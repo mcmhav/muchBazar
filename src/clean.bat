@@ -1,0 +1,27 @@
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+rm $DIR/*.bbl
+rm $DIR/*.blg
+rm $DIR/*.mtc*
+rm $DIR/*.mlf*
+rm $DIR/*.mlt*
+rm $DIR/*.maf
+rm $DIR/*.aux
+rm $DIR/*.out
+rm $DIR/*.toc
+rm $DIR/*.lof
+rm $DIR/*.lot
+rm $DIR/*.log
+rm $DIR/*.fdb_latexmk
+rm $DIR/chapter/*.bbl
+rm $DIR/chapter/*.blg
+rm $DIR/chapter/*.mtc*
+rm $DIR/chapter/*.mlf*
+rm $DIR/chapter/*.mlt*
+rm $DIR/chapter/*.maf
+rm $DIR/chapter/*.aux
+rm $DIR/chapter/*.out
+rm $DIR/chapter/*.toc
+rm $DIR/chapter/*.lof
+rm $DIR/chapter/*.lot
+rm $DIR/chapter/*.log
+rm $DIR/chapter/*.fdb_latexmk

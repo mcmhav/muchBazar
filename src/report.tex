@@ -1,0 +1,155 @@
+\documentclass[10pt,a4paper,oneside]{report}
+
+\usepackage[section] {placeins}
+
+\usepackage[norsk,english]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+
+\selectlanguage{english}
+
+\usepackage[dvipsnames]{xcolor}
+\usepackage{graphicx}
+\usepackage{tabularx}
+\usepackage{booktabs}
+\usepackage{wrapfig}
+\usepackage{pbox}
+
+\usepackage[headings]{fullpage} % wider
+\usepackage{verbatim}
+\usepackage{url}
+\usepackage{minitoc}
+\usepackage{cite}
+\usepackage{notoccite}
+\usepackage{caption}
+\usepackage{float}
+\usepackage{tikz}
+\usepackage{changepage}
+\usepackage{fancyhdr}
+\usepackage{blindtext}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{soul}
+% \usepackage{amssymb}
+\usepackage{pifont}
+\newcommand{\cmark}{\ding{51}}%
+\newcommand{\xmark}{\ding{55}}%
+
+% Listings - for listing code snippets
+\usepackage{listings}
+\lstset{
+    basicstyle=\ttfamily\footnotesize,
+    breaklines=true,
+    aboveskip=25pt,
+    belowskip=25pt
+}
+
+\setlength{\parskip}{1.5ex}
+% \setlength{\hoffset}{30pt}
+% \setlength{\textwidth}{393pt}
+
+\usepackage{substr}
+\usepackage{datatool}
+\usepackage[acronym]{glossaries}
+
+\fontfamily{ptm}\selectfont
+
+\usepackage{hyperref}
+\hypersetup{
+    bookmarks=true,
+    unicode=true,
+    pdftoolbar=true,
+    pdfmenubar=true,
+    pdffitwindow=false,
+    pdfstartview={FitH},
+    pdftitle={title},
+    pdfauthor={Martin Havig},
+    pdfsubject={Subject},
+    %pdfcreator={Creator},
+    %pdfproducer={Producer},
+    pdfkeywords={keyword},
+    pdfnewwindow=true,
+    colorlinks=false,
+    linkcolor=blue,
+    citecolor=blue,
+    filecolor=blue,
+    urlcolor=blue
+}
+
+\newcommand{\HRule}{\rule{\linewidth}{0.5mm}}
+\bibliographystyle{plain}
+
+\begin{document}
+
+%TITLE
+\thispagestyle{empty}
+\begin{center}
+	% \vspace{\stretch{0.7}}
+	{\Huge Twilm} \\
+	\medskip
+    \vspace{\stretch{0.2}}
+
+    { \Large \bfseries PROJECT}
+    \HRule \\[0.5cm]
+	{ \huge \bfseries ONELINER ABOUT \\[0.4cm]}
+
+    \HRule \\[0.5cm]
+
+    \begin{minipage}{0.4\textwidth}
+        \begin{flushleft} \large
+            \emph{Authors}\\
+            Martin Christian \textsc{Havig} \\
+        \end{flushleft}
+    \end{minipage}
+    \begin{minipage}{0.4\textwidth}
+        \begin{flushright} \large
+            \emph{Supervisor:} \\
+            Some  \textsc{One}
+        \end{flushright}
+    \end{minipage}
+
+    \vfill
+    \today \\\ \\\
+\end{center}
+\newpage
+
+%Acknowledgments
+\renewcommand{\abstractname}{Acknowledgments}
+\begin{abstract}
+\end{abstract}
+
+%ABSTRACT
+\renewcommand{\abstractname}{Abstract}
+\begin{abstract}
+
+\end{abstract}
+\pagenumbering{roman}
+
+\setcounter{tocdepth}{2}
+\dominitoc
+\dominilof
+\dominilot
+\tableofcontents
+\clearpage
+\listoffigures
+\listoftables
+
+\setcounter{tocdepth}{1}
+
+%CHAPTERS
+\input{chapter/01-introduction}
+\input{chapter/02-prestudy}
+\input{chapter/03-requirements}
+\input{chapter/04-design}
+\input{chapter/05-implementation}
+
+\input{chapter/90-evaluation}
+\input{chapter/91-conclusion}
+
+\input{chapter/99-appendices}
+
+\newpage
+\addcontentsline{toc}{chapter}{References}
+\bibliography{references}
+
+\end{document}
