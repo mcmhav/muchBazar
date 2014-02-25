@@ -10,70 +10,9 @@
 \subsection{Logical View}
 
 \subsection{Process View}
-The development view describes how the various technologies and implementations are dependent on one another. A layered approach is used to depict this in figure~\ref{figure:development-view}. It shows how the commercial off-the-shelf software (COTS) is dependent on the underlying language they are built in. Also, it shows how the modules implemented in the project are dependent on the various COTS.
-
-\begin{figure}[H]
-    \centerline{\includegraphics[width=4.5in]{image/architecture-development-view.png}}
-    \caption[Development view]{Development view showing the technology stack. Each technology block is dependent on the technology block(s) below it.}
-    \label{figure:development-view}
-\end{figure}
 
 \subsection{Physical View}
-The physical view describes the mapping(s) of the software onto hardware, as seen in figure~\ref{figure:physical-view}. The NoSQL database communicate with the Twilm implementation. These are both stored on a single computer. This computer has Internet access. The Twilm implementation uses the Internet access to reach Twitter.
-
-The NoSQL database can also be decoupled from the computer running Twilm and set up on several computers with replication, as shown in figure~\ref{figure:distr-phys-view}. This fulfills the system storage replication requirement in the non functional requirements in section~\ref{section:non-functional-requirements}.
-
-\begin{figure}[H]
-\centerline{\includegraphics[width=4.5in]{image/architecture-physical-view.png}}
-\caption[Physical view]{Physical view showing the components of the system mapped onto hardware. Only a single computer with Internet access to Twitter runs the entire system.}
-\label{figure:physical-view}
-\end{figure}
-
-\begin{figure}[H]
-\centerline{\includegraphics[width=4.5in]{image/architecture-physical-view-distributed.png}}
-\caption[Distributed physical view]{Distributed physical view showing the components of the system mapped onto hardware using database replication.}
-\label{figure:distr-phys-view}
-\end{figure}
 
 \section{Algorithm Design}
-\subsection{Dataset Building}\label{algorithm-design:dataset-building}
-The dataset building algorithm retrieves and iterates over a list of Netflix users in a test set. This test set is normally the probe in the Netflix Prize dataset. It then consolidates Twitter data with Netflix Prize data by building a dataset for the user based on Twitter data points related to the movies the user has rated. An illustration of this process and its beginning and resulting data structures can be seen in figure~\ref{figure:dataset-building-algorithm}
-
-\begin{figure}[H]
-    \centerline{\includegraphics[width=6in]{image/design-algorithm-dataset-building.png}}
-    \caption[Database building algorithm]{Illustration of the dataset building algorithm. The algorithm retrieves data about a Netflix user and consolidates it with the Twitter data points related to the movies the user has rated.}
-    \label{figure:dataset-building-algorithm}
-\end{figure}
-
-
-\subsubsection{Retrieval}
-    Each Netflix user that is not present in the test set is retrieved and iterated over.
-    For each of the movies that these users have rated, the corresponding movie in the dataset that is being built containing the Twitter data points that are relevant to the movie is retrieved.
-    If the dataset does not yet contain this movie, the relevant Twitter data points are retrieved from the Twitter model and added to the dataset movie.
-
-\subsubsection{Consolidating}
-	Once Twitter data points that are related to a movie a user has rated have been retrieved, these data points must be consolidated with the user's data points. The user data points is a hash of Twitter data points that point to a number indicating whether or not the user is positively or negatively interested in this Twitter data point. Each Twitter data point related to the movie the user has rated is added to this hash and scaled by whether or not the user liked it. After Twitter data points have been added to the user data points for all movies the user has rated, they are normalized to a scale of [0, 1] for each user. The user is now expressed in the dataset entirely by Twitter data points rated from 0 to 1.
 
 \subsection{Prediction}\label{algorithm-design:prediction}
-As mentioned in \ref{subsubsec:predict-phase} the system must produce a prediction on the dataset. As concluded in the preliminary study the most suitable algorithms to produce these predictions for this kind of dataset has proven to be a k-nearest neighbors (k-NN) approach. This is because it will allow a low response time, but yet has produced good prediction results on the Netflix Prize dataset~\ref{subsec:sim-sys-conc}.
-
-There are many approaches to gather and select neighbors to calculate predictions with, but the approach which seems most promising is the probabilistic neighborhood selection~\cite{probcobfilter}, and is the approach to be taken.
-
-The prediction algorithm design is split into 3 parts. The last part depends on if the prediction was issued because a user rated a movie, or a movie prediction rating was requested.
-
-\begin{description}
-    \item[First - Retrieval part] \hfill \\
-    The system will retrieve the data points closest to the point to predict. These points are retrieved with a k-NN algorithm, which utilizes a probabilistic selection when selecting neighbors.
-
-    \item[Second - Evaluation part] \hfill \\
-    The neighbors returned are evaluated. A prediction based on the data points is produced, and a confidence measure on this prediction is produced.
-
-    \item[Third - Learning part] \hfill \\
-    If a user rated a movie, the actual rating is compared with the predicted rating, and the data points are weighted regarding of the accuracy of the rating.
-\end{description}
-
-\begin{figure}[H]
-\centerline{\includegraphics[width=3.5in]{image/pred-alg.png}}
-\caption[Prediction algorithm]{The prediction algorithm design and the parts it is separated into. The dataset consist of users on the form described in the top. With the given point the neighbors are selected from the dataset. This is then sent to the evaluation part. Here a prediction is produced.}
-\label{figure:pred-alg}
-\end{figure}

@@ -5,6 +5,51 @@
 
 \clearpage
 
-\end{figure}
+\section{State Of The Art}
+\subsection{System Coldstart Handling}
+\subsection{Fashion Recommendation}
+\subsection{Recommenders (Similar systems? somethingsomething)}
 
-\section{Evaluation}\label{sec:prestrud-eval}
+\section{Data Findings}
+\subsection{What Can Be Understood From The Data}
+\subsubsection{The Expected}
+Event "app_started"; all have user_id's
+Event "app_first_started"; all user_id's are NULL
+Event "user_logged_in"; all have user_id's... (assigned with login, event saved after login?)
+
+\subsubsection{The Strange}
+NULL valued events: (Not all strange, but put together for readability)
+facebook_share_changed
+collection_viewed
+wantlist_menu_entry_clicked
+app_became_active
+
+app_first_started
+facebook_login_failed
+
+> db.prod.distinct('event_json.ipAddress').length
+9033
+> db.prod.distinct('event_json.eventData.device_id').length
+2644
+> db.prod.distinct('user_id').length
+1660
+
+More devices than users, can't fill the blanks with device_id
+
+\subsection{Graphs N' Shit}
+
+\section{What to use}
+\subsection{Some Awesome Algorithms (Build up with project progress)}
+\subsubsection{The Good}
+\subsubsection{The Bad}
+\subsection{Why Not To Use These (Same As above)}
+\subsubsection{The Good}
+\subsubsection{The Bad}
+
+\section{How to evaluate}
+\subsection{What Has Been Done Before}
+\subsection{What To Use}
+\subsubsection{The Good}
+\subsubsection{The Bad}
+
+\section{Evaluation}
