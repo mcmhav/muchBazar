@@ -12,6 +12,44 @@
 Init Hypothesis:
 Two users with similar session habits and similar product accessing pattern have a stronger correlation to one-another than two users with just similar product interests.
 
+
+'product\_purchase\_intended' (user pushed to the product web store) shows a wider specter of information about the product, including additional colors, images and colors.
+For some it might be natural to explore the item there before "wanting" it. Making both
+
+"product\_purchase\_intended" \Rightarrow "product\_wanted"
+
+and
+
+"product\_purchase\_intended"
+\notimplies
+"product\_wanted"
+
+produce valuable information.
+
+Must make different rules for the different stores:
+"Bik Bok", "Cubus", "Gina Trik", "H\&M", "Bianco" has a broad specter of extra functions inside the web store, whereas others might not, only shows the product and a add to chart button.
+This might divide the use pattern of the users into a:
+
+"product\_detail\_clicked" \Rightarrow "product\_purchase\_intended" \Rightarrow "product\_wanted"
+
+"product\_detail\_clicked" \Rightarrow "product\_purchase\_intended"
+\notimplies
+"product\_wanted",
+
+and
+
+"product\_detail\_clicked" \Rightarrow "product\_wanted"
+
+based on the store accessed.
+
+Use this to make a "rule set" with a probability.
+Then again use this to recommend items for the users with that given probability.
+
+Find a "most popular session"-pattern
+Find a "most likely to come after"-pattern
+
+
+
 F:
 % M. Spiliopoulou and L. C. Faulstich. Wum: A web utilization miner. In In Pro-
 % ceedings of EDBT Workshop WebDB98, 1999. Valencia, Spain.
@@ -201,6 +239,70 @@ Articles 4 l8er:
 % { "server_time_stamp" : "2014-01-23T21:00:55.536Z", "event_id" : "product_detail_clicked" }
 % { "server_time_stamp" : "2014-01-23T21:01:03.367Z", "event_id" : "product_detail_clicked" }
 
+
+% > db.sessions.find({'user_id':100000140823565,session:440},{'event_id':1,'server_time_stamp':1,'_id':0}).sort({'ts':1})
+% { "server_time_stamp" : "2013-11-25T22:37:24.946Z", "event_id" : "app_started" }
+% { "server_time_stamp" : "2013-11-25T22:37:44.130Z", "event_id" : "storefront_clicked" }
+% { "server_time_stamp" : "2013-11-25T22:38:22.872Z", "event_id" : "product_wanted" }
+% { "server_time_stamp" : "2013-11-25T22:38:36.121Z", "event_id" : "product_wanted" }
+% { "server_time_stamp" : "2013-11-25T22:38:39.020Z", "event_id" : "product_wanted" }
+% { "server_time_stamp" : "2013-11-25T22:38:43.487Z", "event_id" : "storefront_clicked" }
+% { "server_time_stamp" : "2013-11-25T22:38:54.034Z", "event_id" : "product_detail_clicked" }
+% { "server_time_stamp" : "2013-11-25T22:38:58.223Z", "event_id" : "product_purchase_intended" }
+% { "server_time_stamp" : "2013-11-25T22:39:18.225Z", "event_id" : "product_detail_clicked" }
+% { "server_time_stamp" : "2013-11-25T22:39:18.817Z", "event_id" : "product_purchase_intended" }
+% { "server_time_stamp" : "2013-11-25T22:39:40.515Z", "event_id" : "product_wanted" }
+% { "server_time_stamp" : "2013-11-25T22:39:58.425Z", "event_id" : "product_detail_clicked" }
+% { "server_time_stamp" : "2013-11-25T22:39:58.486Z", "event_id" : "product_purchase_intended" }
+% { "server_time_stamp" : "2013-11-25T22:40:11.966Z", "event_id" : "product_detail_clicked" }
+% { "server_time_stamp" : "2013-11-25T22:40:14.724Z", "event_id" : "product_purchase_intended" }
+% { "server_time_stamp" : "2013-11-25T22:40:41.076Z", "event_id" : "product_detail_clicked" }
+% { "server_time_stamp" : "2013-11-25T22:40:44.990Z", "event_id" : "product_purchase_intended" }
+% { "server_time_stamp" : "2013-11-25T22:40:54.413Z", "event_id" : "product_wanted" }
+% { "server_time_stamp" : "2013-11-25T22:41:10.916Z", "event_id" : "storefront_clicked" }
+% { "server_time_stamp" : "2013-11-25T22:41:22.581Z", "event_id" : "product_wanted" }
+% Type "it" for more
+% > it
+% { "server_time_stamp" : "2013-11-25T22:41:34.537Z", "event_id" : "product_wanted" }
+% { "server_time_stamp" : "2013-11-25T22:41:35.651Z", "event_id" : "product_wanted" }
+% { "server_time_stamp" : "2013-11-25T22:41:44.886Z", "event_id" : "storefront_clicked" }
+% { "server_time_stamp" : "2013-11-25T22:41:55.571Z", "event_id" : "product_wanted" }
+% { "server_time_stamp" : "2013-11-25T22:42:03.349Z", "event_id" : "product_detail_clicked" }
+% { "server_time_stamp" : "2013-11-25T22:42:04.378Z", "event_id" : "product_purchase_intended" }
+% { "server_time_stamp" : "2013-11-25T22:42:24.057Z", "event_id" : "product_wanted" }
+% { "server_time_stamp" : "2013-11-25T22:42:42.844Z", "event_id" : "storefront_clicked" }
+
+% > db.sessions.find({'user_id':100000140823565,session:440},{'product_id':1,'event_id':1,'_id':0}).sort({'ts':1})
+% { "event_id" : "app_started", "product_id" : "NULL" }
+% { "event_id" : "storefront_clicked", "product_id" : "NULL" }
+% { "event_id" : "product_wanted", "product_id" : 6428015 }
+% { "event_id" : "product_wanted", "product_id" : 1798001 }
+% { "event_id" : "product_wanted", "product_id" : 768002 }
+% { "event_id" : "storefront_clicked", "product_id" : "NULL" }
+% { "event_id" : "product_detail_clicked", "product_id" : 10528005 }
+% { "event_id" : "product_purchase_intended", "product_id" : 10528005 }
+% { "event_id" : "product_detail_clicked", "product_id" : 10848005 }
+% { "event_id" : "product_purchase_intended", "product_id" : 10848005 }
+% { "event_id" : "product_wanted", "product_id" : 9868001 }
+% { "event_id" : "product_detail_clicked", "product_id" : 9798002 }
+% { "event_id" : "product_purchase_intended", "product_id" : 9798002 }
+% { "event_id" : "product_detail_clicked", "product_id" : 2278002 }
+% { "event_id" : "product_purchase_intended", "product_id" : 2278002 }
+% { "event_id" : "product_detail_clicked", "product_id" : 6428008 }
+% { "event_id" : "product_purchase_intended", "product_id" : 6428008 }
+% { "event_id" : "product_wanted", "product_id" : 6428008 }
+% { "event_id" : "storefront_clicked", "product_id" : "NULL" }
+% { "event_id" : "product_wanted", "product_id" : 10798006 }
+% Type "it" for more
+% > it
+% { "event_id" : "product_wanted", "product_id" : 8308010 }
+% { "event_id" : "product_wanted", "product_id" : 6478009 }
+% { "event_id" : "storefront_clicked", "product_id" : "NULL" }
+% { "event_id" : "product_wanted", "product_id" : 7058041 }
+% { "event_id" : "product_detail_clicked", "product_id" : 6938028 }
+% { "event_id" : "product_purchase_intended", "product_id" : 6938028 }
+% { "event_id" : "product_wanted", "product_id" : 6938028 }
+% { "event_id" : "storefront_clicked", "product_id" : "NULL" }
 
 
 
