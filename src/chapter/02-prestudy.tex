@@ -73,50 +73,92 @@ We are constrained to unobtrusively learn user-profiles from the natural interac
 %	- Trends?
 
 \subsection{Session Based Recommendation}
+Init Hypothesis:
+Two users with similar session habits and similar product accessing pattern have a stronger correlation to one-another than two users with just similar product interests.
+
+
+'product\_purchase\_intended' (user pushed to the product web store) shows a wider specter of information about the product, including additional colors, images and colors.
+For some it might be natural to explore the item there before "wanting" it. Making both
+
+"product\_purchase\_intended" \Rightarrow "product\_wanted"
+
+and
+
+"product\_purchase\_intended"
+\notimplies
+"product\_wanted"
+
+produce valuable information.
+
+Must make different rules for the different stores:
+"Bik Bok", "Cubus", "Gina Trik", "H\&M", "Bianco" has a broad specter of extra functions inside the web store, whereas others might not, only shows the product and a add to chart button.
+This might divide the use pattern of the users into a:
+
+"product\_detail\_clicked" \Rightarrow "product\_purchase\_intended" \Rightarrow "product\_wanted"
+
+"product\_detail\_clicked" \Rightarrow "product\_purchase\_intended"
+\notimplies
+"product\_wanted",
+
+and
+
+"product\_detail\_clicked" \Rightarrow "product\_wanted"
+
+based on the store accessed.
+
+Use this to make a "rule set" with a probability.
+Then again use this to recommend items for the users with that given probability.
+
+Find a "most popular session"-pattern
+Find a "most likely to come after"-pattern
+
+
+
+F:
+% M. Spiliopoulou and L. C. Faulstich. Wum: A web utilization miner. In In Pro-
+% ceedings of EDBT Workshop WebDB98, 1999. Valencia, Spain.
+
+% R. Cooley, B. Mobasher, and J. Srivastava. Data preparation for mining world wide
+% web browsing patterns. Journal of Knowledge and Information Systems, 1(1), 1999.
+
 Articles 4 l8er:
-In Proceedings Of
-the 1995 International Joint Conference on Artificial Intelligence, 1995. Montreal,
-Canada.
+% In Proceedings Of the 1995 International Joint Conference on Artificial Intelligence, 1995. Montreal,
+% Canada.
 
-S. Schechter, M. Krishnan, and M. D. Smith. Using path profiles to predict http
-requests. In Proceedings of 7th International World Wide Web Conference, Novem-
-ber 1998. Brisbane, Australia.
+% S. Schechter, M. Krishnan, and M. D. Smith. Using path profiles to predict http
+% requests. In Proceedings of 7th International World Wide Web Conference, Novem-
+% ber 1998. Brisbane, Australia.
 
-M. Spiliopoulou and L. C. Faulstich. Wum: A web utilization miner. In In Pro-
-ceedings of EDBT Workshop WebDB98, 1999. Valencia, Spain.
 
-R. Cooley, B. Mobasher, and J. Srivastava. Data preparation for mining world wide
-web browsing patterns. Journal of Knowledge and Information Systems, 1(1), 1999.
+% B. Mobasher, H. Dai, T. Luo, and M. Nakagawa. Discovery of aggregate usage
+% profiles for web personalization. In Proceedings of the Web Mining for E-Commerce
+% Workshop (WebKDD’2000), 2000.
 
-B. Mobasher, H. Dai, T. Luo, and M. Nakagawa. Discovery of aggregate usage
-profiles for web personalization. In Proceedings of the Web Mining for E-Commerce
-Workshop (WebKDD’2000), 2000.
+% C. Shahabi, A. Zarkesh, J. Adibi, and V. Shah. Knowledge discovery from users
+% web-page navigation. In Proceeding of the IEEE RIDE97 Workshop, pages 20–29,
+% April 1997. Birmingham, England.
 
-C. Shahabi, A. Zarkesh, J. Adibi, and V. Shah. Knowledge discovery from users
-web-page navigation. In Proceeding of the IEEE RIDE97 Workshop, pages 20–29,
-April 1997. Birmingham, England.
+% O. Nasraoui, R. Krishnapuram, and A. Joshi. Mining web access logs using a fuzzy
+% relational clustering algorithm based on a robust estimator. In Proceedings of Eight
+% International World Wide Web Conference, 1999. Toronto, Canada.
 
-O. Nasraoui, R. Krishnapuram, and A. Joshi. Mining web access logs using a fuzzy
-relational clustering algorithm based on a robust estimator. In Proceedings of Eight
-International World Wide Web Conference, 1999. Toronto, Canada.
+% Y. Yan, M. Jacobsen, Garc ̈ıa-Molina H, and U. Dayal. From user access patterns to
+% dynamic hypertext linking. In Proceedings of the Fifth International World Wide
+% Web Conference, 1996. Paris, France.
 
-Y. Yan, M. Jacobsen, Garc ̈ıa-Molina H, and U. Dayal. From user access patterns to
-dynamic hypertext linking. In Proceedings of the Fifth International World Wide
-Web Conference, 1996. Paris, France.
+% A. Nanopoulos, D. Katsaros, and Y. Manolopoulos. Effective prediction of web-
+% user accesses: a data mining approach. In Proceedings of WEBKDD workshop,
+% 2001. San Francisco, CA, USA.
 
-A. Nanopoulos, D. Katsaros, and Y. Manolopoulos. Effective prediction of web-
-user accesses: a data mining approach. In Proceedings of WEBKDD workshop,
-2001. San Francisco, CA, USA.
+% R. Agrawal and R. Srikant. Mining sequential patterns. In Proceedings of the In-
+% ternational Conference on Data Engineering (ICDE), March 1995. Taipei, Taiwan
 
-R. Agrawal and R. Srikant. Mining sequential patterns. In Proceedings of the In-
-ternational Conference on Data Engineering (ICDE), March 1995. Taipei, Taiwan
+% M. Deshpande and G. Karypis. Selective markov models for predicting web-page
+% accesses. In Proceedings of the First SIAM International Conference on Data Min-
+% ing (SDM’2001), 2001.
 
-M. Deshpande and G. Karypis. Selective markov models for predicting web-page
-accesses. In Proceedings of the First SIAM International Conference on Data Min-
-ing (SDM’2001), 2001.
-
-R. R. Sarukkai. Link prediction and path analysis using markov chains. In Proceed-
-ings of the Ninth International World Wide Web Conference, 2000. Amsterdam.
+% R. R. Sarukkai. Link prediction and path analysis using markov chains. In Proceed-
+% ings of the Ninth International World Wide Web Conference, 2000. Amsterdam.
 
 
 %http://dl.acm.org/citation.cfm?id=1136004
@@ -128,7 +170,208 @@ ings of the Ninth International World Wide Web Conference, 2000. Amsterdam.
 %http://dl.acm.org/citation.cfm?id=345169
 %http://dl.acm.org/citation.cfm?id=345169
 
+
+
+% Use event_id, events:
+%     "product_detail_clicked",
+%     "product_wanted",
+%     "storefront_clicked",
+%     "app_started",
+%     "around_me_clicked",
+%     "app_first_started",
+%     "product_purchase_intended",
+%     "user_logged_in",
+%     "featured_storefront_clicked",
+%     "stores_map_clicked",
+%     "friend_invited",
+%     "store_clicked",
+%     "activity_clicked",
+%     "app_became_active",
+%     "facebook_share_changed",
+%     "collection_viewed",
+%     "featured_collection_clicked",
+%     "facebook_login_failed",
+%     "wantlist_menu_entry_clicked"
+
+
+% Start:
+%     "app_first_started",
+%     "app_started",
+%     "app_became_active",
+%     "user_logged_in",
+
+
+% Products:
+%     "product_detail_clicked",
+%     "product_wanted",
+%     "product_purchase_intended",
+
+
+% Store:
+%     "storefront_clicked",
+%     "around_me_clicked",
+%     "stores_map_clicked",
+%     "store_clicked",
+%     "collection_viewed",
+%     "featured_storefront_clicked",
+
+%     "activity_clicked",
+
+%     "featured_collection_clicked",
+%     "wantlist_menu_entry_clicked"
+
+
+% Course:
+%     App started
+%     Check next events, a days timeframe
+
+%Simple session form, no structure:
+% {u'event_id': u'product_detail_clicked', u'count': 68.0}
+% {u'event_id': u'product_wanted', u'count': 35.0}
+% {u'event_id': u'storefront_clicked', u'count': 69.0}
+% {u'event_id': u'app_started', u'count': 26.0}
+% {u'event_id': u'featured_storefront_clicked', u'count': 4.0}
+% {u'event_id': u'user_logged_in', u'count': 9.0}
+% {u'event_id': u'product_purchase_intended', u'count': 2.0}
+% {u'event_id': u'around_me_clicked', u'count': 7.0}
+% {u'event_id': u'stores_map_clicked', u'count': 1.0}
+% {u'event_id': u'store_clicked', u'count': 1.0}
+% {'user_id': 100001385800886L}
+% {'num_events': 222}
+% Total amount:    222
+% User:            100001385800886
+% Total Sessions:  30
+% Total Events:    936
+% Date:            11 - 10 - 2013
+
+
+% Structured session exploration: Probably more info in this #yolo
+% > db.sessions.find({'user_id':1094505588,session:64},{'event_id':1,'server_time_stamp':1,'_id':0}).sort({'ts':1})
+% { "server_time_stamp" : "2014-01-23T20:51:31.520Z", "event_id" : "app_started" }
+% { "server_time_stamp" : "2014-01-23T20:51:37.932Z", "event_id" : "storefront_clicked" }
+% { "server_time_stamp" : "2014-01-23T20:51:54.725Z", "event_id" : "product_detail_clicked" }
+% { "server_time_stamp" : "2014-01-23T20:52:06.309Z", "event_id" : "storefront_clicked" }
+% { "server_time_stamp" : "2014-01-23T20:52:51.353Z", "event_id" : "storefront_clicked" }
+% { "server_time_stamp" : "2014-01-23T20:52:56.799Z", "event_id" : "product_detail_clicked" }
+% { "server_time_stamp" : "2014-01-23T20:53:07.334Z", "event_id" : "product_detail_clicked" }
+% { "server_time_stamp" : "2014-01-23T20:53:20.172Z", "event_id" : "storefront_clicked" }
+% { "server_time_stamp" : "2014-01-23T20:53:29.087Z", "event_id" : "storefront_clicked" }
+% { "server_time_stamp" : "2014-01-23T20:53:44.725Z", "event_id" : "storefront_clicked" }
+% { "server_time_stamp" : "2014-01-23T20:53:57.673Z", "event_id" : "product_detail_clicked" }
+% { "server_time_stamp" : "2014-01-23T20:54:05.607Z", "event_id" : "storefront_clicked" }
+% { "server_time_stamp" : "2014-01-23T20:54:10.771Z", "event_id" : "storefront_clicked" }
+% { "server_time_stamp" : "2014-01-23T20:54:58.947Z", "event_id" : "storefront_clicked" }
+% { "server_time_stamp" : "2014-01-23T20:55:19.147Z", "event_id" : "storefront_clicked" }
+% { "server_time_stamp" : "2014-01-23T20:55:48.113Z", "event_id" : "storefront_clicked" }
+% { "server_time_stamp" : "2014-01-23T20:56:07.440Z", "event_id" : "storefront_clicked" }
+% { "server_time_stamp" : "2014-01-23T20:56:14.615Z", "event_id" : "storefront_clicked" }
+% { "server_time_stamp" : "2014-01-23T20:56:20.779Z", "event_id" : "product_detail_clicked" }
+% { "server_time_stamp" : "2014-01-23T20:56:48.086Z", "event_id" : "product_detail_clicked" }
+% Type "it" for more
+% > it
+% { "server_time_stamp" : "2014-01-23T20:56:54.070Z", "event_id" : "product_detail_clicked" }
+% { "server_time_stamp" : "2014-01-23T20:56:59.237Z", "event_id" : "product_detail_clicked" }
+% { "server_time_stamp" : "2014-01-23T20:57:30.500Z", "event_id" : "product_detail_clicked" }
+% { "server_time_stamp" : "2014-01-23T20:57:36.649Z", "event_id" : "product_detail_clicked" }
+% { "server_time_stamp" : "2014-01-23T20:57:43.810Z", "event_id" : "product_detail_clicked" }
+% { "server_time_stamp" : "2014-01-23T20:57:53.359Z", "event_id" : "product_detail_clicked" }
+% { "server_time_stamp" : "2014-01-23T20:57:56.238Z", "event_id" : "product_detail_clicked" }
+% { "server_time_stamp" : "2014-01-23T20:58:04.901Z", "event_id" : "storefront_clicked" }
+% { "server_time_stamp" : "2014-01-23T20:58:11.366Z", "event_id" : "storefront_clicked" }
+% { "server_time_stamp" : "2014-01-23T20:58:27.142Z", "event_id" : "storefront_clicked" }
+% { "server_time_stamp" : "2014-01-23T20:58:30.301Z", "event_id" : "storefront_clicked" }
+% { "server_time_stamp" : "2014-01-23T20:58:41.754Z", "event_id" : "storefront_clicked" }
+% { "server_time_stamp" : "2014-01-23T20:58:49.212Z", "event_id" : "storefront_clicked" }
+% { "server_time_stamp" : "2014-01-23T20:59:11.201Z", "event_id" : "product_detail_clicked" }
+% { "server_time_stamp" : "2014-01-23T20:59:19.222Z", "event_id" : "storefront_clicked" }
+% { "server_time_stamp" : "2014-01-23T20:59:23.511Z", "event_id" : "storefront_clicked" }
+% { "server_time_stamp" : "2014-01-23T20:59:29.173Z", "event_id" : "storefront_clicked" }
+% { "server_time_stamp" : "2014-01-23T20:59:37.524Z", "event_id" : "product_detail_clicked" }
+% { "server_time_stamp" : "2014-01-23T20:59:44.068Z", "event_id" : "product_detail_clicked" }
+% { "server_time_stamp" : "2014-01-23T20:59:48.219Z", "event_id" : "product_detail_clicked" }
+% Type "it" for more
+% > it
+% { "server_time_stamp" : "2014-01-23T20:59:58.970Z", "event_id" : "product_detail_clicked" }
+% { "server_time_stamp" : "2014-01-23T21:00:02.258Z", "event_id" : "product_detail_clicked" }
+% { "server_time_stamp" : "2014-01-23T21:00:17.681Z", "event_id" : "storefront_clicked" }
+% { "server_time_stamp" : "2014-01-23T21:00:20.957Z", "event_id" : "storefront_clicked" }
+% { "server_time_stamp" : "2014-01-23T21:00:25.827Z", "event_id" : "storefront_clicked" }
+% { "server_time_stamp" : "2014-01-23T21:00:32.543Z", "event_id" : "storefront_clicked" }
+% { "server_time_stamp" : "2014-01-23T21:00:38.122Z", "event_id" : "storefront_clicked" }
+% { "server_time_stamp" : "2014-01-23T21:00:42.472Z", "event_id" : "product_detail_clicked" }
+% { "server_time_stamp" : "2014-01-23T21:00:45.751Z", "event_id" : "product_detail_clicked" }
+% { "server_time_stamp" : "2014-01-23T21:00:55.536Z", "event_id" : "product_detail_clicked" }
+% { "server_time_stamp" : "2014-01-23T21:01:03.367Z", "event_id" : "product_detail_clicked" }
+
+
+% > db.sessions.find({'user_id':100000140823565,session:440},{'event_id':1,'server_time_stamp':1,'_id':0}).sort({'ts':1})
+% { "server_time_stamp" : "2013-11-25T22:37:24.946Z", "event_id" : "app_started" }
+% { "server_time_stamp" : "2013-11-25T22:37:44.130Z", "event_id" : "storefront_clicked" }
+% { "server_time_stamp" : "2013-11-25T22:38:22.872Z", "event_id" : "product_wanted" }
+% { "server_time_stamp" : "2013-11-25T22:38:36.121Z", "event_id" : "product_wanted" }
+% { "server_time_stamp" : "2013-11-25T22:38:39.020Z", "event_id" : "product_wanted" }
+% { "server_time_stamp" : "2013-11-25T22:38:43.487Z", "event_id" : "storefront_clicked" }
+% { "server_time_stamp" : "2013-11-25T22:38:54.034Z", "event_id" : "product_detail_clicked" }
+% { "server_time_stamp" : "2013-11-25T22:38:58.223Z", "event_id" : "product_purchase_intended" }
+% { "server_time_stamp" : "2013-11-25T22:39:18.225Z", "event_id" : "product_detail_clicked" }
+% { "server_time_stamp" : "2013-11-25T22:39:18.817Z", "event_id" : "product_purchase_intended" }
+% { "server_time_stamp" : "2013-11-25T22:39:40.515Z", "event_id" : "product_wanted" }
+% { "server_time_stamp" : "2013-11-25T22:39:58.425Z", "event_id" : "product_detail_clicked" }
+% { "server_time_stamp" : "2013-11-25T22:39:58.486Z", "event_id" : "product_purchase_intended" }
+% { "server_time_stamp" : "2013-11-25T22:40:11.966Z", "event_id" : "product_detail_clicked" }
+% { "server_time_stamp" : "2013-11-25T22:40:14.724Z", "event_id" : "product_purchase_intended" }
+% { "server_time_stamp" : "2013-11-25T22:40:41.076Z", "event_id" : "product_detail_clicked" }
+% { "server_time_stamp" : "2013-11-25T22:40:44.990Z", "event_id" : "product_purchase_intended" }
+% { "server_time_stamp" : "2013-11-25T22:40:54.413Z", "event_id" : "product_wanted" }
+% { "server_time_stamp" : "2013-11-25T22:41:10.916Z", "event_id" : "storefront_clicked" }
+% { "server_time_stamp" : "2013-11-25T22:41:22.581Z", "event_id" : "product_wanted" }
+% Type "it" for more
+% > it
+% { "server_time_stamp" : "2013-11-25T22:41:34.537Z", "event_id" : "product_wanted" }
+% { "server_time_stamp" : "2013-11-25T22:41:35.651Z", "event_id" : "product_wanted" }
+% { "server_time_stamp" : "2013-11-25T22:41:44.886Z", "event_id" : "storefront_clicked" }
+% { "server_time_stamp" : "2013-11-25T22:41:55.571Z", "event_id" : "product_wanted" }
+% { "server_time_stamp" : "2013-11-25T22:42:03.349Z", "event_id" : "product_detail_clicked" }
+% { "server_time_stamp" : "2013-11-25T22:42:04.378Z", "event_id" : "product_purchase_intended" }
+% { "server_time_stamp" : "2013-11-25T22:42:24.057Z", "event_id" : "product_wanted" }
+% { "server_time_stamp" : "2013-11-25T22:42:42.844Z", "event_id" : "storefront_clicked" }
+
+% > db.sessions.find({'user_id':100000140823565,session:440},{'product_id':1,'event_id':1,'_id':0}).sort({'ts':1})
+% { "event_id" : "app_started", "product_id" : "NULL" }
+% { "event_id" : "storefront_clicked", "product_id" : "NULL" }
+% { "event_id" : "product_wanted", "product_id" : 6428015 }
+% { "event_id" : "product_wanted", "product_id" : 1798001 }
+% { "event_id" : "product_wanted", "product_id" : 768002 }
+% { "event_id" : "storefront_clicked", "product_id" : "NULL" }
+% { "event_id" : "product_detail_clicked", "product_id" : 10528005 }
+% { "event_id" : "product_purchase_intended", "product_id" : 10528005 }
+% { "event_id" : "product_detail_clicked", "product_id" : 10848005 }
+% { "event_id" : "product_purchase_intended", "product_id" : 10848005 }
+% { "event_id" : "product_wanted", "product_id" : 9868001 }
+% { "event_id" : "product_detail_clicked", "product_id" : 9798002 }
+% { "event_id" : "product_purchase_intended", "product_id" : 9798002 }
+% { "event_id" : "product_detail_clicked", "product_id" : 2278002 }
+% { "event_id" : "product_purchase_intended", "product_id" : 2278002 }
+% { "event_id" : "product_detail_clicked", "product_id" : 6428008 }
+% { "event_id" : "product_purchase_intended", "product_id" : 6428008 }
+% { "event_id" : "product_wanted", "product_id" : 6428008 }
+% { "event_id" : "storefront_clicked", "product_id" : "NULL" }
+% { "event_id" : "product_wanted", "product_id" : 10798006 }
+% Type "it" for more
+% > it
+% { "event_id" : "product_wanted", "product_id" : 8308010 }
+% { "event_id" : "product_wanted", "product_id" : 6478009 }
+% { "event_id" : "storefront_clicked", "product_id" : "NULL" }
+% { "event_id" : "product_wanted", "product_id" : 7058041 }
+% { "event_id" : "product_detail_clicked", "product_id" : 6938028 }
+% { "event_id" : "product_purchase_intended", "product_id" : 6938028 }
+% { "event_id" : "product_wanted", "product_id" : 6938028 }
+% { "event_id" : "storefront_clicked", "product_id" : "NULL" }
+
+
+
 \subsection{Recommenders (Similar systems? somethingsomething)}
+\subsection{Items clustering}
 
 % Trust based CF recommenders
 
@@ -151,28 +394,33 @@ ings of the Ninth International World Wide Web Conference, 2000. Amsterdam.
 	%Which events are interesting to look at?
 
 \subsubsection{The Expected}
-Event "app_started"; all have user_id's
-Event "app_first_started"; all user_id's are NULL
-Event "user_logged_in"; all have user_id's... (assigned with login, event saved after login?)
+Event "app\_started", all have user\_id's
+Event "app\_first\_started", all user\_id's are NULL
+Event "user\_logged\_in", all have user\_id's... (assigned with login, event saved after login?)
 
 \subsubsection{The Strange}
 NULL valued events: (Not all strange, but put together for readability)
-facebook_share_changed
-collection_viewed
-wantlist_menu_entry_clicked
-app_became_active
+facebook\_share\_changed
+collection\_viewed
+wantlist\_menu\_entry\_clicked
+app\_became\_active
 
-app_first_started
-facebook_login_failed
+app\_first\_started
+facebook\_login\_failed
 
-> db.prod.distinct('event_json.ipAddress').length
+> db.prod.distinct('event\_json.ipAddress').length
 9033
-> db.prod.distinct('event_json.eventData.device_id').length
+> db.prod.distinct('event\_json.eventData.device\_id').length
 2644
-> db.prod.distinct('user_id').length
+> db.prod.distinct('user\_id').length
 1660
 
-More devices than users, can't fill the blanks with device_id
+More devices than users, can't fill the blanks with device\_id
+
+Q's:
+    app\_became\_active id's for better sessions?
+    store\_clicked vs. storefront\_clicked (23 vs. 19744)
+    API item-id's mapping to event product\_id's; how to map?
 
 \subsection{Graphs N' Shit}
 
@@ -259,3 +507,8 @@ The data available strongly influences the choice of evaluation method/metrics. 
 \subsubsection{The Bad}
 
 \section{Evaluation}
+
+
+
+Thoughts:
+
