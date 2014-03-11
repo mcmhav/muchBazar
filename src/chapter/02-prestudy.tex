@@ -41,7 +41,7 @@ Ask the right questions if you're going to find the right answers
 - Vanessa Redgrave
 
 %What is the cold-start user problem?
-Scenario: The target user has very few ratings (e.g. a new user). In this scenario, collaborative filtering (CF) based recommenders might not be able to find users with tastes that are truly similar to the target user, thus the recommendation quality to the target user might be poor. On the other hand, because of the very limited number of items rated by the target user, it is hard to obtain the content interests of the target user. Consequently, content-based techniques might only generate very limited recommendations in such situations. 
+Scenario: The target user has very few ratings (e.g. a new user). In this scenario, collaborative filtering (CF) based recommenders might not be able to find users with tastes that are truly similar to the target user, thus the recommendation quality to the target user might be poor. On the other hand, because of the very limited number of items rated by the target user, it is hard to obtain the content interests of the target user. Consequently, content-based techniques might only generate very limited recommendations in such situations.
 
 One crucial problem of recommender system is how to best learn from new users. Collaborative Filtering (CF), is the best known technology for recommender systems and is based on the idea that like-minded users have similar tastes and preferences. A new user therefore poses a challenge to CF recommender, since the system has no knowledge about the preferences of the new user, and can therefore not provide any personalized recommendations, this is known as the cold start problem for new users. The system must therefore acquire some information about the new user in order to make personalized recommendations.
 
@@ -364,18 +364,62 @@ Interesting fields from data:
 
     Offer: prodid - price(old/new) - storeid -time -
 
-Thoughts on graphs:
+Thoughts on graphs (some of these will be in the appendix/removed, placed here for simplicity and structure) (event database filtered on "server-environment" with "prod" as value and removed all events with "simulator" as "platform"):
+
+
 
     Simple:
-        Count for different events
+
         Count for users (unique)
+
+        unique users: 1658
+
+
         Count for unique items
+
+        > db.prod.distinct('product\_id').length - 4042
+        > db.prod.distinct('product\_name').length - 2591
+
+
+
         Count stores unique (not collections, but from offer db)
+
+        > db.offer.distinct('brandId').length - 15
+        > db.prod.distinct('retailer\_brand').length - 21
+
+        The missing 4 (the last two are null and N/A). These are foreign brands i.e. unknown, maybe test brands.
+
+        45002,
+        38002,
+        44004,
+        55006
+
+
         Price ranges of all items (groupings)
-        (Distinct event locations)
-        Item time on market
+
+\begin{figure}[H]
+    \includegraphics[width=5in]{image/price_distr.png}
+    \centering
+    \caption[Price distribution of items]{some awesome text}
+    \label{figure:ratingdistr}
+\end{figure}
+
+        (Distinct event locations)TODO
+
+        Item time on market TODO maybe not that interesting alone
+
 
     complex 2.Deg:
+
+        Count for different events
+
+\begin{figure}[H]
+    \includegraphics[width=5in]{image/event_id.png}
+    \centering
+    \caption[Count for different events]{some awesome text}
+    \label{figure:ratingdistr}
+\end{figure}
+
         Distinct events done on stores (shady)
         peak online (slope-style)
         Price range of items in stores
@@ -387,11 +431,22 @@ Thoughts on graphs:
         unique Stores count for users
 
     complex 3.Deg:
-        count Sessions for users (aprox: sessioncount)
+
+        count Sessions for users (aprox: sessioncount)TODO
+
+\begin{figure}[H]
+    \includegraphics[width=5in]{image/global_sessioncount.png}
+    \centering
+    \caption[Count of sessions per user mapped with count of user with give session amount]{TODOsome awesome text}
+    \label{figure:ratingdistr}
+\end{figure}
+
         price span for user
 
     complex 4.Deg:
+
         Stats for sessions:
+
             Timespann of sessions for users (avg, max, min)
             Events per session (avg, max, min)
             Item viewtime for user in session
@@ -402,8 +457,10 @@ Thoughts on graphs:
             user preferred price in session
 
     complex 5.Deg:
+
         Stats for global session stats:
-        price vs view, want and purchase
+
+            price vs view, want and purchase
             avg viewtime for an item (i know)
             Similarity of user favorite store, items viewed and items wanted?
             time of session over lifetime of app for all users (slope-style)
