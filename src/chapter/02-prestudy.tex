@@ -120,7 +120,25 @@ Articles 4 l8er:
 %http://dl.acm.org/citation.cfm?id=345169
 %http://dl.acm.org/citation.cfm?id=345169
 
+Session issues:
+Once in a blue moon a user will do a "product action" (purchase,want,details) without having a previous frontstore-access event. Which leads to unknown store-id of the item.
+Issue is most probably from missing user-id in collection\_viewed, and a user checks out an item from there. It is not possible to be 100\% sure which user access the item from the collection\_viewed event, so this event is therefor not integrated into the session-stack.
 
+
+% thoughts:
+Categorize stores
+    prize
+    items in store
+
+Categorize items
+    Type
+    Prize
+    View frequency
+
+Predicting events...
+    Value brought vs. clustering on the "item"-events value
+
+Make a store
 
 % event_id, events:
 
@@ -245,7 +263,6 @@ Articles 4 l8er:
 % { "event_id" : "product_wanted", "product_id" : 10798006 }
 
 
-
 \subsection{Recommenders (Similar systems? somethingsomething)}
 \subsection{Items clustering}
 
@@ -268,6 +285,7 @@ Articles 4 l8er:
 	%How many users?
 	%How much preference data?
 	%Which events are interesting to look at?
+
 
 \subsubsection{The Expected}
 Event "app\_started", all have user\_id's
@@ -309,14 +327,33 @@ Q's:
     store\_clicked vs. storefront\_clicked (23 vs. 19744)
     API item-id's mapping to event product\_id's; how to map?
 
-\subsection{Graphs N' Shit}
 
-%Thoughts on grapsh:
-%BubbleChart
-%Blobls of smaller bubbles with eventid
-%Blobs for eventcount on stores with items items from stores (populate "storename" for "itemevents")
-%Show occurence of event after other event?
-%User stats: items, likes, intented purchased, events, session avg, max event, fequency
+
+soBazar want to build a proper model.
+Give input on how to build this model. The supplier should know that an item is a jacket for instance.
+Have something to show on the 20. Should be better than what is already implemented.
+
+
+
+\subsection{Graphs}
+
+Thoughts on graphs:
+BubbleChart
+Blobs of smaller bubbles with eventid
+Blobs for eventcount on stores with items items from stores (populate "storename" for "itemevents")
+Show occurence of event after other event?
+User stats: items, likes, intented purchased, events, session avg, max event, fequency
+Find prices for stores: prize ranges
+User
+
+
+To be done to 17:
+    - PP
+    - List articles to be read
+    - Prototype implementation
+    - Research question(s)
+    -
+
 
 \section{What to use}
 
