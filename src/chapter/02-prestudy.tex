@@ -363,6 +363,30 @@ To be done to 17:
 
 Given enough data, item-based CF methods often performs as well or better than almost any other recommendation method. However, in cold-start situations where a user, an item, or the entire system is new, simple non-personalized recommendations often fare better...
 
+User based - new user
+Non personalized approaches
+	- most popular
+	- highest rated
+Other alternatives
+	- use demographic information
+
+Item based - new item
+	- most popular
+	- highest rated
+	- use content information
+	
+When you enter a clothing store you are normally confronted with the following suggestions:
+	- New in/Seasonal highlights
+	- Special offer/discounts
+	- Bestsellers
+	- Are you looking for something in particular?
+	
+Personalized recommendations, what assumptions can be made?
+#1 - You are like your friends
+#2 - You are like people who do similar things that you do
+#3 - You like things that are similar to things you already like
+#4 - You are influenced by experts and the opinions of others
+
 \subsubsection{The Good}
 \subsubsection{The Bad}
 \subsection{Why Not To Use These (Same As above)}
@@ -384,6 +408,23 @@ direct input from the user regarding their personal preferences. In particular
 we do not have any substantial evidence of which items the user dislikes (e.g. a
 low rating for a movie). But in return implicit feedback is more easily
 collected, and usually more abundant.
+
+Almost all of the research on implicit feedback has considered how behaviors can
+be used as positive evidence, rather than negative evidence. However, one can imagine
+behaviors which indicate that a user does not ﬁnd something relevant or which suggest
+that something is unimportant to the user, such as delete. It is likely that little research
+has been conducted on negative implicit feedback because there are fewer of these types
+of behaviors, and, in general, less is understood about how to effectively use negative
+feedback, whether for implicit or explicit relevance feedback.
+
+Another challenge facing implicit feedback research is the notion of degree of
+personalization offered by the system. In particular, individual differences can greatly
+impact the effectiveness of using behavior as implicit relevance feedback. People behave
+differently and have varying approaches to information-seeking; thus, it is difﬁcult to
+generate, and dangerous to apply, all-purpose rules for describing how behavior can be
+used as implicit relevance feedback
+
+%Implicit feedback classfication (Type, confidence, precision)
 
 In the case of our project we collect the following data, which can be considered as implicit feedback.
 - product\_detail\_clicked, product\_purchase\_intended, collection\_viewed(?)...
