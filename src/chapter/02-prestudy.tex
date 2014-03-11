@@ -337,15 +337,67 @@ Have something to show on the 20. Should be better than what is already implemen
 
 \subsection{Graphs}
 
-Thoughts on graphs:
-BubbleChart
-Blobs of smaller bubbles with eventid
-Blobs for eventcount on stores with items items from stores (populate "storename" for "itemevents")
-Show occurence of event after other event?
-User stats: items, likes, intented purchased, events, session avg, max event, fequency
-Find prices for stores: prize ranges
-User
+Interesting fields from data:
 
+    Events: userid - prodid - storeid - time - price? - applicationstate - (eventlocation)
+
+    Offer: prodid - price(old/new) - storeid -time -
+
+Thoughts on graphs:
+
+    Simple:
+        Count for different events
+        Count for users (unique)
+        Count for unique items
+        Count stores unique (not collections, but from offer db)
+        Price ranges of all items (groupings)
+        (Distinct event locations)
+        Item time on market
+
+    complex 2.Deg:
+        Distinct events done on stores (shady)
+        peak online (slope-style)
+        Price range of items in stores
+        count User eventes
+        user-item (how many items has a user "interacted" with)
+        Count of unique items in item db also in event db
+        Usable events regarding userid (events types with not null userid)
+        (Plotting locations)
+        unique Stores count for users
+
+    complex 3.Deg:
+        count Sessions for users (aprox: sessioncount)
+        price span for user
+
+    complex 4.Deg:
+        Stats for sessions:
+            Timespann of sessions for users (avg, max, min)
+            Events per session (avg, max, min)
+            Item viewtime for user in session
+            Stores visited per session
+            revisit time of items for user
+            relationship with view, want and purchase
+            time of session over lifetime of app
+            user preferred price in session
+
+    complex 5.Deg:
+        Stats for global session stats:
+        price vs view, want and purchase
+            avg viewtime for an item (i know)
+            Similarity of user favorite store, items viewed and items wanted?
+            time of session over lifetime of app for all users (slope-style)
+
+    complex 6.Deg:
+
+    Blobs of smaller bubbles with eventid
+    Blobs for eventcount on stores with items items from stores (populate "storename" for "itemevents")
+    Show occurence of event after other event?
+    User stats: items, likes, intented purchased, events, session avg, max event, fequency
+    Find prices for stores: prize ranges
+    User
+
+Visuals:
+    BubbleChart
 
 To be done to 17:
     - PP
@@ -374,18 +426,18 @@ Item based - new item
 	- most popular
 	- highest rated
 	- use content information
-	
+
 When you enter a clothing store you are normally confronted with the following suggestions:
 	- New in/Seasonal highlights
 	- Special offer/discounts
 	- Bestsellers
 	- Are you looking for something in particular?
-	
+
 Personalized recommendations, what assumptions can be made?
-#1 - You are like your friends
-#2 - You are like people who do similar things that you do
-#3 - You like things that are similar to things you already like
-#4 - You are influenced by experts and the opinions of others
+\#1 - You are like your friends
+\#2 - You are like people who do similar things that you do
+\#3 - You like things that are similar to things you already like
+\#4 - You are influenced by experts and the opinions of others
 
 \subsubsection{The Good}
 \subsubsection{The Bad}
@@ -411,7 +463,7 @@ collected, and usually more abundant.
 
 Almost all of the research on implicit feedback has considered how behaviors can
 be used as positive evidence, rather than negative evidence. However, one can imagine
-behaviors which indicate that a user does not ﬁnd something relevant or which suggest
+behaviors which indicate that a user does not find something relevant or which suggest
 that something is unimportant to the user, such as delete. It is likely that little research
 has been conducted on negative implicit feedback because there are fewer of these types
 of behaviors, and, in general, less is understood about how to effectively use negative
@@ -420,7 +472,7 @@ feedback, whether for implicit or explicit relevance feedback.
 Another challenge facing implicit feedback research is the notion of degree of
 personalization offered by the system. In particular, individual differences can greatly
 impact the effectiveness of using behavior as implicit relevance feedback. People behave
-differently and have varying approaches to information-seeking; thus, it is difﬁcult to
+differently and have varying approaches to information-seeking; thus, it is difficult to
 generate, and dangerous to apply, all-purpose rules for describing how behavior can be
 used as implicit relevance feedback
 
