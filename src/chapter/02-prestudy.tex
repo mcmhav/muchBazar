@@ -8,15 +8,29 @@
 \section{State Of The Art}
 \subsection{System Coldstart Handling}
 
-Cold-start scenarios in recommender systems are situations in which little/no prior events, like ratings or clicks, are known for certain users or items.
-
-The cold start problem can divided into three sub problems: (1) Cold-start system, (2) Cold-start user and (3) Cold-start item
+Cold-start scenarios in recommender systems are situations in which little/no prior events, like ratings or clicks, are known for certain users or items. The cold start problem can divided into three sub problems: (1) Cold-start system, (2) Cold-start user and (3) Cold-start item
 
 \subsubsection{Cold-start System}
 
 %Having a large amount of data like e.g. in the netflix dataset
 % -> Do not require a great understanding of the data to get decent results
 % -> Out case is a little different. What implications does the limited amount of data have?
+
+However, one situation when CF algorithms are less effective is when data is sparse, either because the target user is new to the system, an item is new, or both. In fact, in extreme cases, when data is very scarce, simple non-personalized recommendations based on global averages can outperform CF algorithms.
+
+Most standard recommendation algorithms only word effectively in environments with datasets of high information density.
+
+One difficult, though common problem for recommender systems is the cold-start problem.
+
+Pure collaborative filtering cannot help in a cold-start setting, since no user preference information is available to form any basis for recommendations. However content information can help bridge the gap from existing items to new items, by inferring similarities among them.
+
+%Approaches:
+%Naive Filterbots - Covers (Cold start system, user & item)
+%http://delivery.acm.org/10.1145/1160000/1150490/p699-park.pdf?ip=129.241.103.83&id=1150490&acc=ACTIVE%20SERVICE&key=CDADA77FFDD8BE08%2E5386D6A7D247483C2E4D4702B0C3E38B35%2E4D4702B0C3E38B35&CFID=419807217&CFTOKEN=62708098&__acm__=1394538962_5e2abb38bbcf4611b8354c8dd6abe53e
+
+%Trust-Aware Collaborative Filtering for Recommender Systems
+%http://download.springer.com/static/pdf/980/chp%253A10.1007%252F978-3-540-30468-5_31.pdf?auth66=1394714615_aa7f78fc8c1ed07f19406c3e36ff506f&ext=.pdf
+% + Other articles as well
 
 
 \subsubsection{Cold-start user}
@@ -27,10 +41,13 @@ Ask the right questions if you're going to find the right answers
 - Vanessa Redgrave
 
 %What is the cold-start user problem?
+Scenario: The target user has very few ratings (e.g. a new user). In this scenario, collaborative filtering (CF) based recommenders might not be able to find users with tastes that are truly similar to the target user, thus the recommendation quality to the target user might be poor. On the other hand, because of the very limited number of items rated by the target user, it is hard to obtain the content interests of the target user. Consequently, content-based techniques might only generate very limited recommendations in such situations. 
 
-One crucial problem of recommender system is how to best learn from new users. Collaborative Filtering (CF), is the best known technology for recommender systems and is based on the idea that like-minded users have similar tastes and preferences. A new user therefore poses a challenge to CF recommender, since the system has no knowledge about the preferences of the new user, and can therefore not provide any personalized recommendations, this is known as the cold start problem for new users. The system must therefore acquire some information about the new user in order to make personalized recommendations. However, the system must be careful to present useful items to garner information. A food recommender should probably not ask whether a new user likes vanilla ice cream since most people like vanilla ice cream. Therefore, knowing that a new user likes vanilla ice cream tells you very little about the user. The choice of what questions to ask a new user, then, is critical.
+One crucial problem of recommender system is how to best learn from new users. Collaborative Filtering (CF), is the best known technology for recommender systems and is based on the idea that like-minded users have similar tastes and preferences. A new user therefore poses a challenge to CF recommender, since the system has no knowledge about the preferences of the new user, and can therefore not provide any personalized recommendations, this is known as the cold start problem for new users. The system must therefore acquire some information about the new user in order to make personalized recommendations.
 
-Rashid et. al. \cite{Rashid2002} performed a study of different item selection strategies that collaborative filtering recommender systems can use to learn about new users. They presented the users with a questionary with items asking them to rate/select the ones they like. Their strategies can be divided into five classes:
+However, the system must be careful to present useful items to garner information. A food recommender should probably not ask whether a new user likes vanilla ice cream since most people like vanilla ice cream. Therefore, knowing that a new user likes vanilla ice cream tells you very little about the user. The choice of what questions to ask a new user, then, is critical.
+
+Rashid et. al. \cite{Rashid2002} performed a study of different item selection strategies that collaborative filtering recommender systems can use to learn about new users. They presented the users with a questionnaire with items asking them to rate/select the ones they like. Their strategies can be divided into five classes:
 
 \begin{itemize}
 \item \emph{Random} strategies: Strategies that avoid bias in the presentation of bias
@@ -44,9 +61,13 @@ This study was later extended by Rashid et. al. \cite{Rashid2008} where they mor
 
 %Their suggestion for e-commerce: Recommend most popular items rather than the highest rated ones, and then use item-item similarity as quickly as possible
 
-A new user preference elicitation strategy needs to ensure that the user does not 1) lose interest in returning due to low quality initial recommendations, 2) as quickly as possible being able to provide good personalized recommendations (find the right neighbourhoods).
+A new user preference elicitation strategy needs to ensure that the user does not 1) lose interest in returning due to low quality initial recommendations, 2) as quickly as possible being able to provide good personalized recommendations (find the right neighborhoods).
 
 We are constrained to unobtrusively learn user-profiles from the natural interactions of users with the system, meaning that we can not require the user to rate e.g. 10 items before we can start providing recommendations. We have a \emph{mixed initiative} system meaning that there is provisions for both user and system controlled interactions. We (the system) can only select which items to recommend to the user, and this does not mean that the user actually will click an item or rate it.
+
+%Addressing Cold-Start Problem in Recommendation Systems
+%Hybrid approach - Analysis of two probabilsitic aspect models (pure collaborative filtering) to combine to users information
+%http://delivery.acm.org/10.1145/1360000/1352837/p208-lam.pdf?ip=129.241.103.83&id=1352837&acc=ACTIVE%20SERVICE&key=CDADA77FFDD8BE08%2E5386D6A7D247483C%2E4D4702B0C3E38B35%2E4D4702B0C3E38B35&CFID=419807217&CFTOKEN=62708098&__acm__=1394540844_3a505da9cccf443d08f702408693d1f7
 
 \subsubsection{Cold-start item}
 
@@ -447,6 +468,10 @@ Personalized recommendations, what assumptions can be made?
 
 \section{How to evaluate}
 
+
+Some key questions in evaluating recommender systems on testbed data are: what to predict, how to grade performance and what baseline to compare with.
+
+
 Explicit feedback ("relevance judgement")
 
 Explicit feedback are more precise than implicit feedback, but more difficult to collect since it requires the user to spend time rating items and the amount of feedback is often scarce. The main difference between the two is that implicit feedback is inferred from user behaviour, such as noting which news articles they do and do not view. Explicit feedback unlike implicit feedback provides the users with a mechanism to unequivocally express their ratings on a scale from usually in the form of a Likert scale ranging from 1-5 (strongly disagree - strongly agree). Thus explicit feedback captures both positive and negative feedback, while implicit feedback only can be positive. Furthermore, explicit feedback tend to concentrate on either side of the rating scale, as users are more likely to express their preference if they feel strongly for or against an item.
@@ -525,6 +550,9 @@ The data available strongly influences the choice of evaluation method/metrics. 
 %Evaluation using implicit feedback datasets
 %Turnover rate?
 % ++
+
+%Clues
+% http://delivery.acm.org/10.1145/570000/564421/p253-schein.pdf?ip=129.241.103.83&id=564421&acc=ACTIVE%20SERVICE&key=CDADA77FFDD8BE08%2E5386D6A7D247483C%2E4D4702B0C3E38B35%2E4D4702B0C3E38B35&CFID=419807217&CFTOKEN=62708098&__acm__=1394537427_86c608d0d7733db023faa5a09da46de7
 
 \subsection{What To Use}
 \subsubsection{The Good}
