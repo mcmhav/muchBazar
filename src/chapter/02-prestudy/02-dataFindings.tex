@@ -58,6 +58,8 @@ soBazar want to build a proper model.  Give input on how to build this model.
 The supplier should know that an item is a jacket for instance.  Have something
 to show on the 20. Should be better than what is already implemented.
 
+
+
 \subsection{Graphs}
 
 Interesting fields from data:
@@ -74,23 +76,28 @@ with "prod" as value and removed all events with "simulator" as "platform"):
 
     Simple:
 
-\begin{table}
+\begin{table}[H]
+    \centering
     \begin{tabular}{l|l|l}
-    ~                                                 & Amount                                                                                                                                                                                            & Notes                                                                                                                                                                                                                \\ \hline
-    Unique users                                      & 1658                                                                                                                                                                                              & Count of unique users in eventdatabase                                                                                                                                                                               \\ \hline
-    > db.prod.distinct('product\_name').length & 2591                                                                                                                                                                                              & Count for unique items                                                                                                                                                                                               \\ \hline
-    > db.prod.distinct('product\_id').length & 4042                                                                                                                                                                                              & Count for unique items                                                                                                                                                                                               \\ \hline
-    > db.offer.distinct('brandId').length             & 15                                                                                                                                                                                                & Count stores unique (not collections, but from offer\\(the items database) db)  (The missing 4 (the last two\\are null and N/A). These are foreign brands i.e. unknown,\\maybe test brands. 45002,38002,44004,55006) \\ \hline
-    > db.prod.distinct('retailer\_brand').length & 21                                                                                                                                                                                                & Count stores unique (from prod db)                                                                                                                                                                                   \\ \hline
-    Items in events not in the actual offer database: &         NonMatching values:             620\\        Offer database length:          7854\\        Event items length:             4042\\        Items from list2 not in list1:  7.89406671759613 & ~                                                                                                                                                                                                                    \\ \hline
-    ~                                                 & ~                                                                                                                                                                                                 & ~                                                                                                                                                                                                                    \\ \hline
-    ~                                                 & ~                                                                                                                                                                                                 & ~                                                                                                                                                                                                                    \\ \hline
-    ~                                                 & ~                                                                                                                                                                                                 & ~                                                                                                                                                                                                                    \\ \hline
-    ~                                                 & ~                                                                                                                                                                                                 & ~                                                                                                                                                                                                                    \\ \hline
-    ~                                                 & ~                                                                                                                                                                                                 & ~                                                                                                                                                                                                                    \\ \hline
-    ~                                                 & ~                                                                                                                                                                                                 & ~                                                                                                                                                                                                                    \\ \hline
-    ~                                                 & ~                                                                                                                                                                                                 & ~                                                                                                                                                                                                                    \\
+    ~                  & Amount & Notes                                  \\ \hline
+    Unique users       & 1658   & Count of unique users in eventdatabase \\ \hline
+    Unique item names  & 2591   & > db.prod.distinct('product\_name').length \\ \hline
+    Unique item ids    & 4042   & > db.prod.distinct('product\_id').length TODO, remove one?  \\ \hline
+    Unique brands      & 15     & > db.offer.distinct('brandId').length \tablefootnote{Count stores unique (not collections, but from offer (the items database) db)  (The missing 4 (the last two are null and N/A). These are foreign brands i.e. unknown, maybe test brands. 45002,38002,44004,55006)} \\ \hline
+    Unique storefronts & 21     & > db.prod.distinct('retailer\_brand').lengthCount stores unique (from prod db)     \\
     \end{tabular}
+\end{table}
+
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{l|l|l}
+        NonMatching values:           & 620    & ~ \\ \hline
+        Offer database length         & 7854   & ~ \\ \hline
+        Event items length           & 4042   & ~ \\ \hline
+        Items from list2 not in list1 & 7.89 \% & ~ \\
+    \end{tabular}
+    \caption { Items in events not in the actual offer database }
 \end{table}
 
         Price ranges of all items (groupings)
