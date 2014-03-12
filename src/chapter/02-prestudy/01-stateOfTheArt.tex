@@ -1,0 +1,303 @@
+% !TEX root = ../../report.tex
+
+\section{State Of The Art}
+\subsection{System Coldstart Handling}
+
+Cold-start scenarios in recommender systems are situations in which little/no
+prior events, like ratings or clicks, are known for certain users or items. The
+cold start problem can divided into three sub problems: (1) Cold-start system,
+(2) Cold-start user and (3) Cold-start item
+
+\subsubsection{Cold-start System}
+
+%Having a large amount of data like e.g. in the netflix dataset
+% -> Do not require a great understanding of the data to get decent results
+% -> Out case is a little different. What implications does the limited amount
+%  of data have?
+
+However, one situation when CF algorithms are less effective is when data is
+sparse, either because the target user is new to the system, an item is new, or
+both. In fact, in extreme cases, when data is very scarce, simple
+non-personalized recommendations based on global averages can outperform CF
+algorithms.
+
+Most standard recommendation algorithms only word effectively in environments
+with datasets of high information density.
+
+One difficult, though common problem for recommender systems is the cold-start
+problem.
+
+Pure collaborative filtering cannot help in a cold-start setting, since no user
+preference information is available to form any basis for recommendations.
+However content information can help bridge the gap from existing items to new
+items, by inferring similarities among them.
+
+%Approaches: Naive Filterbots - Covers (Cold start system, user & item)
+%http://delivery.acm.org/10.1145/1160000/1150490/p699-park.pdf?ip=129.241.103.83&id=1150490&acc=ACTIVE%20SERVICE&key=CDADA77FFDD8BE08%2E5386D6A7D247483C2E4D4702B0C3E38B35%2E4D4702B0C3E38B35&CFID=419807217&CFTOKEN=62708098&__acm__=1394538962_5e2abb38bbcf4611b8354c8dd6abe53e
+
+%Trust-Aware Collaborative Filtering for Recommender Systems
+%http://download.springer.com/static/pdf/980/chp%253A10.1007%252F978-3-540-30468-5_31.pdf?auth66=1394714615_aa7f78fc8c1ed07f19406c3e36ff506f&ext=.pdf
+%+ Other articles as well
+
+\subsubsection{Cold-start user}
+
+\begin{quotation}
+Ask the right questions if you're going to find the right answers
+\end{quotation}
+- Vanessa Redgrave
+
+%What is the cold-start user problem?
+Scenario: The target user has very few ratings (e.g. a new user). In this
+scenario, collaborative filtering (CF) based recommenders might not be able to
+find users with tastes that are truly similar to the target user, thus the
+recommendation quality to the target user might be poor. On the other hand,
+because of the very limited number of items rated by the target user, it is
+hard to obtain the content interests of the target user. Consequently,
+content-based techniques might only generate very limited recommendations in
+such situations.
+
+One crucial problem of recommender system is how to best learn from new users.
+Collaborative Filtering (CF), is the best known technology for recommender
+systems and is based on the idea that like-minded users have similar tastes and
+preferences. A new user therefore poses a challenge to CF recommender, since
+the system has no knowledge about the preferences of the new user, and can
+therefore not provide any personalized recommendations, this is known as the
+cold start problem for new users. The system must therefore acquire some
+information about the new user in order to make personalized recommendations.
+
+However, the system must be careful to present useful items to garner
+information. A food recommender should probably not ask whether a new user
+likes vanilla ice cream since most people like vanilla ice cream. Therefore,
+knowing that a new user likes vanilla ice cream tells you very little about the
+user. The choice of what questions to ask a new user, then, is critical.
+
+Rashid et. al. \cite{Rashid2002} performed a study of different item selection
+strategies that collaborative filtering recommender systems can use to learn
+about new users. They presented the users with a questionnaire with items
+asking them to rate/select the ones they like. Their strategies can be divided
+into five classes:
+
+\begin{itemize}
+\item \emph{Random} strategies: Strategies that avoid bias in the presentation
+of bias
+
+\item \emph{Popularity:} Select among the top N items where the probability
+that is proportionate to the items popularity.
+
+\item \emph{Pure entropy:} Present the items with the highest entropy that the
+user has not seen
+
+\item \emph{Balanced strategies:} A balanced approach combining both popularity
+data and entropy.
+
+\item \emph{Personalized:} As soon as some information is known about a user,
+present items specifically tailored to that user using e.g. item-item
+similarity
+\end{itemize}
+
+This study was later extended by Rashid et. al. \cite{Rashid2008} where they
+more closely examined information theoretic strategies for item selection.
+
+%Their suggestion for e-commerce: Recommend most popular items rather than the
+%highest rated ones, and then use item-item similarity as quickly as possible
+
+A new user preference elicitation strategy needs to ensure that the user does
+not 1) lose interest in returning due to low quality initial recommendations,
+2) as quickly as possible being able to provide good personalized
+recommendations (find the right neighborhoods).
+
+We are constrained to unobtrusively learn user-profiles from the natural
+interactions of users with the system, meaning that we can not require the user
+to rate e.g. 10 items before we can start providing recommendations. We have a
+\emph{mixed initiative} system meaning that there is provisions for both user
+and system controlled interactions. We (the system) can only select which items
+to recommend to the user, and this does not mean that the user actually will
+click an item or rate it.
+
+%Addressing Cold-Start Problem in Recommendation Systems
+%Hybrid approach - Analysis of two probabilsitic aspect models (pure
+%collaborative filtering) to combine to users information
+%http://delivery.acm.org/10.1145/1360000/1352837/p208-lam.pdf?ip=129.241.103.83&id=1352837&acc=ACTIVE%20SERVICE&key=CDADA77FFDD8BE08%2E5386D6A7D247483C%2E4D4702B0C3E38B35%2E4D4702B0C3E38B35&CFID=419807217&CFTOKEN=62708098&__acm__=1394540844_3a505da9cccf443d08f702408693d1f7
+
+\subsubsection{Cold-start item}
+
+%What is the cold-start item problem? / Introduction
+
+
+%What strategies exist?
+
+
+%What is suitable in our case?
+
+\subsection{Fashion Recommendation}
+
+% Building Recommender Systems using a Knowledge Base of product semantics
+% http://images.accenture.ca/SiteCollectionDocuments/PDF/recommenderws02.pdf
+%   - Would probably require some more product semantics
+
+%What are the challanges of making recommendations for fashion?
+%   - How often are items relevant?
+%   - Implicit feedback (Based around users fashion browsing habits and an
+%     occational purchase...) - Changing interest of users
+%   - Unstructured content/multiple content providers
+%   - Sparsity
+%   - Trends?
+
+\subsection{Session Based Recommendation}
+Init Hypothesis:
+Two users with similar session habits and similar product accessing pattern
+have a stronger correlation to one-another than two users with just similar
+product interests.
+
+
+'product\_purchase\_intended' (user pushed to the product web store) shows a
+wider specter of information about the product, including additional colors,
+images and colors.  For some it might be natural to explore the item there
+before "wanting" it. Making both
+
+"product\_purchase\_intended" $\Rightarrow$ "product\_wanted"
+
+and
+
+"product\_purchase\_intended" $\notimplies$ "product\_wanted"
+
+produce valuable information.
+
+Must make different rules for the different stores:
+"Bik Bok", "Cubus", "Gina Trik", "H\&M", "Bianco" has a broad specter of extra
+functions inside the web store, whereas others might not, only shows the
+product and a add to chart button.  This might divide the use pattern of the
+users into a:
+
+"product\_detail\_clicked" $\Rightarrow$ "product\_purchase\_intended" $\Rightarrow$ "product\_wanted"
+
+"product\_detail\_clicked" $\Rightarrow$ "product\_purchase\_intended" $\notimplies$ "product\_wanted",
+
+and
+
+"product\_detail\_clicked" $\Rightarrow$ "product\_wanted"
+
+based on the store accessed.
+
+Use this to make a "rule set" with a probability.
+Then again use this to recommend items for the users with that given
+probability.
+
+Find a "most popular session"-pattern
+Find a "most likely to come after"-pattern
+
+% db.sessions.group({key:{'storefront_name':1},cond:{},reduce:function(cur,result){result.count += 1}, initial: {count:0}})
+
+Articles 4 l8er:
+%http://dl.acm.org/citation.cfm?id=1136004
+%http://link.springer.com/chapter/10.1007/3-540-46119-1_42
+%http://dl.acm.org/citation.cfm?id=1082567
+%http://link.springer.com/chapter/10.1007%2F978-3-540-30214-8_20
+%http://dl.acm.org/citation.cfm?id=502935
+%http://dl.acm.org/citation.cfm?id=1835896
+%http://dl.acm.org/citation.cfm?id=345169
+%http://dl.acm.org/citation.cfm?id=345169
+
+Session issues:
+Once in a blue moon a user will do a "product action" (purchase,want,details)
+without having a previous frontstore-access event. Which leads to unknown
+store-id of the item.
+
+Issue is most probably from missing user-id in collection\_viewed, and a user
+checks out an item from there. It is not possible to be 100\% sure which user
+access the item from the collection\_viewed event, so this event is therefor
+not integrated into the session-stack.
+
+
+% thoughts:
+Categorize stores
+    prize
+    items in store
+
+Categorize items
+    Type
+    Prize
+    View frequency
+
+Predicting events...
+    Value brought vs. clustering on the "item"-events value
+
+Make a store
+
+% event_id, events:
+
+% Products:
+%     "product_detail_clicked",
+%     "product_wanted",
+%     "wantlist_menu_entry_clicked"
+%     "product_purchase_intended",
+
+% Store clicked: (produces not NULL storefront_name) (db.sessions.find({'storefront_name':{$ne:'NULL'},$or:[{'event_id':'featured_storefront_clicked'},{event_id:'storefront_clicked'}]}).count())
+%     "storefront_clicked",
+%     "featured_storefront_clicked",
+
+% Other store interactions
+%     "store_clicked",
+%     "around_me_clicked",
+%     "stores_map_clicked",
+%     "collection_viewed",
+%     "featured_collection_clicked",
+
+% Start:
+%     "app_first_started",
+%     "app_became_active",
+%     "app_started",
+%     "user_logged_in",
+%     "facebook_login_failed",
+
+% Other:
+%     "friend_invited",
+%     "activity_clicked",
+%     "facebook_share_changed",
+
+% Course:
+%     App started
+%     Check next events, a days timeframe
+
+
+%Simple session form, no structure:
+% {u'event_id': u'product_detail_clicked', u'count': 68.0}
+% {u'event_id': u'product_wanted', u'count': 35.0}
+% {u'event_id': u'storefront_clicked', u'count': 69.0}
+% {u'event_id': u'app_started', u'count': 26.0}
+% {u'event_id': u'featured_storefront_clicked', u'count': 4.0}
+% {u'event_id': u'user_logged_in', u'count': 9.0}
+% {u'event_id': u'product_purchase_intended', u'count': 2.0}
+% {u'event_id': u'around_me_clicked', u'count': 7.0}
+% {u'event_id': u'stores_map_clicked', u'count': 1.0}
+% {u'event_id': u'store_clicked', u'count': 1.0}
+% {'user_id': 100001385800886L}
+% {'num_events': 222}
+% Total amount:    222
+% User:            100001385800886
+% Total Sessions:  30
+% Total Events:    936
+% Date:            11 - 10 - 2013
+
+% Structured session exploration: Probably more info in this
+% > db.sessions.find({'user_id':1094505588,session:64},{'event_id':1,'server_time_stamp':1,'_id':0}).sort({'ts':1})
+
+% > db.sessions.find({'user_id':100000140823565,session:440},{'event_id':1,'server_time_stamp':1,'_id':0}).sort({'ts':1})
+
+% > db.sessions.find({'user_id':100000140823565,session:440},{'product_id':1,'event_id':1,'_id':0}).sort({'ts':1})
+
+
+
+\subsection{Recommenders (Similar systems? somethingsomething)}
+\subsection{Items clustering}
+
+% Trust based CF recommenders
+
+% ### Hybrid Systems ###
+
+% ### COLD START NEW ITEM ARTICLES ###
+
+% Regression-based Latent Factor Models - http://dl.acm.org/citation.cfm?id=1557029
+% Learning Attribute-to-Feature Mappings for Cold-Start Recommendations - http://ieeexplore.ieee.org/xpl/abstractCitations.jsp?tp=&arnumber=5693971&url=http%3A%2F%2Fieeexplore.ieee.org%2Fxpls%2Fabs_all.jsp%3Farnumber%3D5693971
+% fLDA: Matrix Factorization through Latent Dirichlet Allocation - http://dl.acm.org/citation.cfm?id=1718499
+% Matchbox: Large Scale Bayesian Recommendations
