@@ -8,32 +8,71 @@
 \section{State Of The Art}
 \subsection{System Coldstart Handling}
 
-Cold-start scenarios in recommender systems are situations in which little/no prior events, like ratings or clicks, are known for certain users or items. The cold start problem can divided into three sub problems: (1) Cold-start system, (2) Cold-start user and (3) Cold-start item
+%When does the system go from a cold->warm system?
+%When can a user be considered warm? (How many ratings?)
+%When can a item be considered warm? (How many ratings?)
+
+In the literature, the term cold is used about an object in a system, or a whole system, which is new. Cold-start scenarios in recommender systems are situations in which little/no prior events, like ratings or clicks, are known for certain users or items. The cold-start problem can therefore be divided into three sub problems:
+
+\begin{itemize}
+	\begin{item} \emph{Cold-start system}: A situation where we only have new users and little or no ratings for the items.
+	\begin{item} \emph{Cold-start item}: The problem of recommending items that are new to the system, which have not received any ratings. E.g. in a scenario where the average item in an item collection have 10 000 ratings, a new item with only 5 ratings would be considered an "cold-item"
+	\begin{item} \emph{Cold-start user}: The problem of giving accurate recommendations who is new to a recommender system. E.g. in a recommender system where the average user have rated 100 items, a user which only have rated 2 items, would be considered a "cold-user".
+\end{itemize}
+
+The cold-start system  problem is mainly a collaborative filtering problem, and can be seen as a combination of the cold-start user and cold-start item problem where the majority of the users are new to the system and have expressed few preferences, resulting in a very sparse user-item matrix, rendering recommendation systems using traditional collaborative-filtering methods futile.
+
+The cold-start user problem is present both in content-based and collaborative-filtering systems. In content-based systems, the lack of ratings given by the target user, means that the target user will have a limited content-profile, since the users content profile is constructed using content-information from his/hers rated items. Similarly, the cold-start user problem also affects user-based collaborative filtering, since user similarities are calculated based on items that a user shares with other users of the system. The system will therefore most likely struggle to find users with tastes that are \emph{truly} similar to the target user. In both cases, recommendation quality is most likely bound to suffer.
+
+%TODO: Cite articles using content-information to tackle the cold start item problem
+The cold-start item problem. In content-based systems, new items can easily be recommended using the content information of the item, making it a popular solution \cite{•} to the cold-start new item problem. This problem is more severe in collaborative-filtering systems where items are only recommendable if they have been rated by multiple users. New items will therefore not be recommendable before multiple users somehow stumble upon the new item while e.g. browsing the item collection, unless additional measures are taken to solve this problem.
 
 \subsubsection{Cold-start System}
 
-%Having a large amount of data like e.g. in the netflix dataset
-% -> Do not require a great understanding of the data to get decent results
-% -> Out case is a little different. What implications does the limited amount of data have?
+%Propose a categorization of approaches
+	%Initial Categorization
+		%The immediate remedy - Meta information (Hybrid approaches)
+		%Seed items or users
+			%Wisdom of the Better Few: Cold Start Recommendation via Representative based Rating Elicitation
+		%Trust-Aware Collaborative Filtering
+			%Trust-Aware Collaborative Filtering for Recommender Systems
+			%+ many others
+		%Filterbots / surrogate users 
+			%Na¨ıve Filterbots for Robust Cold-Start Recommendations
+				%Check out RipperBots (For binary rating version)
+				%Recommend items based on the average of the users with the same demographics...			
+			
+%Read a few articles that fall under each category and present them
+%Discussion: Which are the most relevant?
+	%How do we determine what is the best solution?
 
 However, one situation when CF algorithms are less effective is when data is sparse, either because the target user is new to the system, an item is new, or both. In fact, in extreme cases, when data is very scarce, simple non-personalized recommendations based on global averages can outperform CF algorithms.
 
-Most standard recommendation algorithms only word effectively in environments with datasets of high information density.
+Most standard recommendation algorithms only work effectively in environments with datasets of high information density.
 
 One difficult, though common problem for recommender systems is the cold-start problem.
 
 Pure collaborative filtering cannot help in a cold-start setting, since no user preference information is available to form any basis for recommendations. However content information can help bridge the gap from existing items to new items, by inferring similarities among them.
 
-%Approaches:
-%Naive Filterbots - Covers (Cold start system, user & item)
-%http://delivery.acm.org/10.1145/1160000/1150490/p699-park.pdf?ip=129.241.103.83&id=1150490&acc=ACTIVE%20SERVICE&key=CDADA77FFDD8BE08%2E5386D6A7D247483C2E4D4702B0C3E38B35%2E4D4702B0C3E38B35&CFID=419807217&CFTOKEN=62708098&__acm__=1394538962_5e2abb38bbcf4611b8354c8dd6abe53e
-
-%Trust-Aware Collaborative Filtering for Recommender Systems
-%http://download.springer.com/static/pdf/980/chp%253A10.1007%252F978-3-540-30468-5_31.pdf?auth66=1394714615_aa7f78fc8c1ed07f19406c3e36ff506f&ext=.pdf
-% + Other articles as well
-
-
 \subsubsection{Cold-start user}
+
+%Can the different approaches be classified? E.g. 3 main categories of approaches
+	%Initial categorization
+		%Interview process to quickly learn user preference
+			%Information theory vs most popular
+				%Rashid2002, Rashid2008
+ 			%Decision trees
+ 				%Functional Matrix Factorizations for Cold-Start Recommendation
+ 		%Blending
+ 			%Using other methods (e.g. most popular) until the user profile is "known"
+ 		%Hybrid approaches
+ 			%Using demographic data
+ 		%Key figures / Seed users. NB! For later, check with Seed items or users (Cold-start system)
+ 			%Whom Should I Trust? The Impact of Key Figures on Cold Start Recommendations
+
+%Read a few articles from each category
+%Discussion: Which category/approach is the most relevant for us?
+	%How do we determine this "systematically"?
 
 \begin{quotation}
 Ask the right questions if you're going to find the right answers
@@ -50,7 +89,7 @@ However, the system must be careful to present useful items to garner informatio
 Rashid et. al. \cite{Rashid2002} performed a study of different item selection strategies that collaborative filtering recommender systems can use to learn about new users. They presented the users with a questionnaire with items asking them to rate/select the ones they like. Their strategies can be divided into five classes:
 
 \begin{itemize}
-\item \emph{Random} strategies: Strategies that avoid bias in the presentation of bias
+\item \emph{Random:} strategies: Strategies that avoid bias in the presentation of bias
 \item \emph{Popularity:} Select among the top N items where the probability that is proportionate to the items popularity.
 \item \emph{Pure entropy:} Present the items with the highest entropy that the user has not seen
 \item \emph{Balanced strategies:} A balanced approach combining both popularity data and entropy.
@@ -65,33 +104,53 @@ A new user preference elicitation strategy needs to ensure that the user does no
 
 We are constrained to unobtrusively learn user-profiles from the natural interactions of users with the system, meaning that we can not require the user to rate e.g. 10 items before we can start providing recommendations. We have a \emph{mixed initiative} system meaning that there is provisions for both user and system controlled interactions. We (the system) can only select which items to recommend to the user, and this does not mean that the user actually will click an item or rate it.
 
-%Addressing Cold-Start Problem in Recommendation Systems
-%Hybrid approach - Analysis of two probabilsitic aspect models (pure collaborative filtering) to combine to users information
-%http://delivery.acm.org/10.1145/1360000/1352837/p208-lam.pdf?ip=129.241.103.83&id=1352837&acc=ACTIVE%20SERVICE&key=CDADA77FFDD8BE08%2E5386D6A7D247483C%2E4D4702B0C3E38B35%2E4D4702B0C3E38B35&CFID=419807217&CFTOKEN=62708098&__acm__=1394540844_3a505da9cccf443d08f702408693d1f7
 
 \subsubsection{Cold-start item}
 
-%What is the cold-start item problem? / Introduction
+To solve the new-item problem, there are two commonly used (simple) solutions that often are used in E-commerce websites:
 
+\begin{itemize}
 
-%What strategies exist?
+	\begin{item} Advertising at the homepage/front-page of the website, putting the new items in an eye catching position. This solution, however, may 						 result in that some users, which don't like these new items, might leave the website.
+	
+	\begin{item} Requesting the user to choose one or more of his/hers categories while registering for the site, and recommend items from the selected 					 categories. This approach however, requires active user involvement and complicates the sign up process -> BAD, in addition, many users 					 might chose not to give up any personal interest information, thus the user group covered by this solution is not large enough.
 
+\end{itemize}
 
-%What is suitable in our case?
+%What strategies exist? Categorization
+	%Most dominant! Hybrid approach incorporating item information
+	%Dynamic Browsing tree
+		%Collaborative Filtering Cold-Start Recommendation Based on Dynamic Browsing Tree Model in E-commerce
+	
+
+%Read a few articles for each category, summarize them
+%What is suitable in our case?/Discussion
 
 \subsection{Fashion Recommendation}
 
 % Building Recommender Systems using a Knowledge Base of product semantics
 % http://images.accenture.ca/SiteCollectionDocuments/PDF/recommenderws02.pdf
-% 	- Would probably require some more product semantics
+% 	- Would probably require some more product semantics...
 
 %What are the challanges of making recommendations for fashion?
-%	- How often are items relevant?
+
+%	- For how long are items relevant?
+	%	- Spring, Summer, Fall, Winter collections
+			%Improving E-Commerce Recommender Systems by the Identification of Seasonal Products (Article)
+	%	- Freshness, fresh decay operators
+
 %	- Implicit feedback (Based around users fashion browsing habits and an occational purchase...)
+	%	- What do we look at? What information is the most useful
+	%		- Item category, item keywords, brand... ?
+
 %	- Changing interest of users
 %	- Unstructured content/multiple content providers
+	% - How to select features for a content-based approach
+		% E.g. keywords, when descriptions are in multiple languages
 %	- Sparsity
+	% - Can rating infromation from similar items be used to decrease sparsity? (Content infromation - Hybrid approaches)
 %	- Trends?
+	%	- How important is e.g. item popularity?
 
 \subsection{Session Based Recommendation}
 Init Hypothesis:
@@ -523,10 +582,16 @@ To be done to 17:
 \section{What to use}
 
 
-%
+%Having a large amount of data like e.g. in the netflix dataset
+% -> Do not require a great understanding of the data to get decent results
+% -> Out case is a little different. What implications does the limited amount of data have?
+
+%We need to take this into account when designing our system / selecting methods for recomendations
+
 \subsection{Some Awesome Algorithms (Build up with project progress)}
 
 Given enough data, item-based CF methods often performs as well or better than almost any other recommendation method. However, in cold-start situations where a user, an item, or the entire system is new, simple non-personalized recommendations often fare better...
+
 
 User based - new user
 Non personalized approaches
@@ -560,8 +625,26 @@ Personalized recommendations, what assumptions can be made?
 
 \section{How to evaluate}
 
+%What will be adressed in the section?
+
+	%Implicit feedback vs. explicit feedback
+		%How is implicit feedback related to user preference
+		
+	%Evaluation of implicit factors in e-commerce
+		% How to model interest in items? Normalization etc...
+		% Evaluating Various Implicit Factors in E-commerce (Article)
+	
+	%What evaluation methodologies exist?
+		%Online vs Offline
+		%User experiments
+		%Questionaires...
+		
+	%What evaluation measures/metrics exist
+		%What is the difference between metrics for explicit and implicit feedback?
+		%Discussion on relevance
 
 Some key questions in evaluating recommender systems on testbed data are: what to predict, how to grade performance and what baseline to compare with.
+
 
 
 Explicit feedback ("relevance judgement")
