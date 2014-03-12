@@ -6,7 +6,7 @@ The following section will present the state of the art recommender systems...
 
 \subsection{System Coldstart Handling}
 
-%When does the system go from a cold->warm system?
+%When does the system go from a cold->warm?
 %When can a user be considered warm? (How many ratings?)
 %When can a item be considered warm? (How many ratings?)
 
@@ -18,19 +18,21 @@ In the literature, the term cold is used about an object in a system, or a whole
 	\item \emph{Cold-start user}: The problem of giving accurate recommendations who is new to a recommender system. E.g. in a recommender system where the average user have rated 100 items, a user which only have rated 2 items, would be considered a "cold-user".
 \end{itemize}
 
-The cold-start system  problem is mainly a collaborative filtering problem, and can be seen as a combination of the cold-start user and cold-start item problem where the majority of the users are new to the system and have expressed few preferences, resulting in a very sparse user-item matrix, rendering recommendation systems using traditional collaborative-filtering methods futile.
+The cold-start system problem is mainly a collaborative filtering problem, and can be seen as a combination of the cold-start user and cold-start item problem where the majority of the users are new to the system and have expressed few preferences, resulting in a very sparse user-item matrix, rendering recommendation systems using traditional collaborative-filtering methods futile.
 
 The cold-start user problem is present both in content-based and collaborative-filtering systems. In content-based systems, the lack of ratings given by the target user, means that the target user will have a limited content-profile, since the users content profile is constructed using content-information from his/hers rated items. Similarly, the cold-start user problem also affects user-based collaborative filtering, since user similarities are calculated based on items that a user shares with other users of the system. The system will therefore most likely struggle to find users with tastes that are \emph{truly} similar to the target user. In both cases, recommendation quality is most likely bound to suffer.
 
 %TODO: Cite articles using content-information to tackle the cold start item problem
 The cold-start item problem. In content-based systems, new items can easily be recommended using the content information of the item, making it a popular solution \cite{•} to the cold-start new item problem. This problem is more severe in collaborative-filtering systems where items are only recommendable if they have been rated by multiple users. New items will therefore not be recommendable before multiple users somehow stumble upon the new item while e.g. browsing the item collection, unless additional measures are taken to solve this problem.
 
-
 \subsubsection{Cold-start system}
+
+In this section we will present a few different solutions to the cold-start system problem found in the literature. As mentioned in the introduction to the cold-start problem, most algorithms only work effectively in environments where the dataset has high information density. In fact, in extreme cases, when data is very scarce, simple non-personalized recommendations based on global averages can outperform collaborative-filtering and content-based algorithms. Pure collaborative filtering cannot help in a cold-start setting, since no user preference information is available to form any basis for recommendations. 
 
 %Propose a categorization of approaches
 	%Initial Categorization
 		%The immediate remedy - Meta information (Hybrid approaches)
+		%Blending/Non personalized approaches/Global models for all users
 		%Seed items or users
 			%Wisdom of the Better Few: Cold Start Recommendation via Representative based Rating Elicitation
 		%Trust-Aware Collaborative Filtering
@@ -45,29 +47,24 @@ The cold-start item problem. In content-based systems, new items can easily be r
 %Discussion: Which are the most relevant?
 	%How do we determine what is the best solution?
 
-However, one situation when CF algorithms are less effective is when data is sparse, either because the target user is new to the system, an item is new, or both. In fact, in extreme cases, when data is very scarce, simple non-personalized recommendations based on global averages can outperform CF algorithms.
-
-Most standard recommendation algorithms only work effectively in environments with datasets of high information density.
-
-One difficult, though common problem for recommender systems is the cold-start problem.
-
-Pure collaborative filtering cannot help in a cold-start setting, since no user preference information is available to form any basis for recommendations. However content information can help bridge the gap from existing items to new items, by inferring similarities among them.
-
 \subsubsection{Cold-start user}
+
+This section will present a few different solutions to the cold-start user problem proposed in the literature. 
 
 %Can the different approaches be classified? E.g. 3 main categories of approaches
 	%Initial categorization
-		%Interview process to quickly learn user preference
-			%Information theory vs most popular
+		%Interview process to quickly learn user preference/Ask to rate, Intelligent selection
+		As pointed out by Rashid et. al. \citep{Rashid2002}, the most direct way of acquiring information for use in personalised recommendations from a new users is to present item for the user to rate...	
+			%Information theory vs most popular, How do one select the items to present to the user?
 				%Rashid2002, Rashid2008
  			%Decision trees
  				%Functional Matrix Factorizations for Cold-Start Recommendation
- 		%Blending
- 			%Using other methods (e.g. most popular) until the user profile is "known"
- 		%Hybrid approaches
- 			%Using demographic data
+ 		%Hybrid approaches 
+ 			%Using demographic data - KEEP IN MIND: What kind of demographic information is most commonly used? / Most informative in our case?
+ 			It is a common strategy to gather demographic data in order to gain knowledge about the user. Data that may be collected typically includes age, gender, nationality, marital status, income, educational level and occupation. The idea is that people with a more common background share a more similar taste than someone with a random background, and therefore good recommendations can be made as long as we know the new user’s background.
  		%Key figures / Seed users. NB! For later, check with Seed items or users (Cold-start system)
  			%Whom Should I Trust? The Impact of Key Figures on Cold Start Recommendations
+ 		%%Trust-aware / Trust propagation
 
 %Read a few articles from each category
 %Discussion: Which category/approach is the most relevant for us?
@@ -78,7 +75,7 @@ Ask the right questions if you're going to find the right answers
 \end{quotation}
 - Vanessa Redgrave
 
-%What is the cold-start user problem?
+
 Scenario: The target user has very few ratings (e.g. a new user). In this scenario, collaborative filtering (CF) based recommenders might not be able to find users with tastes that are truly similar to the target user, thus the recommendation quality to the target user might be poor. On the other hand, because of the very limited number of items rated by the target user, it is hard to obtain the content interests of the target user. Consequently, content-based techniques might only generate very limited recommendations in such situations.
 
 One crucial problem of recommender system is how to best learn from new users. Collaborative Filtering (CF), is the best known technology for recommender systems and is based on the idea that like-minded users have similar tastes and preferences. A new user therefore poses a challenge to CF recommender, since the system has no knowledge about the preferences of the new user, and can therefore not provide any personalized recommendations, this is known as the cold start problem for new users. The system must therefore acquire some information about the new user in order to make personalized recommendations.
