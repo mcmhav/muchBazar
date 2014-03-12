@@ -216,72 +216,13 @@ Make a store
 % Total Events:    936
 % Date:            11 - 10 - 2013
 
-% Structured session exploration: Probably more info in this #yolo
+% Structured session exploration: Probably more info in this
 % > db.sessions.find({'user_id':1094505588,session:64},{'event_id':1,'server_time_stamp':1,'_id':0}).sort({'ts':1})
-% { "server_time_stamp" : "2014-01-23T20:51:31.520Z", "event_id" : "app_started" }
-% { "server_time_stamp" : "2014-01-23T20:51:37.932Z", "event_id" : "storefront_clicked" }
-% { "server_time_stamp" : "2014-01-23T20:51:54.725Z", "event_id" : "product_detail_clicked" }
-% { "server_time_stamp" : "2014-01-23T20:52:06.309Z", "event_id" : "storefront_clicked" }
-% { "server_time_stamp" : "2014-01-23T20:52:51.353Z", "event_id" : "storefront_clicked" }
-% { "server_time_stamp" : "2014-01-23T20:52:56.799Z", "event_id" : "product_detail_clicked" }
-% { "server_time_stamp" : "2014-01-23T20:53:07.334Z", "event_id" : "product_detail_clicked" }
-% { "server_time_stamp" : "2014-01-23T20:53:20.172Z", "event_id" : "storefront_clicked" }
-% { "server_time_stamp" : "2014-01-23T20:53:29.087Z", "event_id" : "storefront_clicked" }
-% { "server_time_stamp" : "2014-01-23T20:53:44.725Z", "event_id" : "storefront_clicked" }
-% { "server_time_stamp" : "2014-01-23T20:53:57.673Z", "event_id" : "product_detail_clicked" }
-% { "server_time_stamp" : "2014-01-23T20:54:05.607Z", "event_id" : "storefront_clicked" }
-% { "server_time_stamp" : "2014-01-23T20:54:10.771Z", "event_id" : "storefront_clicked" }
-% { "server_time_stamp" : "2014-01-23T20:54:58.947Z", "event_id" : "storefront_clicked" }
-% { "server_time_stamp" : "2014-01-23T20:55:19.147Z", "event_id" : "storefront_clicked" }
-% { "server_time_stamp" : "2014-01-23T20:55:48.113Z", "event_id" : "storefront_clicked" }
-% { "server_time_stamp" : "2014-01-23T20:56:07.440Z", "event_id" : "storefront_clicked" }
-% { "server_time_stamp" : "2014-01-23T20:56:14.615Z", "event_id" : "storefront_clicked" }
-% { "server_time_stamp" : "2014-01-23T20:56:20.779Z", "event_id" : "product_detail_clicked" }
-% { "server_time_stamp" : "2014-01-23T20:56:48.086Z", "event_id" : "product_detail_clicked" }
 
 % > db.sessions.find({'user_id':100000140823565,session:440},{'event_id':1,'server_time_stamp':1,'_id':0}).sort({'ts':1})
-% { "server_time_stamp" : "2013-11-25T22:37:24.946Z", "event_id" : "app_started" }
-% { "server_time_stamp" : "2013-11-25T22:37:44.130Z", "event_id" : "storefront_clicked" }
-% { "server_time_stamp" : "2013-11-25T22:38:22.872Z", "event_id" : "product_wanted" }
-% { "server_time_stamp" : "2013-11-25T22:38:36.121Z", "event_id" : "product_wanted" }
-% { "server_time_stamp" : "2013-11-25T22:38:39.020Z", "event_id" : "product_wanted" }
-% { "server_time_stamp" : "2013-11-25T22:38:43.487Z", "event_id" : "storefront_clicked" }
-% { "server_time_stamp" : "2013-11-25T22:38:54.034Z", "event_id" : "product_detail_clicked" }
-% { "server_time_stamp" : "2013-11-25T22:38:58.223Z", "event_id" : "product_purchase_intended" }
-% { "server_time_stamp" : "2013-11-25T22:39:18.225Z", "event_id" : "product_detail_clicked" }
-% { "server_time_stamp" : "2013-11-25T22:39:18.817Z", "event_id" : "product_purchase_intended" }
-% { "server_time_stamp" : "2013-11-25T22:39:40.515Z", "event_id" : "product_wanted" }
-% { "server_time_stamp" : "2013-11-25T22:39:58.425Z", "event_id" : "product_detail_clicked" }
-% { "server_time_stamp" : "2013-11-25T22:39:58.486Z", "event_id" : "product_purchase_intended" }
-% { "server_time_stamp" : "2013-11-25T22:40:11.966Z", "event_id" : "product_detail_clicked" }
-% { "server_time_stamp" : "2013-11-25T22:40:14.724Z", "event_id" : "product_purchase_intended" }
-% { "server_time_stamp" : "2013-11-25T22:40:41.076Z", "event_id" : "product_detail_clicked" }
-% { "server_time_stamp" : "2013-11-25T22:40:44.990Z", "event_id" : "product_purchase_intended" }
-% { "server_time_stamp" : "2013-11-25T22:40:54.413Z", "event_id" : "product_wanted" }
-% { "server_time_stamp" : "2013-11-25T22:41:10.916Z", "event_id" : "storefront_clicked" }
-% { "server_time_stamp" : "2013-11-25T22:41:22.581Z", "event_id" : "product_wanted" }
 
 % > db.sessions.find({'user_id':100000140823565,session:440},{'product_id':1,'event_id':1,'_id':0}).sort({'ts':1})
-% { "event_id" : "app_started", "product_id" : "NULL" }
-% { "event_id" : "storefront_clicked", "product_id" : "NULL" }
-% { "event_id" : "product_wanted", "product_id" : 6428015 }
-% { "event_id" : "product_wanted", "product_id" : 1798001 }
-% { "event_id" : "product_wanted", "product_id" : 768002 }
-% { "event_id" : "storefront_clicked", "product_id" : "NULL" }
-% { "event_id" : "product_detail_clicked", "product_id" : 10528005 }
-% { "event_id" : "product_purchase_intended", "product_id" : 10528005 }
-% { "event_id" : "product_detail_clicked", "product_id" : 10848005 }
-% { "event_id" : "product_purchase_intended", "product_id" : 10848005 }
-% { "event_id" : "product_wanted", "product_id" : 9868001 }
-% { "event_id" : "product_detail_clicked", "product_id" : 9798002 }
-% { "event_id" : "product_purchase_intended", "product_id" : 9798002 }
-% { "event_id" : "product_detail_clicked", "product_id" : 2278002 }
-% { "event_id" : "product_purchase_intended", "product_id" : 2278002 }
-% { "event_id" : "product_detail_clicked", "product_id" : 6428008 }
-% { "event_id" : "product_purchase_intended", "product_id" : 6428008 }
-% { "event_id" : "product_wanted", "product_id" : 6428008 }
-% { "event_id" : "storefront_clicked", "product_id" : "NULL" }
-% { "event_id" : "product_wanted", "product_id" : 10798006 }
+
 
 
 \subsection{Recommenders (Similar systems? somethingsomething)}
@@ -370,30 +311,24 @@ Thoughts on graphs (some of these will be in the appendix/removed, placed here f
 
     Simple:
 
-        Count for users (unique)
-
-        unique users: 1658
-
-
-        Count for unique items
-
-        > db.prod.distinct('product\_id').length - 4042
-        > db.prod.distinct('product\_name').length - 2591
-
-
-
-        Count stores unique (not collections, but from offer db)
-
-        > db.offer.distinct('brandId').length - 15
-        > db.prod.distinct('retailer\_brand').length - 21
-
-        The missing 4 (the last two are null and N/A). These are foreign brands i.e. unknown, maybe test brands.
-
-        45002,
-        38002,
-        44004,
-        55006
-
+\begin{table}
+    \begin{tabular}{l|l|l}
+    ~                                                 & Amount                                                                                                                                                                                            & Notes                                                                                                                                                                                                                \\ \hline
+    Unique users                                      & 1658                                                                                                                                                                                              & Count of unique users in eventdatabase                                                                                                                                                                               \\ \hline
+    > db.prod.distinct('product\_name').length & 2591                                                                                                                                                                                              & Count for unique items                                                                                                                                                                                               \\ \hline
+    > db.prod.distinct('product\_id').length & 4042                                                                                                                                                                                              & Count for unique items                                                                                                                                                                                               \\ \hline
+    > db.offer.distinct('brandId').length             & 15                                                                                                                                                                                                & Count stores unique (not collections, but from offer\\(the items database) db)  (The missing 4 (the last two\\are null and N/A). These are foreign brands i.e. unknown,\\maybe test brands. 45002,38002,44004,55006) \\ \hline
+    > db.prod.distinct('retailer\_brand').length & 21                                                                                                                                                                                                & Count stores unique (from prod db)                                                                                                                                                                                   \\ \hline
+    Items in events not in the actual offer database: &         NonMatching values:             620\\        Offer database length:          7854\\        Event items length:             4042\\        Items from list2 not in list1:  7.89406671759613 & ~                                                                                                                                                                                                                    \\ \hline
+    ~                                                 & ~                                                                                                                                                                                                 & ~                                                                                                                                                                                                                    \\ \hline
+    ~                                                 & ~                                                                                                                                                                                                 & ~                                                                                                                                                                                                                    \\ \hline
+    ~                                                 & ~                                                                                                                                                                                                 & ~                                                                                                                                                                                                                    \\ \hline
+    ~                                                 & ~                                                                                                                                                                                                 & ~                                                                                                                                                                                                                    \\ \hline
+    ~                                                 & ~                                                                                                                                                                                                 & ~                                                                                                                                                                                                                    \\ \hline
+    ~                                                 & ~                                                                                                                                                                                                 & ~                                                                                                                                                                                                                    \\ \hline
+    ~                                                 & ~                                                                                                                                                                                                 & ~                                                                                                                                                                                                                    \\
+    \end{tabular}
+\end{table}
 
         Price ranges of all items (groupings)
 
@@ -436,16 +371,7 @@ Thoughts on graphs (some of these will be in the appendix/removed, placed here f
     \label{figure:ratingdistr}
 \end{figure}
 
-
-        Items in events not in the actual offer database:
-        NonMatching values:             620
-        Offer database length:          7854
-        Event items length:             4042
-        Items from list2 not in list1:  7.89406671759613
-
-
         peak online (slope-style) (events per day)
-
 
 \begin{figure}[H]
     \includegraphics[width=5in]{image/events_per_day.png}
@@ -453,6 +379,7 @@ Thoughts on graphs (some of these will be in the appendix/removed, placed here f
     \caption[Distribution of events per day]{TODOsome awesome text}
     \label{figure:ratingdistr}
 \end{figure}
+
 
         Price range of items in stores
         count User eventes
