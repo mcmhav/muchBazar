@@ -1,130 +1,117 @@
 \documentclass[10pt,a4paper,oneside]{report}
 
 \usepackage[section] {placeins}
-
-\usepackage[norsk,english]{babel}
-\usepackage[utf8]{inputenc}
-\usepackage[T1]{fontenc}
-
-\selectlanguage{english}
-
 \usepackage[dvipsnames]{xcolor}
-\usepackage{graphicx}
+\usepackage{graphicx} % in order to insert images
 \usepackage{tabularx}
-\usepackage{booktabs}
-\usepackage{wrapfig}
-\usepackage{pbox}
-
 \usepackage[headings]{fullpage} % wider
-\usepackage{verbatim}
-\usepackage{url}
+\usepackage{verbatim} % enable verbatim text for code etc.
 \usepackage{minitoc}
-\usepackage{cite}
-\usepackage{notoccite}
+\usepackage{cite} % we want to cite our bibliography
 \usepackage{caption}
-\usepackage{float}
-\usepackage{tikz}
-\usepackage{changepage}
 \usepackage{fancyhdr}
-\usepackage{blindtext}
-\usepackage{enumerate}
-\usepackage{enumitem}
+\usepackage{enumerate} % we want lists.
+\usepackage{enumitem} % less gap between items
 \usepackage{soul}
-% \usepackage{amssymb}
-\usepackage{pifont}
-\usepackage{amsmath}
-\newcommand{\notimplies}{\mathrel{{\ooalign{\hidewidth$\not\phantom{=}$\hidewidth\cr$\implies$}}}}
-\newcommand{\cmark}{\ding{51}}%
-\newcommand{\xmark}{\ding{55}}%
-
-% Listings - for listing code snippets
+\usepackage{amsmath} % math symbols
 \usepackage{listings}
-\lstset{
-    basicstyle=\ttfamily\footnotesize,
-    breaklines=true,
-    aboveskip=25pt,
-    belowskip=25pt
-}
+\usepackage[linkcolor={blue},citecolor={blue},urlcolor={red}]{hyperref}
 
-\setlength{\parskip}{1.5ex}
-% \setlength{\hoffset}{30pt}
-% \setlength{\textwidth}{393pt}
+% Package configutations
+\newcommand{\notimplies}{\mathrel{{\ooalign{\hidewidth$\not\phantom{=}$\hidewidth\cr$\implies$}}}}
+\newcommand{\HRule}{\rule{\linewidth}{0.5mm}} % Header
+\lstset{basicstyle=\ttfamily\footnotesize,breaklines=true,aboveskip=25pt,belowskip=25pt} % code box
+\hypersetup{urlcolor=blue, colorlinks=true} % Colors hyperlinks in blue
 
-\usepackage{substr}
-\usepackage{datatool}
-\usepackage[acronym]{glossaries}
+% Custom variables
+\def \thesistitle{Our awesome title}
+\def \authorname{Thomas Almenningen, Martin Christian Havig and Herman Schistad}
+\def \supheri{Heri Ramampiaro}
+\def \suphelge{Helge Langseth}
+\def \degreename{Computer Science}
+\def \groupname{Artificial Intelligence Group}
+\def \deptname{IDI}
 
-\fontfamily{ptm}\selectfont
-
-\usepackage{hyperref}
-\hypersetup{
-    unicode=true,
-    pdftoolbar=true,
-    pdfmenubar=true,
-    pdffitwindow=false,
-    pdfstartview={FitH},
-    pdftitle={title},
-    pdfauthor={Martin Havig},
-    pdfsubject={Subject},
-    %pdfcreator={Creator},
-    %pdfproducer={Producer},
-    pdfkeywords={keyword},
-    pdfnewwindow=true,
-    colorlinks=false,
-    linkcolor=blue,
-    citecolor=blue,
-    filecolor=blue,
-    urlcolor=blue
-}
-
-\newcommand{\HRule}{\rule{\linewidth}{0.5mm}}
-\bibliographystyle{plain}
+% PDF-metadata
+\hypersetup{pdftitle={\thesistitle}}
+\hypersetup{pdfauthor=\authorname}
 
 \begin{document}
 
-%TITLE
-\thispagestyle{empty}
+%----------------------------------------------
+% TITLE PAGE
+%----------------------------------------------
+
+\begin{titlepage}
 \begin{center}
-	% \vspace{\stretch{0.7}}
-	{\Huge Twilm} \\
-	\medskip
-    \vspace{\stretch{0.2}}
+%\includegraphics[scale=1.1]{fig/rams}
+\mbox{}\\[6pc]
+\begin{center}
+\Huge{\thesistitle}\\[2pc]
 
-    { \Large \bfseries PROJECT}
-    \HRule \\[0.5cm]
-	{ \huge \bfseries ONELINER ABOUT \\[0.4cm]}
+\Large{\authorname}\\[1pc]
+\large{\today}\\[2pc]
 
-    \HRule \\[0.5cm]
-
-    \begin{minipage}{0.4\textwidth}
-        \begin{flushleft} \large
-            \emph{Authors}\\
-            Martin Christian \textsc{Havig} \\
-        \end{flushleft}
-    \end{minipage}
-    \begin{minipage}{0.4\textwidth}
-        \begin{flushright} \large
-            \emph{Supervisor:} \\
-            Some  \textsc{One}
-        \end{flushright}
-    \end{minipage}
-
-    \vfill
-    \today \\\ \\\
+MASTER THESIS\\
+Department of Computer and Information Science\\
+Norwegian University of Science and Technology
 \end{center}
-\newpage
+\vfill
 
-%Acknowledgments
+\noindent Supervisor: \supheri \\
+\noindent Supervisor: \suphelge
+  
+	%{\Huge Twilm} \\
+	%\medskip
+  %  \vspace{\stretch{0.2}}
+%
+ %   { \Large \bfseries PROJECT}
+  %  \HRule \\[0.5cm]
+	%{ \huge \bfseries ONELINER ABOUT \\[0.4cm]}
+
+   % \HRule \\[0.5cm]
+
+   % \begin{minipage}{0.4\textwidth}
+   %     \begin{flushleft} \large
+   %         \emph{Authors}\\
+   %         Martin Christian \textsc{Havig} \\
+   %     \end{flushleft}
+   % \end{minipage}
+   % \begin{minipage}{0.4\textwidth}
+   %     \begin{flushright} \large
+   %         \emph{Supervisor:} \\
+   %         Some  \textsc{One}
+   %     \end{flushright}
+   % \end{minipage}
+
+    %\vfill
+   % \today \\\ \\\
+\end{center}
+\end{titlepage}
+
+\clearpage
+
+%----------------------------------------------
+% ACKNOWLEDGEMENTS
+%----------------------------------------------
+
 \renewcommand{\abstractname}{Acknowledgments}
 \begin{abstract}
 \end{abstract}
 
-%ABSTRACT
+%----------------------------------------------
+% ABSTRACT
+%----------------------------------------------
+
 \renewcommand{\abstractname}{Abstract}
 \begin{abstract}
 
 \end{abstract}
 \pagenumbering{roman}
+
+%----------------------------------------------
+% TABLE OF CONTENTS
+%----------------------------------------------
 
 \setcounter{tocdepth}{2}
 \dominitoc
@@ -137,7 +124,10 @@
 
 \setcounter{tocdepth}{1}
 
-%CHAPTERS
+%----------------------------------------------
+% CHAPTERS
+%----------------------------------------------
+
 \input{chapter/01-introduction}
 \input{chapter/02-prestudy}
 \input{chapter/03-requirements}
@@ -149,8 +139,12 @@
 
 \input{chapter/99-appendices}
 
-\newpage
+%----------------------------------------------
+% BIBLIOGRAPHY
+%----------------------------------------------
+\clearpage
 \addcontentsline{toc}{chapter}{References}
+\bibliographystyle{plain}
 \bibliography{references}
 
 \end{document}
