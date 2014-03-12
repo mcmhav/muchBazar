@@ -27,7 +27,7 @@ The cold-start item problem. In content-based systems, new items can easily be r
 
 \subsubsection{Cold-start system}
 
-In this section we will present a few different solutions to the cold-start system problem found in the literature. As mentioned in the introduction to the cold-start problem, most algorithms only work effectively in environments where the dataset has high information density. In fact, in extreme cases, when data is very scarce, simple non-personalized recommendations based on global averages can outperform collaborative-filtering and content-based algorithms. Pure collaborative filtering cannot help in a cold-start setting, since no user preference information is available to form any basis for recommendations. 
+In this section we will present a few different solutions to the cold-start system problem found in the literature. As mentioned in the introduction to the cold-start problem, most algorithms only work effectively in environments where the dataset has high information density. In fact, in extreme cases, when data is very scarce, simple non-personalized recommendations based on global averages can outperform collaborative-filtering and content-based algorithms. Pure collaborative filtering cannot help in a cold-start setting, since no user preference information is available to form any basis for recommendations.
 
 %Propose a categorization of approaches
 	%Initial Categorization
@@ -38,28 +38,28 @@ In this section we will present a few different solutions to the cold-start syst
 		%Trust-Aware Collaborative Filtering
 			%Trust-Aware Collaborative Filtering for Recommender Systems
 			%+ many others
-		%Filterbots / surrogate users 
+		%Filterbots / surrogate users
 			%Na¨ıve Filterbots for Robust Cold-Start Recommendations
 				%Check out RipperBots (For binary rating version)
-				%Recommend items based on the average of the users with the same demographics...			
-			
+				%Recommend items based on the average of the users with the same demographics...
+
 %Read a few articles that fall under each category and present them
 %Discussion: Which are the most relevant?
 	%How do we determine what is the best solution?
 
 \subsubsection{Cold-start user}
 
-This section will present a few different solutions to the cold-start user problem proposed in the literature. 
+This section will present a few different solutions to the cold-start user problem proposed in the literature.
 
 %Can the different approaches be classified? E.g. 3 main categories of approaches
 	%Initial categorization
 		%Interview process to quickly learn user preference/Ask to rate, Intelligent selection
-		As pointed out by Rashid et. al. \citep{Rashid2002}, the most direct way of acquiring information for use in personalised recommendations from a new users is to present item for the user to rate...	
+		As pointed out by Rashid et. al. \cite{Rashid2002}, the most direct way of acquiring information for use in personalised recommendations from a new users is to present item for the user to rate...
 			%Information theory vs most popular, How do one select the items to present to the user?
 				%Rashid2002, Rashid2008
  			%Decision trees
  				%Functional Matrix Factorizations for Cold-Start Recommendation
- 		%Hybrid approaches 
+ 		%Hybrid approaches
  			%Using demographic data - KEEP IN MIND: What kind of demographic information is most commonly used? / Most informative in our case?
  			It is a common strategy to gather demographic data in order to gain knowledge about the user. Data that may be collected typically includes age, gender, nationality, marital status, income, educational level and occupation. The idea is that people with a more common background share a more similar taste than someone with a random background, and therefore good recommendations can be made as long as we know the new user’s background.
  		%Key figures / Seed users. NB! For later, check with Seed items or users (Cold-start system)
@@ -114,7 +114,7 @@ To solve the new-item problem, there are two commonly used (simple) solutions th
 	%Most dominant! Hybrid approach incorporating item information
 	%Dynamic Browsing tree
 		%Collaborative Filtering Cold-Start Recommendation Based on Dynamic Browsing Tree Model in E-commerce
-	
+
 
 %Read a few articles for each category, summarize them
 %What is suitable in our case?/Discussion
