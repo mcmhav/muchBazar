@@ -2,3 +2,14 @@
 .DS_Store
 *.log
 *.aux
+
+*.lof
+*.lol
+*.lot
+*.maf
+*.mlf*
+*.mlt*
+*.mtc*
+*.out
+*.toc
+*.gz

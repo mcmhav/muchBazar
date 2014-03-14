@@ -22,8 +22,15 @@ The cold-start system problem is mainly a collaborative filtering problem, and c
 
 The cold-start user problem is present both in content-based and collaborative-filtering systems. In content-based systems, the lack of ratings given by the target user, means that the target user will have a limited content-profile, since the users content profile is constructed using content-information from his/hers rated items. Similarly, the cold-start user problem also affects user-based collaborative filtering, since user similarities are calculated based on items that a user shares with other users of the system. The system will therefore most likely struggle to find users with tastes that are \emph{truly} similar to the target user. In both cases, recommendation quality is most likely bound to suffer.
 
-%TODO: Cite articles using content-information to tackle the cold start item problem
-The cold-start item problem. In content-based systems, new items can easily be recommended using the content information of the item, making it a popular solution \cite{•} to the cold-start new item problem. This problem is more severe in collaborative-filtering systems where items are only recommendable if they have been rated by multiple users. New items will therefore not be recommendable before multiple users somehow stumble upon the new item while e.g. browsing the item collection, unless additional measures are taken to solve this problem.
+%TODO  Cite articles using content-information to tackle the cold start item problem
+The cold-start item problem. In content-based systems, new items can easily be recommended using the content information of the item, making it a popular solution \cite{} to the cold-start new item problem. This problem is more severe in collaborative-filtering systems where items are only recommendable if they have been rated by multiple users. New items will therefore not be recommendable before multiple users somehow stumble upon the new item while e.g. browsing the item collection, unless additional measures are taken to solve this problem.
+
+%Other snippets worth including
+%#1
+However in a typical domain, for example in the domain of movies or books, the number of items is very large (in the order of the millions) while the number of items rated by every single user is in general small (in the order of dozens or less). This means that it is very unlikely two random users have rated any items in common and hence they are not comparable.
+
+%#2
+One crucial problem of recommender system is how to best learn from new users. Collaborative Filtering (CF), is the best known technology for recommender systems and is based on the idea that like-minded users have similar tastes and preferences. A new user therefore poses a challenge to CF recommender, since the system has no knowledge about the preferences of the new user, and can therefore not provide any personalized recommendations, this is known as the cold start problem for new users. The system must therefore acquire some information about the new user in order to make personalized recommendations.
 
 \subsubsection{Cold-start system}
 
@@ -35,7 +42,7 @@ In this section we will present a few different solutions to the cold-start syst
 		%Blending/Non personalized approaches/Global models for all users
 		%Seed items or users
 			%Wisdom of the Better Few: Cold Start Recommendation via Representative based Rating Elicitation
-		%Trust-Aware Collaborative Filtering
+		%Trust-Aware Collaborative Filtering		
 			%Trust-Aware Collaborative Filtering for Recommender Systems
 			%+ many others
 		%Filterbots / surrogate users 
@@ -46,59 +53,168 @@ In this section we will present a few different solutions to the cold-start syst
 %Read a few articles that fall under each category and present them
 %Discussion: Which are the most relevant?
 	%How do we determine what is the best solution?
+	
+\paragraph{Trust Aware Recommender Systems}
+
+%General Introduction
+%Explain the main idea behind TRUST AWARE RECOMMENDERS formally + figures
+%See - Trust-Aware Collaborative Filtering for Recommender Systems for formal description
+
+Due to the popularity of social networks such as Facebook, more and more researchers turn to incorporate the social relationships (e.g. trust) of users to help complement users’ preference in addition to item ratings. Trust relationships of users are often employed in order to correlate more potential raters for the active users who require recommendations.
+
+In a trust-based system, there is also a trust network among users. If u trusts v, then there is a value $t_{u,v}$ for this trust which is a real number in $[0,1]$. Zero means no trust and one means full trust. Binary trust networks are the most common trust networks (Amazon, eBay, ...)
+
+
+
+%Alleviating the Sparsity Problem of Collaborative Filtering Using Trust Inferences 
+%Article Comments:
+%	- Pretty good general model for dealing with sparsity
+%	- Requires no additional information such as product details, demographic information about userstrus
+
+Papagelis et. al. \cite{Papagelis2005} proposed to alleviate sparsity using trust interfaces. Trust interfaces are transitive associations between users in the context of an underlying social network. Their approach is built on the idea of social networks in recommender systems. Instead of reducing the dimension of the user-item matrix, in an attempt to make it more informative, they propose a method that permits to define transitive properties between users in the context of a social network.
+
+\begin{figure}[H]
+    \includegraphics[width=5in]{image/trustnetwork.png}
+    \centering
+    \caption[Underlying Social Networks in Recommender Systems]{Underlying Social Networks in Recommender Systems}
+    \label{figure:cfsocialnetwork}
+\end{figure}
+
+Due to the number of ratings that exist in recommendation systems, underlying social networks are very sparse. There are cases in which insufficient or loss of information is detrimental for the recommendation algorithms. Consider Figure \ref{figure:cfsocialnetwork}, classic CF will associate only the users which have co-rated an item (User $1$ and $2$ and user $1$ and $3$). To deal with the problem of a sparse social network, it is possible to infer trust between a source user $S$ and a target user $T$ through an intermediate user $N$ (User $2$ and $3$ are connected through the intermediary user $1$), as shown by the \emph{Inferred Association} arrow. According to this process, trust is propagated in the network and associations between users are built, even if they have no co-rated item. Trust paths can be of variable length, depending on the number of associations that one needs to traverse in order to reach the target user.
+
+
+%Trust-Aware Collaborative Filtering for Recommender Systems
+% Main improvements - Users with few ratings
+% Requires user involvement - Allows user to rate other users
+
+% You might think:
+% "What about the scalability issues of having 3-4 times as many connections?"
+% Solution: Only consider a "few" selected users based on their "predicted trust"
+
+
+%Trust-aware Recommender Systems
+%Article Comments:
+% Requires user involvement - is this a acceptable?
+
+Massa et. al. \cite{Massa2007} propose using trust information explicitly expressed by the users. Users are allowed to state how much they consider every other user trustworthy that, in the context of recommender systems, is related to how much they consider the ratings provided by a certain user valuable and relevant. This additional information (trust statements) can be organized in a trust network and a trust metric can be used to predict the trustworthiness of other users as well (for example, friends of friends). The idea here is to not search for similar users as CF does but to search for trust-able users by exploiting trust propagation over the trust network. The items appreciated by these users are then recommended to the active user.
+
+The authors experimented with both Local Trust Metrics and Global Trust Metrics. 
+
+The authors attempted propagating the trust up to a distance of 4. By using the Pearson Correlation coefficient they found on average 160.73. However just propagating a few steps help to increase significantly the number of neighbors that can be considered for rating predictions. Propagating at distance 2 (friends of friends) it is possible to reach 399.89 users, further increasing the trust horizon to 3 and 4 allows respectively 4,386.32 and 16,333.94 users. This pattern is even more evident on cold start users \cite{Massa2004}. These results say that by propagating trust it is possible to increase the coverage (generate more recommendations) but that it also considers users who are worse predictors for the current user so that the prediction error increases as well. The trust propagation horizon basically represents a tradeoff between accuracy and coverage.
+
+The authors also experimented with a Global Trust Metrics, the popular PageRank algorithm. Their findings indicate that Global Trust Metrics are not suited for the task of finding good neighbors, especially for providing personalized recommendations.
+
+\begin{figure}[H]
+    \includegraphics[width=5in]{image/trustawarearchitecture.png}
+    \centering
+    \caption[Trust-Aware Recommender System Architecture]{Trust-Aware Recommender System Architecture. Adopted from \cite{Massa2004}}
+    \label{figure:trustarchictecture}
+\end{figure}
+
+
+%TODO - More detailed architecture description + move to introduction
+The systems takes as input the trust matrix (representing the community trust statements) and the ratings matrix (ratings given by users to items) and produces, as output, a matrix of predicted ratings that the users would assign to the items. The \emph{Trust Metric} module takes the trust network as input, and exploits trust propagation in order to predict, for every user, how much she could trust other users. Trust metrics can be can be classified in local and global. Global trust metrics produces an estimated trust matrix with all the rows equal, meaning that the estimated trust in a certain user (column) is the same for every user (row). A simple local trust metric could e.g. for each user assign to every other user a predicted trust based on her minimum distance from the source user. More sophisticated ones could also be employed. The \emph{Similarity Metric} module computes the user similarities, this is one of the standard steps of any traditional collaborative filtering technique,trus e.g. by using the Pearson Correlation Coefficient. The \emph{Rating Predictor} either uses the user similarity matrix or the estimated trust matrix or a combination of both to calculate the predicted ratings.
+
+. The difference from traditional CF systems is the additional input matrix of trust statements. The key difference is in how neighbors are identified and how their weights are computed. 
+
+%Motivation / Rational for their approach
+In decentralized environments where everyone is free to create content and there is no centralized quality control entity, evaluating the quality of the content becomes an important issue. This phenomenon can be observed in online marketplaces such as E-bay where users can create "fake" auctions, peer-to-peer networks where peers can enter corrupted items. In these environments, it is often a good strategy to delegate the quality assessment task to users themselves.
+
+%Using a Trust Network to Improve Top-N Recommendation
+%Article Comments:
+%	-
+
+Jamali et. al. \cite{Jamali2009} propose two different methods for getting around the cold-start user problem using a trust network. 
+
+Approach 1: Random Walk
+Starting from user $u$, we perform a random walk on the trust network. Each random walk stops at a certain user. Then the items rated highly by that user will be considered as recommended items, ordered according to the ratings expressed by that user. We perform several random walks to gather more infroamtion and compute a more confident result. The estimated rating of each item is the average of ratings for that item over all raters considered. At the end, we output items with the highest estimated rating as top-N recommended items.
+
+Approach 2: Combined Approach
+In this approach we compute the top $K$ trusted users in the network and rank the items rated by these trusted users to compute top-N recommended items. We use the collaborative filtering approach to compute another set of top-N recommended items. Finally, we merge these two lists to produce a combined list of top-N recommended items. The top $K$ trusted users can either be found by \emph{Breadth First Search} or \emph{Random Walk in the social network}.
+
+%Random walk with depth = 2, best result, however, it does not outperform CF-User...
+
+\paragraph{Hybrid Methods}
+
+The cold start problem, is in its most basic form, a consequence of lacking data or information. Hybrid methods incorporate information from other sources the bridge the gaps, and improve the recommendation quality.
 
 \subsubsection{Cold-start user}
 
-This section will present a few different solutions to the cold-start user problem proposed in the literature. 
+%Introduction
+%Cold start users often account for more than 50% of the total users
+
+The difficulty in the new user problem is how to find the neighbors of a new user effectively.
+
+This section will present a few different solutions to the cold-start user problem proposed in the literature
 
 %Can the different approaches be classified? E.g. 3 main categories of approaches
 	%Initial categorization
-		%Interview process to quickly learn user preference/Ask to rate, Intelligent selection
-		As pointed out by Rashid et. al. \citep{Rashid2002}, the most direct way of acquiring information for use in personalised recommendations from a new users is to present item for the user to rate...	
+		%Interview process to quickly learn user preference/Ask to rate, Intelligent selection	
 			%Information theory vs most popular, How do one select the items to present to the user?
 				%Rashid2002, Rashid2008
  			%Decision trees
  				%Functional Matrix Factorizations for Cold-Start Recommendation
  		%Hybrid approaches 
  			%Using demographic data - KEEP IN MIND: What kind of demographic information is most commonly used? / Most informative in our case?
- 			It is a common strategy to gather demographic data in order to gain knowledge about the user. Data that may be collected typically includes age, gender, nationality, marital status, income, educational level and occupation. The idea is that people with a more common background share a more similar taste than someone with a random background, and therefore good recommendations can be made as long as we know the new user’s background.
- 		%Key figures / Seed users. NB! For later, check with Seed items or users (Cold-start system)
+ 		%Key figures / Seed users. TODO : For later, check with Seed items or users (Cold-start system)
  			%Whom Should I Trust? The Impact of Key Figures on Cold Start Recommendations
- 		%%Trust-aware / Trust propagation
+ 		%Trust-aware / Trust propagation
 
 %Read a few articles from each category
 %Discussion: Which category/approach is the most relevant for us?
 	%How do we determine this "systematically"?
 
-\begin{quotation}
-Ask the right questions if you're going to find the right answers
-\end{quotation}
-- Vanessa Redgrave
+\paragraph{Intelligent Selection}\mbox{}\\
 
+%My though behind including these articles:
+%Use e.g. a tinder like interface and ask the user to like/dislike 15 items when first logging in
 
-Scenario: The target user has very few ratings (e.g. a new user). In this scenario, collaborative filtering (CF) based recommenders might not be able to find users with tastes that are truly similar to the target user, thus the recommendation quality to the target user might be poor. On the other hand, because of the very limited number of items rated by the target user, it is hard to obtain the content interests of the target user. Consequently, content-based techniques might only generate very limited recommendations in such situations.
+\begin{chapquote}[30pt]{Vanessa Redgrave}
+  "Ask the right questions if you're going to find the right answers"
+\end{chapquote}
 
-One crucial problem of recommender system is how to best learn from new users. Collaborative Filtering (CF), is the best known technology for recommender systems and is based on the idea that like-minded users have similar tastes and preferences. A new user therefore poses a challenge to CF recommender, since the system has no knowledge about the preferences of the new user, and can therefore not provide any personalized recommendations, this is known as the cold start problem for new users. The system must therefore acquire some information about the new user in order to make personalized recommendations.
-
-However, the system must be careful to present useful items to garner information. A food recommender should probably not ask whether a new user likes vanilla ice cream since most people like vanilla ice cream. Therefore, knowing that a new user likes vanilla ice cream tells you very little about the user. The choice of what questions to ask a new user, then, is critical.
-
-Rashid et. al. \cite{Rashid2002} performed a study of different item selection strategies that collaborative filtering recommender systems can use to learn about new users. They presented the users with a questionnaire with items asking them to rate/select the ones they like. Their strategies can be divided into five classes:
+As pointed out by Rashid et. al. \cite{Rashid2002}, the most direct way of acquiring information for use in personalised recommendations from a new users is to present item for the user to rate. However, they argue that the system must be careful to present useful items to garner information. A food recommender should probably not ask whether a new user likes vanilla ice cream since most people like vanilla ice cream. Therefore, knowing that a new user likes vanilla ice cream tells you very little about the user. The choice of what questions to ask a new user, then, is critical. The authors performed a study of different item selection strategies that collaborative filtering recommender systems can use to learn about new users. They presented the users with a questionnaire with items asking them to rate/select the ones they like. Their strategies can be divided into five classes:
 
 \begin{itemize}
 \item \emph{Random:} strategies: Strategies that avoid bias in the presentation of bias
-\item \emph{Popularity:} Select among the top N items where the probability that is proportionate to the items popularity.
+\item \emph{Popularity:} Select among the top N items where the probability that an item is selected is proportionate to the items popularity.
 \item \emph{Pure entropy:} Present the items with the highest entropy that the user has not seen
 \item \emph{Balanced strategies:} A balanced approach combining both popularity data and entropy.
 \item \emph{Personalized:} As soon as some information is known about a user, present items specifically tailored to that user using e.g. item-item similarity
 \end{itemize}
 
-This study was later extended by Rashid et. al. \cite{Rashid2008} where they more closely examined information theoretic strategies for item selection.
+Their evaluation focused on user effort and accuracy. Their suggestion for e-commerce recommender system is to start off recommending the most popular items rather than the highest rated ones, and then use item-item similarity as quickly as possible.
 
-%Their suggestion for e-commerce: Recommend most popular items rather than the highest rated ones, and then use item-item similarity as quickly as possible
+This study was later extended by Rashid et. al. \cite{Rashid2008} where they more closely examined information theoretic strategies for item selection. In the article they identify a number of aspects that a new user preference elicitation strategy should consider.
 
-A new user preference elicitation strategy needs to ensure that the user does not 1) lose interest in returning due to low quality initial recommendations, 2) as quickly as possible being able to provide good personalized recommendations (find the right neighborhoods).
+In the article they introduced three new strategies:
 
-We are constrained to unobtrusively learn user-profiles from the natural interactions of users with the system, meaning that we can not require the user to rate e.g. 10 items before we can start providing recommendations. We have a \emph{mixed initiative} system meaning that there is provisions for both user and system controlled interactions. We (the system) can only select which items to recommend to the user, and this does not mean that the user actually will click an item or rate it.
+\begin{itemize}
+\item \emph{Entropy0}: Entropy Considering Missing Values
+\item \emph{HELF:} Harmonic mean of Entropy and Logarithm of Frequency
+\item \emph{IGCN:} Information Gain through Clustered Neighbors
+\end{itemize}
+
+%TODO Sum up the approaches, neatly
+
+%Findings:
+%#1 IGCN
+%#2 Entropy0
+%#3 HELF
+%#4 Popularity
+
+%Discussion on "suitedness", user involvement ∕ recommendation quality tradeoff
+It is worth mentioning that the authors worked on the cold-start new user problem for a movie recommender. The implications of this is that a user must have watched a movie, in order to rate it. This is not so important for our domain, as taking a quick look at the item should be sufficient to like/dislike it.
+%Implications -> Ignore the user effort stars in the article, as they dont have to browse until they find movies they previously have watched
+%Priority: Making the tinder like "swipe" interface smooth and efficient is important, making the rating as easy as possible
+%We cannot calculate entropt as we have no rating distribution for the items (1-5), damn u implicit feedback ;)
+
+We are constrained to unobtrusively learn user-profiles from the natural interactions of users with the system, meaning that we can not require the user to rate e.g. 10 items before we can start providing recommendations. We currently have a \emph{mixed initiative} system meaning that there is provisions for both user and system controlled interactions. We (the system) can only select which items to recommend to the user, and this does not mean that the user actually will click an item or rate it.
+
+\paragraph{Hybrid Approaches}
+
+It is a common strategy to gather demographic data in order to gain knowledge about the user. Data that may be collected typically includes age, gender, nationality, marital status, income, educational level and occupation. The idea is that people with a more common background share a more similar taste than someone with a random background, and therefore good recommendations can be made as long as we know the new user’s background.
+
 
 
 \subsubsection{Cold-start item}
@@ -110,20 +226,38 @@ To solve the new-item problem, there are two commonly used (simple) solutions th
 \item Requesting the user to choose one or more of his/hers categories while registering for the site, and recommend items from the selected categories. This approach however, requires active user involvement and complicates the sign up process -> BAD, in addition, many users might chose not to give up any personal interest information, thus the user group covered by this solution is not large enough.
 \end{itemize}
 
+This section will cover some approaches described in the literature to solve the cold-start new item problem.
+
 %What strategies exist? Categorization
 	%Most dominant! Hybrid approach incorporating item information
 	%Dynamic Browsing tree
 		%Collaborative Filtering Cold-Start Recommendation Based on Dynamic Browsing Tree Model in E-commerce
 	
 
-%Read a few articles for each category, summarize them
-%What is suitable in our case?/Discussion
+\paragraph{Hybrid Methods / Latent Factor Models}
 
-%TODO: Categorize these articles
-% Regression-based Latent Factor Models - http://dl.acm.org/citation.cfm?id=1557029
-% Learning Attribute-to-Feature Mappings for Cold-Start Recommendations - http://ieeexplore.ieee.org/xpl/abstractCitations.jsp?tp=&arnumber=5693971&url=http%3A%2F%2Fieeexplore.ieee.org%2Fxpls%2Fabs_all.jsp%3Farnumber%3D5693971
-% fLDA: Matrix Factorization through Latent Dirichlet Allocation - http://dl.acm.org/citation.cfm?id=1718499
-% Matchbox: Large Scale Bayesian Recommendations
+%TODO - Sort articles, some are more general cold-start solutions (not just new-item)
+%TODO - Read articles more in detail, explain their approaches
+
+%Regression-based Latent Factor Models
+
+Agarwal et. al. \cite{Agarwal2009} propose a class of latent factors models called RLFM that incorporates both user/item features and past interaction data into a single model.
+
+%Learning Attribute-to-Feature Mappings for Cold-Start Recommendations
+% - Model for positive implicit feedback!
+% - Demonstrates usefulness for new-item recommendations
+
+
+%fLDA: Matrix Factorization through Latent Dirichlet Allocation
+% - 
+Matrix factorization method to predict ratings in recommender system applications where a "bag-of-words" representation of item meta-data is natural
+
+%Matchbox: Large Scale Bayesian Recommendations
+% - Online algorithm
+The Matchbox system makes use of content information in the form of user and item meta data in combination with collaborative filtering information from previous user behavior in order to predict the value of an item for a user.
+
+%What is suitable in our case?/Discussion
+%TODO
 
 \subsection{Fashion Recommendation}
 
@@ -259,7 +393,7 @@ Make a store
 %     "facebook_login_failed",
 
 % Other:
-%     "friend_invited",
+%     "friend_invited",he users rat
 %     "activity_clicked",
 %     "facebook_share_changed",
 
@@ -280,7 +414,14 @@ Make a store
 % {u'event_id': u'stores_map_clicked', u'count': 1.0}
 % {u'event_id': u'store_clicked', u'count': 1.0}
 % {'user_id': 100001385800886L}
-% {'num_events': 222}
+% {'num_events': 2
+\begin{figure}[H]
+    \includegraphics[width=5in]{image/price_distr.png}
+    \centering
+    \caption[Price distribution of items]{some awesome text}
+    \label{figure:ratingdistr}
+\end{figure}
+%22}
 % Total amount:    222
 % User:            100001385800886
 % Total Sessions:  30
