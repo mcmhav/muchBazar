@@ -26,6 +26,17 @@
 \lstset{basicstyle=\ttfamily\footnotesize,breaklines=true,aboveskip=25pt,belowskip=25pt} % code box
 \hypersetup{urlcolor=blue, colorlinks=true} % Colors hyperlinks in blue
 
+%Quotes
+\makeatletter
+\renewcommand{\@chapapp}{}% Not necessary...
+\newenvironment{chapquote}[2][2em]
+  {\setlength{\@tempdima}{#1}%
+   \def\chapquote@author{#2}%
+   \parshape 1 \@tempdima \dimexpr\textwidth-2\@tempdima\relax%
+   \itshape}
+  {\par\normalfont\hfill--\ \chapquote@author\hspace*{\@tempdima}\par\bigskip}
+\makeatother
+
 % Custom variables
 \def \thesistitle{Our awesome title}
 \def \authorname{Thomas Almenningen, Martin Christian Havig and Herman Schistad}
@@ -61,7 +72,7 @@ Norwegian University of Science and Technology
 \end{center}
 \vfill
 
-\noindent Supervisor: \supheri \\
+\noindent Supervisor: \supheri \\
 \noindent Supervisor: \suphelge
 
 	%{\Huge Twilm} \\
