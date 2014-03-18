@@ -57,12 +57,73 @@ In this section we will present a few different solutions to the cold-start syst
 \paragraph{Trust Aware Recommender Systems}
 
 %General Introduction
-%Explain the main idea behind TRUST AWARE RECOMMENDERS formally + figures
-%See - Trust-Aware Collaborative Filtering for Recommender Systems for formal description
+%	Explain the main idea behind TRUST AWARE RECOMMENDERS formally + figures
+%	See - Trust-Aware Collaborative Filtering for Recommender Systems for formal description
 
 Due to the popularity of social networks such as Facebook, more and more researchers turn to incorporate the social relationships (e.g. trust) of users to help complement users’ preference in addition to item ratings. Trust relationships of users are often employed in order to correlate more potential raters for the active users who require recommendations.
 
-In a trust-based system, there is also a trust network among users. If u trusts v, then there is a value $t_{u,v}$ for this trust which is a real number in $[0,1]$. Zero means no trust and one means full trust. Binary trust networks are the most common trust networks (Amazon, eBay, ...)
+% Web of Trust - Figure explanation
+Using explicit trust statements, it is possible to predict trust in unknown users by propagating trust. Consider the example shown in Figure \ref{figure:weboftrust}. User A has issued a trust statement in B and C; hence B and C are in the web of trust of A. Using these explicit trust statements, it is possible to predict trust in unknown users by propagating trust, making it possible to infer something about how much user A could trust D.
+
+\begin{figure}[H]
+    \includegraphics[width=5in]{image/webofTrust.png}
+    \centering
+    \caption[Trust Network]{Trust Network. Nodes are users and solid edges are trust statements. The dotted edge is one of the undefined and predictable trust statements (Adopted from \cite{Massa2004}}
+    \label{figure:weboftrust}
+\end{figure}
+
+% The formals
+To capture all the trust statements we need a $NxN$ matrix, where $N$ is the number of users, since each user is allowed to express a trust value in every other user. This matrix will make up our trust network among the users. If $u$ trusts $v$, then there is a value $t_{u,v}$ for this trust which is a real number in $[0,1]$. Zero means no trust and one means full trust. In addition to the trust network we will also have a Rating matrix of size $NxM$, where $M$ is the number of items. This rating will not differ from a standard rating matrix, which are used in traditional collaborative filtering systems. The value $r_{u, i}$, is the rating user $u$ have given to item $i$, the rating scale may differ from system to system.
+
+% Architecture 
+The systems takes as input the trust network (representing the trust statements) and the ratings matrix (ratings given by users to items) and produces, as output, a matrix of predicted ratings that the users would assign to the items. Figure \ref{figure:trustarchictecture} shown a conceptual overview of the trust-aware recommender system architecture.
+
+\begin{figure}[H]
+    \includegraphics[width=5in]{image/trustawarearchitecture.png}
+    \centering
+    \caption[Trust-Aware Recommender System Architecture]{Trust-Aware Recommender System Architecture. Adopted from \cite{Massa2004}}
+    \label{figure:trustarchictecture}
+\end{figure}
+
+The \emph{Trust Metric} module takes the trust network as input, and exploits trust propagation in order to predict, for every user, how much she could trust other users. Trust metrics can either be local and global. Global trust metrics produces an estimated trust matrix with all the rows equal, meaning that the estimated trust in a certain user (column) is the same for every user (row). A simple local trust metric could e.g. for each user assign to every other user a predicted trust based on her minimum distance from the source user. More sophisticated ones could also be employed. If we again consider Figure \ref{figure:weboftrust}, we could employ a local trust metric where the predicted trust is based on the minimum distance from the source user. If we set the maximum propagation distance $d$, a user at distance $n$ from the source user will have a predicted trust value of:
+
+\begin{equation}
+t_{u,v} = (d-n+1)/d
+\end{equation}
+
+Giving users not reachable within the maximum propagation distance a trust of $0$. Using user $A$ as the source user, the users at distance $1$ ($B$ and $C$) would get a trust value of $(4-1+1)/4 = 1$, while the user at distance 2 (D) would get a predicted trust value of $(4-2+1)/4 = 0.75$. Meaning that we will have a linear decay in trust based on the distance from the source user.
+
+The \emph{Similarity Metric} module computes the user similarities, this is one of the standard steps of any traditional collaborative filtering technique, user similarities can be found e.g. by using the Pearson Correlation Coefficient. The intuition is that, if a user rates in a similar way to another user, then her ratings are using for predicting the ratings for that users. 
+
+The \emph{Rating Predictor} can use the neighbours from the user similarity matrix, the estimated trust matrix or a combination of both in order to calculate the predicted ratings.
+
+The main advantage is not improved accuracy, but improved coverage. As exemplified by Massa et. al. \cite{Massa2007}. The authors attempted propagating the trust up to a distance of 4. By using the Pearson Correlation coefficient they found on average 160.73 neighbours. However just propagating a few steps help to increase significantly the number of neighbours that can be considered for rating predictions. Propagating at distance 2 (friends of friends) it is possible to reach 399.89 users, further increasing the trust horizon to 3 and 4 allows respectively 4,386.32 and 16,333.94 users. This pattern is even more evident on cold start users \cite{Massa2004}. These results say that by propagating trust it is possible to increase the coverage (generate more recommendations) but that it also considers users who are worse predictors for the current user so that the prediction error increases as well. The trust propagation horizon basically represents a trade-off between accuracy and coverage.
+
+% Trust-Aware Collaborative Filtering for Recommender Systems
+%	Main improvements - Users with few ratings
+% 	Requires user involvement - Allows user to rate other users
+%	Findings:
+%		Little improvement in accuracy
+%		Much better coverage
+%			For users with 4 ratings:
+
+% You might think:
+% 	"What about the scalability issues of having 3-4 times as many connections?"
+% 	Solution: Only consider a "few" selected users based on their "predicted trust" (cutoff point)
+
+
+% Trust-aware Recommender Systems
+% Article Comments:
+% 	Requires user involvement - is this a acceptable?
+
+Massa et. al. \cite{Massa2004, Massa2007} propose using trust information explicitly expressed by the users. Users are allowed to state how much they consider every other user trustworthy that, in the context of recommender systems, is related to how much they consider the ratings provided by a certain user valuable and relevant. This additional information (trust statements) can be organized in a trust network and a trust metric can be used to predict the trustworthiness of other users as well (for example, friends of friends). The idea here is to not search for similar users as CF does but to search for trust-able users by exploiting trust propagation over the trust network. The items appreciated by these users are then recommended to the active user. In decentralized environments where everyone is free to create content and there is no centralized quality control entity, evaluating the quality of the content becomes an important issue. This phenomenon can be observed in online marketplaces such as E-bay where users can create "fake" auctions, peer-to-peer networks where peers can enter corrupted items. In these environments, it is often a good strategy to delegate the quality assessment task to users themselves.
+
+The authors experimented with both Local Trust Metrics and Global Trust Metrics. They used the PageRank algorithm as a global trust metric. PageRank tries to infer the authority of every single user by examining the structure of the network. The algorithm follows a simple idea: if a link from user A to user B represent a positive vote casted by A to B, then the global rank of a page depends on the number (and quality) of the incoming links. The trust values assigned by users to users are used to predict the trustworthiness of unknown users. Their findings, not surprisingly, indicate that Global Trust Metrics are not suited for the task of finding good neighbors, especially for providing personalized recommendations. As a local trust metric they chose MoleTrust, which is a depth-first graph walking algorithm with a tuneable trust horizon which allowed them to experiment with different propagation distances.
+
+%Motivation / Rational for their approach
+
+
+
 
 
 
@@ -83,46 +144,11 @@ Papagelis et. al. \cite{Papagelis2005} proposed to alleviate sparsity using trus
 Due to the number of ratings that exist in recommendation systems, underlying social networks are very sparse. There are cases in which insufficient or loss of information is detrimental for the recommendation algorithms. Consider Figure \ref{figure:cfsocialnetwork}, classic CF will associate only the users which have co-rated an item (User $1$ and $2$ and user $1$ and $3$). To deal with the problem of a sparse social network, it is possible to infer trust between a source user $S$ and a target user $T$ through an intermediate user $N$ (User $2$ and $3$ are connected through the intermediary user $1$), as shown by the \emph{Inferred Association} arrow. According to this process, trust is propagated in the network and associations between users are built, even if they have no co-rated item. Trust paths can be of variable length, depending on the number of associations that one needs to traverse in order to reach the target user.
 
 
-%Trust-Aware Collaborative Filtering for Recommender Systems
-% Main improvements - Users with few ratings
-% Requires user involvement - Allows user to rate other users
-
-% You might think:
-% "What about the scalability issues of having 3-4 times as many connections?"
-% Solution: Only consider a "few" selected users based on their "predicted trust"
 
 
-%Trust-aware Recommender Systems
-%Article Comments:
-% Requires user involvement - is this a acceptable?
-
-Massa et. al. \cite{Massa2007} propose using trust information explicitly expressed by the users. Users are allowed to state how much they consider every other user trustworthy that, in the context of recommender systems, is related to how much they consider the ratings provided by a certain user valuable and relevant. This additional information (trust statements) can be organized in a trust network and a trust metric can be used to predict the trustworthiness of other users as well (for example, friends of friends). The idea here is to not search for similar users as CF does but to search for trust-able users by exploiting trust propagation over the trust network. The items appreciated by these users are then recommended to the active user.
-
-The authors experimented with both Local Trust Metrics and Global Trust Metrics.
-
-The authors attempted propagating the trust up to a distance of 4. By using the Pearson Correlation coefficient they found on average 160.73. However just propagating a few steps help to increase significantly the number of neighbors that can be considered for rating predictions. Propagating at distance 2 (friends of friends) it is possible to reach 399.89 users, further increasing the trust horizon to 3 and 4 allows respectively 4,386.32 and 16,333.94 users. This pattern is even more evident on cold start users \cite{Massa2004}. These results say that by propagating trust it is possible to increase the coverage (generate more recommendations) but that it also considers users who are worse predictors for the current user so that the prediction error increases as well. The trust propagation horizon basically represents a tradeoff between accuracy and coverage.
-
-The authors also experimented with a Global Trust Metrics, the popular PageRank algorithm. Their findings indicate that Global Trust Metrics are not suited for the task of finding good neighbors, especially for providing personalized recommendations.
-
-\begin{figure}[H]
-    \includegraphics[width=5in]{image/trustawarearchitecture.png}
-    \centering
-    \caption[Trust-Aware Recommender System Architecture]{Trust-Aware Recommender System Architecture. Adopted from \cite{Massa2004}}
-    \label{figure:trustarchictecture}
-\end{figure}
-
-
-%TODO - More detailed architecture description + move to introduction
-The systems takes as input the trust matrix (representing the community trust statements) and the ratings matrix (ratings given by users to items) and produces, as output, a matrix of predicted ratings that the users would assign to the items. The \emph{Trust Metric} module takes the trust network as input, and exploits trust propagation in order to predict, for every user, how much she could trust other users. Trust metrics can be can be classified in local and global. Global trust metrics produces an estimated trust matrix with all the rows equal, meaning that the estimated trust in a certain user (column) is the same for every user (row). A simple local trust metric could e.g. for each user assign to every other user a predicted trust based on her minimum distance from the source user. More sophisticated ones could also be employed. The \emph{Similarity Metric} module computes the user similarities, this is one of the standard steps of any traditional collaborative filtering technique,trus e.g. by using the Pearson Correlation Coefficient. The \emph{Rating Predictor} either uses the user similarity matrix or the estimated trust matrix or a combination of both to calculate the predicted ratings.
-
-. The difference from traditional CF systems is the additional input matrix of trust statements. The key difference is in how neighbors are identified and how their weights are computed.
-
-%Motivation / Rational for their approach
-In decentralized environments where everyone is free to create content and there is no centralized quality control entity, evaluating the quality of the content becomes an important issue. This phenomenon can be observed in online marketplaces such as E-bay where users can create "fake" auctions, peer-to-peer networks where peers can enter corrupted items. In these environments, it is often a good strategy to delegate the quality assessment task to users themselves.
-
-%Using a Trust Network to Improve Top-N Recommendation
-%Article Comments:
-%	-
+% Using a Trust Network to Improve Top-N Recommendation
+% Article Comments:
+%		-
 
 Jamali et. al. \cite{Jamali2009} propose two different methods for getting around the cold-start user problem using a trust network.
 
@@ -143,7 +169,7 @@ The cold start problem, is in its most basic form, a consequence of lacking data
 %Introduction
 %Cold start users often account for more than 50% of the total users
 
-The difficulty in the new user problem is how to find the neighbors of a new user effectively.
+The difficulty in the new user problem is how to find the neighbours of a new user effectively.
 
 This section will present a few different solutions to the cold-start user problem proposed in the literature
 
