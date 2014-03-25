@@ -93,11 +93,11 @@ t_{u,v} = (d-n+1)/d
 
 Giving users not reachable within the maximum propagation distance a trust of $0$. Using user $A$ as the source user, the users at distance $1$ ($B$ and $C$) would get a trust value of $(4-1+1)/4 = 1$, while the user at distance 2 (D) would get a predicted trust value of $(4-2+1)/4 = 0.75$. Meaning that we will have a linear decay in trust based on the distance from the source user.
 
-The \emph{Similarity Metric} module computes the user similarities, this is one of the standard steps of any traditional collaborative filtering technique, user similarities can be found e.g. by using the Pearson Correlation Coefficient. The intuition is that, if a user rates in a similar way to another user, then her ratings are using for predicting the ratings for that users. 
+The \emph{Similarity Metric} module computes the user similarities, this is one of the standard steps of any traditional collaborative filtering technique, user similarities can be found e.g. by using the Pearson Correlation Coefficient. The intuition is that, if a user rates in a similar way to another user, then her ratings are useful for predicting the ratings for that users. 
 
-The \emph{Rating Predictor} can use the neighbours from the user similarity matrix, the estimated trust matrix or a combination of both in order to calculate the predicted ratings.
+The \emph{Rating Predictor} can use the neighbors from the user similarity matrix, the estimated trust matrix or a combination of both in order to calculate the predicted ratings.
 
-The main advantage is not improved accuracy, but improved coverage. As exemplified by Massa et. al. \cite{Massa2007}. The authors attempted propagating the trust up to a distance of 4. By using the Pearson Correlation coefficient they found on average 160.73 neighbours. However just propagating a few steps help to increase significantly the number of neighbours that can be considered for rating predictions. Propagating at distance 2 (friends of friends) it is possible to reach 399.89 users, further increasing the trust horizon to 3 and 4 allows respectively 4,386.32 and 16,333.94 users. This pattern is even more evident on cold start users \cite{Massa2004}. These results say that by propagating trust it is possible to increase the coverage (generate more recommendations) but that it also considers users who are worse predictors for the current user so that the prediction error increases as well. The trust propagation horizon basically represents a trade-off between accuracy and coverage.
+The main advantage is not improved accuracy, but improved coverage. As exemplified by Massa et. al. \cite{Massa2007}. The authors experimented with propagating the trust up to a distance of 4. By using the Pearson Correlation coefficient they found on average 160.73 neighbours. However just propagating a few steps help to increase significantly the number of neighbours that can be considered for rating predictions. Propagating at distance 2 (friends of friends) it is possible to reach 399.89 users, further increasing the trust horizon to 3 and 4 allows respectively 4,386.32 and 16,333.94 users. This pattern is even more evident on cold start users \cite{Massa2004}. These results say that by propagating trust it is possible to increase the coverage (generate more recommendations) but that it also considers users who are worse predictors for the current user so that the prediction error increases as well. The trust propagation horizon basically represents a trade-off between accuracy and coverage.
 
 % Trust-Aware Collaborative Filtering for Recommender Systems
 %	Main improvements - Users with few ratings
@@ -120,19 +120,12 @@ Massa et. al. \cite{Massa2004, Massa2007} propose using trust information explic
 
 The authors experimented with both Local Trust Metrics and Global Trust Metrics. They used the PageRank algorithm as a global trust metric. PageRank tries to infer the authority of every single user by examining the structure of the network. The algorithm follows a simple idea: if a link from user A to user B represent a positive vote casted by A to B, then the global rank of a page depends on the number (and quality) of the incoming links. The trust values assigned by users to users are used to predict the trustworthiness of unknown users. Their findings, not surprisingly, indicate that Global Trust Metrics are not suited for the task of finding good neighbors, especially for providing personalized recommendations. As a local trust metric they chose MoleTrust, which is a depth-first graph walking algorithm with a tuneable trust horizon which allowed them to experiment with different propagation distances.
 
-%Motivation / Rational for their approach
-
-
-
-
-
-
-%Alleviating the Sparsity Problem of Collaborative Filtering Using Trust Inferences
-%Article Comments:
+% Alleviating the Sparsity Problem of Collaborative Filtering Using Trust Inferences
+% Article Comments:
 %	- Pretty good general model for dealing with sparsity
 %	- Requires no additional information such as product details, demographic information about userstrus
 
-Papagelis et. al. \cite{Papagelis2005} proposed to alleviate sparsity using trust interfaces. Trust interfaces are transitive associations between users in the context of an underlying social network. Their approach is built on the idea of social networks in recommender systems. Instead of reducing the dimension of the user-item matrix, in an attempt to make it more informative, they propose a method that permits to define transitive properties between users in the context of a social network.
+Papagelis et. al. \cite{Papagelis2005} proposed to alleviate sparsity using trust interfaces. Trust interfaces are transitive associations between users in the context of an underlying social network. Their approach is built on the idea of social networks in recommender systems. Instead of reducing the dimension of the user-item matrix, in an attempt to make it more informative, they propose a method that permits to define transitive properties between users in the context of a social network. Their approach does not require the user to explicitly express which users they trust, the trust information is inferred from the underlying social network of the rating matrix.
 
 \begin{figure}[H]
     \includegraphics[width=5in]{image/trustnetwork.png}
@@ -143,8 +136,20 @@ Papagelis et. al. \cite{Papagelis2005} proposed to alleviate sparsity using trus
 
 Due to the number of ratings that exist in recommendation systems, underlying social networks are very sparse. There are cases in which insufficient or loss of information is detrimental for the recommendation algorithms. Consider Figure \ref{figure:cfsocialnetwork}, classic CF will associate only the users which have co-rated an item (User $1$ and $2$ and user $1$ and $3$). To deal with the problem of a sparse social network, it is possible to infer trust between a source user $S$ and a target user $T$ through an intermediate user $N$ (User $2$ and $3$ are connected through the intermediary user $1$), as shown by the \emph{Inferred Association} arrow. According to this process, trust is propagated in the network and associations between users are built, even if they have no co-rated item. Trust paths can be of variable length, depending on the number of associations that one needs to traverse in order to reach the target user.
 
+% Trust-paths
+For example, if the trust $T_{1 \rightarrow 2} = 0.7$ based on 5 co-rated items and $T_{1 \rightarrow 3} = 0.35$ based on 2 co-rated items, then the trust between user $2$ and $3$ through $1$ is, $T_{2 \overrightarrow{1} 3} = 0.6$ ($\frac{0.7*5}{5+2} + \frac{0.35*2}{7}$)
 
+% Confidence
+In order to express the subjective notion of trust, the authors set up a confidence model that is assigned to each direct association of the network that expresses the reliability of the association. Confidence is related to the number of co-rated items between two users. The confidence scores are all expressed in relation to the most confident association for each user.
 
+\begin{equation}
+C_{s \rightarrow t} = \frac{n(I_{s} \cap I_{t}}{n(I_{s} \cap I_{u_{MAX_CONF}}}
+\end{equation}
+
+Using the above example, assuming that the maximum number of co-rated items user $1$ has with any user is 7, the $C_{1 \rightarrow 2} = \frac{5}{7}$
+
+% Results/Findings
+The authors achieved improved accuracy for all sparsity levels. With a sparsity level of $99.9%$ the 2-HOP CF (friend of friends) increased the MAE performance by $17%$.
 
 % Using a Trust Network to Improve Top-N Recommendation
 % Article Comments:
@@ -153,10 +158,12 @@ Due to the number of ratings that exist in recommendation systems, underlying so
 Jamali et. al. \cite{Jamali2009} propose two different methods for getting around the cold-start user problem using a trust network.
 
 Approach 1: Random Walk
-Starting from user $u$, we perform a random walk on the trust network. Each random walk stops at a certain user. Then the items rated highly by that user will be considered as recommended items, ordered according to the ratings expressed by that user. We perform several random walks to gather more infroamtion and compute a more confident result. The estimated rating of each item is the average of ratings for that item over all raters considered. At the end, we output items with the highest estimated rating as top-N recommended items.
+Starting from user $u$, we perform a random walk on the trust network. Each random walk stops at a certain user. Then the items rated highly by that user will be considered as recommended items, ordered according to the ratings expressed by that user. We perform several random walks to gather more information and compute a more confident result. The estimated rating of each item is the average of ratings for that item over all raters considered. At the end, we output items with the highest estimated rating as top-N recommended items.%
 
 Approach 2: Combined Approach
-In this approach we compute the top $K$ trusted users in the network and rank the items rated by these trusted users to compute top-N recommended items. We use the collaborative filtering approach to compute another set of top-N recommended items. Finally, we merge these two lists to produce a combined list of top-N recommended items. The top $K$ trusted users can either be found by \emph{Breadth First Search} or \emph{Random Walk in the social network}.
+In this approach we compute the top $K$ trusted users in the network and rank the items rated by these trusted users to compute top-N recommended items. We use the collaborative filtering approach to compute another set of top-N recommended items. Finally, we merge these two lists to produce a combined list of top-N recommended items. The top $K$ trusted users can either be found by \emph{Breadth First Search} or \emph{Random Walk in the social network}.%d
+
+Their approaches showed great improvements in recall for cold-start users, improving the performance by 50$%$ over the standard collaborative filtering approach.
 
 %Random walk with depth = 2, best result, however, it does not outperform CF-User...
 
@@ -221,7 +228,7 @@ In the article they introduced three new strategies:
 \item \emph{IGCN:} Information Gain through Clustered Neighbors
 \end{itemize}
 
-%TODO Sum up the approaches, neatly
+%TODO Sum up the approaches. Neatly.
 
 %Findings:
 %#1 IGCN
