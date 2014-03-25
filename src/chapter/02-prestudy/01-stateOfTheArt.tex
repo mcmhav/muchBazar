@@ -75,7 +75,7 @@ Using explicit trust statements, it is possible to predict trust in unknown user
 % The formals
 To capture all the trust statements we need a $NxN$ matrix, where $N$ is the number of users, since each user is allowed to express a trust value in every other user. This matrix will make up our trust network among the users. If $u$ trusts $v$, then there is a value $t_{u,v}$ for this trust which is a real number in $[0,1]$. Zero means no trust and one means full trust. In addition to the trust network we will also have a Rating matrix of size $NxM$, where $M$ is the number of items. This rating will not differ from a standard rating matrix, which are used in traditional collaborative filtering systems. The value $r_{u, i}$, is the rating user $u$ have given to item $i$, the rating scale may differ from system to system.
 
-% Architecture 
+% Architecture
 The systems takes as input the trust network (representing the trust statements) and the ratings matrix (ratings given by users to items) and produces, as output, a matrix of predicted ratings that the users would assign to the items. Figure \ref{figure:trustarchictecture} shown a conceptual overview of the trust-aware recommender system architecture.
 
 \begin{figure}[H]
@@ -93,7 +93,7 @@ t_{u,v} = (d-n+1)/d
 
 Giving users not reachable within the maximum propagation distance a trust of $0$. Using user $A$ as the source user, the users at distance $1$ ($B$ and $C$) would get a trust value of $(4-1+1)/4 = 1$, while the user at distance 2 (D) would get a predicted trust value of $(4-2+1)/4 = 0.75$. Meaning that we will have a linear decay in trust based on the distance from the source user.
 
-The \emph{Similarity Metric} module computes the user similarities, this is one of the standard steps of any traditional collaborative filtering technique, user similarities can be found e.g. by using the Pearson Correlation Coefficient. The intuition is that, if a user rates in a similar way to another user, then her ratings are using for predicting the ratings for that users. 
+The \emph{Similarity Metric} module computes the user similarities, this is one of the standard steps of any traditional collaborative filtering technique, user similarities can be found e.g. by using the Pearson Correlation Coefficient. The intuition is that, if a user rates in a similar way to another user, then her ratings are using for predicting the ratings for that users.
 
 The \emph{Rating Predictor} can use the neighbours from the user similarity matrix, the estimated trust matrix or a combination of both in order to calculate the predicted ratings.
 
@@ -289,11 +289,11 @@ The Matchbox system makes use of content information in the form of user and ite
 
 \subsubsection{Psychology something}
 
-% -----------------------Article notes START------------------------------
-
+% -----------------------Article notes Fashion------------------------------
+% -----------------------Article notes------------------------------
+%FASHIONMARKETING
 % Fashion article notes (yeah will move to github-page):
 % fashion marketing and theory:
-
 % Difference between men and women - what, where, when and how
 % Understanding of consumer behavior can come from different ares, such as: psychological, cultural social psychological, physio-psychological, genetics anthropology.
 % Fashion is a socio-cultural phenomenom.
@@ -432,14 +432,42 @@ The Matchbox system makes use of content information in the form of user and ite
 % 	programmed to work consume in a special way - how to use it
 % Business anthropology
 % 	become the hotest candidates for busness related resarch hobschr
+% -----------------------Article notes------------------------------
 
-% -----------------------Article notes END------------------------------
+% -----------------------Article notes------------------------------
+% The Psychology and Behavior of Consumers in the Fashion Industry
+Keywords / Short summary
+    Low price brands vs. high priced brands
+        Status level (positioning) used to maximize performance
+        Higher price appeal on a psychological level
+        People satisfy self concept -> the feel of belonging to a specific social group
+        Lifestyle choices
+            materialism
+            ambition
+            orientation
+            popularity
+        Dress for others
+        Two surveys - one with brand known, one without
+            Survey done with known brand changed the outcome of the survey
+            Usually in favor of the higher priced brands
 
-% -----------------------Article notes START------------------------------
-The Psychology and Behavior of Consumers in the
-Fashion Industry
 
-% -----------------------Article notes END------------------------------
+Interesting findings
+    Two surveys - one with brand known, one without
+        Survey done with known brand changed the outcome of the survey
+        Usually in favor of the higher priced brands
+
+Quotes
+-
+
+Interesting references literature
+% -----------------------Article notes------------------------------
+
+% -----------------------Article notes------------------------------
+% How Evaluation Guides AI Research
+
+% -----------------------Article notes------------------------------
+
 
 % n:
 % http://ieeexplore.ieee.org/xpl/login.jsp?tp=&arnumber=5581949&url=http%3A%2F%2Fieeexplore.ieee.org%2Fxpls%2Fabs_all.jsp%3Farnumber%3D5581949
@@ -516,6 +544,50 @@ Tell me something i don't know problem.
 	%	- How important is e.g. item popularity?
 
 
+% -----------------------Article notes Recommender------------------------------
+% -----------------------Article notes------------------------------
+a_framework_for_content_based_demographic_filtering_AIR99 old
+focus on users who have rated pages (restaurant) highly
+train on a subset of each user i.e. no cold users
+    test by similarity of top tree of recommended to actual
+use pearson
+    user to user similarity 67.9\% (with a 95\% confidence interval of 0.58\%)
+    item to item similarity 59.8\% (with a 95\% confidence interval of 1.0\%)
+    best combined
+Content based.
+    content of store (frequent words) with regards to users preferences
+        Liked items multiply key-word by two, unliked by 0.5
+    61.2 (with a 95\% confidence interval of 0.56\%)
+    61.5 (with a 95\% confidence interval of 0.84\%)
+Demographics
+    gender, age, area code, education and employed with rating of restaurant
+    57.5 (with a 95\% confidence interval of 0.76\%).
+Handling sparse rating matrix
+    Similarity of user through content (word frequency in liked/disliked restaurant)
+    70.1 (with a 95\% confidence interval of 0.60\%)
+    Restaurants in common could be lower and still produce 70\% while with collaborative it would go as low as 57\% and increase up to 69\%.
+Combining the solutions
+    Top 5 restaurants of each user for each recommendation. Points 5-1
+    72.1 (with a 95\% confidence interval of 0.44\%)
+Suggestions
+    Using ALS on the sub
+
+notes:
+Good:
+    + Shows increase with recommendation blend
+    + Good inspiration for potential recommendation approaches with cf-cb-demographics
+    + The approach is easily usable when recentness of an item is taken into consideration
+Bad:
+    - So similar scores implies faulty testing conditions
+    - Old
+    - Small dataset
+% -----------------------Article notes------------------------------
+
+
+% -----------------------Article notes Sessions------------------------------
+% -----------------------Article notes------------------------------
+
+% -----------------------Article notes------------------------------
 
 \subsection{Session Based Recommendation}
 Init Hypothesis:
@@ -666,5 +738,4 @@ Make a store
 \subsection{Items clustering}
 
 
-
-
+\subsection{One-Class Collaborative Filtering}
