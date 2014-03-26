@@ -233,12 +233,12 @@ It is worth mentioning that the authors worked on the cold-start new user proble
 We are constrained to unobtrusively learn user-profiles from the natural interactions of users with the system, meaning that we can not require the user to rate e.g. 10 items before we can start providing recommendations. We currently have a \emph{mixed initiative} system meaning that there is provisions for both user and system controlled interactions. We (the system) can only select which items to recommend to the user, and this does not mean that the user actually will click an item or rate it.
 
 % Wisdom of the Better Few: Cold Start Recommendation via Representative based Rating Elicitation
- 
+
 Liu et. al \cite{Liu2011} propose an approach in which they elect a few representative users and items. The representative set should represent a set of active users or items who well represent the entire population but with little taste overlap. In their approach they wish to find a rank-k factorization of the form $Y \approx XR$ or $Y \approx CX$ where $X$ is a loading matrix consisting of free parameters and $R$ and $C$ which is the component matrix consisting of actual rows or columns from $Y$. The representative users and items are found using dimensionality reduction techniques by reducing the column space of the rating matrix from $m$ to $k$. And then applying basis selection based on the maximum-volume principle to select the $k$ most representative users or items. In order to be able to recommend new items to the users it must first be rated by the $k$ representative users, likewise for new users to be rated they need to rate the $k$ most representative users. Their method therefore easily allows new users to be \emph{folded in}.
 
 % User effort vs. accuracy in rating-based elicitation
 
-Cremonesi et. al. \cite{Cremonesi2012} performed a set of experiments where they looked at the trade-off between user-effort and accuracy. More specifically, how many ratings are enough to provide good quality recommendations to new users? The authors conclusion is that between 5 and 20 ratings are optimal for the movie domain. Their conclusion is therefore that 10 ratings is enough, but that this number depends on the recommendation method and the dataset used. 
+Cremonesi et. al. \cite{Cremonesi2012} performed a set of experiments where they looked at the trade-off between user-effort and accuracy. More specifically, how many ratings are enough to provide good quality recommendations to new users? The authors conclusion is that between 5 and 20 ratings are optimal for the movie domain. Their conclusion is therefore that 10 ratings is enough, but that this number depends on the recommendation method and the dataset used.
 
 \paragraph{Hybrid Approaches}
 
@@ -252,7 +252,7 @@ To solve the new-item problem, there are two commonly used (simple) solutions th
 
 \begin{itemize}
 \item Advertising at the homepage/front-page of the website, putting the new items in an eye catching position. This solution, however, may 		result in that some users, which don't like these new items, might leave the website.
-%TODO Move to cold-start user 
+%TODO Move to cold-start user
 \item Requesting the user to choose one or more of his/hers categories while registering for the site, and recommend items from the selected categories. This approach however, requires active user involvement and complicates the sign up process -> BAD, in addition, many users might chose not to give up any personal interest information, thus the user group covered by this solution is not large enough.
 \end{itemize}
 
@@ -277,7 +277,7 @@ Agarwal et. al. \cite{Agarwal2009} propose a class of latent factors models call
 % - Demonstrates usefulness for new-item recommendations
 % - See A. Item Recommendation from Implicit Feedback in the article for implicit feedback recommendations
 
-Gantner et. al. \cite{•} propose a method on how to map additional information such as user and item features to the latent features of a matrix (or higher dimensional) factorization model. The authors use BPR-MF, a matrix factorization model based on the Bayesian Personalized Ranking (BPR) framework. 
+Gantner et. al. \cite{•} propose a method on how to map additional information such as user and item features to the latent features of a matrix (or higher dimensional) factorization model. The authors use BPR-MF, a matrix factorization model based on the Bayesian Personalized Ranking (BPR) framework.
 
 % fLDA: Matrix Factorization through Latent Dirichlet Allocation
 % -
@@ -292,7 +292,26 @@ The Matchbox system makes use of content information in the form of user and ite
 
 \subsection{Fashion Recommendation}
 
-\subsubsection{Psychology something}
+\subsubsection{Psychology/theory}
+
+[Fashion] A Theory on Fashion Consumption
+PDF:
+## Keywords / Short summary
+A study on the fashion industry in China.
+
+Lot of different "definitions" of fashion:
+* "A universal rule that makes personal behavior becomes amodel”
+* The entire spectrum of attractive clothes styles at any given time
+* The worship and pursuit in an era or at one time
+* Is what people highly advocate at any one time
+
+
+
+## Interesting findings
+
+## Quotes
+
+## Interesting references literature
 
 % -----------------------Article notes Fashion------------------------------
 % -----------------------Article notes------------------------------
@@ -439,40 +458,8 @@ The Matchbox system makes use of content information in the form of user and ite
 % 	become the hotest candidates for busness related resarch hobschr
 % -----------------------Article notes------------------------------
 
-% -----------------------Article notes------------------------------
-% The Psychology and Behavior of Consumers in the Fashion Industry
-Keywords / Short summary
-    Low price brands vs. high priced brands
-        Status level (positioning) used to maximize performance
-        Higher price appeal on a psychological level
-        People satisfy self concept -> the feel of belonging to a specific social group
-        Lifestyle choices
-            materialism
-            ambition
-            orientation
-            popularity
-        Dress for others
-        Two surveys - one with brand known, one without
-            Survey done with known brand changed the outcome of the survey
-            Usually in favor of the higher priced brands
-
-
-Interesting findings
-    Two surveys - one with brand known, one without
-        Survey done with known brand changed the outcome of the survey
-        Usually in favor of the higher priced brands
-
-Quotes
--
-
-Interesting references literature
-% -----------------------Article notes------------------------------
 
 % -----------------------Article notes------------------------------
-% How Evaluation Guides AI Research
-
-% -----------------------Article notes------------------------------
-
 
 % n:
 % http://ieeexplore.ieee.org/xpl/login.jsp?tp=&arnumber=5581949&url=http%3A%2F%2Fieeexplore.ieee.org%2Fxpls%2Fabs_all.jsp%3Farnumber%3D5581949
@@ -548,53 +535,13 @@ Tell me something i don't know problem.
 %	- Trends?
 	%	- How important is e.g. item popularity?
 
-
 % -----------------------Article notes Recommender------------------------------
 % -----------------------Article notes------------------------------
-a_framework_for_content_based_demographic_filtering_AIR99 old
-focus on users who have rated pages (restaurant) highly
-train on a subset of each user i.e. no cold users
-    test by similarity of top tree of recommended to actual
-use pearson
-    user to user similarity 67.9\% (with a 95\% confidence interval of 0.58\%)
-    item to item similarity 59.8\% (with a 95\% confidence interval of 1.0\%)
-    best combined
-Content based.
-    content of store (frequent words) with regards to users preferences
-        Liked items multiply key-word by two, unliked by 0.5
-    61.2 (with a 95\% confidence interval of 0.56\%)
-    61.5 (with a 95\% confidence interval of 0.84\%)
-Demographics
-    gender, age, area code, education and employed with rating of restaurant
-    57.5 (with a 95\% confidence interval of 0.76\%).
-Handling sparse rating matrix
-    Similarity of user through content (word frequency in liked/disliked restaurant)
-    70.1 (with a 95\% confidence interval of 0.60\%)
-    Restaurants in common could be lower and still produce 70\% while with collaborative it would go as low as 57\% and increase up to 69\%.
-Combining the solutions
-    Top 5 restaurants of each user for each recommendation. Points 5-1
-    72.1 (with a 95\% confidence interval of 0.44\%)
-Suggestions
-    Using ALS on the sub
-
-notes:
-Good:
-    + Shows increase with recommendation blend
-    + Good inspiration for potential recommendation approaches with cf-cb-demographics
-    + The approach is easily usable when recentness of an item is taken into consideration
-Bad:
-    - So similar scores implies faulty testing conditions
-    - Old
-    - Small dataset
-% -----------------------Article notes------------------------------
-
-
-% -----------------------Article notes Sessions------------------------------
-% -----------------------Article notes------------------------------
 
 % -----------------------Article notes------------------------------
 
-\subsection{Session Based Recommendation}
+
+\subsection{Session Based Approach}
 Init Hypothesis:
 Two users with similar session habits and similar product accessing pattern
 have a stronger correlation to one-another than two users with just similar
@@ -739,8 +686,16 @@ Make a store
 
 
 
-\subsection{Recommenders (Similar systems? somethingsomething)}
+\subsection{Recommenders (Similar systems?)}
 \subsection{Items clustering}
-
-
 \subsection{One-Class Collaborative Filtering}
+
+
+% PDF:
+% ## Keywords / Short summary
+
+% ## Interesting findings
+
+% ## Quotes
+
+% ## Interesting references literature
