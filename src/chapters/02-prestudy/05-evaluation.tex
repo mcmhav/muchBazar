@@ -17,48 +17,6 @@
 Some key questions in evaluating recommender systems on testbed data are: what
 to predict, how to grade performance and what baseline to compare with.
 
-
-Explicit feedback ("relevance judgement")
-
-Explicit feedback are more precise than implicit feedback, but more difficult
-to collect since it requires the user to spend time rating items and the amount
-of feedback is often scarce. The main difference between the two is that
-implicit feedback is inferred from user behaviour, such as noting which news
-articles they do and do not view. Explicit feedback unlike implicit feedback
-provides the users with a mechanism to unequivocally express their ratings on a
-scale from usually in the form of a Likert scale ranging from 1-5 (strongly
-disagree - strongly agree). Thus explicit feedback captures both positive and
-negative feedback, while implicit feedback only can be positive. Furthermore,
-explicit feedback tend to concentrate on either side of the rating scale, as
-users are more likely to express their preference if they feel strongly for or
-against an item.
-
-product\_wanted, in the form of like/no feedback, can this be considered
-"explicit feedback?" no negative feedback...
-
-Implicit feedback (Indirectly reflect opinion through observing user behaviour)
-
-Unlike the more extensively researched explicit feedback, we do not have any
-direct input from the user regarding their personal preferences. In particular
-we do not have any substantial evidence of which items the user dislikes (e.g. a
-low rating for a movie). But in return implicit feedback is more easily
-collected, and usually more abundant.
-
-Almost all of the research on implicit feedback has considered how behaviors can
-be used as positive evidence, rather than negative evidence. However, one can imagine
-behaviors which indicate that a user does not find something relevant or which suggest
-that something is unimportant to the user, such as delete. It is likely that little research
-has been conducted on negative implicit feedback because there are fewer of these types
-of behaviors, and, in general, less is understood about how to effectively use negative
-feedback, whether for implicit or explicit relevance feedback.
-
-Another challenge facing implicit feedback research is the notion of degree of
-personalization offered by the system. In particular, individual differences can greatly
-impact the effectiveness of using behavior as implicit relevance feedback. People behave
-differently and have varying approaches to information-seeking; thus, it is difficult to
-generate, and dangerous to apply, all-purpose rules for describing how behavior can be
-used as implicit relevance feedback
-
 %Implicit feedback classfication (Type, confidence, precision)
 
 In the case of our project we collect the following data, which can be
@@ -67,44 +25,6 @@ product\_purchase\_intended, collection\_viewed(?)...
 
 Other types of implicit feedback include purchase history, browsing
 history, search pattern and even mouse movements
-
-Hu et. al. \cite{Hu2008} identify four unique characteristics of implicit
-feedback, which differentiates it from explicit feedback...
-
-\begin{enumerate}
-
-\item No negative feedback. By observing user behaviour we can infer which
-items the user consume and probably like. However, it is hard to infer which
-items the user did not like. This asymmetry has several implications; Explicit
-feedback provides a more detailed picture of the
-users preferences, but for implicit data the low ratings are treated as missing
-data and omitted from the analysis. Hence it is crucial to address the missing
-data where most negative feedback is expected to be found
-
-\item Implicit feedback is inherently noisy. While we track user behaviour, we
-can only guess their preferences and true motives. For example, a purchase does
-not necessarily indicate a positive view of an item, the item may have been
-purchased as a gift, or perhaps the user was disappointed
-with the item
-
-\item The numerical value of explicit feedback indicates preference, whereas
-the numerical value of implicit feedback indicates confidence. Explicit
-feedback could e.g. range from total dislike to really like, on the other hand
-implicit feedback describe the frequency of actions, e.g. how
-frequently a user buys an item. But a higher frequency might not necessarily
-indicate a stronger preference. A user might choose to only watch a really good
-movie once. However, a recurring event is more likely to reflect the user
-opinion. However, the numerical value of the feedback is definitely useful, as
-it tells us about the confidence we have in a certain observation
-
-\item Evaluation of implicit feedback requires appropriate measures. In the
-case of explicit feedback where a user specify a numerical score, measures such
-as mean squared error (MSE) could measure the success of the predictions.
-However, with implicit models we have to take into account
-the availability of the item, competition with other items, and repeat
-feedback.
-
-\end{enumerate}
 
 Accuracy metrics not suited for implicit feedback datasets, as they require
 knowing which items are undesired by a user \cite{Hu2008}.
