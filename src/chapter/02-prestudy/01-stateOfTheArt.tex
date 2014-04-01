@@ -220,11 +220,9 @@ As pointed out by Rashid et. al. \cite{Rashid2002}, the most direct way of acqui
 \item \emph{Personalized:} As soon as some information is known about a user, present items specifically tailored to that user using e.g. item-item similarity
 \end{itemize}
 
-Their evaluation focused on user effort and accuracy. Their suggestion for e-commerce recommender system is to start off recommending the most popular items rather than the highest rated ones, and then use item-item similarity as quickly as possible.
+Their evaluation focused on user effort and accuracy. It is worth noting that user effort is included, since they are making a movie recommender system, thus requiring the user to have seen a movie for her to be able to rate a movie. Their suggestion for e-commerce recommender system is to start off recommending the most popular items rather than the highest rated ones, and then use item-item similarity as quickly as possible.
 
-This study was later extended by Rashid et. al. \cite{Rashid2008} where they more closely examined information theoretic strategies for item selection. In the article they identify a number of aspects that a new user preference elicitation strategy should consider.
-
-In the article they introduced three new strategies:
+This study was later extended by Rashid et. al. \cite{Rashid2008} where they more closely examined information theoretic strategies for item selection. In the article they identify a number of aspects that a new user preference elicitation strategy should consider. In the article they introduced three new strategies:
 
 \begin{itemize}
 \item \emph{Entropy0}: Entropy Considering Missing Values
@@ -232,16 +230,8 @@ In the article they introduced three new strategies:
 \item \emph{IGCN:} Information Gain through Clustered Neighbors
 \end{itemize}
 
-%TODO Sum up the approaches. Neatly.
-
-%Findings:
-%#1 IGCN
-%#2 Entropy0
-%#3 HELF
-%#4 Popularity
-
 %Discussion on "suitedness", user involvement ∕ recommendation quality tradeoff
-It is worth mentioning that the authors worked on the cold-start new user problem for a movie recommender. The implications of this is that a user must have watched a movie, in order to rate it. This is not so important for our domain, as taking a quick look at the item should be sufficient to like/dislike it.
+It is worth mentioning that the authors worked on the cold-start new user problem for a movie recommender. The implications of this is that a user must have watched a movie, in order to rate it. This is not so important for our domain, as taking a quick look at the item should be sufficient to like/dislike it. Information theor
 %Implications -> Ignore the user effort stars in the article, as they dont have to browse until they find movies they previously have watched
 %Priority: Making the tinder like "swipe" interface smooth and efficient is important, making the rating as easy as possible
 %We cannot calculate entropt as we have no rating distribution for the items (1-5), damn u implicit feedback ;)
@@ -254,12 +244,11 @@ Liu et. al \cite{Liu2011} propose an approach in which they elect a few represen
 
 % User effort vs. accuracy in rating-based elicitation
 
-Cremonesi et. al. \cite{Cremonesi2012} performed a set of experiments where they looked at the trade-off between user-effort and accuracy. More specifically, how many ratings are enough to provide good quality recommendations to new users? The authors conclusion is that between 5 and 20 ratings are optimal for the movie domain. Their conclusion is therefore that 10 ratings is enough, but that this number depends on the recommendation method and the dataset used. 
+Cremonesi et. al. \cite{Cremonesi2012} performed a set of experiments where they looked at the trade-off between user-effort and accuracy. More specifically, how many ratings are enough to provide good quality recommendations to new users? The authors conclusion is that between 5 and 20 ratings are optimal for the movie domain. They concluded that 10 ratings is enough, but that this number depends on the recommendation method and the dataset used. 
 
 \paragraph{Hybrid Approaches}
 
 It is a common strategy to gather demographic data in order to gain knowledge about the user. Data that may be collected typically includes age, gender, nationality, marital status, income, educational level and occupation. The idea is that people with a more common background share a more similar taste than someone with a random background, and therefore good recommendations can be made as long as we know the new user’s background.
-
 
 \subsubsection{Cold-start item}
 
@@ -283,7 +272,7 @@ This section will cover some approaches described in the literature to solve the
 %TODO - Sort articles, some are more general cold-start solutions (not just new-item)
 %TODO - Read articles more in detail, explain their approaches
 
-Another line of search for solving the cold-start problem is to utilize features of items and users. The content features can be used to capture the similarities between users and items, thus reducing the amount of data required to make accurate predictions.
+Another line of search for solving the cold-start problem is to utilize features of items and users. The content features can be used to capture the similarities between users and items, thus reducing the amount of data required to make accurate predictions...
 
 % Regression-based Latent Factor Models
 
@@ -309,7 +298,7 @@ Gantner et. al. \cite{Ganter2010} propose a method on how to map additional info
 %	#2 Linear Mapping
 %		Each item factor is expressed by a weighted sum of the item attributes
 
-The authors use BPR-MF, a matrix factorization model based on the Bayesian Personalized Ranking (BPR) framework. 
+The authors use BPR-MF, a matrix factorization model based on the Bayesian Personalized Ranking (BPR) framework...
 
 
 % fLDA: Matrix Factorization through Latent Dirichlet Allocation
