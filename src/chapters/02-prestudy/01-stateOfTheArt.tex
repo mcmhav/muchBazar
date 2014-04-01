@@ -621,7 +621,10 @@ previous user behavior in order to predict the value of an item for a user.
 
 
 \subsubsection{Theory}
-What is fashion:
+This subsection will look into some background research on fashion.
+And look into what fashion is and why a consumer behaves like the consumer does.
+
+\textbf{What is fashion:}
 There are a lot of different ways of defining what fashion really is.
 
 \begin{itemize}
@@ -639,7 +642,7 @@ As seen from the different definitions mentioned above, what is reoccurring is;
 clothes, popularity, time and a cultural grouping. % MTODO better flow, not
 enough items to make the assumption
 
-Task of fashion marketing:
+\textbf{Task of fashion marketing:}
 Fashion is subject to constant change as seen from the different definitions of fashion from ~\ref{items:fashionDefinitions}.
 Some of these changes are due to human changes such as adoption of a new line of clothing, or something less controllable, such as the changing of the seasons.
 How much of a product should be made to satisfy the need of the consumer, but still remain a desirable product the consumer would find itself unique and special with.
@@ -756,46 +759,27 @@ Where the cumulative looks at the purchase as a whole, such as: the product, the
 The transaction specific focuses on the post-purchase, if the expectations of the product during the pre-purchase is met in the post-purchase stage, the likeliness of a repeat purchase is increased.
 
 
-\subsubsection{Fashion Recommender Systems}
 
-SuitUp:
-Social network which attempts to be a "practcal and ejoyable social space
-centered around clothing items".  Use multiple tools for recommending colts,
-including a Hot-or-Not, following other users, rate items and outfit creator
-approach.  Developed based on users surveys, brainstorming sessions and
-interviews with potential users.  The potential users consisted of a group of
-about 70 people who where in their 20's.  Hard to keep up with the changing in
-fashion and the users preferences.  Generates clothing and neighbor
-recommendations for users.  DirectedEdge~\cite{direcetedEdge} is used for
-recommendations.  It treats everything as an item, whether it is a user or a
-piece of clothing.  This makes item-item, user-user and item-user correlations
-simple.
+\subsubsection{What Other Fashion Recommender Systems Has Done?} % some more awesome name
+This subsection will look methods of other fashion recommender systems and other proposed methods to recommend products in the fashion domain.
 
-SuitUp Finding:
-The Hot-or-Not approach was well liked by all the test subjects.  Some more,
-but not very relevant.
-sauce:\cite{SuitUp}
+\textbf{Photograph based approach}
+Fashion and the products it regards are highly dependent on visuals.
+A fashion product would not be very interesting if no one saw it. %MTODO redundant?
+An approach to use the importance of how the product looks regarding recommending is to utilize images of the product.
+Fashion Coordinates Recommender System Using Photographs from Fashion Magazines~\cite{Iwata:2011} is a system doing this.
+They teach their system by using fashion magazines with full body images.
+They segment the image into two parts, top and bottom.
+From this the system learns which top matches to which bottom and collects visual features of the products.
+From this the system can recommend other tops to go with a selected bottom, or other way around.
+The proposed system scored better\footnote{Accuracy of 50\% on the top 5 suggested items, whereas naive and random managed 18\% and under 5\% respectively} than both a more naive approach and a random selection.
+Runtime was at 0.04 seconds per recommendation.
 
-LookBook:
-Can stay on the "new"/"hot" page for about 1-2 days.
-This happens with up voting from other users.
-So in other terms, something says popular for 1-2 days...
 
-DirectedEdge:
-Recommendation API.
-Can handle easily the need to express more interest in new items.  Which makes
-it useful in a fashion domain where items has a short lifetime.
-%http://developer.directededge.com/
-Twitter example: Obama is just noise when it comes to suggesting new friends to
-follow.  The authorative source is noise.  Tell me something i don't know
-problem.
+\textbf{Hot-or-not}
 
-Fashion Coordinates Recommender System Using Photographs from Fashion Magazines
-\cite{Iwata:2011} A system where they teach a system what to recommend through
-fashion magazine images.
-% MTODO more to come
+\textbf{Trust based}
 
-% http://www.slideshare.net/guest2f8cee8/polyvore-outfit-recommender-system
 
 % Building Recommender Systems using a Knowledge Base of product semantics
 % http://images.accenture.ca/SiteCollectionDocuments/PDF/recommenderws02.pdf
@@ -820,6 +804,7 @@ fashion magazine images.
 	% - Can rating infromation from similar items be used to decrease sparsity? (Content infromation - Hybrid approaches)
 %	- Trends?
 	%	- How important is e.g. item popularity?
+
 
 \subsection{Session Based Approach}
 Init Hypothesis:
