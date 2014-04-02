@@ -808,6 +808,43 @@ This feature gives the user a set of items and the option to either like or disl
 %	- Trends?
 	%	- How important is e.g. item popularity?
 
+\subsection{Recommender Systems (general)} %MTOD naming
+\subsubsection{Collaborative Filtering}
+In collaborative filtering the system will utilize the other users and the user's ratings to make predictions. \todo{maybe maybe ambiguous}
+Ratings can be based on a variety of feedback from the user, such as: rating from 1 to 5, like or dislike, having a look at an item or buying an item.
+For each user, in a collaborative filtering system, there will be a set ratings, for the more active users the amount of ratings will be higher.
+
+\textbf{Recommendation}
+The prediction of items for a user is done through looking at the user and other users.
+The system will try to find similar users based on the other users ratings.
+Based on this subset of users, the system can predict items by suggesting new items the user is not familiar with, but similar users have shown interest in. \todo{ambiguous who the user is?}
+
+There are a lot of algorithms used in the field of collaborative filtering to find and recommend items. This can be divided into two categories: Memory-based and Model-base algorithms.
+
+\subsubsection{Content Based Filtering}
+
+\textbf{Memory-based}
+
+\textbf{Model-base algorithms}
+
+
+\missingfigure{some awesome CF image}
+
+\textbf{User Profiling}
+In content based filtering the system will utilize the metadata(content) of the item to suggest items with similar metadata or properties.
+Based on the items the user previously have rated, either through implicit or explicit feedback, the system can build a user profile for the user.
+This user profile is usually a vector of some sort representing the users preferences through weighting the collected item properties from previous ratings.
+
+\textbf{Recommendation}
+With this profile the system will try to recommend items for the user.
+This is done through matching the profile vector with items metadata.
+From this the system produces a level of user interest in the items.
+This estimate is used to suggest the items of most interest to the user.
+
+In a fashion recommender system the the set of metadata to an item could be attributes such as: color, brand, store, size, key words and price.
+When recommending items for a user, the items with the most similar metadata to the user's user profile will be suggested.
+
+\missingfigure{maybe some trendy CBF image}
 
 \subsection{Session Based Approach}
 Init Hypothesis:
@@ -952,9 +989,6 @@ Make a store
 
 % > db.sessions.find({'user_id':100000140823565,session:440},{'product_id':1,'event_id':1,'_id':0}).sort({'ts':1})
 
-
-
-\subsection{Recommenders (Similar systems?)}
 \subsection{Items clustering}
 \subsection{One-Class Collaborative Filtering}
 
@@ -978,7 +1012,7 @@ Make a store
 
 % cite:
 % ## Keywords / Short summary
-Lot of references to work done on implicit feed back to check out
+% Lot of references to work done on implicit feed back to check out
 
 
 % ## Interesting findings
