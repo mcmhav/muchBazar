@@ -41,7 +41,7 @@ mind.
 The following table, partly inspired by Hu et. al. \cite{Hu2008}, identifies
 the different characteristics in implicit and explicit ratings:
 
-\begin{table}[h!]
+\begin{table}[H]
     \begin{tabular}{|l|p{6cm}|p{6cm}|}
     \hline
     ~                  & \textbf{Explicit ratings}
@@ -95,7 +95,8 @@ events. The two most important factors in such a scheme is how one choses these
 events and how to weight them. We can imagine that in a e-commerce store the
 following events would be useful:
 
-\begin{table}[h!]
+\begin{table}[H]
+  \centering
   \begin{tabular}{|l|l|}
   \hline
   Event type & Description \\ \hline
@@ -117,8 +118,8 @@ higher implicit rating than a user buying it.
 Instead, \cite{pkghost2014implicit} proposes using a rating mapping, that uses
 \textit{levels of frequency}.
 
-\begin{table}[h!]
-  \label{implicit-table}
+\begin{table}[H]
+  \centering
   \begin{tabular}{|l|l|}
   \hline
   Event type & Scores \\ \hline
@@ -129,6 +130,9 @@ Instead, \cite{pkghost2014implicit} proposes using a rating mapping, that uses
   4 & 10, 15, 18, 20 \\
   \hline
   \end{tabular}
+  \caption{Scores per event type, increases as frequence of each event
+           increments}
+  \label{implicit-table}
 \end{table}
 
 Then a user browsing an item $i$ two times, would get a score of 40 and a if
@@ -171,16 +175,19 @@ regression model is forumulated as:
 As a simple example, imagine we have the following $x$ (independent) and $y$
 (dependent) values, respectivly:
 
-\begin{verbatim}
- x  | y  
---------
- -2 | 3
- 3  | -1
- 1  | 1
- -1 | 3
- 2  | 3
- 4  | -2
-\end{verbatim}
+\begin{figure}[H]
+  \centering
+  \begin{BVerbatim}
+   x  | y  
+  --------
+   -2 | 3
+   3  | -1
+   1  | 1
+   -1 | 3
+   2  | 3
+   4  | -2
+  \end{BVerbatim}
+\end{figure}
 
 Solving equation \ref{eq-regression} we have the following equations where we
 want to find the values of $w_0$ and $w_1$:
@@ -206,26 +213,29 @@ solved the problem of the following form:
 Carrying out this minimazation for our equations \ref{eqs-regression-example},
 we obtain an intercept value ($w_0$) of $1.3787$ and a slope ($w_1$) of
 $0.5454$, this can be validated as a good approximation to the data points, by
-looking at the 2d-plot below:
+looking at the 2D-plot below:
 
-\begin{tikzpicture}
-  \begin{axis}[
-      axis lines=middle,
-      xmin=-5, xmax=5,
-      ymin=-5, ymax=5,
-      xtick=\empty, ytick=\empty
-  ]
-  \addplot [only marks] table {
-    -2 -3
-    -3 -1
-    1 1   
-    -4 -2
-    2 3
-    -1 3
-  };
-  \addplot [domain=-5:5, samples=2, dashed] {0.5454*x+1.3787};
-  \end{axis}
-\end{tikzpicture}
+\begin{figure}[H]
+  \centering
+  \begin{tikzpicture}
+    \begin{axis}[
+        axis lines=middle,
+        xmin=-5, xmax=5,
+        ymin=-5, ymax=5,
+        xtick=\empty, ytick=\empty
+    ]
+    \addplot [only marks] table {
+      -2 -3
+      -3 -1
+      1 1   
+      -4 -2
+      2 3
+      -1 3
+    };
+    \addplot [domain=-5:5, samples=2, dashed] {0.5454*x+1.3787};
+    \end{axis}
+  \end{tikzpicture}
+\end{figure}
 
 Now, using this methology on implicit feedback we need a regression model that
 correctly explains the correlation between feedback and ratings. Four models
