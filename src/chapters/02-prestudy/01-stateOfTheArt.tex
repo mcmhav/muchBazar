@@ -272,7 +272,7 @@ number of co-rated items between two users. The confidence scores are all
 expressed in relation to the most confident association for each user.
 
 \begin{equation}
-C_{s \rightarrow t} = \frac{n(I_{s} \cap I_{t}}{n(I_{s} \cap I_{u_{MAX_CONF}}})
+C_{s \rightarrow t} = \frac{n(I_{s} \cap I_{t}}{n(I_{s} \cap I_{u_{MAX_CONF}})} 
 \end{equation}
 
 Using the above example, assuming that the maximum number of co-rated items
@@ -331,7 +331,7 @@ the datasets with a high degree of sparsity.
 
 % Wisdom of the Better Few: Cold Start Recommendation via Representative based Rating Elicitation
 
-Liu et. al \cite{Liu2011} propose an approach in which they elect a few
+Liu et. al. \cite{Liu2011} propose an approach in which they elect a few
 representative users and items. The representative set should represent a set
 of active users or items who well represent the entire population but with
 little taste overlap. In their approach they wish to find a rank-k
@@ -456,7 +456,7 @@ Regularizing latent factors through regression has important consequences when m
 Agarwal et. al \cite{Agarwal2010} propose a Matrix factorization method to predict ratings in recommender system
 applications where a "bag-of-words" representation of item meta-data is natural. Their method regularizes both user and item factor simultaneously through user features and the bag of words associated with each item.
 
-The key idea of their method is to let user factors take values in an Euclidean space of existing factorization models, but assign item factors through a richer prior based on Latent Dirichlet Allocation (LDA). The main idea behind LDA is to attach a discrete latent factor to each word of an item that can take $K$ different values ($K$-topics) and produce item topics by averaging the per-word topics in the item. An article where 80$\%$ of the words are assigned to politics and the rest to education would be though of as a political article related to the issue of education. This allows us to model the affinity between user $i$ and item $j$ as $s'{j}\hat{z_{j}}$, where $\hat{z_{j]}$ is the multinomial probability vector representing the soft cluster membership score of of item $j$ to the $K$ different latent topics. 
+The key idea of their method is to let user factors take values in an Euclidean space of existing factorization models, but assign item factors through a richer prior based on Latent Dirichlet Allocation (LDA). The main idea behind LDA is to attach a discrete latent factor to each word of an item that can take $K$ different values ($K$-topics) and produce item topics by averaging the per-word topics in the item. An article where 80$\%$ of the words are assigned to politics and the rest to education would be though of as a political article related to the issue of education. This allows us to model the affinity between user $i$ and item $j$ as $s'{j}\hat{z_{j}}$, where $\hat{z_{j}}$ is the multinomial probability vector representing the soft cluster membership score of of item $j$ to the $K$ different latent topics. 
 
 % Matchbox: Large Scale Bayesian Recommendations
 % 	Online algorithm
@@ -494,7 +494,7 @@ The authors use BPR-MF, a matrix factorization model based on the Bayesian Perso
 \begin{enumerate}
 \item k-NN Mapping:	Weighted k-NN regression for each factor. Determine the k-nearest neighbors as the most similar items according to the cosine similarity of the attribute vectors.
 \item Linear Mapping: Each item factor is expressed by a weighted sum of the item attributes. Suitable parameters for the mapping function is learned by optimizing the model for the squared error on latent features.
-
+\end{enumerate}
 
 \subsection{Fashion Recommendation}
 
