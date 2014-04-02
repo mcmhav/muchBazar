@@ -242,7 +242,7 @@ $u$ used item $i$. Equally $re_{iu}$ depicts how recently user $u$ used item
 $i$ and $gp_{i}$ how popular product $i$ is, globaly. By accounting for
 recentness in their regression model they achieved good results and after
 training they used their $w$-vector, combined with the independent variables to
-predict future ratings.
+predict future ratings. \todo{Explain how number between 1 and 3 was given}
 
 \subsubsection{Relative preferences using buying frequency}
 
@@ -274,6 +274,8 @@ multiplying with $k$, here $k=5$:
   ImplicitRating(u,i) = \lceil 5 * RP(u,i) \rceil
 \end{equation}
 
+\todo{Explain a bit about Sequential pattern analysis}
+
 \subsection{Challanges and weaknesses}
 \label{implicit-weaknesses}
 
@@ -294,7 +296,12 @@ information-seeking; thus, it is difficult to generate, and dangerous to apply,
 all-purpose rules for describing how behavior can be used as implicit relevance
 feedback.
 
+\todo{Add weaknesses of explicit ratings}
+
+\todo{Mention fashion-specific challenges, e.g. clicks does not equal high
+rating}
+
 \subsection{Evaluating convertion to implicit ratings}
 
-Why we can not consider number of clicks on product implicit feedback.
-
+\todo{Something about MPR (mean percentile ranking) and perhaps AP (average
+precision)}
