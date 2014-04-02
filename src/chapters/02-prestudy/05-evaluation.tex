@@ -1,0 +1,55 @@
+% !TEX root = ../../report.tex
+
+\section{Evaluating predicted ratings}
+
+% What will be adressed in the section?
+
+	% What evaluation methodologies exist?
+		% Online vs Offline
+		% User experiments
+		% Questionaires...
+		
+	% What evaluation measures/metrics exist
+		% What is the difference between metrics for explicit and implicit feedback?
+		% Discussion on relevance
+
+
+Some key questions in evaluating recommender systems on testbed data are: what
+to predict, how to grade performance and what baseline to compare with.
+
+%Implicit feedback classfication (Type, confidence, precision)
+
+In the case of our project we collect the following data, which can be
+considered as implicit feedback.  - product\_detail\_clicked,
+product\_purchase\_intended, collection\_viewed(?)...
+
+Other types of implicit feedback include purchase history, browsing
+history, search pattern and even mouse movements
+
+Accuracy metrics not suited for implicit feedback datasets, as they require
+knowing which items are undesired by a user \cite{Hu2008}.
+
+Being accurate is not always enough. Striking a balance between accuracy and
+user satisfaction \cite{McNee2006}
+  % High accuracy != User satisfaction
+  % Therefore, important to consider other evaluation metrics beyond the
+  % conventional ones Which are the most important factors to consider with
+  % regards to user satisfaction
+
+The data available strongly influences the choice of evaluation method/metrics.
+E.g. classification accuracy metrics seem to be the most suitable when working
+with binary preferences, e.g. in the form of recall-oriented measures.
+
+\subsection{What Has Been Done Before}
+
+%Evaluation by looking at sessions
+%Evaluation using implicit feedback datasets
+%Turnover rate?
+% ++
+
+%Clues
+% http://delivery.acm.org/10.1145/570000/564421/p253-schein.pdf?ip=129.241.103.83&id=564421&acc=ACTIVE%20SERVICE&key=CDADA77FFDD8BE08%2E5386D6A7D247483C%2E4D4702B0C3E38B35%2E4D4702B0C3E38B35&CFID=419807217&CFTOKEN=62708098&__acm__=1394537427_86c608d0d7733db023faa5a09da46de7
+
+\subsection{What To Use}
+\subsubsection{The Good}
+\subsubsection{The Bad}
