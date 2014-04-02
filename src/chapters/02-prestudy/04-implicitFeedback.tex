@@ -83,14 +83,168 @@ the different characteristics in implicit and explicit ratings:
     \end{tabular}
 \end{table}
 
+\clearpage
+
 \subsection{Quantifying implicit feedback}
 
-Previous work:
+\subsubsection{Classifying levels of frequency}
 
-\begin{enumerate}
-\item Naive rule based
-\item Walk the Talk
-\end{enumerate}
+The naive way of quantifying implicit feedback is to use a simple
+\textit{counting scheme} where ratings are made based on frequency of certain
+events. The two most important factors in such a scheme is how one choses these
+events and how to weight them. We can imagine that in a e-commerce store the
+following events would be useful:
+
+\begin{table}[h!]
+  \begin{tabular}{|l|l|}
+  \hline
+  Event type & Description \\ \hline
+  0 & Item purchased \\
+  1 & Item placed in shopping cart \\
+  2 & Item placed in wish list \\
+  3 & Item browsed based on search result \\
+  4 & Item browsed \\
+  \hline
+  \end{tabular}
+\end{table}
+
+Then, our heuristic would count the frequency of each event for an item $i$ on
+user $u$. However, just counting is not a bounded function - so if one give
+\textit{Item browsed} the weight of $1$ and the \textit{Item purchased} event
+a weight of $100$, then a user browsing an item more than 100 times would get a
+higher implicit rating than a user buying it.
+
+Instead, \cite{pkghost2014implicit} proposes using a rating mapping, that uses
+\textit{levels of frequency}.
+
+\begin{table}[h!]
+  \label{implicit-table}
+  \begin{tabular}{|l|l|}
+  \hline
+  Event type & Scores \\ \hline
+  0 & 100 \\
+  1 & 70, 77, 80 \\
+  2 & 30, 40, 45, 48, 50 \\
+  3 & 20, 25, 28, 30 \\
+  4 & 10, 15, 18, 20 \\
+  \hline
+  \end{tabular}
+\end{table}
+
+Then a user browsing an item $i$ two times, would get a score of 40 and a if
+buying it the score would be 100 (e.g. the event type with highest interest
+level supersede all others). Equally, if a user browsed the item 100 times, it
+would make no difference in score compared to browsing it 4 times.
+
+If we wanted ratings between 1 and $k$ one can transform the score $s$ provided
+by table \ref{implicit-table}:
+
+\begin{equation}
+  ImplicitRating(s, k) = 100 * \frac{k-1}{100} + 1 
+\end{equation}
+
+The advantage of this heuristic is that is requires no training, it is simple
+to understand and works reasonably well, if weights are chosen correctly.
+However, the fact that one need to find these weights by hand is also its
+largest weakness. However, in order to find weights automatically one need to
+train a model - which can adapt and learn the optimal values for each weight.
+
+\subsubsection{Regression analysis}
+
+This requires us to having some metric informing our algorithm about good or
+bad weights. This is done in a study by Parra et. al. \cite{parra2011walk}
+where they do a quantitive user study asking 114 active users to rate items
+found in their activity history. They used this in order to do
+a \textit{Regression analysis}, where the rating was the \textit{dependent
+variable} and the implicit feedback, combined with other factors were the
+\textit{independent variables}.
+
+A regression analysis is using multiple data points in order to learn how the
+independent variables relate to the dependent variable. Often the linear
+regression model is forumulated as:
+
+\begin{equation}
+  \label{eq-regression}
+  \hat{y}(w,x) = w_0 + w_1 x_1 + \dots + w_p x_p
+\end{equation}
+
+As a simple example, imagine we have the following $x$ (independent) and $y$
+(dependent) values, respectivly:
+
+\begin{verbatim}
+ x  | y  
+--------
+ -2 | 3
+ 3  | -1
+ 1  | 1
+ -1 | 3
+ 2  | 3
+ 4  | -2
+\end{verbatim}
+
+Solving equation \ref{eq-regression} we have the following equations where we
+want to find the values of $w_0$ and $w_1$:
+
+\begin{equation}
+  \label{eqs-regression-example}
+  \begin{split}
+    -2 = w_0 + 3 w_1 \\
+    \dots \\
+    4 = w_0 - 2 w_1
+  \end{split}
+\end{equation}
+
+Using a minimization method called \textit{Least squares} we try to minimize
+the residual $e$, using sum of squares between the observed values in the
+dataset and the values predicted by the linear approximation. Mathematically it
+solved the problem of the following form:
+
+\begin{equation}
+  min (SSE = \sum_{i=1}^{n} e_i^2)
+\end{equation}
+
+Carrying out this minimazation for our equations \ref{eqs-regression-example},
+we obtain an intercept value ($w_0$) of $1.3787$ and a slope ($w_1$) of
+$0.5454$, this can be validated as a good approximation to the data points, by
+looking at the 2d-plot below:
+
+\begin{tikzpicture}
+  \begin{axis}[
+      axis lines=middle,
+      xmin=-5, xmax=5,
+      ymin=-5, ymax=5,
+      xtick=\empty, ytick=\empty
+  ]
+  \addplot [only marks] table {
+    -2 -3
+    -3 -1
+    1 1   
+    -4 -2
+    2 3
+    -1 3
+  };
+  \addplot [domain=-5:5, samples=2, dashed] {0.5454*x+1.3787};
+  \end{axis}
+\end{tikzpicture}
+
+Now, using this methology on implicit feedback we need a regression model that
+correctly explains the correlation between feedback and ratings. Four models
+are proposed:
+
+\noindent
+Model 1: $r_{iu} = w_0 + w_1 if_{iu}$ \\
+Model 2: $r_{iu} = w_0 + w_1 if_{iu} + w_2 re_{iu}$ \\
+Model 3: $r_{iu} = w_0 + w_1 if_{iu} + w_2 re_{iu} + w_3 gp_{i}$ \\
+Model 4: $r_{iu} = w_0 + w_1 if_{iu} + w_2 re_{iu} + w_3 if_{iu} \cdot re_{iu}$
+
+where $if_{iu}$ is a number between 1 and 3, dependent on how many times user
+$u$ used item $i$. Equally $re_{iu}$ depicts how recently user $u$ used item
+$i$ and $gp_{i}$ how popular product $i$ is, globaly. By accounting for
+recentness in their regression model they achieved good results and after
+training they used their $w$-vector, combined with the independent variables to
+predict future ratings.
+
+\subsubsection{Relative preferences using buying frequency}
 
 A hybrid approach using sequential pattern analysis and collaboraitve filtering
 techniques are presented by Choi et. al. \cite{choi2012hybrid}. In their
