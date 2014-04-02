@@ -639,7 +639,8 @@ There are a lot of different ways of defining what fashion really is.
 \end{itemize}
 
 As seen from the different definitions mentioned above, what is reoccurring is;
-clothes, popularity, time and a cultural grouping. % MTODO better flow, not
+clothes, popularity, time and a cultural grouping.
+\todo{Better flow}
 enough items to make the assumption
 
 \textbf{Task of fashion marketing:}
@@ -664,15 +665,7 @@ Fashion trends comes and goes, and the new fashion starts with the refusal of wh
 
 In fashion there is a big difference between men and women in what, where, when
 and how they buy.  How to understand the behavior of the consumers and how they
-act can come from a vast set of areas, the main factors influencing the consumer according to \cite{kotler2009marketing} is: % MTODO have only one
-% \begin{itemize}
-%     \item Physiological factors
-%     \item Socio-cultural factors
-%     \item Personal factors
-%     \item Psychological factors
-%     \item Rational factors
-%     \label{items:FashionFactors}
-% \end{itemize}
+act can come from a vast set of areas, the main factors influencing the consumer according to \cite{kotler2009marketing} is:
 
 \begin{table}[H]
     \centering
@@ -687,7 +680,7 @@ act can come from a vast set of areas, the main factors influencing the consumer
     \label{table:FashionFactors}
     \caption [Fashion Factors]{Main factors influencing the consumer when it comes to their buying behavior}
 \end{table}
-
+\todo{Last column for in depth explanation (perhaps)}
 When it comes to fashion it is mainly a socio-cultural phenomenon.
 
 One central factor when it comes to shopping and fashion is price, a rational factor.
@@ -760,7 +753,8 @@ The transaction specific focuses on the post-purchase, if the expectations of th
 
 
 
-\subsubsection{What Other Fashion Recommender Systems Has Done?} % some more awesome name
+\subsubsection{What Other Fashion Recommender Systems Has Done?}
+\todo{A shorter and more precise way of saying this}
 This subsection will look methods of other fashion recommender systems and other proposed methods to recommend products in the fashion domain.
 
 \textbf{Photograph based approach}
@@ -821,15 +815,33 @@ Based on this subset of users, the system can predict items by suggesting new it
 
 There are a lot of algorithms used in the field of collaborative filtering to find and recommend items. This can be divided into two categories: Memory-based and Model-base algorithms.
 
-\subsubsection{Content Based Filtering}
-
-\textbf{Memory-based}
-
-\textbf{Model-base algorithms}
-
-
 \missingfigure{some awesome CF image}
 
+\textbf{Memory-based}
+In memory based collaborative filtering the entire user-item database is used to generate recommendations.
+A usual approach to find a rating is to look at a set of the most similar users based on their ratings, the user's neighbors, and use the similarity to weight their rating on the item or items in question.
+\todo{some awesome CF equation to predict rating}
+
+How to calculate the similarity of users can be done in a variety of ways.
+Most of them base their similarity measure on the user's ratings.
+Two often used approaches to calculate this is through Pearson correlation coefficient or cosine similarity.
+\missingfigure{similarity figure perhaps}
+
+\todo{some more words on memory, and the similarity measure}
+
+
+\textbf{Model-base algorithms}
+As the name implies this approach tries to model the user ratings.
+With this approach the complete dataset is not necessary when making predictions, like the memory-based approach often needs.
+So instead of using the complete dataset the model is used.
+Often used collaborative filtering algorithms to build these models are: Bayesian networks, clustering models, singular value decomposition and Markov decision process based models.
+
+
+\todo{some more words on model}
+\missingfigure{ALS-figure perhaps}
+
+
+\subsubsection{Content Based Filtering}
 \textbf{User Profiling}
 In content based filtering the system will utilize the metadata(content) of the item to suggest items with similar metadata or properties.
 Based on the items the user previously have rated, either through implicit or explicit feedback, the system can build a user profile for the user.
@@ -847,6 +859,7 @@ When recommending items for a user, the items with the most similar metadata to 
 \missingfigure{maybe some trendy CBF image}
 
 \subsection{Session Based Approach}
+\todo{This subsection has been dead for a while. Just here in case of revival (time)}
 Init Hypothesis:
 Two users with similar session habits and similar product accessing pattern
 have a stronger correlation to one-another than two users with just similar
