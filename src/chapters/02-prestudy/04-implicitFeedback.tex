@@ -17,7 +17,7 @@
 Explicit feedback is present in many of the largest recommender systems today
 and hence, is extensively researched.\todo{Ref.} The user is commonly asked to
 rate item $i$ on a Likert scale from $1$ to $k$, ranging from strongly
-disagree/dislike to strongly agree/like. Its advantages are, among others the
+disagree to strongly agree with an item. Its advantages are, among others the
 ability to get precise feedback from the user and capturing both positive and
 negative preferences. However, although having a high popularity, the method
 has multiple weaknesses. The most prominent weakness is the difficulty of
@@ -29,70 +29,289 @@ different preferences due to peer of social pressure. The fact that we are
 introducing a user overhead, makes it difficult to have a complete view on the
 user preferences \cite{jawaheer2010characterisation}.
 
-We can achieve better results looking at user behaviour, which is both easier
-to collect and does not require any extra effort from the user.  Our end-goal
-is to predict a rating $r$ for a given user $u$ on item $i$, and thus we need
-some way of translating our implicit feedback into what we call
-\textbf{implicit ratings} - these are ratings, just like explicit ratings, but
-inferred by user behaviour and as we will see in the succeeding sections need
-to be anylyzed with this in mind.
+We can try to achieve better results and create a more pleasant experience for
+the user, by looking at behavioural statistics, which is both easier to collect
+and does not require any extra effort from the user. Our end-goal is to predict
+a rating $r$ for a given user $u$ on item $i$, and thus we need some way of
+translating our implicit feedback into what we call \textbf{implicit ratings} -
+these are ratings, just like explicit ratings, but inferred by user behaviour
+and as we will see in the succeeding sections need to be anylyzed with this in
+mind.
+
+The following table, partly inspired by Hu et. al. \cite{Hu2008}, identifies
+the different characteristics in implicit and explicit ratings:
+
+\begin{table}[H]
+    \begin{tabular}{|l|p{6cm}|p{6cm}|}
+    \hline
+    ~                  & \textbf{Explicit ratings}
+                       & \textbf{Implicit ratings} \\ \hline
+
+    \textit{Types of feedback}  
+                       & Positive and negative.
+                       & Positive. \\ \hline
+
+    \textit{Meaning}
+                       & Indicates preference. Often on a Likert scale ranging
+                         from total dislike to really like.
+                       & Indicates confidence. Higher frequency in implicit 
+                         feedback does not necessarily indicate higher
+                         preference. \\ \hline
+
+    \textit{Noisiness}
+                       & Medium. Depends on domain and can be removed 
+                         \cite{amatriain2009like}.
+                       & High. One of the main challenges in evaluating
+                         implicit feedback is choosing which events to
+                         consider. \\ \hline
+
+    \textit{Evaluation metrics}
+                       & Traditional metrics such as RMSE are commonly used.
+                       & As users do not provide numerical scores, a
+                         Precision-Recall scheme or similar or more often used.
+                         \\ \hline
+
+    \textit{Strengths}
+                       & Heavily researched, good evaluation metrics, easy to
+                         implement.
+                       & Does not require feedback from user, less sparsity and
+                         catches actual behavior, not influenced by peer
+                         pressure etc. \\ \hline
+
+    \textit{Weaknesses}
+                       & \multicolumn{2}{c|}{See subsection \ref{implicit-weaknesses}} \\ \hline
+    \end{tabular}
+\end{table}
+
+\clearpage
 
 \subsection{Quantifying implicit feedback}
 
-Hu et. al. \cite{Hu2008} identify four unique characteristics of implicit
-feedback, which differentiates it from explicit feedback...
+\subsubsection{Classifying levels of frequency}
 
-\begin{enumerate}
+The naive way of quantifying implicit feedback is to use a simple
+\textit{counting scheme} where ratings are made based on frequency of certain
+events. The two most important factors in such a scheme is how one choses these
+events and how to weight them. We can imagine that in a e-commerce store the
+following events would be useful:
 
-\item No negative feedback. By observing user behaviour we can infer which
-items the user consume and probably like. However, it is hard to infer which
-items the user did not like. This asymmetry has several implications; Explicit
-feedback provides a more detailed picture of the
-users preferences, but for implicit data the low ratings are treated as missing
-data and omitted from the analysis. Hence it is crucial to address the missing
-data where most negative feedback is expected to be found
+\begin{table}[H]
+  \centering
+  \begin{tabular}{|l|l|}
+  \hline
+  Event type & Description \\ \hline
+  0 & Item purchased \\
+  1 & Item placed in shopping cart \\
+  2 & Item placed in wish list \\
+  3 & Item browsed based on search result \\
+  4 & Item browsed \\
+  \hline
+  \end{tabular}
+\end{table}
 
-\item Implicit feedback is inherently noisy. While we track user behaviour, we
-can only guess their preferences and true motives. For example, a purchase does
-not necessarily indicate a positive view of an item, the item may have been
-purchased as a gift, or perhaps the user was disappointed
-with the item
+Then, our heuristic would count the frequency of each event for an item $i$ on
+user $u$. However, just counting is not a bounded function - so if one give
+\textit{Item browsed} the weight of $1$ and the \textit{Item purchased} event
+a weight of $100$, then a user browsing an item more than 100 times would get a
+higher implicit rating than a user buying it.
 
-\item The numerical value of explicit feedback indicates preference, whereas
-the numerical value of implicit feedback indicates confidence. Explicit
-feedback could e.g. range from total dislike to really like, on the other hand
-implicit feedback describe the frequency of actions, e.g. how
-frequently a user buys an item. But a higher frequency might not necessarily
-indicate a stronger preference. A user might choose to only watch a really good
-movie once. However, a recurring event is more likely to reflect the user
-opinion. However, the numerical value of the feedback is definitely useful, as
-it tells us about the confidence we have in a certain observation
+Instead, \cite{pkghost2014implicit} proposes using a rating mapping, that uses
+\textit{levels of frequency}.
 
-\item Evaluation of implicit feedback requires appropriate measures. In the
-case of explicit feedback where a user specify a numerical score, measures such
-as mean squared error (MSE) could measure the success of the predictions.
-However, with implicit models we have to take into account
-the availability of the item, competition with other items, and repeat
-feedback.
+\begin{table}[H]
+  \centering
+  \begin{tabular}{|l|l|}
+  \hline
+  Event type & Scores \\ \hline
+  0 & 100 \\
+  1 & 70, 77, 80 \\
+  2 & 30, 40, 45, 48, 50 \\
+  3 & 20, 25, 28, 30 \\
+  4 & 10, 15, 18, 20 \\
+  \hline
+  \end{tabular}
+  \caption{Scores per event type, increases as frequence of each event
+           increments}
+  \label{implicit-table}
+\end{table}
 
-\end{enumerate}
+Then a user browsing an item $i$ two times, would get a score of 40 and a if
+buying it the score would be 100 (e.g. the event type with highest interest
+level supersede all others). Equally, if a user browsed the item 100 times, it
+would make no difference in score compared to browsing it 4 times.
+
+If we wanted ratings between 1 and $k$ one can transform the score $s$ provided
+by table \ref{implicit-table}:
+
+\begin{equation}
+  ImplicitRating(s, k) = 100 * \frac{k-1}{100} + 1 
+\end{equation}
+
+The advantage of this heuristic is that is requires no training, it is simple
+to understand and works reasonably well, if weights are chosen correctly.
+However, the fact that one need to find these weights by hand is also its
+largest weakness. However, in order to find weights automatically one need to
+train a model - which can adapt and learn the optimal values for each weight.
+
+\subsubsection{Regression analysis}
+
+This requires us to having some metric informing our algorithm about good or
+bad weights. This is done in a study by Parra et. al. \cite{parra2011walk}
+where they do a quantitive user study asking 114 active users to rate items
+found in their activity history. They used this in order to do
+a \textit{Regression analysis}, where the rating was the \textit{dependent
+variable} and the implicit feedback, combined with other factors were the
+\textit{independent variables}.
+
+A regression analysis is using multiple data points in order to learn how the
+independent variables relate to the dependent variable. Often the linear
+regression model is forumulated as:
+
+\begin{equation}
+  \label{eq-regression}
+  \hat{y}(w,x) = w_0 + w_1 x_1 + \dots + w_p x_p
+\end{equation}
+
+As a simple example, imagine we have the following $x$ (independent) and $y$
+(dependent) values, respectivly:
+
+\begin{figure}[H]
+  \centering
+  \begin{BVerbatim}
+   x  | y  
+  --------
+   -2 | 3
+   3  | -1
+   1  | 1
+   -1 | 3
+   2  | 3
+   4  | -2
+  \end{BVerbatim}
+\end{figure}
+
+Solving equation \ref{eq-regression} we have the following equations where we
+want to find the values of $w_0$ and $w_1$:
+
+\begin{equation}
+  \label{eqs-regression-example}
+  \begin{split}
+    -2 = w_0 + 3 w_1 \\
+    \dots \\
+    4 = w_0 - 2 w_1
+  \end{split}
+\end{equation}
+
+Using a minimization method called \textit{Least squares} we try to minimize
+the residual $e$, using sum of squares between the observed values in the
+dataset and the values predicted by the linear approximation. Mathematically it
+solved the problem of the following form:
+
+\begin{equation}
+  min (SSE = \sum_{i=1}^{n} e_i^2)
+\end{equation}
+
+Carrying out this minimazation for our equations \ref{eqs-regression-example},
+we obtain an intercept value ($w_0$) of $1.3787$ and a slope ($w_1$) of
+$0.5454$, this can be validated as a good approximation to the data points, by
+looking at the 2D-plot below:
+
+\begin{figure}[H]
+  \centering
+  \begin{tikzpicture}
+    \begin{axis}[
+        axis lines=middle,
+        xmin=-5, xmax=5,
+        ymin=-5, ymax=5,
+        xtick=\empty, ytick=\empty
+    ]
+    \addplot [only marks] table {
+      -2 -3
+      -3 -1
+      1 1   
+      -4 -2
+      2 3
+      -1 3
+    };
+    \addplot [domain=-5:5, samples=2, dashed] {0.5454*x+1.3787};
+    \end{axis}
+  \end{tikzpicture}
+\end{figure}
+
+Now, using this methology on implicit feedback we need a regression model that
+correctly explains the correlation between feedback and ratings. Four models
+are proposed:
+
+\noindent
+Model 1: $r_{iu} = w_0 + w_1 if_{iu}$ \\
+Model 2: $r_{iu} = w_0 + w_1 if_{iu} + w_2 re_{iu}$ \\
+Model 3: $r_{iu} = w_0 + w_1 if_{iu} + w_2 re_{iu} + w_3 gp_{i}$ \\
+Model 4: $r_{iu} = w_0 + w_1 if_{iu} + w_2 re_{iu} + w_3 if_{iu} \cdot re_{iu}$
+
+where $if_{iu}$ is a number between 1 and 3, dependent on how many times user
+$u$ used item $i$. Equally $re_{iu}$ depicts how recently user $u$ used item
+$i$ and $gp_{i}$ how popular product $i$ is, globaly. By accounting for
+recentness in their regression model they achieved good results and after
+training they used their $w$-vector, combined with the independent variables to
+predict future ratings. \todo{Explain how number between 1 and 3 was given}
+
+\subsubsection{Relative preferences using buying frequency}
+
+A hybrid approach using sequential pattern analysis and collaboraitve filtering
+techniques are presented by Choi et. al. \cite{choi2012hybrid}. In their
+algorithm they calculate an implicit rating by finding the absolute preference
+AP:
+
+\begin{equation}
+  AP(u,i) = ln(\frac{trans(u,i)}{\sum_{e \in E}{trans(u, e)}} + 1)
+\end{equation}
+
+where $trans(u,i)$ is the number of transactions for user $u$ on item $i$.
+However, this absolute preference only takes into account the frequency of
+purchases and because the frequency is heavily dependent on price, item
+category and lifespan of an item - they compare it with other users finding the
+relative preference RP:
+
+\begin{equation}
+  RP(u,i) = \frac{AP(u,i)}{Max_{c \in U}(AP(c,i))}
+\end{equation}
+
+where $U$ denotes every user who purchased item $i$. The reason for using a
+maximization function, is to make $RP(u,i)$ range from $0.0$ to $1.0$ (i.e.
+normalization) and one can thus find a rating on a common Likert scale by
+multiplying with $k$, here $k=5$:
+
+\begin{equation}
+  ImplicitRating(u,i) = \lceil 5 * RP(u,i) \rceil
+\end{equation}
+
+\todo{Explain a bit about Sequential pattern analysis}
 
 \subsection{Challanges and weaknesses}
+\label{implicit-weaknesses}
 
-Almost all of the research on implicit feedback has considered how behaviors can
-be used as positive evidence, rather than negative evidence. However, one can imagine
-behaviors which indicate that a user does not find something relevant or which suggest
-that something is unimportant to the user, such as delete. It is likely that little research
-has been conducted on negative implicit feedback because there are fewer of these types
-of behaviors, and, in general, less is understood about how to effectively use negative
-feedback, whether for implicit or explicit relevance feedback.
+Almost all of the research on implicit feedback has considered how behaviors
+can be used as positive evidence, rather than negative evidence. However, one
+can imagine behaviors which indicate that a user does not find something
+relevant or which suggest that something is unimportant to the user, such as
+delete. It is likely that little research has been conducted on negative
+implicit feedback because there are fewer of these types of behaviors, and, in
+general, less is understood about how to effectively use negative feedback,
+whether for implicit or explicit relevance feedback.
 
 Another challenge facing implicit feedback research is the notion of degree of
-personalization offered by the system. In particular, individual differences can greatly
-impact the effectiveness of using behavior as implicit relevance feedback. People behave
-differently and have varying approaches to information-seeking; thus, it is difficult to
-generate, and dangerous to apply, all-purpose rules for describing how behavior can be
-used as implicit relevance feedback.
+personalization offered by the system. In particular, individual differences
+can greatly impact the effectiveness of using behavior as implicit relevance
+feedback. People behave differently and have varying approaches to
+information-seeking; thus, it is difficult to generate, and dangerous to apply,
+all-purpose rules for describing how behavior can be used as implicit relevance
+feedback.
+
+\todo{Add weaknesses of explicit ratings}
+
+\todo{Mention fashion-specific challenges, e.g. clicks does not equal high
+rating}
 
 \subsection{Evaluating convertion to implicit ratings}
 
+\todo{Something about MPR (mean percentile ranking) and perhaps AP (average
+precision)}
