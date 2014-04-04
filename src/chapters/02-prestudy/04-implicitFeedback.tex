@@ -24,7 +24,7 @@ has multiple weaknesses. The most prominent weakness is the difficulty of
 collecting ratings: the method requires the user to spend time rating items and
 the amount of feedback is often scarce, creating sparse data sets. Further,
 explicit ratings are often subject to inconsitencies known as natural
-noise \cite{amatriain2009like} and users might also be pressed to report
+noise \cite{amatriain2009like} and users might also be pressed to report
 different preferences due to peer of social pressure. The fact that we are
 introducing a user overhead, makes it difficult to have a complete view on the
 user preferences \cite{jawaheer2010characterisation}.
@@ -159,7 +159,7 @@ This requires us to having some metric informing our algorithm about good or
 bad weights. This is done in a study by Parra et. al. \cite{parra2011walk}
 where they do a quantitive user study asking 114 active users to rate items
 found in their activity history. They used this in order to do
-a \textit{Regression analysis}, where the rating was the \textit{dependent
+a \textit{Regression analysis}, where the rating was the \textit{dependent
 variable} and the implicit feedback, combined with other factors were the
 \textit{independent variables}.
 
@@ -244,7 +244,7 @@ are proposed:
 \noindent
 Model 1: $r_{iu} = w_0 + w_1 if_{iu}$ \\
 Model 2: $r_{iu} = w_0 + w_1 if_{iu} + w_2 re_{iu}$ \\
-Model 3: $r_{iu} = w_0 + w_1 if_{iu} + w_2 re_{iu} + w_3 gp_{i}$ \\
+Model 3: $r_{iu} = w_0 + w_1 if_{iu} + w_2 re_{iu} + w_3 gp_{i}$ \\
 Model 4: $r_{iu} = w_0 + w_1 if_{iu} + w_2 re_{iu} + w_3 if_{iu} \cdot re_{iu}$
 
 where $if_{iu}$ is a number between 1 and 3, dependent on how many times user
@@ -257,7 +257,7 @@ predict future ratings. \todo{Explain how number between 1 and 3 was given}
 \subsubsection{Relative preferences using buying frequency}
 
 A hybrid approach using sequential pattern analysis and collaboraitve filtering
-techniques are presented by Choi et. al. \cite{choi2012hybrid}. In their
+techniques are presented by Choi et. al. \cite{choi2012hybrid}. In their
 algorithm they calculate an implicit rating by finding the absolute preference
 AP:
 

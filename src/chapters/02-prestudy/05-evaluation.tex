@@ -1,33 +1,74 @@
 % !TEX root = ../../report.tex
 
-\section{Evaluating predicted ratings}
+\section{Evaluation}
 
 % What will be adressed in the section?
 
 	% What evaluation methodologies exist?
-		% Online vs Offline
-		% User experiments
-		% Questionaires...
-
-	% What evaluation measures/metrics exist
-		% What is the difference between metrics for explicit and implicit feedback?
-		% Discussion on relevance
+		% Offline Evaluation
+		% 	Recommender System Datasets
+		%		Explicit vs. Implicit
+		% 	Offline Evaluation Measures
+		%		Traditional evaluation measures
+		%		Cold-start system evaluation
+		%		Implicit feedback evaluation measures
+		% Online Evaluation
 
 
 Some key questions in evaluating recommender systems on testbed data are: what
 to predict, how to grade performance and what baseline to compare with.
 
-%Implicit feedback classfication (Type, confidence, precision)
 
-In the case of our project we collect the following data, which can be
-considered as implicit feedback.  - product\_detail\_clicked,
-product\_purchase\_intended, collection\_viewed(?)...
+This section will cover how the quality of recommender systems can be
+assessed. These evaluation methods can be split into two classes: Offline
+evaluation and Online evaluation. This section will also cover the most
+frequently used evaluation metrics, a discussion of evaluation measures for implicit feedback, and cold-start summary of the methodologies used in the literature to evaluate the quality of cold-start recommendations.
 
-Other types of implicit feedback include purchase history, browsing
-history, search pattern and even mouse movements
 
-Accuracy metrics not suited for implicit feedback datasets, as they require
-knowing which items are undesired by a user \cite{Hu2008}.
+\subsection{Offline Evaluation}
+
+Offline experiments are performed using pre-collected dataset(s) and a protocol
+that models the user behavior to estimate recommender performance through
+different evaluation measures
+
+\subsubsection{Recommender system datasets}
+
+The main aim of a recommender system is to identify the set of items in a dataset that might be intersting to a user based on their expressed preferences. For a fashion recommender this would mean estimating how much a user might like an item, by e.g. predicting what rating a user might give an item. In recent years, various test collections for different domains such as books, music, movies have been made available to the public. These datasets usually consist of user ratings in the form of \emph{<UserID, ItemID, Rating>}.
+
+In recent years more or more datasets have been made available which contains additional information such as demographic information about the users, trust-networks, user-assigned tags and etc. Under we have listed a few selected popular datasets containing additional information:
+
+%TODO - Find more cool dataset
+
+\begin{itemize}
+\item MovieLens 100k dataset \cite{Movielens}: The movielens dataset incorporates demographic information about the user in addition the traditional rating matrix
+\item Epinions dataset \cite{Epinions}: The Epinions dataset includes a trust-network, which specifices who-trust-whom in a social network based on customer reviews for the website Epinions.com
+\end{itemize}
+
+\textbf{Explicit-feedback}
+
+The definition of explicit is defined as "stated clearly and in detail, leaving no room for confusion or doubt". Explicit feedback are more precise than implicit feedback, but more difficult to collect since it requires active user involvement. One serious implication of this is that the amount of feedback often is scarce since many users opt not to provide any feedback. Explicit feedback mechanisms allow the users to unequivocally express their ratings on a scale (usually in the form of a Likert scale (strongly disagree - strongly agree). Thus explicit feedback is able to capture both negative and positive feedback, while implicit feedback \emph{only} can be positive. It is worth noting that explicit feedback tend to concentrate on either side of the rating scale, as users are more likely to express their preference if they feel strongly for or against an item \cite{Jawaheer2010}.
+
+\textbf{Implicit-feedback}
+
+%TODO - Herman, maybe you want to add something more?
+%	Implicit feedback classfication (Type, confidence, precision)
+
+Unlike explicit feedback, we do not have nay direct input from the user regarind their personal preferences. In particular we do not have any substatial evidence of which items the user dislikes, such as low ratings. However, implicit-feedback is more easily collected, and usually more abundant. Implicit feedback types include browsing history, purchase history, search patters, etc.
+
+\subsubsection{Offline Evaluation}
+
+%Leave one out
+%K-fold
+%...
+
+\subsubsection{Offline Evaluation Metrics}
+
+When evaluating a recommender system, you wish to estimate a user's satisfaction for a given recommendation. Traditionally recommender systems have been evaluated by means of predictive accuracy. However, there is now a widely agreed that accurate predictions are crucial but insufficient to deploy a good recommendation engine \cite{Shani2011}. This subsection will cover the most popular metrics used for offline evaluation, a discussion of evaluation measures for implicit feedback, and a summary of the cold-start evaluation methodologies found in the literature.
+
+The data available strongly influences the choice of evaluation method/metrics.
+E.g. classification accuracy metrics seem to be the most suitable when working
+with binary preferences, e.g. in the form of recall-oriented measures.
+
 
 Being accurate is not always enough. Striking a balance between accuracy and
 user satisfaction \cite{McNee2006}
@@ -36,14 +77,75 @@ user satisfaction \cite{McNee2006}
   % conventional ones Which are the most important factors to consider with
   % regards to user satisfaction
 
-The data available strongly influences the choice of evaluation method/metrics.
-E.g. classification accuracy metrics seem to be the most suitable when working
-with binary preferences, e.g. in the form of recall-oriented measures.
+\textbf{Predictive Accuracy Metrics}
+\textbf{Classification Accuracy Metrics}
+\textbf{Rank Accuracy Metrics}
+\textbf{Beyond Accuracy}
 
-%Evaluation by looking at sessions
-%Evaluation using implicit feedback datasets
-%Turnover rate?
-% ++
+
+
+\subsection{Online Evaluation}
+
+Instead of doing offline evaluations on the system, one could also run large
+scale experiments on a deployed system. Such experiments evaluate the
+performance of recommender systems on real users which are oblivious to the
+conducted experiment. The real effect of a recommender system depends on a
+variety of factors such as user’s intent, the user’s context and how the
+recommendations are presented to the user. All these factors are hard to
+capture in an offline setting. Thus, the experiment that provides the strongest evidence as to the true real value of the system is an online evaluation, where the system is used by real users to perform real tasks
+
+\subsubsection{Online Evaluation Metrics}
+
+Online studies in recommendations and advertisement usually measure the click-through-rate (CTR) of the recommendations,
+which aligns with financial incentives and implicitly factors in accuracy,
+novelty, diversity, etc., according to the preferences of the distribution of users.
+The click-through-rate of an algorithm is defined as the number of clicks your
+recommendations get divided by the total number of recommendations that
+have been made. A high CTR therefore indicates that your system is doing
+well...
+
+\begin{equation}
+CTR = \frac{Clicks}{Recommendations}
+\end{equation}
+
+\subsection{Evaluation using Implicit Feedback}
+
+Accuracy metrics not suited for implicit feedback datasets, as they require
+knowing which items are undesired by a user \cite{Hu2008}.
+
+\subsection{Evaluation of Cold-start Recommendations}
+
+%What evaluation metrics are used?
+
+\cite{Rashid2008}: Accuracy metric: MAE, Expected Utility (Penalize false positives more than false negatives)
+\cite{Rashid2002}: Accuracy metric: MAE
+\cite{Massa2004}: Leave one out, MAE, MAUE, Rating Coverage, User Coverage
+\cite{Massa2007}: Leave one out, MAE, MAUE, Rating Coverage, User Coverage,
+\cite{Jamali2009}: Leave one out, Recall/Hit-ratio
+\cite{Agarwal2009}: Movie: RMSE, Yahoo: ROC curves, 5-fold cross validation
+
+%What type of user feedback is used?
+
+\cite{Rashid2008}: Explicit feedback, MOVIELENS, Only users with 80 or more ratings
+\cite{Rashid2002}: Explicit feedback, MOVIELENS, Only users with 200 or more ratings
+\cite{Massa2004}: Explicit feedback, EPINIONS + Web of trust
+\cite{Massa2007}: Explicit feedback, EPINIONS + Web of trust
+\cite{Jamali2009}: Explicit feedback, EPINIONS + Web of trust
+\cite{Agarwal2009}: Explicit feedback, MovieLens + EachMovie, also incorporates user features
+
+%How do they similate the "cold-start situation"?
+	%Cold-start system
+	%Cold-start user
+	%Cold-start item
+
+
+\cite{Rashid2008}: Use the movies found when presenting 15, 30, 45, 60, 75 movies to provide predictions for the remaining movies in the list of each user
+\cite{Rashid2002}: Use the movies found when presenting 30, 45, 60, 90 movies to provide predictions for the remaining movies in the list of each user
+\cite{Massa2004}: Consider users who provided 2, 3 or 4 ratings, How does trust propagation of 1,2,3,4 affect rating & user coverage and predictive accurracy?
+\cite{Massa2007}: All users, cold users, heavy users, Controversial items, Black sheep, Trust propagation performance on entire dataset
+\cite{Jamali2009}: All users, cold start users (<5 ratings), recall for different neighborhood sizes
+\cite{Agarwal2009}: 25\% set aside for evaluation, train each model with 30\%, 60\%, 75\% of data, compare performance
+
 
 %Clues
 % http://delivery.acm.org/10.1145/570000/564421/p253-schein.pdf?ip=129.241.103.83&id=564421&acc=ACTIVE%20SERVICE&key=CDADA77FFDD8BE08%2E5386D6A7D247483C%2E4D4702B0C3E38B35%2E4D4702B0C3E38B35&CFID=419807217&CFTOKEN=62708098&__acm__=1394537427_86c608d0d7733db023faa5a09da46de7
