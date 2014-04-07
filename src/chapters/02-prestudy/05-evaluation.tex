@@ -27,9 +27,8 @@ frequently used evaluation metrics, a discussion of evaluation measures for impl
 
 \subsection{Offline Evaluation}
 
-Offline experiments are performed using pre-collected dataset(s) and a protocol
-that models the user behavior to estimate recommender performance through
-different evaluation measures
+Offline experiments are performed using pre-collected dataset(s) and a protocol that models the user behavior to estimate recommender performance through different evaluation measures.
+%Offline experiments are carried out to compare different methods or finding the optimal parameters for a given method.
 
 \subsubsection{Recommender system datasets}
 
@@ -53,36 +52,79 @@ The definition of explicit is defined as "stated clearly and in detail, leaving 
 %TODO - Herman, maybe you want to add something more?
 %	Implicit feedback classfication (Type, confidence, precision)
 
-Unlike explicit feedback, we do not have nay direct input from the user regarind their personal preferences. In particular we do not have any substatial evidence of which items the user dislikes, such as low ratings. However, implicit-feedback is more easily collected, and usually more abundant. Implicit feedback types include browsing history, purchase history, search patters, etc.
+Unlike explicit feedback, we do not have nay direct input from the user regarding their personal preferences. In particular we do not have any substantial evidence of which items the user dislikes, such as low ratings. However, implicit-feedback is more easily collected, and usually more abundant. Implicit feedback types include browsing history, purchase history, search patters, etc.
 
-\subsubsection{Offline Evaluation}
 
-%Leave one out
-%K-fold
-%...
+\subsection{Validation Methods}
+
+Validation techniques are motivated by two fundamental problems; model selection and performance estimation. Almost all pattern recognition techniques have one or more free parameters, and we want a way to select the \emph{optimal} parameter(s) or model for a given problem. Once we have chosen a model, we wish to estimate how well it is doing.
+
+\textbf{The Holdout Method}
+
+When using the holdout method you split the dataset into two groups; a training set used to train the classifier and a test set used to estimate the error rate of the trained classifier. The Netflix Prize Competition \cite{Netflix} provided a training set consisting of 100,480,507 ratings given by 480,189 users to 17,300 movies. The testset consisted of 2,817,131 items where the ratings were unknown. The submitted predictions were scored against the true ratings in terms of root mean squared error (RMSE), and the goal was to minimize this error.
+
+The holdout method has two basic drawbacks; (1) In problems with sparse datasets we may not be able to afford the luxury of setting aside a portion of the dataset for testing, (2) Since it is a single train-and-test experiment, the holdout estimate can be misleading if we happen to get an "unfortunate" split.
+
+\textbf{Cross-Validation}
+
+K-fold Cross-Calidation creates a K-fold partition of the dataset. For each of the $K$ experiments, use $K-1$ folds for training and the remaining one for testing. By setting $K=2$, this is the same as the holdout method. The true error is found by taking the average error from all the experiments.
+
+Leave-one-out is the degenerate case of K-fold Cross-Validation, where $K$ is chosen as the total number of examples. For a dataset with $N$ examples we perform $N$ experiments. For each experiment we use $N-1$ examples for training and the remaining example for testing. Again, the true error is found by taking the average error rate from the experiments.
+
+In practice the number of folds often depends on the size of the dataset. For large datasets, even 3-Fold Cross Validation will be quite accurate, which for sparse datasets, one may wish to train as many examples as possible. A common choice is $K$ value between 5 and 10.
+
+\textbf{Bootstrapping}
+
+
 
 \subsubsection{Offline Evaluation Metrics}
 
-When evaluating a recommender system, you wish to estimate a user's satisfaction for a given recommendation. Traditionally recommender systems have been evaluated by means of predictive accuracy. However, there is now a widely agreed that accurate predictions are crucial but insufficient to deploy a good recommendation engine \cite{Shani2011}. This subsection will cover the most popular metrics used for offline evaluation, a discussion of evaluation measures for implicit feedback, and a summary of the cold-start evaluation methodologies found in the literature.
-
-The data available strongly influences the choice of evaluation method/metrics.
-E.g. classification accuracy metrics seem to be the most suitable when working
-with binary preferences, e.g. in the form of recall-oriented measures.
-
-
-Being accurate is not always enough. Striking a balance between accuracy and
-user satisfaction \cite{McNee2006}
-  % High accuracy != User satisfaction
-  % Therefore, important to consider other evaluation metrics beyond the
-  % conventional ones Which are the most important factors to consider with
-  % regards to user satisfaction
+When evaluating a recommender system, you wish to estimate a user's satisfaction for a given recommendation. Traditionally recommender systems have been evaluated by means of predictive accuracy. However, there is now a widely agreed that accurate predictions are crucial but insufficient to deploy a good recommendation engine \cite{Shani2011, McNee2006}. Some of the properties can be traded-off, one such example is the trade-off between accuracy and diversity. It is important to understand and evaluate these trade-offs and their effect on the overall performance. This subsection will cover the most popular metrics used for offline evaluation, a discussion of evaluation measures for implicit feedback, and a summary of the cold-start evaluation methodologies found in the literature.
 
 \textbf{Predictive Accuracy Metrics}
-\textbf{Classification Accuracy Metrics}
+
+Predictive accuracy metrics measure how close the predicted ratings are to the true user ratings. More formally, the system tries to predict ratings $\hat{u(c,s)}$ for a test set $T$ of user.item pairs $(c, s)$ for which the true ratings are known. Traditionally, mean absolute error(MAE) has be used to evaluate the performance of collaborative-filtering algorithms, but other measures such as root mean squared error (RMSE) are also commonly used.
+
+\begin{equation}
+MAE = \sqrt{\frac{1}{\vert T \vert} \sum_{(c,s) \epsilon T}  (\hat{u(c,s)} - u(c,s))^{2}}
+\end{equation}
+
+\textbf{Measuring Usage Prediction}
+
+In many applications the recommender system does not predict the user's preferences of items, but tries to recommend to users items that they may use. In an offline evaluation of usage prediction, we typically have a dataset consisting of items each user has used. We then select a test user, hide some of her selections, and ask the recommender to predict a set of items the user will use. We then have four possible outcomes for the recommend and hidden items.
+
+\begin{table}
+\caption{•}
+\begin{tabular}{c c c}
+\hline
+			&	Recommended		&	Not Recommended \\
+Used		&	True-Positive 	&	False-Negative	\\
+Not Used	&	False-Positive	&	True-Negative	\\
+\hline
+\end{tabular}
+\label{table:usageprediction}
+\end{table}
+
+This model assumes that unused items would not have been used if they had been recommended to a user. This assumption may be false, such as when the set of unused items contains some interesting items that the user did not select. For example, a user may not have used an items because she was unaware of its existence, but after the recommendation exposed that item, the user can decide to select it. We can count the number of examples that fall into each cell in the table and compute the Precision, Recall and False Positive Rate.
+
 \textbf{Rank Accuracy Metrics}
+
+Rank accuracy metrics measure the ability of a recommendation method to produce a recommended ordering of items that matches how the user would have ordered the same items. Shani et. al. \cite{Shani2011} lists two different appraoches for measuring the ranking accuracy: Try determining the correct order of a set of items for each user and measure how close a system comes to this correct order, or we can attempt to measure the utility of the system's ranking to a user.
+
+Herlocker et. al. \cite{Herlocker2004} argue that rank accuracy metrics may be overly sensitive for domains where the user just wants an item that is "good enough" (binary preferences) since the user won't be concerned about the ordering of items beyond the binary classification. These metrics are therefore most suitable to evaluate algorithms that are used to present ranked lists to the user in domains where the user preferences are expressed using numerical values.
+
 \textbf{Beyond Accuracy}
 
+\textbf{Coverage}
 
+The term coverage can refer to several distinct properties of the system
+
+
+
+Most commonly, the term coverage refers to the proportion of items the recommendation system can recommend, also known as \emph{item-space coverage}. The simplest measure of catalogue coverage is the percentage of all items that can ever be recommended.
+
+Coverage can also be the proportion of users interactions for which the system can recommend items, known as \emph{user-space coverage}}. In many applications the recommender system may not provide recommendations for some users due to e.g. low confidence in the accuracy of predictions for that user. In such cases one may prefer a recommender that can provide recommendations to a wider range of users.
+ 
 
 \subsection{Online Evaluation}
 
@@ -114,6 +156,8 @@ Accuracy metrics not suited for implicit feedback datasets, as they require
 knowing which items are undesired by a user \cite{Hu2008}.
 
 \subsection{Evaluation of Cold-start Recommendations}
+
+The cold-start problem can be considered a sub problem of coverage because it measures the system coverage over a specific set of items and users. When evaluating the cold-start system performance one is interested in measuring the system accuracy for these users and items.
 
 %What evaluation metrics are used?
 
