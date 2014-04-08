@@ -9,34 +9,34 @@
 
 \section{Motivation}
 
+%TODO (HELGE) Flere cites, jobbe med flyten i språket, konkretisere}
+%TODO Finish introduction
+
 %What are recommender systems good for?
-In today's day and age the increasing amount of data overwhelm our human processing capabilities in many information seeking tasks. To cope with this overload researchers have introduced recommender system to filter the ever increasing information and only present a small selection of items which reflects the users tastes, interests and priorities.  Recommender systems are an active research field and has been successfully applied to many different systems ranging from e-commerce sites such as \emph{Amazon}, movie and TV-series streaming services like \emph{Netflix} and in different music applications such as {Last.fm} and {iTunes}.
+In today's day and age the increasing amount of data overwhelm our human processing capabilities in many information seeking tasks. To cope with this overload researchers have introduced recommender system to filter the ever increasing information and only present a small selection of items which reflects the users tastes, interests and priorities. Recommender systems are an active research field and has been successfully applied to many different systems ranging from e-commerce sites such as \emph{Amazon}, movie and TV-series streaming services like \emph{Netflix} and in different music applications such as \emph{Last.fm} and \emph{iTunes}.
 
 %What is telenors incentive?
-Many/most/all of the largest commerce Web sites have been using recommender systems to help their customers find products to purchase for nearly two decades.
+Many of the largest commerce Web sites have been using recommender systems to help their customers find products to purchase for nearly two decades.
 Schafer et. al. \cite{Schafer1999} identified three ways, in which recommender systems increase E-commerce sales: (1) Browser into buyers: Recommender systems can help customers find products they wish to purchase, (2) Cross-sell: Recommender systems improve cross-sell by suggesting additional products for the customer to purchase and (3) Loyalty: In a world where the competitor only is one click away, gaining customer loyalty is an essential customer strategy. Recommender systems improve loyalty by creating a value added relationship between the site and the customer.
 
-\textbf{SoBazar}
-SoBazar is a new fashion e-commerce application for web and hand held devices published by Telenor, Norway's largest telco company.
-With the goal to suggest, aggregate and sell fashion products from various brands and stores.
-As there is a new application there is little to none data in the database, which makes it an interesting study for recommendation in an cold start environment.
-The user are logging into the application through their Facebook accounts.
-This opens for the potential to explore the trust based recommendation domain.
-In the application the user will have the option as: to watch, to like and to buy products, from the various brands.
-All these events are stored to be potentially used for analysis for different purposes, such as product recommendation.
-The events, mentioned above, will mainly be implicit feedback.
-With this implicit feedback recommendations can be done, and user experience can be improved.
-As mentioned, there are a lot of research done on recommender systems, regarding systems like Netflix and Amazon.
-However research done on the combination of implicit feedback and the fashion domain in comparison to explicit feedback and domains such as the movie domain is small, which makes this an cutting edge topic to explore in depth.
-The main task of this thesis is therefore to provide the SoBazar application with recommendation based on the implicit feedback.
+SoBazar is a new fashion e-commerce application for web and hand held devices developed by Telenor, Norway's largest telco company. The application aggregates fashion products from various brands and stores into one \emph{webstore}. The app is planned to be officially \emph{launched} this summer, meaning that there currently is a limited amount user-item interaction data available, making it a classic cold-start scenario. We have access to data coming from many sources including user information from facebook, rich meta-data description of the items from the retailers as well as information about the users browsing and shopping habits collected by the application.
 
-%E-Commerce Recommendation Applications
+In a classic recommendation scenario one has access to rich explicit information regarding the users preferences, often in the form of ratings. We have a very limited amount of explicit information available and must therefore determine the best way to leverage the implicit information collected by the application in combination with the user combination collected from facebook and item meta-data to improve the recommendations.
 
-% What are we planning to do? \ Which issues will be investigated?
-% Early beta - little data available (Cold start related problems)
-  %Social data, log dumps, limited content information...
-% Fashion domain (What are the challanges/most important features?)
-% How do we evaluate the system?
+The fashion recommendation task also differs from movies, books and music in many ways. Firstly, fashion consumption is largely determined by seasons. E.g. one does not buy winter jackets in the middle of summer. Some clothes do also go out of fashion, the same can not be said for movies...
+%TODO - MARTIN aka. fashion chief: Skriv noen linje her...
+% Feks. Sesonger, Recentness, 
+Since each application domain has its own specific needs, the methods used for recommendation differ.
+
+%The user are logging into the application through their Facebook accounts.
+%This opens for the potential to explore the trust based recommendation domain.
+%In the application the user will have the option as: to watch, to like and to buy products, from the various brands.
+%All these events are stored to be potentially used for analysis for different purposes, such as product recommendation.
+%The events, mentioned above, will mainly be implicit feedback.
+%With this implicit feedback recommendations can be done, and user experience can be improved.
+%As mentioned, there are a lot of research done on recommender systems, regarding systems like Netflix and Amazon.
+%However research done on the combination of implicit feedback and the fashion domain in comparison to explicit feedback and domains such as the movie domain is small, which makes this an cutting edge topic to explore in depth.
+%The main task of this thesis is therefore to provide the SoBazar application with recommendation based on the implicit feedback.
 
 \section{Problem Statement}
 
