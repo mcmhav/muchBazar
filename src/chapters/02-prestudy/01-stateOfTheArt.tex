@@ -251,7 +251,7 @@ recommendable before multiple users somehow stumble upon the new item while
 e.g. browsing the item collection, unless additional measures are taken to
 solve this problem. To solve the new-item problem, there are two commonly used (simple) solutions often used in E-commerce websites:
 
-\begin{itemize}
+\begin{itemize}ollaborative filtering
 \item Advertising at the homepage/front-page of the website, putting the new
 items in an eye catching position. This solution, however, may this result in
 that some users, which don't like these new items, might leave the website.
@@ -292,52 +292,54 @@ preference information is available to form any basis for recommendations
 
 Due to the popularity of social networks such as Facebook, more and more
 researchers turn to incorporate the social relationships (e.g. trust) of users
-to help complement users’ preference in addition to item ratings, in order to overcome the limitations of existing recommender systems. For example, when looking for movie recommendations we often turn to our friends which we share a similar taste in movies with. Trust can be defined as: "believe in the reliability, truth, or ability of", and in the context of recommender systems a trusted user would be a user you trust to provide you good recommendations. Trust relationships of users are often employed in order to correlate more potential raters for the active users who require recommendations. Massa et. al. \citep{Massa2004} show that some of the weaknesses of RS such as data sparseness and their susceptibility to shilling attacks could be alleviated by incorporating trust.
+to help complement users’ preference in addition to item ratings, in order to overcome the limitations of existing recommender systems. For example, when looking for movie recommendations we often turn to our friends which we share a similar taste in movies with. Trust can be defined as: "believe in the reliability, truth, or ability of", and in the context of recommender systems a trusted user would be a user you trust to provide you good recommendations. Trust relationships of users are often employed in order to correlate more potential raters for the active users who require recommendations \cite{Massa2004, Massa2007}. Massa et. al. \citep{Massa2004} also show that some of the weaknesses of recommender systems such as data sparseness and their susceptibility to shilling attacks could be alleviated by incorporating trust. 
+
+% The formals
+In \cite{Massa2004}, Massa et. al. describes their Trust-Aware recommender system archictecture.
+To capture all the trust statements we need a $CxC$ matrix, where $C$ is the number of users, since each user is allowed to express a trust value in every other user. This matrix will make up our trust network among the users. If $u$
+trusts $v$, then there is a value $t_{u,v}$ for this trust which is a real
+number in $[0,1]$. Zero means no trust and one means full trust. E.g. in the case of the Epinions dataset \cite{Epinions}, users can explicitly state whether they trust or distrust a user [1, -1], i.e. reviewers whose reviews and ratings they have consistently found to be valuable or reviewers which they find consistently offensive, inaccurate or not valuable. In decentralized environments where everyone is free to create content and there
+is no centralized quality control entity, evaluating the quality of the content becomes an important issue. This phenomenon can be observed in online
+marketplaces such as E-bay where users can create "fake" auctions, peer-to-peer networks where peers can enter corrupted items. In these environments, it is often a good strategy to delegate the quality assessment task to users themselves. E.g. \emph{Ebay.com} allows users to express their level of satisfaction after every interaction with another user.
+
+This additional information (trust statements) can be organized in a trust network and a trust metric can be used to predict the
+trustworthiness of other users as well (for example, friends of friends). The idea here is to not search for similar users as CF does but to search for
+trust-able users by exploiting trust propagation over the trust network. The items appreciated by these users are then recommended to the active user. 
+
+%How do we get this matrix?
+%Chen et. al. \cite{Chen2010} proposed a framework to estimate trust between facebook users...
+
+In addition to the trust network we will also have a Rating matrix of size $CxS$, where $S$ is
+the number of items. This rating will not differ from a standard rating matrix,
+which are used in traditional collaborative filtering systems. The value $u(c,s)$, is the rating given by user $c$ to item $s$, the rating scale may differ from system to system.
 
 % Web of Trust - Figure explanation
 Using explicit trust statements, it is possible to predict trust in unknown
 users by propagating trust. Consider the example shown in Figure
-\ref{figure:weboftrust}. User A has issued a trust statement in B and C; hence
-B and C are in the web of trust of A. Using these explicit trust statements, it
+\ref{figure:weboftrust}. User $A$ has issued a trust statement in $B$ and $C$; hence
+$B$ and $C$ are in the web of trust of $A$. Using these explicit trust statements, it
 is possible to predict trust in unknown users by propagating trust, making it
-possible to infer something about how much user A could trust D.
+possible to infer something about how much user $A$ could trust $D$.
 
 \begin{figure}[H]
     \includegraphics[width=5in]{image/webofTrust.png}
     \centering
-    \caption[Trust Network]{Trust Network. Nodes are users and solid edges are trust statements. The dotted edge is one of the undefined and predictable trust statements (Adopted from \cite{Massa2004}}
+    \caption[Trust Network]{Trust Network. Nodes are users and solid edges are trust statements. The dotted edge is one of the undefined and predictable trust statements (Adopted from \cite{Massa2004})}
     \label{figure:weboftrust}
 \end{figure}
-
-% The formals
-To capture all the trust statements we need a $NxN$ matrix, where $N$ is the
-number of users, since each user is allowed to express a trust value in every
-other user. This matrix will make up our trust network among the users. If $u$
-trusts $v$, then there is a value $t_{u,v}$ for this trust which is a real
-number in $[0,1]$. Zero means no trust and one means full trust. In addition to
-the trust network we will also have a Rating matrix of size $NxM$, where $M$ is
-the number of items. This rating will not differ from a standard rating matrix,
-which are used in traditional collaborative filtering systems. The value $r_{u,
-i}$, is the rating user $u$ have given to item $i$, the rating scale may differ
-from system to system.
 
 % Architecture
 The systems takes as input the trust network (representing the trust
 statements) and the ratings matrix (ratings given by users to items) and
 produces, as output, a matrix of predicted ratings that the users would assign
-to the items. Figure \ref{figure:trustarThe cold-start system problem is mainly a collaborative filtering problem, and
-can be seen as a combination of the cold-start user and cold-start item problem
-where the majority of the users are new to the system and have expressed few
-preferences, resulting in a very sparse user-item matrix, rendering
-recommendation systems using traditional collaborative-filtering methods
-futile.chictecture} shown a conceptual
+to the items. Figure \ref{figure:trustarchictecture} shows a conceptual
 overview of the trust-aware recommender system architecture.
 
 \begin{figure}[H]
     \includegraphics[width=5in]{image/trustawarearchitecture.png}
     \centering
     \caption[Trust-Aware Recommender System Architecture]{Trust-Aware
-    Recommender System Architecture. Adopted from \cite{Massa2004}}
+    Recommender System Architecture (Adopted from \cite{Massa2004})}
     \label{figure:trustarchictecture}
 \end{figure}
 
@@ -364,6 +366,18 @@ would get a trust value of $(4-1+1)/4 = 1$, while the user at distance 2 (D)
 would get a predicted trust value of $(4-2+1)/4 = 0.75$. Meaning that we will
 have a linear decay in trust based on the distance from the source user.
 
+Massa et. al. \cite{Massa2007} experimented with both local and global trust
+Metrics. They used the PageRank algorithm as a global trust metric. PageRank
+tries to infer the authority of every single user by examining the structure of
+the network. The algorithm follows a simple idea: if a link from user $A$ to user
+$B$ represent a positive vote casted by $A$ to $B$, then the global rank of a page
+depends on the number (and quality) of the incoming links. The trust values
+assigned by users to users are used to predict the trustworthiness of unknown
+users. Their findings, not surprisingly, indicate that Global Trust Metrics are
+not suited for the task of finding good neighbors, especially for providing
+personalized recommendations, but is more suited to applications such as \emph{Ebay.com} to find untrustworthy users. As a local trust metric they chose MoleTrust, which is a depth-first graph walking algorithm with a tuneable trust horizon
+which allowed them to experiment with different propagation distances.
+
 The \emph{Similarity Metric} module computes the user similarities, this is one
 of the standard steps of any traditional collaborative filtering technique,
 user similarities can be found e.g. by using the Pearson Correlation
@@ -374,55 +388,52 @@ The \emph{Rating Predictor} can use the neighbors from the user similarity
 matrix, the estimated trust matrix or a combination of both in order to
 calculate the predicted ratings.
 
-The main advantage is not improved accuracy, but improved coverage. As
-exemplified by Massa et. al. \cite{Massa2007}. The authors experimented with
-propagating the trust up to a distance of 4. By using the Pearson Correlation
-coefficient they found on average 160.73 neighbors. However just propagating a
-few steps help to increase significantly the number of neighbors that can be
-considered for rating predictions. Propagating at distance 2 (friends of
-friends) it is possible to reach 399.89 users, further increasing the trust
-horizon to 3 and 4 allows respectively 4,386.32 and 16,333.94 users. This
-pattern is even more evident on cold start users \cite{Massa2004}. These
-results say that by propagating trust it is possible to increase the coverage
-(generate more recommendations) but that it also considers users who are worse
-predictors for the current user so that the prediction error increases as well.
-The trust propagation horizon basically represents a trade-off between accuracy
-and coverage.
+
+% Using a Trust Network to Improve Top-N Recommendation
+
+Jamali et. al. \cite{Jamali2009} propose two different methods for getting
+around the cold-start user problem using a trust network.
+
+Their first approach called \emph{Random Walk} only utilize the trust network to provide recommendations. Starting from the active user $u$, we perform a random walk on the trust network. Each
+random walk stops at a certain user. Then the items rated highly by that user
+will be considered as recommended items, ordered according to the ratings
+expressed by that user. We perform several random walks to gather more
+information and compute a more confident result. The estimated rating of each
+item is the average of ratings for that item over all raters considered. At the
+end, we output items with the highest estimated rating as top-N recommended
+items.
+
+Their second approach called \emph{Combined Approach} uses both user-user similarities and the trust network to provide recommendations. In this approach we compute the top $K$ trusted users in the network and rank
+the items rated by these trusted users to compute top-N recommended items. The top $K$ trusted users can either be found by
+\emph{Breadth First Search} or \emph{Random Walk in the social network}. We use the collaborative filtering approach to compute another set of top-N
+recommended items. Finally, we merge these two lists to produce a combined list of top-N recommended items. Items returned by CF is denoted as $CF_{u}$, while the items returned by Trust-based approach are denoted $TR_{u}$.
+
+\begin{equation}
+
+\[
+ \hat{u}(c,s) =
+  \begin{cases}
+   \frac{u_{tr_{c,i}} + u_{cf_{c,i}}}{2} & i \in TR_{u};i \in CF_{u} \\
+   \hat{u_{tr_{c,i}}}       & i \in TR_{u};i \not \in CF_{u} \\
+   \hat{u_{cf_{c,i}}}		 & i \in CF_{u};i \not \in TR_{u}
+  \end{cases}
+\]
+\end{equation}
+
+The top-N items with the highest value of $\hat{u}(c,s)$ will be returned as the top-N recommended items. The authors also experimented with weighted averaging in the case where the item appear in both $TR_{u}$ and $CF_{u}$.
+
+Their approaches showed great improvements in recall for cold-start users,
+improving the performance by 50$\%$ over standard CF methods. The main improvements however, are the coverage of the trust-based approaches, while still maintaining the same or even slightly better precision than the standard CF methods.
 
 % Trust-aware Recommender Systems + Trust-Aware Collaborative Filtering for Recommender Systems
 % Article Comments:
 % 	Requires user involvement (explicitly express trust) - is this a acceptable?
 
-Massa et. al. \cite{Massa2004, Massa2007} propose using trust information
-explicitly expressed by the users. Users are allowed to state how much they
-consider every other user trustworthy that, in the context of recommender
-systems, is related to how much they consider the ratings provided by a certain
-user valuable and relevant. This additional information (trust statements) can
-be organized in a trust network and a trust metric can be used to predict the
-trustworthiness of other users as well (for example, friends of friends). The
-idea here is to not search for similar users as CF does but to search for
-trust-able users by exploiting trust propagation over the trust network. The
-items appreciated by these users are then recommended to the active user. In
-decentralized environments where everyone is free to create content and there
-is no centralized quality control entity, evaluating the quality of the content
-becomes an important issue. This phenomenon can be observed in online
-marketplaces such as E-bay where users can create "fake" auctions, peer-to-peer
-networks where peers can enter corrupted items. In these environments, it is
-often a good strategy to delegate the quality assessment task to users
-themselves.
-
-The authors experimented with both Local Trust Metrics and Global Trust
-Metrics. They used the PageRank algorithm as a global trust metric. PageRank
-tries to infer the authority of every single user by examining the structure of
-the network. The algorithm follows a simple idea: if a link from user $A$ to user
-$B$ represent a positive vote casted by $A$ to $B$, then the global rank of a page
-depends on the number (and quality) of the incoming links. The trust values
-assigned by users to users are used to predict the trustworthiness of unknown
-users. Their findings, not surprisingly, indicate that Global Trust Metrics are
-not suited for the task of finding good neighbors, especially for providing
-personalized recommendations. As a local trust metric they chose MoleTrust,
-which is a depth-first graph walking algorithm with a tuneable trust horizon
-which allowed them to experiment with different propagation distances.
+%Massa et. al. \cite{Massa2004, Massa2007} propose using trust information
+%explicitly expressed by the users. Users are allowed to state how much they
+%consider every other user trustworthy that, in the context of recommender
+%systems, is related to how much they consider the ratings provided by a certain
+%user valuable and relevant. 
 
 % Alleviating the Sparsity Problem of Collaborative Filtering Using Trust Inferences
 % Article Comments:
@@ -431,7 +442,7 @@ which allowed them to experiment with different propagation distances.
 
 Papagelis et. al. \cite{Papagelis2005} proposed to alleviate sparsity using
 trust interfaces. Trust interfaces are transitive associations between users in
-the context of an underlying social network, and does therefore not require users to explicitly express their trust in other users. Their approach is built on the
+the context of an underlying social network, and does therefore not require users to explicitly express their trust in other users, unlike the approaches described above. Their approach is built on the
 idea of social networks in recommender systems. Instead of reducing the
 dimension of the user-item matrix, in an attempt to make it more informative,
 they propose a method that permits to define transitive properties between
@@ -484,34 +495,29 @@ The authors achieved improved accuracy for all sparsity levels. With a sparsity
 level of $99.9\%$ the 2-HOP CF (friend of friends) increased the MAE
 performance by $17\%$ over standard CF methods.
 
-% Using a Trust Network to Improve Top-N Recommendation
-% Article Comments:
-%		-
-
-Jamali et. al. \cite{Jamali2009} propose two different methods for getting
-around the cold-start user problem using a trust network.
-
-Their first approach called \emph{Random Walk} only utilize the trust network to provide recommendations. Starting from the active user $u$, we perform a random walk on the trust network. Each
-random walk stops at a certain user. Then the items rated highly by that user
-will be considered as recommended items, ordered according to the ratings
-expressed by that user. We perform several random walks to gather more
-information and compute a more confident result. The estimated rating of each
-item is the average of ratings for that item over all raters considered. At the
-end, we output items with the highest estimated rating as top-N recommended
-items.
-
-Their second appraoch called \emph{Combined Approach} uses both user-user similarities and the trust network to provide recommendations. In this approach we compute the top $K$ trusted users in the network and rank
-the items rated by these trusted users to compute top-N recommended items. We
-use the collaborative filtering approach to compute another set of top-N
-recommended items. Finally, we merge these two lists to produce a combined list
-of top-N recommended items. The top $K$ trusted users can either be found by
-\emph{Breadth First Search} or \emph{Random Walk in the social network}.%d
-
-Their approaches showed great improvements in recall for cold-start users,
-improving the performance by 50$\%$ over the standard collaborative filtering
-approach. The main improvements however, are the coverage of the trust-based approaches, while still maintaining the same or even slightly better precision than the standard CF methods.
 
 %TODO - READ: A Matrix Factorization Technique with Trust Propagation for Recommendation in Social Networks
+
+%TODO - Discussion on Trust-Aware Recommenders
+%What to include:
+%	Discussion on the authors findings
+%	Scalability
+%	How can we incorporate trust?
+
+The main advantage is not improved accuracy, but improved coverage. Massa et. al. \cite{Massa2007} found trusted users to be good predictors. For the cold-start users they achieved a MAE of 0.674 when looking at friends of friends, compared to traditional collaborative filtering which scored 1.094. The difference is very high, and particularly relevant as it is important for recommender systems to generate personalized recommendations as soon as possible for new users, so that these users appreciate the system and keep using it. The authors also experimented with
+propagating the trust up to a distance of 4. By using the Pearson Correlation
+coefficient they found on average 160.73 neighbors. However just propagating a
+few steps help to increase significantly the number of neighbors that can be
+considered for rating predictions. Propagating at distance 2 (friends of
+friends) it is possible to reach 399.89 users, further increasing the trust
+horizon to 3 and 4 allows respectively 4,386.32 and 16,333.94 users. This
+pattern is even more evident on cold start users \cite{Massa2004}. These
+results say that by propagating trust it is possible to increase the coverage
+(generate more recommendations) but that it also likely to considers users who are worse
+predictors for the current user so that the prediction error increases as well.
+The trust propagation horizon basically represents a trade-off between accuracy
+and coverage.
+
 
 \subsubsection{Filterbots}
 
@@ -520,13 +526,16 @@ approach. The main improvements however, are the coverage of the trust-based app
 Park et. al. \cite{Park2006} propose using filterbots to improve the cold-start
 performance of collaborative filtering methods. Their filterbots are a varition of RipperBots, described in \cite{Good1999}.
 
-A filterbot is an automated agent that rates all or most items using IF techniques. The filterbots injects psuedo
+A filterbot is an automated agent that rates all or most items using information filtering (IF) techniques. The filterbots injects psuedo
 users or bots into the system. These bots rate items algorithmically according to item features and user profiles. For their movie recommendation systems the author propose using 7 global bots which rates movies based on average item rating, a critic bot that generates ratings based on the average critic (pre-selected users) ratings, an award bot that generates rating based on the awards a movie has won, and so on. These ratings generated by these bots are injected into the user-item matrix along with actual user-item ratings. Standard CF algorithms are then applied to generate
 recommendations.
 
 Their approach clearly demonstrated better robustness to all three cold-start situations than standard item-based
 and user-based collaborative filtering. The improvements were most evident on
 the datasets with a high degree of sparsity.
+
+% Discussion
+
 
 \subsubsection{Wisdom of the better few / Seed users}
 
@@ -545,8 +554,12 @@ And then applying basis selection based on the maximum-volume principle to
 select the $k$ most representative users or items. In order to be able to
 recommend new items to the users it must first be rated by the $k$
 representative users, likewise for new users to be rated they need to rate the
-$k$ most representative users. Their method therefore easily allows new users
-to be \emph{folded in}.
+$k$ most representative items. Their method therefore easily allows new users
+and items to be \emph{folded in}.
+
+% Discussion
+%	Not so sure about new items having to be rated by all the representative users, will this actually happen?...
+%	After training the model, all new items must be rated by these users...
 
 
 \subsubsection{Intelligent Selection / Interview Process}\mbox{}\\
@@ -602,20 +615,6 @@ more closely examined information theoretic strategies for item selection. In th
 \item \emph{IGCN:} Information Gain through Clustered Neighbors
 \end{itemize}
 
-It is worth mentioning that the authors worked on the cold-start new user
-problem for a movie recommender. The implications of this is that a user must
-have watched a movie, in order to rate it. This is not so important for our
-domain, as taking a quick look at the item should be sufficient to like/dislike
-it. We also currently have no way of calculating entropy as we have no rating distribution for our items.
-
-We are constrained to unobtrusively learn user-profiles from the natural
-interactions of users with the system, meaning that we can not require the user
-to rate e.g. 10 items before we can start providing recommendations. We
-currently have a \emph{mixed initiative} system meaning that there is
-provisions for both user and system controlled interactions. We (the system)
-can only select which items to recommend to the user, and this does not mean
-that the user actually will click an item or rate it. Our rational for including these articles is that we envision a simple "hot or not" interface to be used to present items to new users when the first log in to the system.
-
 % User effort vs. accuracy in rating-based elicitation
 
 Cremonesi et. al. \cite{Cremonesi2012} performed a set of experiments where
@@ -625,6 +624,29 @@ recommendations to new users? The authors conclusion is that between 5 and 20
 ratings are optimal for the movie domain. They concluded that 10
 ratings is \emph{enough}, but that this number depends on the recommendation method
 and the dataset used.
+
+% Discussion
+
+Our rational for including these articles is that we envision a simple "hot or not" interface to be used to present items to new users when the first log in to the system.
+
+
+It is worth mentioning that the authors worked on the cold-start new user
+problem for a movie recommender. The implications of this is that a user must
+have watched a movie, in order to rate it. This is not so important for our
+domain, as taking a quick look at the item should be sufficient to like/dislike
+it. 
+
+% We also currently have no way of calculating entropy as we have no rating distribution for our items
+% Until we have implicit ratings in place, is this still suitable then?
+
+We are also currently constrained to unobtrusively learn user-profiles from the natural
+interactions of users with the system, meaning that we can not require the user
+to rate e.g. 10 items before we can start providing recommendations. We
+currently have a \emph{mixed initiative} system meaning that there is
+provisions for both user and system controlled interactions. We (the system)
+can only select which items to recommend to the user, and this does not mean
+that the user actually will click an item or rate it.
+
 
 \subsubsection{Hybrid Methods}
 
@@ -638,7 +660,7 @@ Another line of search for solving the cold-start problem is to utilize features
 %The idea is that people with a more common background share a more similar taste than someone with a random background, and therefore good %recommendations can be made as long as we know the new user’s background.
 
 This section will present some latent factor models presented recently proposed that incorporate both user/item features and past interactions. In Matrix factorization methods, the regularization is mostly based on a
-zero-mean Gaussian prior on the factors, we refer to this method as ZeroMean. However. in these models the dyadic response matrix $Y$ is estimated by a altent factor model such that $Y \approx U^{T}V$, where the latent factor matrices, $U$ and $V$, are estimated by regression such that $U \approx FX$ and $V \approx MZ$. $X$ and $Z$ denote user attribute and item feature matrices, and $F$ and $M$ are weight matrices learned by regression. The difference between these methods are how they estimate the weights.
+zero-mean Gaussian prior on the factors, we refer to this method as ZeroMean. However. in these models the dyadic response matrix $Y$ is estimated by a latent factor model such that $Y \approx U^{T}V$, where the latent factor matrices, $U$ and $V$, are estimated by regression such that $U \approx FX$ and $V \approx MZ$. $X$ and $Z$ denote user attribute and item feature matrices, and $F$ and $M$ are weight matrices learned by regression. The difference between the following methods are how they estimate these weights.
 
 % Regression-based Latent Factor Models
 
@@ -696,6 +718,9 @@ The authors use BPR-MF, a matrix factorization model based on the Bayesian Perso
 \item k-NN Mapping:	Weighted k-NN regression for each factor. Determine the k-nearest neighbors as the most similar items according to the cosine similarity of the attribute vectors.
 \item Linear Mapping: Each item factor is expressed by a weighted sum of the item attributes. Suitable parameters for the mapping function is learned by optimizing the model for the squared error on latent features.
 \end{enumerate}
+
+\subsubsection{Discussion}
+
 
 \subsection{Fashion Recommendation}
 

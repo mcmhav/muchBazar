@@ -14,6 +14,8 @@
 
 \section{Implicit feedback to implicit ratings}
 
+%Helge: Poenget er at å rate i sobazar koster penger, mens det er "gratis" hos netflix
+
 Explicit feedback is present in many of the largest recommender systems today
 and hence, is extensively researched.\todo{Ref.} The user is commonly asked to
 rate item $i$ on a Likert scale from $1$ to $k$, ranging from strongly
@@ -25,7 +27,7 @@ collecting ratings: the method requires the user to spend time rating items and
 the amount of feedback is often scarce, creating sparse data sets. Further,
 explicit ratings are often subject to inconsitencies known as natural
 noise \cite{amatriain2009like} and users might also be pressed to report
-different preferences due to peer of social pressure. The fact that we are
+different preferences due to peer of social pressure \todo{ref}. The fact that we are
 introducing a user overhead, makes it difficult to have a complete view on the
 user preferences \cite{jawaheer2010characterisation}.
 
@@ -54,7 +56,7 @@ the different characteristics in implicit and explicit ratings:
     \textit{Meaning}
                        & Indicates preference. Often on a Likert scale ranging
                          from total dislike to really like.
-                       & Indicates confidence. Higher frequency in implicit 
+                       & Indicates confidence \todo{Helge: ?}. Higher frequency in implicit 
                          feedback does not necessarily indicate higher
                          preference. \\ \hline
 
@@ -84,6 +86,8 @@ the different characteristics in implicit and explicit ratings:
 \end{table}
 
 \clearpage
+
+\todo{Helge: Maybe best in plain text?}
 
 \subsection{Quantifying implicit feedback}
 
@@ -135,7 +139,9 @@ Instead, \cite{pkghost2014implicit} proposes using a rating mapping, that uses
   \label{implicit-table}
 \end{table}
 
-Then a user browsing an item $i$ two times, would get a score of 40 and a if
+\todo{Helge: Er dette "globalt" for alle?}
+
+Then a user browsing an item $i$ two times, would get a score of 40 \todo{Helge: Hvorfor?} and a if
 buying it the score would be 100 (e.g. the event type with highest interest
 level supersede all others). Equally, if a user browsed the item 100 times, it
 would make no difference in score compared to browsing it 4 times.
@@ -147,11 +153,11 @@ by table \ref{implicit-table}:
   ImplicitRating(s, k) = 100 * \frac{k-1}{100} + 1 
 \end{equation}
 
-The advantage of this heuristic is that is requires no training, it is simple
+The advantage of this heuristic is that it requires no training, it is simple
 to understand and works reasonably well, if weights are chosen correctly.
 However, the fact that one need to find these weights by hand is also its
 largest weakness. However, in order to find weights automatically one need to
-train a model - which can adapt and learn the optimal values for each weight.
+train a model - which can adapt and learn the optimal values for each weight. \todo{Helge: Si noe om at datamengden er lav?}
 
 \subsubsection{Regression analysis}
 
@@ -201,6 +207,8 @@ want to find the values of $w_0$ and $w_1$:
   \end{split}
 \end{equation}
 
+\todo{Helge: +e1, +e6, si hva de forskjellige verdiene står for}
+
 Using a minimization method called \textit{Least squares} we try to minimize
 the residual $e$, using sum of squares between the observed values in the
 dataset and the values predicted by the linear approximation. Mathematically it
@@ -239,7 +247,7 @@ looking at the 2D-plot below:
 
 Now, using this methology on implicit feedback we need a regression model that
 correctly explains the correlation between feedback and ratings. Four models
-are proposed:
+are proposed \todo{Helge: Cite}:
 
 \noindent
 Model 1: $r_{iu} = w_0 + w_1 if_{iu}$ \\
@@ -250,7 +258,7 @@ Model 4: $r_{iu} = w_0 + w_1 if_{iu} + w_2 re_{iu} + w_3 if_{iu} \cdot re_{iu}$
 where $if_{iu}$ is a number between 1 and 3, dependent on how many times user
 $u$ used item $i$. Equally $re_{iu}$ depicts how recently user $u$ used item
 $i$ and $gp_{i}$ how popular product $i$ is, globaly. By accounting for
-recentness in their regression model they achieved good results and after
+recentness in their regression model they achieved good results \todo{Helge: Hva betyr det?} and after
 training they used their $w$-vector, combined with the independent variables to
 predict future ratings. \todo{Explain how number between 1 and 3 was given}
 
@@ -265,6 +273,8 @@ AP:
   AP(u,i) = ln(\frac{trans(u,i)}{\sum_{e \in E}{trans(u, e)}} + 1)
 \end{equation}
 
+\todo{Helge: E=?, hvilke sett er det}
+
 where $trans(u,i)$ is the number of transactions for user $u$ on item $i$.
 However, this absolute preference only takes into account the frequency of
 purchases and because the frequency is heavily dependent on price, item
@@ -278,11 +288,12 @@ relative preference RP:
 where $U$ denotes every user who purchased item $i$. The reason for using a
 maximization function, is to make $RP(u,i)$ range from $0.0$ to $1.0$ (i.e.
 normalization) and one can thus find a rating on a common Likert scale by
-multiplying with $k$, here $k=5$:
+multiplying with $k$, here $k=5$: \todo{Helge: Remove ", here k=5}
 
 \begin{equation}
   ImplicitRating(u,i) = \lceil 5 * RP(u,i) \rceil
 \end{equation}
+\todo{Helge: change 5 with k}
 
 \todo{Explain a bit about Sequential pattern analysis}
 
@@ -296,7 +307,7 @@ relevant or which suggest that something is unimportant to the user, such as
 delete. It is likely that little research has been conducted on negative
 implicit feedback because there are fewer of these types of behaviors, and, in
 general, less is understood about how to effectively use negative feedback,
-whether for implicit or explicit relevance feedback.
+whether for implicit or explicit relevance feedback. \todo{Helge: Domain driver? (e.g. news har ikke dette)}
 
 Another challenge facing implicit feedback research is the notion of degree of
 personalization offered by the system. In particular, individual differences
