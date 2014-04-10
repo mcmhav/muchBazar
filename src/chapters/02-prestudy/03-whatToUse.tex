@@ -11,6 +11,8 @@
 
 \subsection{Some Awesome Algorithms (Build up with project progress)}
 
+%TODO - Add simple descriptions of the algorithms used in the experiments
+
 Given enough data, item-based CF methods often performs as well or better than
 almost any other recommendation method. However, in cold-start situations where
 a user, an item, or the entire system is new, simple non-personalized
@@ -39,6 +41,34 @@ Personalized recommendations, what assumptions can be made?
 \#2 - You are like people who do similar things that you do
 \#3 - You like things that are similar to things you already like
 \#4 - You are influenced by experts and the opinions of others
+
+
+\subsubsection{ALS-WR}
+
+Alternating-least-squares with weighted-$\lambda$-regularization (ALS-WR) was designed fro the Netflix Prize Competition \cite{Netflix}, where it obtained an RMSE score of 0.8975, which was on of the best results based on a pure method.
+
+Alternating-least-squares is a method to solve Equation \ref{equation:minimize}. Since both $q_{s}$ and $p_{c}$ are unknown, the equation is not convex. However if we fix one of the unknowns, the optimization problem becomes quadratic and can be solved optimally. The ALS technique rotate between fixing the $q_{s}$'s and fixing the $p_{c}$'s. When all the $p_{c}$'s are fixed, the system recomputes the $q_{s}$'s by solving a least-squares problem, and vica versa. This ensures that each step decreases the error until convergence. What makes ALS favorable over the simpler and faster stochastic gradient descent is two things. ALS can be parallelized since the system computes the $q_{s}$'s independently of the other item factors, the same can also be applied to the user factors. The second case if for systems centered around implicit data. Because the training set cannot be considered sparse, looping over each single training case as gradient descent would not be practical, but ALS can efficiently handle such cases \cite{Hu:2008:CFI:1510528.1511352}.
+
+ALS solves the low-rank matrix factorization as follows:
+
+\begin{itemize}
+\item Step 1: Initialize the matrix M by assigning the average rating for that movie as the first row, and a small random numbers for the remaining entries;
+\item Step 2: Fix P, solve Q by minimizing the objective function (the sum of squared errors);
+\item Step 3: Fix Q, solve by minimizing the objective function similarly;
+\item Step 4: Repeat Steps 2 and 3 until a stopping criterion is satisfied.
+\end{itemize}
+
+Zhou et. al. \cite{Zhou2008} used the difference in RMSEs between the rounds as a stopping criterion.
+
+Without regularization ALS might lead to overfitting due to the many free parameters. Regularization was therefore introduced in the form of weighted-$\lambda$-regularization to prevent the model from overfitting.
+
+\begin{equation}
+f(P, Q) = \sum_{(c,s)\epsilon C} (u(c,s) - p^{T}_{c}q_{s})^{2} + \lambda (\sum_{c} n_{p_{c}} \Vert p_{c} \Vert ^{2} + \sum_{s} n_{q_{s}} \Vert q_{s} \Vert ^{2})
+\label{WeightedLamba}
+\end{equation}
+
+where $n_{p_{c}}$ and $n_{q_{s}}$ denote the number of ratings of user $c$ and item $s$ respectively. $S_{c}$ denote the set of items $s$ that user $c$ rated, then $n_{p_{c}}$ is the cardinality of $S_{c}$; similarly $C_{s}$ denotes the set of users who rated item $s$, and $n_{q_{s}}$ is the cardinality of $I_{s}$. A given column of P, $p_{c}$ is found by solving a regularized linear least squares problem involving the known ratings of user $c$, and the feature vectors $q_{s}$ of the items that user $c$ has rated. Similarly, we can compute individual $q_{s}$'s via a regularized linear least squares solution, using the feature vectors of users who rated item $j$, and their ratings of it.
+
 
 \subsubsection{The Good}
 \subsubsection{The Bad}
