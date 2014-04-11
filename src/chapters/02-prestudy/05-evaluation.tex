@@ -15,22 +15,25 @@
 		% Online Evaluation
 
 
-Some key questions in evaluating recommender systems on testbed data are: what
-to predict, how to grade performance and what baseline to compare with.
+%Some key questions in evaluating recommender systems on testbed data are: what
+%to predict, how to grade performance and what baseline to compare with.
 
+In many cases a system designer that wished to employ a recommender system must choose between a set of candidate approaches. A first step towards selecting an appropriate algorithm is to decide which properties are the most important for the application. Recommender systems have a variety of properties such as accuracy, robustness, scalability, etc. The following section will discuss how to compare recommenders based on the set of properties  relevant for the application. We have several different experimental settings which can be used to evaluating recommender systems. We will focus on two types of experiments: Offline experiments where the system is evaluated without user interactions and Online experiments where real users interact with the system. This section will also cover some of the most frequently used evaluation metrics, a discussion on the suitedness of different evaluation measures for implicit feedback, and summary of the methodologies and evaluation measures used to evaluate the cold-start performance of recommender systems.
 
-This section will cover how the quality of recommender systems can be
-assessed. These evaluation methods can be split into two classes: Offline
-evaluation and Online evaluation. This section will also cover the most
-frequently used evaluation metrics, a discussion of evaluation measures for implicit feedback, and cold-start summary of the methodologies used in the literature to evaluate the quality of cold-start recommendations.
+Shani et. al. lists the following guidelines for general experimental studies:
+
+\begin{itemize}
+\item Hypothesis: before running an experiment one must form an hypothesis. For example, an hypothesis can be that algorithm $A$ better predicts user ratings than algorithm $B$. In that case the experiment should test the prediction accuracy, and not look at other factors.
+\item Controlling variables: when comparing a few candidate algorithms on a certain hypothesis, it is important that all variables that are not tested are fixed.
+\item Generalization power: when drawing conclusions from experiments, we may wish that our conclusions generalize beyond the immediate context of the experiments. When choosing an algorithm for a real application, we may want our conclusion to hold on the deployed system, and generalize beyond the experimental data set. To increase the probability of generalization of the recommender results one must typically experiment with several data sets or applications.
+\end{itemize}
 
 
 \subsection{Offline Evaluation}
 
-Offline experiments are performed using pre-collected dataset(s) and a protocol that models the user behavior to estimate recommender performance through different evaluation measures.
-%Offline experiments are carried out to compare different methods or finding the optimal parameters for a given method.
+Offline experiments are performed using pre-collected dataset(s) and a protocol that models the user behavior to estimate recommender performance through different evaluation measures. Offline experiments are attractive because they require no interactions with real users, and thus allows researchers to compare a wide range of algorithms at a low cost. The downside of offline experiments is that they can answer a very narrow set of questions, typically questions about the predictive power of the algorithm, and does not measure other user factors.
 
-\subsubsection{Recommender system datasets}
+\subsubsection{Datasets for Offline Evaluation}
 
 The main aim of a recommender system is to identify the set of items in a dataset that might be intersting to a user based on their expressed preferences. For a fashion recommender this would mean estimating how much a user might like an item, by e.g. predicting what rating a user might give an item. In recent years, various test collections for different domains such as books, music, movies have been made available to the public. These datasets usually consist of user ratings in the form of \emph{<UserID, ItemID, Rating>}.
 
@@ -55,7 +58,7 @@ The definition of explicit is defined as "stated clearly and in detail, leaving 
 Unlike explicit feedback, we do not have nay direct input from the user regarding their personal preferences. In particular we do not have any substantial evidence of which items the user dislikes, such as low ratings. However, implicit-feedback is more easily collected, and usually more abundant. Implicit feedback types include browsing history, purchase history, search patters, etc.
 
 
-\subsection{Validation Methods}
+\subsubsection{Validation Methods}
 
 Validation techniques are motivated by two fundamental problems; model selection and performance estimation. Almost all pattern recognition techniques have one or more free parameters, and we want a way to select the \emph{optimal} parameter(s) or model for a given problem. Once we have chosen a model, we wish to estimate how well it is doing.
 
@@ -74,7 +77,6 @@ Leave-one-out is the degenerate case of K-fold Cross-Validation, where $K$ is ch
 In practice the number of folds often depends on the size of the dataset. For large datasets, even 3-Fold Cross Validation will be quite accurate, which for sparse datasets, one may wish to train as many examples as possible. A common choice is $K$ value between 5 and 10.
 
 \textbf{Bootstrapping}
-
 
 
 \subsubsection{Offline Evaluation Metrics}
@@ -116,15 +118,16 @@ Herlocker et. al. \cite{Herlocker2004} argue that rank accuracy metrics may be o
 \textbf{Beyond Accuracy}
 
 \textbf{Coverage}
+subsection
+The term coverage can refer to several distinct properties of the system. Most commonly, the term coverage refers to the proportion of items the recommendation system can recommend, also known as \emph{item-space coverage}. The simplest measure of catalogue coverage is the percentage of all items that can ever be recommended. Coverage can also be the proportion of users interactions for which the system can recommend items, known as \emph{user-space coverage}. In many applications the recommender system may not provide recommendations for some users due to e.g. low confidence in the accuracy of predictions for that user. In such cases one may prefer a recommender that can provide recommendations to a wider range of users.
 
 The term coverage can refer to several distinct properties of the system. Most commonly, the term coverage refers to the proportion of items the recommendation system can recommend, also known as \emph{item-space coverage}. The simplest measure of catalogue coverage is the percentage of all items that can ever be recommended. Coverage can also be the proportion of users interactions for which the system can recommend items, known as \emph{user-space coverage}. In many applications the recommender system may not provide recommendations for some users due to e.g. low confidence in the accuracy of predictions for that user. In such cases one may prefer a recommender that can provide recommendations to a wider range of users.
 
 \subsection{Evaluation using Implicit Feedback}
 
-Accuracy metrics not suited for implicit feedback datasets, as they require
-knowing which items are undesired by a user \cite{Hu2008}.
+Accuracy metrics not suited for implicit feedback datasets, as they require knowing which items are undesired by a user \cite{Hu2008}.
 
-\subsection{Evaluation of Cold-start Recommendations}
+\subsubsection{Evaluation of Cold-start Recommendations}
 
 The cold-start problem can be considered a sub problem of coverage because it measures the system coverage over a specific set of items and users. When evaluating the cold-start system performance one is interested in measuring the system accuracy for these users and items.
 
@@ -217,7 +220,6 @@ well.
 CTR = \frac{Clicks}{Recommendations}
 \end{equation}
 
-<<<<<<< HEAD
 \subsection{Evaluation using Implicit Feedback}
 
 Accuracy metrics not suited for implicit feedback datasets, as they require
@@ -262,8 +264,6 @@ The cold-start problem can be considered a sub problem of coverage because it me
 %Clues
 % http://delivery.acm.org/10.1145/570000/564421/p253-schein.pdf?ip=129.241.103.83&id=564421&acc=ACTIVE%20SERVICE&key=CDADA77FFDD8BE08%2E5386D6A7D247483C%2E4D4702B0C3E38B35%2E4D4702B0C3E38B35&CFID=419807217&CFTOKEN=62708098&__acm__=1394537427_86c608d0d7733db023faa5a09da46de7
 
-=======
->>>>>>> 123e297cb94d778ace1e13c71255cd6e8f346d90
 \subsection{What To Use}
 
 \todo{RMSE, MSE, P/R \dots}
