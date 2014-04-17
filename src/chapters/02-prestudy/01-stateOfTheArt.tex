@@ -1020,5 +1020,12 @@ checks out an item from there. It is not possible to be 100\% sure which user
 access the item from the collection\_viewed event, so this event is therefor
 not integrated into the session-stack.
 
-\subsection{One-Class Collaborative Filtering}
 
+\subsection{One-Class Collaborative Filtering}
+Although the advantages are clear, a drawback of implicit rating, especially in situations of data sparsity, is that it is hard to identify representative negative examples. All of the negative examples and missing positive examples are mixed together and cannot be distinguished. We refer to collaborative filtering with only positive examples given as One-Class Collaborative Filtering (OCCF). OCCF can occur in different scenarios with two examples as follows.
+
+There are several intuitive strategies to attack this problem. One approach is to label negative examples to convert the data into a classical CF problem. But this is very expensive or even intractable because the users generating the preference data will not bear the burden. In fact, users rarely supply the ratings needed by traditional learning algorithms, specifically not negative examples [23]. Moreover, based on some user studies [14], if a customer is asked to provide many positive and negative examples before the system performs well, she would get a bad impression of it, and may decline to use the system. Another common solution is to treat all the missing data as negative examples. The drawback is that this biases the recommendation results because some of the missing data might be positive. On the other hand, if we treat missing as unknown, that is, ignore all the missing examples and utilize the positive examples only and then feed it into CF algorithms that only model non-missing data (as in [30]), a trivial solution arising from this approach is that all the predictions on missing values are positive examples. All missing as negative (AMAN) and all missing as unknown (AMAU) are therefore two extreme strategies in one-class problems
+
+Because both of them consider multi-class problems, their methods do not directly apply to OCCF problems.
+
+The key difference between OCCF and previous CF problems is there is no negative example given in the OCCF problems. While positive examples are given, non-positive examples are either negative or missing positive examples. Even though RMSE or MAE are commonly used metrics to evaluate the performance of traditional CF algorithms, for the one-class problem, ranking is more relevant and we will discuss relevant performance metrics in Section 4.
