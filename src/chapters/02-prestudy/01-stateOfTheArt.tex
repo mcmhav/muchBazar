@@ -400,9 +400,9 @@ calculate the predicted ratings.
 
 % Using a Trust Network to Improve Top-N Recommendation
 
+
 Jamali et. al. \cite{Jamali2009} propose two different methods for getting
-around the cold-start user problem using a trust network. Their first approach called \emph{Random Walk} only utilize the trust network to provide recommendations. Starting from the active user $u$, we perform a random walk on the trust network. Each
-random walk stops at a certain user. Then the items rated highly by that user
+around the cold-start user problem using a trust network. Their first approach called \emph{Random Walk} only utilize the trust network to provide recommendations. Starting from the active user $u$, we perform a random walk on the trust network. Each random walk stops at a certain user. Then the items rated highly by that user
 will be considered as recommended items, ordered according to the ratings
 expressed by that user. We perform several random walks to gather more
 information and compute a more confident result. The estimated rating of each
@@ -413,16 +413,23 @@ the items rated by these trusted users to compute top-N recommended items. The t
 \emph{Breadth First Search} or \emph{Random Walk in the social network}. We use the collaborative filtering approach to compute another set of top-N
 recommended items. Finally, we merge these two lists to produce a combined list of top-N recommended items. Items returned by CF is denoted as $CF_{u}$, while the items returned by Trust-based approach are denoted $TR_{u}$.
 
-\begin{equation}
-\[
- \hat{u}(c,s) =
-  \begin{cases}
-   \frac{u_{tr_{c,i}} + u_{cf_{c,i}}}{2} 	& i \in TR_{u};i \in CF_{u} 		\\
-   \hat{u_{tr_{c,i}}}       				& i \in TR_{u};i \not \in CF_{u} 	\\
-   \hat{u_{cf_{c,i}}}		 				& i \in CF_{u};i \not \in TR_{u}	
-  \end{cases}
-\]
-\end{equation}
+%TODO - FIX
+%\begin{equation}
+%\[
+%\begin{equation*}
+% \hat{u}(c,s) =
+%  \begin{cases}
+%   \frac{u_{tr_{c,i}} + u_{cf_{c,i}}}{2} 	& i \in TR_{u};i \in CF_{u} 		\\
+%   \hat{u_{tr_{c,i}}}       				& i \in TR_{u};i \not \in CF_{u} 	\\
+%   \hat{u_{cf_{c,i}}}		 				& i \in CF_{u};i \not \in TR_{u}	
+%  \end{cases}
+%\]
+%\end{equation}
+
+
+
+The top-N items with the highest value of $\hat{u}(c,s)$ will be returned as the top-N recommended items. The authors also experimented with weighted averaging in the case where the item appear in both $TR_{u}$ and $CF_{u}$.
+
 
 The top-N items with the highest value of $\hat{u}(c,s)$ will be returned as the top-N recommended items. The authors also experimented with weighted averaging in the case where the item appear in both $TR_{u}$ and $CF_{u}$. Their approaches showed great improvements in recall for cold-start users,
 improving the performance by 50\% over standard CF methods. The main improvements however, are the coverage of the trust-based approaches, while still maintaining the same or even slightly better precision than the standard CF methods.
@@ -441,6 +448,7 @@ improving the performance by 50\% over standard CF methods. The main improvement
 % Article Comments:
 %	- Pretty good general model for dealing with sparsity
 %	- Requires no additional information such as product details, demographic information about userstrus
+
 
 Papagelis et. al. \cite{Papagelis2005} proposed to alleviate sparsity using
 trust inferred from user-user similarity. This approach does therefore not require users to explicitly express their trust in other users, unlike the approaches described above, the trust information is inferred from the underlying social network of the rating matrix. Their approach is based on the assumption that the more similar two users are, the greater their established trust would be considered.
