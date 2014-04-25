@@ -3,13 +3,11 @@
 \section{State Of The Art}
 \label{sec:SotA}
 
-This section will present and discuss previous work in the field of recommender systems, existing solutions to the cold-start problem and fashion recommender systems. The section will also contain a discussion of the domain specific challanges of designing a recommender system for the fashion domain. 
+This section will present and discuss previous work in the field of recommender systems, existing solutions to the cold-start problem and fashion recommender systems. The section will also contain a discussion of the domain specific challenges of designing a recommender system for the fashion domain. 
 
 \subsection{Recommender Systems foundations}
 
-Recommender systems have become an important research topic since the introduction of Tapestry \cite{Goldberg1992}, the first collaborative filtering system back in 1992. Recommender systems now play an important role in many of the most popular web-sites such as Amazon, YouTube, Netflix, Tripadvisor, Last.fm, and IMDb. In its most common formulation the recommendation problem is reduced to the problem of estimating the preference/rating of items that have not been seen by a user. Usually, this estimation is based on ratings previously given by the user to other items in the collection. Once we have estimated these ratings we can recommend the items with the highest rating to the user. These recommendations relate to various decision-making processes, such as what items to buy, what music to listen to, or what online news to read.
-
-Recommender systems are usually classified into the following categories, based on how the recommendations are made \cite{Adomavicius2005}
+Recommender systems have become an important research topic since the introduction of Tapestry \cite{Goldberg1992}, the first collaborative filtering system back in 1992. Recommender systems now play an important role in many of the most popular web-sites such as Amazon, YouTube, Netflix, Tripadvisor, Last.fm, and IMDb. In its most common formulation the recommendation problem is reduced to the problem of estimating the preference/rating of items that have not been seen by a user. Usually, this estimation is based on ratings previously given by the user to other items in the collection. Once we have estimated these ratings we can recommend the items with the highest rating to the user. These recommendations relate to various decision-making processes, such as what items to buy, what music to listen to, or what online news to read. Recommender systems are usually classified into the following categories, based on how the recommendations are made \cite{Adomavicius2005}
 
 \begin{itemize}
 \item \emph{Content-based recommendations:} The user will be recommended items with similar content to the ones the user preferred in the past;
@@ -19,34 +17,34 @@ Recommender systems are usually classified into the following categories, based 
 
 \subsubsection{Content Based Filtering}
 
-In a content-based system, we must construct for each user $c$ a \emph{profile} $ContentBasedProfile(c)$, which is a record or collection of the attributes which characterizes each item $Content(s)$ of all the items $s_{i} \epsilon S$ previously assigned an utility $u(c, s)$ by user $c$. For our example in a fashion recommender system the content-based recommender system tries to understand the commonalities among the items user $c$ has rated highly in the past (color, brand, store, price, etc.). Then recommend items that have a high degree of similarity to these items. $ContentBasedProfile(c)$ can be designed as a vector of weights $(w_{c1} ... w_{ck})$, where each weight $w_{ci}$ denotes the importance of the keyword $k_{i}$ to user $c$.
+In a content-based system, we must construct a \emph{profile} $ContentBasedProfile(c)$ or each user $c$, which is a record or collection of the attributes which characterizes each item $Content(s)$ of all the items $s_{i} \epsilon S$ previously rated by user $c$. For example in a fashion recommender system the content-based recommender system tries to understand the commonalities among the items user $c$ has rated highly in the past (color, brand, store, price, etc.). Then recommend items that have a high degree of similarity to these items. $ContentBasedProfile(c)$ can be designed as a vector of weights $(w_{c1} ... w_{ck})$, where each weight $w_{ci}$ denotes the importance of the keyword $k_{i}$ to user $c$.
 
 Items that can be recommended to the user can often be stored in a database table. Figure \ref{figure:contentbaseddb} shows a simple database with rows describing 5 items that have been rated by 3 users. The column names starting with $X_{n}$ are the properties of the items, often referred to as "attributes".
 
 \begin{figure}[H]
     \includegraphics[width=5in]{image/contentbaseddb.png}
     \centering
-    \caption[A clothing database]{A clothing database. Rows are items, columns are users and properties of the items and predictable trust statements}
+    \caption[A clothing database]{A clothing database. Rows are items, columns are users and properties of the items}
     \label{figure:contentbaseddb}
 \end{figure}
 
-From the rating matrix and content properties one can then construct a $ContentBasedProfile(c)$ for each user $c$, for user Arya one could image it could look something like this.
+From the rating matrix and content properties one can then construct a $ContentBasedProfile(c)$ for each user $c$, for the user Arya one could imagine it would look something like this.
 
 \begin{figure}[H]
-    \includegraphics[width=3in]{image/contentprofile.png}
+    \includegraphics[width=2in]{image/contentprofile.png}
     \centering
     \caption[Content Profile Example]{Content Profile Example}
     \label{figure:contentbaseddb}
 \end{figure}
 
-The recommendation process consists of matching up the attributes of the user profile against the attributes of an item. The result is a relevance judgment that represents the user's level of interest in that object. The utility $u(c, s)$ of item $s$ for user $c$ is estimated based on the utilities $u(c, s_{i})$ assigned by user c to items $s_{i} \epsilon S$ that exhibit a similarity to item $s$. E.g. for the user Arya items with the attributes low price and low formality could safely be recommended as they fit her user profile. The utility function $r(u, i)$ is usually defined as:
+The recommendation process consists of matching up the attributes of the user profile against the attributes of an item. The result is a relevance judgment that represents the user's level of interest in that object. The utility $u(c, s)$ of item $s$ for user $c$ is estimated based on the utilities $u(c, s_{i})$ assigned by user c to items $s_{i} \epsilon S$ that exhibit a similarity to item $s$. E.g. for the user Arya items with the attributes low price and low formality could safely be recommended as they fit her user profile, and have similar characteristics to the items which she previously have rated highly. The utility function $r(u, i)$ is usually defined as:
 \begin{equation}
 r(u,i) = score(ContentBasedProfile(u), Content(i)).
 \end{equation}
 
 \subsubsection{Collaborative Filtering}
 
-The goal of collaborative filtering methods is to suggest new items or to predict the utility $u(c, s)$ of a certain item s for a particular user c based on the user's previous activities and/or likings and similarity to other users. In a typical CF scenario, there is a list of $n$ users $C = {c_{1}, ... c_{n}}$ and a list of $m$ items $S = {s_{1},...s_{m}}$. Each user $c_{i}$ has a list of items $S_{si}$, which the user have expressed her opinion about, which makes up our rating matrix of size $SxC$. More formally, the utility $u(c, s)$ of item $s$ for user $c$ is estimated based on the utilities $u(c_{j}, s)$ assigned to item $s$ by the users $c_{j} \epsilon C$, which can be considered "similar" to the active user $c$. This is exemplified in Figure \ref{figure:ratingmatrix}. For example, in our fashion recommender system, in order to recommend clothes to user $c$, the collaborative filtering method must find the "peers" of users $c$, which share the same tastes in clothes (user which tend to rate clothes similarly). Then, recommend the clothes that are most liked among these "peers".
+The goal of collaborative filtering methods is to suggest new items or to predict the utility $u(c, s)$ of a certain item s for a particular user c based on the user's previous activities and/or likings and similarity to other users. In a typical CF scenario, there is a list of $n$ users $C = {c_{1}, ... c_{n}}$ and a list of $m$ items $S = {s_{1},...s_{m}}$. Each user $c_{i}$ has a list of items $S_{si}$, which the user have expressed her opinion about, which makes up our rating matrix of size $S \times C$. More formally, the utility $u(c, s)$ of item $s$ for user $c$ is estimated based on the utilities $u(c_{j}, s)$ assigned to item $s$ by the users $c_{j} \epsilon C$, which can be considered "similar" to the active user $c$. This is exemplified in Figure \ref{figure:ratingmatrix}. For example, in our fashion recommender system, in order to recommend clothes to user $c$, the collaborative filtering method must find the "peers" of users $c$, which share the same tastes in clothes (user which tend to enjoy similar clothes). Then, recommend the clothes that are most liked among these "peers".
 
 \begin{figure}[H]
     \includegraphics[width=5in]{image/ratingmatrix.png}
@@ -55,7 +53,7 @@ The goal of collaborative filtering methods is to suggest new items or to predic
     \label{figure:ratingmatrix}
 \end{figure}
 
-Researchers have devised a number of collaborative filtering algorithms that can be divided into two main categories: Memory-based and Model-based algorithms \cite{Su2009}.
+Researchers have devised a number of collaborative filtering algorithms that can be divided into two main categories: Memory-based and Model-based algorithms \cite{Su2009}.\linebreak[4]
 
 \textbf{Memory-based Methods}
 
@@ -66,13 +64,13 @@ Memory-based Collaborative Filtering methods utilize the entire user-item databa
 u(c,s) = k * \sum_{c' \epsilon C} sim(c, c') * u(c',s)
 \end{equation}
 
-Where k serves as a normalization factor, usually being $1/|C|$. Various appraoches have been used to compute the similarity $sim(c, c')$ between the users. Generally these approaches are based on the rating similarities for items both users have rated. The most popular similarity measure is The Pearson Correlation Coefficient. Equation \ref{equation:pearson} shows how to calculate the Pearson Correlation Coefficient between two users $c$ and $c'$, Here $S_{cc'}$ is the set of items the user have in \emph{common}.
+Where k serves as a normalization factor, usually being $1/|C|$. Various appraoches have been used to compute the similarity $sim(c, c')$ between the users. Generally these approaches are based on the rating similarities for items both users have rated. The most popular similarity measure is The Pearson Correlation Coefficient. Equation \ref{equation:pearson} shows how to calculate the Pearson Correlation Coefficient between two users $c$ and $c'$, here $S_{cc'}$ is the set of items the user have in \emph{common}.
 
 \begin{equation}
 sim(c, c') = \frac{\sum_{s \epsilon S_{cc'}} (u(c, s)-\bar{u_{c}})(u(c',s)-\bar{u_{c'}})}{\sqrt[•]{\sum_{s \epsilon S_{cc'}} (u(c, s)-\bar{u_{c}})^{2}(u(c',s)-\bar{u_{c'}})^{2}}}
 \end{equation}
 
-Where $u_{c}$ is the mean utility of user $c$. The Pearson Correlation Coefficient and other similarity measures such as consine based approaches are more commonly known user-based collaborative filtering.
+Where $u_{c}$ is the mean utility of user $c$. The Pearson Correlation Coefficient and other similarity measures such as consine based approaches are more commonly known user-based collaborative filtering.\linebreak[4]
 
 Item-based Top-N Recommendation methods calculates the similarity between items instead of users. In these approaches, the historical information is analyzed to identify the relations between items such that a purchase of another item (or set of items) often leads to the purchase of another item. These models are often used since they quickly can recommend a set of items, and have shown to produce recommendation results comparable or better than traditional user-based approaches \cite{Karypis2001}.
 
@@ -85,7 +83,7 @@ The algorithm first computes the $k$ most similar items for each item according 
     \label{figure:ratingmatrix}
 \end{figure}
 
-Each user a set $S_{c}$ of items previously rated by the user which we want to compute top-N recommendations for. First, we identify the set $C$ of candidate items recommended items by taking the union of the k most similar items and removing each of the items in the set $S_{c}$ the user already has rated; then calculate the similarities between each item of the set $C$ and the set $S_{c}$, using only the $k$ most similar items for each item in $S_{c}$. The resulting set of items in $C$ are sorted in descending order of similarity and will be the recommended as the item-based Top-N list \cite{Karypis2001}.
+Each user has a set of items $S_{c}$ previously rated by the user which we want to compute top-N recommendations for. First, we identify the set $C$ of candidate items recommended items by taking the union of the $k$ most similar items and removing each of the items in the set $S_{c}$ the user already has rated; then calculate the similarities between each item of the set $C$ and the set $S_{c}$, using only the $k$ most similar items for each item in $S_{c}$. The resulting set of items in $C$ are sorted in descending order of similarity and will be the recommended as the item-based Top-N list \cite{Karypis2001}.\linebreak[4]
 
 \textbf{Model-based Methods}
 
@@ -93,24 +91,9 @@ As the name implies, Model-based approaches provide recommendations by first dev
 
 Latent factor models comprise an alternative approach by transforming both items and users to a latent factor space. The latent factor space tries to explain the ratings by characterizing both items and users on factors automatically inferred from the data. The most popular latent factor models are based on matrix factorization techniques \cite{Koren2009}.
 
-The main idea behind matrix factorization is just as its name implies, factorize a matrix, finding two or more matriches such that when you multiply them you get back the original matrix. Matrix factorization can be used to discover latent factors underlying the interactions between the users and items. These factors \emph{explain} how a user rates an item (i.e. that a user would give high ratings to a certain shirt if he likes the brand, or if the color is nice). If we can discover these factors, we should be able to predict a rating with respect to a certain user and a certain item based on the correlation between their factors.
+The main idea behind matrix factorization is just as its name implies, factorize a matrix, finding two or more matrices such that when you multiply them you get back the original matrix. Matrix factorization can be used to discover latent factors underlying the interactions between the users and items. These factors \emph{explain} how a user rates an item (i.e. that a user would give high ratings to a certain shirt if he likes the brand, or if the color is nice). If we can discover these factors, we should be able to predict a rating with respect to a certain user and a certain item based on the correlation between their factors.
 
-Consider the following rating matrix R \ref{table:RatingMatrix} containing the rating of four users $C$ for four items $S$, giving us a $CxS$ matrix with explicit ratings on a scale from 1 to 5.
-
-\begin{table}[!htbp]
-\centering
-\begin{tabular}{|c|c|c|c|}
-\hline
-5.00 	& 5.00	& 2.00 & - 	  \\ \hline
-2.00 	& -		& 3.00 & 5.00 \\ \hline
- - 		& 5.00	& -    & 3.00 \\ \hline
-3.00	& - 	& -	   & 5.00 \\ \hline
-\end{tabular}
-\label{table:RatingMatrix}
-\caption{Rating matrix R ($C \times S$)}
-\end{table} 
-
-A matrix factorization model map both users and items to a joint latent factor space of dimensionality $f$, where $f$ is the number of latent factors. The number of latent factors are usually determined by using a hold-out dataset or cross-validation by evaluating the prediction error experimenting with different values. It is also worth mentioning that this is a trade off between model building complexity and accuracy as having more features makes the model building more expensive. Each user $c$ is associated with a vector $p_{c} \epsilon \mathbb{R}^{f}$, and each item $s$ is associated with a vector $q_{s} \epsilon \mathbb{R}^{f}$. Giving us a matrix Q containing the user factors and a matrix P containing the item factors as exemplified in Figure \ref{figure:matrixdecomp}.
+A matrix factorization model map both users and items to a joint latent factor space of dimensionality $f$, where $f$ is the number of latent factors. The number of latent factors are usually determined by using a hold-out dataset or cross-validation by evaluating the prediction error experimenting with different values. It is also worth mentioning that this in some ways can be seen as a trade-off between model building complexity and accuracy as having more features makes the model building more expensive. Each user $c$ is associated with a vector $p_{c} \epsilon \mathbb{R}^{f}$, and each item $s$ is associated with a vector $q_{s} \epsilon \mathbb{R}^{f}$. Giving us a matrix Q containing the user factors and a matrix P containing the item factors as exemplified in Figure \ref{figure:matrixdecomp}.
 
 \begin{figure}[H]
     \includegraphics[width=5in]{image/matrixdecomp.jpg}
@@ -125,7 +108,7 @@ User-item interactions are modeled as inner products in that space. For a given 
 u(c,s) = p_{c}^{T}q_{s} = \sum_{k=1}^{f} q_{sk}p_{kc}
 \end{equation}
 
-Then problem then, is to discover the user factor matrix $P$ and the item factor matrix $Q$ such that their product approximates the original rating matrix $R$.
+The problem then, is to discover the user factor matrix $P$ and the item factor matrix $Q$ such that their product approximates the original rating matrix $R$.
 
 \begin{equation}
 R \approx Q \times P^{T} = \hat{R}
@@ -138,7 +121,22 @@ To learn the factor vectors the system minimizes the regularized square error on
 min_{q, p} = \sum_{(c,s)\epsilon K} (u(c,s) - p^{T}_{c}q_{s})^{2} + \lambda ( \Vert q_{s} \Vert ^{2} + \Vert p_{c} \Vert ^{2})
 \end{equation}
 
-However, it is important to remember that our goal is generalize beyond the observed ratings, in a way that we can predict future unknown ratings. The system should therefore avoid overfitting the data by regularizing the learned parameters, whose magnitudes are penalized. $\lambda$ controls the extent of regularization, and if much like $f$, often determined by cross-validation. Two possible approaches to minimizing Equation \ref{equation:minimize} is to use Stochastic Gradient Descent or Alternating Least Squares \citep{Koren2009}.
+However, it is important to remember that our goal is generalize beyond the observed ratings, in a way that we can predict future unknown ratings. The system should therefore avoid overfitting the data by regularizing the learned parameters, whose magnitudes are penalized. $\lambda$ controls the extent of regularization, and much like $f$, often determined by cross-validation. Two possible approaches to minimizing Equation \ref{equation:minimize} is to use Stochastic Gradient Descent or Alternating Least Squares \citep{Koren2009}.
+
+Consider the following example where we have the following rating matrix R shown in Table \ref{table:ratingMatrix} containing the rating of four users $C$ for four items $S$, giving us a $C \times S$ matrix with explicit ratings on a scale from 1 to 5.
+
+\begin{table}[!htbp]
+\centering
+\begin{tabular}{|c|c|c|c|}
+\hline
+5.00 	& 5.00	& 2.00 & - 	  \\ \hline
+2.00 	& -		& 3.00 & 5.00 \\ \hline
+ - 		& 5.00	& -    & 3.00 \\ \hline
+3.00	& - 	& -	   & 5.00 \\ \hline
+\end{tabular}
+\label{table:RatingMatrix}
+\caption{Rating matrix R ($C \times S$)}
+\end{table} 
 
 Given that $f = 3$, we might end up with the following matrix $P$ and $Q$
 
@@ -183,14 +181,15 @@ Giving us the following rating prediction matrix $\hat{R}$
 \caption{Rating prediction matrix $\hat{R}$}
 \end{table} 
 
-As you can see the values of known ratings in Table \ref{table:RatingMatrix} are fairly similar to the corresponding ratings in the rating prediction matrix.
+As you can see the values of known ratings in Table \ref{table:ratingMatrix} are fairly similar to the corresponding ratings in the rating prediction matrix.
 
 \subsubsection{Hybrid approaches}
 
 A term \emph{hybrid recommender systems} is used to describe any recommender system that combines multiple recommendation techniques together to provide recommendations. Burke et. al. \cite{Burke2002} identified seven different classes of hybrid recommender systems:
 
 \begin{itemize}
-\item Weighted: The score of different recommendation components are combined numerically
+\item Weighted: The score of different recommendation components are combined numerically.
+\item Switching: Switching between recommender systems depending on the situation.
 \item Mixed: Recommendations from different recommenders are presented together.
 \item Feature Combination. Features derived from different knowledge sources are combined together and given to a single recommendation algorithm
 \item Feature Augmentation: One recommendation technique is used to compute a feature or set of features, which is then part of the input to the next technique.
@@ -207,19 +206,17 @@ Most commonly hybrid systems are built by combining collaborative and content-ba
 \item Constructing a general unifying model that incorporates both content-based and collaborative characteristics
 \end{itemize}
 
-\subsubsection{Challenges}
+\subsubsection{Recommender System Challenges}
 
 \textbf{Scalability}
 
-As the number of existing users and items blow up, traditional CF algorithms suffer serious scalabiltiy problems. The model building phase of \emph{Traditional} collaborative filtering methods have a complexity of O(CS) where $C$ is the number of users and $S$ is the number of items. For systems with millions of users and items
+As the number of existing users and items blow up, traditional CF algorithms suffer serious scalability problems. The model building phase of \emph{Traditional} collaborative filtering methods have a complexity of O(MN) where $M$ is the number of users and $N$ is the number of items. For systems with millions of users and items, even a complexity of n is too large. Another fundamental issue is how to embed the core recommendation techniques in real operational systems and how to deal with massive and dynamic sets of data produced by the interactions of users with items. Recommender systems are expected in many cases to provide rapid recommendations online, it is therefore also important to consider how fast the system provides recommendations.
 
-The computational complexity of item-to-item based algorithms are up to two orders of magnitude faster than traditional user-based algorithms \cite{Deshpande2004}
-
-Dimensionality reduction techniques such as SVD can deal with the scalability by providing more compact representations and quickly produce good recommendations. However, most dimensionalty reduction techniques must undergo expensive matrix factorization steps.
+Better scalabiltiy and improved accuracy make the item-item collaborative filtering approaches more favorable in many cases. The computational complexity of item-to-item based algorithms are up to two orders of magnitude faster than traditional user-based algorithms \cite{Deshpande2004}. Dimensionality reduction techniques such as SVD can deal with the scalability by providing more compact representations and quickly produce good recommendations. However, most dimensionalty reduction techniques must undergo expensive matrix factorization steps.
 
 \textbf{Sparsity}
 
-In practice, many collaborative filtering systems deal with very large item collections. This means that the number of ratings obtained is usually very small compared to the number of ratings that it needs to predict. Efficient prediction of ratings from a small number of examples is therefore important. The \emph{reduced coverage} problem occurs when the number of users' rating amy be very small compared to the number of items. This may lead to that the recommender is unable to provide recommendations for a large portion of the items. \emph{Neighbour transitivity} refers to the problem in which users with similar tastes may not be identified due to a lack of co-rated items, making collaborative filtering futile, since it relies on comparing users to predict unknown ratings.
+In practice, many recommender systems deal with very large item collections. This means that the number of ratings obtained is usually very small compared to the number of ratings that it needs to predict. Efficient prediction of ratings from a small number of examples is therefore important. The \emph{reduced coverage} problem occurs when the number of users' rating may be very small compared to the number of items. This may lead to that the recommender is unable to provide recommendations for a large portion of the items. \emph{Neighbour transitivity} refers to the problem in which users with similar tastes may not be identified due to a lack of co-rated items, making collaborative filtering futile, since it relies on comparing users to predict unknown ratings.
 
 \textbf{Cold-start}
 
@@ -233,6 +230,19 @@ In recommender systems where everyone can give ratings, people may give lots of 
 
 \textbf{Explanations / Transparency}
 
+Tintarev et. al. \cite{Tintarev2007} lists seven roles a that can be played by explanations in recommender systems:
+
+\begin{itemize}
+\item Transparency: Explaining how the system works
+\item Scrutability: Allowing the users to tell the system it is wrong
+\item Trust: Increasing user confidence in the system
+\item Effectiveness: Help users make good decisions
+\item Persuasiveness: Convince users to try or buy
+\item Efficiency: Helping users to make decisions faster
+\item Satisfaction: Increasing the ease of use or enjoyment
+\end{itemize}
+
+In collaborative filtering systems the explanations is of the form "Other users similar to you liked this item", while in content-based style explanations, the item's attributes which most affected the item to be recommended to the user are illustrated. For example, in a fashion recommender, an explanation may be of the form "This shirt was recommended because it's a Ralph Lauren who you seem to like".
 
 \subsection{System Cold-start Handling}
 
@@ -260,14 +270,14 @@ for certain users or items. The cold-start problem can be divided into three sub
   to a user who is new to a recommender system.
 \end{itemize}
 
-For example in a scenario where the average item in an item collection have 5 000 ratings, a new item with only 5 ratings would be considered a \emph{cold-item}. Likewise, in a recommender system where the average user has rated 25 items, a user who only has rated 2 items, would be considered a \emph{cold-user}.
+For example in a scenario where the average item in an item collection have 5 000 ratings, a new item with only 5 ratings would be considered a \emph{cold-item}. Likewise, in a recommender system where the average user has rated 25 items, a user who only has rated 2 items, would be considered a \emph{cold-user}.\linebreak[4]
 
 The cold-start system problem is mainly a collaborative filtering problem, and
 can be seen as a combination of the cold-start user and cold-start item problem
 where the majority of the users are new to the system and have expressed few
 preferences, resulting in a very sparse user-item matrix, rendering traditional collaborative-filtering methods futile. Most traditional algorithms only work effectively in environments where the datasets has high information density. In fact, in extreme cases, when data
 is very scarce, simple non-personalized recommendations based on global
-averages can outperform collaborative-filtering algorithms \cite{Park2006}
+averages can outperform collaborative-filtering algorithms \cite{Park2006}. The reason why the cold-start system problem is not so evident in content-based systems is due to \emph{User Independence}, meaning that the system only exploits ratings provided by the active user to build her profile. Instead, collaborative filtering methods need ratings from other users to find the "peers" of the active users.
 
 In content-based systems, new items can easily be
 recommended using the content information of the item, making it a popular
@@ -276,10 +286,10 @@ severe in collaborative-filtering systems where items are only recommendable if
 they have been rated by substantial amount of users. New items will therefore not be
 recommendable before multiple users somehow stumble upon the new item while
 e.g. browsing the item collection, unless additional measures are taken to
-solve this problem. To solve the new-item problem, there are two commonly used (simple) solutions often used in E-commerce websites:
+solve this problem. To \emph{solve} the new-item problem, there are two commonly used (simple) solutions often used in E-commerce websites:
 
 \begin{itemize}
-\item Advertising at the homepage/front-page of the website, putting the new
+\item Advertising at the front-page of the website, putting the new
 items in an eye catching position. This solution, however, may this result in
 that some users, which don't like these new items, might leave the website.
 \item Requesting the user to choose one or more of his/hers categories while
@@ -294,10 +304,8 @@ collaborative-filtering systems. Collaborative Filtering is based on the idea th
 preferences. A new user therefore poses a challenge to a CF recommender, since
 the system has no knowledge about the preferences of the new user, and can
 therefore not provide any personalized recommendations. The system must therefore acquire some
-information about the new user before it can start making personalized recommendations. In a typical domain, for example in the domain of books, the number of items is very large (in the order of tens of thousands) while the number of items rated by every single user is in general small (in the order of dozens or less). This means that it is very unlikely two random users have rated any items in common and hence they are not comparable. The system will therefore most likely struggle to find users. Similarly, in content-based systems, the lack of ratings
-given by the target user, means that the target user will have a limited
-content-profile, since the users content profile is constructed using content-information from his/hers rated items. 
-with tastes that are \emph{truly} similar to the target user. In both cases, recommendation quality is most likely bound to suffer.
+information about the new user before it can start making personalized recommendations. In a typical domain, for example in the domain of books, the number of items is very large (in the order of tens of thousands) while the number of items rated by every single user is in general small (in the order of dozens or less). This means that it is very unlikely two random users have rated any items in common and hence they are not comparable. The system will therefore most likely struggle to find users with tastes that are \emph{truly} similar to the target user. Similarly, in content-based systems, the lack of ratings given by the target user, means that the target user will have a limited
+content-profile, since the users content profile is constructed using content-information from his/hers rated items. In both cases, recommendation quality is most likely bound to suffer.\linebreak[4]
 		
 This section will present a few different solutions to the cold-start problem, focusing mainly on \emph{complete} solutions to the cold-start problem. 
 
@@ -305,19 +313,15 @@ This section will present a few different solutions to the cold-start problem, f
 
 Due to the popularity of social networks such as Facebook, more and more
 researchers turn to incorporate the social relationships (e.g. trust) of users
-to help complement users’ preference in addition to item ratings, in order to overcome the limitations of existing recommender systems. For example, when looking for movie recommendations we often turn to our friends which we share a similar taste in movies with. Trust can be defined as: "believe in the reliability, truth, or ability of", and in the context of recommender systems a trusted user would be a user you trust to provide you good recommendations. Trust relationships of users are often employed in order to correlate more potential raters for the active users who require recommendations \cite{Massa2004, Massa2007}. Massa et. al. \citep{Massa2004} also show that some of the weaknesses of recommender systems such as data sparseness and their susceptibility to shilling attacks could be alleviated by incorporating trust. 
+to help complement users’ preference in addition to item ratings, in order to overcome the limitations of existing recommender systems. For example, when looking for movie recommendations we often turn to our friends which we share a similar taste in movies with. Trust can be defined as: "believe in the reliability, truth, or ability of", and in the context of recommender systems a trusted user would be a user you trust to provide you with good recommendations. E.g. in the case of the Epinions dataset \cite{Epinions}, users can explicitly state whether they trust or distrust a user [1, -1], i.e. reviewers whose reviews and ratings they have consistently found to be valuable or reviewers which they find consistently offensive, inaccurate or not valuable. In decentralized environments where everyone is free to create content and there
+is no centralized quality control entity, evaluating the quality of the content becomes an important issue. This phenomenon can be observed in online
+marketplaces such as E-bay where users can create "fake" auctions and in peer-to-peer networks where peers can enter corrupted items. In these environments, it is often a good strategy to delegate the quality assessment task to users themselves. E.g. \emph{Ebay.com} allows users to express their level of satisfaction after every interaction with another user. Trust relationships of users are often employed in order to correlate more potential raters for the active users who require recommendations \cite{Massa2004, Massa2007}. Massa et. al. \cite{Massa2004} also show that some of the weaknesses of recommender systems such as data sparseness and their susceptibility to shilling attacks could be alleviated by incorporating trust. 
 
 % The formals
-In \cite{Massa2004}, Massa et. al. propose the following Trust-Aware recommender system.
+In \cite{Massa2004}, Massa et. al. proposes a Trust-Aware recommender system architecture. 
 To capture all the trust statements we need a $CxC$ matrix, where $C$ is the number of users, since each user is allowed to express a trust value in every other user. This matrix will make up our trust network among the users. If $u$
 trusts $v$, then there is a value $t_{u,v}$ for this trust which is a real
-number in $[0,1]$. Zero means no trust and one means full trust. E.g. in the case of the Epinions dataset \cite{Epinions}, users can explicitly state whether they trust or distrust a user [1, -1], i.e. reviewers whose reviews and ratings they have consistently found to be valuable or reviewers which they find consistently offensive, inaccurate or not valuable. In decentralized environments where everyone is free to create content and there
-is no centralized quality control entity, evaluating the quality of the content becomes an important issue. This phenomenon can be observed in online
-marketplaces such as E-bay where users can create "fake" auctions and in peer-to-peer networks where peers can enter corrupted items. In these environments, it is often a good strategy to delegate the quality assessment task to users themselves. E.g. \emph{Ebay.com} allows users to express their level of satisfaction after every interaction with another user.
-
-This additional information (trust statements) can be organized in a trust network and a \emph{trust metric} can be used to predict the
-trustworthiness of other users as well (for example, friends of friends). The idea here is to not search for similar users as CF does but to search for
-trust-able users by exploiting trust propagation over the trust network. The items appreciated by these users are then recommended to the active user. 
+number in $[0,1]$. Zero means no trust and one means full trust. This additional information can be organized in a trust network and a \emph{trust metric} can be used to predict the trustworthiness of other users as well (for example, friends of friends). The idea here is to not search for similar users as CF does but to search for trust-able users by exploiting trust propagation over the trust network. The items appreciated by these users are then recommended to the active user. 
 
 % Web of Trust - Figure explanation
 Consider the example shown in Figure \ref{figure:weboftrust}. User $A$ has issued a trust statement in $B$ and $C$; hence
@@ -326,19 +330,17 @@ is possible to predict trust in unknown users by propagating trust, making it
 possible to infer something about how much user $A$ could trust $D$.
 
 \begin{figure}[H]
-    \includegraphics[width=3in]{image/webofTrust.png}
+    \includegraphics[width=2in]{image/webofTrust.png}
     \centering
     \caption[Trust Network]{Trust Network. Nodes are users and solid edges are trust statements. The dotted edge is one of the undefined and predictable trust statements (Adopted from \cite{Massa2004})}
     \label{figure:weboftrust}
 \end{figure}
 
-In addition to the trust network we will also have a Rating matrix of size $CxS$, where $S$ is
-the number of items. This rating will not differ from a standard rating matrix,
-which are used in traditional collaborative filtering systems. The value $u(c,s)$, is the rating given by user $c$ to item $s$, the rating scale may differ from system to system.
+In addition to the trust network we will also have a rating matrix of size $CxS$, where $S$ is
+the number of items. This rating will not differ from a standard rating matrix, which are used in traditional collaborative filtering systems. The value $u(c,s)$, is the rating given by user $c$ to item $s$, the rating scale may differ from system to system.
 
 % Architecture
-The systems takes as input the trust network (representing the trust
-statements) and the ratings matrix (ratings given by users to items) and
+The systems takes as input the trust network and the ratings matrix and
 produces, as output, a matrix of predicted ratings that the users would assign
 to the items. Figure \ref{figure:trustarchictecture} shows a conceptual
 overview of the trust-aware recommender system architecture.
@@ -374,6 +376,18 @@ would get a trust value of $(4-1+1)/4 = 1$, while the user at distance 2 (D)
 would get a predicted trust value of $(4-2+1)/4 = 0.75$. Meaning that we will
 have a linear decay in trust based on the distance from the source user.
 
+Massa et. al. \cite{Massa2007} experimented with both local and global trust
+metrics. They used the PageRank algorithm as a global trust metric. PageRank
+tries to infer the authority of every single user by examining the structure of
+the network. The algorithm follows a simple idea: if a link from user $A$ to user
+$B$ represent a positive vote casted by $A$ to $B$, then the global rank of a page
+depends on the number (and quality) of the incoming links. The trust values
+assigned by users to users are used to predict the trustworthiness of unknown
+users. Their findings, not surprisingly, indicate that Global Trust Metrics are
+not suited for the task of finding good neighbors, especially for providing
+personalized recommendations, but is more suited to applications such as \emph{Ebay.com} to find untrustworthy users. As a local trust metric they used MoleTrust, which is a depth-first graph walking algorithm with a tuneable trust horizon
+which allowed them to experiment with different propagation distances. They found trusted users to be good predictors. For the cold-start users they achieved a MAE of 0.674 when looking at friends of friends, compared to traditional collaborative filtering which scored 1.094. The difference is very high, and particularly relevant as it is important for recommender systems to generate personalized recommendations as soon as possible for new users, so that these users appreciate the system and keep using it.
+
 The \emph{Similarity Metric} module computes the user similarities, this is one
 of the standard steps of any traditional collaborative filtering technique,
 user similarities can be found e.g. by using the Pearson Correlation
@@ -386,38 +400,20 @@ calculate the predicted ratings.
 
 % Using a Trust Network to Improve Top-N Recommendation
 
-Massa et. al. \cite{Massa2007} experimented with both local and global trust
-Metrics. They used the PageRank algorithm as a global trust metric. PageRank
-tries to infer the authority of every single user by examining the structure of
-the network. The algorithm follows a simple idea: if a link from user $A$ to user
-$B$ represent a positive vote casted by $A$ to $B$, then the global rank of a page
-depends on the number (and quality) of the incoming links. The trust values
-assigned by users to users are used to predict the trustworthiness of unknown
-users. Their findings, not surprisingly, indicate that Global Trust Metrics are
-not suited for the task of finding good neighbors, especially for providing
-personalized recommendations, but is more suited to applications such as \emph{Ebay.com} to find untrustworthy users. As a local trust metric they chose MoleTrust, which is a depth-first graph walking algorithm with a tuneable trust horizon
-which allowed them to experiment with different propagation distances.
-
-
-
 Jamali et. al. \cite{Jamali2009} propose two different methods for getting
-around the cold-start user problem using a trust network.
-
-Their first approach called \emph{Random Walk} only utilize the trust network to provide recommendations. Starting from the active user $u$, we perform a random walk on the trust network. Each
+around the cold-start user problem using a trust network. Their first approach called \emph{Random Walk} only utilize the trust network to provide recommendations. Starting from the active user $u$, we perform a random walk on the trust network. Each
 random walk stops at a certain user. Then the items rated highly by that user
 will be considered as recommended items, ordered according to the ratings
 expressed by that user. We perform several random walks to gather more
 information and compute a more confident result. The estimated rating of each
 item is the average of ratings for that item over all raters considered. At the
 end, we output items with the highest estimated rating as top-N recommended
-items.
-
-Their second approach called \emph{Combined Approach} uses both user-user similarities and the trust network to provide recommendations. In this approach we compute the top $K$ trusted users in the network and rank
+items. Their second approach called \emph{Combined Approach} uses both user-user similarities and the trust network to provide recommendations. In this approach we compute the top $K$ trusted users in the network and rank
 the items rated by these trusted users to compute top-N recommended items. The top $K$ trusted users can either be found by
 \emph{Breadth First Search} or \emph{Random Walk in the social network}. We use the collaborative filtering approach to compute another set of top-N
 recommended items. Finally, we merge these two lists to produce a combined list of top-N recommended items. Items returned by CF is denoted as $CF_{u}$, while the items returned by Trust-based approach are denoted $TR_{u}$.
 
-\begin{equation*}
+\begin{equation}
 \[
  \hat{u}(c,s) =
   \begin{cases}
@@ -426,12 +422,10 @@ recommended items. Finally, we merge these two lists to produce a combined list 
    \hat{u_{cf_{c,i}}}		 				& i \in CF_{u};i \not \in TR_{u}	
   \end{cases}
 \]
-\end{equation*}
+\end{equation}
 
-The top-N items with the highest value of $\hat{u}(c,s)$ will be returned as the top-N recommended items. The authors also experimented with weighted averaging in the case where the item appear in both $TR_{u}$ and $CF_{u}$.
-
-Their approaches showed great improvements in recall for cold-start users,
-improving the performance by 50$\%$ over standard CF methods. The main improvements however, are the coverage of the trust-based approaches, while still maintaining the same or even slightly better precision than the standard CF methods.
+The top-N items with the highest value of $\hat{u}(c,s)$ will be returned as the top-N recommended items. The authors also experimented with weighted averaging in the case where the item appear in both $TR_{u}$ and $CF_{u}$. Their approaches showed great improvements in recall for cold-start users,
+improving the performance by 50\% over standard CF methods. The main improvements however, are the coverage of the trust-based approaches, while still maintaining the same or even slightly better precision than the standard CF methods.
 
 % Trust-aware Recommender Systems + Trust-Aware Collaborative Filtering for Recommender Systems
 % Article Comments:
@@ -449,14 +443,7 @@ improving the performance by 50$\%$ over standard CF methods. The main improveme
 %	- Requires no additional information such as product details, demographic information about userstrus
 
 Papagelis et. al. \cite{Papagelis2005} proposed to alleviate sparsity using
-trust interfaces. Trust interfaces are transitive associations between users in
-the context of an underlying social network, and does therefore not require users to explicitly express their trust in other users, unlike the approaches described above. Their approach is built on the
-idea of social networks in recommender systems. Instead of reducing the
-dimension of the user-item matrix, in an attempt to make it more informative,
-they propose a method that permits to define transitive properties between
-users in the context of a social network. Their approach does not require the
-user to explicitly express which users they trust, the trust information is
-inferred from the underlying social network of the rating matrix.
+trust inferred from user-user similarity. This approach does therefore not require users to explicitly express their trust in other users, unlike the approaches described above, the trust information is inferred from the underlying social network of the rating matrix. Their approach is based on the assumption that the more similar two users are, the greater their established trust would be considered.
 
 \begin{figure}[H]
     \includegraphics[width=5in]{image/trustnetwork.png}
@@ -480,10 +467,9 @@ depending on the number of associations that one needs to traverse in order to
 reach the target user.
 
 % Trust-paths
-For example, if the trust $T_{1 \rightarrow 2} = 0.7$ based on 5 co-rated items
-and $T_{1 \rightarrow 3} = 0.35$ based on 2 co-rated items, then the trust
-between user $2$ and $3$ through $1$ is, $T_{2 \overrightarrow{1} 3} = 0.6$
-($\frac{0.7*5}{5+2} + \frac{0.35*2}{7}$)
+For example, if the trust $t_{(1,2)} = 0.7$ based on 5 co-rated items
+and $t_{(1,3)} = 0.35$ based on 2 co-rated items, then the trust
+between user $2$ and $3$ through $1$ is, $\frac{0.7*5}{5+2} + \frac{0.35*2}{7} = 0.6$.
 
 In order to express the subjective notion of trust, the authors set up a
 confidence model that is assigned to each direct association of the network
@@ -492,19 +478,24 @@ number of co-rated items between two users. The confidence scores are all
 expressed in relation to the most confident association for each user.
 
 \begin{equation}
-C_{s \rightarrow t} = \frac{n(I_{s} \cap I_{t}}{n(I_{s} \cap I_{u_{MAX_CONF}})} 
+c_{(s,t)} = \frac{n(I_{s} \cap I_{t})}{n(I_{s} \cap I_{u_{MAX_CONF}})} 
 \end{equation}
 
 Using the above example, assuming that the maximum number of co-rated items
-user $1$ has with any user is 7, $C_{1 \rightarrow 2} = \frac{5}{7}$
+user $1$ has with any user is 7, $c_{(1,2)} = \frac{5}{7}$.
 
 % Results/Findings
 The authors achieved improved accuracy for all sparsity levels. With a sparsity
 level of $99.9\%$ the 2-HOP CF (friend of friends) increased the MAE
 performance by $17\%$ over standard CF methods.
 
-
 %TODO - READ: A Matrix Factorization Technique with Trust Propagation for Recommendation in Social Networks
+
+%Jamali et. al. propose a technique for incorporating trust using matrix factorization, called SocialMF. 
+
+%Leverage regularization model to fusing the one mode data by minimizing the gap between the taste of a user and the taste of her trusted friends
+
+%In their model, the users which have not expressed any ratings feature vectors will be learned to be close to their trusted neighbors.
 
 %TODO - Discussion on Trust-Aware Recommenders
 
@@ -514,17 +505,13 @@ performance by $17\%$ over standard CF methods.
 %	How can we incorporate trust? (How do we get this matrix?)
 %	Chen et. al. \cite{Chen2010} proposed a framework to estimate trust between facebook users...
 
-
-
 \subsubsection{Filterbots}
 
 % Na¨ıve Filterbots for Robust Cold-Start Recommendations
 
 Park et. al. \cite{Park2006} propose using filterbots to improve the cold-start
-performance of collaborative filtering methods. Their filterbots are a varition of RipperBots, described in \cite{Good1999}.
-
-A filterbot is an automated agent that rates all or most items using information filtering (IF) techniques. The filterbots injects psuedo
-users or bots into the system. These bots rate items algorithmically according to item features and user profiles. For their movie recommendation systems the author propose using 7 global bots which rates movies based on average item rating, a critic bot that generates ratings based on the average critic (pre-selected users) ratings, an award bot that generates rating based on the awards a movie has won, and so on. These ratings generated by these bots are injected into the user-item matrix along with actual user-item ratings. Standard CF algorithms are then applied to generate
+performance of collaborative filtering methods. Their filterbots are a varition of RipperBots, described in detail in \cite{Good1999}. A filterbot is an automated agent that rates all or most items using information filtering (IF) techniques. The filterbots injects psuedo
+users or bots into the system. These bots rate items algorithmically according to item features and user profiles. For their movie recommendation systems the authors used 7 global bots which rates movies based on average item rating, a critic bot that generates ratings based on the average critic (pre-selected users) ratings, an award bot that generates rating based on the awards a movie has won, and so on. These ratings generated by these bots are injected into the user-item matrix along with actual user-item ratings. Standard CF algorithms are then applied to generate
 recommendations. 
 
 Their approach clearly demonstrated better robustness to all three cold-start situations than standard item-based
@@ -595,17 +582,16 @@ present items specifically tailored to that user using e.g. item-item
 similarity
 \end{itemize}
 
-
-% Learning preferences of new users in recommender systems: an information theoretic approach
-
-This study was later extended by Rashid et. al. \cite{Rashid2008} where they
-more closely examined information theoretic strategies for item selection. In the article they introduced three new strategies, which where compared based on user effort and accuracy:
+The authors found Popularity and balanced strategies to perform the best. Their recommendation for an e-commerce recommender is to start recommending the most popular items, rather than the highest rated ones, and then use item-item strategies to personalize the recommendations as quickly as possible. This study was later extended by Rashid et. al. \cite{Rashid2008} where they
+more closely examined information theoretic strategies for item selection. In the article they introduced three new strategies, which again was evaluated based on user effort and accuracy:
 
 \begin{itemize}
 \item \emph{Entropy0}: Entropy Considering Missing Values
 \item \emph{HELF:} Harmonic mean of Entropy and Logarithm of Frequency
 \item \emph{IGCN:} Information Gain through Clustered Neighbors
 \end{itemize}
+
+The authors point out that approaches like popularity is likely to worsen the \emph{prefix-bias}, meaning that popular items garner even more evaluations. The accuracy differences between the approaches is fairly small, IGNC performed the best closely followed by Entropy0 and Popularity. However, the expected utility of the profiles built using popularity is much lower than the information theoretic approaches.\linebreak[4]
 
 % User effort vs. accuracy in rating-based elicitation
 
@@ -622,30 +608,22 @@ and the dataset used.
 %TODO - Add some fancy math, wait until matrix factorization intro is in place (so we do not mess up notations)
 %TODO - Find some sweet cf articles incorporating demographic information
 
-Another line of search for solving the cold-start problem is to utilize features of items and users. The content features can be used to capture the similarities between users and items, thus reducing the amount of data required to make accurate predictions. User data that may be collected typically includes age, gender, nationality, marital status, income, educational level and occupation. Item data could e.g. be the price of a product, title, description, editorial ratings and so.
+Another line of search for solving the cold-start problem is to utilize features of items and users. The content features can be used to capture the similarities between users and items, thus reducing the amount of data required to make accurate predictions. User data that may be collected typically includes age, gender, nationality, marital status, income, educational level and occupation. Item data could e.g. be the price of a product, title, description, editorial ratings and so. The idea is that people with a more common background share a more similar taste than someone with a random background, and therefore good recommendations can be made as long as we know something about the new user’s background. 
 
-%The idea is that people with a more common background share a more similar taste than someone with a random background, and therefore good %recommendations can be made as long as we know the new user’s background. 
-
-This section will present some latent factor models presented recently proposed that incorporate both user/item features and past interactions. In Matrix factorization methods, the regularization is mostly based on a
-zero-mean Gaussian prior on the factors, we refer often referred to as ZeroMean. However in the following models the dyadic response matrix $Y$ is estimated by a latent factor model such that $Y \approx U^{T}V$, where the latent factor matrices, $P$ and $Q$, are estimated by regression such that $P \approx FX$ and $Q \approx MZ$. $X$ and $Z$ denote user attribute and item feature matrices, and $F$ and $M$ are weight matrices learned by regression. The difference between the following methods are how they estimate the weights.
+This section will present some latent factor models presented recently proposed that incorporate both user/item features in addition to user-item interactions. In Matrix factorization methods, the regularization is mostly based on a
+zero-mean Gaussian prior on the factors, we refer often referred to as ZeroMean. However in the following models the dyadic response matrix $Y$ is estimated by a latent factor model such that $Y \approx U^{T}V$, where the latent factor matrices, $P$ and $Q$, are estimated by regression such that $P \approx FX$ and $Q \approx MZ$. $X$ and $Z$ denote user attribute and item feature matrices, and $F$ and $M$ are weight matrices learned by regression. The main difference between the following methods is how they estimate these weight matrices.
 
 % Regression-based Latent Factor Models
 
 Agarwal et. al. \cite{Agarwal2009} propose a class of latent factors models called regression-based latent factor model (RLFM) that incorporates both user/item features and past interaction data into a single model. Their approach utilizes features of items and users as the
-prior distribution for latent profiles in matrix factorization.
+prior distribution for latent profiles in matrix factorization. Regularizing latent factors through regression has important consequences when modeling sparse dyadic data. For users/items with little data, one obtain reliable factor estimates by using the regression estimates as a fallback. This allows the model to effectively deal with both cold start and warm start situations. Their method assumes a Gaussian prior, but replaces the zero mean with a feature-based regression, thus it simultaneously regularizes both user and item factors through known features. Users and items are anchored around a global feature-based one where profiles are constructed by estimating deviations from the global ones in a smooth fashion. The deviation depends on the amount of information available, e.g. items/users with sparse data are aggressively "shrunk" to the global one. New items and users start out with profiles based on their known features that gets refined smoothly with the availability of more data.
 
-Regularizing latent factors through regression has important consequences when modeling sparse dyadic data. For users/items with little data, one obtain reliable factor estimates by using the regression estimates as a fallback. This allows the model to effectively deal with both cold start and warm start situations.
-
-Their method assumes a Gaussian prior, but replaces the zero mean with a feature-based regression, thus it simultaneously regularizes both user and item factors through known features. 
-
-Users and items are anchored around a global feature-based one where profiles are constructed by estimating deviations from the global ones in a smooth fashion. The deviation depends on the amount of information available, e.g. items/users with sparse data are aggressively "shrunk" to the global one. New items and users start out with profiles based on their known features that gets refined smoothly with the availability of more data. %
+Their model outperformed all other models on both the MovieLens and EachMovie datasets, with the results being the most evident on the MovieLens dataset where it significantly outperformed the other methods.
 
 % fLDA: Matrix Factorization through Latent Dirichlet Allocation
 
 Agarwal et. al \cite{Agarwal2010} propose a Matrix factorization method to predict ratings in recommender system
-applications where a "bag-of-words" representation of item meta-data is natural. Their method regularizes both user and item factor simultaneously through user features and the bag of words associated with each item.
-
-The key idea of their method is to let user factors take values in an Euclidean space of existing factorization models, but assign item factors through a richer prior based on Latent Dirichlet Allocation (LDA). The main idea behind LDA is to attach a discrete latent factor to each word of an item that can take $K$ different values ($K$-topics) and produce item topics by averaging the per-word topics in the item. An article where 80$\%$ of the words are assigned to politics and the rest to education would be though of as a political article related to the issue of education. This allows us to model the affinity between user $i$ and item $j$ as $s'{j}\hat{z_{j}}$, where $\hat{z_{j}}$ is the multinomial probability vector representing the soft cluster membership score of of item $j$ to the $K$ different latent topics. 
+applications where a "bag-of-words" representation of item meta-data is natural. Their method regularizes both user and item factor simultaneously through user features and the bag of words associated with each item. The key idea of their method is to let user factors take values in an Euclidean space of existing factorization models, but assign item factors through a richer prior based on Latent Dirichlet Allocation (LDA). The main idea behind LDA is to attach a discrete latent factor to each word of an item that can take $K$ different values ($K$-topics) and produce item topics by averaging the per-word topics in the item. An article where 80$\%$ of the words are assigned to politics and the rest to education would be though of as a political article related to the issue of education. This allows us to model the affinity between user $i$ and item $j$ as $s'{j}\hat{z_{j}}$, where $\hat{z_{j}}$ is the multinomial probability vector representing the soft cluster membership score of of item $j$ to the $K$ different latent topics. 
 
 % Matchbox: Large Scale Bayesian Recommendations
 % 	Online algorithm
@@ -662,7 +640,7 @@ Their model is dynamic, meaning that it allows an item's popularity, a user's ta
 %	k-NN worked best with MORE features than the linear mapping functions
 %	Code can be found at: ismll.de/mymedialite
 
-Gantner et. al. \cite{Ganter2010} propose a method on how to map additional
+Gantner et. al. \cite{Gantner2010} propose a method on how to map additional
 information such as user and item features to the latent features of a matrix
 (or higher dimensional) factorization model. At the core of their approach is a
 standard factorization model, optimized to the recommendation task. The
