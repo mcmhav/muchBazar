@@ -131,7 +131,7 @@ Accuracy metrics not suited for implicit feedback datasets, as they require know
 
 The cold-start problem can be considered a sub problem of coverage because it measures the system coverage over a specific set of items and users. When evaluating the cold-start system performance one is interested in measuring the system accuracy for these users and items.
 
-The evaluation metric used seem to depend on the type of feedback available. Most experiments carried out have used \emph{traditional} datasets such as MovieLens, EachMovie, Netflix among others. All these dataset contain explicit ratings, accuracy metrics such as MAE \cite{Rashid2002, Rashid 2008, Massa2004, Massa2007, Stern2009} and RMSE \cite{Agarwal2009, Agarwal2010} are therefore the most used ones. In the experiments where binary rating data have been used Precision@N \cite{Liu2011, Ganter2010}, ROC curves \cite{Agarwal2009, Ganter2010, Schein2002} and AUC \cite{Liu2011, Ganter2010} seems to be the preferred evaluation metrics.
+The evaluation metric used seem to depend on the type of feedback available. Most experiments carried out have used \emph{traditional} datasets such as MovieLens, EachMovie, Netflix among others. All these dataset contain explicit ratings, accuracy metrics such as MAE \cite{Rashid2002, Rashid2008, Massa2004, Massa2007, Stern2009} and RMSE \cite{Agarwal2009, Agarwal2010} are therefore the most used ones. In the experiments where binary rating data have been used Precision@N \cite{Liu2011, Gantner2010}, ROC curves \cite{Agarwal2009, Gantner2010, Schein2002} and AUC \cite{Liu2011, Gantner2010} seems to be the preferred evaluation metrics.
 
 Another way to discriminate between different recommender techniques is coverage. The recommender system may not be able to make predictions for every item. For this reason, it is important to measure the portion of ratings that an RS is able to predict (ratings coverage). However, this quantity is not always informative about the quality of a recommender system. A RS is likely to be good at predicting nearly all the ratings for heavy users and not be able to do the same for users who have rated few items. For this reason, one should also compute the users coverage, defined as the portion of users which the RS is able to predict at least one rating for. Good et. al. \cite{Good1999} measure the item-space coverage, while Massa et. al. \cite{Massa2004, Massa2007} measures both the item-space coverage and user-space coverage of their methods.
 
@@ -145,7 +145,7 @@ Another highly similar way to simulate the cold-start user and cold-start item s
 
 Another \emph{simpler} approach employed by \cite{Massa2007, Jamali2009} is to determine a cutoff point for what is considered a cold-start user. E.g. that every user with less than 5 ratings is considered a cold-start user. Then separately measure the error on predictions made to these users.
 
-To simulate a cold-start system scenario Agarwal et. al. \cite{2009} split the dataset in two using 75\% of the dataset for training and 25\% for testing. They then train the model using 30\%, 60\% and 75\% of the data and compare their performance on the testset.
+To simulate a cold-start system scenario Agarwal et. al. \cite{Agarwal2009} split the dataset in two using 75\% of the dataset for training and 25\% for testing. They then train the model using 30\%, 60\% and 75\% of the data and compare their performance on the testset.
 
 %Summary of articles read
 
