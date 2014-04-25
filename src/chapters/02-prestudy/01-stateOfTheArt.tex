@@ -400,7 +400,7 @@ which allowed them to experiment with different propagation distances.
 
 
 
-Jamali et. al. \cite{Jamali2009} propose two different methods for getting
+Jamali et.\ al. \cite{Jamali2009} propose two different methods for getting
 around the cold-start user problem using a trust network.
 
 Their first approach called \emph{Random Walk} only utilize the trust network to provide recommendations. Starting from the active user $u$, we perform a random walk on the trust network. Each
@@ -418,14 +418,12 @@ the items rated by these trusted users to compute top-N recommended items. The t
 recommended items. Finally, we merge these two lists to produce a combined list of top-N recommended items. Items returned by CF is denoted as $CF_{u}$, while the items returned by Trust-based approach are denoted $TR_{u}$.
 
 \begin{equation*}
-\[
  \hat{u}(c,s) =
   \begin{cases}
    \frac{u_{tr_{c,i}} + u_{cf_{c,i}}}{2} 	& i \in TR_{u};i \in CF_{u} 		\\
    \hat{u_{tr_{c,i}}}       				& i \in TR_{u};i \not \in CF_{u} 	\\
    \hat{u_{cf_{c,i}}}		 				& i \in CF_{u};i \not \in TR_{u}	
   \end{cases}
-\]
 \end{equation*}
 
 The top-N items with the highest value of $\hat{u}(c,s)$ will be returned as the top-N recommended items. The authors also experimented with weighted averaging in the case where the item appear in both $TR_{u}$ and $CF_{u}$.
@@ -448,7 +446,7 @@ improving the performance by 50$\%$ over standard CF methods. The main improveme
 %	- Pretty good general model for dealing with sparsity
 %	- Requires no additional information such as product details, demographic information about userstrus
 
-Papagelis et. al. \cite{Papagelis2005} proposed to alleviate sparsity using
+Papagelis et.\ al. \cite{Papagelis2005} proposed to alleviate sparsity using
 trust interfaces. Trust interfaces are transitive associations between users in
 the context of an underlying social network, and does therefore not require users to explicitly express their trust in other users, unlike the approaches described above. Their approach is built on the
 idea of social networks in recommender systems. Instead of reducing the
