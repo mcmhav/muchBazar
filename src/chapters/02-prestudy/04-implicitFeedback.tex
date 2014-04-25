@@ -26,68 +26,69 @@ has multiple weaknesses. The most prominent weakness is the difficulty of
 collecting ratings: the method requires the user to spend time rating items and
 the amount of feedback is often scarce, creating sparse data sets. Further,
 explicit ratings are often subject to inconsitencies known as natural
-noise \cite{amatriain2009like} and users might also be pressed to report
+noise~\cite{amatriain2009like} and users might also be pressed to report
 different preferences due to peer of social pressure \todo{ref}. The fact that we are
 introducing a user overhead, makes it difficult to have a complete view on the
-user preferences \cite{Jawaheer2010}.
+user preferences~\cite{Jawaheer2010}.
 
 We can try to achieve better results and create a more pleasant experience for
 the user, by looking at behavioural statistics, which is both easier to collect
 and does not require any extra effort from the user. Our end-goal is to predict
 a rating $r$ for a given user $u$ on item $i$, and thus we need some way of
-translating our implicit feedback into what we call \textbf{implicit ratings} -
+translating our implicit feedback into what we call \textbf{implicit ratings} –
 these are ratings, just like explicit ratings, but inferred by user behaviour
 and as we will see in the succeeding sections need to be anylyzed with this in
 mind.
 
-The following table, partly inspired by Hu et. al. \cite{Hu2008}, identifies
+The following table, partly inspired by Hu et.\ al.~\cite{Hu2008}, identifies
 the different characteristics in implicit and explicit ratings:
 
 \begin{table}[H]
-    \begin{tabular}{|l|p{6cm}|p{6cm}|}
-    \hline
-    ~                  & \textbf{Explicit ratings}
-                       & \textbf{Implicit ratings} \\ \hline
+    \begin{tabular}{l p{6cm} p{6cm}}
+    \toprule
+    –                  & \textbf{Explicit ratings}
+                       & \textbf{Implicit ratings} \\ \midrule
 
     \textit{Types of feedback}  
                        & Positive and negative.
-                       & Positive. \\ \hline
+                       & Positive. \\ \midrule
 
     \textit{Meaning}
                        & Indicates preference. Often on a Likert scale ranging
                          from total dislike to really like.
-                       & Indicates confidence. %TODO Helge: ? Higher frequency in implicit 
+                       & Indicates confidence.
+%                         \todo{Helge:? Higher frequency in implicit}
                          feedback does not necessarily indicate higher
-                         preference. \\ \hline
+                         preference. \\ \midrule
 
     \textit{Noisiness}
-                       & Medium. Depends on domain and can be removed 
-                         \cite{amatriain2009like}.
+                       & Medium. Depends on domain and can be removed~\cite{amatriain2009like}.
                        & High. One of the main challenges in evaluating
                          implicit feedback is choosing which events to
-                         consider. \\ \hline
+                         consider. \\ \midrule
 
     \textit{Evaluation metrics}
                        & Traditional metrics such as RMSE are commonly used.
                        & As users do not provide numerical scores, a
                          Precision-Recall scheme or similar or more often used.
-                         \\ \hline
+                         \\ \midrule
 
     \textit{Strengths}
                        & Heavily researched, good evaluation metrics, easy to
                          implement.
                        & Does not require feedback from user, less sparsity and
                          catches actual behavior, not influenced by peer
-                         pressure etc. \\ \hline
+                         pressure etc. \\ \midrule
 
     \textit{Weaknesses}
-                       & \multicolumn{2}{c|}{See subsection \ref{implicit-weaknesses}} \\ \hline
+                       & \multicolumn{2}{c}{See Subsection~\ref{implicit-weaknesses}} \\
+    \bottomrule
     \end{tabular}
 \end{table}
 
 \clearpage
 
-%TODO - {Helge: Maybe best in plain text?}
+\todo{Helge: Maybe best in plain text?}
 
 \subsection{Quantifying implicit feedback}
 
@@ -101,53 +102,53 @@ following events would be useful:
 
 \begin{table}[H]
   \centering
-  \begin{tabular}{|l|l|}
-  \hline
-  Event type & Description \\ \hline
+  \begin{tabular}{ll}
+  \toprule
+  Event type & Description \\ \midrule
   0 & Item purchased \\
   1 & Item placed in shopping cart \\
   2 & Item placed in wish list \\
   3 & Item browsed based on search result \\
   4 & Item browsed \\
-  \hline
+  \bottomrule
   \end{tabular}
 \end{table}
 
 Then, our heuristic would count the frequency of each event for an item $i$ on
-user $u$. However, just counting is not a bounded function - so if one give
+user $u$. However, just counting is not a bounded function – so if one give
 \textit{Item browsed} the weight of $1$ and the \textit{Item purchased} event
 a weight of $100$, then a user browsing an item more than 100 times would get a
 higher implicit rating than a user buying it.
 
-Instead, \cite{pkghost2014implicit} proposes using a rating mapping, that uses
+Instead,~\cite{pkghost2014implicit} proposes using a rating mapping, that uses
 \textit{levels of frequency}.
 
 \begin{table}[H]
   \centering
-  \begin{tabular}{|l|l|}
-  \hline
-  Event type & Scores \\ \hline
+  \begin{tabular}{ll}
+  \toprule
+  Event type & Scores \\ \midrule
   0 & 100 \\
   1 & 70, 77, 80 \\
   2 & 30, 40, 45, 48, 50 \\
   3 & 20, 25, 28, 30 \\
   4 & 10, 15, 18, 20 \\
-  \hline
+  \bottomrule
   \end{tabular}
   \caption{Scores per event type, increases as frequence of each event
            increments}
-  \label{implicit-table}
+\label{implicit-table}
 \end{table}
 
-\todo{Helge: Er dette "globalt" for alle?}
+\todo{Helge: Er dette \"globalt\" for alle?}
 
 Then a user browsing an item $i$ two times, would get a score of 40 \todo{Helge: Hvorfor?} and a if
-buying it the score would be 100 (e.g. the event type with highest interest
+buying it the score would be 100 (e.g.\ the event type with highest interest
 level supersede all others). Equally, if a user browsed the item 100 times, it
 would make no difference in score compared to browsing it 4 times.
 
 If we wanted ratings between 1 and $k$ one can transform the score $s$ provided
-by table \ref{implicit-table}:
+by table~\ref{implicit-table}:
 
 \begin{equation}
   ImplicitRating(s, k) = 100 * \frac{k-1}{100} + 1 
@@ -157,12 +158,13 @@ The advantage of this heuristic is that it requires no training, it is simple
 to understand and works reasonably well, if weights are chosen correctly.
 However, the fact that one need to find these weights by hand is also its
 largest weakness. However, in order to find weights automatically one need to
-train a model - which can adapt and learn the optimal values for each weight. \todo{Helge: Si noe om at datamengden er lav?}
+train a model — which can adapt and learn the optimal values for each weight.
+\todo{Helge: Si noe om at datamengden er lav?}
 
 \subsubsection{Regression analysis}
 
 This requires us to having some metric informing our algorithm about good or
-bad weights. This is done in a study by Parra et. al. \cite{parra2011walk}
+bad weights. This is done in a study by Parra et.\ al.~\cite{parra2011walk}
 where they do a quantitive user study asking 114 active users to rate items
 found in their activity history. They used this in order to do
 a \textit{Regression analysis}, where the rating was the \textit{dependent
@@ -175,7 +177,7 @@ regression model is forumulated as:
 
 \begin{equation}
   \label{eq-regression}
-  \hat{y}(w,x) = w_0 + w_1 x_1 + \dots + w_p x_p
+  \hat{y}(w,x) = w_0 + w_1 x_1 + \cdots + w_p x_p
 \end{equation}
 
 As a simple example, imagine we have the following $x$ (independent) and $y$
@@ -185,7 +187,7 @@ As a simple example, imagine we have the following $x$ (independent) and $y$
   \centering
   \begin{BVerbatim}
    x  | y  
-  --------
+  ———————
    -2 | 3
    3  | -1
    1  | 1
@@ -195,7 +197,7 @@ As a simple example, imagine we have the following $x$ (independent) and $y$
   \end{BVerbatim}
 \end{figure}
 
-Solving equation \ref{eq-regression} we have the following equations where we
+Solving equation~\ref{eq-regression} we have the following equations where we
 want to find the values of $w_0$ and $w_1$:
 
 \begin{equation}
@@ -215,10 +217,10 @@ dataset and the values predicted by the linear approximation. Mathematically it
 solved the problem of the following form:
 
 \begin{equation}
-  min (SSE = \sum_{i=1}^{n} e_i^2)
+  \min (SSE = \sum_{i=1}^{n} e_i^2)
 \end{equation}
 
-Carrying out this minimazation for our equations \ref{eqs-regression-example},
+Carrying out this minimazation for our equations~\ref{eqs-regression-example},
 we obtain an intercept value ($w_0$) of $1.3787$ and a slope ($w_1$) of
 $0.5454$, this can be validated as a good approximation to the data points, by
 looking at the 2D-plot below:
@@ -232,10 +234,9 @@ looking at the 2D-plot below:
         ymin=-5, ymax=5,
         xtick=\empty, ytick=\empty
     ]
-    \addplot [only marks] table {
-      -2 -3
+    \addplot[only marks]table[]{-2 -3
       -3 -1
-      1 1   
+      1 1
       -4 -2
       2 3
       -1 3
@@ -251,7 +252,7 @@ are proposed \todo{Helge: Cite}:
 
 \noindent
 Model 1: $r_{iu} = w_0 + w_1 if_{iu}$ \\
-Model 2: $r_{iu} = w_characterisation0 + w_1 if_{iu} + w_2 re_{iu}$ \\
+Model 2: $r_{iu} = w_{characterisation0} + w_1 if_{iu} + w_2 re_{iu}$ \\
 Model 3: $r_{iu} = w_0 + w_1 if_{iu} + w_2 re_{iu} + w_3 gp_{i}$ \\
 Model 4: $r_{iu} = w_0 + w_1 if_{iu} + w_2 re_{iu} + w_3 if_{iu} \cdot re_{iu}$
 
@@ -265,12 +266,12 @@ predict future ratings. \todo{Explain how number between 1 and 3 was given}
 \subsubsection{Relative preferences using buying frequency}
 
 A hybrid approach using sequential pattern analysis and collaboraitve filtering
-techniques are presented by Choi et. al. \cite{choi2012hybrid}. In their
+techniques are presented by Choi et.\ al.~\cite{choi2012hybrid}. In their
 algorithm they calculate an implicit rating by finding the absolute preference
-AP:
+AP\@:
 
 \begin{equation}
-  AP(u,i) = ln(\frac{trans(u,i)}{\sum_{e \in E}{trans(u, e)}} + 1)
+  AP(u,i) = \ln(\frac{trans(u,i)}{\sum_{e \in E}{trans(u, e)}} + 1)
 \end{equation}
 
 \todo{Helge: E=?, hvilke sett er det}
@@ -278,17 +279,17 @@ AP:
 where $trans(u,i)$ is the number of transactions for user $u$ on item $i$.
 However, this absolute preference only takes into account the frequency of
 purchases and because the frequency is heavily dependent on price, item
-category and lifespan of an item - they compare it with other users finding the
-relative preference RP:
+category and lifespan of an item — they compare it with other users finding the
+relative preference RP@\:
 
 \begin{equation}
   RP(u,i) = \frac{AP(u,i)}{Max_{c \in U}(AP(c,i))}
 \end{equation}
 
 where $U$ denotes every user who purchased item $i$. The reason for using a
-maximization function, is to make $RP(u,i)$ range from $0.0$ to $1.0$ (i.e.
+maximization function, is to make $RP(u,i)$ range from $0.0$ to $1.0$ (i.e.\
 normalization) and one can thus find a rating on a common Likert scale by
-multiplying with $k$, here $k=5$: \todo{Helge: Remove ", here k=5}
+multiplying with $k$, here $k=5$: \todo{Helge: Remove \", here k=5}
 
 \begin{equation}
   ImplicitRating(u,i) = \lceil 5 * RP(u,i) \rceil
@@ -307,7 +308,8 @@ relevant or which suggest that something is unimportant to the user, such as
 delete. It is likely that little research has been conducted on negative
 implicit feedback because there are fewer of these types of behaviors, and, in
 general, less is understood about how to effectively use negative feedback,
-whether for implicit or explicit relevance feedback. \todo{Helge: Domain driver? (e.g. news har ikke dette)}
+whether for implicit or explicit relevance feedback.
+\todo{Helge: Domain driver? (e.g.\ news har ikke dette)}
 
 Another challenge facing implicit feedback research is the notion of degree of
 personalization offered by the system. In particular, individual differences
@@ -319,7 +321,7 @@ feedback.
 
 \todo{Add weaknesses of explicit ratings}
 
-\todo{Mention fashion-specific challenges, e.g. clicks does not equal high
+\todo{Mention fashion-specific challenges, e.g.\ clicks does not equal high
 rating}
 
 \subsection{Evaluating convertion to implicit ratings}
