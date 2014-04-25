@@ -43,6 +43,7 @@ mind.
 The following table, partly inspired by Hu et.\ al.~\cite{Hu2008}, identifies
 the different characteristics in implicit and explicit ratings:
 
+\todo{Helge: Maybe best in plain text?}
 \begin{table}[H]
     \begin{tabular}{l p{6cm} p{6cm}}
     \toprule
@@ -56,10 +57,9 @@ the different characteristics in implicit and explicit ratings:
     \textit{Meaning}
                        & Indicates preference. Often on a Likert scale ranging
                          from total dislike to really like.
-                       & Indicates confidence.
-%                         \todo{Helge:? Higher frequency in implicit}
-                         feedback does not necessarily indicate higher
-                         preference. \\ \midrule
+                       & Indicates confidence. Recurring events is more likely
+                         to reflect the user opinion. 
+                         \\ \midrule
 
     \textit{Noisiness}
                        & Medium. Depends on domain and can be removed~\cite{amatriain2009like}.
@@ -87,8 +87,6 @@ the different characteristics in implicit and explicit ratings:
 \end{table}
 
 \clearpage
-
-\todo{Helge: Maybe best in plain text?}
 
 \subsection{Quantifying implicit feedback}
 
@@ -120,8 +118,8 @@ user $u$. However, just counting is not a bounded function – so if one give
 a weight of $100$, then a user browsing an item more than 100 times would get a
 higher implicit rating than a user buying it.
 
-Instead,~\cite{pkghost2014implicit} proposes using a rating mapping, that uses
-\textit{levels of frequency}.
+Instead,~\cite{pkghost2014implicit} proposes using a global rating mapping,
+that uses \textit{levels of frequency}.
 
 \begin{table}[H]
   \centering
@@ -140,12 +138,13 @@ Instead,~\cite{pkghost2014implicit} proposes using a rating mapping, that uses
 \label{implicit-table}
 \end{table}
 
-\todo{Helge: Er dette \"globalt\" for alle?}
-
-Then a user browsing an item $i$ two times, would get a score of 40 \todo{Helge: Hvorfor?} and a if
+Then a user browsing an item $i$ two times, would get a score of 40 and a if
 buying it the score would be 100 (e.g.\ the event type with highest interest
 level supersede all others). Equally, if a user browsed the item 100 times, it
-would make no difference in score compared to browsing it 4 times.
+would make no difference in score compared to browsing it 4 times. The scores
+given to the various event types may vary from what kind of dataset one have,
+the domain and should be evaluated using one or more of the methods mentioned
+in Section~\ref{evaluation}.
 
 If we wanted ratings between 1 and $k$ one can transform the score $s$ provided
 by table~\ref{implicit-table}:
@@ -156,10 +155,16 @@ by table~\ref{implicit-table}:
 
 The advantage of this heuristic is that it requires no training, it is simple
 to understand and works reasonably well, if weights are chosen correctly.
-However, the fact that one need to find these weights by hand is also its
-largest weakness. However, in order to find weights automatically one need to
-train a model — which can adapt and learn the optimal values for each weight.
-\todo{Helge: Si noe om at datamengden er lav?}
+The latter is also its largest weakness – as finding these weights may be
+difficult. If one had explicit feedback, as well as the implicit, one could
+train a model automatically choosing weights. Further, when using the scores
+defined above we only use a small percentage of the scale 0\-100 and for all
+users the highest score within an event would be the same, even if one user
+triggered the \textit{event type 3} 10 times more often than another user, as
+long as both had reached the highest score of 30.
+
+Improvements to this model are presented in Section~\ref{design}
+\todo{ref the correct section}
 
 \subsubsection{Regression analysis}
 
@@ -180,8 +185,10 @@ regression model is forumulated as:
   \hat{y}(w,x) = w_0 + w_1 x_1 + \cdots + w_p x_p
 \end{equation}
 
-As a simple example, imagine we have the following $x$ (independent) and $y$
-(dependent) values, respectivly:
+where we want to find the values of the $w$, also called the unknown
+parameters. Using a dataset of $x$ (independent) and $y$ (dependent) values we
+can solve the equation above and perform the analysis. As a simple example,
+consider the following dataset:
 
 \begin{figure}[H]
   \centering
@@ -208,8 +215,6 @@ want to find the values of $w_0$ and $w_1$:
     4 = w_0 - 2 w_1
   \end{split}
 \end{equation}
-
-\todo{Helge: +e1, +e6, si hva de forskjellige verdiene står for}
 
 Using a minimization method called \textit{Least squares} we try to minimize
 the residual $e$, using sum of squares between the observed values in the
@@ -248,7 +253,7 @@ looking at the 2D-plot below:
 
 Now, using this methology on implicit feedback we need a regression model that
 correctly explains the correlation between feedback and ratings. Four models
-are proposed \todo{Helge: Cite}:
+are proposed~\cite{parra2011walk}:
 
 \noindent
 Model 1: $r_{iu} = w_0 + w_1 if_{iu}$ \\
@@ -256,12 +261,35 @@ Model 2: $r_{iu} = w_{characterisation0} + w_1 if_{iu} + w_2 re_{iu}$ \\
 Model 3: $r_{iu} = w_0 + w_1 if_{iu} + w_2 re_{iu} + w_3 gp_{i}$ \\
 Model 4: $r_{iu} = w_0 + w_1 if_{iu} + w_2 re_{iu} + w_3 if_{iu} \cdot re_{iu}$
 
-where $if_{iu}$ is a number between 1 and 3, dependent on how many times user
-$u$ used item $i$. Equally $re_{iu}$ depicts how recently user $u$ used item
-$i$ and $gp_{i}$ how popular product $i$ is, globaly. By accounting for
-recentness in their regression model they achieved good results \todo{Helge: Hva betyr det?} and after
-training they used their $w$-vector, combined with the independent variables to
-predict future ratings. \todo{Explain how number between 1 and 3 was given}
+where $if_{iu}$ is a number, indicating the a bucket of items between 1 and 3,
+dependent on how many times user $u$ used item $i$. Equally $re_{iu}$ depicts
+how recently user $u$ used item $i$ and $gp_{i}$ how popular product $i$ is,
+globaly. By accounting for recentness in their regression model (model 2\-4)
+they achieved an improvement in the $R^2$ value by 10\%. $R^2$, also called the
+coefficient of determination, is a standard metric in regression analysis
+indicating how well data points fit a statistical model. Training they used
+their $w$-vector, combined with the independent variables to predict future
+ratings.
+
+The buckets with values between 1 and 3 are used to get a reasonably
+homogeneous sampling of items, as a random sampling strategy might yield only
+very popular items. The three bins from 1 to 3 represent respectivly low,
+medium and high activity on an item within a independent variable. As suggested
+in the article one may get better results by using fewer or more buckets. With
+3 buckets and accounting for 3 different feedbacks (Implicit feedback, global
+popularity and recentness) this creates in effect 27 buckets per user.
+
+As one may see, this approach requires some form of explicit feedback, in order
+to train our model with independent and dependent variables. In the research
+done by Parra et.\ al.\ they performed a user survey based on 114 active users,
+that is they had more than 5000 events in the system. This requirement makes
+regression analysis not suitable for domains where the relation between
+implicit and explicit feedback are not linear nor symmetric, e.g.\ a purchase on
+an item does not imply many clicks on the item, by the same user – whilst the
+probability of the opposite is larger. See Section~\ref{} for a larger
+discussion surrounding this topic. \todo{link to correct section}
+
+\todo{Explain how number between 1 and 3 was given}
 
 \subsubsection{Relative preferences using buying frequency}
 
@@ -289,12 +317,11 @@ relative preference RP@\:
 where $U$ denotes every user who purchased item $i$. The reason for using a
 maximization function, is to make $RP(u,i)$ range from $0.0$ to $1.0$ (i.e.\
 normalization) and one can thus find a rating on a common Likert scale by
-multiplying with $k$, here $k=5$: \todo{Helge: Remove \", here k=5}
+multiplying with $k$:
 
 \begin{equation}
-  ImplicitRating(u,i) = \lceil 5 * RP(u,i) \rceil
+  ImplicitRating(u,i) = \lceil k * RP(u,i) \rceil
 \end{equation}
-\todo{Helge: change 5 with k}
 
 \todo{Explain a bit about Sequential pattern analysis}
 
@@ -302,14 +329,12 @@ multiplying with $k$, here $k=5$: \todo{Helge: Remove \", here k=5}
 \label{implicit-weaknesses}
 
 Almost all of the research on implicit feedback has considered how behaviors
-can be used as positive evidence, rather than negative evidence. However, one
-can imagine behaviors which indicate that a user does not find something
-relevant or which suggest that something is unimportant to the user, such as
-delete. It is likely that little research has been conducted on negative
-implicit feedback because there are fewer of these types of behaviors, and, in
-general, less is understood about how to effectively use negative feedback,
-whether for implicit or explicit relevance feedback.
-\todo{Helge: Domain driver? (e.g.\ news har ikke dette)}
+can be used as positive evidence, rather than negative evidence. This is not to
+say that we can not use user behaviours to get negative feedback, examples may
+be analyzing bounce rates (e.g.\ reading an article for less than 5 seconds) or
+deleting/hiding something from a feed of items. There are however much fewer of
+these types of events, and they are easier retrieved in certain domains, such
+as news.
 
 Another challenge facing implicit feedback research is the notion of degree of
 personalization offered by the system. In particular, individual differences
