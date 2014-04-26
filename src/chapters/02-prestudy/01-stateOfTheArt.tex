@@ -989,8 +989,6 @@ checks out an item from there. It is not possible to be 100\% sure which user
 access the item from the collection\_viewed event, so this event is therefor
 not integrated into the session-stack.
 
-\clearpage
-
 \subsection{One-Class Collaborative Filtering}
 \subsubsection{About}
 There are many applications where the feedback from a user is in binary form.
@@ -1051,14 +1049,14 @@ This weight is between 0 and 1.
     \begin{tabular}{l|l|l}
       \textbf{Schemes}      & \textbf{Pos Examples} & \textbf{Neg Examples} \\ \hline
       Uniform               & $W_{ij} = 1$ & $W_{ij} = δ$ \\ \hline
-      User-Oriented         & $W_{ij} = 1$ & $$W_{ij} ∝ \sum_{j} R_{ij}$$ \\ \hline
+      User-Oriented         & $W_{ij} = 1$ & $W_{ij} ∝ \sum_{j} R_{ij}$ \\ \hline
       Item-Oriented         & $W_{ij} = 1$ & $W_{ij} ∝ m - \sum_{j} R_{ij}$ \\ \hline
-      User-Item interaction & $W_{ij} = 1$ & $W_{ij} = 1$ \todo{fixequations} \\
+      User-Item interaction & $W_{ij} = 1$ & $W_{ij} = 1$  \\
     \end{tabular}
     \label{table:WeightingSchemes}
-    \caption [Weighting Schemes]{Different ways of weighting ratings suggested by~\todo{add cite}}
+    \caption[Weighting Schemes]{Different ways of weighting ratings suggested by~\todo{add cite}}
 \end{table}
-
+\todo{fixequations}
 \todo{maybe explain the schemes better}
 
 \textbf{Negative example sampling \todo{cite}.}

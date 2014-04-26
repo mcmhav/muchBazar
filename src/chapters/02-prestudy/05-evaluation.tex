@@ -421,9 +421,34 @@ CTR = \frac{Clicks}{Recommendations}
 
 
 \subsection{Evaluation Metrics}
+
+\subsubsection{Mean percentage ranking (MPR)}
+This measure is a recall-oriented metric.
+A known issue with implicit feedback is and often lack of the actual user's preference.
+This approach is used to measure the user satisfaction of items in an ordered list.
+
+\begin{equation}
+	MPR = \frac{\sum_{u,i}{r_{ui} * rank_{ui}}}{\sum_{u,i}{r_{ui}}}
+	\label{equation:mpr}
+\end{equation}
+
+How to calculate MPR is shown in ~\ref{equation:mpr}.
+A list of all the items for user $u$ is ordered based on the rank $rank_{ui}$ of the $u$.
+Where $rank_{ui}$ is the percentile rank of item $i$ in this list for $u$.
+$rank_{ui} = 0$ means that $i$ is the most preferred item for $u$.
+$r_{ui}$ indicates wither $u$ has consumed $i$ or not.
+This makes a MPR value of 0\% to be the most preferred value, and a value of 50\% meaning a near randomly produced list.
+
 \subsubsection{MAP}
-\subsubsection{RMSE}
-\subsubsection{MPR}
+
+
+\subsubsection{Root-mean-square error (RMSE)}
+Often used to measure difference between a set of predicted values with a set of actual values.
+The basic idea behind it is to
+
 \subsubsection{MRR}
 \subsubsection{..}
-\subsubsection{..-++++++++++++++*--}
+
+– Validation of the mapping approaches: MPR and AP Correlation
+
+– Evaluation of the results: accuracy (RMSE, MAE…), Diversity, Novelty and Serendipity.
