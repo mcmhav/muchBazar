@@ -34,7 +34,7 @@ the suitedness of different evaluation measures for implicit feedback, and
 summary of the methodologies and evaluation measures used to evaluate the
 cold-start performance of recommender systems.
 
-Shani et\. al.\ lists the following guidelines for general experimental
+Shani et\. al.\ \cite{Shani2011} lists the following guidelines for general experimental
 studies:
 
 \begin{itemize}
@@ -46,7 +46,7 @@ studies:
 
 \item Controlling variables: when comparing a few candidate algorithms on a
 	certain hypothesis, it is important that all variables that are not tested
-	are fixed. 
+	are fixed.
 
 \item Generalization power: when drawing conclusions from experiments, we may
 	wish that our conclusions generalize beyond the immediate context of the
@@ -171,7 +171,11 @@ large datasets, even 3-Fold Cross Validation will be quite accurate, which for
 sparse datasets, one may wish to train as many examples as possible. A common
 choice is $K$ value between 5 and 10.
 
+%TODO - Advantages/Disadvantages
+
 \textbf{Bootstrapping}
+
+%TODO - Write about bootstrapping
 
 
 \subsubsection{Offline Evaluation Metrics}
@@ -253,7 +257,6 @@ values.
 
 \textbf{Coverage}
 
-%subsection
 The term coverage can refer to several distinct properties of the system. Most
 commonly, the term coverage refers to the proportion of items the
 recommendation system can recommend, also known as \emph{item-space coverage}.
@@ -263,14 +266,16 @@ interactions for which the system can recommend items, known as
 \emph{user-space coverage}. In many applications the recommender system may not
 provide recommendations for some users due to e.g.\\ low confidence in the
 accuracy of predictions for that user. In such cases one may prefer a
-recommender that can provide recommendations to a wider range of users.
+recommender that can provide recommendations to a wider range of users. However, an increase in coverage is only beneficial if the accuracy does not drop significantly.
 
-%An increase in coverage is only beneficial if accuracy does not drop significantly...
+%TODO - Others? (Serendipity, Diversity...)
 
 \subsubsection{Evaluation using Implicit Feedback}
 
 Accuracy metrics not suited for implicit feedback datasets, as they require
 knowing which items are undesired by a user~\cite{Hu2008}.
+
+%TODO - What evaluation measures are suited for implicit feedback, and why are traditional evaluation measures such as RMSE, ... not as suitable when working with implicit feedback?
 
 \subsubsection{Evaluation of Cold-start Recommendations}
 
@@ -280,13 +285,12 @@ evaluating the cold-start system performance one is interested in measuring the
 system accuracy for these users and items.
 
 The evaluation metric used seem to depend on the type of feedback available.
-Most experiments carried out have used \emph{traditional} datasets such as
-MovieLens, EachMovie, Netflix among others. All these dataset contain explicit
-ratings, accuracy metrics such as MAE~\cite{Rashid2002, Rashid2008, Massa2004,
+Most experiments carried out have used \emph{traditional} explicit feedback datasets such as
+MovieLens, EachMovie, Netflix etc. Accuracy metrics such as MAE~\cite{Rashid2002, Rashid2008, Massa2004,
 Massa2007, Stern2009} and RMSE~\cite{Agarwal2009, Agarwal2010} are therefore
 the most used ones. In the experiments where binary rating data have been used
 Precision@N~\cite{Liu2011, Gantner2010}, ROC curves~\cite{Agarwal2009,
-Gantner2010, Schein2002} and AUC~\cite{Liu2011, Gantner2010} seems to be the
+Gantner2010, Schein2002} and Area Under Curve (AUC) \cite{Liu2011, Gantner2010} seems to be the
 preferred evaluation metrics.
 
 Another way to discriminate between different recommender techniques is
@@ -301,7 +305,7 @@ is able to predict at least one rating for. Good et.\ al.~\cite{Good1999}
 measure the item-space coverage, while Massa et.\ al.~\cite{Massa2004,
 Massa2007} measures both the item-space coverage and user-space coverage of
 their methods.
- 
+
 Massa et.\ al~\cite{Massa2004} argue that performance measures such as Mean
 Absolute User Error (MAUE) is a good measure for cold-start recommendations
 since every user is taken into account once and a cold start user is as
@@ -363,8 +367,8 @@ compare their performance on the testset.
 %\cite{Agarwal2010}: Explicit feedback + User features and bag of words rep of crawled movie data - MovieLens, Yahoo! Buzz (1 or -1), BookCrossing
 %\cite{Liu2011}: Explicit feedback. Netflix...
 %\cite{Park2006}: Explicit feedback, Yahoo!, MovieLens, EachMovie
-%\cite{Stern2009}: MovieLens, Netflix, 
-%\cite{Ganter2010}: MovieLens - Binary (likes, not likes) 
+%\cite{Stern2009}: MovieLens, Netflix,
+%\cite{Ganter2010}: MovieLens - Binary (likes, not likes)
 %\cite{Schein2002}: MovieLens, Movielens(Stripped of ratings -> implicit)
 
 %	How do they similate the "cold-start situation"?
@@ -391,13 +395,9 @@ performance of recommender systems on real users which are oblivious to the
 conducted experiment. The real effect of a recommender system depends on a
 variety of factors such as user’s intent, the user’s context and how the
 recommendations are presented to the user. All these factors are hard to
-<<<<<<< HEAD
-capture in an offline setting. Thus, the experiment that provides the strongest evidence as to the true real value of the system is an online evaluation, where the system is used by real users to perform real tasks.
-=======
 capture in an offline setting. Thus, the experiment that provides the strongest
 evidence as to the true real value of the system is an online evaluation, where
 the system is used by real users to perform real tasks
->>>>>>> 34895417455007ae8fd830a338931cf14af2853f
 
 \subsubsection{Online Evaluation Metrics}
 
@@ -415,12 +415,177 @@ CTR = \frac{Clicks}{Recommendations}
 
 \subsection{What To Use}
 
-\todo{RMSE, MSE, P/R \dots}
+The main idea behind a recommendation system is to produce a set of items which are of interest to the user.
+For the system to be successful, this sets of items needs quality.
+But what needs to be considered when determining the quality of the recommendations?
+According to a user study~\cite{Pu:2011:UEF:2043932.2043962} the most central aspects to this quality is:
+
+\todo{as list or in table, or not}
+
+\textbf{Perceived accuracy}.
+The degree of how well the user perceives the recommended items match the actual want of the user.
+
+\textbf{Novelty}.
+The degree of new and interesting items recommended for the user.
+
+\textbf{Attractiveness}.
+How well the recommended items are able to evoke interest or desire in the user.
+
+\textbf{Diversity}.
+How different the recommended items are.
+
+\textbf{Context compatibility}.
+How the system uses contextual factors to supply the recommendations with more personalized recommendations.
+
+% \todo{RMSE, MSE, P/R \dots}
+
 
 \subsubsection{The Good}
+Since the data at hand is mainly implicit feedback and this data is sparse, some natural ways of approaching the evaluations task would be:
 
-\todo{Which are best suited for implicit ratings?}
+\textbf{MPR}
+\begin{itemize}
+	\item good
+	\item Possible to produce a score for a recommender system which relies on implicit feedback
+	\item Usable even though there are no feedback indicating undesired items
+	\item Does not need a ranked list of the actual preferences of the user
+	\item bad
+	\item Needs distinct ranking of the different items
+\end{itemize}
+
+\textbf{MAP}
+\begin{itemize}
+	\item good
+	\item Possible to produce a score for a recommender system which relies on implicit feedback
+	\item Usable even though there are no feedback indicating undesired items
+	\item Does not need a ranked list of the actual preferences of the user
+	\item Differentiates between predicted more desired items and those that are not
+	\item bad
+	\item Needs distinct ranking of the different items
+\end{itemize}
+
 
 \subsubsection{The Bad}
+\textbf{RMSE}
+\begin{itemize}
+	\item good
+	\item Well known, so it produces a clear score of the system
+	\item bad
+	\item Needs the actual rating of the items
+	\item Needs a predicted rating for the items
+	\item Not easy to gather reliable information about undesired items trough implicit feedback
+\end{itemize}
 
-\todo{Why RMSE etc.\ can be bad}
+
+
+\subsection{Evaluation Metrics}
+
+% Evaluate rating
+\subsubsection{Root-mean-square error (RMSE)}
+Often used to measure difference between a set of predicted values with a set of actual values.
+
+\begin{equation}
+	RMSE = \sqrt{\frac{\sum_{t=1}^{n}{(\hat{y_t} - y_t)^{2}}}{n}}
+\end{equation}
+% \begin{equation}
+% 	RMSE = \sqrt{\frac{1}{\vert T \vert} \sum_{(c,s) \epsilon T}{(\hat{u(c,s)} - u(c,s))}^{2}}
+% \end{equation}
+
+How to calculate the $RMSE$ value is shown in~\ref{equation:ndcg}.
+Here $y_t$ is the actual value and $\hat{y_t}$ is the estimated value.
+This approach is often used in evaluating recommender systems producing ratings for domains such as the movie domain.
+
+
+% implicit
+\subsubsection{Mean Percentage Ranking (MPR)}
+This measure is a recall-oriented metric.
+A known issue with implicit feedback is and often lack of the actual user's preference.
+This approach is used to measure the user satisfaction of items in an ordered list.
+
+\begin{equation}
+	MPR = \frac{\sum_{u,i}{r_{ui} * rank_{ui}}}{\sum_{u,i}{r_{ui}}}
+	\label{equation:mpr}
+\end{equation}
+
+How to calculate $MPR$ is shown in ~\ref{equation:mpr}.
+A list of all the items for user $u$ is ordered based on the rank $rank_{ui}$ of the $u$.
+Where $rank_{ui}$ is the percentile rank of item $i$ in this list for $u$.
+$rank_{ui} = 0$ means that $i$ is the most preferred item for $u$.
+$r_{ui}$ indicates whether $u$ has consumed $i$ or not.
+This makes a $MPR$ value of 0\% to be the most preferred value, and a value of 50\% meaning a near randomly produced list.
+
+
+\subsubsection{User-Centric Evaluation}
+\cite{Pu:2011:UEF:2043932.2043962}
+
+
+% Evaluate list of recommendations
+\subsubsection{Mean Average Precision (MAP)}
+MAP~\cite{Manning:2008:IIR:1394399} measures quality across recall levels.
+
+% \begin{equation}
+% 	MAP(N) = \frac{1}{|N|}\sum_{i=1}^{|N|}{\frac{1}{n_i}}\sum_{j=1}^{n_i}{Precision(R_{ij})}
+% 	\label{equation:apn}
+% \end{equation}
+% $Precision(R_{ij})$ is the precision of the items in an ordered predicted list to the actual preferred list.
+
+\begin{equation}
+	ap@n = \sum_{k=1}^{n}{\frac{P(K)}{min(m,n)}}
+	\label{equation:apn}
+\end{equation}
+
+\begin{equation}
+	MAP@n = \sum_{i=1}^{N}{\frac{ap@n_i}{N}}
+	\label{equation:map}
+\end{equation}
+
+How to calculate the $MAP$ value is shown in~\ref{equation:map}.
+\ref{equation:apn} calculates the average precision at $n$ for a user.
+From \ref{equation:apn}, $P(K)$ is the precision at $k$ in the item list, $n$ is the maximum number of predicted items and $m$ is the actual length of the predicted items list.
+\ref{equation:map} calculates the mean of all the values from \ref{equation:apn}.
+
+
+\subsubsection{AP correlation}
+$AP correlation$~\cite{Yilmaz:2008:NRC:1390334.1390435} measures the overall precision and is a variant of $Kendall's tau$.
+It counts the amount of items correctly placed in a ordered predicted rank list $list1$ and a list of the actual rank ordering of the preferences of the user $list2$.
+
+\begin{equation}
+	AP = \frac{2}{N - 1} * \sum_{i=2}^{N}{(\frac{C(i)}{i - 1})} - 1
+	\label{equation:ap}
+\end{equation}
+
+How to calculate the $AP correlation$ value is shown in ~\ref{equation:ap}.
+$C(i)$ is the number of items ranked correctly above rank $i$.
+The value of AP is between -1 and 1, where a score of 0 means that $list1$ can be considered a randomly generated list and 1 is a perfect match with the actual list $list2$.
+
+
+\subsubsection{Normalized Discounted Cumulative Gain (nDCG)}
+$nDCG$ measures the graded relevance of the recommended item, the ranking quality or the usefulness of the recommended item based on its rank position.
+It is often used to measure the performance of web search recommendation systems.
+
+\begin{equation}
+	DCG_k = \sum_{i=1}^{k}{\frac{2^{rel_i}-1}{log_2(i+1)}}
+	\label{equation:dcg}
+\end{equation}
+
+\begin{equation}
+	nDCG_k = \frac{DCG_k}{IDCG_k}
+	\label{equation:ndcg}
+\end{equation}
+
+How to calculate the $nDCG$ value is shown in~\ref{equation:ndcg}.
+Where $k$ is the maximum amount of suggested items, and $rel_i$ is the graded relevance of the result at position $i$.
+$IDCG_k$, from~\ref{equation:ndcg}, is the ideal $DCG_k$ value.
+This is the result list sorted on relevance.
+
+
+
+\subsubsection{Receiver Operating Characteristics (ROC))}
+The $ROC$ curve is the recall against the fallout, where recall is the amount of relevant retrieved items amongst all the correct items (true positive).
+Fallout is the amount of retrieved items which is not relevant amongst all the non relevant items (false positive).
+The goal is to maximize the recall while minimizing the fallout.
+
+
+\subsubsection{MRR}
+\subsubsection{..}
+

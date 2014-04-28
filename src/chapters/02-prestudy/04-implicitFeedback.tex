@@ -14,6 +14,7 @@
 
 \label{implicit-feedback}
 \section{Implicit feedback to implicit ratings}
+\label{sec:implicit}
 
 %Helge: Poenget er at å rate i sobazar koster penger, mens det er "gratis" hos netflix
 
@@ -51,7 +52,7 @@ the different characteristics in implicit and explicit ratings:
     –                  & \textbf{Explicit ratings}
                        & \textbf{Implicit ratings} \\ \midrule
 
-    \textit{Types of feedback}  
+    \textit{Types of feedback}
                        & Positive and negative.
                        & Positive. \\ \midrule
 
@@ -59,11 +60,12 @@ the different characteristics in implicit and explicit ratings:
                        & Indicates preference. Often on a Likert scale ranging
                          from total dislike to really like.
                        & Indicates confidence. Recurring events is more likely
-                         to reflect the user opinion. 
+                         to reflect the user opinion.
                          \\ \midrule
 
     \textit{Noisiness}
-                       & Medium. Depends on domain and can be removed~\cite{amatriain2009like}.
+                       & Medium. Depends on domain and can be removed
+                         \cite{amatriain2009like}.
                        & High. One of the main challenges in evaluating
                          implicit feedback is choosing which events to
                          consider. \\ \midrule
@@ -151,7 +153,7 @@ If we wanted ratings between 1 and $k$ one can transform the score $s$ provided
 by table~\ref{implicit-table}:
 
 \begin{equation}
-  ImplicitRating(s, k) = 100 * \frac{k-1}{100} + 1 
+  ImplicitRating(s, k) = 100 * \frac{k-1}{100} + 1
 \end{equation}
 
 The advantage of this heuristic is that it requires no training, it is simple
@@ -194,8 +196,8 @@ consider the following dataset:
 \begin{figure}[H]
   \centering
   \begin{BVerbatim}
-   x  | y  
-  ———————
+   x  | y
+  --------
    -2 | 3
    3  | -1
    1  | 1
