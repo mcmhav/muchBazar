@@ -121,6 +121,8 @@ Herlocker et. al. \cite{Herlocker2004} argue that rank accuracy metrics may be o
 subsection
 The term coverage can refer to several distinct properties of the system. Most commonly, the term coverage refers to the proportion of items the recommendation system can recommend, also known as \emph{item-space coverage}. The simplest measure of catalogue coverage is the percentage of all items that can ever be recommended. Coverage can also be the proportion of users interactions for which the system can recommend items, known as \emph{user-space coverage}. In many applications the recommender system may not provide recommendations for some users due to e.g. low confidence in the accuracy of predictions for that user. In such cases one may prefer a recommender that can provide recommendations to a wider range of users.
 
+%An increase in coverage is only beneficial if accuracy does not drop significantly...
+
 \subsubsection{Evaluation using Implicit Feedback}
 
 Accuracy metrics not suited for implicit feedback datasets, as they require knowing which items are undesired by a user \cite{Hu2008}.
@@ -200,7 +202,7 @@ performance of recommender systems on real users which are oblivious to the
 conducted experiment. The real effect of a recommender system depends on a
 variety of factors such as user’s intent, the user’s context and how the
 recommendations are presented to the user. All these factors are hard to
-capture in an offline setting. Thus, the experiment that provides the strongest evidence as to the true real value of the system is an online evaluation, where the system is used by real users to perform real tasks
+capture in an offline setting. Thus, the experiment that provides the strongest evidence as to the true real value of the system is an online evaluation, where the system is used by real users to perform real tasks.
 
 \subsubsection{Online Evaluation Metrics}
 
