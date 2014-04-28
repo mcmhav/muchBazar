@@ -1,5 +1,6 @@
 % !TEX root = ../../report.tex
 
+\label{evaluation}
 \section{Evaluation}
 
 % What will be adressed in the section?
@@ -18,132 +19,320 @@
 %Some key questions in evaluating recommender systems on testbed data are: what
 %to predict, how to grade performance and what baseline to compare with.
 
-In many cases a system designer that wished to employ a recommender system must choose between a set of candidate approaches. A first step towards selecting an appropriate algorithm is to decide which properties are the most important for the application. Recommender systems have a variety of properties such as accuracy, robustness, scalability, etc. The following section will discuss how to compare recommenders based on the set of properties  relevant for the application. We have several different experimental settings which can be used to evaluating recommender systems. We will focus on two types of experiments: Offline experiments where the system is evaluated without user interactions and Online experiments where real users interact with the system. This section will also cover some of the most frequently used evaluation metrics, a discussion on the suitedness of different evaluation measures for implicit feedback, and summary of the methodologies and evaluation measures used to evaluate the cold-start performance of recommender systems.
+In many cases a system designer that wished to employ a recommender system must
+choose between a set of candidate approaches. A first step towards selecting an
+appropriate algorithm is to decide which properties are the most important for
+the application. Recommender systems have a variety of properties such as
+accuracy, robustness, scalability, etc. The following section will discuss how
+to compare recommenders based on the set of properties  relevant for the
+application. We have several different experimental settings which can be used
+to evaluating recommender systems. We will focus on two types of experiments:
+Offline experiments where the system is evaluated without user interactions and
+Online experiments where real users interact with the system. This section will
+also cover some of the most frequently used evaluation metrics, a discussion on
+the suitedness of different evaluation measures for implicit feedback, and
+summary of the methodologies and evaluation measures used to evaluate the
+cold-start performance of recommender systems.
 
-Shani et. al. lists the following guidelines for general experimental studies:
+Shani et\. al.\ lists the following guidelines for general experimental
+studies:
 
 \begin{itemize}
-\item Hypothesis: before running an experiment one must form an hypothesis. For example, an hypothesis can be that algorithm $A$ better predicts user ratings than algorithm $B$. In that case the experiment should test the prediction accuracy, and not look at other factors.
-\item Controlling variables: when comparing a few candidate algorithms on a certain hypothesis, it is important that all variables that are not tested are fixed. 
-\item Generalization power: when drawing conclusions from experiments, we may wish that our conclusions generalize beyond the immediate context of the experiments. When choosing an algorithm for a real application, we may want our conclusion to hold on the deployed system, and generalize beyond the experimental data set. To increase the probability of generalization of the recommender results one must typically experiment with several data sets or applications.
+
+\item Hypothesis: before running an experiment one must form an hypothesis. For
+	example, an hypothesis can be that algorithm $A$ better predicts user ratings
+	than algorithm $B$. In that case the experiment should test the prediction
+	accuracy, and not look at other factors.
+
+\item Controlling variables: when comparing a few candidate algorithms on a
+	certain hypothesis, it is important that all variables that are not tested
+	are fixed. 
+
+\item Generalization power: when drawing conclusions from experiments, we may
+	wish that our conclusions generalize beyond the immediate context of the
+	experiments. When choosing an algorithm for a real application, we may want
+	our conclusion to hold on the deployed system, and generalize beyond the
+	experimental data set. To increase the probability of generalization of the
+	recommender results one must typically experiment with several data sets or
+	applications.
+
 \end{itemize}
 
 
 \subsection{Offline Evaluation}
 
-Offline experiments are performed using pre-collected dataset(s) and a protocol that models the user behavior to estimate recommender performance through different evaluation measures. Offline experiments are attractive because they require no interactions with real users, and thus allows researchers to compare a wide range of algorithms at a low cost. The downside of offline experiments is that they can answer a very narrow set of questions, typically questions about the predictive power of the algorithm, and does not measure other user factors.
+Offline experiments are performed using pre-collected dataset\(s\) and a protocol
+that models the user behavior to estimate recommender performance through
+different evaluation measures. Offline experiments are attractive because they
+require no interactions with real users, and thus allows researchers to compare
+a wide range of algorithms at a low cost. The downside of offline experiments
+is that they can answer a very narrow set of questions, typically questions
+about the predictive power of the algorithm, and does not measure other user
+factors.
 
 \subsubsection{Datasets for Offline Evaluation}
 
-The main aim of a recommender system is to identify the set of items in a dataset that might be intersting to a user based on their expressed preferences. For a fashion recommender this would mean estimating how much a user might like an item, by e.g. predicting what rating a user might give an item. In recent years, various test collections for different domains such as books, music, movies have been made available to the public. These datasets usually consist of user ratings in the form of \emph{<UserID, ItemID, Rating>}.
+The main aim of a recommender system is to identify the set of items in a
+dataset that might be intersting to a user based on their expressed
+preferences. For a fashion recommender this would mean estimating how much a
+user might like an item, by e.g.\\ predicting what rating a user might give an
+item. In recent years, various test collections for different domains such as
+books, music, movies have been made available to the public. These datasets
+usually consist of user ratings in the form of \emph{<UserID, ItemID, Rating>}.
 
-In recent years more or more datasets have been made available which contains additional information such as demographic information about the users, trust-networks, user-assigned tags and etc. Under we have listed a few selected popular datasets containing additional information:
+In recent years more or more datasets have been made available which contains
+additional information such as demographic information about the users,
+trust-networks, user-assigned tags and etc. Under we have listed a few selected
+popular datasets containing additional information:
 
 %TODO - Find more cool dataset
 
 \begin{itemize}
-\item MovieLens 100k dataset \cite{Movielens}: The movielens dataset incorporates demographic information about the user in addition the traditional rating matrix
-\item Epinions dataset \cite{Epinions}: The Epinions dataset includes a trust-network, which specifices who-trust-whom in a social network based on customer reviews for the website Epinions.com
+
+\item MovieLens 100k dataset~\cite{Movielens}: The movielens dataset
+	incorporates demographic information about the user in addition the
+	traditional rating matrix
+
+\item Epinions dataset~\cite{Epinions}: The Epinions dataset includes a
+	trust-network, which specifices who-trust-whom in a social network based on
+	customer reviews for the website Epinions.com
+
 \end{itemize}
 
 \textbf{Explicit-feedback}
 
-The definition of explicit is defined as "stated clearly and in detail, leaving no room for confusion or doubt". Explicit feedback are more precise than implicit feedback, but more difficult to collect since it requires active user involvement. One serious implication of this is that the amount of feedback often is scarce since many users opt not to provide any feedback. Explicit feedback mechanisms allow the users to unequivocally express their ratings on a scale (usually in the form of a Likert scale (strongly disagree - strongly agree). Thus explicit feedback is able to capture both negative and positive feedback, while implicit feedback \emph{only} can be positive. It is worth noting that explicit feedback tend to concentrate on either side of the rating scale, as users are more likely to express their preference if they feel strongly for or against an item \cite{Jawaheer2010}.
+The definition of explicit is defined as `stated clearly and in detail, leaving
+no room for confusion or doubt'. Explicit feedback are more precise than
+implicit feedback, but more difficult to collect since it requires active user
+involvement. One serious implication of this is that the amount of feedback
+often is scarce since many users opt not to provide any feedback. Explicit
+feedback mechanisms allow the users to unequivocally express their ratings on a
+scale (usually in the form of a Likert scale (strongly disagree – strongly
+agree). Thus explicit feedback is able to capture both negative and positive
+feedback, while implicit feedback \emph{only} can be positive. It is worth
+noting that explicit feedback tend to concentrate on either side of the rating
+scale, as users are more likely to express their preference if they feel
+strongly for or against an item~\cite{Jawaheer2010}.
 
 \textbf{Implicit-feedback}
 
 %TODO - Herman, maybe you want to add something more?
 %	Implicit feedback classfication (Type, confidence, precision)
 
-Unlike explicit feedback, we do not have nay direct input from the user regarding their personal preferences. In particular we do not have any substantial evidence of which items the user dislikes, such as low ratings. However, implicit-feedback is more easily collected, and usually more abundant. Implicit feedback types include browsing history, purchase history, search patters, etc.
+Unlike explicit feedback, we do not have nay direct input from the user
+regarding their personal preferences. In particular we do not have any
+substantial evidence of which items the user dislikes, such as low ratings.
+However, implicit-feedback is more easily collected, and usually more abundant.
+Implicit feedback types include browsing history, purchase history, search
+patters, etc. For a larger discussion surrounding the differences between
+implicit and explicit feedback, see Section~\ref{implicit-feedback}
 
 
 \subsubsection{Validation Methods}
 
-Validation techniques are motivated by two fundamental problems; model selection and performance estimation. Almost all pattern recognition techniques have one or more free parameters, and we want a way to select the \emph{optimal} parameter(s) or model for a given problem. Once we have chosen a model, we wish to estimate how well it is doing.
+Validation techniques are motivated by two fundamental problems; model
+selection and performance estimation. Almost all pattern recognition techniques
+have one or more free parameters, and we want a way to select the
+\emph{optimal} parameter\(s\) or model for a given problem. Once we have chosen a
+model, we wish to estimate how well it is doing.
 
 \textbf{The Holdout Method}
 
-When using the holdout method you split the dataset into two groups; a training set used to train the classifier and a test set used to estimate the error rate of the trained classifier. The Netflix Prize Competition \cite{Netflix} provided a training set consisting of 100,480,507 ratings given by 480,189 users to 17,300 movies. The testset consisted of 2,817,131 items where the ratings were unknown. The submitted predictions were scored against the true ratings in terms of root mean squared error (RMSE), and the goal was to minimize this error.
+When using the holdout method you split the dataset into two groups; a training
+set used to train the classifier and a test set used to estimate the error rate
+of the trained classifier. The Netflix Prize Competition~\cite{Netflix}
+provided a training set consisting of 100,480,507 ratings given by 480,189
+users to 17,300 movies. The testset consisted of 2,817,131 items where the
+ratings were unknown. The submitted predictions were scored against the true
+ratings in terms of root mean squared error (RMSE), and the goal was to
+minimize this error.
 
-The holdout method has two basic drawbacks; (1) In problems with sparse datasets we may not be able to afford the luxury of setting aside a portion of the dataset for testing, (2) Since it is a single train-and-test experiment, the holdout estimate can be misleading if we happen to get an "unfortunate" split.
+The holdout method has two basic drawbacks; (1) In problems with sparse
+datasets we may not be able to afford the luxury of setting aside a portion of
+the dataset for testing, (2) Since it is a single train-and-test experiment,
+the holdout estimate can be misleading if we happen to get an `unfortunate'
+split.
 
 \textbf{Cross-Validation}
 
-K-fold Cross-Calidation creates a K-fold partition of the dataset. For each of the $K$ experiments, use $K-1$ folds for training and the remaining one for testing. By setting $K=2$, this is the same as the holdout method. The true error is found by taking the average error from all the experiments.
+K-fold Cross-Calidation creates a K-fold partition of the dataset. For each of
+the $K$ experiments, use $K-1$ folds for training and the remaining one for
+testing. By setting $K=2$, this is the same as the holdout method. The true
+error is found by taking the average error from all the experiments.
 
-Leave-one-out is the degenerate case of K-fold Cross-Validation, where $K$ is chosen as the total number of examples. For a dataset with $N$ examples we perform $N$ experiments. For each experiment we use $N-1$ examples for training and the remaining example for testing. Again, the true error is found by taking the average error rate from the experiments.
+Leave-one-out is the degenerate case of K-fold Cross-Validation, where $K$ is
+chosen as the total number of examples. For a dataset with $N$ examples we
+perform $N$ experiments. For each experiment we use $N-1$ examples for training
+and the remaining example for testing. Again, the true error is found by taking
+the average error rate from the experiments.
 
-In practice the number of folds often depends on the size of the dataset. For large datasets, even 3-Fold Cross Validation will be quite accurate, which for sparse datasets, one may wish to train as many examples as possible. A common choice is $K$ value between 5 and 10.
+In practice the number of folds often depends on the size of the dataset. For
+large datasets, even 3-Fold Cross Validation will be quite accurate, which for
+sparse datasets, one may wish to train as many examples as possible. A common
+choice is $K$ value between 5 and 10.
 
 \textbf{Bootstrapping}
 
 
 \subsubsection{Offline Evaluation Metrics}
 
-When evaluating a recommender system, you wish to estimate a user's satisfaction for a given recommendation. Traditionally recommender systems have been evaluated by means of predictive accuracy. However, there is now a widely agreed that accurate predictions are crucial but insufficient to deploy a good recommendation engine \cite{Shani2011, McNee2006}. Some of the properties can be traded-off, one such example is the trade-off between accuracy and diversity. It is important to understand and evaluate these trade-offs and their effect on the overall performance. This subsection will cover the most popular metrics used for offline evaluation, a discussion of evaluation measures for implicit feedback, and a summary of the cold-start evaluation methodologies found in the literature.
+When evaluating a recommender system, you wish to estimate a user's
+satisfaction for a given recommendation. Traditionally recommender systems have
+been evaluated by means of predictive accuracy. However, there is now a widely
+agreed that accurate predictions are crucial but insufficient to deploy a good
+recommendation engine~\cite{Shani2011, McNee2006}. Some of the properties can
+be traded-off, one such example is the trade-off between accuracy and
+diversity. It is important to understand and evaluate these trade-offs and
+their effect on the overall performance. This subsection will cover the most
+popular metrics used for offline evaluation, a discussion of evaluation
+measures for implicit feedback, and a summary of the cold-start evaluation
+methodologies found in the literature.
 
 \textbf{Predictive Accuracy Metrics}
 
-Predictive accuracy metrics measure how close the predicted ratings are to the true user ratings. More formally, the system tries to predict ratings $\hat{u(c,s)}$ for a test set $T$ of user.item pairs $(c, s)$ for which the true ratings are known. Traditionally, mean absolute error(MAE) has be used to evaluate the performance of collaborative-filtering algorithms, but other measures such as root mean squared error (RMSE) are also commonly used.
+Predictive accuracy metrics measure how close the predicted ratings are to the
+true user ratings. More formally, the system tries to predict ratings
+$\hat{u(c,s)}$ for a test set $T$ of user.item pairs $(c, s)$ for which the
+true ratings are known. Traditionally, mean absolute error (MAE) has be used to
+evaluate the performance of collaborative-filtering algorithms, but other
+measures such as root mean squared error (RMSE) are also commonly used.
 
 \begin{equation}
-MAE = \sqrt{\frac{1}{\vert T \vert} \sum_{(c,s) \epsilon T}  (\hat{u(c,s)} - u(c,s))^{2}}
+MAE = \sqrt{\frac{1}{\vert T \vert} \sum_{(c,s) \epsilon T}{(\hat{u(c,s)} - u(c,s))}^{2}}
 \end{equation}
 
 \textbf{Measuring Usage Prediction}
 
-In many applications the recommender system does not predict the user's preferences of items, but tries to recommend to users items that they may use. In an offline evaluation of usage prediction, we typically have a dataset consisting of items each user has used. We then select a test user, hide some of her selections, and ask the recommender to predict a set of items the user will use. We then have four possible outcomes for the recommend and hidden items.
+In many applications the recommender system does not predict the user's
+preferences of items, but tries to recommend to users items that they may use.
+In an offline evaluation of usage prediction, we typically have a dataset
+consisting of items each user has used. We then select a test user, hide some
+of her selections, and ask the recommender to predict a set of items the user
+will use. We then have four possible outcomes for the recommend and hidden
+items.
 
 \begin{table}
 \caption{•}
 \begin{tabular}{c c c}
-\hline
+\toprule
 			&	Recommended		&	Not Recommended \\
 Used		&	True-Positive 	&	False-Negative	\\
 Not Used	&	False-Positive	&	True-Negative	\\
-\hline
+\bottomrule
 \end{tabular}
 \label{table:usageprediction}
 \end{table}
 
-This model assumes that unused items would not have been used if they had been recommended to a user. This assumption may be false, such as when the set of unused items contains some interesting items that the user did not select. For example, a user may not have used an items because she was unaware of its existence, but after the recommendation exposed that item, the user can decide to select it. We can count the number of examples that fall into each cell in the table and compute the Precision, Recall and False Positive Rate.
+This model assumes that unused items would not have been used if they had been
+recommended to a user. This assumption may be false, such as when the set of
+unused items contains some interesting items that the user did not select. For
+example, a user may not have used an items because she was unaware of its
+existence, but after the recommendation exposed that item, the user can decide
+to select it. We can count the number of examples that fall into each cell in
+the table and compute the Precision, Recall and False Positive Rate.
 
 \textbf{Rank Accuracy Metrics}
 
-Rank accuracy metrics measure the ability of a recommendation method to produce a recommended ordering of items that matches how the user would have ordered the same items. Shani et. al. \cite{Shani2011} lists two different appraoches for measuring the ranking accuracy: Try determining the correct order of a set of items for each user and measure how close a system comes to this correct order, or we can attempt to measure the utility of the system's ranking to a user.
+Rank accuracy metrics measure the ability of a recommendation method to produce
+a recommended ordering of items that matches how the user would have ordered
+the same items. Shani et.\ al.~\cite{Shani2011} lists two different appraoches
+for measuring the ranking accuracy: Try determining the correct order of a set
+of items for each user and measure how close a system comes to this correct
+order, or we can attempt to measure the utility of the system's ranking to a
+user.
 
-Herlocker et. al. \cite{Herlocker2004} argue that rank accuracy metrics may be overly sensitive for domains where the user just wants an item that is "good enough" (binary preferences) since the user won't be concerned about the ordering of items beyond the binary classification. These metrics are therefore most suitable to evaluate algorithms that are used to present ranked lists to the user in domains where the user preferences are expressed using numerical values.
+Herlocker et.\ al.~\cite{Herlocker2004} argue that rank accuracy metrics may be
+overly sensitive for domains where the user just wants an item that is `good
+enough' (binary preferences) since the user won't be concerned about the
+ordering of items beyond the binary classification. These metrics are therefore
+most suitable to evaluate algorithms that are used to present ranked lists to
+the user in domains where the user preferences are expressed using numerical
+values.
 
 \textbf{Beyond Accuracy}
 
 \textbf{Coverage}
-subsection
-The term coverage can refer to several distinct properties of the system. Most commonly, the term coverage refers to the proportion of items the recommendation system can recommend, also known as \emph{item-space coverage}. The simplest measure of catalogue coverage is the percentage of all items that can ever be recommended. Coverage can also be the proportion of users interactions for which the system can recommend items, known as \emph{user-space coverage}. In many applications the recommender system may not provide recommendations for some users due to e.g. low confidence in the accuracy of predictions for that user. In such cases one may prefer a recommender that can provide recommendations to a wider range of users.
+
+%subsection
+The term coverage can refer to several distinct properties of the system. Most
+commonly, the term coverage refers to the proportion of items the
+recommendation system can recommend, also known as \emph{item-space coverage}.
+The simplest measure of catalogue coverage is the percentage of all items that
+can ever be recommended. Coverage can also be the proportion of users
+interactions for which the system can recommend items, known as
+\emph{user-space coverage}. In many applications the recommender system may not
+provide recommendations for some users due to e.g.\\ low confidence in the
+accuracy of predictions for that user. In such cases one may prefer a
+recommender that can provide recommendations to a wider range of users.
 
 %An increase in coverage is only beneficial if accuracy does not drop significantly...
 
 \subsubsection{Evaluation using Implicit Feedback}
 
-Accuracy metrics not suited for implicit feedback datasets, as they require knowing which items are undesired by a user \cite{Hu2008}.
+Accuracy metrics not suited for implicit feedback datasets, as they require
+knowing which items are undesired by a user~\cite{Hu2008}.
 
 \subsubsection{Evaluation of Cold-start Recommendations}
 
-The cold-start problem can be considered a sub problem of coverage because it measures the system coverage over a specific set of items and users. When evaluating the cold-start system performance one is interested in measuring the system accuracy for these users and items.
+The cold-start problem can be considered a sub problem of coverage because it
+measures the system coverage over a specific set of items and users. When
+evaluating the cold-start system performance one is interested in measuring the
+system accuracy for these users and items.
 
-The evaluation metric used seem to depend on the type of feedback available. Most experiments carried out have used \emph{traditional} datasets such as MovieLens, EachMovie, Netflix among others. All these dataset contain explicit ratings, accuracy metrics such as MAE \cite{Rashid2002, Rashid 2008, Massa2004, Massa2007, Stern2009} and RMSE \cite{Agarwal2009, Agarwal2010} are therefore the most used ones. In the experiments where binary rating data have been used Precision@N \cite{Liu2011, Ganter2010}, ROC curves \cite{Agarwal2009, Ganter2010, Schein2002} and AUC \cite{Liu2011, Ganter2010} seems to be the preferred evaluation metrics.
+The evaluation metric used seem to depend on the type of feedback available.
+Most experiments carried out have used \emph{traditional} datasets such as
+MovieLens, EachMovie, Netflix among others. All these dataset contain explicit
+ratings, accuracy metrics such as MAE~\cite{Rashid2002, Rashid2008, Massa2004,
+Massa2007, Stern2009} and RMSE~\cite{Agarwal2009, Agarwal2010} are therefore
+the most used ones. In the experiments where binary rating data have been used
+Precision@N~\cite{Liu2011, Gantner2010}, ROC curves~\cite{Agarwal2009,
+Gantner2010, Schein2002} and AUC~\cite{Liu2011, Gantner2010} seems to be the
+preferred evaluation metrics.
 
-Another way to discriminate between different recommender techniques is coverage. The recommender system may not be able to make predictions for every item. For this reason, it is important to measure the portion of ratings that an RS is able to predict (ratings coverage). However, this quantity is not always informative about the quality of a recommender system. A RS is likely to be good at predicting nearly all the ratings for heavy users and not be able to do the same for users who have rated few items. For this reason, one should also compute the users coverage, defined as the portion of users which the RS is able to predict at least one rating for. Good et. al. \cite{Good1999} measure the item-space coverage, while Massa et. al. \cite{Massa2004, Massa2007} measures both the item-space coverage and user-space coverage of their methods.
+Another way to discriminate between different recommender techniques is
+coverage. The recommender system may not be able to make predictions for every
+item. For this reason, it is important to measure the portion of ratings that
+an RS is able to predict (ratings coverage). However, this quantity is not
+always informative about the quality of a recommender system. A RS is likely to
+be good at predicting nearly all the ratings for heavy users and not be able to
+do the same for users who have rated few items. For this reason, one should
+also compute the users coverage, defined as the portion of users which the RS
+is able to predict at least one rating for. Good et.\ al.~\cite{Good1999}
+measure the item-space coverage, while Massa et.\ al.~\cite{Massa2004,
+Massa2007} measures both the item-space coverage and user-space coverage of
+their methods.
  
-Massa et. al \cite{Massa2004} argue that performance measures such as Mean Absolute User Error (MAUE) is a good measure for cold-start recommendations since every user is taken into account once and a cold start user is as influential as an heavy rater. Similarly, Park et. al. \cite{Park2006} measure normalized MAE (NMAE) by macro-averaging, which first calculates the mean average error of each users and taking the average of all users.
+Massa et.\ al~\cite{Massa2004} argue that performance measures such as Mean
+Absolute User Error (MAUE) is a good measure for cold-start recommendations
+since every user is taken into account once and a cold start user is as
+influential as an heavy rater. Similarly, Park et.\ al.~\cite{Park2006} measure
+normalized MAE (NMAE) by macro-averaging, which first calculates the mean
+average error of each users and taking the average of all users.
 
 To simulate the cold-start scenario, different approaches have been employed:
 
-One popular way to simulate a cold-start user scenario used by \cite{Stern2009, Lam2008} is to split the dataset in two disjoint sets, a training set containing 90\% of the users and the remaining 10\% being in the test set. For each test user one trains a model with a random subset $T\%$ of their ratings e.g. $5\%$ or $75\%$, and then use the model to predict their remaining ratings. The same methodology can also be used to simulate a cold-start item scenario. Another highly similar way to simulate the cold-start user and cold-start item scenario was used in \cite{Rashid2002, Rashid2008}. For the cold-start user scenario one selects a subset of the users with e.g. more than 200 ratings. One then trains the model with a subset of the ratings. In the case of \cite{Rashid2002} 30, 45, 60 and 90 ratings was used. After training the model one computes the error on the hidden ratings for the same user.
+One popular way to simulate a cold-start user scenario used by~\cite{Stern2009,
+Lam2008} is to split the dataset in two disjoint sets, a training set
+containing 90\% of the users and the remaining 10\% being in the test set. For
+each test user one trains a model with a random subset $T\%$ of their ratings
+e.g.\ $5\%$ or $75\%$, and then use the model to predict their remaining
+ratings. The same methodology can also be used to simulate a cold-start item
+scenario. Another highly similar way to simulate the cold-start user and
+cold-start item scenario was used in~\cite{Rashid2002, Rashid2008}. For the
+cold-start user scenario one selects a subset of the users with e.g.\ more than
+200 ratings. One then trains the model with a subset of the ratings. In the
+case of~\cite{Rashid2002} 30, 45, 60 and 90 ratings was used. After training
+the model one computes the error on the hidden ratings for the same user.
 
-Another \emph{simpler} approach employed by \cite{Massa2007, Jamali2009} is to determine a cutoff point for what is considered a cold-start user. E.g. that every user with less than 5 ratings is considered a cold-start user. Then separately measure the error on predictions made to these users.
+Another \emph{simpler} approach employed by~\cite{Massa2007, Jamali2009} is to
+determine a cutoff point for what is considered a cold-start user. E.g.\ that
+every user with less than 5 ratings is considered a cold-start user. Then
+separately measure the error on predictions made to these users.
 
-To simulate a cold-start system scenario Agarwal et. al. \cite{2009} split the dataset in two using 75\% of the dataset for training and 25\% for testing. They then train the model using 30\%, 60\% and 75\% of the data and compare their performance on the testset.
+To simulate a cold-start system scenario Agarwal et.\ al.~\cite{Agarwal2009}
+split the dataset in two using 75\% of the dataset for training and 25\% for
+testing. They then train the model using 30\%, 60\% and 75\% of the data and
+compare their performance on the testset.
 
 %Summary of articles read
 
@@ -202,17 +391,23 @@ performance of recommender systems on real users which are oblivious to the
 conducted experiment. The real effect of a recommender system depends on a
 variety of factors such as user’s intent, the user’s context and how the
 recommendations are presented to the user. All these factors are hard to
+<<<<<<< HEAD
 capture in an offline setting. Thus, the experiment that provides the strongest evidence as to the true real value of the system is an online evaluation, where the system is used by real users to perform real tasks.
+=======
+capture in an offline setting. Thus, the experiment that provides the strongest
+evidence as to the true real value of the system is an online evaluation, where
+the system is used by real users to perform real tasks
+>>>>>>> 34895417455007ae8fd830a338931cf14af2853f
 
 \subsubsection{Online Evaluation Metrics}
 
-Online studies in recommendations and advertisement usually measure the click-through-rate (CTR) of the recommendations,
-which aligns with financial incentives and implicitly factors in accuracy,
-novelty, diversity, etc., according to the preferences of the distribution of users.
-The click-through-rate of an algorithm is defined as the number of clicks your
-recommendations get divided by the total number of recommendations that
-have been made. A high CTR therefore indicates that your system is doing
-well.
+Online studies in recommendations and advertisement usually measure the
+click-through-rate (CTR) of the recommendations, which aligns with financial
+incentives and implicitly factors in accuracy, novelty, diversity, etc.,
+according to the preferences of the distribution of users.  The
+click-through-rate of an algorithm is defined as the number of clicks your
+recommendations get divided by the total number of recommendations that have
+been made. A high CTR therefore indicates that your system is doing well.
 
 \begin{equation}
 CTR = \frac{Clicks}{Recommendations}
@@ -228,4 +423,4 @@ CTR = \frac{Clicks}{Recommendations}
 
 \subsubsection{The Bad}
 
-\todo{Why RMSE etc. can be bad}
+\todo{Why RMSE etc.\ can be bad}
