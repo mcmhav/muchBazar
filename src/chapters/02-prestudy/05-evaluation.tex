@@ -409,20 +409,88 @@ CTR = \frac{Clicks}{Recommendations}
 
 \subsection{What To Use}
 
-\todo{RMSE, MSE, P/R \dots}
+The main idea behind a recommendation system is to produce a set of items which are of interest to the user.
+For the system to be successful, this sets of items needs quality.
+But what needs to be considered when determining the quality of the recommendations?
+According to a user study~\cite{Pu:2011:UEF:2043932.2043962} the most central aspects to this quality is:
+
+\todo{as list or in table, or not}
+
+\textbf{Perceived accuracy}.
+The degree of how well the user perceives the recommended items match the actual want of the user.
+
+\textbf{Novelty}.
+The degree of new and interesting items recommended for the user.
+
+\textbf{Attractiveness}.
+How well the recommended items are able to evoke interest or desire in the user.
+
+\textbf{Diversity}.
+How different the recommended items are.
+
+\textbf{Context compatibility}.
+How the system uses contextual factors to supply the recommendations with more personalized recommendations.
+
+% \todo{RMSE, MSE, P/R \dots}
+
 
 \subsubsection{The Good}
+Since the data at hand is mainly implicit feedback and this data is sparse, some natural ways of approaching the evaluations task would be:
 
-\todo{Which are best suited for implicit ratings?}
+\textbf{MPR}
+\begin{itemize}
+	\item good
+	\item Possible to produce a score for a recommender system which relies on implicit feedback
+	\item Usable even though there are no feedback indicating undesired items
+	\item Does not need a ranked list of the actual preferences of the user
+	\item bad
+	\item Needs distinct ranking of the different items
+\end{itemize}
+
+\textbf{MAP}
+\begin{itemize}
+	\item good
+	\item Possible to produce a score for a recommender system which relies on implicit feedback
+	\item Usable even though there are no feedback indicating undesired items
+	\item Does not need a ranked list of the actual preferences of the user
+	\item Differentiates between predicted more desired items and those that are not
+	\item bad
+	\item Needs distinct ranking of the different items
+\end{itemize}
+
 
 \subsubsection{The Bad}
-
-\todo{Why RMSE etc.\ can be bad}
+\textbf{RMSE}
+\begin{itemize}
+	\item good
+	\item Well known, so it produces a clear score of the system
+	\item bad
+	\item Needs the actual rating of the items
+	\item Needs a predicted rating for the items
+	\item Not easy to gather reliable information about undesired items trough implicit feedback
+\end{itemize}
 
 
 
 \subsection{Evaluation Metrics}
 
+% Evaluate rating
+\subsubsection{Root-mean-square error (RMSE)}
+Often used to measure difference between a set of predicted values with a set of actual values.
+
+\begin{equation}
+	RMSE = \sqrt{\frac{\sum_{t=1}^{n}{(\hat{y_t} - y_t)^{2}}}{n}}
+\end{equation}
+% \begin{equation}
+% 	RMSE = \sqrt{\frac{1}{\vert T \vert} \sum_{(c,s) \epsilon T}{(\hat{u(c,s)} - u(c,s))}^{2}}
+% \end{equation}
+
+How to calculate the $RMSE$ value is shown in~\ref{equation:ndcg}.
+Here $y_t$ is the actual value and $\hat{y_t}$ is the estimated value.
+This approach is often used in evaluating recommender systems producing ratings for domains such as the movie domain.
+
+
+% implicit
 \subsubsection{Mean Percentage Ranking (MPR)}
 This measure is a recall-oriented metric.
 A known issue with implicit feedback is and often lack of the actual user's preference.
@@ -441,6 +509,11 @@ $r_{ui}$ indicates whether $u$ has consumed $i$ or not.
 This makes a $MPR$ value of 0\% to be the most preferred value, and a value of 50\% meaning a near randomly produced list.
 
 
+\subsubsection{User-Centric Evaluation}
+\cite{Pu:2011:UEF:2043932.2043962}
+
+
+% Evaluate list of recommendations
 \subsubsection{Mean Average Precision (MAP)}
 MAP~\cite{Manning:2008:IIR:1394399} measures quality across recall levels.
 
@@ -500,27 +573,13 @@ $IDCG_k$, from~\ref{equation:ndcg}, is the ideal $DCG_k$ value.
 This is the result list sorted on relevance.
 
 
-\subsubsection{Root-mean-square error (RMSE)}
-Often used to measure difference between a set of predicted values with a set of actual values.
-
-\begin{equation}
-	RMSE = \sqrt{\frac{\sum_{t=1}^{n}{(\hat{y_t} - y_t)^{2}}}{n}}
-\end{equation}
-% \begin{equation}
-% 	RMSE = \sqrt{\frac{1}{\vert T \vert} \sum_{(c,s) \epsilon T}{(\hat{u(c,s)} - u(c,s))}^{2}}
-% \end{equation}
-
-How to calculate the $RMSE$ value is shown in~\ref{equation:ndcg}.
-Here $y_t$ is the actual value and $\hat{y_t}$ is the estimated value.
-This approach is often used in evaluating recommender systems producing ratings for domains such as the movie domain.
-
 
 \subsubsection{Receiver Operating Characteristics (ROC))}
 The $ROC$ curve is the recall against the fallout, where recall is the amount of relevant retrieved items amongst all the correct items (true positive).
 Fallout is the amount of retrieved items which is not relevant amongst all the non relevant items (false positive).
 The goal is to maximize the recall while minimizing the fallout.
 
+
 \subsubsection{MRR}
 \subsubsection{..}
 
-– Evaluation of the results: accuracy (RMSE, MAE…), Diversity, Novelty and Serendipity.
