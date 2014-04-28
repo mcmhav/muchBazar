@@ -420,9 +420,10 @@ CTR = \frac{Clicks}{Recommendations}
 \todo{Why RMSE etc.\ can be bad}
 
 
+
 \subsection{Evaluation Metrics}
 
-\subsubsection{Mean percentage ranking (MPR)}
+\subsubsection{Mean Percentage Ranking (MPR)}
 This measure is a recall-oriented metric.
 A known issue with implicit feedback is and often lack of the actual user's preference.
 This approach is used to measure the user satisfaction of items in an ordered list.
@@ -432,23 +433,94 @@ This approach is used to measure the user satisfaction of items in an ordered li
 	\label{equation:mpr}
 \end{equation}
 
-How to calculate MPR is shown in ~\ref{equation:mpr}.
+How to calculate $MPR$ is shown in ~\ref{equation:mpr}.
 A list of all the items for user $u$ is ordered based on the rank $rank_{ui}$ of the $u$.
 Where $rank_{ui}$ is the percentile rank of item $i$ in this list for $u$.
 $rank_{ui} = 0$ means that $i$ is the most preferred item for $u$.
-$r_{ui}$ indicates wither $u$ has consumed $i$ or not.
-This makes a MPR value of 0\% to be the most preferred value, and a value of 50\% meaning a near randomly produced list.
+$r_{ui}$ indicates whether $u$ has consumed $i$ or not.
+This makes a $MPR$ value of 0\% to be the most preferred value, and a value of 50\% meaning a near randomly produced list.
 
-\subsubsection{MAP}
+
+\subsubsection{Mean Average Precision (MAP)}
+MAP~\cite{Manning:2008:IIR:1394399} measures quality across recall levels.
+
+% \begin{equation}
+% 	MAP(N) = \frac{1}{|N|}\sum_{i=1}^{|N|}{\frac{1}{n_i}}\sum_{j=1}^{n_i}{Precision(R_{ij})}
+% 	\label{equation:apn}
+% \end{equation}
+% $Precision(R_{ij})$ is the precision of the items in an ordered predicted list to the actual preferred list.
+
+\begin{equation}
+	ap@n = \sum_{k=1}^{n}{\frac{P(K)}{min(m,n)}}
+	\label{equation:apn}
+\end{equation}
+
+\begin{equation}
+	MAP@n = \sum_{i=1}^{N}{\frac{ap@n_i}{N}}
+	\label{equation:map}
+\end{equation}
+
+How to calculate the $MAP$ value is shown in~\ref{equation:map}.
+\ref{equation:apn} calculates the average precision at $n$ for a user.
+From \ref{equation:apn}, $P(K)$ is the precision at $k$ in the item list, $n$ is the maximum number of predicted items and $m$ is the actual length of the predicted items list.
+\ref{equation:map} calculates the mean of all the values from \ref{equation:apn}.
+
+
+\subsubsection{AP correlation}
+$AP correlation$~\cite{Yilmaz:2008:NRC:1390334.1390435} measures the overall precision and is a variant of $Kendall's tau$.
+It counts the amount of items correctly placed in a ordered predicted rank list $list1$ and a list of the actual rank ordering of the preferences of the user $list2$.
+
+\begin{equation}
+	AP = \frac{2}{N - 1} * \sum_{i=2}^{N}{(\frac{C(i)}{i - 1})} - 1
+	\label{equation:ap}
+\end{equation}
+
+How to calculate the $AP correlation$ value is shown in ~\ref{equation:ap}.
+$C(i)$ is the number of items ranked correctly above rank $i$.
+The value of AP is between -1 and 1, where a score of 0 means that $list1$ can be considered a randomly generated list and 1 is a perfect match with the actual list $list2$.
+
+
+\subsubsection{Normalized Discounted Cumulative Gain (nDCG)}
+$nDCG$ measures the graded relevance of the recommended item, the ranking quality or the usefulness of the recommended item based on its rank position.
+It is often used to measure the performance of web search recommendation systems.
+
+\begin{equation}
+	DCG_k = \sum_{i=1}^{k}{\frac{2^{rel_i}-1}{log_2(i+1)}}
+	\label{equation:dcg}
+\end{equation}
+
+\begin{equation}
+	nDCG_k = \frac{DCG_k}{IDCG_k}
+	\label{equation:ndcg}
+\end{equation}
+
+How to calculate the $nDCG$ value is shown in~\ref{equation:ndcg}.
+Where $k$ is the maximum amount of suggested items, and $rel_i$ is the graded relevance of the result at position $i$.
+$IDCG_k$, from~\ref{equation:ndcg}, is the ideal $DCG_k$ value.
+This is the result list sorted on relevance.
 
 
 \subsubsection{Root-mean-square error (RMSE)}
 Often used to measure difference between a set of predicted values with a set of actual values.
-The basic idea behind it is to
+
+\begin{equation}
+	RMSE = \sqrt{\frac{\sum_{t=1}^{n}{(\hat{y_t} - y_t)^{2}}}{n}}
+\end{equation}
+% \begin{equation}
+% 	RMSE = \sqrt{\frac{1}{\vert T \vert} \sum_{(c,s) \epsilon T}{(\hat{u(c,s)} - u(c,s))}^{2}}
+% \end{equation}
+
+How to calculate the $RMSE$ value is shown in~\ref{equation:ndcg}.
+Here $y_t$ is the actual value and $\hat{y_t}$ is the estimated value.
+This approach is often used in evaluating recommender systems producing ratings for domains such as the movie domain.
+
+
+\subsubsection{Receiver Operating Characteristics (ROC))}
+The $ROC$ curve is the recall against the fallout, where recall is the amount of relevant retrieved items amongst all the correct items (true positive).
+Fallout is the amount of retrieved items which is not relevant amongst all the non relevant items (false positive).
+The goal is to maximize the recall while minimizing the fallout.
 
 \subsubsection{MRR}
 \subsubsection{..}
-
-– Validation of the mapping approaches: MPR and AP Correlation
 
 – Evaluation of the results: accuracy (RMSE, MAE…), Diversity, Novelty and Serendipity.
