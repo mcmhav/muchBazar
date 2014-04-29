@@ -175,7 +175,7 @@ choice is $K$ value between 5 and 10.
 
 \textbf{Bootstrapping}
 
-%TODO - Write about bootstrapping
+%TODO - Write about bootstrapping?
 
 
 \subsubsection{Offline Evaluation Metrics}
@@ -213,19 +213,20 @@ In an offline evaluation of usage prediction, we typically have a dataset
 consisting of items each user has used. We then select a test user, hide some
 of her selections, and ask the recommender to predict a set of items the user
 will use. We then have four possible outcomes for the recommend and hidden
-items.
+items:
 
-\begin{table}
-\caption{•}
-\begin{tabular}{c c c}
-\toprule
-			&	Recommended		&	Not Recommended \\
-Used		&	True-Positive 	&	False-Negative	\\
-Not Used	&	False-Positive	&	True-Negative	\\
-\bottomrule
+\begin{center}
+\begin{table}[H]
+\begin{tabular}{|c|c|c|}
+\hline
+			&	Recommended		&	Not Recommended \\ \hline
+Used		&	True-Positive 	&	False-Negative	\\ \hline
+Not Used	&	False-Positive	&	True-Negative	\\ \hline
 \end{tabular}
 \label{table:usageprediction}
+\caption{}
 \end{table}
+\end{center}
 
 This model assumes that unused items would not have been used if they had been
 recommended to a user. This assumption may be false, such as when the set of
@@ -255,6 +256,8 @@ values.
 
 \textbf{Beyond Accuracy}
 
+There is an emerging understanding that good recommendations accuracy alone does not give the users of the recommender system an effective and satisfying experience \cite{Herlocker2004}. The following \emph{measures} attempts to assess a recommender systems usefulness beyond being able to provide accurate recommendations to the users.
+
 \textbf{Coverage}
 
 The term coverage can refer to several distinct properties of the system. Most
@@ -268,7 +271,11 @@ provide recommendations for some users due to e.g.\\ low confidence in the
 accuracy of predictions for that user. In such cases one may prefer a
 recommender that can provide recommendations to a wider range of users. However, an increase in coverage is only beneficial if the accuracy does not drop significantly.
 
-%TODO - Others? (Serendipity, Diversity...)
+\textbf{Novelty and Serendipity}
+
+
+%TODO - What more?
+%		Scalability...?
 
 \subsubsection{Evaluation using Implicit Feedback}
 
