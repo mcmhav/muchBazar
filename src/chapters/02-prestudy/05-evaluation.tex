@@ -431,8 +431,6 @@ How different the recommended items are.
 \textbf{Context compatibility}.
 How the system uses contextual factors to supply the recommendations with more personalized recommendations.
 
-% \todo{RMSE, MSE, P/R \dots}
-
 
 \subsubsection{The Good}
 Since the data at hand is mainly implicit feedback and this data is sparse, some natural ways of approaching the evaluations task would be:
@@ -474,8 +472,13 @@ Since the data at hand is mainly implicit feedback and this data is sparse, some
 
 \subsection{Evaluation Metrics}
 
+\subsubsection{System-centric}
+System-centric evaluation methods measures the accuracy of the recommendation system.
+
+
 % Evaluate rating
-\subsubsection{Root-mean-square error (RMSE)}
+\textbf{Root-mean-square error (RMSE)}
+
 Often used to measure difference between a set of predicted values with a set of actual values.
 
 \begin{equation}
@@ -491,10 +494,11 @@ This approach is often used in evaluating recommender systems producing ratings 
 
 
 % implicit
-\subsubsection{Mean Percentage Ranking (MPR)}
+\textbf{Mean Percentage Ranking (MPR)}
+
 This measure is a recall-oriented metric.
-A known issue with implicit feedback is and often lack of the actual user's preference.
-This approach is used to measure the user satisfaction of items in an ordered list.
+A known issue with implicit feedback is that it often lack the actual user's preference.
+This approach is used to measure the user satisfaction of items in an recommended ordered list.
 
 \begin{equation}
 	MPR = \frac{\sum_{u,i}{r_{ui} * rank_{ui}}}{\sum_{u,i}{r_{ui}}}
@@ -509,12 +513,9 @@ $r_{ui}$ indicates whether $u$ has consumed $i$ or not.
 This makes a $MPR$ value of 0\% to be the most preferred value, and a value of 50\% meaning a near randomly produced list.
 
 
-\subsubsection{User-Centric Evaluation}
-\cite{Pu:2011:UEF:2043932.2043962}
-
-
 % Evaluate list of recommendations
-\subsubsection{Mean Average Precision (MAP)}
+\textbf{Mean Average Precision (MAP)}
+
 MAP~\cite{Manning:2008:IIR:1394399} measures quality across recall levels.
 
 % \begin{equation}
@@ -539,7 +540,8 @@ From \ref{equation:apn}, $P(K)$ is the precision at $k$ in the item list, $n$ is
 \ref{equation:map} calculates the mean of all the values from \ref{equation:apn}.
 
 
-\subsubsection{AP correlation}
+\textbf{AP correlation}
+
 $AP correlation$~\cite{Yilmaz:2008:NRC:1390334.1390435} measures the overall precision and is a variant of $Kendall's tau$.
 It counts the amount of items correctly placed in a ordered predicted rank list $list1$ and a list of the actual rank ordering of the preferences of the user $list2$.
 
@@ -553,7 +555,8 @@ $C(i)$ is the number of items ranked correctly above rank $i$.
 The value of AP is between -1 and 1, where a score of 0 means that $list1$ can be considered a randomly generated list and 1 is a perfect match with the actual list $list2$.
 
 
-\subsubsection{Normalized Discounted Cumulative Gain (nDCG)}
+\textbf{Normalized Discounted Cumulative Gain (nDCG)}
+
 $nDCG$ measures the graded relevance of the recommended item, the ranking quality or the usefulness of the recommended item based on its rank position.
 It is often used to measure the performance of web search recommendation systems.
 
@@ -574,12 +577,19 @@ This is the result list sorted on relevance.
 
 
 
-\subsubsection{Receiver Operating Characteristics (ROC))}
+\textbf{Receiver Operating Characteristics (ROC))}
+
 The $ROC$ curve is the recall against the fallout, where recall is the amount of relevant retrieved items amongst all the correct items (true positive).
 Fallout is the amount of retrieved items which is not relevant amongst all the non relevant items (false positive).
 The goal is to maximize the recall while minimizing the fallout.
 
 
-\subsubsection{MRR}
-\subsubsection{..}
+\textbf{MRR}
+\textbf{..}
 
+
+\subsubsection{User-Centric Evaluation}
+User-centric evaluation focuses on the perceived quality of the recommendation system.
+
+\cite{Pu:2011:UEF:2043932.2043962}
+\cite{Knijnenburg:2011:PPS:2043932.2043993}
