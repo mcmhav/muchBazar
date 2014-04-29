@@ -13,3 +13,6 @@
 *.out
 *.toc
 *.gz
+*.bbl
+*.blg
+*.fdb_latexmk

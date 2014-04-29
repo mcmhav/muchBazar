@@ -200,10 +200,32 @@ $\hat{u(c,s)}$ for a test set $T$ of user.item pairs $(c, s)$ for which the
 true ratings are known. Traditionally, mean absolute error (MAE) has be used to
 evaluate the performance of collaborative-filtering algorithms, but other
 measures such as root mean squared error (RMSE) are also commonly used.
+sadf
+\equationMEA
+asfasdf
+sdafs
 
-\begin{equation}
-MAE = \sqrt{\frac{1}{\vert T \vert} \sum_{(c,s) \epsilon T}{(\hat{u(c,s)} - u(c,s))}^{2}}
-\end{equation}
+\begin{table}[H]
+    \centering
+    \begin{tabular}{l|l|l}
+    	\textbf{Metric}	& \textbf{Equation} & \textbf{About} \\ \hline
+    	RMSE 			& \parbox{6cm}{\equationRMSE}
+    	 & asdfasdf \\
+    \end{tabular}
+    \label{table:predictiveAccuracyMetrics}
+    \caption [Predictive Accuracy Metrics]{}
+\end{table}
+
+
+\textbf{Root-mean-square error (RMSE)}
+Often used to measure difference between a set of predicted values with a set of actual values.
+
+\equationRMSE
+
+How to calculate the $RMSE$ value is shown in~\ref{equation:rmse}.
+Here $y_t$ is the actual value and $\hat{y_t}$ is the estimated value.
+This approach is often used in evaluating recommender systems producing ratings for domains such as the movie domain.
+
 
 \textbf{Measuring Usage Prediction}
 
@@ -483,20 +505,7 @@ System-centric evaluation methods measures the accuracy of the recommendation sy
 
 
 % Evaluate rating
-\textbf{Root-mean-square error (RMSE)}
 
-Often used to measure difference between a set of predicted values with a set of actual values.
-
-\begin{equation}
-	RMSE = \sqrt{\frac{\sum_{t=1}^{n}{(\hat{y_t} - y_t)^{2}}}{n}}
-\end{equation}
-% \begin{equation}
-% 	RMSE = \sqrt{\frac{1}{\vert T \vert} \sum_{(c,s) \epsilon T}{(\hat{u(c,s)} - u(c,s))}^{2}}
-% \end{equation}
-
-How to calculate the $RMSE$ value is shown in~\ref{equation:ndcg}.
-Here $y_t$ is the actual value and $\hat{y_t}$ is the estimated value.
-This approach is often used in evaluating recommender systems producing ratings for domains such as the movie domain.
 
 
 % implicit
