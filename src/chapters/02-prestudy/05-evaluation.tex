@@ -34,7 +34,7 @@ the suitedness of different evaluation measures for implicit feedback, and
 summary of the methodologies and evaluation measures used to evaluate the
 cold-start performance of recommender systems.
 
-Shani et\. al.\ lists the following guidelines for general experimental
+Shani et\. al.\ \cite{Shani2011} lists the following guidelines for general experimental
 studies:
 
 \begin{itemize}
@@ -171,7 +171,11 @@ large datasets, even 3-Fold Cross Validation will be quite accurate, which for
 sparse datasets, one may wish to train as many examples as possible. A common
 choice is $K$ value between 5 and 10.
 
+%TODO - Advantages/Disadvantages
+
 \textbf{Bootstrapping}
+
+%TODO - Write about bootstrapping
 
 
 \subsubsection{Offline Evaluation Metrics}
@@ -253,7 +257,6 @@ values.
 
 \textbf{Coverage}
 
-%subsection
 The term coverage can refer to several distinct properties of the system. Most
 commonly, the term coverage refers to the proportion of items the
 recommendation system can recommend, also known as \emph{item-space coverage}.
@@ -263,12 +266,16 @@ interactions for which the system can recommend items, known as
 \emph{user-space coverage}. In many applications the recommender system may not
 provide recommendations for some users due to e.g.\\ low confidence in the
 accuracy of predictions for that user. In such cases one may prefer a
-recommender that can provide recommendations to a wider range of users.
+recommender that can provide recommendations to a wider range of users. However, an increase in coverage is only beneficial if the accuracy does not drop significantly.
+
+%TODO - Others? (Serendipity, Diversity...)
 
 \subsubsection{Evaluation using Implicit Feedback}
 
 Accuracy metrics not suited for implicit feedback datasets, as they require
 knowing which items are undesired by a user~\cite{Hu2008}.
+
+%TODO - What evaluation measures are suited for implicit feedback, and why are traditional evaluation measures such as RMSE, ... not as suitable when working with implicit feedback?
 
 \subsubsection{Evaluation of Cold-start Recommendations}
 
@@ -278,13 +285,12 @@ evaluating the cold-start system performance one is interested in measuring the
 system accuracy for these users and items.
 
 The evaluation metric used seem to depend on the type of feedback available.
-Most experiments carried out have used \emph{traditional} datasets such as
-MovieLens, EachMovie, Netflix among others. All these dataset contain explicit
-ratings, accuracy metrics such as MAE~\cite{Rashid2002, Rashid2008, Massa2004,
+Most experiments carried out have used \emph{traditional} explicit feedback datasets such as
+MovieLens, EachMovie, Netflix etc. Accuracy metrics such as MAE~\cite{Rashid2002, Rashid2008, Massa2004,
 Massa2007, Stern2009} and RMSE~\cite{Agarwal2009, Agarwal2010} are therefore
 the most used ones. In the experiments where binary rating data have been used
 Precision@N~\cite{Liu2011, Gantner2010}, ROC curves~\cite{Agarwal2009,
-Gantner2010, Schein2002} and AUC~\cite{Liu2011, Gantner2010} seems to be the
+Gantner2010, Schein2002} and Area Under Curve (AUC) \cite{Liu2011, Gantner2010} seems to be the
 preferred evaluation metrics.
 
 Another way to discriminate between different recommender techniques is
