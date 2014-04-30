@@ -190,7 +190,7 @@ popular metrics used for offline evaluation, a discussion of evaluation
 measures for implicit feedback, and a summary of the cold-start evaluation
 methodologies found in the literature.
 
-\textbf{Predictive Accuracy Metrics}
+\paragraph{Predictive Accuracy Metrics}
 
 Predictive accuracy metrics measure how close the predicted ratings are to the
 true user ratings. More formally, the system tries to predict ratings
@@ -199,32 +199,39 @@ true ratings are known. Traditionally, mean absolute error (MAE) has be used to
 evaluate the performance of collaborative-filtering algorithms, but other
 measures such as root mean squared error (RMSE) are also commonly used.
 
-\ExecuteMetaData[equations.tex]{testur}
+\textbf{Mean Absolute Error (MAE).}
+MAE measures how close the predictions are to the actual outcome.
 
-\begin{table}[H]
-    \centering
-    \begin{tabular}{l|l|l}
-    	\textbf{Metric}	& \textbf{Equation} & \textbf{About} \\ \hline
-    	RMSE 			& \parbox{6cm}{\equationRMSE}
-    	 & asdfasdf \\
-    \end{tabular}
-    \label{table:predictiveAccuracyMetrics}
-    \caption [Predictive Accuracy Metrics]{}
-\end{table}
+\begin{equation}
+    MAE = \frac{1}{n}\sum_{i=1}^{n}{|\hat{R_i}-R_i|}
+    \label{equation:mae}
+\end{equation}
+
+$R_i$ is the actual outcome and $hat{R_i}$ is the predicted value.
+As the name suggest, $MAE$ calculates the average absolute error.
 
 
-\textbf{Root-mean-square error (RMSE)}
+\textbf{Root Mean Squared Error (RMSE).}
 Often used to measure difference between a set of predicted values with a set of actual values.
 
 \equationRMSE
-
-
 
 How to calculate the $RMSE$ value is shown in~\ref{equation:rmse}.
 Here $y_t$ is the actual value and $\hat{y_t}$ is the estimated value.
 This approach is often used in evaluating recommender systems producing ratings for domains such as the movie domain.
 
-\parbox{6cm}{\equationMEA}
+\begin{table}[H]
+    \centering
+    \begin{tabular}{l|l|l}
+    	% \rowstyle{\bfseries}
+    	Metric	& Equation & About \\ \toprule
+    	MEA 			& \parbox{6cm}{\equationMEA} & safd \\	\hline
+    	RMSE 			& \parbox{6cm}{\equationRMSE} & asdf \\
+    \end{tabular}
+    \label{table:predictiveAccuracyMetrics}
+    \caption [Predictive Accuracy Metrics]{adsf}
+\end{table}
+
 
 \textbf{Measuring Usage Prediction}
 
@@ -237,15 +244,16 @@ will use. We then have four possible outcomes for the recommend and hidden
 items.
 
 \begin{table}
-\caption{•}
-\begin{tabular}{c c c}
-\toprule
-			&	Recommended		&	Not Recommended \\
-Used		&	True-Positive 	&	False-Negative	\\
-Not Used	&	False-Positive	&	True-Negative	\\
-\bottomrule
-\end{tabular}
-\label{table:usageprediction}
+	\centering
+	\begin{tabular}{l|l|l}
+	\toprule
+				&	Recommended		&	Not Recommended \\
+	Used		&	True-Positive 	&	False-Negative	\\
+	Not Used	&	False-Positive	&	True-Negative	\\
+	\bottomrule
+	\end{tabular}
+	\label{table:usageprediction}
+	\caption[]{•}
 \end{table}
 
 This model assumes that unused items would not have been used if they had been
@@ -574,15 +582,11 @@ The value of AP is between -1 and 1, where a score of 0 means that $list1$ can b
 $nDCG$ measures the graded relevance of the recommended item, the ranking quality or the usefulness of the recommended item based on its rank position.
 It is often used to measure the performance of web search recommendation systems.
 
-\begin{equation}
-	DCG_k = \sum_{i=1}^{k}{\frac{2^{rel_i}-1}{log_2(i+1)}}
-	\label{equation:dcg}
-\end{equation}
+\equationNDCG
 
-\begin{equation}
-	nDCG_k = \frac{DCG_k}{IDCG_k}
-	\label{equation:ndcg}
-\end{equation}
+\equationDCG
+
+asdf
 
 How to calculate the $nDCG$ value is shown in~\ref{equation:ndcg}.
 Where $k$ is the maximum amount of suggested items, and $rel_i$ is the graded relevance of the result at position $i$.

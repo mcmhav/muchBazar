@@ -8,6 +8,13 @@
 % Begin document
 \begin{document}
 
+%<*mae>
+\begin{equation}
+    MAE = \frac{1}{n}\sum_{i=1}^{n}{|\hat{R_i-R_i|}}
+    \label{equation:mae}
+\end{equation}
+%</mae>
+
 %<*rmse>
 \begin{equation}
     RMSE = \sqrt{\frac{\sum_{t=1}^{n}{(\hat{y_t} - y_t)^{2}}}{n}}
@@ -15,11 +22,18 @@
 \end{equation}
 %</rmse>
 
-%<*testur>
+%<*dcg>
 \begin{equation}
-    MAE = \frac{1}{n} \sum_{i=1}^{n}{|\hat{R_i-R_i|}}
-    \label{equation:mae}
+    DCG_k = \sum_{i=1}^{k}{\frac{2^{rel_i}-1}{log_2(i+1)}}
+    \label{equation:dcg}
 \end{equation}
-%</testur>
+%</dcg>
+
+%</ndcg>
+\begin{equation}
+    nDCG_k = \frac{DCG_k}{IDCG_k}
+    \label{equation:ndcg}
+\end{equation}
+%</ndcg>
 
 \end{document}
