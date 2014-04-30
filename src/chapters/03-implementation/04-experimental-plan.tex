@@ -9,23 +9,71 @@ In addition to evaluate the methods on the Sobazar dataset we want to make sure 
 
 Most public datasets contain explicit feedback
 
+Lack of public datasets containing user browsing history, purchases...
+
 How to select datasets:
+
 \begin{itemize}
-\item Size of dataset:
-\item Domain:
-\item Precence of features
+	\item Size of dataset: Preferable as close as possible to Sobazar (in 6 months)
+	\item Type of user feedback:
+	\item Domain: E-commerce datasets with purchase history would be most relevant.
+	\item Precence of features: To evaluate hybrid methods?
 \end{itemize} 
 
 
 %Most datasets contain explicit feedback
 %Size which is close to what we imagine the final system
-%E-commerce datasets with purchase history would be the most relevant... 
+
 
 \subsection{Dataset 1}
+
+Rossmann dataset?
+%General statistics and averages
+%Interesting findings/properties
+%Was cleaning neccesary?
+%How was the methods evaluated on the dataset?
+%	- x-fold cross validation
+
+
 \subsection{Dataset 2}
+
+Movielens/Million Song dataset?
+%General statistics and averages
+%Interesting findings/properties
+%Was cleaning neccesary?
+%How was the methods evaluated on the dataset?
+%	- x-fold cross validation
+
+
+
 \subsection{Sobazar Data}
 
+%Highlight limitations of the sobazar dataset for evaluation
+%Number of users
+%Number of items
+%Number of ratings
+%-> Implications for evaluation
+%How was the methods evaluated on the dataset?
+%	- x-fold cross validation
 
+\subsection{Summary}
+
+%Some fancy tables n stuff
+
+%TODO - What else is interesting to know? Rating scale, average number of ratings per user, number of cold start users...
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|l|l|l|l|l|}
+    \hline
+	Dataset		& 	Ratings & 	Users	& 	Items 	& 	Sparsity 	\\ \hline
+	Sobazar 	& 	16,453  & 	1,235	&	3,386	&	-			\\ \hline
+	Dataset 1 	& 	-  		& 	-		&	-		&	-			\\ \hline
+	Dataset 2 	& 	-  		& 	-		&	-		&	-			\\ \hline
+    \end{tabular}
+    \label{table:datasets}
+    \caption [Overview of the datasets used for evaluation]{Overview of the datasets used for evaluation}
+\end{table}
 
 
 \section{Simulating the cold-start problem}
