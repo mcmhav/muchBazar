@@ -16,3 +16,4 @@
 *.bbl
 *.blg
 *.fdb_latexmk
+src/pdf
