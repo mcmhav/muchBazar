@@ -2,7 +2,7 @@ all: build
 
 build:
 	mkdir -p pdf
-	texi2pdf --clean --output=pdf/thesis.pdf report.tex
+	pdflatex -output-directory=pdf -halt-on-error report.tex
 
 clean:
 	rm -rf pdf/ *.log
