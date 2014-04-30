@@ -88,11 +88,17 @@ sim(c, c') = \frac{\sum_{s \epsilon S_{cc'}} (u(c, s)-\bar{u_{c}})(u(c',s)-\bar{
 \label{equation:pearson}
 \end{equation}
 
-Where $u_{c}$ is the mean utility of user $c$. The Pearson Correlation Coefficient and other similarity measures such as consine based approaches are more commonly known user-based collaborative filtering.\linebreak[4]
+Where $u_{c}$ is the mean utility of user $c$. The Pearson Correlation Coefficient and other similarity measures such as consine based approaches are more commonly known user-based collaborative filtering.\linebreak[2]
 
 Item-based Top-N Recommendation methods calculates the similarity between items instead of users. In these approaches, the historical information is analyzed to identify the relations between items such that a purchase of another item (or set of items) often leads to the purchase of another item. These models are often used since they quickly can recommend a set of items, and have shown to produce recommendation results comparable or better than traditional user-based approaches \cite{Karypis2001}.
 
-The algorithm first computes the $k$ most similar items for each item according to the ratings given by users they both share. Items that often are rated similarly by users are considered more similar than items which share few similar ratings. Figure \ref{figure:itemsim} illustrates the process of finding the item-similarities.
+The algorithm first computes the $k$ most similar items for each item according to the ratings given by users they both share. Once the most similar items are found, the prediction is then computed by taking the weighted average of the target user's ratings on these similar items.
+
+\begin{equation}
+u(c,s) = \frac{\sum_{all similar items, S} (sim(s,S)u(c, S)}{\sum_{all similar items, S}(|s,S|)}
+\end{equation}
+
+Items that often are rated similarly by users are considered more similar than items which share few similar ratings. Figure \ref{figure:itemsim} illustrates the process of finding the item-similarities.
 
 \begin{figure}[H]
     \includegraphics[width=5in]{image/itemsim.png}
@@ -101,9 +107,13 @@ The algorithm first computes the $k$ most similar items for each item according 
     \label{figure:itemsim}
 \end{figure}
 
-%TODO - Add cosine similarity equation
+There are a number of ways of computing the similarity between items. E.g. by means of cosine-based similarity. In this case, two items are though of as two vectors in an $C$ dimensional user space. The similarity between the items is found by computing the cosine of the angle between the two vectors.
 
-Each user has a set of items $S_{c}$ previously rated by the user which we want to compute top-N recommendations for. First, we identify the set $C$ of candidate items recommended items by taking the union of the $k$ most similar items and removing each of the items in the set $S_{c}$ the user already has rated; then calculate the similarities between each item of the set $C$ and the set $S_{c}$, using only the $k$ most similar items for each item in $S_{c}$. The resulting set of items in $C$ are sorted in descending order of similarity and will be the recommended as the item-based Top-N list \cite{Karypis2001}.\linebreak[4]
+\begin{equation}
+sim(s',s) = cos(\vec{s'},\vec{s}) = \frac{\vec{s'} \cdot \vec{s}}{\|\vec{s'}\|^{2} * \|\vec{s}\|^{2}}
+\end{equation}
+
+The item similarities are then used to find the Top-N recommendations. Each user has a set of items $S_{c}$ previously rated by the user which we want to compute top-N recommendations for. First, we identify the set $C$ of candidate items recommended items by taking the union of the $k$ most similar items and removing each of the items in the set $S_{c}$ the user already has rated; then calculate the similarities between each item of the set $C$ and the set $S_{c}$, using only the $k$ most similar items for each item in $S_{c}$. The resulting set of items in $C$ are sorted in descending order of similarity and will be the recommended as the item-based Top-N list \cite{Karypis2001}.\newline
 
 \textbf{Model-based Methods}
 
@@ -232,8 +242,7 @@ Most commonly hybrid systems are built by combining collaborative and content-ba
 
 As the number of existing users and items blow up, traditional CF algorithms suffer serious scalability problems. The model building phase of \emph{Traditional} collaborative filtering methods have a complexity of O(MN) where $M$ is the number of users and $N$ is the number of items. For systems with millions of users and items, even a complexity of n is too large. Another fundamental issue is how to embed the core recommendation techniques in real operational systems and how to deal with massive and dynamic sets of data produced by the interactions of users with items. Recommender systems are expected in many cases to provide rapid recommendations online, it is therefore also important to consider how fast the system provides recommendations.
 
-Better scalabiltiy and improved accuracy make the item-item collaborative filtering approaches more favorable in many cases. The computational complexity of item-to-item based algorithms are up to two orders of magnitude faster than traditional user-based algorithms \cite{Deshpande2004}. Dimensionality reduction techniques such as SVD can deal with the scalability by providing more compact representations and quickly produce good recommendations. However, most dimensionalty reduction techniques must undergo expensive matrix factorization steps.\linebreak[4]
-
+Better scalabiltiy and improved accuracy make the item-item collaborative filtering approaches more favorable in many cases. The computational complexity of item-to-item based algorithms are up to two orders of magnitude faster than traditional user-based algorithms \cite{Deshpande2004}. Dimensionality reduction techniques such as SVD can deal with the scalability by providing more compact representations and quickly produce good recommendations. However, most dimensionalty reduction techniques must undergo expensive matrix factorization steps.\newline
 \textbf{Sparsity}
 
 In practice, many recommender systems deal with very large item collections. This means that the number of ratings obtained is usually very small compared to the number of ratings that it needs to predict. Efficient prediction of ratings from a small number of examples is therefore important. The \emph{reduced coverage} problem occurs when the number of users' rating may be very small compared to the number of items. This may lead to that the recommender is unable to provide recommendations for a large portion of the items. \emph{Neighbour transitivity} refers to the problem in which users with similar tastes may not be identified due to a lack of co-rated items, making collaborative filtering futile, since it relies on comparing users to predict unknown ratings. \linebreak[4]
@@ -685,7 +694,7 @@ Massa et. al. \cite{Massa2007} found trusted users to be good predictors. When l
 Requiring users to explicitly express trust, is not something users necessarily will frown upon. Services like Instagram, Facebook and many others offers a "follow" function to their users, filling their news feeds with content from the users which they have chosen to follow. For Sobazar we imagine that you e.g. could chose to follow people either because they have a good taste in clothes or that you simply are friends, and you want to keep up with what your friends are buying.
 
 %Scalability & Final Verdict
-Propagating trust is expensive. The trust propagation must be computed in addition addition to the user-user or item-item similarities, and it therefore scales worse than collaborative filtering methods. Good general model for sparsity and increasing robustness of recommender systems, with the downsides being scalability challenges and the added complexity to the system.\linebreak[4]
+Propagating trust is expensive. The trust propagation must be computed in addition addition to the user-user or item-item similarities, and it therefore scales worse than collaborative filtering methods. Good general model for sparsity and increasing robustness of recommender systems, with the downsides being scalability challenges and the added complexity to the system.\newline
 
 \textbf{Interview Process}
 
@@ -696,7 +705,7 @@ Rashid et. al. \cite{Rashid2008} got the best results using information theoreti
 Our rational behind including these articles is that we envision a simple "hot or not" tinder like interface to be used to present items to new users when the first log in to the system. And then ask new users that download the app to rate e.g. 10 items when first logging in. It is worth mentioning that the authors of these articles mainly worked on a solution to the cold-start new user problem. The user-effort dimension of their evaluation could also largely be ignored as they made a system for movie recommendations. The implications of this is that a user must have watched a movie, in order to rate it. This is not as important for the fashion domain, as taking a quick look at an item should be sufficient to like/dislike it, so we should give more weight to the accuracy of the system after the interview process than user effort. It is also worth noting that calculating entropy using implicit ratings is tricky, since the rating distribution does not range from dislike to like. We can therefore not find \emph{high-entropy} or \emph{controversial} items which users either tend to like or dislike, as we have no data about items users dislike \todo{Discussion on suitedness of implicit ratings for entropy calculations}. We are also currently constrained to unobtrusively learn user-profiles from the natural interactions of users with the system, meaning that we can not require the user to rate e.g. 10 items before we can start providing recommendations, as this functionality has not been implemented.
 
 %Scalability & Final Verdict
-The scalability of the approach is also fairly good. It requires another module in addition to collaborative filtering which is used in the non-personalized step until the user have rated a predetermined amount of items. When enough items have been rated the CF algorithm is used to produce recommendations. We really like this approach as it is simple and elegant. Given that a information theory approach is used this would be a good model for dealing with sparsity, as the number of ratings would sky-rocket in addition to having ratings for a large portion of the item collection (not only limited to the most popular items). The negative aspects of this approach is mainly limited to the fact that it requires active user involvement.\linebreak[4]
+The scalability of the approach is also fairly good. It requires another module in addition to collaborative filtering which is used in the non-personalized step until the user have rated a predetermined amount of items. When enough items have been rated the CF algorithm is used to produce recommendations. We really like this approach as it is simple and elegant. Given that a information theory approach is used this would be a good model for dealing with sparsity, as the number of ratings would sky-rocket in addition to having ratings for a large portion of the item collection (not only limited to the most popular items). The negative aspects of this approach is mainly limited to the fact that it requires active user involvement.\newline
 
 \textbf{Seed users}
 
@@ -711,42 +720,40 @@ Park et. al. \cite{Park2006} clearly demonstrated the robustness of their Naive 
 To incorporate filterbots in our system we would first have to define what filterbots we wound want to use. We could e.g. use a Brand-bot that calculates ratings of brands over all users. The rating of a brand is the average rating of the items of the given brand, which then is injected into the user-item matrix. It is worth noting that selecting what bots to add to the system and and coding them would require some engineering effort, and involve some testing to validate your bots.
 
 %TODO - Scalability & Final Verdict
-Park et. al. \cite{Park2006} claim that the added computational complexity of adding seven global bots is almost negligible. The downside of this approach is the additional engineering effort required and the fact that it's performance is not on pair with the more sophisticated latent factor methods.\linebreak[4]
+Park et. al. \cite{Park2006} claim that the added computational complexity of adding seven global bots is almost negligible. The downside of this approach is the additional engineering effort required and the fact that it's performance is not on pair with the more sophisticated latent factor methods.\newline
 
 \textbf{Hybrid recommenders}
 
 %TODO - Summarize results
 
-Latent factor models are currently the main paradigm within the recommender system field and are currently considered the state-of-the-art recommendation methods. 
+Latent factor models are currently the main paradigm within the recommender system field and are currently considered the state-of-the-art recommendation methods. The hybrid methods achieved state-of-the-art performance as well as having good fallback methods based on user and item features to solve the cold-start problem.
 
 %TODO - How can we implement this in our system?
-To implement these recommenders we would first have to select and extract user-features from Facebook and item-features from our item database. 
+To implement these recommenders we would first have to select and extract user-features from Facebook and item-features from our item database. Another concern of ours is that our dataset is currently to small for latent factor methods, and is therefore likely to produce sub-optimal results.
 
-%TODO - Scalability
+%TODO - Scalability & Final Verdict
 %	Which of the models are online?
-As most latent factor models, model building is expensive. Matchbox and RLFM have to option of being trained online, which should further could increase the cold-start performance, as the model always will be up to date. Latent factor models are also known to provide quick recommendations.
-
-%TODO - Final Verdict
-These methods combine state-of-the-art performance, elegant solutions to the cold-start problem incorporating meta-information as fallback in addition to having the option to be incrementally trained.\linebreak[4]
+As most latent factor models, model building is expensive. Matchbox and RLFM have to option of being trained online, which should further could increase the cold-start performance, as the model always will be up to date. Latent factor models are also known to provide quick recommendations. These methods combine state-of-the-art performance, elegant solutions to the cold-start problem incorporating meta-information as fallback in addition to having the option to be incrementally trained.\newline
 
 
 \textbf{Summary}
 
 %TODO - Summary of all the methods
-\todo{How do we compare the methods: Feedback from Helge and Heri appriciated}
+\todo{How do we compare the methods: Feedback from Helge and Heri appriciated. }
 
 
 It is hard to compare the performance of the different methods as they have experimented with different datasets and evaluation measures...
 
+\todo{What are the most important 'attributes' to consider?}
 I would also argue that having the option to incrementally update the model is an important feature to further improve cold-start performance. As having a model that is already updated will instantly incorporate data about new users and items.
 
 Compare the models based on the following properties:
 
 \begin{itemize}
 	\item Accuracy: How accurate is the method...
-	\item Cold-start performance: How well does it handle the different cold-start problems. Accuracy for new users...
-	\item Scalability: How well does the method scale
-	\item User-effort: Required user effort
+	\item Cold-start performance: How well does it handle the cold-start related problems?
+	\item Scalability: How well does the method scale for larger datasets
+	\item User-effort: How much user involvement is required?
 \end{itemize}
 
 \begin{table}[H]
@@ -765,6 +772,7 @@ Compare the models based on the following properties:
 \end{table}
 
 We propose to do this...
+For these reasons...
 
 \subsection{Fashion Recommendation}
 
