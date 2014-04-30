@@ -11,41 +11,73 @@
 
 \subsection{Some Awesome Algorithms (Build up with project progress)}
 
-%TODO - Add simple descriptions of the algorithms used in the experiments
+This section aims to describe the algorithms which will be evaluated in our experiment.
 
-Given enough data, item-based CF methods often performs as well or better than
-almost any other recommendation method. However, in cold-start situations where
-a user, an item, or the entire system is new, simple non-personalized
-recommendations often fare better...
+\subsubsection{Most-popular Recommender}
 
-User based - new user
-Non personalized approaches
-    - most popular
-    - highest rated
-Other alternatives
-    - use demographic information
+We have developed a simple most-popular recommender that uses result dithering to \emph{randomize} the recommendations to the users. One could imagine to final system to leverage multiple recommendation techniques. When users are new to the system they are recommended the most popular items, until enough data is collected to provide personalized recommendations. One could imagine multiple categories of most popular recommendations: Most viewed, most wanted, most bought or a combination of all.
 
-Item based - new item
-    - most popular
-    - highest rated
-    - use content information
+Dithering adds \emph{noise} to the algorithm, which permutes the results in such a way that the top few results have a high probability of remaining on the top spots, but as one goes deeper into the results, the degree of mixing increases dramatically. It is important to note that dithering is \emph{guaranteed} to make off-line performance worse, but is likely to make the actual performance better. We have experimented with two different methods of dithering:
 
-When you enter a clothing store you are normally confronted with the following suggestions:
-    - New in/Seasonal highlights
-    - Special offer/discounts
-    - Bestsellers
-    - Are you looking for something in particular?
+\begin{itemize}
+\item Score = log2(rank) - runif(x, y)
+\item Score = log2(rank) - x*rexp(y)
+\end{itemize}
 
-Personalized recommendations, what assumptions can be made?
-\#1 - You are like your friends
-\#2 - You are like people who do similar things that you do
-\#3 - You like things that are similar to things you already like
-\#4 - You are influenced by experts and the opinions of others
+Given $x=8$ and $y=2$ alternative one generated the following permutations of the original ranking in 10 runs:
 
+\begin{enumerate}
+	\item 8, 3, 24, 20, 1, 19, 22, 15, 42, 36
+	\item 2, 0, 1, 32, 20, 3, 35, 34, 43, 10
+	\item 7, 1, 3, 12, 2, 25, 0, 9, 24, 27
+	\item 0, 4, 3, 5, 7, 16, 26, 22, 13, 33
+	\item 0, 10, 8, 1, 15, 5, 30, 17, 11, 35
+	\item 7, 4, 6, 12, 2, 1, 19, 0, 27, 9
+	\item 1, 5, 0, 2, 9, 3, 20, 12, 4, 31
+	\item 0, 1, 2, 5, 39, 4, 15, 41, 10, 22
+	\item 4, 6, 0, 3, 1, 29, 36, 31, 35, 20
+	\item 5, 1, 0, 8, 3, 18, 25, 24, 2, 28
+\end{enumerate}
+
+Given $x=3.0$ and $y=2.5$ alternative two generates the following permutations of the original most popular ranking in 10 runs:
+
+\begin{enumerate}
+	\item 2, 4, 0, 35, 3, 1, 15, 72, 9, 5
+	\item 0, 10, 11, 17, 1, 3, 8, 41, 15, 5
+	\item 44, 1, 0, 15, 9, 4, 5, 59, 26, 2
+	\item 0, 98, 1, 4, 2, 41, 8, 26, 11, 94
+	\item 0, 6, 1, 2, 70, 4, 19, 14, 8, 3
+	\item 2, 5, 0, 16, 15, 18, 1, 3, 32, 6
+	\item 2, 65, 4, 0, 3, 45, 8, 1, 48, 36
+	\item 3, 49, 5, 0, 2, 82, 8, 77, 11, 4
+	\item 0, 1, 21, 8, 4, 85, 2, 6, 47, 3
+	\item 0, 1, 21, 70, 11, 20, 2, 10, 9, 3
+\end{enumerate}
+
+Here 0 is the most popular item before the permutation. The results show that alternative two has a higher degree of mixing than alternative one, as the added noise is larger than alternative one. The values of $x$ and $y$ can be modified to achieve the desired degree/level/amount of mixing.
+
+\subsubsection{Item-Average}
+
+Item average is a simple recommender that always estimates the preference for an item to be the average of all known preference values for that item. No information about users is taken into account. This recommender can therefore be considered a \emph{highest rated} recommender, as it is likely to recommend the highest rated items. The following equation shows the rating prediction procedure:
+
+\begin{equation}
+\label{equation:itemaverageratingprediction}
+u(c,s) = k * \sum_{c' \epsilon C} u(c',s)
+\end{equation}
+
+Where $k$ again is a normalization factor ($1/|C|$). This is somewhat similar to collaborative filtering, except for the fact that the user similarity $sim(c, c')$ has been taken out of the equation. It is also worth mentioning that this method is not suited for binary ratings, as the result is likely to be very random, and should therefore not be used without item ratings to average.
+
+\subsubsection{User-based Collaborative Filtering}
+
+Recommend items by finding similar users. This is often harder to scale because of the dynamic nature of users. The pearson correlation coefficient is used to calculate the user similarities. For a more in depth description of user-based collaborative filtering see Section \ref{subsec:cf}.
+
+\subsubsection{Item-based Collaborative Filtering}
+
+Calculate similarity between items and make recommendations. Items usually don't change much, so this often can be computed offline. For a more in depth description of item-based collaborative filtering see Section \ref{subsec:cf}.
 
 \subsubsection{ALS-WR}
 
-Alternating-least-squares with weighted-$\lambda$-regularization (ALS-WR) was designed fro the Netflix Prize Competition \cite{Netflix}, where it obtained an RMSE score of 0.8975, which was on of the best results based on a pure method.
+Alternating-least-squares with weighted-$\lambda$-regularization (ALS-WR) was designed fro the Netflix Prize Competition \cite{Netflix}, where it obtained an RMSE score of 0.8975, which was one of the best results based on a pure method.
 
 Alternating-least-squares is a method to solve Equation \ref{equation:minimize}. Since both $q_{s}$ and $p_{c}$ are unknown, the equation is not convex. However if we fix one of the unknowns, the optimization problem becomes quadratic and can be solved optimally. The ALS technique rotate between fixing the $q_{s}$'s and fixing the $p_{c}$'s. When all the $p_{c}$'s are fixed, the system recomputes the $q_{s}$'s by solving a least-squares problem, and vica versa. This ensures that each step decreases the error until convergence. What makes ALS favorable over the simpler and faster stochastic gradient descent is two things. ALS can be parallelized since the system computes the $q_{s}$'s independently of the other item factors, the same can also be applied to the user factors. The second case if for systems centered around implicit data. Because the training set cannot be considered sparse, looping over each single training case as gradient descent would not be practical, but ALS can efficiently handle such cases \cite{Hu2008}.
 
@@ -68,6 +100,12 @@ f(P, Q) = \sum_{(c,s)\epsilon C} (u(c,s) - p^{T}_{c}q_{s})^{2} + \lambda (\sum_{
 \end{equation}
 
 where $n_{p_{c}}$ and $n_{q_{s}}$ denote the number of ratings of user $c$ and item $s$ respectively. $S_{c}$ denote the set of items $s$ that user $c$ rated, then $n_{p_{c}}$ is the cardinality of $S_{c}$; similarly $C_{s}$ denotes the set of users who rated item $s$, and $n_{q_{s}}$ is the cardinality of $I_{s}$. A given column of P, $p_{c}$ is found by solving a regularized linear least squares problem involving the known ratings of user $c$, and the feature vectors $q_{s}$ of the items that user $c$ has rated. Similarly, we can compute individual $q_{s}$'s via a regularized linear least squares solution, using the feature vectors of users who rated item $j$, and their ratings of it.
+
+%TODO - Find some fancy cold-start solution methods (Preferably 2-3)
+%TODO - Which of these do we include in our experiments?
+%\subsubsection{Filterbots} ?
+%\subsubsection{Regression-based latent factor model} ?
+%\subsubsection{Matchbox} ?
 
 
 \subsubsection{The Good}
