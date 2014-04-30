@@ -55,7 +55,7 @@ experimental studies:
 		applications.
 \end{itemize}
 
-
+0
 \subsection{Offline Evaluation}
 
 Offline experiments are performed using pre-collected dataset\(s\) and a protocol
@@ -94,6 +94,9 @@ popular datasets containing additional information:
 	trust-network, which specifices who-trust-whom in a social network based on
 	customer reviews for the website Epinions.com
 
+\item The Million Song Dataset~\cite{Bertin-Mahieux2011}: The million song
+	dataset is a implicit dataset. This data also includes information on the users,
+	and metadata about the songs
 \end{itemize}
 
 \textbf{Explicit-feedback}
@@ -335,8 +338,38 @@ The goal is to maximize the recall while minimizing the fallout.
 \end{equation}
 From~\ref{equation:tpr} and~\ref{equation:fpr}, $P_0(T)$ and $P_1(T)$ is the probability of $T$ not belonging to the other class.
 The $ROC$ curve is a plotting of the recall rate versus the fallout rate.
+\begin{equation}
+    AUROC = \int_\infty^{-\infty} TPR(T)P_0(T)dTdT
+    \label{equation:auroc}
+\end{equation}
+$AUROC$ is the probability that the recommender system will rank positive ranks higher than negative ranks.
 
 
+\subparagraph{Limitations} % (fold)
+\label{subp:limitations}
+As mentioned by Powers et al.~\cite{powers2007}, Recall, Precision, F-Measure and Rand Accuracy have a Bias.
+Another drawback or limitation with the measuring of user predictions is that it does not take into account the ranking of the items.
+To handle this, rank based metrics can be used.
+% subparagraph limitations (end)
+
+\paragraph{Rank Based Metrics}
+Rank accuracy metrics measure the ability of a recommendation method to produce
+a recommended ordering of items that matches how the user would have ordered
+the same items. Shani et.\ al.~\cite{Shani2011} lists two different approaches
+for measuring the ranking accuracy: Try determining the correct order of a set
+of items for each user and measure how close a system comes to this correct
+order, or we can attempt to measure the utility of the system's ranking to a
+user.
+
+Herlocker et.\ al.~\cite{Herlocker2004} argue that rank accuracy metrics may be
+overly sensitive for domains where the user just wants an item that is `good
+enough' (binary preferences) since the user won't be concerned about the
+ordering of items beyond the binary classification. These metrics are therefore
+most suitable to evaluate algorithms that are used to present ranked lists to
+the user in domains where the user preferences are expressed using numerical
+values.
+
+% TODO MPR and MAP maybe in ranking? not directly ranking though
 \subparagraph{Mean Percentage Ranking (MPR)} % (fold)
 \label{subp:mean_percentage_ranking_}
 This measure is a recall-oriented metric.
@@ -376,6 +409,18 @@ From \ref{equation:apn}, $P(K)$ is the precision at $k$ in the item list, $n$ is
 \ref{equation:map} calculates the mean of all the values from \ref{equation:apn}.
 % subparagraph mean_average_precision_map_ (end)
 
+\subparagraph{AP correlation} % (fold)
+\label{subp:ap_correlation}
+$AP correlation$~\cite{Yilmaz:2008:NRC:1390334.1390435} measures the overall precision and is a variant of $Kendall's tau$.
+It counts the amount of items correctly placed in a ordered predicted rank list $list1$ and a list of the actual rank ordering of the preferences of the user $list2$.
+\begin{equation}
+	AP = \frac{2}{N - 1} * \sum_{i=2}^{N}{(\frac{C(i)}{i - 1})} - 1
+	\label{equation:ap}
+\end{equation}
+How to calculate the $AP correlation$ value is shown in ~\ref{equation:ap}.
+$C(i)$ is the number of items ranked correctly above rank $i$.
+The value of AP is between -1 and 1, where a score of 0 means that $list1$ can be considered a randomly generated list and 1 is a perfect match with the actual list $list2$.
+% subparagraph ap_correlation (end)
 
 \subparagraph{Normalized Discounted Cumulative Gain (nDCG)} % (fold)
 \label{subp:normalized_discounted_cumulative_gain_}
@@ -398,43 +443,6 @@ $IDCG_k$, from~\ref{equation:ndcg}, is the ideal $DCG_k$ value.
 This is the result list sorted on relevance.
 % subparagraph normalized_discounted_cumulative_gain_ (end)
 
-\subparagraph{Limitations} % (fold)
-\label{subp:limitations}
-As mentioned by Powers et al.~\cite{powers2007}, Recall, Precision, F-Measure and Rand Accuracy have Bias.asdfsdfsdf
-
-% subparagraph limitations (end)
-
-\paragraph{Rank Based Metrics}
-Rank accuracy metrics measure the ability of a recommendation method to produce
-a recommended ordering of items that matches how the user would have ordered
-the same items. Shani et.\ al.~\cite{Shani2011} lists two different appraoches
-for measuring the ranking accuracy: Try determining the correct order of a set
-of items for each user and measure how close a system comes to this correct
-order, or we can attempt to measure the utility of the system's ranking to a
-user.
-
-Herlocker et.\ al.~\cite{Herlocker2004} argue that rank accuracy metrics may be
-overly sensitive for domains where the user just wants an item that is `good
-enough' (binary preferences) since the user won't be concerned about the
-ordering of items beyond the binary classification. These metrics are therefore
-most suitable to evaluate algorithms that are used to present ranked lists to
-the user in domains where the user preferences are expressed using numerical
-values.
-
-\subparagraph{AP correlation} % (fold)
-\label{subp:ap_correlation}
-$AP correlation$~\cite{Yilmaz:2008:NRC:1390334.1390435} measures the overall precision and is a variant of $Kendall's tau$.
-It counts the amount of items correctly placed in a ordered predicted rank list $list1$ and a list of the actual rank ordering of the preferences of the user $list2$.
-
-\begin{equation}
-	AP = \frac{2}{N - 1} * \sum_{i=2}^{N}{(\frac{C(i)}{i - 1})} - 1
-	\label{equation:ap}
-\end{equation}
-
-How to calculate the $AP correlation$ value is shown in ~\ref{equation:ap}.
-$C(i)$ is the number of items ranked correctly above rank $i$.
-The value of AP is between -1 and 1, where a score of 0 means that $list1$ can be considered a randomly generated list and 1 is a perfect match with the actual list $list2$.
-% subparagraph ap_correlation (end)
 
 \paragraph{Beyond Accuracy}
 There is an emerging understanding that good recommendations accuracy alone does not give the users of the recommender system an effective and satisfying experience \cite{Herlocker2004}. The following \emph{measures} attempts to assess a recommender systems usefulness beyond being able to provide accurate recommendations to the users.
@@ -443,7 +451,7 @@ There is an emerging understanding that good recommendations accuracy alone does
 The term coverage can refer to several distinct properties of the system. Most
 commonly, the term coverage refers to the proportion of items the
 recommendation system can recommend, also known as \emph{item-space coverage}.
-The simplest measure of catalogue coverage is the percentage of all items that
+The simplest measure of catalog coverage is the percentage of all items that
 can ever be recommended. Coverage can also be the proportion of users
 interactions for which the system can recommend items, known as
 \emph{user-space coverage}. In many applications the recommender system may not
@@ -600,8 +608,31 @@ been made. A high CTR therefore indicates that your system is doing well.
 CTR = \frac{Clicks}{Recommendations}
 \end{equation}
 
-\subsection{What To Use}
 
+\subsubsection{User-Centric Evaluation}
+User-centric evaluation focuses on the perceived quality of the recommendation system~\cite{Pu:2011:UEF:2043932.2043962,Knijnenburg:2011:PPS:2043932.2043993}.
+To gather this kind of information, user feedback is required.
+User-centric evaluation is meant to handle the short comings of the offline evaluation metrics, such as predictive accuracy metrics.
+User-centric evaluation can make evaluations on items which the user has not yet show interest in.
+This allows user-centric evaluation to make evaluations on information about the system, such as the perceived quality and novelty of the recommendation system.
+When the user feedback has been gathered the data must be analyzed.
+
+\paragraph{Perceived quality}
+To gather the perceived quality the system must ask the user to examine the recommended item, and give feedback regarding the their actual interest in the recommended item.
+For the feedback from the user to be as complete as possible, the system must supply the user with the reason to why the item was suggested, and the metadata of the item.
+When the user has this overview of the item, the user's feedback regarding the item can produce some quality measure.
+One  way of having the user to give this feedback is to re-rate the recommended item on a similar scale as the item was rated.
+A rating scale from 1 to 5 is often used for both~\cite{Schafer:1999:RSE:336992.337035}.
+
+\paragraph{Novelty}
+Novelty is the the degree of new and interesting items recommended for the user.
+To gather this data, the system has to ask the user for feedback.
+The novelty together with perceived quality allows the system to make informed decisions about the ratio of new items to recommend for the user.
+The novelty is expected to change over time, some times the user would like to receive recommendation on new items, and other times recommendations closer to the user's preferences.
+For the system to be able to detect these changes in preferences, and acting accordingly would be beneficial in regards of the user's satisfaction.
+
+
+\subsection{What To Use}
 The main idea behind a recommendation system is to produce a set of items which are of interest to the user.
 For the system to be successful, this sets of items needs quality.
 But what needs to be considered when determining the quality of the recommendations?
@@ -661,17 +692,3 @@ Since the data at hand is mainly implicit feedback and this data is sparse, some
 	\item Not easy to gather reliable information about undesired items trough implicit feedback
 \end{itemize}
 
-
-\subsubsection{System-centric}
-System-centric evaluation methods measures the accuracy of the recommendation system.
-
-
-\textbf{MRR}
-\textbf{..}
-
-
-\subsubsection{User-Centric Evaluation}
-User-centric evaluation focuses on the perceived quality of the recommendation system.
-
-\cite{Pu:2011:UEF:2043932.2043962}
-\cite{Knijnenburg:2011:PPS:2043932.2043993}
