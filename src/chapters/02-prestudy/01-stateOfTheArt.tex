@@ -1075,7 +1075,7 @@ Another naive approach is to go in the opposite direction.
 Viewing all missing values as unknown, thereby only utilizing the known values when recommending, the predictions on the unknown values will only be positive.
 The data in an OCCF problem is also usually very sparse, therefore using only the positive examples will in many cases lead to an incomplete view of the data, and quality reduced recommendations.
 
-\textbf{Weighted low rank approximation. % \todo{cite}}
+\textbf{Weighted low rank approximation.} % \todo{cite}}
 The idea behind this approach is to distribute different weights too the unknown values.
 More specifically, given two matrices, one rating matrix $R = SxC$ % \todo{0 or 1} where $S$ is a list of $m$ items, $S = {s_{1},...s_{m}}$ and $C$ is a list of $n$ users, $C = {c_{1}, ... c_{n}}$ and a corresponding weight matrix $W$% \todo{between 0 and 1} where $S$ is a list of $m$ items, $S = {s_{1},...s_{m}}$ and $CWz$ is a list of $n$ users, $C = {c_{1}, ... c_{n}}$.
 With these two matrices, weighted low rank approximation is meant to find a low rank matrix $X$, which minimizes the objective of a weighted Frobenius loss function. % \todo{reread}
@@ -1108,7 +1108,7 @@ This weight is between 0 and 1.
 % \todo{maybe explain the schemes better}
 % \todo{add cite}
 
-\textbf{Negative example sampling % \todo{cite}.}
+\textbf{Negative example sampling }% \todo{cite}.}
 In many cases the missing values are in fact negative values.
 This approach will i most cases lead to a large rating matrix, and therefore high computational costs.
 Therefore, instead of using all the ratings in the ratings matrix $R$, only all the actual positive values are selected.
@@ -1118,13 +1118,13 @@ This subset is based on a sampling probability matrix $P$.
 There are different sampling schemes.
 Using the same schemes as from the wighting scheme from weighted low rank approximation.
 
-\textbf{Em algorithms to predict negative examples % \todo{ref}.}
+\textbf{Em algorithms to predict negative examples} % \todo{ref}.}
 % \todo{check out the approaches}
 PEBL: positive example based learning for web page classification using SVM
 Building text classifiers using positive and unlabeled examples
 Presence-only data and the EM algorithm
 
-\textbf{Low-density non-negative matrix factorization (ldNMF).~% \todo{cite}}
+\textbf{Low-density non-negative matrix factorization (ldNMF).}~% \todo{cite}}
 arg min
 J W, H, {y ij } (i,j)∈U =
 W ≥0,H≥0
@@ -1150,7 +1150,7 @@ $V$ is a loss function (squared loss or generalized KL-divergence).
 $C$ is the entry specific costs.
 γ ≥ 0 and $λ$ tradeoff the regularizers againts the fata-fit terms.
 
-\textbf{Group Bayesian personalized ranking (GBPR).~% \todo{cite}}
+\textbf{Group Bayesian personalized ranking (GBPR).}~% \todo{cite}}
 Utilizing rich user interaction.
 Group preference is the preference score of a group of user on an item. % \todo{equation}
 GBPR assumes that the group preference is stronger than the observed user preference.
@@ -1163,5 +1163,5 @@ r Gui > r ˆ uj )[1 − P r(ˆ
 r uj > r ˆ Gui )], (3)
 equation.
 
-\textbf{Incorporating Rich User Information. % \todo{cite}}
+\textbf{Incorporating Rich User Information. }% \todo{cite}}
 
