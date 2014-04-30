@@ -4,6 +4,7 @@
 \usepackage[section] {placeins}
 \usepackage{amsmath} % math symbols
 \usepackage{booktabs} % commands to better structure tables
+\usepackage[british]{babel} % break words when going over a line.
 \usepackage{caption}
 % \usepackage{cite} % we want to cite our bibliography
 \usepackage{enumerate} % we want lists.
@@ -11,7 +12,8 @@
 \usepackage{fancyhdr}
 \usepackage{fancyvrb} % for fancy verbatims and centering them
 \usepackage{float} % for placing figures/tables at the specified place in text with [H]
-\usepackage[headings]{fullpage} % wider
+%\usepackage[headings]{fullpage} % wider
+\usepackage[top=2in, bottom=1.5in, left=1in, right=2in]{geometry}
 \usepackage{graphicx} % in order to insert images
 \usepackage[linkcolor={blue},citecolor={blue},urlcolor={red}]{hyperref}
 \usepackage{listings}
@@ -20,7 +22,7 @@
 \usepackage{pgfplots} % in order to create nice tikz plots
 \usepackage{tablefootnote} % for handling footnote in tables
 \usepackage{tabularx}
-\usepackage{todonotes} % todo boxes
+%\usepackage{todonotes} % todo boxes
 \usepackage{soul}
 \usepackage{verbatim} % Enable verbatim text for code etc.
 \usepackage{pbox}     % Can be used in tables to have multiple lines in one box
@@ -28,6 +30,8 @@
 \usepackage{amssymb}
 %\usepackage[dvipsnames]{xcolor}
 
+\pagestyle{headings} % Footer is blank, header displays information according
+% to document class (e.g., section name) and page number top right.
 
 % Package configutations
 \newcommand{\notimplies}{\mathrel{{\ooalign{\hidewidth$\not\phantom{=}$\hidewidth\cr$\implies$}}}}

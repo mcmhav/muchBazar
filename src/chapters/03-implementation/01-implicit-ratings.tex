@@ -8,6 +8,7 @@ methods for generating (implicit) ratings based on these logs we can create
 common recommender systems models and recommend items without the user actively
 taking part of the process.
 
+\ref{levels-frequency}
 \subsection{Levels of frequency, with global popularity}
 
 Considering the weaknesses presented in Section~\ref{levels-frequency}, namely
@@ -15,8 +16,8 @@ choosing good weights and only using a small percentage of the scale between
 0-100. Further, the method presented does not differentiate between active and
 less active users, thus ignoring the entropy once the maximal level is reached.
 Instead we extend the method by considering the global popularity of each item,
-so that the user that.. \todo{Finish the subsection about improving leveled
-freq}
+so that the user that.. % \todo{Finish the subsection about improving leveled
+% freq}
 
 \subsection{Introduction to the sigmoid-function}
 
@@ -45,23 +46,88 @@ is a mathematical function having an "S" shape and a common special case of the
 more general sigmoid-function. In its most simplest case the logistic function
 is defined as:
 
-\begin{figure}[h!]
-  \center
-  \begin{tabular}{m{5cm}c}
-    \toprule
-    \begin{equation*}
-      f(x) = \frac{1}{1+\exp^{-x}}
-    \end{equation*}
-  &
-    \begin{tikzpicture}
-      \begin{axis}[width=190pt,axis x line=middle, axis y line=center, tick align=outside]
-        \addplot+[mark=none,smooth] (\x,{sin(\x r)});
-      \end{axis}
-    \end{tikzpicture}
-  \end{tabular}
-\end{figure}
+% Vertical alignment of equation and plot.
+\noindent\begin{minipage}{.45\textwidth}
+  \centering
+  \begin{tikzpicture}
+    \begin{axis}
+    \addplot[black,xlabel=$x$,ylabel=$f(x)$] {1/(1+exp(-x))};
+    \end{axis}
+  \end{tikzpicture}
+\end{minipage}
+\begin{minipage}{.45\textwidth}
+\begin{align}
+  \label{logistic-function}
+  f(x) = \frac{1}{1+\exp^{-x}}
+\end{align}
+\end{minipage}
+
+Here the value of $f(x)$ is asymptotically limited between 0 and 1, dependent
+on the value of $x$. The steepest point of the curve happens when $x=0$. By
+adjusting the exponent of $e^(-x)$ we can skew the curve in order to map to our
+data, giving us a \textit{function of relevancy} ranging from an item being
+very relevant ($f(x)=0$) and not relevant ($f(x)=1$).
+
+By adding two variables to the logistic function we can fine tune both the
+steepness and range of $f(x)$. Hence we adjust Equation~\ref{logistic-function}
+to include $s$, the steepness coefficient, and $r$, the shift coefficient. By
+default these are $1$ and $0$ respectively, but by adjusting $s$ closer to 0 we
+decrease the steepness, creating a more gradual curve. Setting the $r$ to a
+larger number we shift the steepest point of the curve to $x=r$, hence if we
+set $r$ to $20$, the steepest point (largest acceleration) in our curve would
+be located when $x=20$.
 
 \subsection{Considering number of days since event}
+
+We are considering the following event log for user $u$ on product $p$, where
+our goal is to give a implicit rating based on different event types and the
+number of days between events.
+
+\begin{table}[h!]
+  \begin{tabular}{p{4cm}m{3cm}}
+    \toprule
+    Number of days since most recent event & Unique event types \\
+    \midrule
+    5 & 1,2,3 \\
+    10 & 1 \\
+    15 & 1,2 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+As discussed in Section~\ref{implicit-feedback} and
+Section~\ref{levels-frequency} we will use levels of frequency to order or
+event types by scores, or rather importance. We can imagine, for the purpose of
+this example that events of type 1 can have scores ranging from 20 to 60,
+events of type 2 from 60 to 80 and events of type 3 from 80 to 100. As
+discussed earlier, the way we assign these scores is at the moment fairly
+naive, some results using various schemes are given in Section~\ref{}.
+\marginpar{\textbf{todo}: do evaluation on different schemes}
+
+By setting the shift coefficient $r$ to $14.0$, and the steepness coefficient
+$s$ to $0.4$, we get the following logistic function:
+
+\begin{figure}[h!]
+  \centering
+  \begin{tikzpicture}
+    \begin{axis}[
+      ymin=0,ymax=1,
+      xmin=0,xmax=30,
+      xlabel=Number of days since most recent event for user $u$,
+      ylabel=Penalization $f(x)$,
+      extra x ticks={5,10,15},
+      extra tick style={grid=major}
+    ]
+    \addplot[
+    black,
+    xlabel=$x$,
+    ylabel=$f(x)$,
+    domain=0:30]
+    {1/(1+exp(-0.4*(x-15)))};
+    \end{axis}
+  \end{tikzpicture}
+\end{figure}
+
 
 \subsection{Considering ordering of events}
 

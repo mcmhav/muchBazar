@@ -19,7 +19,7 @@
 %Helge: Poenget er at å rate i sobazar koster penger, mens det er "gratis" hos netflix
 
 Explicit feedback is present in many of the largest recommender systems today
-and hence, is extensively researched.\todo{Ref.} The user is commonly asked to
+and hence, is extensively researched.% \todo{Ref.} The user is commonly asked to
 rate item $i$ on a Likert scale from $1$ to $k$, ranging from strongly
 disagree to strongly agree with an item. Its advantages are, among others the
 ability to get precise feedback from the user and capturing both positive and
@@ -29,7 +29,7 @@ collecting ratings: the method requires the user to spend time rating items and
 the amount of feedback is often scarce, creating sparse data sets. Further,
 explicit ratings are often subject to inconsistencies known as natural
 noise~\cite{amatriain2009like} and users might also be pressed to report
-different preferences due to peer of social pressure \todo{ref}. The fact that we are
+different preferences due to peer of social pressure % \todo{ref}. The fact that we are
 introducing a user overhead, makes it difficult to have a complete view on the
 user preferences~\cite{Jawaheer2010}.
 
@@ -45,7 +45,7 @@ mind.
 The following table, partly inspired by Hu et.\ al.~\cite{Hu2008}, identifies
 the different characteristics in implicit and explicit ratings:
 
-\todo{Helge: Maybe best in plain text?}
+% \todo{Helge: Maybe best in plain text?}
 \begin{table}[H]
     \begin{tabular}{l p{6cm} p{6cm}}
     \toprule
@@ -167,7 +167,7 @@ triggered the \textit{event type 3} 10 times more often than another user, as
 long as both had reached the highest score of 30.
 
 Improvements to this model are presented in Section~\ref{design}
-\todo{ref the correct section}
+% \todo{ref the correct section}
 
 \subsubsection{Regression analysis}
 
@@ -290,9 +290,9 @@ regression analysis not suitable for domains where the relation between
 implicit and explicit feedback are not linear nor symmetric, e.g.\ a purchase on
 an item does not imply many clicks on the item, by the same user – whilst the
 probability of the opposite is larger. See Section~\ref{} for a larger
-discussion surrounding this topic. \todo{link to correct section}
+discussion surrounding this topic. % \todo{link to correct section}
 
-\todo{Explain how number between 1 and 3 was given}
+% \todo{Explain how number between 1 and 3 was given}
 
 \subsubsection{Relative preferences using buying frequency}
 
@@ -305,7 +305,7 @@ AP\@:
   AP(u,i) = \ln(\frac{trans(u,i)}{\sum_{e \in E}{trans(u, e)}} + 1)
 \end{equation}
 
-\todo{Helge: E=?, hvilke sett er det}
+% \todo{Helge: E=?, hvilke sett er det}
 
 where $trans(u,i)$ is the number of transactions for user $u$ on item $i$.
 However, this absolute preference only takes into account the frequency of
@@ -326,7 +326,7 @@ multiplying with $k$:
   ImplicitRating(u,i) = \lceil k * RP(u,i) \rceil
 \end{equation}
 
-\todo{Explain a bit about Sequential pattern analysis}
+% \todo{Explain a bit about Sequential pattern analysis}
 
 \subsection{Challenges and weaknesses}
 \label{implicit-weaknesses}
@@ -347,12 +347,12 @@ information-seeking; thus, it is difficult to generate, and dangerous to apply,
 all-purpose rules for describing how behavior can be used as implicit relevance
 feedback.
 
-\todo{Add weaknesses of explicit ratings}
+% \todo{Add weaknesses of explicit ratings}
 
-\todo{Mention fashion-specific challenges, e.g.\ clicks does not equal high
-rating}
+% \todo{Mention fashion-specific challenges, e.g.\ clicks does not equal high
+% rating}
 
 \subsection{Evaluating conversion to implicit ratings}
 
-\todo{Something about MPR (mean percentile ranking) and perhaps AP (average
-precision)}
+% \todo{Something about MPR (mean percentile ranking) and perhaps AP (average
+% precision)}
