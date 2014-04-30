@@ -3,8 +3,6 @@
 \label{evaluation}
 \section{Evaluation}
 
-% What will be adressed in the section?
-
 	% What evaluation methodologies exist?
 		% Offline Evaluation
 		% 	Recommender System Datasets
@@ -24,9 +22,10 @@ choose between a set of candidate approaches. A first step towards selecting an
 appropriate algorithm is to decide which properties are the most important for
 the application. Recommender systems have a variety of properties such as
 accuracy, robustness, scalability, etc. The following section will discuss how
-to compare recommenders based on the set of properties  relevant for the
-application. We have several different experimental settings which can be used
-to evaluating recommender systems. We will focus on two types of experiments:
+to compare recommender systems based on the set of properties  relevant for the
+application and how to evaluate the performance of the system. We have several
+different experimental settings which can be used to evaluating recommender systems.
+We will focus on two types of experiments:
 Offline experiments where the system is evaluated without user interactions and
 Online experiments where real users interact with the system. This section will
 also cover some of the most frequently used evaluation metrics, a discussion on
@@ -34,28 +33,26 @@ the suitedness of different evaluation measures for implicit feedback, and
 summary of the methodologies and evaluation measures used to evaluate the
 cold-start performance of recommender systems.
 
-Shani et\. al.\ \cite{Shani2011} lists the following guidelines for general experimental
-studies:
+Shani et al.\ \cite{Shani2011} lists the following guidelines for general
+experimental studies:
 
 \begin{itemize}
+	\item Hypothesis: before running an experiment one must form an hypothesis. For
+		example, an hypothesis can be that algorithm $A$ better predicts user ratings
+		than algorithm $B$. In that case the experiment should test the prediction
+		accuracy, and not look at other factors.
 
-\item Hypothesis: before running an experiment one must form an hypothesis. For
-	example, an hypothesis can be that algorithm $A$ better predicts user ratings
-	than algorithm $B$. In that case the experiment should test the prediction
-	accuracy, and not look at other factors.
+	\item Controlling variables: when comparing a few candidate algorithms on a
+		certain hypothesis, it is important that all variables that are not tested
+		are fixed.
 
-\item Controlling variables: when comparing a few candidate algorithms on a
-	certain hypothesis, it is important that all variables that are not tested
-	are fixed.
-
-\item Generalization power: when drawing conclusions from experiments, we may
-	wish that our conclusions generalize beyond the immediate context of the
-	experiments. When choosing an algorithm for a real application, we may want
-	our conclusion to hold on the deployed system, and generalize beyond the
-	experimental data set. To increase the probability of generalization of the
-	recommender results one must typically experiment with several data sets or
-	applications.
-
+	\item Generalization power: when drawing conclusions from experiments, we may
+		wish that our conclusions generalize beyond the immediate context of the
+		experiments. When choosing an algorithm for a real application, we may want
+		our conclusion to hold on the deployed system, and generalize beyond the
+		experimental data set. To increase the probability of generalization of the
+		recommender results one must typically experiment with several data sets or
+		applications.
 \end{itemize}
 
 
@@ -178,6 +175,7 @@ choice is $K$ value between 5 and 10.
 %TODO - Write about bootstrapping
 
 
+
 \subsubsection{Offline Evaluation Metrics}
 
 When evaluating a recommender system, you wish to estimate a user's
@@ -200,10 +198,8 @@ $\hat{u(c,s)}$ for a test set $T$ of user.item pairs $(c, s)$ for which the
 true ratings are known. Traditionally, mean absolute error (MAE) has be used to
 evaluate the performance of collaborative-filtering algorithms, but other
 measures such as root mean squared error (RMSE) are also commonly used.
-sadf
-\equationMEA
-asfasdf
-sdafs
+
+\ExecuteMetaData[equations.tex]{testur}
 
 \begin{table}[H]
     \centering
@@ -222,10 +218,13 @@ Often used to measure difference between a set of predicted values with a set of
 
 \equationRMSE
 
+
+
 How to calculate the $RMSE$ value is shown in~\ref{equation:rmse}.
 Here $y_t$ is the actual value and $\hat{y_t}$ is the estimated value.
 This approach is often used in evaluating recommender systems producing ratings for domains such as the movie domain.
 
+\parbox{6cm}{\equationMEA}
 
 \textbf{Measuring Usage Prediction}
 
