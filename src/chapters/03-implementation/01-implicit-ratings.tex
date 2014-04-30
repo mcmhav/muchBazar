@@ -53,10 +53,13 @@ is defined as:
       f(x) = \frac{1}{1+\exp^{-x}}
     \end{equation*}
   &
-    \includegraphics[scale=0.3]{image/logistic-function}
+    \begin{tikzpicture}
+      \begin{axis}[width=190pt,axis x line=middle, axis y line=center, tick align=outside]
+        \addplot+[mark=none,smooth] (\x,{sin(\x r)});
+      \end{axis}
+    \end{tikzpicture}
   \end{tabular}
 \end{figure}
-
 
 \subsection{Considering number of days since event}
 
