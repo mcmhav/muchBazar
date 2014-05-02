@@ -113,6 +113,7 @@ There are a number of ways of computing the similarity between items. E.g. by me
 sim(s',s) = cos(\vec{s'},\vec{s}) = \frac{\vec{s'} \cdot \vec{s}}{\|\vec{s'}\|^{2} * \|\vec{s}\|^{2}}
 \end{equation}
 
+
 The item similarities can then used to find the Top-N recommendations. Each user has a set of items $S_{c}$ previously rated by the user which we want to compute top-N recommendations for. First, we identify the set $C$ of candidate items recommended items by taking the union of the $k$ most similar items and removing each of the items in the set $S_{c}$ the user already has rated; then calculate the similarities between each item of the set $C$ and the set $S_{c}$, using only the $k$ most similar items for each item in $S_{c}$. The resulting set of items in $C$ are sorted in descending order of similarity and will be the recommended as the item-based Top-N list \cite{Karypis2001}.
 
 \paragraph{Model-based Methods}
@@ -240,6 +241,7 @@ Most commonly hybrid systems are built by combining collaborative and content-ba
 
 \paragraph{Scalability}
 
+
 As the number of existing users and items blow up, traditional CF algorithms suffer serious scalability problems. The model building phase of \emph{Traditional} collaborative filtering methods have a complexity of O(MN) where $M$ is the number of users and $N$ is the number of items. For systems with millions of users and items, even a complexity of n is too large. Another fundamental issue is how to embed the core recommendation techniques in real operational systems and how to deal with massive and dynamic sets of data produced by the interactions of users with items. Recommender systems are expected in many cases to provide rapid recommendations online, it is therefore also important to consider how fast the system provides recommendations.
 
 Better scalabiltiy and improved accuracy make the item-item collaborative filtering approaches more favorable in many cases. The computational complexity of item-to-item based algorithms are up to two orders of magnitude faster than traditional user-based algorithms \cite{Deshpande2004}. Dimensionality reduction techniques such as SVD can deal with the scalability by providing more compact representations and quickly produce good recommendations. However, most dimensionalty reduction techniques must undergo expensive matrix factorization steps.\newline
@@ -301,7 +303,8 @@ for certain users or items. The cold-start problem can be divided into three sub
   to a user who is new to a recommender system.
 \end{itemize}
 
-For example in a scenario where the average item in an item collection have 5 000 ratings, a new item with only 5 ratings would be considered a \emph{cold-item}. Likewise, in a recommender system where the average user has rated 25 items, a user who only has rated 2 items, would be considered a \emph{cold-user}.\linebreak[4]
+
+For example in a scenario where the average item in an item collection have 5 000 ratings, a new item with only 5 ratings would be considered a \emph{cold-item}. Likewise, in a recommender system where the average user has rated 25 items, a user who only has rated 2 items, would be considered a \emph{cold-user}.\newline
 
 The cold-start system problem is mainly a collaborative filtering problem, and
 can be seen as a combination of the cold-start user and cold-start item problem
@@ -688,20 +691,48 @@ The authors found that linear mapping worked the best, and that their method yie
 \paragraph{Trust-aware recommenders}
 
 %Summarize results
-Massa et. al. \cite{Massa2007} found trusted users to be good predictors. When looking at directly trusted users they improved the MAE from 1.094 using traditional collaborative filtering to 0.674 for cold-start recommendations. By propagating the trust they were able to drasticly increase the coverage. The average number of directly trusted users were 9.88, while the average number of comparable users using the pearson correlation factor was 160.73. Propagating at a distance of 2 it is possible to reach 399.89 users, increasing it to 3 and 4 respectively it is possible to reach respectively 4,386.32 and 16,033.94 users. Jamali et. al. \cite{Jamali2009} got even better results with their \emph{Trustwalker} approach by combining trust-based and item-based recommendations. Massa et. al. \cite{Massa2004} also argue that it is more useful for a recommender system to ask for one trust statement than asking for one rating for new users.
+Massa et. al. \cite{Massa2007} found trusted users to be good predictors. When
+looking at directly trusted users they improved the MAE from 1.094 using
+traditional collaborative filtering to 0.674 for cold-start recommendations. By
+propagating the trust they were able to drasticly increase the coverage. The
+average number of directly trusted users were 9.88, while the average number of
+comparable users using the pearson correlation factor was 160.73. Propagating
+at a distance of 2 it is possible to reach 399.89 users, increasing it to 3 and
+4 respectively it is possible to reach respectively 4,386.32 and 16,033.94
+users. Jamali et. al. \cite{Jamali2009} got even better results with their
+\emph{Trustwalker} approach by combining trust-based and item-based
+recommendations. Massa et. al. \cite{Massa2004} also argue that it is more
+useful for a recommender system to ask for one trust statement than asking for
+one rating for new users.
 
 %How can this be implemented in our system?
-Requiring users to explicitly express trust, is not something users necessarily will frown upon. Services like Instagram, Facebook and many others offers a "follow" function to their users, filling their news feeds with content from the users which they have chosen to follow. For Sobazar we imagine that you e.g. could chose to follow people either because they have a good taste in clothes or that you simply are friends, and you want to keep up with what your friends are buying.
+Requiring users to explicitly express trust, is not something users necessarily
+will frown upon. Services like Instagram, Facebook and many others offers a
+"follow" function to their users, filling their news feeds with content from
+the users which they have chosen to follow. For Sobazar we imagine that you
+e.g. could chose to follow people either because they have a good taste in
+clothes or that you simply are friends, and you want to keep up with what your
+friends are buying.
 
 %Scalability & Final Verdict
-Propagating trust is expensive. The trust propagation must be computed in addition addition to the user-user or item-item similarities, and it therefore scales worse than collaborative filtering methods. Good general model for sparsity and increasing robustness of recommender systems, with the downsides being scalability challenges and the added complexity to the system.\newline
+Propagating trust is expensive. The trust propagation must be computed in
+addition addition to the user-user or item-item similarities, and it therefore
+scales worse than collaborative filtering methods. Good general model for
+sparsity and increasing robustness of recommender systems, with the downsides
+being scalability challenges and the added complexity to the system.
 
 \paragraph{Interview Process}
 
 %Summarize results
-Rashid et. al. \cite{Rashid2008} got the best results using information theoretic approaches and argues that simpler methods such as most popular is likely to worsen the prefix bias. The authors found Information Gain through Clustered Neighbours (IGCN) to have the best performance overall, which scored 5 out of 5 stars for accuracy, and would be a good candidate to find items for the user to rate.
+Rashid et. al. \cite{Rashid2008} got the best results using information
+theoretic approaches and argues that simpler methods such as most popular is
+likely to worsen the prefix bias. The authors found Information Gain through
+Clustered Neighbours (IGCN) to have the best performance overall, which scored
+5 out of 5 stars for accuracy, and would be a good candidate to find items for
+the user to rate.
 
 %How can this be implemented?
+
 Our rational behind including these articles is that we envision a simple "hot or not" tinder like interface to be used to present items to new users when the first log in to the system. And then ask new users that download the app to rate e.g. 10 items when first logging in. It is worth mentioning that the authors of these articles mainly worked on a solution to the cold-start new user problem. The user-effort dimension of their evaluation could also largely be ignored as they made a system for movie recommendations. The implications of this is that a user must have watched a movie, in order to rate it. This is not as important for the fashion domain, as taking a quick look at an item should be sufficient to like/dislike it, so we should give more weight to the accuracy of the system after the interview process than user effort. It is also worth noting that calculating entropy using implicit ratings is tricky, since the rating distribution does not range from dislike to like. We can therefore not find \emph{high-entropy} or \emph{controversial} items which users either tend to like or dislike, as we have no data about items users dislike \marginpar{Discussion on suitedness of implicit ratings for entropy calculations}. We are also currently constrained to unobtrusively learn user-profiles from the natural interactions of users with the system, meaning that we can not require the user to rate e.g. 10 items before we can start providing recommendations, as this functionality has not been implemented.
 
 %Scalability & Final Verdict
@@ -709,40 +740,57 @@ The scalability of the approach is also fairly good. It requires another module 
 
 \paragraph{Seed users}
 
-In our opinion, this approach is not that suited for our domain, as it fairly dynamic and we are working with a large item collection. For an item to be recommendable it must be rated by all representative users, which is highly unlikely given the size of the item collection itself. E.g. if we have 15 representative users and a spring collection launches containing 6000 items, for all these items to be recommendable these 15 representative users must rate all these items.\linebreak[4]
+In our opinion, this approach is not that suited for our domain, as it fairly dynamic and we are working with a large item collection. For an item to be recommendable it must be rated by all representative users, which is highly unlikely given the size of the item collection itself. E.g. if we have 15 representative users and a spring collection launches containing 6000 items, for all these items to be recommendable these 15 representative users must rate all these items.
 
 \paragraph{Filterbots}
 
 %TODO - Summarize results
-Park et. al. \cite{Park2006} clearly demonstrated the robustness of their Naive Filterbot compared to item-based and user-based approaches in all three cold-start scenarios. The results in \cite{Agarwal2009, Agarwal2010} also shows that the Naive Filterbots performance is very close to the state-of-the-art latent factor models.
+Park et. al. \cite{Park2006} clearly demonstrated the robustness of their Naive
+Filterbot compared to item-based and user-based approaches in all three
+cold-start scenarios. The results in \cite{Agarwal2009, Agarwal2010} also shows
+that the Naive Filterbots performance is very close to the state-of-the-art
+latent factor models.
 
 %TODO - How can we implement this in our system?
-To incorporate filterbots in our system we would first have to define what filterbots we wound want to use. We could e.g. use a Brand-bot that calculates ratings of brands over all users. The rating of a brand is the average rating of the items of the given brand, which then is injected into the user-item matrix. It is worth noting that selecting what bots to add to the system and and coding them would require some engineering effort, and involve some testing to validate your bots.
+To incorporate filterbots in our system we would first have to define what
+filterbots we wound want to use. We could e.g. use a Brand-bot that calculates
+ratings of brands over all users. The rating of a brand is the average rating
+of the items of the given brand, which then is injected into the user-item
+matrix. It is worth noting that selecting what bots to add to the system and
+and coding them would require some engineering effort, and involve some testing
+to validate your bots.
 
 %TODO - Scalability & Final Verdict
-Park et. al. \cite{Park2006} claim that the added computational complexity of adding seven global bots is almost negligible. The downside of this approach is the additional engineering effort required and the fact that it's performance is not on pair with the more sophisticated latent factor methods.\newline
+Park et. al. \cite{Park2006} claim that the added computational complexity of
+adding seven global bots is almost negligible. The downside of this approach is
+the additional engineering effort required and the fact that it's performance
+is not on pair with the more sophisticated latent factor methods.
 
 \paragraph{Hybrid recommenders}
 
 %TODO - Summarize results
 
-Latent factor models are currently the main paradigm within the recommender system field and are currently considered the state-of-the-art recommendation methods. The hybrid methods achieved state-of-the-art performance as well as having good fallback methods based on user and item features to solve the cold-start problem.
+Latent factor models are currently the main paradigm within the recommender
+system field and are currently considered the state-of-the-art recommendation
+methods. The hybrid methods achieved state-of-the-art performance as well as
+having good fallback methods based on user and item features to solve the
+cold-start problem.
 
 %TODO - How can we implement this in our system?
+
 To implement these recommenders we would first have to select and extract user-features from Facebook and item-features from our item database. Another concern of ours is that our dataset is currently to small for latent factor methods, and is therefore likely to produce sub-optimal results.
 
 %TODO - Scalability & Final Verdict
 %	Which of the models are online?
-As most latent factor models, model building is expensive. Matchbox and RLFM have to option of being trained online, which should further could increase the cold-start performance, as the model always will be up to date. Latent factor models are also known to provide quick recommendations. These methods combine state-of-the-art performance, elegant solutions to the cold-start problem incorporating meta-information as fallback in addition to having the option to be incrementally trained.\newline
-
+As most latent factor models, model building is expensive. Matchbox and RLFM have to option of being trained online, which should further could increase the cold-start performance, as the model always will be up to date. Latent factor models are also known to provide quick recommendations. These methods combine state-of-the-art performance, elegant solutions to the cold-start problem incorporating meta-information as fallback in addition to having the option to be incrementally trained.
 
 \paragraph{Summary}
 
 %TODO - Summary of all the methods
 \marginpar{How do we compare the methods: Feedback from Helge and Heri appriciated. }
 
-
-It is hard to compare the performance of the different methods as they have experimented with different datasets and evaluation measures...
+It is hard to compare the performance of the different methods as they have
+experimented with different datasets and evaluation measures...
 
 \marginpar{What are the most important 'attributes' to consider?}
 I would also argue that having the option to incrementally update the model is an important feature to further improve cold-start performance. As having a model that is already updated will instantly incorporate data about new users and items.
@@ -969,7 +1017,7 @@ A recommender system called SuitUp~\cite{SuitUp} did a survey on some of their p
 One interesting finding was that many of the users enjoyed the Hot-or-Not feature of the system.
 This feature gives the user a set of items and the option to either like or dislike.
 
-\textbf{Trust based}
+\paragraph{Trust based}
 
 
 
@@ -1052,7 +1100,9 @@ Which makes it difficult to identify what is what.
 Recommendations, through finding the missing positives, done on these types of data is usually thought of as one-class collaborative filtering (OCCF).
 OCCF can be viewed as an extreme case of class imbalance, in which the balance is only distributed over one class. \marginpar{checkout Extreme re-balancing for svms: a case study maybe}
 
+
 \paragraph{Common OCCF Scenarios}
+
 Some of the most common scenarios where the OCCF problems occurs are:
 Bookmarking, click history, product purchase, "like" and news reader.
 The data produced from user feedback from all these scenarios can be on the binary form.
@@ -1066,15 +1116,20 @@ One way of doing so is by asking the user to rate more items.
 This can be done through forcing the user to rate a set of predetermined items and/or produce negative ratings to uninteresting items.
 The issue with this approach is that putting the rating burden onto the user has shown to produce negative user experience. \marginpar{reference}
 
+
 \paragraph{All missing as negative (AMAN)}
+
 One naive approach is to view all the missing values as negative values.
 Thereby saying all web pages ignored by the user are unwanted pages.
 One issue with this approach is that it will render examples which are positive, but unknown, as false negatives.
 
+
 \paragraph{All missing as unknown (AMAU)}
+
 Another naive approach is to go in the opposite direction.
 Viewing all missing values as unknown, thereby only utilizing the known values when recommending, the predictions on the unknown values will only be positive.
 The data in an OCCF problem is also usually very sparse, therefore using only the positive examples will in many cases lead to an incomplete view of the data, and quality reduced recommendations.
+
 
 \paragraph{Weighted low rank approximation}
 
@@ -1110,7 +1165,9 @@ This weight is between 0 and 1.
 \marginpar{maybe explain the schemes better}
 \marginpar{add cite}
 
+
 \paragraph{Negative example sampling}
+
 In many cases the missing values are in fact negative values.
 This approach will i most cases lead to a large rating matrix, and therefore high computational costs.
 Therefore, instead of using all the ratings in the ratings matrix $R$, only all the actual positive values are selected.
@@ -1120,14 +1177,18 @@ This subset is based on a sampling probability matrix $P$.  \marginpar{cite}
 There are different sampling schemes.
 Using the same schemes as from the wighting scheme from weighted low rank approximation.
 
+
 \paragraph{Em algorithms to predict negative examples}
 \marginpar{check out the approaches}
+
 PEBL: positive example based learning for web page classification using SVM
 Building text classifiers using positive and unlabeled examples
 Presence-only data and the EM algorithm \marginpar{ref}.
 
+
 \paragraph{Low-density non-negative matrix factorization (ldNMF)}
 arg min .~\marginpar{cite}
+
 J W, H, {y ij } (i,j)∈U =
 W ≥0,H≥0
 y ij ∈{0,1},(i,j)∈U
@@ -1152,7 +1213,9 @@ $V$ is a loss function (squared loss or generalized KL-divergence).
 $C$ is the entry specific costs.
 γ ≥ 0 and $λ$ tradeoff the regularizers againts the fata-fit terms.
 
+
 \paragraph{Group Bayesian personalized ranking (GBPR)}
+
 Utilizing rich user interaction.
 Group preference is the preference score of a group of user on an item. \marginpar{equation}
 GBPR assumes that the group preference is stronger than the observed user preference. \marginpar{cite}
@@ -1165,6 +1228,8 @@ r Gui > r ˆ uj )[1 − P r(ˆ
 r uj > r ˆ Gui )], (3)
 equation.
 
+
 \paragraph{Incorporating Rich User Information}
 Todo. \marginpar{cite}
+
 
