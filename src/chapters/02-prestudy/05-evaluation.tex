@@ -3,6 +3,8 @@
 \label{evaluation}
 \section{Evaluation}
 
+% What will be adressed in the section?
+
 	% What evaluation methodologies exist?
 		% Offline Evaluation
 		% 	Recommender System Datasets
@@ -22,10 +24,9 @@ choose between a set of candidate approaches. A first step towards selecting an
 appropriate algorithm is to decide which properties are the most important for
 the application. Recommender systems have a variety of properties such as
 accuracy, robustness, scalability, etc. The following section will discuss how
-to compare recommender systems based on the set of properties  relevant for the
-application and how to evaluate the performance of the system. We have several
-different experimental settings which can be used to evaluating recommender systems.
-We will focus on two types of experiments:
+to compare recommenders based on the set of properties  relevant for the
+application. We have several different experimental settings which can be used
+to evaluating recommender systems. We will focus on two types of experiments:
 Offline experiments where the system is evaluated without user interactions and
 Online experiments where real users interact with the system. This section will
 also cover some of the most frequently used evaluation metrics, a discussion on
@@ -33,26 +34,28 @@ the suitedness of different evaluation measures for implicit feedback, and
 summary of the methodologies and evaluation measures used to evaluate the
 cold-start performance of recommender systems.
 
-Shani et al.\ \cite{Shani2011} lists the following guidelines for general
-experimental studies:
+Shani et\. al.\ \cite{Shani2011} lists the following guidelines for general experimental
+studies:
 
 \begin{itemize}
-	\item Hypothesis: before running an experiment one must form an hypothesis. For
-		example, an hypothesis can be that algorithm $A$ better predicts user ratings
-		than algorithm $B$. In that case the experiment should test the prediction
-		accuracy, and not look at other factors.
 
-	\item Controlling variables: when comparing a few candidate algorithms on a
-		certain hypothesis, it is important that all variables that are not tested
-		are fixed.
+\item Hypothesis: before running an experiment one must form an hypothesis. For
+	example, an hypothesis can be that algorithm $A$ better predicts user ratings
+	than algorithm $B$. In that case the experiment should test the prediction
+	accuracy, and not look at other factors.
 
-	\item Generalization power: when drawing conclusions from experiments, we may
-		wish that our conclusions generalize beyond the immediate context of the
-		experiments. When choosing an algorithm for a real application, we may want
-		our conclusion to hold on the deployed system, and generalize beyond the
-		experimental data set. To increase the probability of generalization of the
-		recommender results one must typically experiment with several data sets or
-		applications.
+\item Controlling variables: when comparing a few candidate algorithms on a
+	certain hypothesis, it is important that all variables that are not tested
+	are fixed.
+
+\item Generalization power: when drawing conclusions from experiments, we may
+	wish that our conclusions generalize beyond the immediate context of the
+	experiments. When choosing an algorithm for a real application, we may want
+	our conclusion to hold on the deployed system, and generalize beyond the
+	experimental data set. To increase the probability of generalization of the
+	recommender results one must typically experiment with several data sets or
+	applications.
+
 \end{itemize}
 
 
@@ -96,7 +99,7 @@ popular datasets containing additional information:
 
 \end{itemize}
 
-\textbf{Explicit-feedback}
+\paragraph{Explicit-feedback}
 
 The definition of explicit is defined as `stated clearly and in detail, leaving
 no room for confusion or doubt'. Explicit feedback are more precise than
@@ -111,7 +114,7 @@ noting that explicit feedback tend to concentrate on either side of the rating
 scale, as users are more likely to express their preference if they feel
 strongly for or against an item~\cite{Jawaheer2010}.
 
-\textbf{Implicit-feedback}
+\paragraph{Implicit-feedback}
 
 %TODO - Herman, maybe you want to add something more?
 %	Implicit feedback classfication (Type, confidence, precision)
@@ -120,10 +123,15 @@ Unlike explicit feedback, we do not have nay direct input from the user
 regarding their personal preferences. In particular we do not have any
 substantial evidence of which items the user dislikes, such as low ratings.
 However, implicit-feedback is more easily collected, and usually more abundant.
-Implicit feedback types include browsing history, purchase history, search
-patters, etc. For a larger discussion surrounding the differences between
+Types of implicit feedback include purchase history, browsing history, search patters, or even mouse movements. For example, a user who purchases many clothes from the same brand probably likes that brand. For a larger discussion surrounding the differences between
 implicit and explicit feedback, see Section~\ref{implicit-feedback}
 
+
+%Implicit feedback methods are
+%based on assigning a relevance score to speciﬁc user actions on an item, such as
+%saving, discarding, printing, bookmarking, etc. The main advantage is that they do
+%not require a direct user involvement, even though biasing is likely to occur, e.g.
+%interruption of phone calls while reading
 
 \subsubsection{Validation Methods}
 
@@ -133,7 +141,7 @@ have one or more free parameters, and we want a way to select the
 \emph{optimal} parameter\(s\) or model for a given problem. Once we have chosen a
 model, we wish to estimate how well it is doing.
 
-\textbf{The Holdout Method}
+\paragraph{The Holdout Method}
 
 When using the holdout method you split the dataset into two groups; a training
 set used to train the classifier and a test set used to estimate the error rate
@@ -150,7 +158,7 @@ the dataset for testing, (2) Since it is a single train-and-test experiment,
 the holdout estimate can be misleading if we happen to get an `unfortunate'
 split.
 
-\textbf{Cross-Validation}
+\paragraph{Cross-Validation}
 
 K-fold Cross-Calidation creates a K-fold partition of the dataset. For each of
 the $K$ experiments, use $K-1$ folds for training and the remaining one for
@@ -170,12 +178,6 @@ choice is $K$ value between 5 and 10.
 
 %TODO - Advantages/Disadvantages
 
-\textbf{Bootstrapping}
-
-%TODO - Write about bootstrapping?
-
-
-
 \subsubsection{Offline Evaluation Metrics}
 
 When evaluating a recommender system, you wish to estimate a user's
@@ -191,6 +193,7 @@ measures for implicit feedback, and a summary of the cold-start evaluation
 methodologies found in the literature.
 
 \paragraph{Predictive Accuracy Metrics}
+
 Predictive accuracy metrics measure how close the predicted ratings are to the
 true user ratings. More formally, the system tries to predict ratings
 $\hat{u(c,s)}$ for a test set $T$ of user.item pairs $(c, s)$ for which the
@@ -198,213 +201,43 @@ true ratings are known. Traditionally, mean absolute error (MAE) has be used to
 evaluate the performance of collaborative-filtering algorithms, but other
 measures such as root mean squared error (RMSE) are also commonly used.
 
-\subparagraph{Mean Absolute Error (MAE)}
-MAE measures how close the predictions are to the actual outcome.
-
 \begin{equation}
-    MAE = \frac{1}{n}\sum_{i=1}^{n}{|\hat{R_i}-R_i|}
-    \label{equation:mae}
+MAE = \sqrt{\frac{1}{\vert T \vert} \sum_{(c,s) \epsilon T}{(\hat{u(c,s)} - u(c,s))}^{2}}
 \end{equation}
-
-$R_i$ is the actual outcome and $\hat{R_i}$ is the predicted value.
-As the name suggest, $MAE$ calculates the average absolute error.
-
-
-\subparagraph{Root Mean Squared Error (RMSE)}
-Often used to measure difference between a set of predicted values with a set of actual values.
-
-\begin{equation}
-    MSE = \frac{1}{n}\sum_{i=1}^{n}{(\hat{R_i} - R_i)^{2}}
-    \label{equation:mse}
-\end{equation}
-
-\begin{equation}
-    RMSE = \sqrt{MSE}
-    \label{equation:rmse}
-\end{equation}
-
-In $MSE$~\ref{equation:mse} $\hat{R_i}$ is the predicted value and $R_i$ is the actual value.
-Both $MAE$ and $MSE$ are used to measure how correct the predictions are compared to the actual values.
-The main difference is that $MSE$ gives more error for faults.
-$RMSE$ is the square root of $MSE$ and is one of the most used metrics to compare recommender algorithms in collaborative filtering.
-And was the main metric used in the Netflix price competition to evaluate the performance of the competitors recommender systems.
-
-% \todo{maybe some sweet table of the different algorithms with their eqations and their contributions}
-% \begin{table}[H]
-%     \centering
-%     \begin{tabular}{l|l|l}
-%     	% \rowstyle{\bfseries}
-%     	Metric	& Equation & About \\ \toprule
-%     	MEA 			& \parbox{6cm}{\equationMEA} & safd \\	\hline
-%     	RMSE 			& \parbox{6cm}{\equationRMSE} & asdf \\
-%     \end{tabular}
-%     \label{table:predictiveAccuracyMetrics}
-%     \caption [Predictive Accuracy Metrics]{adsf}
-% \end{table}
-
-
 
 \paragraph{Measuring Usage Prediction}
-\paragraph{Decision Based Metrics}
+
 In many applications the recommender system does not predict the user's
 preferences of items, but tries to recommend to users items that they may use.
-This is often done by giving the user a top-K set of recommendations.
 In an offline evaluation of usage prediction, we typically have a dataset
 consisting of items each user has used. We then select a test user, hide some
 of her selections, and ask the recommender to predict a set of items the user
 will use. We then have four possible outcomes for the recommend and hidden
-items.
+items:
 
+\begin{center}
 \begin{table}[H]
-	\centering
-	\begin{tabular}{l|l|l}
-					&	Relevant			&	Not Relevant \\ \hline
-	Recommended		&	True-Positive (TP) 	&	False-Positive (FP)	\\ \hline
-	Not Recommended	&	False-Negative (FN)	&	True-Negative (TN)	\\ \hline
-	\end{tabular}
-	\label{table:usageprediction}
-	\caption[Usage prediction (Confusion Matrix)]{This table is showing the different categories recommended items can end up in.}
+\begin{tabular}{|c|c|c|}
+\hline
+			&	Recommended		&	Not Recommended \\ \hline
+Used		&	True-Positive 	&	False-Negative	\\ \hline
+Not Used	&	False-Positive	&	True-Negative	\\ \hline
+\end{tabular}
+\label{table:usageprediction}
+\caption{}
 \end{table}
+\end{center}
 
-\begin{table}[H]
-	\centering
-	\begin{tabular}{l|l}
-		True-Positive (TP)	& The recommended item is of interest to the user \\ \hline
-		False-Positive (FP)	& The recommended item is not of interest to the user \\ \hline
-		False-Negative (FN)	& The item is of interest to the user, but is not recommended \\ \hline
-		True-Negative (TN)	& The item is not of interest to the user, but is not recommended \\
-	\end{tabular}
-	\label{table:predictionCategories}
-	\caption[Prediction Categories]{}
-\end{table}
-
-This model assumes that not relevant items would not have been relevant if they had been
+This model assumes that unused items would not have been used if they had been
 recommended to a user. This assumption may be false, such as when the set of
-not relevant items contains some interesting items that the user did not select. For
-example, a user may not have relevant an items because she was unaware of its
+unused items contains some interesting items that the user did not select. For
+example, a user may not have used an items because she was unaware of its
 existence, but after the recommendation exposed that item, the user can decide
 to select it. We can count the number of examples that fall into each cell in
-the table and compute the Precision, Recall, Fallout and $ROC$.
+the table and compute the Precision, Recall and False Positive Rate.
 
-\subparagraph{Precision}
-Precision is the amount of the actually true positives recommended, over the amount of all the items recommended.
-\begin{equation}
-    Precision = \frac{TP}{TP+FP}
-    \label{equation:precision}
-\end{equation}
+\paragraph{Rank Accuracy Metrics}
 
-\subparagraph{Recall}
-Recall is the ratio of the items of interest for the user, actually recommended to the user.
-\begin{equation}
-    Recall = \frac{TP}{TP+FN}
-    \label{equation:recall}
-\end{equation}
-
-\subparagraph{Fallout}
-Fallout is the amount of retrieved items which is not relevant amongst all the non relevant items (false positive).
-\begin{equation}
-    Fallout = \frac{FP}{FP+TN}
-    \label{equation:fallout}
-\end{equation}
-
-\subparagraph{F-measure}
-F-measure combines the precision and the recall.
-\begin{equation}
-    F-measure = \frac{(1 + \beta^2) * (Precision * Recall)}{(\beta^2 * Precision + Recall)}
-    \label{equation:f-measure}
-\end{equation}
-$\beta$ is a non negative real value.
-
-\subparagraph{Accuracy}
-Accuracy is the amount of correctly recommended items over the total amount of items in the dataset.
-\begin{equation}
-    Accuracy = \frac{TP+TN}{TP+TN+FP+FN}
-    \label{equation:accuracy}
-\end{equation}
-
-\subparagraph{Receiver Operating Characteristics (ROC))}
-The $ROC$ is the recall rate ($TPR$) against the fallout rate ($FPR$).
-The goal is to maximize the recall while minimizing the fallout.
-\begin{equation}
-    TPR(T) = \int_T^\infty P_0(T)dT
-    \label{equation:tpr}
-\end{equation}
-\begin{equation}
-    FPR(T) = \int_T^\infty P_1(T)dT
-    \label{equation:fpr}
-\end{equation}
-From~\ref{equation:tpr} and~\ref{equation:fpr}, $P_0(T)$ and $P_1(T)$ is the probability of $T$ not belonging to the other class.
-The $ROC$ curve is a plotting of the recall rate versus the fallout rate.
-
-
-\subparagraph{Mean Percentage Ranking (MPR)} % (fold)
-\label{subp:mean_percentage_ranking_}
-This measure is a recall-oriented metric.
-A known issue with implicit feedback is that it often lack the actual user's preference.
-This approach is used to measure the user satisfaction of items in an recommended ordered list.
-
-\begin{equation}
-	MPR = \frac{\sum_{u,i}{r_{ui} * rank_{ui}}}{\sum_{u,i}{r_{ui}}}
-	\label{equation:mpr}
-\end{equation}
-
-How to calculate $MPR$ is shown in ~\ref{equation:mpr}.
-A list of all the items for user $u$ is ordered based on the rank $rank_{ui}$ of the $u$.
-Where $rank_{ui}$ is the percentile rank of item $i$ in this list for $u$.
-$rank_{ui} = 0$ means that $i$ is the most preferred item for $u$.
-$r_{ui}$ indicates whether $u$ has consumed $i$ or not.
-This makes a $MPR$ value of 0\% to be the most preferred value, and a value of 50\% meaning a near randomly produced list.
-% subparagraph mean_percentage_ranking_ (end)
-
-
-\subparagraph{Mean Average Precision (MAP)} % (fold)
-\label{subp:mean_average_precision_map_}
-MAP~\cite{Manning:2008:IIR:1394399} measures quality across recall levels.
-\begin{equation}
-	ap@n = \sum_{k=1}^{n}{\frac{P(K)}{min(m,n)}}
-	\label{equation:apn}
-\end{equation}
-
-\begin{equation}
-	MAP@n = \sum_{i=1}^{N}{\frac{ap@n_i}{N}}
-	\label{equation:map}
-\end{equation}
-
-How to calculate the $MAP$ value is shown in~\ref{equation:map}.
-\ref{equation:apn} calculates the average precision at $n$ for a user.
-From \ref{equation:apn}, $P(K)$ is the precision at $k$ in the item list, $n$ is the maximum number of predicted items and $m$ is the actual length of the predicted items list.
-\ref{equation:map} calculates the mean of all the values from \ref{equation:apn}.
-% subparagraph mean_average_precision_map_ (end)
-
-
-\subparagraph{Normalized Discounted Cumulative Gain (nDCG)} % (fold)
-\label{subp:normalized_discounted_cumulative_gain_}
-$nDCG$ measures the graded relevance of the recommended item, the ranking quality or the usefulness of the recommended item based on its rank position.
-It is often used to measure the performance of web search recommendation systems.
-
-\begin{equation}
-    DCG_k = \sum_{i=1}^{k}{\frac{2^{rel_i}-1}{log_2(i+1)}}
-    \label{equation:dcg}
-\end{equation}
-
-\begin{equation}
-    nDCG_k = \frac{DCG_k}{IDCG_k}
-    \label{equation:ndcg}
-\end{equation}
-
-How to calculate the $nDCG$ value is shown in~\ref{equation:ndcg}.
-Where $k$ is the maximum amount of suggested items, and $rel_i$ is the graded relevance of the result at position $i$.
-$IDCG_k$, from~\ref{equation:ndcg}, is the ideal $DCG_k$ value.
-This is the result list sorted on relevance.
-% subparagraph normalized_discounted_cumulative_gain_ (end)
-
-\subparagraph{Limitations} % (fold)
-\label{subp:limitations}
-As mentioned by Powers et al.~\cite{powers2007}, Recall, Precision, F-Measure and Rand Accuracy have Bias.asdfsdfsdf
-
-% subparagraph limitations (end)
-
-\paragraph{Rank Based Metrics}
 Rank accuracy metrics measure the ability of a recommendation method to produce
 a recommended ordering of items that matches how the user would have ordered
 the same items. Shani et.\ al.~\cite{Shani2011} lists two different appraoches
@@ -421,25 +254,12 @@ most suitable to evaluate algorithms that are used to present ranked lists to
 the user in domains where the user preferences are expressed using numerical
 values.
 
-\subparagraph{AP correlation} % (fold)
-\label{subp:ap_correlation}
-$AP correlation$~\cite{Yilmaz:2008:NRC:1390334.1390435} measures the overall precision and is a variant of $Kendall's tau$.
-It counts the amount of items correctly placed in a ordered predicted rank list $list1$ and a list of the actual rank ordering of the preferences of the user $list2$.
-
-\begin{equation}
-	AP = \frac{2}{N - 1} * \sum_{i=2}^{N}{(\frac{C(i)}{i - 1})} - 1
-	\label{equation:ap}
-\end{equation}
-
-How to calculate the $AP correlation$ value is shown in ~\ref{equation:ap}.
-$C(i)$ is the number of items ranked correctly above rank $i$.
-The value of AP is between -1 and 1, where a score of 0 means that $list1$ can be considered a randomly generated list and 1 is a perfect match with the actual list $list2$.
-% subparagraph ap_correlation (end)
-
 \paragraph{Beyond Accuracy}
+
 There is an emerging understanding that good recommendations accuracy alone does not give the users of the recommender system an effective and satisfying experience \cite{Herlocker2004}. The following \emph{measures} attempts to assess a recommender systems usefulness beyond being able to provide accurate recommendations to the users.
 
-\paragraph{Coverage}
+\subparagraph{Coverage}
+
 The term coverage can refer to several distinct properties of the system. Most
 commonly, the term coverage refers to the proportion of items the
 recommendation system can recommend, also known as \emph{item-space coverage}.
@@ -451,11 +271,15 @@ provide recommendations for some users due to e.g.\\ low confidence in the
 accuracy of predictions for that user. In such cases one may prefer a
 recommender that can provide recommendations to a wider range of users. However, an increase in coverage is only beneficial if the accuracy does not drop significantly.
 
-\paragraph{Novelty and Serendipity}
+\subparagraph{Novelty and Serendipity}
 
+Some recommender systems produce highly accurate recommendations and also have reasonable coverage - and yet that are useless for practical purposes. For instance, a music recommender can recommend Rihanna to every customer who have not yet listened to Rihanna. However, statistically, this is highly accurate as most people have listened to Rihanna or at least knows about her and have consciously chosen not to listen to her. Much more valuable would be a recommendation to a kick-ass indie-rock band that the active user would love, but will never hear about in the news. We therefore need a new dimension for analysing recommender systems that consider "nonobviousness" of the recommendations. One such dimension is \emph{novelty}. Another related dimension is \emph{serendipity}. A serendipitous recommendation helps a user find a surprisingly interesting item the user might not have discovered otherwise. To clarify the difference between the two, a novel recommendation could be to recommend an unknown album from one of the users favorite artists, that the user likely eventually would have discovered herself. However, a recommendation by an unknown artist is more likely to be serendipitous. Serendipity is therefore a measure of how surprisingly the successful recommendations are.
 
-%TODO - What more?
-%		Scalability...?
+\subparagraph{Diversity}
+
+Diversity is generally defined as the opposite of similarity. In some cases suggesting a set of similar items may not be as useful for the user, because it may take longer to explore the range of products. E.g. when presenting a list of 5 recommendations, the system should not recommend 5 Ralph Lauren shirts with different colors. As diversity may come at the expanse of other properties such as accuracy, one should evaluate the decrease in accuracy vs. the increase in diversity.
+
+Other evaluation methods worth knowing about includes confidence, trust, utility, robustness, adaptivity, scalability mentioned in \cite{Herlocker2004, Shani2011}.
 
 \subsubsection{Evaluation using Implicit Feedback}
 
@@ -500,7 +324,7 @@ influential as an heavy rater. Similarly, Park et.\ al.~\cite{Park2006} measure
 normalized MAE (NMAE) by macro-averaging, which first calculates the mean
 average error of each users and taking the average of all users.
 
-To simulate the cold-start scenario, different approaches have been employed:
+To simulate the cold-start scenario, different approaches have been employed.
 
 One popular way to simulate a cold-start user scenario used by~\cite{Stern2009,
 Lam2008} is to split the dataset in two disjoint sets, a training set
@@ -607,22 +431,24 @@ For the system to be successful, this sets of items needs quality.
 But what needs to be considered when determining the quality of the recommendations?
 According to a user study~\cite{Pu:2011:UEF:2043932.2043962} the most central aspects to this quality is:
 
-% \todo{as list or in table, or not}
+\marginpar{as list or in table, or not}
 
-\textbf{Perceived accuracy}.
+\paragraph{Perceived accuracy}.
 The degree of how well the user perceives the recommended items match the actual want of the user.
 
-\textbf{Novelty}.
+\paragraph{Novelty}.
 The degree of new and interesting items recommended for the user.
 
-\textbf{Attractiveness}.
+\paragraph{Attractiveness}.
 How well the recommended items are able to evoke interest or desire in the user.
 
-\textbf{Diversity}.
+\paragraph{Diversity}.
 How different the recommended items are.
 
-\textbf{Context compatibility}.
+\paragraph{Context compatibility}.
 How the system uses contextual factors to supply the recommendations with more personalized recommendations.
+
+% \todo{RMSE, MSE, P/R \dots}
 
 
 \subsubsection{The Good}
@@ -662,16 +488,115 @@ Since the data at hand is mainly implicit feedback and this data is sparse, some
 \end{itemize}
 
 
-\subsubsection{System-centric}
-System-centric evaluation methods measures the accuracy of the recommendation system.
+
+\subsection{Evaluation Metrics}
+
+% Evaluate rating
+\subsubsection{Root-mean-square error (RMSE)}
+Often used to measure difference between a set of predicted values with a set of actual values.
+
+\begin{equation}
+	RMSE = \sqrt{\frac{\sum_{t=1}^{n}{(\hat{y_t} - y_t)^{2}}}{n}}
+\end{equation}
+% \begin{equation}
+% 	RMSE = \sqrt{\frac{1}{\vert T \vert} \sum_{(c,s) \epsilon T}{(\hat{u(c,s)} - u(c,s))}^{2}}
+% \end{equation}
+
+How to calculate the $RMSE$ value is shown in~\ref{equation:ndcg}.
+Here $y_t$ is the actual value and $\hat{y_t}$ is the estimated value.
+This approach is often used in evaluating recommender systems producing ratings for domains such as the movie domain.
 
 
-\textbf{MRR}
-\textbf{..}
+% implicit
+\subsubsection{Mean Percentage Ranking (MPR)}
+This measure is a recall-oriented metric.
+A known issue with implicit feedback is and often lack of the actual user's preference.
+This approach is used to measure the user satisfaction of items in an ordered list.
+
+\begin{equation}
+	MPR = \frac{\sum_{u,i}{r_{ui} * rank_{ui}}}{\sum_{u,i}{r_{ui}}}
+	\label{equation:mpr}
+\end{equation}
+
+How to calculate $MPR$ is shown in ~\ref{equation:mpr}.
+A list of all the items for user $u$ is ordered based on the rank $rank_{ui}$ of the $u$.
+Where $rank_{ui}$ is the percentile rank of item $i$ in this list for $u$.
+$rank_{ui} = 0$ means that $i$ is the most preferred item for $u$.
+$r_{ui}$ indicates whether $u$ has consumed $i$ or not.
+This makes a $MPR$ value of 0\% to be the most preferred value, and a value of 50\% meaning a near randomly produced list.
 
 
 \subsubsection{User-Centric Evaluation}
-User-centric evaluation focuses on the perceived quality of the recommendation system.
-
 \cite{Pu:2011:UEF:2043932.2043962}
-\cite{Knijnenburg:2011:PPS:2043932.2043993}
+
+
+% Evaluate list of recommendations
+\subsubsection{Mean Average Precision (MAP)}
+MAP~\cite{Manning:2008:IIR:1394399} measures quality across recall levels.
+
+% \begin{equation}
+% 	MAP(N) = \frac{1}{|N|}\sum_{i=1}^{|N|}{\frac{1}{n_i}}\sum_{j=1}^{n_i}{Precision(R_{ij})}
+% 	\label{equation:apn}
+% \end{equation}
+% $Precision(R_{ij})$ is the precision of the items in an ordered predicted list to the actual preferred list.
+
+\begin{equation}
+	ap@n = \sum_{k=1}^{n}{\frac{P(K)}{min(m,n)}}
+	\label{equation:apn}
+\end{equation}
+
+\begin{equation}
+	MAP@n = \sum_{i=1}^{N}{\frac{ap@n_i}{N}}
+	\label{equation:map}
+\end{equation}
+
+How to calculate the $MAP$ value is shown in~\ref{equation:map}.
+\ref{equation:apn} calculates the average precision at $n$ for a user.
+From \ref{equation:apn}, $P(K)$ is the precision at $k$ in the item list, $n$ is the maximum number of predicted items and $m$ is the actual length of the predicted items list.
+\ref{equation:map} calculates the mean of all the values from \ref{equation:apn}.
+
+
+\subsubsection{AP correlation}
+$AP correlation$~\cite{Yilmaz:2008:NRC:1390334.1390435} measures the overall precision and is a variant of $Kendall's tau$.
+It counts the amount of items correctly placed in a ordered predicted rank list $list1$ and a list of the actual rank ordering of the preferences of the user $list2$.
+
+\begin{equation}
+	AP = \frac{2}{N - 1} * \sum_{i=2}^{N}{(\frac{C(i)}{i - 1})} - 1
+	\label{equation:ap}
+\end{equation}
+
+How to calculate the $AP correlation$ value is shown in ~\ref{equation:ap}.
+$C(i)$ is the number of items ranked correctly above rank $i$.
+The value of AP is between -1 and 1, where a score of 0 means that $list1$ can be considered a randomly generated list and 1 is a perfect match with the actual list $list2$.
+
+
+\subsubsection{Normalized Discounted Cumulative Gain (nDCG)}
+$nDCG$ measures the graded relevance of the recommended item, the ranking quality or the usefulness of the recommended item based on its rank position.
+It is often used to measure the performance of web search recommendation systems.
+
+\begin{equation}
+	DCG_k = \sum_{i=1}^{k}{\frac{2^{rel_i}-1}{log_2(i+1)}}
+	\label{equation:dcg}
+\end{equation}
+
+\begin{equation}
+	nDCG_k = \frac{DCG_k}{IDCG_k}
+	\label{equation:ndcg}
+\end{equation}
+
+How to calculate the $nDCG$ value is shown in~\ref{equation:ndcg}.
+Where $k$ is the maximum amount of suggested items, and $rel_i$ is the graded relevance of the result at position $i$.
+$IDCG_k$, from~\ref{equation:ndcg}, is the ideal $DCG_k$ value.
+This is the result list sorted on relevance.
+
+
+
+\subsubsection{Receiver Operating Characteristics (ROC))}
+The $ROC$ curve is the recall against the fallout, where recall is the amount of relevant retrieved items amongst all the correct items (true positive).
+Fallout is the amount of retrieved items which is not relevant amongst all the non relevant items (false positive).
+The goal is to maximize the recall while minimizing the fallout.
+
+
+\subsubsection{MRR}
+\subsubsection{..}
+
