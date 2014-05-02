@@ -1173,8 +1173,8 @@ Compare the models based on the following properties:
 	Intelligent selection & & & \\ \hline
 	Hybrid Methods & & & \\ \hline
     \end{tabular}
+    \caption[Evaluation of cold-start methods]{Evaluation of cold-start methods}
     \label{table:evaluationcoldstart}
-    \caption [Evaluation of cold-start methods]{Evaluation of cold-start methods}
 \end{table}
 
 We propose to do this...
@@ -1241,8 +1241,8 @@ act can come from a vast set of areas, the main factors influencing the consumer
       Psychological factors   & Product reliance or sympathy & - \\ \hline % more expensive because more expensive - increase self-confidence
       Rational factors        & Brand of product, quality, designer, price & - \\
     \end{tabular}
+    \caption[Fashion Factors]{Main factors influencing the consumer when it comes to their buying behavior}
     \label{table:FashionFactors}
-    \caption [Fashion Factors]{Main factors influencing the consumer when it comes to their buying behavior}
 \end{table}
 % \todo{Last column for in depth explanation (perhaps)}
 When it comes to fashion it is mainly a socio-cultural phenomenon.
@@ -1352,8 +1352,6 @@ This poses an issue for recommending items based on their content.
         % E.g. keywords, when descriptions are in multiple languages
     % - Can rating infromation from similar items be used to decrease sparsity? (Content infromation - Hybrid approaches)
 
-
-
 \subsubsection{What Other Fashion Recommender Systems Has Done?}
 % \todo{A shorter and more precise way of saying this}
 This subsection will look methods of other fashion recommender systems and other proposed methods to recommend products in the fashion domain.
@@ -1375,13 +1373,20 @@ A recommender system called SuitUp~\cite{SuitUp} did a survey on some of their p
 One interesting finding was that many of the users enjoyed the Hot-or-Not feature of the system.
 This feature gives the user a set of items and the option to either like or dislike.
 
-% todo
 % \paragraph{Trust based}
+% todo
 
 
 
 \subsection{Session Based Approach}
-% \todo{This subsection has been dead for a while. Just here in case of revival (time)}
+% todo, structure.
+\subsubsection{E-commerce}
+\subsubsection{Mining}
+\subsubsection{Structuring}
+\paragraph{Analyzing}
+\subsubsection{Recommending}
+\subsubsection{Limitations}
+
 Init Hypothesis:
 Two users with similar session habits and similar product accessing pattern
 have a stronger correlation to one-another than two users with just similar
@@ -1424,16 +1429,6 @@ probability.
 Find a "most popular session"-pattern
 Find a "most likely to come after"-pattern
 
-Articles 4 l8er:
-%http://dl.acm.org/citation.cfm?id=1136004
-%http://link.springer.com/chapter/10.1007/3-540-46119-1_42
-%http://dl.acm.org/citation.cfm?id=1082567
-%http://link.springer.com/chapter/10.1007%2F978-3-540-30214-8_20
-%http://dl.acm.org/citation.cfm?id=502935
-%http://dl.acm.org/citation.cfm?id=1835896
-%http://dl.acm.org/citation.cfm?id=345169
-%http://dl.acm.org/citation.cfm?id=345169
-
 Session issues:
 Once in a blue moon a user will do a "product action" (purchase,want,details)
 without having a previous frontstore-access event. Which leads to unknown
@@ -1443,6 +1438,7 @@ Issue is most probably from missing user-id in collection\_viewed, and a user
 checks out an item from there. It is not possible to be 100\% sure which user
 access the item from the collection\_viewed event, so this event is therefor
 not integrated into the session-stack.
+
 
 
 \subsection{One-Class Collaborative Filtering}

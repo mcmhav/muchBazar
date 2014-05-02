@@ -226,17 +226,14 @@ As the name suggest, $MAE$ calculates the average absolute error.
 
 \subparagraph{Root Mean Squared Error (RMSE)}
 Often used to measure difference between a set of predicted values with a set of actual values.
-
 \begin{equation}
     MSE = \frac{1}{n}\sum_{i=1}^{n}{(\hat{R_i} - R_i)^{2}}
     \label{equation:mse}
 \end{equation}
-
 \begin{equation}
     RMSE = \sqrt{MSE}
     \label{equation:rmse}
 \end{equation}
-
 In $MSE$~\ref{equation:mse} $\hat{R_i}$ is the predicted value and $R_i$ is the actual value.
 Both $MAE$ and $MSE$ are used to measure how correct the predictions are compared to the actual values.
 The main difference is that $MSE$ gives more error for faults.
@@ -444,6 +441,9 @@ How to calculate the $nDCG$ value is shown in~\ref{equation:ndcg}.
 Where $k$ is the maximum amount of suggested items, and $rel_i$ is the graded relevance of the result at position $i$.
 $IDCG_k$, from~\ref{equation:ndcg}, is the ideal $DCG_k$ value.
 This is the result list sorted on relevance.
+
+% \subparagraph{Limitations}
+% todo maybe
 
 
 \paragraph{Beyond Accuracy}
