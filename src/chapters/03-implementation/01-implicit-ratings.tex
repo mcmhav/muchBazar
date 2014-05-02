@@ -18,8 +18,8 @@ choosing good weights and only using a small percentage of the scale between
 0-100. Further, the method presented does not differentiate between active and
 less active users, thus ignoring the entropy once the maximal level is reached.
 Instead we extend the method by considering the global popularity of each item,
-so that the user that.. % \todo{Finish the subsection about improving leveled
-% freq}
+so that the user that.. \marginpar{Finish the subsection about improving leveled
+freq}
 
 \subsection{Introduction to the sigmoid-function}
 
@@ -85,7 +85,8 @@ We are considering the following event log for user $u$ on product $p$, where
 our goal is to give a implicit rating based on different event types and the
 number of days between events.
 
-\begin{table}[h!]
+\begin{table}[H]
+  \label{events-example}
   \begin{tabular}{p{4cm}m{3cm}}
     \toprule
     Number of days since most recent event & Unique event types \\
@@ -99,15 +100,41 @@ number of days between events.
 
 As discussed in Section~\ref{implicit-feedback} and
 Section~\ref{levels-frequency} we will use levels of frequency to order or
-event types by scores, or rather importance. We can imagine, for the purpose of
-this example that events of type 1 can have scores ranging from 20 to 60,
-events of type 2 from 60 to 80 and events of type 3 from 80 to 100. As
-discussed earlier, the way we assign these scores is at the moment fairly
-naive, some results using various schemes are given in Section~\ref{}.
-\marginpar{\textbf{todo}: do evaluation on different schemes}
+event types by scores, or rather importance. But, instead of sampling scores
+between a given range we use a interval start and stop value - and use the
+whole range of float values in this interval as possible scores. We can
+imagine, for the purpose of this example that we have the following score
+intervals:
 
-By setting the shift coefficient $r$ to $14.0$, and the steepness coefficient
-$s$ to $0.4$, we get the following logistic function:
+\begin{table}[H]
+  \label{implicit-example-scores}
+  \begin{tabular}{lll}
+    \toprule
+    Event type & Min. score & Max. score \\
+    \midrule
+    1 & 20 & 60 \\
+    2 & 60 & 80 \\
+    3 & 80 & 100 \\
+    \bottomrule
+  \end{tabular}
+  \caption{Example of a scoring scheme using continious scores between a min.
+  and max value as possible implicit scores}
+\end{table}
+
+\marginpar{\textbf{todo}: do evaluation on different schemes}
+As discussed earlier, the way we assign these scores is at the moment fairly
+naive, some results using various schemes are given in Section~\ref{}. The main
+thing to note is that we use non-overlapping intervals in order to do various
+optimizations in our algorithms and also that the interval for the most common
+event (typically a product click or similar) is $3x$ as big as our higher
+valued event types. This is done in order to create a larger differentiation
+of scores between events of same type in the same time space.
+
+Using the events in Table~\ref{events-example} we set our shift coefficient $r$
+to $14.0$, and the steepness coefficient $s$ to $0.4$ in order to both match
+our domain specific goals (short life span of products and seasonal activity)
+and get a good spread in final ratings as our dataset is small. This yields the
+following logistic function:
 
 \begin{figure}[h!]
   \centering
@@ -130,6 +157,42 @@ $s$ to $0.4$, we get the following logistic function:
   \end{tikzpicture}
 \end{figure}
 
+As one can see, an event happening 15 days after the most recent event for user
+$u$ will get a penalization of $0.5$ whilst an event with $x=5$ recieves
+$0.018$. Following up on Table~\ref{events-example} we can calculate the
+various penalizations and final scores for each day, by taking the highest
+possible score for event $i$ and penalizing it in the following manner:
+
+\begin{equation}
+  s_{e}(x,u) = b_e - (b_e - w_e) \cdot p_{x}(u)
+\end{equation}
+
+where $p_x$ is the penalization after $x$ days. $b_e$ and $w_e$ are the best
+and worst scores achievable for event $e$, respectivly. The final score
+$s_{e}(x,u)$ is presented for each event below:
+
+\begin{table}[h!]
+  \label{events-example}
+  \begin{tabular}{lm{2cm}lll}
+    \toprule
+    Num. days ($x$) & Event types & Penalization ($p_{x}(u)$) & Event scores & Highest score \\
+    \midrule
+    5   & 1,2,3 & 0.018   & 59.1, 79.64, 99.64 & 99.64 \\
+    10  & 1     & 0.1192  & 55.23              & 55.23  \\
+    15  & 1,2   & 0.5     & 50.0, 70.0         & 70.0 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+\marginpar{Perhaps represent this differently?}
+
+When selecting a score for user $u$ we select the highest valued one, in this
+case 99.64. In fact, we can optimize our algorithm by starting at the most
+recent events and not calculating scores for events types that yield a lower
+score than the current highest score. In the scenario above we could take all
+events on $x=5$, then taken the event type with highest maximum value (3) and
+ignored all other events. Note that this is only true if you have
+non-overlapping event type scores/intervals, as we have per
+Table~\ref{implicit-example-scores}.
 
 \subsection{Considering ordering of events}
 
