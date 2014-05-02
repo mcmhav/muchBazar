@@ -382,7 +382,7 @@ This approach is used to measure the user satisfaction of items in an recommende
 	MPR = \frac{\sum_{u,i}{r_{ui} * rank_{ui}}}{\sum_{u,i}{r_{ui}}}
 	\label{equation:mpr}
 \end{equation}
-How to calculate $MPR$ is shown in ~\ref{equation:mpr}.
+How to calculate $MPR$ is shown in~\ref{equation:mpr}.
 A list of all the items for user $u$ is ordered based on the rank $rank_{ui}$ of the $u$.
 Where $rank_{ui}$ is the percentile rank of item $i$ in this list for $u$.
 $rank_{ui} = 0$ means that $i$ is the most preferred item for $u$.
@@ -436,6 +436,15 @@ Where $k$ is the maximum amount of suggested items, and $rel_i$ is the graded re
 $IDCG_k$, from~\ref{equation:ndcg}, is the ideal $DCG_k$ value.
 This is the result list sorted on relevance.
 
+\subparagraph{Half-life utility~\cite{Breese:1998:EAP:2074094.2074100}}
+List of item
+Assume that the further down an item is in the list the less chance there is for that item to be viewed by the user.
+The rate of the decaying probability is exponential.
+\begin{equation}
+	R_a = \sum_{j}{\frac{max(v_{a,j}-d,0)}{2^{\frac{j-1}{\alpha-1}}}}
+\end{equation}
+
+
 % \subparagraph{Limitations}
 % todo maybe
 
@@ -467,6 +476,12 @@ Other evaluation methods worth knowing about includes confidence, trust, utility
 \subsubsection{Evaluation using Implicit Feedback}
 Accuracy metrics not suited for implicit feedback datasets, as they require
 knowing which items are undesired by a user~\cite{Hu2008}.
+
+\cite{deLace2011} used mpr and map
+\cite{Nati03weightedlow-rank} average squared difference
+\cite{Pan:2013:GGP:2540128.2540516} top-k evaluation metrics: precision, recall, F1, nDCG, ROC and 1-call
+\cite{Sindhwani:2010:OMC:1933307.1934641} - roc curve and precision-recall curve
+\cite{pan2008} -MAP, HLU
 
 %TODO - What evaluation measures are suited for implicit feedback, and why are traditional evaluation measures such as RMSE, ... not as suitable when working with implicit feedback?
 
