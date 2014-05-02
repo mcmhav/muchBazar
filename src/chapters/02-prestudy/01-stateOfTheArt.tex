@@ -1288,8 +1288,8 @@ The complete list is shown in~\ref{table:ConsumersPurchaseDec}
           - Function \\
         } \\ \hline
     \end{tabular}
+    \caption[Consumers' Purchase Decisions]{The attributes effecting the consumer when in the process of consuming products~\cite{dutton2006}}
     \label{table:ConsumersPurchaseDec}
-    \caption [Consumers' Purchase Decisions]{The attributes effecting the consumer when in the process of consuming products~\cite{dutton2006}}
 \end{table}
 
 The modern consumer finds pleasure with the consumption experience itself, not just the product, and this especially applies to the fashion domain.
@@ -1444,6 +1444,7 @@ checks out an item from there. It is not possible to be 100\% sure which user
 access the item from the collection\_viewed event, so this event is therefor
 not integrated into the session-stack.
 
+
 \subsection{One-Class Collaborative Filtering}
 \subsubsection{About}
 There are many applications where the feedback from a user is in binary form.
@@ -1482,42 +1483,49 @@ Another naive approach is to go in the opposite direction.
 Viewing all missing values as unknown, thereby only utilizing the known values when recommending, the predictions on the unknown values will only be positive.
 The data in an OCCF problem is also usually very sparse, therefore using only the positive examples will in many cases lead to an incomplete view of the data, and quality reduced recommendations.
 
-\paragraph{Weighted low rank approximation}
-\cite{pan2008}
+\paragraph{Weighted low-rank approximation}
+\cite{pan2008} \cite{Nati03weightedlow-rank}
 The idea behind this approach is to distribute different weights to the unknown values.
-More specifically, given two matrices, one rating matrix $R = SxC$ % \todo{0 or 1} where $S$ is a list of $m$ items, $S = {s_{1},...s_{m}}$ and $C$ is a list of $n$ users, $C = {c_{1}, ... c_{n}}$ and a corresponding weight matrix $W$% \todo{between 0 and 1} where $S$ is a list of $m$ items, $S = {s_{1},...s_{m}}$ and $CWz$ is a list of $n$ users, $C = {c_{1}, ... c_{n}}$.
-With these two matrices, weighted low rank approximation is meant to find a low rank matrix $X$, which minimizes the objective of a weighted Frobenius loss function. % \todo{reread}
+More specifically, given two matrices, one rating matrix $R = SxC$, where $S$ is a list of $m$ items, $S = {s_{1},...s_{m}}$ and $C$ is a list of $n$ users, $C = {c_{1}, ... c_{n}}$.
+$R$ has a corresponding weight matrix $W$, where $S$ is a list of $m$ items, $S = {s_{1},...s_{m}}$ and $CWz$ is a list of $n$ users, $C = {c_{1}, ... c_{n}}$.
+The values in $R$ are either 0 or 1, and the values in $W$ are between 0 and 1.
+With these two matrices, weighted low-rank approximation is meant to find a low rank matrix $X$.
+Done through the Frobenius norm, which is minimizing the sum squared differences to the target matrix~\cite{frobeniusNorm}.
+Other approaches to the weighting issue has been taken, such as low-density non-negative matrix factorization~\cite{Sindhwani:2010:OMC:1933307.1934641}.
 
 \begin{equation}
-J(X) = \sum_{mn} W_{mn}(R_{mn} - X_{mn})^2
-\label{equation:frobenius}
+    J(X) = \sum_{mn} W_{mn}(R_{mn} - X_{mn})^2
+    \label{equation:frobenius}
 \end{equation}
 
-Equation~\ref{equation:frobenius} can be optimized and solved efficiently though the use of wighted ALS~% \todo{cite}.
+Equation~\ref{equation:frobenius} can be optimized and solved efficiently though the use of wighted ALS~\citep{Koren2009}.
 The positive values are set to 1 in the $R$ matrix, and the negative set to 0.
 Since the positive values have a high certainty of being correct, the corresponding wight from the matrix $W$ is set to 1.
 For the unknown values the corresponding weight is set after a weighting schema.
 Where the weight is lowered for more certain negatives.
 This weight is between 0 and 1.
+Another approach to handling the
 
 \begin{table}[H]
     \centering
     \begin{tabular}{l|l|l}
-      \textbf{Schemes}      & \textbf{Pos Examples} & \textbf{Neg Examples} \\ \hline
-      Uniform               & $W_{ij} = 1$ & $W_{ij} = δ$ \\ \hline
-      User-Oriented         & $W_{ij} = 1$ & $W_{ij} \alpha \sum_{j} R_{ij}$ \\ \hline
-      Item-Oriented         & $W_{ij} = 1$ & $W_{ij} \alpha m - \sum_{j} R_{ij}$ \\ \hline
-      User-Item interaction & $W_{ij} = 1$ & $W_{ij} = 1$  \\
+      \emph{Schemes}      & \emph{Pos Examples} & \emph{Neg Examples} \\ \hline
+      Uniform               & $W_{mn} = 1$ & $W_{mn} = [0,1]$ \\ \hline
+      User-Oriented         & $W_{mn} = 1$ & $W_{mn} = UO(\sum_{n} R_{mn})$ \\ \hline
+      Item-Oriented         & $W_{mn} = 1$ & $W_{mn} = IO(m - \sum_{n} R_{mn})$ \\ \hline
+      User-Item interaction & $W_{mn} = 1$ & $W_{mn} = E(I)$  \\
     \end{tabular}
+    \caption[Weighting Schemes]{Different ways of weighting ratings suggested by \cite{pan2008}}
     \label{table:WeightingSchemes}
-    \caption[Weighting Schemes]{Different ways of weighting ratings suggested by}
 \end{table}
-% \todo{fixequations}
-% \todo{maybe explain the schemes better}
-% \todo{add cite}
 
-\paragraph{Negative example sampling}
-\cite{pan2008}
+Different weighting schemes are show in~\ref{table:WeightingSchemes}.
+The uniform approach considers all negative examples in the same way, and thereby assigns the same weight to all the negative examples.
+The user-oriented scheme assumes that if a user has more ratings, the negative examples can be weighted to be more negative.
+The item-oriented assumes that if there are more positive example for an item, the missing data is negative with a lower probability.
+The last scheme, the user-item interaction approach, takes into consideration the events on the item to be considered. For instance clicks and views.
+
+\paragraph{Negative example sampling~\cite{pan2008}}
 In many cases the missing values are in fact negative values.
 This approach will i most cases lead to a large rating matrix, and therefore high computational costs.
 Therefore, instead of using all the ratings in the ratings matrix $R$, only all the actual positive values are selected.
@@ -1525,55 +1533,53 @@ This is combined with a subset of the presumed negative values.
 This subset is based on a sampling probability matrix $P$.
 
 There are different sampling schemes.
-Using the same schemes as from the wighting scheme from weighted low rank approximation.
+Using the same schemes as from weighted low rank approximation.
 
-\paragraph{Em algorithms to predict negative examples}
-\cite{Nati03weightedlow-rank}
-% \todo{check out the approaches}
-PEBL: positive example based learning for web page classification using SVM
-Building text classifiers using positive and unlabeled examples
-Presence-only data and the EM algorithm
+% \paragraph{Em algorithms to predict negative examples}
+% \cite{Nati03weightedlow-rank}
+% % \todo{check out the approaches}
+% PEBL: positive example based learning for web page classification using SVM
+% Building text classifiers using positive and unlabeled examples
+% Presence-only data and the EM algorithm
 
-\paragraph{Low-density non-negative matrix factorization (ldNMF)}
-\cite{Sindhwani:2010:OMC:1933307.1934641}
-arg min
-J W, H, {y ij } (i,j)∈U =
-W ≥0,H≥0
-y ij ∈{0,1},(i,j)∈U
-λ W
-2
-F
-+ γ H
-2
-F
-C ij V (X ij , w i T h j )
-+
-(i,j)∈L
-C ij V (y ij , w i T h j )
-+
-(i,j)∈U
-% \todo{make equation}
-Equation.
-$R = SxC$ % \todo{0 or 1} is the rating matrix, where $S$ is a list of $m$ items, $S = {s_{1},...s_{m}}$ and $C$ is a list of $n$ users, $C = {c_{1}, ... c_{n}}$.
-$L$ is the set of positive ratings, while $U$ is the set of unlabeled rating.
-$W$ and $H$ are the latent factors.
-$V$ is a loss function (squared loss or generalized KL-divergence).
-$C$ is the entry specific costs.
-γ ≥ 0 and $λ$ tradeoff the regularizers againts the fata-fit terms.
+% \paragraph{Low-density non-negative matrix factorization (ldNMF)}
+% \cite{Sindhwani:2010:OMC:1933307.1934641}
+% arg min
+% J W, H, {y ij } (i,j)∈U =
+% W ≥0,H≥0
+% y ij ∈{0,1},(i,j)∈U
+% λ W
+% 2
+% F
+% + γ H
+% 2
+% F
+% C ij V (X ij , w i T h j )
+% +
+% (i,j)∈L
+% C ij V (y ij , w i T h j )
+% +
+% (i,j)∈U
+% % \todo{make equation}
+% Equation.
+% $R = SxC$ % \todo{0 or 1} is the rating matrix, where $S$ is a list of $m$ items, $S = {s_{1},...s_{m}}$ and $C$ is a list of $n$ users, $C = {c_{1}, ... c_{n}}$.
+% $L$ is the set of positive ratings, while $U$ is the set of unlabeled rating.
+% $W$ and $H$ are the latent factors.
+% $V$ is a loss function (squared loss or generalized KL-divergence).
+% $C$ is the entry specific costs.
+% γ ≥ 0 and $λ$ tradeoff the regularizers againts the fata-fit terms.
 
-\paragraph{Group Bayesian personalized ranking (GBPR)}
-\cite{Pan:2013:GGP:2540128.2540516}
+\paragraph{Group Bayesian personalized ranking (GBPR)~\cite{Pan:2013:GGP:2540128.2540516}}
 Utilizing rich user interaction.
-Group preference is the preference score of a group of user on an item. % \todo{equation}
+Group preference is the preference score of a group of user on an item.
 GBPR assumes that the group preference is stronger than the observed user preference.
-GBPR =
-tr j∈I tr I tr
-u∈U tr i∈I u
-u
-P r(ˆ
-r Gui > r ˆ uj )[1 − P r(ˆ
-r uj > r ˆ Gui )], (3)
-equation.
 
-\paragraph{Incorporating Rich User Information}
-\cite{deLace2011}
+\paragraph{Incorporating Rich User Information~\cite{deLace2011}}
+When dealing with implicit feedback extra information is usually available regarding the user and item.
+For instance search query, click history, view time and purchase history.
+Two ways of incorporating this information has been proposed in~\cite{deLace2011}.
+One is through linearly combining cores from the different sources, and the other is through embedding user information into collaborative filtering.
+
+\subsubsection{Discussion}
+%mtodo discuss
+

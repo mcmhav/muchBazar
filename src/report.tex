@@ -28,8 +28,10 @@
 \usepackage{pbox}     % Can be used in tables to have multiple lines in one box
 \usepackage{multirow} % Span a row over multiple rows
 \usepackage{amssymb}
+\usepackage{silence} % remove annoying warnings from minitoc
+\WarningFilter{minitoc(hints)}{}
 %\usepackage[dvipsnames]{xcolor}
-
+\pgfplotsset{compat=1.9} % suggested by latex to handle some compatibility warnings
 \pagestyle{headings} % Footer is blank, header displays information according
 % to document class (e.g., section name) and page number top right.
 
