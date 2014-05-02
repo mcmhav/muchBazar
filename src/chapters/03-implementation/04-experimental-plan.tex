@@ -9,10 +9,30 @@
 
 In addition to evaluate the methods on the Sobazar dataset we want to make sure that our solution generalizes beyond our experimental dataset, in accordance to the general guidelines for experimental studies \ref{Shani2011}.
 
-Most public datasets contain explicit feedback
+The data used for offline evaluation should match as closely as possible the data we expect the recommender system to face when it is deployed \cite{Gunawardana2009}. However, most publicly available datasets are not collected from e-commerce sites and does therefore not contain user browsing history, purchases etc. 
 
-How to select datasets:
+
+Natural to assume that the number of users on Sobazar will increase as they system \emph{officially} goes live.
+
+%Always a possibility to reduce the size of datasets by removing some ratings...
+
+
+
+
+When selecting datasets for evaluation we focused on the following dataset properties:
+
 \begin{itemize}
+<<<<<<< HEAD
+	\item Size of dataset: Preferable as close as possible to Sobazar in terms of number of ratings, users and items.
+	\item Type of user feedback: Preferably implicit, as it allows us to test our implicit feedback to implicit rating function.
+	\item Domain: E-commerce datasets with purchase history would be most relevant.
+	\item Precence of features: To evaluate hybrid methods?
+\end{itemize} 
+
+
+
+
+=======
 \item Size of dataset:
 \item Domain:
 \item Precence of features
@@ -22,12 +42,100 @@ How to select datasets:
 %Most datasets contain explicit feedback
 %Size which is close to what we imagine the final system
 %E-commerce datasets with purchase history would be the most relevant...
+>>>>>>> 138678fd09f4d64674f752e2ba4df8b37f01befb
 
 \subsection{Dataset 1}
-\subsection{Dataset 2}
+
+Rossmann dataset?
+%General statistics and averages
+%Interesting findings/properties
+%Was cleaning neccesary?
+%How was the methods evaluated on the dataset?
+%	- x-fold cross validation
+
+\subsection{MovieLens 1M}
+
+As our second dataset we have chosen the MovieLens 1M dataset. The dataset contain 1,000,209 anonymous ratings on approximately 3,706 movies (The readme mentions 3900 movies) made by 6040 users. User features included age, gender, occupation and zipcode, item features include movie genre. Each user included in the dataset have provided a minimum of 20 ratings. The average rating given to movies in the dataset is $3.58$. There are 18 different genres in the dataset, but each movie can have multiple genres assigned to it, of which there are 498 different combinations in the dataset.
+
+\begin{table}
+\centering
+\begin{tabular}{|l|l|}
+\hline
+Male & Female \\ \hline
+4331 & 1709 \\ \hline
+\end{tabular}
+\caption{MovieLens Gender Distribution}
+\end{table}
+
+\begin{table}
+\centering
+\begin{tabular}{|l|l|l|l|l|l|l|}
+\hline
+Under 18 & 18-24 & 25-34 	& 35-44 	& 45-49 & 50-55 & 56+ \\ \hline
+222		 &	1103 &	2096	&	1193	& 550	& 496	& 380 \\ \hline
+\end{tabular}
+\caption{MovieLens Age Group Distribution}
+\end{table}
+
+\begin{table}
+\centering
+\begin{tabular}{|l|l|}
+\hline
+Other/not specified  & 711  \\ \hline
+Academic/Educator  & 528  \\ \hline
+Artist  & 267 \\ \hline
+Clerical/Admin & 173 \\ \hline
+College/Grad student  & 759 \\ \hline
+Customer service & 112 \\ \hline
+Doctor/Health care & 236 \\ \hline
+Executive/Managerial & 679 \\ \hline
+Farmer & 17 \\ \hline
+Homemaker & 92 \\ \hline
+K-12 student & 195 \\ \hline
+Lawyer & 129 \\ \hline
+Programmer & 388 \\ \hline
+Retired & 142 \\ \hline
+Sales/Marketing & 302 \\ \hline
+Scientist & 144 \\ \hline
+Self-employed & 241 \\ \hline
+Technician/Engineer & 502 \\ \hline
+Tradesman/Craftsman & 70 \\ \hline
+Unemployed & 72 \\ \hline
+Writer & 281 \\ \hline
+\end{tabular}
+\caption{MovieLens Occupation Distribution}
+\end{table}
+
+
+%TODO - How to evaluate using this dataset
+% 5-fold cross validation...
+
 \subsection{Sobazar Data}
 
+%Highlight limitations of the sobazar dataset for evaluation.
+	%-> Implications for evaluation
+	
+%How to evaluate using this dataset
+%	- x-fold cross validation
 
+\subsection{Summary}
+
+%Some fancy tables n stuff
+
+%TODO - What else is interesting to know? Rating scale, average number of ratings per user, number of cold start users...
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|l|l|l|l|l|}
+    \hline
+	Dataset			& 	Ratings 	& 	Users	& 	Items 	& 	Sparsity 	\\ \hline
+	Sobazar 		& 	15,252  	& 	1,235	&	3,386	&	99.65599	\\ \hline
+	Movielens 1M	& 	1,000,029   &	6040 	&	3706	&	95.53164	\\ \hline
+	Dataset 2 		& 	-  			& 	-		&	-		&	-			\\ \hline
+    \end{tabular}
+    \label{table:datasets}
+    \caption [Overview of the datasets used for evaluation]{Overview of the datasets used for evaluation}
+\end{table}
 
 
 \section{Simulating the cold-start problem}
@@ -39,3 +147,9 @@ How to select datasets:
 
 
 \subsection{Evaluation Metrics}
+<<<<<<< HEAD
+
+
+
+=======
+>>>>>>> 138678fd09f4d64674f752e2ba4df8b37f01befb
