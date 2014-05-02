@@ -747,7 +747,7 @@ averaging in the case where the item appear in both $TR_{u}$ and $CF_{u}$.
 The top-N items with the highest value of $\hat{u}(c,s)$ will be returned as
 the top-N recommended items. The authors also experimented with weighted
 averaging in the case where the item appear in both $TR_{u}$ and $CF_{u}$.
-Their approaches showed great improvements in recall for cold-start users, 
+Their approaches showed great improvements in recall for cold-start users,
 improving the performance by 50\% over standard CF methods. The main
 improvements however, are the coverage of the trust-based approaches, while
 still maintaining the same or even slightly better precision than the standard
@@ -1062,7 +1062,7 @@ of the system after the interview process than user effort. It is also worth
 noting that calculating entropy using implicit ratings is tricky, since the
 rating distribution does not range from dislike to like. We can therefore not
 find \emph{high-entropy} or \emph{controversial} items which users either tend
-to like or dislike, as we have no data about items users dislike 
+to like or dislike, as we have no data about items users dislike
 We are also currently constrained to unobtrusively learn user-profiles from the
 natural interactions of users with the system, meaning that we can not require
 the user to rate e.g. 10 items before we can start providing recommendations,
@@ -1295,7 +1295,7 @@ The complete list is shown in~\ref{table:ConsumersPurchaseDec}
 The modern consumer finds pleasure with the consumption experience itself, not just the product, and this especially applies to the fashion domain.
 The purchase is often not done by need, but for pleasure.
 
-\paragraph{Consumer buying behavior.}
+\paragraph{Consumer buying behavior}
 A lot of information about the consumers behavior is lost due to the reasons for their behavior is held in an unconscious or implicit level.
 The reason for a person is interested in a specific product could be based on some distant memory of the consumers life.
 This could affect how a consumer views a particular brand or product for good or worse.
@@ -1313,7 +1313,7 @@ The brand of the product might also greatly affect what the consumer buys and wh
 A study done on the behavior on the consumer~\cite{deLace2011} showed that knowing the brand of two almost identical products made the consumer crowd shift towards the more well know brand.
 Whereas before knowing the actual brand of the product, the crowd had a more equal distribution on the products.
 
-\paragraph{Customer satisfaction.}
+\paragraph{Customer satisfaction}
 There are two main concepts when it comes to customer satisfaction:
 Transaction specific and cumulative specific.
 The transaction specific satisfaction of the consumer is base on the expectations in the pre-purchase stage and the perceived performance of the product in the post-purchase stage.
@@ -1323,7 +1323,7 @@ The transaction specific focuses on the post-purchase, if the expectations of th
 \subsubsection{Challenges}
 There is a set of challenges when it comes to making recommendations in the fashion domain compared to other domains.
 
-\paragraph{Recentness of items.}
+\paragraph{Recentness of items}
 As seen from the different definitions of fashion, time is central in fashion.
 Therefore is time also central when it comes to making recommendations in this domain.
 What is of interest for the customer one month might not be of interest the next.
@@ -1331,7 +1331,7 @@ The interest of the customer is not only affected by what is categorized as curr
 The recentness of an item and how long an item is of interest for a customer is greatly affected by the customers social groups, and the trend in this group.
 % \todo{no universal lifespan of an item, satisfied with the newly introduced items from the stores?}
 
-\paragraph{How to use user feedback.}
+\paragraph{How to use user feedback}
 The feedback from the user will mainly be implicit~\ref{sec:implicit}.
 As seen earlier in this section, it can be assumed that an increased interest in an item have some correlation with increased interacting with the item.
 To what degree this increased interest can be mapped to a more substant % \todo{checkout substance/ (substanse, mer fast/solid/handfast)} feedback varies from customer to customer.
@@ -1340,7 +1340,7 @@ How the item interaction feedback retrieved will be used is explored in~\ref{sec
     %       - Item category, item keywords, brand... ?
 %   - Changing interest of users
 
-\paragraph{Product semantics.}
+\paragraph{Product semantics}
 The product database consist of items from multiple stores with multiple languages and multiple ways of labeling, describing and categorizing their products.
 This poses an issue for recommending items based on their content.
 % \todo{extend?, make own content-based for out system subsection in the prestudy?}
@@ -1375,7 +1375,8 @@ A recommender system called SuitUp~\cite{SuitUp} did a survey on some of their p
 One interesting finding was that many of the users enjoyed the Hot-or-Not feature of the system.
 This feature gives the user a set of items and the option to either like or dislike.
 
-\paragraph{Trust based}
+% todo
+% \paragraph{Trust based}
 
 
 
@@ -1457,7 +1458,7 @@ Which makes it difficult to identify what is what.
 Recommendations, through finding the missing positives, done on these types of data is usually thought of as one-class collaborative filtering (OCCF).
 OCCF can be viewed as an extreme case of class imbalance, in which the balance is only distributed over one class. % \todo{checkout Extreme re-balancing for svms: a case study maybe}
 
-\paragraph{Common OCCF Scenarios.}
+\paragraph{Common OCCF Scenarios}
 Some of the most common scenarios where the OCCF problems occurs are:
 Bookmarking, click history, product purchase, "like" and news reader.
 The data produced from user feedback from all these scenarios can be on the binary form.
@@ -1465,24 +1466,25 @@ The data produced from user feedback from all these scenarios can be on the bina
 \subsubsection{Different approaches}
 To handle the problem with the sparse data mixed with the ambiguous missing data, several strategies has been proposed.
 
-\paragraph{Negative ratings.}
+\paragraph{Negative ratings}
 Since one of the main issues are with the missing data, a natural approach would be to gather more.
 One way of doing so is by asking the user to rate more items.
 This can be done through forcing the user to rate a set of predetermined items and/or produce negative ratings to uninteresting items.
-The issue with this approach is that putting the rating burden onto the user has shown to produce negative user experience. % \todo{reference}
+The issue with this approach is that putting the rating burden onto the user has shown to produce negative user experience~\cite{Kelly:2003:IFI:959258.959260}
 
-\paragraph{All missing as negative (AMAN).}
+\paragraph{All missing as negative (AMAN)}
 One naive approach is to view all the missing values as negative values.
 Thereby saying all web pages ignored by the user are unwanted pages.
 One issue with this approach is that it will render examples which are positive, but unknown, as false negatives.
 
-\paragraph{All missing as unknown (AMAU).}
+\paragraph{All missing as unknown (AMAU)}
 Another naive approach is to go in the opposite direction.
 Viewing all missing values as unknown, thereby only utilizing the known values when recommending, the predictions on the unknown values will only be positive.
 The data in an OCCF problem is also usually very sparse, therefore using only the positive examples will in many cases lead to an incomplete view of the data, and quality reduced recommendations.
 
-\paragraph{Weighted low rank approximation.} % \todo{cite}}
-The idea behind this approach is to distribute different weights too the unknown values.
+\paragraph{Weighted low rank approximation}
+\cite{pan2008}
+The idea behind this approach is to distribute different weights to the unknown values.
 More specifically, given two matrices, one rating matrix $R = SxC$ % \todo{0 or 1} where $S$ is a list of $m$ items, $S = {s_{1},...s_{m}}$ and $C$ is a list of $n$ users, $C = {c_{1}, ... c_{n}}$ and a corresponding weight matrix $W$% \todo{between 0 and 1} where $S$ is a list of $m$ items, $S = {s_{1},...s_{m}}$ and $CWz$ is a list of $n$ users, $C = {c_{1}, ... c_{n}}$.
 With these two matrices, weighted low rank approximation is meant to find a low rank matrix $X$, which minimizes the objective of a weighted Frobenius loss function. % \todo{reread}
 
@@ -1514,7 +1516,8 @@ This weight is between 0 and 1.
 % \todo{maybe explain the schemes better}
 % \todo{add cite}
 
-\paragraph{Negative example sampling }% \todo{cite}.}
+\paragraph{Negative example sampling}
+\cite{pan2008}
 In many cases the missing values are in fact negative values.
 This approach will i most cases lead to a large rating matrix, and therefore high computational costs.
 Therefore, instead of using all the ratings in the ratings matrix $R$, only all the actual positive values are selected.
@@ -1524,13 +1527,15 @@ This subset is based on a sampling probability matrix $P$.
 There are different sampling schemes.
 Using the same schemes as from the wighting scheme from weighted low rank approximation.
 
-\paragraph{Em algorithms to predict negative examples} % \todo{ref}.}
+\paragraph{Em algorithms to predict negative examples}
+\cite{Nati03weightedlow-rank}
 % \todo{check out the approaches}
 PEBL: positive example based learning for web page classification using SVM
 Building text classifiers using positive and unlabeled examples
 Presence-only data and the EM algorithm
 
-\paragraph{Low-density non-negative matrix factorization (ldNMF).}~% \todo{cite}}
+\paragraph{Low-density non-negative matrix factorization (ldNMF)}
+\cite{Sindhwani:2010:OMC:1933307.1934641}
 arg min
 J W, H, {y ij } (i,j)∈U =
 W ≥0,H≥0
@@ -1556,7 +1561,8 @@ $V$ is a loss function (squared loss or generalized KL-divergence).
 $C$ is the entry specific costs.
 γ ≥ 0 and $λ$ tradeoff the regularizers againts the fata-fit terms.
 
-\paragraph{Group Bayesian personalized ranking (GBPR).}~% \todo{cite}}
+\paragraph{Group Bayesian personalized ranking (GBPR)}
+\cite{Pan:2013:GGP:2540128.2540516}
 Utilizing rich user interaction.
 Group preference is the preference score of a group of user on an item. % \todo{equation}
 GBPR assumes that the group preference is stronger than the observed user preference.
@@ -1569,5 +1575,5 @@ r Gui > r ˆ uj )[1 − P r(ˆ
 r uj > r ˆ Gui )], (3)
 equation.
 
-\paragraph{Incorporating Rich User Information. }% \todo{cite}}
-
+\paragraph{Incorporating Rich User Information}
+\cite{deLace2011}
