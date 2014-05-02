@@ -356,7 +356,7 @@ matrix.
 
 A term \emph{hybrid recommender systems} is used to describe any recommender
 system that combines multiple recommendation techniques together to provide
-recommendations. Burke et. al. \cite{Burke2002} identified seven different
+recommendations. Burke et al. \cite{Burke2002} identified seven different
 classes of hybrid recommender systems:
 
 \begin{itemize}
@@ -451,7 +451,7 @@ precautions to discourage such kind of manipulation.
 
 \paragraph{Explanations / Transparency}
 
-Tintarev et. al. \cite{Tintarev2007} lists seven roles a that can be played by explanations in recommender systems:
+Tintarev et al. \cite{Tintarev2007} lists seven roles a that can be played by explanations in recommender systems:
 
 \begin{itemize}
 \item Transparency: Explaining how the system works
@@ -593,12 +593,12 @@ assessment task to users themselves. E.g. \emph{Ebay.com} allows users to
 express their level of satisfaction after every interaction with another user.
 Trust relationships of users are often employed in order to correlate more
 potential raters for the active users who require recommendations
-\cite{Massa2004, Massa2007}. Massa et. al. \cite{Massa2004} also show that some
+\cite{Massa2004, Massa2007}. Massa et al. \cite{Massa2004} also show that some
 of the weaknesses of recommender systems such as data sparseness and their
 susceptibility to shilling attacks could be alleviated by incorporating trust.
 
 % The formals
-In \cite{Massa2004}, Massa et. al. proposes a Trust-Aware recommender system
+In \cite{Massa2004}, Massa et al. proposes a Trust-Aware recommender system
 architecture.  To capture all the trust statements we need a $CxC$ matrix,
 where $C$ is the number of users, since each user is allowed to express a trust
 value in every other user. This matrix will make up our trust network among the
@@ -668,7 +668,7 @@ would get a trust value of $(4-1+1)/4 = 1$, while the user at distance 2 (D)
 would get a predicted trust value of $(4-2+1)/4 = 0.75$. Meaning that we will
 have a linear decay in trust based on the distance from the source user.
 
-Massa et. al. \cite{Massa2007} experimented with both local and global trust
+Massa et al. \cite{Massa2007} experimented with both local and global trust
 metrics. They used the PageRank algorithm as a global trust metric. PageRank
 tries to infer the authority of every single user by examining the structure of
 the network. The algorithm follows a simple idea: if a link from user $A$ to
@@ -701,7 +701,7 @@ calculate the predicted ratings.
 % Using a Trust Network to Improve Top-N Recommendation
 
 
-Jamali et. al. \cite{Jamali2009} propose two different methods for getting
+Jamali et al. \cite{Jamali2009} propose two different methods for getting
 around the cold-start user problem using a trust network. Their first approach
 called \emph{Random Walk} only utilize the trust network to provide
 recommendations. Starting from the active user $u$, we perform a random walk on
@@ -747,7 +747,7 @@ CF methods.
 % Article Comments:
 %   Requires user involvement (explicitly express trust) - is this a acceptable?
 
-%Massa et. al. \cite{Massa2004, Massa2007} propose using trust information
+%Massa et al. \cite{Massa2004, Massa2007} propose using trust information
 %explicitly expressed by the users. Users are allowed to state how much they
 %consider every other user trustworthy that, in the context of recommender
 %systems, is related to how much they consider the ratings provided by a certain
@@ -759,7 +759,7 @@ CF methods.
 %   - Requires no additional information such as product details, demographic information about userstrus
 
 
-Papagelis et. al. \cite{Papagelis2005} proposed to alleviate sparsity using
+Papagelis et al. \cite{Papagelis2005} proposed to alleviate sparsity using
 trust inferred from user-user similarity. This approach does therefore not
 require users to explicitly express their trust in other users, unlike the
 approaches described above, the trust information is inferred from the
@@ -812,11 +812,11 @@ level of $99.9\%$ the 2-HOP CF (friend of friends) increased the MAE
 performance by $17\%$ over standard CF methods.
 
 %TODO - READ: A Matrix Factorization Technique with Trust Propagation for Recommendation in Social Networks
-%Jamali et. al. propose a technique for incorporating trust using matrix factorization, called SocialMF.
+%Jamali et al. propose a technique for incorporating trust using matrix factorization, called SocialMF.
 %Leverage regularization model to fusing the one mode data by minimizing the gap between the taste of a user and the taste of her trusted friends
 %In their model, the users which have not expressed any ratings feature vectors will be learned to be close to their trusted neighbors.
 
-Victor et. al. \cite{Victor2008} points out that cold-start users not only have
+Victor et al. \cite{Victor2008} points out that cold-start users not only have
 expressed few ratings, but also typically have expressed trust in few users. In
 order for trust-aware recommenders to help cold-start users they need to have
 expressed trust in atleast one user. But choosing who to connect to is often a
@@ -831,7 +831,7 @@ cold-start user than connecting to a random user.
 
 % Na¨ıve Filterbots for Robust Cold-Start Recommendations
 
-Park et. al. \cite{Park2006} propose using filterbots to improve the cold-start
+Park et al. \cite{Park2006} propose using filterbots to improve the cold-start
 performance of collaborative filtering methods. Their filterbots are a varition
 of RipperBots, described in detail in \cite{Good1999}. A filterbot is an
 automated agent that rates all or most items using information filtering (IF)
@@ -855,7 +855,7 @@ the datasets with a high degree of sparsity.
 
 % Wisdom of the Better Few: Cold Start Recommendation via Representative based Rating Elicitation
 
-Liu et. al. \cite{Liu2011} propose an approach in which they elect a few
+Liu et al. \cite{Liu2011} propose an approach in which they elect a few
 representative users and items. The representative set should represent a set
 of active users or items who well represent the entire population but with
 little taste overlap. In their approach they wish to find a rank-k
@@ -882,7 +882,7 @@ and items to be \emph{folded in}.
 
 % Getting to Know You: Learning New User Preferences in Recommender Systems
 
-As pointed out by Rashid et. al. \cite{Rashid2002}, the most direct way of
+As pointed out by Rashid et al. \cite{Rashid2002}, the most direct way of
 acquiring information for use in personalized recommendations from a new users
 is to present item for the user to rate. However, they argue that the system
 must be careful to present useful items to garner information. A food
@@ -914,7 +914,7 @@ The authors found Popularity and balanced strategies to perform the best. Their
 recommendation for an e-commerce recommender is to start recommending the most
 popular items, rather than the highest rated ones, and then use item-item
 strategies to personalize the recommendations as quickly as possible. This
-study was later extended by Rashid et. al. \cite{Rashid2008} where they more
+study was later extended by Rashid et al. \cite{Rashid2008} where they more
 closely examined information theoretic strategies for item selection. In the
 article they introduced three new strategies, which again was evaluated based
 on user effort and accuracy:
@@ -934,7 +934,7 @@ information theoretic approaches.\linebreak[4]
 
 % User effort vs. accuracy in rating-based elicitation
 The question then, is how many items you should ask a user to rate. Cremonesi
-et. al. \cite{Cremonesi2012} performed a set of experiments where they looked
+et al. \cite{Cremonesi2012} performed a set of experiments where they looked
 at the trade-off between user-effort and accuracy. More specifically, how many
 ratings are enough to provide good quality recommendations to new users? The
 authors conclusion is that between 5 and 20 ratings are optimal for the movie
@@ -971,7 +971,7 @@ weight matrices.
 
 % Regression-based Latent Factor Models
 
-Agarwal et. al. \cite{Agarwal2009} propose a class of latent factors models
+Agarwal et al. \cite{Agarwal2009} propose a class of latent factors models
 called regression-based latent factor model (RLFM) that incorporates both
 user/item features and past interaction data into a single model. Their
 approach utilizes features of items and users as the prior distribution for
@@ -1017,7 +1017,7 @@ cluster membership score of of item $j$ to the $K$ different latent topics.
 % Matchbox: Large Scale Bayesian Recommendations
 % 	Online algorithm
 
-Stern et. al. \cite{Stern2009} presents a probabilistic model called Matchbox.
+Stern et al. \cite{Stern2009} presents a probabilistic model called Matchbox.
 The system makes use of content information in the form of user and item
 meta-data in combination with collaborative filtering information from previous
 user behavior in order to predict the value of an item for a user. Much like
@@ -1046,7 +1046,7 @@ in 0.25s using Approximate KD Trees.
 %	k-NN worked best with MORE features than the linear mapping functions
 %	Code can be found at: ismll.de/mymedialite
 
-Gantner et. al. \cite{Gantner2010} propose a method on how to map additional
+Gantner et al. \cite{Gantner2010} propose a method on how to map additional
 information such as user and item features to the latent features of a matrix
 (or higher dimensional) factorization model. At the core of their approach is a
 standard factorization model, optimized to the recommendation task. The
@@ -1085,7 +1085,7 @@ yields accuracy comparable to state-of-the-art methods.
 \paragraph{Trust-aware recommenders}
 
 %Summarize results
-Massa et. al. \cite{Massa2007} found trusted users to be good predictors. When
+Massa et al. \cite{Massa2007} found trusted users to be good predictors. When
 looking at directly trusted users they improved the MAE from 1.094 using
 traditional collaborative filtering to 0.674 for cold-start recommendations. By
 propagating the trust they were able to drasticly increase the coverage. The
@@ -1093,9 +1093,9 @@ average number of directly trusted users were 9.88, while the average number of
 comparable users using the pearson correlation factor was 160.73. Propagating
 at a distance of 2 it is possible to reach 399.89 users, increasing it to 3 and
 4 respectively it is possible to reach respectively 4,386.32 and 16,033.94
-users. Jamali et. al. \cite{Jamali2009} got even better results with their
+users. Jamali et al. \cite{Jamali2009} got even better results with their
 \emph{Trustwalker} approach by combining trust-based and item-based
-recommendations. Massa et. al. \cite{Massa2004} also argue that it is more
+recommendations. Massa et al. \cite{Massa2004} also argue that it is more
 useful for a recommender system to ask for one trust statement than asking for
 one rating for new users.
 
@@ -1118,7 +1118,7 @@ being scalability challenges and the added complexity to the system.
 \paragraph{Interview Process}
 
 %Summarize results
-Rashid et. al. \cite{Rashid2008} got the best results using information
+Rashid et al. \cite{Rashid2008} got the best results using information
 theoretic approaches and argues that simpler methods such as most popular is
 likely to worsen the prefix bias. The authors found Information Gain through
 Clustered Neighbours (IGCN) to have the best performance overall, which scored
@@ -1173,7 +1173,7 @@ all these items.
 \paragraph{Filterbots}
 
 %TODO - Summarize results
-Park et. al. \cite{Park2006} clearly demonstrated the robustness of their Naive
+Park et al. \cite{Park2006} clearly demonstrated the robustness of their Naive
 Filterbot compared to item-based and user-based approaches in all three
 cold-start scenarios. The results in \cite{Agarwal2009, Agarwal2010} also shows
 that the Naive Filterbots performance is very close to the state-of-the-art
@@ -1189,7 +1189,7 @@ and coding them would require some engineering effort, and involve some testing
 to validate your bots.
 
 %TODO - Scalability & Final Verdict
-Park et. al. \cite{Park2006} claim that the added computational complexity of
+Park et al. \cite{Park2006} claim that the added computational complexity of
 adding seven global bots is almost negligible. The downside of this approach is
 the additional engineering effort required and the fact that it's performance
 is not on pair with the more sophisticated latent factor methods.
