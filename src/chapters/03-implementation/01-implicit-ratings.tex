@@ -1,3 +1,5 @@
+% !TEX root = ../../report.tex
+
 \section{Generating implicit ratings}
 
 As discussed in Section~\ref{implicit-feedback} we can generate ratings based
@@ -8,6 +10,7 @@ methods for generating (implicit) ratings based on these logs we can create
 common recommender systems models and recommend items without the user actively
 taking part of the process.
 
+\ref{levels-frequency}
 \subsection{Levels of frequency, with global popularity}
 
 Considering the weaknesses presented in Section~\ref{levels-frequency}, namely
@@ -45,24 +48,237 @@ is a mathematical function having an "S" shape and a common special case of the
 more general sigmoid-function. In its most simplest case the logistic function
 is defined as:
 
-\begin{figure}[h!]
-  \center
-  \begin{tabular}{m{5cm}c}
-    \toprule
-    \begin{equation*}
-      f(x) = \frac{1}{1+\exp^{-x}}
-    \end{equation*}
-  &
+% Vertical alignment of equation and plot.
+\begin{figure}[H]
+  \noindent\begin{minipage}{.45\textwidth}
+    \centering
     \begin{tikzpicture}
-      \begin{axis}[width=190pt,axis x line=middle, axis y line=center, tick align=outside]
-        \addplot+[mark=none,smooth] (\x,{sin(\x r)});
+      \begin{axis}
+      \addplot[black,xlabel=$x$,ylabel=$f(x)$] {1/(1+exp(-x))};
       \end{axis}
     \end{tikzpicture}
-  \end{tabular}
+  \end{minipage}
+  \begin{minipage}{.45\textwidth}
+  \begin{align}
+    \label{logistic-function}
+    f(x) = \frac{1}{1+\exp^{-x}}
+  \end{align}
+  \end{minipage}
+  \caption{Logistic function having a S-shape with y-values ranging
+  from 0 to 1.}
 \end{figure}
+
+Here the value of $f(x)$ is asymptotically limited between 0 and 1, dependent
+on the value of $x$. The steepest point of the curve happens when $x=0$. By
+adjusting the exponent of $e^(-x)$ we can skew the curve in order to map to our
+data, giving us a \textit{function of relevancy} ranging from an item being
+very relevant ($f(x)=0$) and not relevant ($f(x)=1$).
+
+By adding two variables to the logistic function we can fine tune both the
+steepness and range of $f(x)$. Hence we adjust Equation~\ref{logistic-function}
+to include $s$, the \textit{steepness coefficient}, and $r$, the \textit{shift
+coefficient}. By default these are $1$ and $0$ respectively, but by adjusting
+$s$ closer to 0 we decrease the steepness, creating a more gradual curve.
+Setting the $r$ to a larger number we shift the steepest point of the curve to
+$x=r$, hence if we set $r$ to $20$, the steepest point (largest acceleration)
+in our curve would be located when $x=20$.
+\marginpar{show equation using these coefficients}
 
 \subsection{Considering number of days since event}
 
+In order to better understand the usage of the logistic function, we consider
+an example event log.
+%We are considering the following event log for user $u$ on product $p$, where
+%our goal is to give a implicit rating based on different event types and the
+%number of days between events.
+
+\begin{table}[H]
+  \centering
+  \label{events-example}
+  \begin{tabular}{p{4cm}m{3cm}}
+    \toprule
+    Number of days since most recent event & Unique event types \\
+    \midrule
+    5 & 1,2,3 \\
+    10 & 1 \\
+    15 & 1,2 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+As discussed in Section~\ref{implicit-feedback} and
+Section~\ref{levels-frequency} we will use levels of frequency to order or
+event types by scores, or rather importance. But, instead of sampling scores
+between a given range we use a interval start and stop value - and use the
+whole range of float values in this interval as possible scores. We can
+imagine, for the purpose of this example that we have the following score
+intervals:
+
+\begin{table}[H]
+  \centering
+  \label{implicit-example-scores}
+  \begin{tabular}{lll}
+    \toprule
+    Event type & Min. score & Max. score \\
+    \midrule
+    1 & 20 & 60 \\
+    2 & 60 & 80 \\
+    3 & 80 & 100 \\
+    \bottomrule
+  \end{tabular}
+  \caption{Example of a scoring scheme using continious scores between a min.
+  and max value as possible implicit scores}
+\end{table}
+
+\marginpar{\textbf{todo}: do evaluation on different schemes}
+As discussed earlier, the way we assign these scores is at the moment fairly
+naive, some results using various schemes are given in Section~\ref{}. The main
+thing to note is that we use non-overlapping intervals in order to do various
+optimizations in our algorithms and also that the interval for the most common
+event (typically a product click or similar) is $3x$ as big as our higher
+valued event types. This is done in order to create a larger differentiation
+of scores between events of same type in the same time space.
+
+Using the events in Table~\ref{events-example} we set our shift coefficient $r$
+to $14.0$, and the steepness coefficient $s$ to $0.4$ in order to both match
+our domain specific goals (short life span of products and seasonal activity)
+and get a good spread in final ratings as our dataset is small. This yields the
+following logistic function:
+
+\begin{figure}[h!]
+  \centering
+  \begin{tikzpicture}
+    \begin{axis}[
+      ymin=0,ymax=1,
+      xmin=0,xmax=30,
+      xlabel=Number of days since most recent event for user $u$,
+      ylabel=Penalization $f(x)$,
+      extra x ticks={5,10,15},
+      extra tick style={grid=major}
+    ]
+    \addplot[
+    black,
+    xlabel=$x$,
+    ylabel=$f(x)$,
+    domain=0:30]
+    {1/(1+exp(-0.4*(x-15)))};
+    \end{axis}
+  \end{tikzpicture}
+\end{figure}
+
+As one can see, an event happening 15 days after the most recent event for user
+$u$ will get a penalization of $0.5$ whilst an event with $x=5$ recieves
+$0.018$. Following up on Table~\ref{events-example} we can calculate the
+various penalizations and final scores for each day, by taking the highest
+possible score for event $i$ and penalizing it in the following manner:
+
+\begin{equation}
+  s_{e}(x,u) = b_e - (b_e - w_e) \cdot p_{x}(u)
+\end{equation}
+
+where $p_x$ is the penalization after $x$ days. $b_e$ and $w_e$ are the best
+and worst scores achievable for event $e$, respectivly. The final score
+$s_{e}(x,u)$ is presented for each event below:
+
+\begin{table}[H]
+  \centering
+  \label{events-example}
+  \begin{tabular}{llm{2cm}ll}
+    \toprule
+    Num. days ($x$) & Event types & Penalization $p_{x}(u)$ & Scores & Highest score \\
+    \midrule
+    5   & 1,2,3 & 0.018   & 59.1, 79.64, 99.64 & \textbf{99.64} \\
+    10  & 1     & 0.1192  & 55.23              & 55.23  \\
+    15  & 1,2   & 0.5     & 50.0, 70.0         & 70.0 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+\marginpar{Perhaps represent this differently?}
+
+When selecting a score for user $u$ we select the highest valued one, in this
+case 99.64. In fact, we can optimize our algorithm by starting at the most
+recent events and not calculating scores for events types that yield a lower
+score than the current highest score. In the scenario above we could take all
+events on $x=5$, then taken the event type with highest maximum value (3) and
+ignored all other events. Note that this is only true if you have
+non-overlapping event type scores/intervals, as we have per
+Table~\ref{implicit-example-scores}. We can now normalize $s$ and get a rating
+$r$ between $a$ and $b$ by using the following equation, knowing that $X_{max}
+= 100$ and $X_{min} = 0$:
+
+\begin{equation}
+  \label{eq-normalization}
+  X' = a + \frac{(X-X_{min})\cdot(b-a)}{X_{max}-X_{min}}
+\end{equation}
+
+Setting $a$ to 0 and $b$ to 5, as is common in recommender systems we get the
+rating $X' = 4.982$ when $s = 99.64$. Intuitivly this makes sense, if we assume
+event type 3 to be the highest valued event in our system it would be
+equivalaent to a user buying a product - or similar. Thus, if user $u$ bought
+product $i$ only $5$ days ago this would get $4.98$ as final rating. If the
+user does not interact with the product again in 30 days we can re-calculate
+the score, now using $x=35$ which yields a penalization of $0.999$ and score $s
+= 100-((100-80)*0,999) = 80.2$, normalized in the same likert scale as above we
+get a new normalized rating $4.01$ - thus still a high rating, but not as
+relevant for the user as 30 days earlier.
+
 \subsection{Considering ordering of events}
+
+In the our previous method using the number of days since the most recent event
+we encounter several weaknesses when a user is either very active or have
+events with a high degree of sparsity. In the latter a user interacting with
+products every 20th day would see a divide in ratings since old events are
+placed after at the top of the S-curve ($f(x) > 0.9$) and new events achieves a
+penalization in the lower values ($f(x) < 0.1$). Similarily, when the user is
+highly active we obtain a large number of items having the same penalization
+weights and in essence a large duplication of ratings, provided the spread of
+event types are not large, which in many systems are unlikely. One possibility
+would be to use a finer granularity on the x values, such as seconds or minutes
+since the most recent event, but instead we extend our method by not taking
+into consideration the \textit{time}, but instead the \textit{ordering} of
+events.
+
+As before we use an example event log where we have 10 events of three
+different types (1,2 and 3) on 6 different item IDs (1001-1006).
+
+\begin{table}
+  \centering
+  \label{event-log-sigmoid-count}
+  \begin{tabular}{lll}
+    \toprule
+    Ordering & Event type & Item id \\
+    \midrule
+    0 & 1 & 1001 \\
+    1 & 1 & 1003 \\
+    2 & 3 & 1002 \\
+    3 & 1 & 1004 \\
+    4 & 2 & 1002 \\
+    5 & 2 & 1006 \\
+    6 & 1 & 1005 \\
+    7 & 1 & 1001 \\
+    8 & 3 & 1005 \\
+    9 & 1 & 1003 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+We want to continue using the sigmoid function, but in this case we will
+differentiate based on how many events we observe for a user. Further, if a
+user has e.g. more than 100 events in the event log we have two options: we can
+set a ceiling, saying that events older than a threshold recieves the maximum
+penalty or we can distribute all items evenly and extend the max-value of
+x-axis. Probably one would want a combination of the two, having a pretty large
+threshold and evenly distribute the items. In the case of evenly distribute the
+values you would need a \textit{distribution factor} $f$ expressing the
+relationship between steepness and shift coefficients. We use the following
+equation where $c$ is the number of events for user $u$.
+
+\begin{equation}
+  f_{u}(x, c) = 
+    \begin{cases}
+      1               & \text{if } c > 1000 \\
+      \frac{1}{1+e^{-(f/c) \cdot (x - c)}} & \text{else }
+    \end{cases}
+\end{equation}
 
 \subsection{Linearly blending the results}
