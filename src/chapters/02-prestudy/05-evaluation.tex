@@ -55,7 +55,6 @@ experimental studies:
 		applications.
 \end{itemize}
 
-0
 \subsection{Offline Evaluation}
 
 Offline experiments are performed using pre-collected dataset\(s\) and a protocol
@@ -99,8 +98,7 @@ popular datasets containing additional information:
 	and metadata about the songs
 \end{itemize}
 
-\textbf{Explicit-feedback}
-
+\paragraph{Explicit-feedback}
 The definition of explicit is defined as `stated clearly and in detail, leaving
 no room for confusion or doubt'. Explicit feedback are more precise than
 implicit feedback, but more difficult to collect since it requires active user
@@ -114,11 +112,7 @@ noting that explicit feedback tend to concentrate on either side of the rating
 scale, as users are more likely to express their preference if they feel
 strongly for or against an item~\cite{Jawaheer2010}.
 
-\textbf{Implicit-feedback}
-
-%TODO - Herman, maybe you want to add something more?
-%	Implicit feedback classfication (Type, confidence, precision)
-
+\paragraph{Implicit-feedback}
 Unlike explicit feedback, we do not have nay direct input from the user
 regarding their personal preferences. In particular we do not have any
 substantial evidence of which items the user dislikes, such as low ratings.
@@ -126,18 +120,18 @@ However, implicit-feedback is more easily collected, and usually more abundant.
 Implicit feedback types include browsing history, purchase history, search
 patters, etc. For a larger discussion surrounding the differences between
 implicit and explicit feedback, see Section~\ref{implicit-feedback}
+%TODO - Herman, maybe you want to add something more?
+%	Implicit feedback classfication (Type, confidence, precision)
 
 
 \subsubsection{Validation Methods}
-
 Validation techniques are motivated by two fundamental problems; model
 selection and performance estimation. Almost all pattern recognition techniques
 have one or more free parameters, and we want a way to select the
 \emph{optimal} parameter\(s\) or model for a given problem. Once we have chosen a
 model, we wish to estimate how well it is doing.
 
-\textbf{The Holdout Method}
-
+\paragraph{The Holdout Method}
 When using the holdout method you split the dataset into two groups; a training
 set used to train the classifier and a test set used to estimate the error rate
 of the trained classifier. The Netflix Prize Competition~\cite{Netflix}
@@ -153,9 +147,8 @@ the dataset for testing, (2) Since it is a single train-and-test experiment,
 the holdout estimate can be misleading if we happen to get an `unfortunate'
 split.
 
-\textbf{Cross-Validation}
-
-K-fold Cross-Calidation creates a K-fold partition of the dataset. For each of
+\paragraph{Cross-Validation}
+K-fold Cross-Validation creates a K-fold partition of the dataset. For each of
 the $K$ experiments, use $K-1$ folds for training and the remaining one for
 testing. By setting $K=2$, this is the same as the holdout method. The true
 error is found by taking the average error from all the experiments.
@@ -171,16 +164,37 @@ large datasets, even 3-Fold Cross Validation will be quite accurate, which for
 sparse datasets, one may wish to train as many examples as possible. A common
 choice is $K$ value between 5 and 10.
 
-%TODO - Advantages/Disadvantages
+\subparagraph{Advantages}
+One positive aspect with k-fold cross-validation is that is does not matter much where the split is set, since the result is averaged over the $K$ experiments.
+All data is used for both training and validation.
 
-\textbf{Bootstrapping}
+\subparagraph{Disadvantages}
+The main disadvantage with K-fold Cross-Validation is the training algorithm has to be run $K$ times, and thereby increasing the runtime for producing an evaluation of the system.
+If the dataset is large, an increase of $K$ runs could prove to be disadvantageous.
+% todo - more?
 
-%TODO - Write about bootstrapping?
+\paragraph{Bootstrapping~\cite{efron1994introduction}}
+Bootstrapping is used to estimate the sampling distribution of statistics. % and estimating the properties of an estimator.
+The idea is that with information from sample data it is possible to say something about the population.
+The sample data is a subset of the population.
+Since the population is unknown it will not be possible to calculate the true error from the sample data.
+To handle this the
+Since it will not be possible to perform inference on:
+\emph{sample data} $\rightarrow$ \emph{population} this is modeled as:
+\emph{resample data} $\rightarrow$ \emph{sample data}.
+The \emph{resample data} is a resampling of the sample data.
 
+In practice an example to bootstrapping is when we want to calculate the average height of the population worldwide.
+The issue here is that it is not as doable to measure everyone, so a subset of the population is used.
+Since the average on this number only will be an estimate of the actual world wide average a sense of error margin must be introduced.
+Bootstraping is then used to reduce the error of margin through resampling the sample data a large number of times~\footnote{Numbers vary on sample size, but is often 1 000 to 10 000}, and new averages are calculated.
+With these averages a histogram can be produced, which provides an estimate of the distribution of this average.
+
+\subparagraph{Disadvantages}
+One prominent issue with bootstrapping is that the same sampling data is used to acquire a better understanding and less error margin of the sampling data~\footnote{"Bootstrapping" comes from the phrase, "to pull oneself up by one's bootstraps"~\cite{bootstrapSaying1843}}.
 
 
 \subsubsection{Offline Evaluation Metrics}
-
 When evaluating a recommender system, you wish to estimate a user's
 satisfaction for a given recommendation. Traditionally recommender systems have
 been evaluated by means of predictive accuracy. However, there is now a widely
@@ -203,15 +217,12 @@ measures such as root mean squared error (RMSE) are also commonly used.
 
 \subparagraph{Mean Absolute Error (MAE)}
 MAE measures how close the predictions are to the actual outcome.
-
 \begin{equation}
     MAE = \frac{1}{n}\sum_{i=1}^{n}{|\hat{R_i}-R_i|}
     \label{equation:mae}
 \end{equation}
-
 $R_i$ is the actual outcome and $\hat{R_i}$ is the predicted value.
 As the name suggest, $MAE$ calculates the average absolute error.
-
 
 \subparagraph{Root Mean Squared Error (RMSE)}
 Often used to measure difference between a set of predicted values with a set of actual values.
@@ -248,7 +259,7 @@ And was the main metric used in the Netflix price competition to evaluate the pe
 
 
 \paragraph{Measuring Usage Prediction}
-\paragraph{Decision Based Metrics}
+% \paragraph{Decision Based Metrics}
 In many applications the recommender system does not predict the user's
 preferences of items, but tries to recommend to users items that they may use.
 This is often done by giving the user a top-K set of recommendations.
@@ -344,13 +355,11 @@ The $ROC$ curve is a plotting of the recall rate versus the fallout rate.
 \end{equation}
 $AUROC$ is the probability that the recommender system will rank positive ranks higher than negative ranks.
 
-
-\subparagraph{Limitations} % (fold)
+\subparagraph{Limitations}
 \label{subp:limitations}
 As mentioned by Powers et al.~\cite{powers2007}, Recall, Precision, F-Measure and Rand Accuracy have a Bias.
 Another drawback or limitation with the measuring of user predictions is that it does not take into account the ranking of the items.
 To handle this, rank based metrics can be used.
-% subparagraph limitations (end)
 
 \paragraph{Rank Based Metrics}
 Rank accuracy metrics measure the ability of a recommendation method to produce
@@ -369,8 +378,7 @@ most suitable to evaluate algorithms that are used to present ranked lists to
 the user in domains where the user preferences are expressed using numerical
 values.
 
-% TODO MPR and MAP maybe in ranking? not directly ranking though
-\subparagraph{Mean Percentage Ranking (MPR)} % (fold)
+\subparagraph{Mean Percentage Ranking (MPR)}
 \label{subp:mean_percentage_ranking_}
 This measure is a recall-oriented metric.
 A known issue with implicit feedback is that it often lack the actual user's preference.
@@ -387,10 +395,8 @@ Where $rank_{ui}$ is the percentile rank of item $i$ in this list for $u$.
 $rank_{ui} = 0$ means that $i$ is the most preferred item for $u$.
 $r_{ui}$ indicates whether $u$ has consumed $i$ or not.
 This makes a $MPR$ value of 0\% to be the most preferred value, and a value of 50\% meaning a near randomly produced list.
-% subparagraph mean_percentage_ranking_ (end)
 
-
-\subparagraph{Mean Average Precision (MAP)} % (fold)
+\subparagraph{Mean Average Precision (MAP)}
 \label{subp:mean_average_precision_map_}
 MAP~\cite{Manning:2008:IIR:1394399} measures quality across recall levels.
 \begin{equation}
@@ -407,11 +413,11 @@ How to calculate the $MAP$ value is shown in~\ref{equation:map}.
 \ref{equation:apn} calculates the average precision at $n$ for a user.
 From \ref{equation:apn}, $P(K)$ is the precision at $k$ in the item list, $n$ is the maximum number of predicted items and $m$ is the actual length of the predicted items list.
 \ref{equation:map} calculates the mean of all the values from \ref{equation:apn}.
-% subparagraph mean_average_precision_map_ (end)
 
-\subparagraph{AP correlation} % (fold)
+
+\subparagraph{AP correlation}
 \label{subp:ap_correlation}
-$AP correlation$~\cite{Yilmaz:2008:NRC:1390334.1390435} measures the overall precision and is a variant of $Kendall's tau$.
+$AP correlation$~\cite{Yilmaz:2008:NRC:1390334.1390435} measures the overall precision and is a variant of $Kendall's$ $tau$.
 It counts the amount of items correctly placed in a ordered predicted rank list $list1$ and a list of the actual rank ordering of the preferences of the user $list2$.
 \begin{equation}
 	AP = \frac{2}{N - 1} * \sum_{i=2}^{N}{(\frac{C(i)}{i - 1})} - 1
@@ -420,13 +426,11 @@ It counts the amount of items correctly placed in a ordered predicted rank list 
 How to calculate the $AP correlation$ value is shown in ~\ref{equation:ap}.
 $C(i)$ is the number of items ranked correctly above rank $i$.
 The value of AP is between -1 and 1, where a score of 0 means that $list1$ can be considered a randomly generated list and 1 is a perfect match with the actual list $list2$.
-% subparagraph ap_correlation (end)
 
-\subparagraph{Normalized Discounted Cumulative Gain (nDCG)} % (fold)
+\subparagraph{Normalized Discounted Cumulative Gain (nDCG)}
 \label{subp:normalized_discounted_cumulative_gain_}
 $nDCG$ measures the graded relevance of the recommended item, the ranking quality or the usefulness of the recommended item based on its rank position.
 It is often used to measure the performance of web search recommendation systems.
-
 \begin{equation}
     DCG_k = \sum_{i=1}^{k}{\frac{2^{rel_i}-1}{log_2(i+1)}}
     \label{equation:dcg}
@@ -436,12 +440,10 @@ It is often used to measure the performance of web search recommendation systems
     nDCG_k = \frac{DCG_k}{IDCG_k}
     \label{equation:ndcg}
 \end{equation}
-
 How to calculate the $nDCG$ value is shown in~\ref{equation:ndcg}.
 Where $k$ is the maximum amount of suggested items, and $rel_i$ is the graded relevance of the result at position $i$.
 $IDCG_k$, from~\ref{equation:ndcg}, is the ideal $DCG_k$ value.
 This is the result list sorted on relevance.
-% subparagraph normalized_discounted_cumulative_gain_ (end)
 
 
 \paragraph{Beyond Accuracy}
@@ -459,14 +461,7 @@ provide recommendations for some users due to e.g.\\ low confidence in the
 accuracy of predictions for that user. In such cases one may prefer a
 recommender that can provide recommendations to a wider range of users. However, an increase in coverage is only beneficial if the accuracy does not drop significantly.
 
-\paragraph{Novelty and Serendipity}
-
-
-%TODO - What more?
-%		Scalability...?
-
 \subsubsection{Evaluation using Implicit Feedback}
-
 Accuracy metrics not suited for implicit feedback datasets, as they require
 knowing which items are undesired by a user~\cite{Hu2008}.
 
