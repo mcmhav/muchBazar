@@ -282,3 +282,79 @@ equation where $c$ is the number of events for user $u$.
 \end{equation}
 
 \subsection{Linearly blending the results}
+
+\marginpar{Move this introduction to the pre-study?}
+At this point we have found multiple novel ways of calculating the 
+implicit ratings, based on our implicit feedback. However, as one may observe
+each method has its weknesses and strengths. A sigmoid-function considering the
+number of days between events is good for including our implicit knowledge
+about seasons into the ratings, but is not as effective if users has high
+spread in between events or low activity. Further, there may exist some clothes
+that has longer life-span than others, e.g. warm jackets that generally are
+bought from September to March (7 months) compared to shorts which are
+generally bought from May to August (4 months), depending on where the store
+reside. Our second sigmoid function has the strength of always keeping the
+ratings for a user fresh, also for less active users, but it is weaker in
+differentiating between seasons - which can be seen if a user is on a hiatus
+between January and August, not using the application. Upon return all ratings
+would be based on his/hers winter activity, not penalizing the fact that the
+type of clothes generally bought in the store at this time are different than
+in January.
+
+Optimally we would like to combine these two methods, taking their strenghts
+and weaknesses together trying to average them out in order to end up with
+generally better ratings - where we cannot trivally imagine scenarios as
+depicted above where our models would fail. The process of combining such
+ratings are in the Recommender Systems community called \textbf{blending} and
+is in many ways a seperate research area in itself, if done advanced enough.
+However, in the case of the naive and linear blend on can achieve results a
+magninute higher than for each method seperatly as seen in \ref{}
+\marginpar{find some refs using linear blending}.
+
+When linearly blending $M$ models $m$, we choose $M$ factors $f$ all adding up
+to 1.0, representing the weight of model $m_{i}$ in the final blend. Then when
+calculating the final rating for item $j$ we sum over all models:
+
+\begin{equation}
+  r_j = \sum _{i=1}^{M} f_{i} * m_{j}
+\end{equation}
+
+As one may observe given the linear blend between with factors $f_1 = 0.7$ and
+$f_2 = 0.3$ and the two ratings $m_1 = 5$ and $m_2 = 3$ for a given item, we
+can calculate the final rating as $0.7 \cdot 5 + 0.3 \cdot 3 = 4.4$. A weakness
+when linearly blending models in this way is the need for manually finding good
+weights for the $M$ factors. There exists methods where this given a good test
+set can be done automatically, such as using Linear Regression or KNN blending.
+Many other blending schemes exists as well, such as Binned Linear Regression,
+Bagged Gradient Boosted Decision Tree (BGBDT), Neural Networks and Kernel Ridge
+Regression Blending \cite{jahrer2010combining} \cite{toscher2009bigchaos}.
+
+As we have multiple proposed models we present our results given various
+evaluation metrics and combinations of weights. Note that when a model has the
+weight 1.0 its equal to that the model has not been blended with any other
+model, and is included in the table below as a baseline.
+
+\begin{table}[H]
+  \centering
+  \begin{tabular}{lll|ll}
+    \toprule
+    \textbf{Naive} &  \textbf{Sigmoid Count} & \textbf{Sigmoid Recent} &
+    \textbf{RMSE} & \textbf{MAE} \\
+    \midrule
+    1.0  &      0.0        &      0.0       &  X   &  X  \\
+    0.0  &      1.0        &      0.0       &  X   &  X  \\
+    0.0  &      0.0        &      1.0       &  X   &  X  \\
+    \midrule
+    0.6  &      0.2        &      0.2       &  X   &  X  \\
+    0.5  &      0.3        &      0.2       &  X   &  X  \\
+    0.4  &      0.3        &      0.3       &  X   &  X  \\
+    0.3  &      0.3        &      0.4       &  X   &  X  \\
+    0.2  &      0.4        &      0.4       &  X   &  X  \\
+    0.1  &      0.4        &      0.5       &  X   &  X  \\
+    0.0  &      0.5        &      0.5       &  X   &  X  \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+As one may see, the best results are achivied when blending with...
+\marginpar{todo: analyze and finish this table}
