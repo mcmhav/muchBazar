@@ -253,6 +253,7 @@ And was the main metric used in the Netflix price competition to evaluate the pe
 
 
 \paragraph{Measuring Usage Prediction}
+\label{para:measuring_usage}
 % \paragraph{Decision Based Metrics}
 In many applications the recommender system does not predict the user's
 preferences of items, but tries to recommend to users items that they may use.
@@ -302,7 +303,7 @@ Precision is the amount of the actually true positives recommended, over the amo
 \end{equation}
 
 \subparagraph{Recall}
-Recall is the ratio of the items of interest for the user, actually recommended to the user.
+Recall is the ratio of the items of interest for the user which actually where recommended to the user.
 \begin{equation}
     Recall = \frac{TP}{TP+FN}
     \label{equation:recall}
@@ -324,7 +325,7 @@ F-measure combines the precision and the recall.
 $\beta$ is a non negative real value.
 
 \subparagraph{Accuracy}
-Accuracy is the amount of correctly recommended items over the total amount of items in the dataset.
+Accuracy is the amount of correctly recommended items over all the items.
 \begin{equation}
     Accuracy = \frac{TP+TN}{TP+TN+FP+FN}
     \label{equation:accuracy}
@@ -349,6 +350,7 @@ The $ROC$ curve is a plotting of the recall rate versus the fallout rate.
 \end{equation}
 $AUROC$ is the probability that the recommender system will rank positive ranks higher than negative ranks.
 
+
 \subparagraph{Limitations}
 \label{subp:limitations}
 As mentioned by Powers et al.~\cite{powers2007}, Recall, Precision, F-Measure and Rand Accuracy have a Bias.
@@ -357,6 +359,7 @@ To handle this, rank based metrics can be used.
 
 
 \paragraph{Rank Based Metrics}
+\label{para:rank_based}
 Rank accuracy metrics measure the ability of a recommendation method to produce
 a recommended ordering of items that matches how the user would have ordered
 the same items. Shani et al.~\cite{Shani2011} lists two different approaches
@@ -437,13 +440,13 @@ $IDCG_k$, from~\ref{equation:ndcg}, is the ideal $DCG_k$ value.
 This is the result list sorted on relevance.
 
 \subparagraph{Half-life utility~\cite{Breese:1998:EAP:2074094.2074100}}
-List of item
 Assume that the further down an item is in the list the less chance there is for that item to be viewed by the user.
 The rate of the decaying probability is exponential.
 \begin{equation}
-	R_a = \sum_{j}{\frac{max(v_{a,j}-d,0)}{2^{\frac{j-1}{\alpha-1}}}}
+	HL_u = \sum_{i}{\frac{max((R_{u,i}-d_i),0)}{2^{\frac{i-1}{\alpha-1}}}}
 \end{equation}
-
+$d_i$ is the default rating of item $i$ and $R_{u,i}$ is the rating of user $u$ on item $i$
+$\alpha$ is the viewing half-life, or half-life parameter.
 
 % \subparagraph{Limitations}
 % todo maybe
@@ -464,8 +467,38 @@ provide recommendations for some users due to e.g.\\ low confidence in the
 accuracy of predictions for that user. In such cases one may prefer a
 recommender that can provide recommendations to a wider range of users. However, an increase in coverage is only beneficial if the accuracy does not drop significantly.
 
+\paragraph{Perceived quality}
+To gather the perceived quality the system must ask the user to examine the recommended item, and give feedback regarding the their actual interest in the recommended item.
+For the feedback from the user to be as complete as possible, the system must supply the user with the reason to why the item was suggested, and the metadata of the item.
+When the user has this overview of the item, the user's feedback regarding the item can produce some quality measure.
+One  way of having the user to give this feedback is to re-rate the recommended item on a similar scale as the item was rated.
+A rating scale from 1 to 5 is often used for both~\cite{Schafer:1999:RSE:336992.337035}.
+
 \subparagraph{Novelty and Serendipity}
-Some recommender systems produce highly accurate recommendations and also have reasonable coverage - and yet that are useless for practical purposes. For instance, a music recommender can recommend Rihanna to every customer who have not yet listened to Rihanna. However, statistically, this is highly accurate as most people have listened to Rihanna or at least knows about her and have consciously chosen not to listen to her. Much more valuable would be a recommendation to a kick-ass indie-rock band that the active user would love, but will never hear about in the news. We therefore need a new dimension for analysing recommender systems that consider "nonobviousness" of the recommendations. One such dimension is \emph{novelty}. Another related dimension is \emph{serendipity}. A serendipitous recommendation helps a user find a surprisingly interesting item the user might not have discovered otherwise. To clarify the difference between the two, a novel recommendation could be to recommend an unknown album from one of the users favorite artists, that the user likely eventually would have discovered herself. However, a recommendation by an unknown artist is more likely to be serendipitous. Serendipity is therefore a measure of how surprisingly the successful recommendations are.
+Some recommender systems produce highly accurate recommendations and also have reasonable coverage - and yet that are useless for practical purposes. For instance, a music recommender can recommend Rihanna to every customer who have not yet listened to Rihanna. However, statistically, this is highly accurate as most people have listened to Rihanna or at least knows about her and have consciously chosen not to listen to her. Much more valuable would be a recommendation to a kick-ass indie-rock band that the active user would love, but will never hear about in the news. We therefore need a new dimension for analyzing recommender systems that consider "nonobviousness" of the recommendations. One such dimension is \emph{novelty}. Another related dimension is \emph{serendipity}. A serendipitous recommendation helps a user find a surprisingly interesting item the user might not have discovered otherwise. To clarify the difference between the two, a novel recommendation could be to recommend an unknown album from one of the users favorite artists, that the user likely eventually would have discovered herself. However, a recommendation by an unknown artist is more likely to be serendipitous. Serendipity is therefore a measure of how surprisingly the successful recommendations are.
+
+As novelty is the the degree of new and interesting items recommended for the user, the system must ask the user for feedback to be able to make any assumptions around the novelty.
+The novelty together with perceived quality allows the system to make informed decisions about the ratio of new items to recommend for the user.
+The novelty is expected to change over time, some times the user would like to receive recommendation on new items, and other times recommendations closer to the user's preferences.
+For the system to be able to detect these changes in preferences, and acting accordingly would be beneficial in regards of the user's satisfaction.
+\begin{equation}
+    Novelty(u) = \frac{1}{N}\sum_{i=1}^{N}{1 - Knows(u,i)}
+    \label{equation:novelty}
+\end{equation}
+In~\ref{equation:novelty} $Knows(u,i)$ represents a binary functions which returns 1 if the user $u$ knows the item $i$, and 0 if not.
+The set of items used for the calculation is the set of recommended items for the user.
+
+The system should be able to produce items both items known to the user, and items unknown to the user.
+For trust in the system and novelty respectively.
+
+\begin{figure}[H]
+    \includegraphics[width=5in]{image/longtailNoveltyFig.png}
+    \centering
+    \caption[Long tail]{Long tail show with the item similarity between items. Similarity shown though edges between the nodes. The gray columns represents the user profile, the violet represents items which might be of interest to the user, and the height is the relevance. Figure from~\cite{celma2008}}
+    \label{figure:longtailNovelty}
+\end{figure}
+\marginpar{todo - not sure if its ok to use this image (not self made) figure from music recommendation, but long tail applies to fashion}
+\marginpar{todo - if so, something about longtail}
 
 \subparagraph{Diversity}
 Diversity is generally defined as the opposite of similarity. In some cases suggesting a set of similar items may not be as useful for the user, because it may take longer to explore the range of products. E.g. when presenting a list of 5 recommendations, the system should not recommend 5 Ralph Lauren shirts with different colors. As diversity may come at the expanse of other properties such as accuracy, one should evaluate the decrease in accuracy vs. the increase in diversity.
@@ -474,8 +507,13 @@ Other evaluation methods worth knowing about includes confidence, trust, utility
 
 
 \subsubsection{Evaluation using Implicit Feedback}
-Accuracy metrics not suited for implicit feedback datasets, as they require
-knowing which items are undesired by a user~\cite{Hu2008}.
+Accuracy metrics such as RMSE and MAE are not especially well suited for implicit feedback datasets, as they require knowing which items are undesired by a user~\cite{Hu2008}.
+One way to handle the issue with missing negative feedback is through conversion of the implicit feedback to explicit feedback, and thereby producing a sense of negative feedback.
+One issue with this is what is considered as negative feedback in the sense of implicit feedback.
+The reason for a user not to access an item is not necessarily grounded in thislike, but could simply be an overlook.
+On the other hand, if the user accessed the item for a short time without buying it, can that be considered as negative feedback?
+These questions raises the need for a different approach when wanting to measure a recommender system using implicit feedback.
+Two ways of measuring the system is through ranking~\ref{para:rank_based} and usage prediction~\ref{para:measuring_usage}.
 
 \cite{deLace2011} used mpr and map
 \cite{Nati03weightedlow-rank} average squared difference
@@ -630,20 +668,8 @@ User-centric evaluation can make evaluations on items which the user has not yet
 This allows user-centric evaluation to make evaluations on information about the system, such as the perceived quality and novelty of the recommendation system.
 When the user feedback has been gathered the data must be analyzed.
 
-\paragraph{Perceived quality}
-To gather the perceived quality the system must ask the user to examine the recommended item, and give feedback regarding the their actual interest in the recommended item.
-For the feedback from the user to be as complete as possible, the system must supply the user with the reason to why the item was suggested, and the metadata of the item.
-When the user has this overview of the item, the user's feedback regarding the item can produce some quality measure.
-One  way of having the user to give this feedback is to re-rate the recommended item on a similar scale as the item was rated.
-A rating scale from 1 to 5 is often used for both~\cite{Schafer:1999:RSE:336992.337035}.
 
-% todo twice lol
-\paragraph{Novelty}
-Novelty is the the degree of new and interesting items recommended for the user.
-To gather this data, the system has to ask the user for feedback.
-The novelty together with perceived quality allows the system to make informed decisions about the ratio of new items to recommend for the user.
-The novelty is expected to change over time, some times the user would like to receive recommendation on new items, and other times recommendations closer to the user's preferences.
-For the system to be able to detect these changes in preferences, and acting accordingly would be beneficial in regards of the user's satisfaction.
+\marginpar{move offline beyond accuracy to here maybe? }
 
 
 \subsection{What To Use}
