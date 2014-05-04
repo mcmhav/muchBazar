@@ -467,7 +467,7 @@ provide recommendations for some users due to e.g.\\ low confidence in the
 accuracy of predictions for that user. In such cases one may prefer a
 recommender that can provide recommendations to a wider range of users. However, an increase in coverage is only beneficial if the accuracy does not drop significantly.
 
-\paragraph{Perceived quality}
+\subparagraph{Perceived quality}
 To gather the perceived quality the system must ask the user to examine the recommended item, and give feedback regarding the their actual interest in the recommended item.
 For the feedback from the user to be as complete as possible, the system must supply the user with the reason to why the item was suggested, and the metadata of the item.
 When the user has this overview of the item, the user's feedback regarding the item can produce some quality measure.
@@ -510,18 +510,34 @@ Other evaluation methods worth knowing about includes confidence, trust, utility
 Accuracy metrics such as RMSE and MAE are not especially well suited for implicit feedback datasets, as they require knowing which items are undesired by a user~\cite{Hu2008}.
 One way to handle the issue with missing negative feedback is through conversion of the implicit feedback to explicit feedback, and thereby producing a sense of negative feedback.
 One issue with this is what is considered as negative feedback in the sense of implicit feedback.
-The reason for a user not to access an item is not necessarily grounded in thislike, but could simply be an overlook.
+The reason for a user not to access an item is not necessarily grounded in dislike, but could simply be an overlook.
 On the other hand, if the user accessed the item for a short time without buying it, can that be considered as negative feedback?
 These questions raises the need for a different approach when wanting to measure a recommender system using implicit feedback.
-Two ways of measuring the system is through ranking~\ref{para:rank_based} and usage prediction~\ref{para:measuring_usage}.
+Two ways of measuring the system is through ranking and usage prediction described earlier.
 
-\cite{deLace2011} used mpr and map
-\cite{Nati03weightedlow-rank} average squared difference
-\cite{Pan:2013:GGP:2540128.2540516} top-k evaluation metrics: precision, recall, F1, nDCG, ROC and 1-call
-\cite{Sindhwani:2010:OMC:1933307.1934641} - roc curve and precision-recall curve
-\cite{pan2008} -MAP, HLU
+\paragraph{Ranking Accuracy} % (fold)
+	\label{par:Ranking_based}
+	The ranking approach can be considered more suited to test recommendation systems using implicit feedback since a subset of the items are meant to be recommended to the user.
+	This subset is usually a ranked top K list of items where the items in this list is the items the system predicts will be most liked by the user.
 
-%TODO - What evaluation measures are suited for implicit feedback, and why are traditional evaluation measures such as RMSE, ... not as suitable when working with implicit feedback?
+	One issue with this approach is that the items in the predicted top K list has to be ranked in some way, the same goes for the list this list is to be compared to.
+	Thereby producing the requirement for a ranked list of preferred items from the user.
+	If there is such a ranked list, ranking accuracy is a good way to go, such as~\cite{Yilmaz:2008:NRC:1390334.1390435}.
+% paragraph paragraph_name (end)
+
+\paragraph{Usage Prediction} % (fold)
+	\label{par:usage_prediction}
+	When there is lack of actual user feedback and
+
+	\cite{deLace2010} used mpr and map
+	\cite{Pan:2013:GGP:2540128.2540516} top-k evaluation metrics: precision, recall, F1, nDCG, ROC and 1-call
+	\cite{Sindhwani:2010:OMC:1933307.1934641} - roc curve and precision-recall curve
+	\cite{pan2008} - MAP, HLU
+
+	\cite{Nati03weightedlow-rank} average squared difference
+% paragraph usage_prediction (end)
+
+	%TODO - What evaluation measures are suited for implicit feedback, and why are traditional evaluation measures such as RMSE, ... not as suitable when working with implicit feedback?
 
 \subsubsection{Evaluation of Cold-start Recommendations}
 
