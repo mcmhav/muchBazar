@@ -527,14 +527,14 @@ Two ways of measuring the system is through ranking and usage prediction describ
 
 \paragraph{Usage Prediction} % (fold)
 	\label{par:usage_prediction}
-	When there is lack of actual user feedback and
+	When there is lack of explicit user feedback and a actual ranked list of the items cannot be produced, usage prediction is a better way to go.
+	Some of the different approaches when dealing with implicit feedback are:
+	Li et al.~\cite{deLace2010} who used $MPR$ and $MAP$ to calculate their performance.
+	Pan et al.~\cite{Pan:2013:GGP:2540128.2540516} who used a set of top-k evaluation metrics: precision, recall, F1, nDCG, ROC and 1-call.
+	Sindhwani et al.~\cite{Sindhwani:2010:OMC:1933307.1934641} who used roc curve and precision-recall curve to evaluate their experiments.
+	Pan et al.~\cite{pan2008} who used $MAP$ and Half-life Utility.
 
-	\cite{deLace2010} used mpr and map
-	\cite{Pan:2013:GGP:2540128.2540516} top-k evaluation metrics: precision, recall, F1, nDCG, ROC and 1-call
-	\cite{Sindhwani:2010:OMC:1933307.1934641} - roc curve and precision-recall curve
-	\cite{pan2008} - MAP, HLU
-
-	\cite{Nati03weightedlow-rank} average squared difference
+	% \cite{Nati03weightedlow-rank} average squared difference
 % paragraph usage_prediction (end)
 
 	%TODO - What evaluation measures are suited for implicit feedback, and why are traditional evaluation measures such as RMSE, ... not as suitable when working with implicit feedback?
