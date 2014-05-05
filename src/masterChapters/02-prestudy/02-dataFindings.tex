@@ -60,7 +60,58 @@ soBazar want to build a proper model.  Give input on how to build this model.
 The supplier should know that an item is a jacket for instance.  Have something
 to show on the 20. Should be better than what is already implemented.
 
+\subsection{Session Findings}
+Init Hypothesis:
+Two users with similar session habits and similar product accessing pattern
+have a stronger correlation to one-another than two users with just similar
+product interests.
 
+
+'product\_purchase\_intended' (user pushed to the product web store) shows a
+wider specter of information about the product, including additional colors,
+images and colors.  For some it might be natural to explore the item there
+before "wanting" it. Making both
+
+"product\_purchase\_intended" $\Rightarrow$ "product\_wanted"
+
+and
+
+"product\_purchase\_intended" $\notimplies$ "product\_wanted"
+
+produce valuable information.
+
+Must make different rules for the different stores:
+"Bik Bok", "Cubus", "Gina Trik", "H\&M", "Bianco" has a broad specter of extra
+functions inside the web store, whereas others might not, only shows the
+product and a add to chart button.  This might divide the use pattern of the
+users into a:
+
+"product\_detail\_clicked" $\Rightarrow$ "product\_purchase\_intended" $\Rightarrow$ "product\_wanted"
+
+"product\_detail\_clicked" $\Rightarrow$ "product\_purchase\_intended" $\notimplies$ "product\_wanted",
+
+and
+
+"product\_detail\_clicked" $\Rightarrow$ "product\_wanted"
+
+based on the store accessed.
+
+Use this to make a "rule set" with a probability.
+Then again use this to recommend items for the users with that given
+probability.
+
+Find a "most popular session"-pattern
+Find a "most likely to come after"-pattern
+
+Session issues:
+Once in a blue moon a user will do a "product action" (purchase,want,details)
+without having a previous frontstore-access event. Which leads to unknown
+store-id of the item.
+
+Issue is most probably from missing user-id in collection\_viewed, and a user
+checks out an item from there. It is not possible to be 100\% sure which user
+access the item from the collection\_viewed event, so this event is therefor
+not integrated into the session-stack.
 
 \subsection{Graphs}
 

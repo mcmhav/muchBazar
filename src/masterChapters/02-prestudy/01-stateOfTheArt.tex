@@ -1514,68 +1514,120 @@ One interesting finding was that many of the users enjoyed the Hot-or-Not featur
 This feature gives the user a set of items and the option to either like or dislike.
 % mtodo
 
-
 \subsection{Session Based Approach}
-% todo, structure.
-\subsubsection{E-commerce}
+    Different ways of personalizing recommendations have been explored earlier in this chapter, such as: collaborative filtering and content based filtering.
+    A common issue with these types recommendations is sparsity in the data, which can lead to poor recommendations.
+    Through utilizing usage pattern of the user and producing sessions, some of the sparsity gaps can be filled.
+    The patterns can help to understand the pre-purchase patterns, products they see and what they buy.
+    This information can also produce interesting relationships between products.
+    With this the user preferences can be gathered and be used to reduce the search space when recommending product for the user.
+
+% \subsubsection{E-commerce}
+%     About sessions
+
 \subsubsection{Mining}
-\subsubsection{Structuring}
+    How to gather information on the user.
+    The data mining can be split into two main steps~\cite{Cho2002329}:
+    \begin{itemize}
+        \item \emph{Data Preparation} - In the data preparation step the sessions are built. They are built based on the usage during a single visit to the application, web page or system the user is accessing. It is the sequence of events produced by the user actions during the visit.
+        \item \emph{Pattern Discovery} - In the pattern discovery step the system must use the sessions gathered in the previous step to discover association rules, sequential patterns, usage clusters, page clusters, user classification or any other pattern discovery method.
+    \end{itemize}
+
+
+    \paragraph{Data Preparation} % (fold)
+        \label{par:Data_Preparation}
+        When a user accesses an application or web page, the system can store the footprints of the user.
+        Within these footprints the system can embed information as browser used by user, location of the user, event triggered by user and time stamp.
+        This bundle of information is called an event, a the set of event produced by the user during on application or web page visit, is called a session.
+    % paragraph paragraph_name (end)
+
+    \paragraph{Pattern Discovery} % (fold)
+        \label{par:pattern_discovery}
+        \subparagraph{Association Rules} % (fold)
+            \label{subp:association_rules}
+            The association rule describes how item X and Y are coupled, this coupling is the percentage of transactions that contain both item X and item Y.
+
+            One simple way of discovering this association is through the aprior algorithm~\cite{Agrawal:1994:FAM:645920.672836}.
+
+            With this set of rules for the items, item taxonomies can be used to infer knowledge regarding the items.
+            For instance; sessions when buying blue skirts often include buying of red shoes.
+        % easy example: http://nikhilvithlani.blogspot.no/2012/03/apriori-algorithm-for-data-mining-made.html
+         % subparagraph subparagraph_name (end) Association rule:
+        \subparagraph{Sequential Patterns} % (fold)
+        \label{subp:sequential_patterns}
+            The sequential patterns can be used to build Markov models to predict the next step the user will take based on the sequential pattern of the events from the sessions~\cite{Deshpande:2004:SMM:990301.990304}.
+
+            An issue with using the Markov model is that if first-order is being used, the accuracy can be faulty, since the model will not be looking far enough behind.
+            Handling this with an higher-order model might solve the inaccuracy due to too low order, but might cause an issue with high state space complexity, and might also reduce coverage.
+            Which can be handled through training a set of K different Markov models, with K different orders, All-$K^{th}$-Order Markov model, but the space complexity issue will still be present.
+
+            The Markov model predicts future actions through looking at past actions.
+            So for first-order, the model looks at the last event performed to predict the next event of the user.
+            The higher the order, the further back the model is looking in the event set and will produce a more complicated model, the higher the order.
+            This can be handled through the usage of a selective Markov model~\cite{Deshpande:2004:SMM:990301.990304}
+
+            One issue with the Markov model is that a user will not get predicted new items if the sessions used to predict future actions are only based on the own users sessions.
+            One way of making use of the patterns and producing new recommendations is trough matching sequential patterns from users with one-another. \marginpar{something not right}
+
+        % subparagraph sequential_patterns (end)
+
+        \subparagraph{Usage Clusters} % (fold)
+        \label{subp:usage_clusters}
+            \begin{table}[H]
+                \centering
+                \begin{tabular}{l|l}
+                    \emph{Event features} & \emph{Description} \\ \hline
+                    Amount of purchases & - \\ \hline
+                    Amount of viewsts & - \\ \hline
+                    Amount of wants & - \\ \hline
+                    Time on items under the different conditions mentioned above & -\\ \hline
+                    Overall average time on items & - \\ \hline
+                    Click to buy rate & - \\ \hline
+                    What was done before a specific action & - \\ \hline
+                    What was done before a specific action & - \\ \hline
+                    What was done before a specific action & - \\
+                \end{tabular}
+                \caption[Event Features]{Set of event features used for finding usage clusters and model the users behavior}
+                \label{table:evaluationcoldstart}
+            \end{table}
+        % subparagraph usage_clusters (end)
+
+        % \subparagraph{Page Clusters} % (fold)
+        % \label{subp:page_clusters}
+
+        % % subparagraph page_clusters (end)
+
+        % \subparagraph{User Classification} % (fold)
+        % \label{subp:user_classification}
+
+        % subparagraph user_classification (end)
+
+\paragraph{Multi-Armed Bandit} % (fold)
+\label{par:multi_armed_bandit}
+
+% paragraph multi_armed_bandit (end)
+    % paragraph pattern_discovery (end)
+% ~\cite{Kelly:2003:IFI:959258.959260}
+
+% \subsubsection{How To Model}
+%     How to use the gathered information to model the user.
+%     Event features:
+%         - Amount of purchases
+%         - Amount of views
+%         - Amount of wants
+%         - Time on items under the different conditions mentioned above
+%         - What was done before a specific action
+%         - Overall average time on items
+%         - Click to buy rate
+
 \paragraph{Analyzing}
+    Analyzing the model of the user
+
 \subsubsection{Recommending}
+    Using the model to help personalizing the recommendation for the user
+
 \subsubsection{Limitations}
-
-
-Init Hypothesis:
-Two users with similar session habits and similar product accessing pattern
-have a stronger correlation to one-another than two users with just similar
-product interests.
-
-
-'product\_purchase\_intended' (user pushed to the product web store) shows a
-wider specter of information about the product, including additional colors,
-images and colors.  For some it might be natural to explore the item there
-before "wanting" it. Making both
-
-"product\_purchase\_intended" $\Rightarrow$ "product\_wanted"
-
-and
-
-"product\_purchase\_intended" $\notimplies$ "product\_wanted"
-
-produce valuable information.
-
-Must make different rules for the different stores:
-"Bik Bok", "Cubus", "Gina Trik", "H\&M", "Bianco" has a broad specter of extra
-functions inside the web store, whereas others might not, only shows the
-product and a add to chart button.  This might divide the use pattern of the
-users into a:
-
-"product\_detail\_clicked" $\Rightarrow$ "product\_purchase\_intended" $\Rightarrow$ "product\_wanted"
-
-"product\_detail\_clicked" $\Rightarrow$ "product\_purchase\_intended" $\notimplies$ "product\_wanted",
-
-and
-
-"product\_detail\_clicked" $\Rightarrow$ "product\_wanted"
-
-based on the store accessed.
-
-Use this to make a "rule set" with a probability.
-Then again use this to recommend items for the users with that given
-probability.
-
-Find a "most popular session"-pattern
-Find a "most likely to come after"-pattern
-
-Session issues:
-Once in a blue moon a user will do a "product action" (purchase,want,details)
-without having a previous frontstore-access event. Which leads to unknown
-store-id of the item.
-
-Issue is most probably from missing user-id in collection\_viewed, and a user
-checks out an item from there. It is not possible to be 100\% sure which user
-access the item from the collection\_viewed event, so this event is therefor
-not integrated into the session-stack.
+    What are the limitations of a session based approach to recommendations.
 
 
 

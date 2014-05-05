@@ -357,25 +357,9 @@ As mentioned by Powers et al.~\cite{powers2007}, Recall, Precision, F-Measure an
 Another drawback or limitation with the measuring of user predictions is that it does not take into account the ranking of the items.
 To handle this, rank based metrics can be used.
 
-
-\paragraph{Rank Based Metrics}
-\label{para:rank_based}
-Rank accuracy metrics measure the ability of a recommendation method to produce
-a recommended ordering of items that matches how the user would have ordered
-the same items. Shani et al.~\cite{Shani2011} lists two different approaches
-for measuring the ranking accuracy: Try determining the correct order of a set
-of items for each user and measure how close a system comes to this correct
-order, or we can attempt to measure the utility of the system's ranking to a
-user.
-
-Herlocker et al.~\cite{Herlocker2004} argue that rank accuracy metrics may be
-overly sensitive for domains where the user just wants an item that is `good
-enough' (binary preferences) since the user won't be concerned about the
-ordering of items beyond the binary classification. These metrics are therefore
-most suitable to evaluate algorithms that are used to present ranked lists to
-the user in domains where the user preferences are expressed using numerical
-values.
-
+\paragraph{Accuracy Ranking} % (fold)
+\label{par:accuracy_ranking}
+\marginpar{if this is the setup, write a little intro}
 \subparagraph{Mean Percentage Ranking (MPR)}
 \label{subp:mean_percentage_ranking_}
 This measure is a recall-oriented metric.
@@ -408,19 +392,6 @@ How to calculate the $MAP$ value is shown in~\ref{equation:map}.
 From \ref{equation:apn}, $P(K)$ is the precision at $k$ in the item list, $n$ is the maximum number of predicted items and $m$ is the actual length of the predicted items list.
 \ref{equation:map} calculates the mean of all the values from \ref{equation:apn}.
 
-
-\subparagraph{AP correlation}
-\label{subp:ap_correlation}
-$AP correlation$~\cite{Yilmaz:2008:NRC:1390334.1390435} measures the overall precision and is a variant of $Kendall's$ $tau$.
-It counts the amount of items correctly placed in a ordered predicted rank list $list1$ and a list of the actual rank ordering of the preferences of the user $list2$.
-\begin{equation}
-	AP = \frac{2}{N - 1} * \sum_{i=2}^{N}{(\frac{C(i)}{i - 1})} - 1
-	\label{equation:ap}
-\end{equation}
-How to calculate the $AP correlation$ value is shown in ~\ref{equation:ap}.
-$C(i)$ is the number of items ranked correctly above rank $i$.
-The value of AP is between -1 and 1, where a score of 0 means that $list1$ can be considered a randomly generated list and 1 is a perfect match with the actual list $list2$.
-
 \subparagraph{Normalized Discounted Cumulative Gain (nDCG)}
 \label{subp:normalized_discounted_cumulative_gain_}
 $nDCG$ measures the graded relevance of the recommended item, the ranking quality or the usefulness of the recommended item based on its rank position.
@@ -443,14 +414,54 @@ This is the result list sorted on relevance.
 Assume that the further down an item is in the list the less chance there is for that item to be viewed by the user.
 The rate of the decaying probability is exponential.
 \begin{equation}
-	HL_u = \sum_{i}{\frac{max((R_{u,i}-d_i),0)}{2^{\frac{i-1}{\alpha-1}}}}
+	HL_u = \sum_{i}{\frac{\delta(i)}{2^{\frac{i-1}{\alpha-1}}}}
 \end{equation}
-$d_i$ is the default rating of item $i$ and $R_{u,i}$ is the rating of user $u$ on item $i$
+$\delta(i)$ is 1 if the user is interested in the item at position $i$ and 0 if not.
 $\alpha$ is the viewing half-life, or half-life parameter.
-
+The half-life utility of all the users are shown in~\ref{equation:HL}
+\begin{equation}
+	HL = 100 * \frac{\sum_u{HL_u}}{\sum_u{HL_u^{max}}}
+	\label{equation:HL}
+\end{equation}
+$HL_u^{max}$ is the maximum possible value of the half-life utility value.
 % \subparagraph{Limitations}
 % todo maybe
+\marginpar{some overlapping of the algorithms (not really comparing two ranked list, but still evaluating a recommender system producing ranked lists)}
 
+\marginpar{something like this perhaps}
+% paragraph accuracy_ranking (end)
+
+\paragraph{Rank Based Metrics}
+\label{para:rank_based}
+Rank accuracy metrics measure the ability of a recommendation method to produce
+a recommended ordering of items that matches how the user would have ordered
+the same items. Shani et al.~\cite{Shani2011} lists two different approaches
+for measuring the ranking accuracy: Try determining the correct order of a set
+of items for each user and measure how close a system comes to this correct
+order, or we can attempt to measure the utility of the system's ranking to a
+user.
+
+Herlocker et al.~\cite{Herlocker2004} argue that rank accuracy metrics may be
+overly sensitive for domains where the user just wants an item that is `good
+enough' (binary preferences) since the user won't be concerned about the
+ordering of items beyond the binary classification. These metrics are therefore
+most suitable to evaluate algorithms that are used to present ranked lists to
+the user in domains where the user preferences are expressed using numerical
+values.
+
+\subparagraph{AP correlation}
+\label{subp:ap_correlation}
+$AP correlation$~\cite{Yilmaz:2008:NRC:1390334.1390435} measures the overall precision and is a variant of $Kendall's$ $tau$.
+It counts the amount of items correctly placed in a ordered predicted rank list $list1$ and a list of the actual rank ordering of the preferences of the user $list2$.
+\begin{equation}
+	AP = \frac{2}{N - 1} * \sum_{i=2}^{N}{(\frac{C(i)}{i - 1})} - 1
+	\label{equation:ap}
+\end{equation}
+How to calculate the $AP correlation$ value is shown in ~\ref{equation:ap}.
+$C(i)$ is the number of items ranked correctly above rank $i$.
+The value of AP is between -1 and 1, where a score of 0 means that $list1$ can be considered a randomly generated list and 1 is a perfect match with the actual list $list2$.
+% \subparagraph{Limitations}
+% todo maybe
 
 \paragraph{Beyond Accuracy}
 There is an emerging understanding that good recommendations accuracy alone does not give the users of the recommender system an effective and satisfying experience \cite{Herlocker2004}. The following \emph{measures} attempts to assess a recommender systems usefulness beyond being able to provide accurate recommendations to the users.
@@ -513,9 +524,14 @@ One issue with this is what is considered as negative feedback in the sense of i
 The reason for a user not to access an item is not necessarily grounded in dislike, but could simply be an overlook.
 On the other hand, if the user accessed the item for a short time without buying it, can that be considered as negative feedback?
 These questions raises the need for a different approach when wanting to measure a recommender system using implicit feedback.
+
+Joachims et al.~\cite{Joachims07evaluatingthe} shows that clicks can be biased, and has to be interpreted relative to the order of presentation and relative to the other abstracts.
+
+\marginpar{extend}
+
 Two ways of measuring the system is through ranking and usage prediction described earlier.
 
-\paragraph{Ranking Accuracy} % (fold)
+\paragraph{Rank Based} % (fold)
 	\label{par:Ranking_based}
 	The ranking approach can be considered more suited to test recommendation systems using implicit feedback since a subset of the items are meant to be recommended to the user.
 	This subset is usually a ranked top K list of items where the items in this list is the items the system predicts will be most liked by the user.
@@ -525,14 +541,22 @@ Two ways of measuring the system is through ranking and usage prediction describ
 	If there is such a ranked list, ranking accuracy is a good way to go, such as~\cite{Yilmaz:2008:NRC:1390334.1390435}.
 % paragraph paragraph_name (end)
 
-\paragraph{Usage Prediction} % (fold)
+\marginpar{maybe hard to differentiate between the names}
+
+\paragraph{Accuracy Ranking} % (fold)
 	\label{par:usage_prediction}
 	When there is lack of explicit user feedback and a actual ranked list of the items cannot be produced, usage prediction is a better way to go.
+	Where the system produces a ranked list of predicted preferred items, but this list is compared to a list of binary interesting or not interesting list, which is often possible to construct from implicit feedback.
 	Some of the different approaches when dealing with implicit feedback are:
 	Li et al.~\cite{deLace2010} who used $MPR$ and $MAP$ to calculate their performance.
 	Pan et al.~\cite{Pan:2013:GGP:2540128.2540516} who used a set of top-k evaluation metrics: precision, recall, F1, nDCG, ROC and 1-call.
 	Sindhwani et al.~\cite{Sindhwani:2010:OMC:1933307.1934641} who used roc curve and precision-recall curve to evaluate their experiments.
 	Pan et al.~\cite{pan2008} who used $MAP$ and Half-life Utility.
+
+	$nDCG$, $MAP$ and Half-life utility has a similar setup.
+	They all have a decaying factor, and rewards the system in different ways for how high in the list a relevant recommended item is.
+
+	On the other hand metrics as Precision alone has no decaying factor, and will not penalize a system with uninteresting items suggested higher in a ranked list.
 
 	% \cite{Nati03weightedlow-rank} average squared difference
 % paragraph usage_prediction (end)
@@ -683,7 +707,6 @@ User-centric evaluation is meant to handle the short comings of the offline eval
 User-centric evaluation can make evaluations on items which the user has not yet show interest in.
 This allows user-centric evaluation to make evaluations on information about the system, such as the perceived quality and novelty of the recommendation system.
 When the user feedback has been gathered the data must be analyzed.
-
 
 \marginpar{move offline beyond accuracy to here maybe? }
 
