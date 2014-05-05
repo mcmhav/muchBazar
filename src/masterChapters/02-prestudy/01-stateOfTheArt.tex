@@ -209,6 +209,7 @@ will be the recommended as the item-based Top-N list \cite{Karypis2001}.
 
 \paragraph{Model-based Methods}
 
+
 As the name implies, Model-based approaches provide recommendations by first
 developing a model of the user ratings, which is then used to make predictions.
 These algorithms develop a model of user ratings rather than identify a
@@ -269,6 +270,7 @@ matrix $Q$ such that their product approximates the original rating matrix $R$.
 
 \begin{equation}
 R \approx Q \times P^{T} = \hat{R}
+\label{equation:dotproduct}
 \end{equation}
 
 To learn the factor vectors the system minimizes the regularized square error
@@ -285,7 +287,7 @@ system should therefore avoid overfitting the data by regularizing the learned
 parameters, whose magnitudes are penalized. $\lambda$ controls the extent of
 regularization, and much like $f$, often determined by cross-validation. Two
 possible approaches to minimizing Equation \ref{equation:minimize} is to use
-Stochastic Gradient Descent or Alternating Least Squares \citep{Koren2009}.
+Stochastic Gradient Descent or Alternating Least Squares \citep{Koren2009}.\newline
 
 Consider the following example where we have the following rating matrix R
 shown in Table \ref{table:ratingMatrix} containing the rating of four users $C$
@@ -333,7 +335,7 @@ Given that $f = 3$, we might end up with the following matrix $P$ and $Q$
 \caption{Item factor matrix $Q$ ($S \times f$)}
 \end{table}
 
-Giving us the following rating prediction matrix $\hat{R}$
+Equation \ref{equation:dotproduct} then gives us the following rating prediction matrix $\hat{R}$.
 
 \begin{table}[!htbp]
 \centering
@@ -389,27 +391,17 @@ content-based and collaborative characteristics
 
 \subsubsection{Recommender System Challenges}
 
+\marginpar{Introduction...}
+
 \paragraph{Scalability}
 
-As the number of existing users and items blow up, traditional CF algorithms
-suffer serious scalability problems. The model building phase of
-\emph{Traditional} collaborative filtering methods have a complexity of O(MN)
-where $M$ is the number of users and $N$ is the number of items. For systems
-with millions of users and items, even a complexity of n is too large. Another
-fundamental issue is how to embed the core recommendation techniques in real
-operational systems and how to deal with massive and dynamic sets of data
-produced by the interactions of users with items. Recommender systems are
-expected in many cases to provide rapid recommendations online, it is therefore
-also important to consider how fast the system provides recommendations.
+As the number of existing users and items blow up, traditional CF algorithms suffer serious scalability problems. The model building phase of \emph{Traditional} collaborative filtering methods have a complexity of O(MN) where $M$ is the number of users and $N$ is the number of items. For systems with millions of users and items, even a complexity of $n$ is too large. Another fundamental issue is how to embed the core recommendation techniques in real operational systems and how to deal with massive and dynamic sets of data produced by the interactions of users with items. Recommender systems are expected in many cases to provide rapid recommendations online, it is therefore also important to consider how fast the system provides recommendations.
 
-Better scalabiltiy and improved accuracy make the item-item collaborative
-filtering approaches more favorable in many cases. The computational complexity
-of item-to-item based algorithms are up to two orders of magnitude faster than
-traditional user-based algorithms \cite{Deshpande2004}. Dimensionality
-reduction techniques such as SVD can deal with the scalability by providing
-more compact representations and quickly produce good recommendations. However,
-most dimensionalty reduction techniques must undergo expensive matrix
-factorization steps.\newline
+Better scalabiltiy and improved accuracy make the item-item collaborative filtering approaches more favorable in many cases. The computational complexity of item-to-item based algorithms are up to two orders of magnitude faster than traditional user-based algorithms \cite{Deshpande2004}. Dimensionality reduction techniques such as SVD can deal with the scalability by providing more compact representations and quickly produce good recommendations. However, most dimensionalty reduction techniques must undergo expensive matrix factorization steps.
+\textbf{Sparsity}
+
+In practice, many recommender systems deal with very large item collections. This means that the number of ratings obtained is usually very small compared to the number of ratings that it needs to predict. Efficient prediction of ratings from a small number of examples is therefore important. The \emph{reduced coverage} problem occurs when the number of users' rating may be very small compared to the number of items. This may lead to that the recommender is unable to provide recommendations for a large portion of the items. \emph{Neighbour transitivity} refers to the problem in which users with similar tastes may not be identified due to a lack of co-rated items, making collaborative filtering futile, since it relies on comparing users to predict unknown ratings.
+
 
 \paragraph{Sparsity}
 
@@ -424,6 +416,7 @@ items. \emph{Neighbour transitivity} refers to the problem in which users with
 similar tastes may not be identified due to a lack of co-rated items, making
 collaborative filtering futile, since it relies on comparing users to predict
 unknown ratings.
+
 
 \paragraph{Cold-start}
 
@@ -540,27 +533,13 @@ information, thus the user group covered by this solution could end up not
 being large enough.
 \end{itemize}
 
-The cold-start user problem is present both in content-based and
-collaborative-filtering systems. Collaborative Filtering is based on the idea
-that like-minded users have similar tastes and preferences. A new user
-therefore poses a challenge to a CF recommender, since the system has no
-knowledge about the preferences of the new user, and can therefore not provide
-any personalized recommendations. The system must therefore acquire some
-information about the new user before it can start making personalized
-recommendations. In a typical domain, for example in the domain of books, the
-number of items is very large (in the order of tens of thousands) while the
-number of items rated by every single user is in general small (in the order of
-dozens or less). This means that it is very unlikely two random users have
-rated any items in common and hence they are not comparable. The system will
-therefore most likely struggle to find users with tastes that are \emph{truly}
-similar to the target user. Similarly, in content-based systems, the lack of
-ratings given by the target user, means that the target user will have a
-limited content-profile, since the users content profile is constructed using
-content-information from his/hers rated items. In both cases, recommendation
-quality is most likely bound to suffer.
+The cold-start user problem is present both in content-based and collaborative-filtering systems. Collaborative Filtering is based on the idea that like-minded users have similar tastes and preferences. A new user therefore poses a challenge to a CF recommender, since
+the system has no knowledge about the preferences of the new user, and can
+therefore not provide any personalized recommendations. The system must therefore acquire some
+information about the new user before it can start making personalized recommendations. In a typical domain, for example in the domain of books, the number of items is very large (in the order of tens of thousands) while the number of items rated by every single user is in general small (in the order of dozens or less). This means that it is very unlikely two random users have rated any items in common and hence they are not comparable. The system will therefore most likely struggle to find users with tastes that are \emph{truly} similar to the target user. Similarly, in content-based systems, the lack of ratings given by the target user, means that the target user will have a limited
+content-profile, since the users content profile is constructed using content-information from his/hers rated items. In both cases, recommendation quality is most likely bound to suffer.\newline
 
-This section will present a few different solutions to the cold-start problem,
-focusing mainly on \emph{complete} solutions to the cold-start problem.
+This section will present a few different solutions to the cold-start problem, focusing mainly on \emph{complete} solutions to the cold-start problem.
 
 \subsubsection{Trust Aware Recommender Systems}
 
@@ -571,31 +550,14 @@ be propagated and aggregated, and consequently connect more people and
 products. By making clever connections in the trust network, newcomers can
 immediately gain access to a wide range of connections.
 
-Due to the popularity of social networks such as Facebook, more and more
-researchers turn to incorporate the social relationships (e.g. trust) of users
-to help complement users’ preference in addition to item ratings, in order to
-overcome the limitations of existing recommender systems. For example, when
-looking for movie recommendations we often turn to our friends which we share a
-similar taste in movies with. Trust can be defined as: "believe in the
-reliability, truth, or ability of", and in the context of recommender systems a
-trusted user would be a user you trust to provide you with good
-recommendations. E.g. in the case of the Epinions dataset \cite{Epinions},
-users can explicitly state whether they trust or distrust a user [1, -1], i.e.
-reviewers whose reviews and ratings they have consistently found to be valuable
-or reviewers which they find consistently offensive, inaccurate or not
-valuable. In decentralized environments where everyone is free to create
-content and there is no centralized quality control entity, evaluating the
-quality of the content becomes an important issue. This phenomenon can be
-observed in online marketplaces such as E-bay where users can create "fake"
-auctions and in peer-to-peer networks where peers can enter corrupted items. In
-these environments, it is often a good strategy to delegate the quality
-assessment task to users themselves. E.g. \emph{Ebay.com} allows users to
-express their level of satisfaction after every interaction with another user.
-Trust relationships of users are often employed in order to correlate more
-potential raters for the active users who require recommendations
-\cite{Massa2004, Massa2007}. Massa et al. \cite{Massa2004} also show that some
-of the weaknesses of recommender systems such as data sparseness and their
-susceptibility to shilling attacks could be alleviated by incorporating trust.
+
+%Due to the popularity of social networks such as Facebook, more and more
+%researchers turn to incorporate the social relationships (e.g. trust) of users
+%to help complement users’ preference in addition to item ratings, in order to overcome the limitations of existing recommender systems
+
+For example, when looking for movie recommendations we often turn to our friends which we share a similar taste in movies with. Trust can be defined as: "believe in the reliability, truth, or ability of", and in the context of recommender systems a trusted user would be a user you trust to provide you with good recommendations. E.g. in the case of the Epinions dataset \cite{Epinions}, users can explicitly state whether they trust or distrust a user [1, -1], i.e. reviewers whose reviews and ratings they have consistently found to be valuable or reviewers which they find consistently offensive, inaccurate or not valuable. In decentralized environments where everyone is free to create content and there
+is no centralized quality control entity, evaluating the quality of the content becomes an important issue. This phenomenon can be observed in online
+marketplaces such as E-bay where users can create "fake" auctions and in peer-to-peer networks where peers can enter corrupted items. In these environments, it is often a good strategy to delegate the quality assessment task to users themselves. E.g. \emph{Ebay.com} allows users to express their level of satisfaction after every interaction with another user. Trust relationships of users are often employed in order to correlate more potential raters for the active users who require recommendations \cite{Massa2004, Massa2007}. Massa et. al. \cite{Massa2004} also show that some of the weaknesses of recommender systems such as data sparseness and their susceptibility to shilling attacks could be alleviated by incorporating trust.
 
 % The formals
 In \cite{Massa2004}, Massa et al. proposes a Trust-Aware recommender system
