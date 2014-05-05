@@ -162,8 +162,8 @@ sparse datasets, one may wish to train as many examples as possible. A common
 choice is $K$ value between 5 and 10.
 
 \subparagraph{Advantages}
-One positive aspect with k-fold cross-validation is that is does not matter much where the split is set, since the result is averaged over the $K$ experiments.
-All data is used for both training and validation.
+One positive aspect with k-fold cross-validation is that is does not matter much where the split is set, since the result is averaged over the $K$ experiments. The strongest argument for using cross-validation is the potential of using the entire training set for testing (albeit not at once), creating the largest possible test set for a fixed training data set
+
 
 \subparagraph{Disadvantages}
 The main disadvantage with K-fold Cross-Validation is the training algorithm has to be run $K$ times, and thereby increasing the runtime for producing an evaluation of the system.
@@ -190,6 +190,13 @@ With these averages a histogram can be produced, which provides an estimate of t
 \subparagraph{Disadvantages}
 One prominent issue with bootstrapping is that the same sampling data is used to acquire a better understanding and less error margin of the sampling data~\footnote{"Bootstrapping" comes from the phrase, "to pull oneself up by one's bootstraps"~\cite{bootstrapSaying1843}}.
 
+\paragraph{Finding the optimal parameter settings}
+
+Finding the optimal parameters for a model is usually a crucial task in engineering approaches to classification and modeling tasks. An automated approach is particularly desirable when the number of parameters are high. In order to work well many algorithms and modeling techniques in computer science rely on a careful choice of their parameters. The usual approach is to select parameters based on some prior experience on the problem at hand with a limited heuristic search of possibly optimal parameters. When such prior knowledge is absent or cannot be directly applied to the technique being used, the optimal parameters have to be found either by \emph{blind} search, by e.g. using genetic algorithms or some kind of grid-search procedure.
+
+The \emph{de facto} standard way of performing model selection optimization is grid search, which is simply an exhaustive searching through a manually specified subset of the hyperparameter space of a learning algorithm. To \emph{guide} the grid-search one typically uses a performance metric, typically measured by cross-validation on the training set. After evaluating the performance all the pre-specified combinations of parameter settings, the grid search algorithm outputs the setting that achieved the highest score in the validation procedure.
+
+Many of the most popular Machine Learning libraries now come with methods for performing grid search.
 
 \subsubsection{Offline Evaluation Metrics}
 When evaluating a recommender system, you wish to estimate a user's
@@ -613,6 +620,9 @@ cold-start user scenario one selects a subset of the users with e.g.\ more than
 200 ratings. One then trains the model with a subset of the ratings. In the
 case of~\cite{Rashid2002} 30, 45, 60 and 90 ratings was used. After training
 the model one computes the error on the hidden ratings for the same user.
+Stern et. al. also used a similar method which they called Given $n$, in which
+they trained their model using 2, 5 and 10 ratings for each test user and predict
+the remaining values.
 
 Another \emph{simpler} approach employed by~\cite{Massa2007, Jamali2009} is to
 determine a cutoff point for what is considered a cold-start user. E.g.\ that
