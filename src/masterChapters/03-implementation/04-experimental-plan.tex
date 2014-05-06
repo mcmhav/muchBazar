@@ -1,37 +1,27 @@
 \section{Experimental Plan}
 
-%Our experiment aims to uncover...
+%We can sometimes evaluate how well the recommender achieves its overall goals.
+%For example, we can check an e-commerce website revenue with and without the
+%recommender system and thereby estimate the value of the system to the website.
 
+Section \ref{sec:evaluation} covers a wide range of evaluation metrics that measure different properties of the recommender system. This section will cover our experimental plan where the goal of the experiment is to evaluate the properties of the system, which we have identified as the most important for the systems success, and select the method that performs the best overall with respect to these properties. The section will describe the datasets used for evaluation, our evaluation methodology and our evaluation metrics of choice.
 
-\section{Selecting datasets for evaluation}
+\subsection{Selecting datasets for evaluation}
 
-In addition to evaluate the methods on the Sobazar dataset we want to make sure that our solution generalizes beyond our experimental dataset, in accordance to the general guidelines for experimental studies \cite{Shani2011}.
-
-The data used for offline evaluation should match as closely as possible the data we expect the recommender system to face when it is deployed \cite{Gunawardana2009}. However, most publicly available datasets are not collected from e-commerce sites and does therefore not contain user browsing history, purchases etc.
-
-
-Natural to assume that the number of users on Sobazar will increase as they system \emph{officially} goes live.
-
-%Always a possibility to reduce the size of datasets by removing some ratings...
-
-
-
-
-When selecting datasets for evaluation we focused on the following dataset properties:
-
+In addition to evaluate the methods on the Sobazar dataset we want to make sure that our solution generalizes beyond our experimental dataset, in accordance to the general guidelines for experimental studies \cite{Shani2011}. The data used for offline evaluation should match as closely as possible the data we expect the recommender system to face when it is deployed \cite{Gunawardana2009}. When selecting datasets for evaluation we focused on the following dataset properties:
 
 \begin{itemize}
-\item Size of dataset: Preferable as close as possible to Sobazar in terms of number of ratings, users and items.
-\item Type of user feedback: Preferably implicit, as it allows us to test our implicit feedback to implicit rating function.
-\item Domain: E-commerce datasets with purchase history would be most relevant.
-\item Precence of features: To evaluate hybrid methods?
+\item Size of dataset: Preferable as close as possible to Sobazar (6 months from now) in terms of number of ratings, users and items.
+\item Type of user feedback: Preferably implicit mixed with explicit feedback, as it allows us to evaluate our implicit feedback to implicit rating function.
+\item Domain: E-commerce datasets with different event types such as browsing behavior and purchase history would be most relevant.
+\item Presence of features: To evaluate the hybrid methods.
 \end{itemize}
 
+We were unable to acquire any e-commerce datasets containing user browsing history, purchases etc. And we therefore had to turn for other domains for datasets.
 
-The reason for selecting the MovieLens 1M dataset over MovieLens 100K is that the number of users is closer to what we expect the SoBazar to have after the \emph{official} launch this summer. 
+The first dataset we chose for evaluation was the MovieLens 1M dataset. The reason for selecting the MovieLens 1M dataset over MovieLens 100K is that the number of users is closer to what we expect the SoBazar to have after the \emph{official} launch this summer in addition to having user- and item features. The MovieLens dataset can also be seen as a \emph{benchmark} dataset as it is one of the most popular recommender systems dataset used for evaluation in countless articles.
 
-
-\subsection{Dataset 1}
+\subsubsection{Dataset 1}
 
 Rossmann dataset?
 %General statistics and averages
@@ -40,7 +30,7 @@ Rossmann dataset?
 %How was the methods evaluated on the dataset?
 %	- x-fold cross validation
 
-\subsection{MovieLens 1M}
+\subsubsection{MovieLens 1M}
 
 As our second dataset we have chosen the MovieLens 1M dataset. The dataset contain 1,000,209 anonymous ratings on approximately 3,706 movies (The readme mentions 3900 movies) made by 6040 users. User features included age, gender, occupation and zipcode, item features include movie genre. Each user included in the dataset have provided a minimum of 20 ratings. The average rating given to movies in the dataset is $3.58$. There are 18 different genres in the dataset, but each movie can have multiple genres assigned to it, of which there are 498 different combinations in the dataset.
 
@@ -95,15 +85,15 @@ Writer & 281 \\ \hline
 
 As the sparsity of this dataset is fairly low (95.53164), we decided to evaluate this dataset using the holdout method. As the dataset include time-stamps we split the dataset based on time, meaning that all ratings given before a given time will be used to train the model and all ratings given after this point will be used as a testset. We set aside the last 25\% ratings for evaluation and train the model using the remaining 75\%.
 
-
-\subsection{Sobazar Data}
+\subsubsection{The Sobazar Dataset}
 
 %Highlight limitations of the sobazar dataset for evaluation.
 	%-> Implications for evaluation
-The Sobazar dataset is the most sparse of our datasets used for evaluation. This has several implications. 
+The Sobazar dataset is smallest and sparsest of our datasets used for evaluation. The dataset contain ratings 15,252 given by 	1,235 users to 3,386 items. We also have access to semi-structured product information collected/crawled from the online retailers for most items. In addition user data from the users can also be downloaded from Facebook.
 
+Having such a small and sparse dataset has several implications. Firstly we have to avoid \emph{wishful thinking} as we have very thin data, meaning that we cannot rely on getting reliable results. Secondly, our evaluation methodology must be \emph{tailored} for small sparse datasets.
 
-The number of folds depends on the size of the dataset. For large datasets, even 3-fold Cross Validation will be quite accurate, while for very sparse datasets, we may have to use leave-one-out in order to train on as many examples as possible. The advantages of using a large number of folds is that the bias of the true error rate estimators will be small (the estimator will be very accurate), with the disadvantages being that the variance of the true error rate estimator will be large in addition to increased computation time. To exemplify this we ran a small experiment on the Sobazar data using IBCF, with $k-NN=3$, experimenting with different cross-validation splits:
+When using cross-validation the number of folds depends on the size of the dataset. For large datasets, even 3-fold Cross Validation will be quite accurate, while for very sparse datasets, we may have to use leave-one-out in order to train on as many examples as possible. The advantages of using a large number of folds is that the bias of the true error rate estimators will be small (the estimator will be very accurate), with the disadvantages being that the variance of the true error rate estimator will be large in addition to increased computation time. To exemplify this we ran a small experiment on the Sobazar data using IBCF, with $k-NN=3$, experimenting with different $K$-fold values:
 
 \begin{table}[H]
 \centering
@@ -118,32 +108,64 @@ K-fold & 	$min_{RMSE}$ 	&	$max_{RMSE}$ 	& Average 	& Variance 					\\ \hline
 \caption{Evaluation results from experimenting with different k-fold splits on the Sobazar dataset}
 \end{table}
 
-When increasing the number of folds we could see that it was unable to generate any recommendations at all for some folds, or getting really poor results, meaning that we get some difficult splits. E.g. when using 30 folds, IBCF was unable to provide any recommendations for 8 folds out of 30. Based on these results we decided to go with $5-10$ \marginpar{Determine final number...} folds for model validation.
+When increasing the number of folds we could see that it was unable to generate any recommendations at all for some folds, or getting really poor results, meaning that we get some difficult splits. E.g. when using 30 folds, IBCF was unable to provide any recommendations for 8 folds out of 30. By using more than 10 folds it is increasingly likely that we end up with a few or more   \emph{unrecommendable} instances in the test set, yielding no test result. Based on these results, and the general consensus that more folds are better for small datasets we believe that using between $5-10$-folds would be a good choice for model validation. Another alternative well suited for sparse datasets is the \emph{all but one} or \emph{leave one out} method, in which one remove one rating from the test users and try to predict the hidden ratings.
 
-\marginpar{What about \emph{all but one}, or leave one out?}
+Another important concern is whether or not to take the timestamps into consideration, which directly speaks against the use of cross-validation, as we wish to use the past interactions to predict future actions. When using the \emph{leave one out} method one could e.g. select a predetermined set of test users based on some criteria and remove their latest rating and try to predict it and repeat the process any number of times.
 
+%TODO - Cross-validation time-based splits?
+%TODO - Look at what others have done
 
-\subsection{Summary}
+\subsubsection{Overview of the Datasets}
 
-%Some fancy tables n stuff
+Table \ref{table:datasets} shows an overview of the datasets used for evaluation.
 
 %TODO - What else is interesting to know? Rating scale, average number of ratings per user, number of cold start users...
+%TODO - % of users with less than 5 ratings for both datasets
 
 \begin{table}[H]
     \centering
     \begin{tabular}{|l|l|l|l|l|}
     \hline
-	Dataset			& 	Ratings 	& 	Users	& 	Items 	& 	Sparsity 	\\ \hline
-	Sobazar 		& 	15,252  	& 	1,235	&	3,386	&	99.65599	\\ \hline
-	Movielens 1M	& 	1,000,029   &	6040 	&	3706	&	95.53164	\\ \hline
-	Dataset 2 		& 	-  			& 	-		&	-		&	-			\\ \hline
+	Dataset			& 	Ratings 	& 	Users	& 	Items 	& 	Sparsity	& Rating Scale 				\\ \hline
+	Sobazar 		& 	15,252  	& 	1,235	&	3,386	&	99.65599	& Implicit Ratings(1-5)		\\ \hline
+	Movielens 1M	& 	1,000,029   &	6040 	&	3706	&	95.53164	& Explicit (1-5)			\\ \hline
+	Dataset 2 		& 	-  			& 	-		&	-		&	-			&							\\ \hline
     \end{tabular}
     \label{table:datasets}
     \caption [Overview of the datasets used for evaluation]{Overview of the datasets used for evaluation}
 \end{table}
 
 
-\section{Simulating the cold-start problem}
+\subsection{Simulating the cold-start problem}
+
+To simulate the cold-start problem and evaluate how well our the different methods tackle the different cold-start situations we came up with the following evaluation methodology. As mentioned in Section \ref{sec:cold-start-eval} there is no common framework for assessing the cold-start performance of recommender systems.
+
+
+How does the dataset evolve over time?
+
+	- Existing users watch new items in the catalogue
+	- New users join the system and view their first item
+	- New items are added to the catalogue
+	
+The first input source has the effect of increasing the dataset density, the average user profile length, and the 
+average number of views per item. The second input factor has the effect of decreasing both the dataset density 
+and the average user profile length, as the new users that join the system have watched one movie. Similarly, 
+the third input factor has the effect of decreasing both the dataset density and the average number of views per 
+item
+
+Cold-start user:
+2 Disjoint sets: 90:10
+Use the test users (10\%) and train the model with e.g. 5, 10, 15, 20 ratings and predict the remaining values
+Repeat k times
+
+
+Cold-start System:
+Train-test split 75:25
+At random draw 35, 50, all(75) ratings and predict the remaining 25
+Repeat k times
+
+
+Our goal is to come up with comprehensive framework to assess a recommender systems cold-start performance.
 
 %Describe the methodology used to simulate the cold-start problem
 
@@ -161,6 +183,9 @@ When increasing the number of folds we could see that it was unable to generate 
 
 
 \subsection{Evaluation Metrics}
+
+
+%Precision @ N, base N selection on the user interface (how many recommendations are presented?)
 
 
 
