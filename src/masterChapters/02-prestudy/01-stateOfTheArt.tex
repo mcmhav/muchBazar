@@ -1535,6 +1535,9 @@ This feature gives the user a set of items and the option to either like or disl
 
         \subparagraph{Usage Clusters} % (fold)
         \label{subp:usage_clusters}
+            The usage clusters are usually built up from the different features of the events in the session.
+            Where the features are collected an used to model the user.
+
             \begin{table}[H]
                 \centering
                 \begin{tabular}{l|l}
@@ -1545,7 +1548,7 @@ This feature gives the user a set of items and the option to either like or disl
                     Time on items under the different conditions mentioned above & -\\ \hline
                     Overall average time on items & - \\ \hline
                     Click to buy rate & - \\ \hline
-                    What was done before a specific action & - \\ \hline
+                    Search query~\cite{Zhang:2006:MSE:1135777.1136004} & - \\ \hline
                     What was done before a specific action & - \\ \hline
                     What was done before a specific action & - \\
                 \end{tabular}
@@ -1554,33 +1557,49 @@ This feature gives the user a set of items and the option to either like or disl
             \end{table}
         % subparagraph usage_clusters (end)
 
-        % \subparagraph{Page Clusters} % (fold)
-        % \label{subp:page_clusters}
-
-        % % subparagraph page_clusters (end)
+        \subparagraph{Page Clusters} % (fold)
+        \label{subp:page_clusters}
+            Page clustering will help the system to understand which pages belong together.
+            For instance when searching for Harry Potter, the user might have interest in knowing more about the author J.K. Rowling, and the system might benefit from clustering queries of here with Harry Potter~\cite{Zhang:2006:MSE:1135777.1136004}.
+        % subparagraph page_clusters (end)
 
         % \subparagraph{User Classification} % (fold)
         % \label{subp:user_classification}
 
         % subparagraph user_classification (end)
 
-\paragraph{Multi-Armed Bandit} % (fold)
-\label{par:multi_armed_bandit}
+\paragraph{Session Examples} % (fold)
+\label{par:session_examples}
 
-% paragraph multi_armed_bandit (end)
+\begin{lstlisting}
+    { "event_id" : "app_started", "product_id" : "NULL", "ts" : NumberLong("1382689141084") }
+    { "event_id" : "storefront_clicked", "product_id" : "NULL", "ts" : NumberLong("1382689144152") }
+    { "event_id" : "storefront_clicked", "product_id" : "NULL", "ts" : NumberLong("1382689172026") }
+    { "event_id" : "storefront_clicked", "product_id" : "NULL", "ts" : NumberLong("1382689179152") }
+    { "event_id" : "product_detail_clicked", "product_id" : 2028030, "ts" : NumberLong("1382689192035") }
+    { "event_id" : "product_purchase_intended", "product_id" : 2028030, "ts" : NumberLong("1382689197749") }
+    { "event_id" : "product_detail_clicked", "product_id" : 2038024, "ts" : NumberLong("1382689263384") }
+    { "event_id" : "storefront_clicked", "product_id" : "NULL", "ts" : NumberLong("1382689284693") }
+    { "event_id" : "storefront_clicked", "product_id" : "NULL", "ts" : NumberLong("1382689297864") }
+    { "event_id" : "storefront_clicked", "product_id" : "NULL", "ts" : NumberLong("1382689322201") }
+    { "event_id" : "storefront_clicked", "product_id" : "NULL", "ts" : NumberLong("1382689326804") }
+    { "event_id" : "storefront_clicked", "product_id" : "NULL", "ts" : NumberLong("1382689352841") }
+    { "event_id" : "product_detail_clicked", "product_id" : 2028032, "ts" : NumberLong("1382689357563") }
+    { "event_id" : "product_detail_clicked", "product_id" : 2038025, "ts" : NumberLong("1382689363957") }
+\end{lstlisting}
+
+purchase time: 14068.69687
+want time: 17859.1539
+
+% paragraph session_examples (end)
+
     % paragraph pattern_discovery (end)
 % ~\cite{Kelly:2003:IFI:959258.959260}
 
-% \subsubsection{How To Model}
-%     How to use the gathered information to model the user.
-%     Event features:
-%         - Amount of purchases
-%         - Amount of views
-%         - Amount of wants
-%         - Time on items under the different conditions mentioned above
-%         - What was done before a specific action
-%         - Overall average time on items
-%         - Click to buy rate
+\paragraph{Multi-Armed Bandit} % (fold)
+\label{par:multi_armed_bandit}
+    \marginpar{might be interesting as an most popular approach, suggest the most popular at any one time if, belongs with most popular approach}
+% paragraph multi_armed_bandit (end)
 
 \paragraph{Analyzing}
     Analyzing the model of the user
