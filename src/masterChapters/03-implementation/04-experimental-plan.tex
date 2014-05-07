@@ -1,3 +1,5 @@
+% !TEX root = ../../report.tex
+
 \section{Experimental Plan}
 
 %We can sometimes evaluate how well the recommender achieves its overall goals.
@@ -124,12 +126,12 @@ Table \ref{table:datasets} shows an overview of the datasets used for evaluation
 
 \begin{table}[H]
     \centering
-    \begin{tabular}{|l|l|l|l|l|}
+    \begin{tabular}{|l|l|l|l|l|l}
     \hline
 	Dataset			& 	Ratings 	& 	Users	& 	Items 	& 	Sparsity	& Rating Scale 				\\ \hline
 	Sobazar 		& 	15,252  	& 	1,235	&	3,386	&	99.65599	& Implicit Ratings(1-5)		\\ \hline
 	Movielens 1M	& 	1,000,029   &	6040 	&	3706	&	95.53164	& Explicit (1-5)			\\ \hline
-	Dataset 2 		& 	-  			& 	-		&	-		&	-			&							\\ \hline
+	Dataset 2 		& 	-  			& 	-		&	-		&	-			& -							\\ \hline
     \end{tabular}
     \label{table:datasets}
     \caption [Overview of the datasets used for evaluation]{Overview of the datasets used for evaluation}
@@ -146,11 +148,11 @@ How does the dataset evolve over time?
 	- Existing users watch new items in the catalogue
 	- New users join the system and view their first item
 	- New items are added to the catalogue
-	
-The first input source has the effect of increasing the dataset density, the average user profile length, and the 
-average number of views per item. The second input factor has the effect of decreasing both the dataset density 
-and the average user profile length, as the new users that join the system have watched one movie. Similarly, 
-the third input factor has the effect of decreasing both the dataset density and the average number of views per 
+
+The first input source has the effect of increasing the dataset density, the average user profile length, and the
+average number of views per item. The second input factor has the effect of decreasing both the dataset density
+and the average user profile length, as the new users that join the system have watched one movie. Similarly,
+the third input factor has the effect of decreasing both the dataset density and the average number of views per
 item
 
 Cold-start user:
