@@ -12,18 +12,19 @@ In addition to evaluate the methods on the Sobazar dataset we want to make sure 
 
 \begin{itemize}
 \item Size of dataset: Preferable as close as possible to Sobazar (6 months from now) in terms of number of ratings, users and items.
-\item Type of user feedback: Preferably implicit mixed with explicit feedback, as it allows us to evaluate our implicit feedback to implicit rating function.
-\item Domain: E-commerce datasets with different event types such as browsing behavior and purchase history would be most relevant.
+\item Different types of user feedback: Preferable different types of implicit feedback such as browsing and buying behavior.
+\item Domain: Preferably a domain as close to possible as the e-commerce domain with respect to the importance of factors such as recentness.
 \item Presence of features: To evaluate the hybrid methods.
+\item Timestamps: To evaluate the recentness mapping
 \end{itemize}
 
-We were unable to acquire any e-commerce datasets containing user browsing history, purchases etc. And we therefore had to turn for other domains for datasets.
+We were unable to acquire any e-commerce datasets containing user browsing history, purchases etc. And we therefore had to turn for other domains for datasets...
 
 The first dataset we chose for evaluation was the MovieLens 1M dataset. The reason for selecting the MovieLens 1M dataset over MovieLens 100K is that the number of users is closer to what we expect the SoBazar to have after the \emph{official} launch this summer in addition to having user- and item features. The MovieLens dataset can also be seen as a \emph{benchmark} dataset as it is one of the most popular recommender systems dataset used for evaluation in countless articles.
 
-\subsubsection{Dataset 1}
+\subsubsection{Book-Crossing Dataset}
 
-Rossmann dataset?
+
 %General statistics and averages
 %Interesting findings/properties
 %Was cleaning neccesary?
@@ -136,50 +137,43 @@ Table \ref{table:datasets} shows an overview of the datasets used for evaluation
 \end{table}
 
 
-\subsection{Simulating the cold-start problem}
+\subsection{Simulating the Cold-Start Problem}
 
-To simulate the cold-start problem and evaluate how well our the different methods tackle the different cold-start situations we came up with the following evaluation methodology. As mentioned in Section \ref{sec:cold-start-eval} there is no common framework for assessing the cold-start performance of recommender systems.
+To simulate the cold-start problem and evaluate how well our the different methods tackle the different cold-start situations we came up with the following evaluation methodology. As mentioned in Section \ref{sec:cold-start-eval} there is no common framework for assessing the cold-start performance of recommender systems. Our goal is to come up with \emph{comprehensive} framework to assess the cold-start performance of our recommender systems. The following inputs changes the dataset over time:
 
+\begin{itemize}
+	\item Existing users watch new items in the catalogue
+	\item	New users join the system and view their first item
+	\item	New items are added to the catalogue
+\end{itemize}
 
-How does the dataset evolve over time?
-
-	- Existing users watch new items in the catalogue
-	- New users join the system and view their first item
-	- New items are added to the catalogue
-	
 The first input source has the effect of increasing the dataset density, the average user profile length, and the 
 average number of views per item. The second input factor has the effect of decreasing both the dataset density 
-and the average user profile length, as the new users that join the system have watched one movie. Similarly, 
+and the average user profile length, as the new users that join the system have browsed only one item. Similarly, 
 the third input factor has the effect of decreasing both the dataset density and the average number of views per 
-item
+item.
 
-Cold-start user:
-2 Disjoint sets: 90:10
-Use the test users (10\%) and train the model with e.g. 5, 10, 15, 20 ratings and predict the remaining values
-Repeat k times
+%TODO - How do we select the test user? (User with more than e.g. 50 ratings or at random)
+To simulate the cold-start user problem we propose splitting the users into two disjoint sets as in \cite{Stern2009, Lam2008}, 
+using 90\% of the users for training and setting aside 10\% for evaluation. We then train the model with e.g. 5, 15, 25 and 35 
+ratings and predict the remaining values. This process is repeated $k$ times.
 
+%TODO - How do we select the test items?  (Items with < 100 ratings or at random)
+Similarly, to simulate the cold-start item problem we again split the items into two disjoint sets,
+ using 90\% of the items for training and the remaining 10\% for evaluation.  We then train the model 
+ with e.g. 20, 40, 60 and 80 ratings and predict the remaining values. This process is repeated $k$ times.
 
-Cold-start System:
-Train-test split 75:25
-At random draw 35, 50, all(75) ratings and predict the remaining 25
-Repeat k times
+To evaluate the cold-start system performance we use the same method as described in ~\cite{Agarwal2009}
+where the authors propose using a 75:25 training/test split, where we at random draw 35\%, 50\% 
+and then finally use all (75\%) of the ratings in the training set and predict the remaining 25\%. This process is repeated $k$ times.
 
+The selection criteria for test items and users can differ from dataset from dataset. E.g. in \cite{Rashid2002, Rashid2008}
+the authors selected a subset of the users with more than 200 ratings, but you can not expect 10\% all the users for all datasets
+to have provided 200 ratings, so this number might be lowered if necessary. The implications of removing the top 10\% of 
+the raters from the Sobazar dataset is fairly large as they stand for a large portion of the few ratings we have...
 
-Our goal is to come up with comprehensive framework to assess a recommender systems cold-start performance.
-
-%Describe the methodology used to simulate the cold-start problem
-
-%	- Why did we choose this methodology?
-
-%TODO - Look at reasoning in the papers
-
-
-
-%	- How to split the dataset
-
-%TODO - Describe the splitting method in detail
-
-% Can the Sobazar data be treated similarly as the other datasets?
+%TODO - How is this implemented on the sobazar data?
+%TODO - How is this implemented on the x data?
 
 
 \subsection{Evaluation Metrics}
