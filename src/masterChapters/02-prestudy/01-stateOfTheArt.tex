@@ -391,18 +391,18 @@ content-based and collaborative characteristics
 
 \subsubsection{Recommender System Challenges}
 
-Below we briefly mention some of the main challenges one faces when working 
+Below we briefly mention some of the main challenges one faces when working
 with recommender systems.
 
 \paragraph{Scalability}
 
-As the number of existing users and items blow up, traditional CF algorithms 
-suffer serious scalability problems. The model building phase of \emph{Traditional} 
-collaborative filtering methods have a complexity of O(MN) where $M$ is the number 
-of users and $N$ is the number of items. For systems with millions of users and items, 
-even a complexity of $n$ is too large. Another fundamental issue is how to embed the 
-core recommendation techniques in real operational systems and how to deal with massive 
-and dynamic sets of data produced by the interactions of users with items. Recommender 
+As the number of existing users and items blow up, traditional CF algorithms
+suffer serious scalability problems. The model building phase of \emph{Traditional}
+collaborative filtering methods have a complexity of O(MN) where $M$ is the number
+of users and $N$ is the number of items. For systems with millions of users and items,
+even a complexity of $n$ is too large. Another fundamental issue is how to embed the
+core recommendation techniques in real operational systems and how to deal with massive
+and dynamic sets of data produced by the interactions of users with items. Recommender
 systems are expected in many cases to provide rapid recommendations online, it is
 therefore also important to consider how fast the system provides recommendations.
 
@@ -412,16 +412,16 @@ based algorithms are up to two orders of magnitude faster than traditional user-
 algorithms \cite{Deshpande2004}. Dimensionality reduction techniques such as
 SVD can deal with the scalability by providing more compact representations and
 quickly produce good recommendations. However, most dimensionalty reduction
-techniques must undergo expensive matrix factorization steps. 
+techniques must undergo expensive matrix factorization steps.
 
 \paragraph{Sparsity}
 
-In practice, many recommender systems deal with very large item collections. 
+In practice, many recommender systems deal with very large item collections.
 This means that the number of ratings obtained is usually very small compared to the
 number of ratings that it needs to predict. Efficient prediction of ratings from a small
 number of examples is therefore important. The \emph{reduced coverage} problem
 occurs when the number of users' rating may be very small compared to the number of items.
-This may lead to that the recommender is unable to provide recommendations for a large 
+This may lead to that the recommender is unable to provide recommendations for a large
 portion of the items. \emph{Neighbour transitivity} refers to the problem in which users
 with similar tastes may not be identified due to a lack of co-rated items, making
 collaborative filtering futile, since it relies on comparing users to predict unknown ratings.
@@ -542,7 +542,7 @@ being large enough.
 \end{itemize}
 
 The cold-start user problem is present both in content-based and collaborative-filtering systems.
-Collaborative Filtering is based on the idea that like-minded users have similar tastes and preferences. 
+Collaborative Filtering is based on the idea that like-minded users have similar tastes and preferences.
 A new user therefore poses a challenge to a CF recommender, since the system has no knowledge about
 the preferences of the new user, and can therefore not provide any personalized recommendations. The system must therefore acquire some
 information about the new user before it can start making personalized recommendations. In a typical domain, for example in the domain of books, the number of items is very large (in the order of tens of thousands) while the number of items rated by every single user is in general small (in the order of dozens or less). This means that it is very unlikely two random users have rated any items in common and hence they are not comparable. The system will therefore most likely struggle to find users with tastes that are \emph{truly} similar to the target user. Similarly, in content-based systems, the lack of ratings given by the target user, means that the target user will have a limited
@@ -1608,31 +1608,59 @@ This section will be used to explore some of these systems, and look into their 
 
     \subparagraph{Strengths} % (fold)
         \begin{itemize}
-            \item
+            \item "Fancy" or like items and earn credits
+            \item Shopping chart in application
+            \item Upload own items
+            \item Suggest users to follow based on what the user likes
+            \item High novelty on the suggested items
         \end{itemize}
     % subparagraph strengths (end)
-    \subparagraph{Weaknesses} % (fold)
-        \begin{itemize}
-            \item
-        \end{itemize}
+    % \subparagraph{Weaknesses} % (fold)
+    %     \begin{itemize}
+    %         \item Limited personalized recommendation
+    %     \end{itemize}
     % subparagraph weaknesses (end)
 % paragraph fancy (end)
 
-
-    \begin{chapquote}[30pt]{About Farfetch}
-        "farfetch.com forms the hub of a global fashion community that unites independent boutiques around the world with fashion lovers"
+\paragraph{Clothia} % (fold)
+\label{par:clothia}
+    \begin{chapquote}[30pt]{About Clothia~\cite{clothia}}
+        "An online destination where you can mix and match outfits, share looks you love, even try on clothes virtually via your webcam using augmented reality technology"
     \end{chapquote}
     \subparagraph{Strengths} % (fold)
         \begin{itemize}
-            \item
+            \item Users can like items
+            \item Users can follow other users
+            \item Users can put together sets of items and show to other users
+            \item System has most popular list
         \end{itemize}
     % subparagraph strengths (end)
     \subparagraph{Weaknesses} % (fold)
         \begin{itemize}
-            \item
+            \item Lack personalized recommendations
         \end{itemize}
     % subparagraph weaknesses (end)
+% paragraph clothia (end)
 
+
+\paragraph{Trendabl} % (fold)
+\label{par:trendabl}
+    \begin{chapquote}[30pt]{About Trendabl~\cite{trendabl}}
+        "Trendabl is a community of people who love fashion"
+    \end{chapquote}
+    \subparagraph{Strengths} % (fold)
+        \begin{itemize}
+            \item Users can upload their own fashion items
+            \item Users can follow other users
+            \item Users can like items
+            \item System recommends other users to follow
+        \end{itemize}
+    % subparagraph strengths (end)
+    \subparagraph{Weaknesses} % (fold)
+        \begin{itemize}
+            \item Recommended users to follow are the top users in the system
+        \end{itemize}
+% paragraph trendabl (end)
 
 
 \paragraph{Farfetch} % (fold)
