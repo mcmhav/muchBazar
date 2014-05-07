@@ -391,32 +391,40 @@ content-based and collaborative characteristics
 
 \subsubsection{Recommender System Challenges}
 
-\marginpar{Introduction...}
+Below we briefly mention some of the main challenges one faces when working 
+with recommender systems.
 
 \paragraph{Scalability}
 
-As the number of existing users and items blow up, traditional CF algorithms suffer serious scalability problems. The model building phase of \emph{Traditional} collaborative filtering methods have a complexity of O(MN) where $M$ is the number of users and $N$ is the number of items. For systems with millions of users and items, even a complexity of $n$ is too large. Another fundamental issue is how to embed the core recommendation techniques in real operational systems and how to deal with massive and dynamic sets of data produced by the interactions of users with items. Recommender systems are expected in many cases to provide rapid recommendations online, it is therefore also important to consider how fast the system provides recommendations.
+As the number of existing users and items blow up, traditional CF algorithms 
+suffer serious scalability problems. The model building phase of \emph{Traditional} 
+collaborative filtering methods have a complexity of O(MN) where $M$ is the number 
+of users and $N$ is the number of items. For systems with millions of users and items, 
+even a complexity of $n$ is too large. Another fundamental issue is how to embed the 
+core recommendation techniques in real operational systems and how to deal with massive 
+and dynamic sets of data produced by the interactions of users with items. Recommender 
+systems are expected in many cases to provide rapid recommendations online, it is
+therefore also important to consider how fast the system provides recommendations.
 
-Better scalabiltiy and improved accuracy make the item-item collaborative filtering approaches more favorable in many cases. The computational complexity of item-to-item based algorithms are up to two orders of magnitude faster than traditional user-based algorithms \cite{Deshpande2004}. Dimensionality reduction techniques such as SVD can deal with the scalability by providing more compact representations and quickly produce good recommendations. However, most dimensionalty reduction techniques must undergo expensive matrix factorization steps.
-\textbf{Sparsity}
-
-In practice, many recommender systems deal with very large item collections. This means that the number of ratings obtained is usually very small compared to the number of ratings that it needs to predict. Efficient prediction of ratings from a small number of examples is therefore important. The \emph{reduced coverage} problem occurs when the number of users' rating may be very small compared to the number of items. This may lead to that the recommender is unable to provide recommendations for a large portion of the items. \emph{Neighbour transitivity} refers to the problem in which users with similar tastes may not be identified due to a lack of co-rated items, making collaborative filtering futile, since it relies on comparing users to predict unknown ratings.
-
+Better scalabiltiy and improved accuracy make the item-item collaborative filtering
+approaches more favorable in many cases. The computational complexity of item-to-item
+based algorithms are up to two orders of magnitude faster than traditional user-based
+algorithms \cite{Deshpande2004}. Dimensionality reduction techniques such as
+SVD can deal with the scalability by providing more compact representations and
+quickly produce good recommendations. However, most dimensionalty reduction
+techniques must undergo expensive matrix factorization steps. 
 
 \paragraph{Sparsity}
 
-In practice, many recommender systems deal with very large item collections.
-This means that the number of ratings obtained is usually very small compared
-to the number of ratings that it needs to predict. Efficient prediction of
-ratings from a small number of examples is therefore important. The
-\emph{reduced coverage} problem occurs when the number of users' rating may be
-very small compared to the number of items. This may lead to that the
-recommender is unable to provide recommendations for a large portion of the
-items. \emph{Neighbour transitivity} refers to the problem in which users with
-similar tastes may not be identified due to a lack of co-rated items, making
-collaborative filtering futile, since it relies on comparing users to predict
-unknown ratings.
-
+In practice, many recommender systems deal with very large item collections. 
+This means that the number of ratings obtained is usually very small compared to the
+number of ratings that it needs to predict. Efficient prediction of ratings from a small
+number of examples is therefore important. The \emph{reduced coverage} problem
+occurs when the number of users' rating may be very small compared to the number of items.
+This may lead to that the recommender is unable to provide recommendations for a large 
+portion of the items. \emph{Neighbour transitivity} refers to the problem in which users
+with similar tastes may not be identified due to a lack of co-rated items, making
+collaborative filtering futile, since it relies on comparing users to predict unknown ratings.
 
 \paragraph{Cold-start}
 
@@ -533,9 +541,10 @@ information, thus the user group covered by this solution could end up not
 being large enough.
 \end{itemize}
 
-The cold-start user problem is present both in content-based and collaborative-filtering systems. Collaborative Filtering is based on the idea that like-minded users have similar tastes and preferences. A new user therefore poses a challenge to a CF recommender, since
-the system has no knowledge about the preferences of the new user, and can
-therefore not provide any personalized recommendations. The system must therefore acquire some
+The cold-start user problem is present both in content-based and collaborative-filtering systems.
+Collaborative Filtering is based on the idea that like-minded users have similar tastes and preferences. 
+A new user therefore poses a challenge to a CF recommender, since the system has no knowledge about
+the preferences of the new user, and can therefore not provide any personalized recommendations. The system must therefore acquire some
 information about the new user before it can start making personalized recommendations. In a typical domain, for example in the domain of books, the number of items is very large (in the order of tens of thousands) while the number of items rated by every single user is in general small (in the order of dozens or less). This means that it is very unlikely two random users have rated any items in common and hence they are not comparable. The system will therefore most likely struggle to find users with tastes that are \emph{truly} similar to the target user. Similarly, in content-based systems, the lack of ratings given by the target user, means that the target user will have a limited
 content-profile, since the users content profile is constructed using content-information from his/hers rated items. In both cases, recommendation quality is most likely bound to suffer.\newline
 
@@ -1088,7 +1097,6 @@ Clustered Neighbours (IGCN) to have the best performance overall, which scored
 the user to rate.
 
 %How can this be implemented?
-
 Our rational behind including these articles is that we envision a simple "hot
 or not" tinder like interface to be used to present items to new users when the
 first log in to the system. And then ask new users that download the app to
@@ -1103,12 +1111,13 @@ of the system after the interview process than user effort. It is also worth
 noting that calculating entropy using implicit ratings is tricky, since the
 rating distribution does not range from dislike to like. We can therefore not
 find \emph{high-entropy} or \emph{controversial} items which users either tend
-to like or dislike, as we have no data about items users dislike
-\marginpar{Discussion on suitedness of implicit ratings for entropy
-calculations}. We are also currently constrained to unobtrusively learn
+to like or dislike, as we have no data about items users dislike.  We are also currently constrained to unobtrusively learn
 user-profiles from the natural interactions of users with the system, meaning
 that we can not require the user to rate e.g. 10 items before we can start
 providing recommendations, as this functionality has not been implemented.
+
+\marginpar{Discussion on suitedness of implicit ratings for entropy
+calculations}.
 
 %Scalability & Final Verdict
 The scalability of the approach is also fairly good. It requires another module
@@ -1120,7 +1129,7 @@ theory approach is used this would be a good model for dealing with sparsity,
 as the number of ratings would sky-rocket in addition to having ratings for a
 large portion of the item collection (not only limited to the most popular
 items). The negative aspects of this approach is mainly limited to the fact
-that it requires active user involvement.\newline
+that it requires active user involvement.
 
 \paragraph{Seed users}
 
@@ -1185,7 +1194,7 @@ be incrementally trained.
 
 \paragraph{Summary}
 
-%TODO - Summary of all the methods
+%TODO - Summary of all the methods, what can we use?
 \marginpar{How do we compare the methods: Feedback from Helge and Heri appriciated. }
 
 It is hard to compare the performance of the different methods as they have
@@ -1221,8 +1230,8 @@ Compare the models based on the following properties:
     \label{table:evaluationcoldstart}
 \end{table}
 
-We propose to do this...
-For these reasons...
+We believe it would be interesting too see how the hybrid methods (RBLF) and Naive Filterbots could be
+combined with our implicit ratings to improve the cold-start performance of our system.
 
 \subsection{Fashion Recommendation}
 
