@@ -1306,7 +1306,7 @@ consumer according to \cite{kotler2009marketing} is:
 \begin{table}[H]
     \centering
     \begin{tabular}{l|l|l}
-      \textbf{Factors}        & \textbf{Examples} & \textbf{something?} \\ \hline
+      \emph{Factors}        & \emph{Examples} & \emph{something?} \\ \hline
       Physiological factors   & Physical protection, commodity & - \\ \hline
       Socio-cultural factors  & Family, friends, work, social groups & - \\ \hline
       Personal factors        & Age, life cycle, occupation, personality & - \\ \hline
@@ -1332,8 +1332,8 @@ content.  The complete list is shown in~\ref{table:ConsumersPurchaseDec}
 \begin{table}[H]
     \centering
     \begin{tabular}{l|l|l}
-      \multicolumn{2}{c|}{\textbf{Concrete Attributes}} & \textbf{Abstract Attributes} \\
-      \multicolumn{2}{c|}{\textbf{(product features)}} & \multirow{2}{*}{\textbf{(attitude-based)}} \\ \cline{1-2}
+      \multicolumn{2}{c|}{\emph{Concrete Attributes}} & \emph{Abstract Attributes} \\
+      \multicolumn{2}{c|}{\emph{(product features)}} & \multirow{2}{*}{\emph{(attitude-based)}} \\ \cline{1-2}
       Intrinsic (hedonic)   & Extrinsic & \\ \hline
       \pbox{4cm}{
           - Style \\
@@ -1462,7 +1462,165 @@ products.  This poses an issue for recommending items based on their content.
 \subsubsection{Competitors to soBazar}
 SoBazar is built up of a collection of e-commerce store front applications and social interactions, but soBazar is not the first of its kind.
 There is a set of other similar applications providing the user with similar possibilities as soBazar.
-This section will be used to explore some of these systems, and look into their strengths and weaknesses.
+This section will be used to explore some of these systems, and look into their strengths and weaknesses regarding item recommendation for the user.
+
+\paragraph{Myntra} % (fold)
+\label{par:myntra}
+    "Myntra.com is a one stop shop for all your fashion and lifestyle needs" - about Myntra~\cite{myntra}.
+
+    Myntra is one of India's largest e-commerce stores for dashion and aims to  provide a hassle free shopping experience for the user.
+    They aim to bring the newest and most in-season fashion products available to the user trough the web store front.
+    The brand base of Myntra consists of 500 leading brands from both inside and outside India.
+
+    The web page a set of recommendation approaches to inform the user of what they might like, and increase the user's awareness of different kinds of items. Such as, similar item and most popular.
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=5in]{image/myntiaSimilarExample.png}
+        \caption[Example of Myntra's "similar item" approach]{In this figure we can see in red how Myntra is suggesting items which are similar to the item the user is currently looking at}
+        \label{figure:myntiaSimilarEx}
+    \end{figure}
+    \begin{table}[H]
+        \centering
+        \begin{tabular}{l|l}
+            \toprule
+            \emph{Strengths} & \emph{Weaknesses} \\ \hline
+            \pbox{9cm}{
+                - Suggest similar items to the currently viewed \\
+                - Popular list for the different brands and stores \\
+                - Ability to add item to a "want list"
+            } & \pbox{9cm}{
+                - No personalized recommendations \\
+            } \\ \bottomrule
+        \end{tabular}
+        \caption[Recommendation related strengths and weaknesses of Myntra~\cite{myntra}]{This table is the list of the recommendation related strengths and weaknesses of the e-commerce fashion web site Myntra~\cite{myntra}}
+        \label{table:ecommerceMyntra}
+    \end{table}
+% paragraph myntra (end)
+
+\paragraph{Flink} % (fold)
+\label{par:flink}
+    "Flink is THE brand-new app to discover, get inspired and share trendy looks from top fashion bloggers" - About Flink~\cite{flink}.
+
+    Flink is a fashion discovery application for iPhone.
+    It allows the user to browse fashion blogs, hot brands and new trends.
+
+    The content displayed can be "liked" and can be a collection of clothes from different brands.
+    if the user is interested in the item, the application can redirect the user to the web page where it is sold.
+    \begin{table}[H]
+        \centering
+        \begin{tabular}{l|l}
+            \toprule
+            \emph{Strengths} & \emph{Weaknesses} \\ \hline
+            \pbox{9cm}{
+                - Can follow other users \\
+                - Connected with facebook \\
+                - Ability to add item to a "want list"
+            } & \pbox{9cm}{
+                - No personalized recommendations \\
+            } \\ \bottomrule
+        \end{tabular}
+        \caption[Recommendation related strengths and weaknesses of Flink~\cite{flink}]{This table is the list of the recommendation related strengths and weaknesses of the mobile fashion application Flink~\cite{flink}}
+        \label{table:iphoneAppFlink}
+    \end{table}
+\marginpar{todo, might be more, but can't explore the application since it is iOS 7 required :P}
+% paragraph flink (end)
+
+\paragraph{Lyst} % (fold)
+\label{par:lyst}
+    "Lyst.com is a fashion shopping site that gives you your own shopping experience, so you can discover more of the fashion you love" - About Lyst~\cite{lyst}.
+
+    Lyst offers items from thousands of the leading brands and stores of the world.
+
+    The site allows the user to follow different stores or brands to receive the latest items they have to offer.
+    The user is given a personalized "stylefeed", which displays items from the different brands or stores the user is following.
+    It is also possible for the user to add items to the their profile.
+
+    On first login the user is presented with a set of brands and store the user can like or dislike, to get the "stylefeed" started.
+    On access of an item, the user is presented with related items, and the ability to add the item to a collection.
+    When the user wants to buy an item, the site will redirect the user to the store selling the item.
+    \begin{table}[H]
+        \centering
+        \begin{tabular}{l|l}
+            \toprule
+            \emph{Strengths} & \emph{Weaknesses} \\ \hline
+            \pbox{9cm}{
+                - Can follow brands and stores \\
+                - Connected with facebook \\
+                - Ability to add item to a "want list" \\
+                - "Stylfeed" based the user's follow list \\
+                - Show related items
+            } & \pbox{9cm}{
+                - No personalized recommendations \\
+            } \\ \bottomrule
+        \end{tabular}
+        \caption[Recommendation related strengths and weaknesses of Lyst~\cite{lyst}]{This table is the list of the recommendation related strengths and weaknesses of e-commerce fashion web site Lyst~\cite{lyst}}
+        \label{table:ecommenreceLyst}
+    \end{table}
+% paragraph lyst (end)
+
+\paragraph{Motilo} % (fold)
+\label{par:motilo}
+    "Motilo was launched in 2011 to answer that perennial fashion dilemma all women face – what shall I wear tonight?" - About Motilo~\cite{motilo}.
+
+    Items on the web page are gathered by the Motilo stylists.
+    This give the page a fresh set of items for the user to select from.
+
+    Motilo gives the user the ability to put together item sets though dragging and dropping the items into a "fashion dilemma", or simply like items.
+    The user can ask friends, the Motilo community or the Motilo stylists about suggestions regarding what to wear, and put together.
+    If the user wants to buy an item, Motilo redirects the user to the page which sells the item in question.
+    \begin{table}[H]
+        \centering
+        \begin{tabular}{l|l}
+            \toprule
+            \emph{Strengths} & \emph{Weaknesses} \\ \hline
+            \pbox{9cm}{
+                - Connected with facebook \\
+                - Ability to add item to a "want list" \\
+                - A feed with the most trending item collections
+            } & \pbox{9cm}{
+                - No personalized recommendations \\
+            } \\ \bottomrule
+        \end{tabular}
+        \caption[Recommendation related strengths and weaknesses of Motilo~\cite{motilo}]{This table is the list of the recommendation related strengths and weaknesses of e-commerce fashion web site Motilo~\cite{motilo}}
+        \label{table:ecommenreceMotilo}
+    \end{table}
+% paragraph motilo (end)
+
+
+\paragraph{Farfetch} % (fold)
+\label{par:farfetch}
+    "farfetch.com forms the hub of a global fashion community that unites independent boutiques around the world with fashion lovers" - About Farfetch~\cite{Farfetch}
+
+    Farfetch is a collection of over 1000 boutiques from all over the world gathered on one web page.
+    The user can shop directly on the page, and get the item delivered to the doorstep with only one checkout process.
+
+    When browsing an item the user is presented with a set of recommendations related to the current item, and previous browsing history.
+    The item can be added to a "want list" or to the shopping chart.
+
+    \begin{table}[H]
+        \centering
+        \begin{tabular}{l|l}
+            \toprule
+            \emph{Strengths} & \emph{Weaknesses} \\ \hline
+            \pbox{9cm}{
+                - Ability to add item to a "want list" \\
+                - A feed with the most popular items \\
+                - A feed with new items \\
+                - A list of recommendations for the user
+            } & \pbox{9cm}{
+                - No option to follow other users
+            } \\ \bottomrule
+        \end{tabular}
+        \caption[Recommendation related strengths and weaknesses of Farfetch~\cite{Farfetch}]{This table is the list of the recommendation related strengths and weaknesses of e-commerce fashion web site Farfetch~\cite{Farfetch}}
+        \label{table:ecommenreceFarfetch}
+    \end{table}
+% paragraph farfetch (end)
+
+% user sell application, interesting?
+\paragraph{Threadflip} % (fold)
+\label{par:threadflip}
+
+% paragraph threadflip (end)
 
 \paragraph{Gilt} % (fold)
 \label{par:gilt}
@@ -1663,23 +1821,9 @@ This section will be used to explore some of these systems, and look into their 
 % paragraph trendabl (end)
 
 
-\paragraph{Farfetch} % (fold)
-\label{par:farfetch}
-    \begin{chapquote}[30pt]{About Farfetch}
-        "farfetch.com forms the hub of a global fashion community that unites independent boutiques around the world with fashion lovers"
-    \end{chapquote}
 
-    \subparagraph{Strengths} % (fold)
-        \begin{itemize}
-            \item
-        \end{itemize}
-    % subparagraph strengths (end)
-    \subparagraph{Weaknesses} % (fold)
-        \begin{itemize}
-            \item
-        \end{itemize}
-    % subparagraph weaknesses (end)
-% paragraph farfetch (end)
+
+
 
 Rue la la, zalando, Ellos, Lookbook.nu, flink, fashiolista, ShopStyle, MYHABIT,
 

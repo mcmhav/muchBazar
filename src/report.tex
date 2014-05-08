@@ -28,12 +28,16 @@
 \usepackage{pbox}     % Can be used in tables to have multiple lines in one box
 \usepackage{multirow} % Span a row over multiple rows
 \usepackage{amssymb}
+\usepackage{pifont}   % Can add check symbol
 %\usepackage[dvipsnames]{xcolor}
 \pgfplotsset{compat=1.9} % latex suggest for compatibility
 
 \pagestyle{headings} % Footer is blank, header displays information according
 % to document class (e.g., section name) and page number top right.
 
+
+\newcommand{\cmark}{\color{ForestGreen}\ding{52}} % Awesome green check mark
+\newcommand{\xmark}{\color{RedOrange}\ding{55}}   % Awesome red cross mark
 % Package configutations
 \newcommand{\notimplies}{\mathrel{{\ooalign{\hidewidth$\not\phantom{=}$\hidewidth\cr$\implies$}}}}
 \newcommand{\HRule}{\rule{\linewidth}{0.5mm}} % Header
