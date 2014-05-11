@@ -226,7 +226,7 @@ that uses \textit{levels of frequency}.
 \label{implicit-table}
 \end{table}
 
-Then a user browsing an item $i$ two times, would get a score of 40 and a if
+Now, a user browsing an item $i$ two times, would get a score of 40 and a if
 buying it the score would be 100 (e.g.\ the event type with highest interest
 level supersede all others). Equally, if a user browsed the item 100 times, it
 would make no difference in score compared to browsing it 4 times. The scores
@@ -251,18 +251,21 @@ users the highest score within an event would be the same, even if one user
 triggered the \textit{event type 3} 10 times more often than another user, as
 long as both had reached the highest score of 30.
 
-Improvements to this model are presented in Section~\ref{design}
-% \todo{ref the correct section}
+Improvements to this model are presented in Section~\ref{implementation}
 
 \subsubsection{Regression analysis}
 
-This requires us to having some metric informing our algorithm about good or
-bad weights. This is done in a study by Parra et al.~\cite{parra2011walk}
-where they do a quantitative user study asking 114 active users to rate items
-found in their activity history. They used this in order to do
-a \textit{Regression analysis}, where the rating was the \textit{dependent
-variable} and the implicit feedback, combined with other factors were the
-\textit{independent variables}.
+A different method for converting events to ratings is finding a mathematical
+model which fits our observed data. Using this model we can predict new ratings
+by extrapolation or intrapolaton. The process of finding such a model within
+statistics is called regression analysis, and have been done in a study by
+Parra et.\ al.~\cite{parra2011walk}. As will be clear the method requires some
+form of \textit{ground truth} which in the referenced study was done by doing a
+quantitative user study asking 114 active users of the music service Last.fm to
+rate items which was found in their activity history. These ratings were used
+as \textit{dependent variables} and the implicit feedback/events, combined with
+other factors were used as \textit{independent variables} - the details of
+which will be exlained below.
 
 A regression analysis is using multiple data points in order to learn how the
 independent variables relate to the dependent variable. Often the linear
@@ -278,19 +281,21 @@ parameters. Using a dataset of $x$ (independent) and $y$ (dependent) values we
 can solve the equation above and perform the analysis. As a simple example,
 consider the following dataset:
 
-\begin{figure}[H]
+\begin{table}[H]
   \centering
-  \begin{BVerbatim}
-   x  | y
-  --------
-   -2 | 3
-   3  | -1
-   1  | 1
-   -1 | 3
-   2  | 3
-   4  | -2
-  \end{BVerbatim}
-\end{figure}
+  \begin{tabular}{ll}
+  \toprule
+  x & y \\
+  \midrule
+   -2 & 3 \\
+   3  & -1 \\
+   1  & 1 \\
+   -1 & 3 \\
+   2  & 3 \\
+   4  & -2 \\
+   \bottomrule
+  \end{tabular}
+\end{table}
 
 Solving equation~\ref{eq-regression} we have the following equations where we
 want to find the values of $w_0$ and $w_1$:
@@ -377,8 +382,6 @@ an item does not imply many clicks on the item, by the same user – whilst the
 probability of the opposite is larger. See Section~\ref{} for a larger
 discussion surrounding this topic. % \todo{link to correct section}
 
-% \todo{Explain how number between 1 and 3 was given}
-
 \subsubsection{Relative preferences using buying frequency}
 
 A hybrid approach using sequential pattern analysis and collaborative filtering
@@ -412,6 +415,8 @@ multiplying with $k$:
 \end{equation}
 
 % \todo{Explain a bit about Sequential pattern analysis}
+% TODO: Expand based on this:
+% http://blog.ub.ac.id/nikeastria/files/2012/04/A-hybrid-online-product-recommendation-system-Combining-implicit.pdf
 
 \subsection{Challenges and weaknesses}
 \label{implicit-weaknesses}
@@ -432,16 +437,19 @@ information-seeking; thus, it is difficult to generate, and dangerous to apply,
 all-purpose rules for describing how behavior can be used as implicit relevance
 feedback.
 
+% Show the three-stage pipeline, where we keep parameters in last two stages and
+% only change parameters in first stage -> Which makes it difficult to evaluate
+% and shows that changing a parameter in first stage have consequences in last
+% stage.
+
+
 % \todo{Add weaknesses of explicit ratings}
 
 % \todo{Mention fashion-specific challenges, e.g.\ clicks does not equal high
 % rating}
 
-\subsection{Evaluating conversion to implicit ratings}
+% \subsection{Evaluating conversion to implicit ratings}
 
-Map against user study.
+% Map against user study.
 
-Refer to evaluation section, written by Martin.
-
-Show the three-stage pipeline, where we keep parameters in last two stages and
-only change parameters in first stage.
+% Refer to evaluation section, written by Martin.
