@@ -108,20 +108,18 @@ One of the most common techniques of quantifying implicit feedback to implicit
 ratings is to use binary ratings - that is if a user has shown any interest in
 an item we give that item a weight of 1, similarily all items the user has not
 shown interest in (e.g. not clicked on) we give a rating of 0. This method was
-introduced and used by Hu et.\ al.\~\cite{Hu2008} where they formalized the
+introduced and used by Hu et.\ al.~\cite{Hu2008} where they formalized the
 notion of confidence which the $r_{ui}$ variables measure, e.g. if a user $u$
 had clicked on an item $i$ 2 times it would translate to the score $r_{ui} =
 2.0$. This was further converted to a $p_{ui}$ value derived by binarizing the
 $r_{ui}$ values:
 
 \begin{equation}
-  \[
-    p_{ui} = \left \{
-    \begin{array}{l l}
-      1 & \quad \text{if $r_{ui} > 0$} \\
-      0 & \quad \text{if $r_{ui} = 0$}
-    \end{array} \right
-  \]
+  p_{ui} =
+  \begin{cases}
+    1 & \text{if $r_{ui} > 0$} \\
+    0 & \text{if $r_{ui} = 0$}
+  \end{cases}
 \end{equation}
 
 As mentioned earlier in this section, and as it is also noted in the original
