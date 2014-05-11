@@ -1,3 +1,5 @@
+% !TEX root = ../../report.tex
+
 \section{Experimental Plan}
 
 %We can sometimes evaluate how well the recommender achieves its overall goals.
@@ -146,31 +148,55 @@ To simulate the cold-start problem and evaluate how well our the different metho
 	\item	New items are added to the catalogue
 \end{itemize}
 
-The first input source has the effect of increasing the dataset density, the average user profile length, and the 
-average number of views per item. The second input factor has the effect of decreasing both the dataset density 
-and the average user profile length, as the new users that join the system have browsed only one item. Similarly, 
-the third input factor has the effect of decreasing both the dataset density and the average number of views per 
-item.
+	- Existing users watch new items in the catalogue
+	- New users join the system and view their first item
+	- New items are added to the catalogue
 
-To simulate the cold-start user problem we propose splitting the users into two disjoint sets as in \cite{Stern2009, Lam2008}, 
-using 90\% of the users for training and setting aside 10\% for evaluation. We then train the model with e.g. 5, 15, 25 and 35 
+The first input source has the effect of increasing the dataset density, the average user profile length, and the
+average number of views per item. The second input factor has the effect of decreasing both the dataset density
+and the average user profile length, as the new users that join the system have watched one movie. Similarly,
+the third input factor has the effect of decreasing both the dataset density and the average number of views per
+item
+
+Cold-start user:
+2 Disjoint sets: 90:10
+Use the test users (10\%) and train the model with e.g. 5, 10, 15, 20 ratings and predict the remaining values
+Repeat k times
+
+
+Cold-start System:
+Train-test split 75:25
+At random draw 35, 50, all(75) ratings and predict the remaining 25
+Repeat k times
+
+
+Our goal is to come up with comprehensive framework to assess a recommender systems cold-start performance.
+
+%Describe the methodology used to simulate the cold-start problem
+
+%	- Why did we choose this methodology?
+
+%TODO - Look at reasoning in the papers
+
+To simulate the cold-start user problem we propose splitting the users into two disjoint sets as in \cite{Stern2009, Lam2008},
+using 90\% of the users for training and setting aside 10\% for evaluation. We then train the model with e.g. 5, 15, 25 and 35
 ratings and predict the remaining values. This process is repeated $k$ times.
 
 Similarly, to simulate the cold-start item problem we again split the items into two disjoint sets,
- using 90\% of the items for training and the remaining 10\% for evaluation.  We then train the model 
+ using 90\% of the items for training and the remaining 10\% for evaluation.  We then train the model
  with e.g. 20, 40, 60 and 80 ratings and predict the remaining values. This process is repeated $k$ times.
 
 To evaluate the cold-start system performance we use the same method as described in ~\cite{Agarwal2009}
-where the authors propose using a 75:25 training/test split, where we at random draw 35\%, 50\% 
+where the authors propose using a 75:25 training/test split, where we at random draw 35\%, 50\%
 and then finally use all (75\%) of the ratings in the training set and predict the remaining 25\%. This process is repeated $k$ times.
 
 The selection criteria for test items and users can differ from dataset from dataset. E.g. in \cite{Rashid2002, Rashid2008}
 the authors selected a subset of the users with more than 200 ratings, but you can not expect 10\% all the users for all datasets
-to have provided 200 ratings, so this number might be lowered if necessary. The implications of removing the top 10\% of 
+to have provided 200 ratings, so this number might be lowered if necessary. The implications of removing the top 10\% of
 the raters from the Sobazar dataset is fairly large as they stand for a large portion of the few ratings we have.
 
 %TODO - How is this implemented on the sobazar data?
-For the Sobazar dataset we select 10\% of the users as test users, each test user have provided at least 25. 
+For the Sobazar dataset we select 10\% of the users as test users, each test user have provided at least 25.
 We then train the model using 10, 15, 20 of their ratings and try to predict their remaining ratings. As we have a very
 low number of ratings and a large item collection we had to use only 2\% of the items as test items, where each
 test item have been rated atleast 20 times. We train the model using 5, 10, 15 of their ratings and try to predict

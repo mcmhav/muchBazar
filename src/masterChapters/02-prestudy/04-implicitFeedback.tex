@@ -33,65 +33,139 @@ different preferences due to peer of social pressure % \todo{ref}. The fact that
 introducing a user overhead, makes it difficult to have a complete view on the
 user preferences~\cite{Jawaheer2010}.
 
-We can try to achieve better results and create a more pleasant experience for
-the user, by looking at behavioral statistics, which is both easier to collect
-and does not require any extra effort from the user. Our end-goal is to predict
-a rating $r$ for a given user $u$ on item $i$, and thus we need some way of
-translating our implicit feedback into what we call \textbf{implicit ratings} –
-these are ratings, just like explicit ratings, but inferred by user behavior
-and as we will see in the succeeding sections need to be analyzed with this in
-mind.
+There may also be practical reasons for not having explicit ratings, dependent
+on how a website/application interacts and works with its customers. A useful
+example is Netflix, where rating an item does not \textit{cost} anything for
+the user, that is to consume the item is included in a monthly subscription
+price, whilst in a webstore rating an item often require the user to first buy
+it, then consume it and finally rate it. This is often infeasable or
+impractical, and we can create more pleasant experience for the user and achieve
+better results with less sparsity by looking at behavioural statistics. By
+considering analytics data we de not require any extra effort from the user and
+the data on which we can base our recommendations are easier to collect, since
+we do not need a seperate user interface for it, and in most applications one
+have access to the most basic of access logs (Web Server Logs) already.
 
-The following table, partly inspired by Hu et al.~\cite{Hu2008}, identifies
-the different characteristics in implicit and explicit ratings:
+Our end-goal is to predict a rating $r$ for a given user $u$ on item $i$, and
+thus we need some way of translating our implicit feedback (Access logs and so
+forth) into what we call \textbf{implicit ratings} – these are ratings, just
+like explicit ratings, but inferred by user behavior and as we will see in the
+succeeding sections need to be analyzed with this in mind.
 
-% \todo{Helge: Maybe best in plain text?}
-\begin{table}[H]
-    \begin{tabular}{l p{6cm} p{6cm}}
-    \toprule
-    –                  & \textbf{Explicit ratings}
-                       & \textbf{Implicit ratings} \\ \midrule
+In summary, partly inspired by Hu et al.~\cite{Hu2008}, we can identify the
+following key charecterstics and differences between implicit and explicit
+ratings.
 
-    \textit{Types of feedback}
-                       & Positive and negative.
-                       & Positive. \\ \midrule
+\textbf{Explicit ratings:}
+\begin{itemize}
+\item Contains both positive and negative feedback. In other words, a user is
+able to explicitly tell the system that he/she does not like an item, as well
+as the opposite.
+\item Indicates preference, often on a Likert scale (or similar), where scores
+range from total dislike to high satisfaction with an item.
+\item There is medium noisiness in the data, but the amount is highly dependent
+on the domain in question~\cite{amatriain2009like}. With little noisiness we
+achieve more precise ratings.
+\item Metrics in use are commonly RMSE, MAP or other evaluation schemes where
+we consider how well we match a test-set.
+\item Both evaluation schemes and recommendation techniques using explicit
+feedback is heavily researched and used. Many of these are easy to implement,
+and multiple open-source tools and projects are at researchers and developers
+disposal~\cite{}.
+\end{itemize}
 
-    \textit{Meaning}
-                       & Indicates preference. Often on a Likert scale ranging
-                         from total dislike to really like.
-                       & Indicates confidence. Recurring events is more likely
-                         to reflect the user opinion.
-                         \\ \midrule
+\textbf{Implicit ratings:}
+\begin{itemize}
+\item Usually only contain positive feedback, since we base our models on user
+activity on an item representing something good. However, looking at metrics
+such as bounce rates so forth, negative feedback can be produced with some
+effort.
+\item Indicates confidence, that is a recurring event is more likely to reflect
+the user opinion, but not necessarily his/hers preference.
+\item There is a high degree of noise and this is one of the main challenges
+with implicit rating and its precision. Researchers and developers need to be
+sure to select correct set of events and session-metrics to base implicit
+ratings on.
+\item As users do not provide numerical scores, a precision-recall evaluation
+scheme is often preffered to more preference-based metrics.
+\item Strengths include not requiring extra feedback for the user, having less
+sparsity and catching actual behaviour in the application. Less influenced by
+peer pressure and so forth.
+\end{itemize}
 
-    \textit{Noisiness}
-                       & Medium. Depends on domain and can be removed
-                         \cite{amatriain2009like}.
-                       & High. One of the main challenges in evaluating
-                         implicit feedback is choosing which events to
-                         consider. \\ \midrule
-
-    \textit{Evaluation metrics}
-                       & Traditional metrics such as RMSE are commonly used.
-                       & As users do not provide numerical scores, a
-                         Precision-Recall scheme or similar or more often used.
-                         \\ \midrule
-
-    \textit{Strengths}
-                       & Heavily researched, good evaluation metrics, easy to
-                         implement.
-                       & Does not require feedback from user, less sparsity and
-                         catches actual behavior, not influenced by peer
-                         pressure etc. \\ \midrule
-
-    \textit{Weaknesses}
-                       & \multicolumn{2}{c}{See Subsection~\ref{implicit-weaknesses}} \\
-    \bottomrule
-    \end{tabular}
-\end{table}
+We will look into more of these charecteristics in our thesis, carefully
+examining the state of the art with regards to both weaknesses and advantages
+and finally introduce some novel techniques facilitating the creation of
+implicit ratings.
 
 \clearpage
 
 \subsection{Quantifying implicit feedback}
+
+\subsubsection{Binary implicit ratings}
+
+One of the most common techniques of quantifying implicit feedback to implicit
+ratings is to use binary ratings - that is if a user has shown any interest in
+an item we give that item a weight of 1, similarily all items the user has not
+shown interest in (e.g. not clicked on) we give a rating of 0. This method was
+introduced and used by Hu et.\ al.\~\cite{Hu2008} where they formalized the
+notion of confidence which the $r_{ui}$ variables measure, e.g. if a user $u$
+had clicked on an item $i$ 2 times it would translate to the score $r_{ui} =
+2.0$. This was further converted to a $p_{ui}$ value derived by binarizing the
+$r_{ui}$ values:
+
+\begin{equation}
+  \[
+    p_{ui} = \left \{
+    \begin{array}{l l}
+      1 & \quad \text{if $r_{ui} > 0$} \\
+      0 & \quad \text{if $r_{ui} = 0$}
+    \end{array} \right
+  \]
+\end{equation}
+
+As mentioned earlier in this section, and as it is also noted in the original
+research, when we have implicit rather than explicit feedback there may be
+multiple reasons beyond preference that decide consumation of an item. It may
+be due to the items availability or price; the users knowledge of the item
+caused by e.g. the user interface or one of many other factors different from
+the user preffering or dislinking the item. To remidate this they introduce a
+variable $c_{ui}$ which measure the confidence in observing $p_{ui}$, where
+their main hypthesis is that as the $r_{ui}$ grows the confidence is stronger.
+Hence, a plausible choice for $c_{ui}$ would be:
+
+\begin{equation}
+c_{ui} = 1 + \alpha r_{ui}
+\end{equation}
+
+Where $\alpha$ controls the rate of increase, and is set to $40$ in their
+expiriments as this produced good results. They now use these two scores
+($p_{ui}$ and $c_{ui}$) in parallel when finding latent factors and training
+their model. In short they find both a user and item vector ($x_u$ and $y_i$,
+respectivly) where the preference is assumed to be their inner product: $p_{ui}
+= x_{u}^{T} y_{i}$. Notice as well how this method stand out from similar
+matrix factorization methods (see Section~\ref{}) by accounting for varying
+confidence levels:
+
+\begin{equation}
+  min_{x,y} \sum _{u,i} c_{ui} (p_{ui} - x_{u}^{T} y_i)^2 + \lambda (\sum _{u}
+  || x_u ||^2 + \sum_{i} || y_i ||^2)
+\end{equation}
+
+Where the $\lambda (\sum _{u} || x_u ||^2 + \sum_{i} || y_i ||^2)$ term is
+necessary for regularizing the model, so that is will not overfit the
+training data. $\lambda$ is highly data dependent and should be set by
+cross-validation.
+
+However, notice the primary term where the difference between the binary weight
+and our user/item-models are minimized and perhaps more importantly multiplied
+by our confidence. As the details on this topic are quite detailed and diverges
+a bit from the generation of implicit ratings, we will stop our analysis of it
+here. But is shows an important aspect which we will return to in subsequent
+sections, namely the confidence in repetative events and our continuious
+challenge to obtain higher confidence in our implicit ratings. For further
+information on matrix factorization and latent factors refer to Section~\ref{}
+or to Hu et.\ al.\ original research~\cite{Hu2008}.
 
 \subsubsection{Classifying levels of frequency}
 
@@ -354,5 +428,9 @@ feedback.
 
 \subsection{Evaluating conversion to implicit ratings}
 
-% \todo{Something about MPR (mean percentile ranking) and perhaps AP (average
-% precision)}
+Map against user study.
+
+Refer to evaluation section, written by Martin.
+
+Show the three-stage pipeline, where we keep parameters in last two stages and
+only change parameters in first stage.

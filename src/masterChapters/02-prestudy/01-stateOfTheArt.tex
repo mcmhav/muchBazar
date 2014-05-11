@@ -391,18 +391,18 @@ content-based and collaborative characteristics
 
 \subsubsection{Recommender System Challenges}
 
-Below we briefly mention some of the main challenges one faces when working 
+Below we briefly mention some of the main challenges one faces when working
 with recommender systems.
 
 \paragraph{Scalability}
 
-As the number of existing users and items blow up, traditional CF algorithms 
-suffer serious scalability problems. The model building phase of \emph{Traditional} 
-collaborative filtering methods have a complexity of O(MN) where $M$ is the number 
-of users and $N$ is the number of items. For systems with millions of users and items, 
-even a complexity of $n$ is too large. Another fundamental issue is how to embed the 
-core recommendation techniques in real operational systems and how to deal with massive 
-and dynamic sets of data produced by the interactions of users with items. Recommender 
+As the number of existing users and items blow up, traditional CF algorithms
+suffer serious scalability problems. The model building phase of \emph{Traditional}
+collaborative filtering methods have a complexity of O(MN) where $M$ is the number
+of users and $N$ is the number of items. For systems with millions of users and items,
+even a complexity of $n$ is too large. Another fundamental issue is how to embed the
+core recommendation techniques in real operational systems and how to deal with massive
+and dynamic sets of data produced by the interactions of users with items. Recommender
 systems are expected in many cases to provide rapid recommendations online, it is
 therefore also important to consider how fast the system provides recommendations.
 
@@ -412,16 +412,16 @@ based algorithms are up to two orders of magnitude faster than traditional user-
 algorithms \cite{Deshpande2004}. Dimensionality reduction techniques such as
 SVD can deal with the scalability by providing more compact representations and
 quickly produce good recommendations. However, most dimensionalty reduction
-techniques must undergo expensive matrix factorization steps. 
+techniques must undergo expensive matrix factorization steps.
 
 \paragraph{Sparsity}
 
-In practice, many recommender systems deal with very large item collections. 
+In practice, many recommender systems deal with very large item collections.
 This means that the number of ratings obtained is usually very small compared to the
 number of ratings that it needs to predict. Efficient prediction of ratings from a small
 number of examples is therefore important. The \emph{reduced coverage} problem
 occurs when the number of users' rating may be very small compared to the number of items.
-This may lead to that the recommender is unable to provide recommendations for a large 
+This may lead to that the recommender is unable to provide recommendations for a large
 portion of the items. \emph{Neighbour transitivity} refers to the problem in which users
 with similar tastes may not be identified due to a lack of co-rated items, making
 collaborative filtering futile, since it relies on comparing users to predict unknown ratings.
@@ -542,7 +542,7 @@ being large enough.
 \end{itemize}
 
 The cold-start user problem is present both in content-based and collaborative-filtering systems.
-Collaborative Filtering is based on the idea that like-minded users have similar tastes and preferences. 
+Collaborative Filtering is based on the idea that like-minded users have similar tastes and preferences.
 A new user therefore poses a challenge to a CF recommender, since the system has no knowledge about
 the preferences of the new user, and can therefore not provide any personalized recommendations. The system must therefore acquire some
 information about the new user before it can start making personalized recommendations. In a typical domain, for example in the domain of books, the number of items is very large (in the order of tens of thousands) while the number of items rated by every single user is in general small (in the order of dozens or less). This means that it is very unlikely two random users have rated any items in common and hence they are not comparable. The system will therefore most likely struggle to find users with tastes that are \emph{truly} similar to the target user. Similarly, in content-based systems, the lack of ratings given by the target user, means that the target user will have a limited
@@ -1241,6 +1241,7 @@ combined with our implicit ratings to improve the cold-start performance of our 
 %    - Bestsellers
 %    - Are you looking for something in particular?
 
+
 \subsubsection{Theory}
 This subsection will look into some background research on fashion.  And look
 into what fashion is and why a consumer behaves like the consumer does.
@@ -1305,7 +1306,7 @@ consumer according to \cite{kotler2009marketing} is:
 \begin{table}[H]
     \centering
     \begin{tabular}{l|l|l}
-      \textbf{Factors}        & \textbf{Examples} & \textbf{something?} \\ \hline
+      \emph{Factors}        & \emph{Examples} & \emph{something?} \\ \hline
       Physiological factors   & Physical protection, commodity & - \\ \hline
       Socio-cultural factors  & Family, friends, work, social groups & - \\ \hline
       Personal factors        & Age, life cycle, occupation, personality & - \\ \hline
@@ -1331,8 +1332,8 @@ content.  The complete list is shown in~\ref{table:ConsumersPurchaseDec}
 \begin{table}[H]
     \centering
     \begin{tabular}{l|l|l}
-      \multicolumn{2}{c|}{\textbf{Concrete Attributes}} & \textbf{Abstract Attributes} \\
-      \multicolumn{2}{c|}{\textbf{(product features)}} & \multirow{2}{*}{\textbf{(attitude-based)}} \\ \cline{1-2}
+      \multicolumn{2}{c|}{\emph{Concrete Attributes}} & \emph{Abstract Attributes} \\
+      \multicolumn{2}{c|}{\emph{(product features)}} & \multirow{2}{*}{\emph{(attitude-based)}} \\ \cline{1-2}
       Intrinsic (hedonic)   & Extrinsic & \\ \hline
       \pbox{4cm}{
           - Style \\
@@ -1458,6 +1459,646 @@ products.  This poses an issue for recommending items based on their content.
         % E.g. keywords, when descriptions are in multiple languages
     % - Can rating infromation from similar items be used to decrease sparsity? (Content infromation - Hybrid approaches)
 
+\subsubsection{Competitors to soBazar}
+SoBazar is built up of a collection of e-commerce store front applications and social interactions, but soBazar is not the first of its kind.
+There is a set of other similar applications providing the user with similar possibilities as soBazar.
+This section will be used to explore some of these systems, and look into their strengths and weaknesses regarding item recommendation for the user.
+
+\paragraph{Myntra} % (fold)
+\label{par:myntra}
+    "Myntra.com is a one stop shop for all your fashion and lifestyle needs" - about Myntra~\cite{myntra}.
+
+    Myntra is one of India's largest e-commerce stores for dashion and aims to  provide a hassle free shopping experience for the user.
+    They aim to bring the newest and most in-season fashion products available to the user trough the web store front.
+    The brand base of Myntra consists of 500 leading brands from both inside and outside India.
+
+    The web page a set of recommendation approaches to inform the user of what they might like, and increase the user's awareness of different kinds of items. Such as, similar item and most popular.
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=5in]{image/myntiaSimilarExample.png}
+        \caption[Example of Myntra's "similar item" approach]{In this figure we can see in red how Myntra is suggesting items which are similar to the item the user is currently looking at}
+        \label{figure:myntiaSimilarEx}
+    \end{figure}
+    \begin{table}[H]
+        \centering
+        \begin{tabular}{l|l}
+            \toprule
+            \emph{Strengths} & \emph{Weaknesses} \\ \hline
+            \pbox{9cm}{
+                - Suggest similar items to the currently viewed \\
+                - Popular list for the different brands and stores \\
+                - Ability to add item to a "want list"
+            } & \pbox{9cm}{
+                - No personalized recommendations \\
+            } \\ \bottomrule
+        \end{tabular}
+        \caption[Recommendation related strengths and weaknesses of Myntra~\cite{myntra}]{This table is the list of the recommendation related strengths and weaknesses of the e-commerce fashion web site Myntra~\cite{myntra}}
+        \label{table:ecommerceMyntra}
+    \end{table}
+% paragraph myntra (end)
+
+\paragraph{Flink} % (fold)
+\label{par:flink}
+    "Flink is THE brand-new app to discover, get inspired and share trendy looks from top fashion bloggers" - About Flink~\cite{flink}.
+
+    Flink is a fashion discovery application for iPhone.
+    It allows the user to browse fashion blogs, hot brands and new trends.
+
+    The content displayed can be "liked" and can be a collection of clothes from different brands.
+    if the user is interested in the item, the application can redirect the user to the web page where it is sold.
+    \begin{table}[H]
+        \centering
+        \begin{tabular}{l|l}
+            \toprule
+            \emph{Strengths} & \emph{Weaknesses} \\ \hline
+            \pbox{9cm}{
+                - Can follow other users \\
+                - Connected with facebook \\
+                - Ability to add item to a "want list"
+            } & \pbox{9cm}{
+                - No personalized recommendations \\
+            } \\ \bottomrule
+        \end{tabular}
+        \caption[Recommendation related strengths and weaknesses of Flink~\cite{flink}]{This table is the list of the recommendation related strengths and weaknesses of the mobile fashion application Flink~\cite{flink}}
+        \label{table:iphoneAppFlink}
+    \end{table}
+\marginpar{todo, might be more, but can't explore the application since it is iOS 7 required :P}
+% paragraph flink (end)
+
+\paragraph{Lyst} % (fold)
+\label{par:lyst}
+    "Lyst.com is a fashion shopping site that gives you your own shopping experience, so you can discover more of the fashion you love" - About Lyst~\cite{lyst}.
+
+    Lyst offers items from thousands of the leading brands and stores of the world.
+
+    The site allows the user to follow different stores or brands to receive the latest items they have to offer.
+    The user is given a personalized "stylefeed", which displays items from the different brands or stores the user is following.
+    It is also possible for the user to add items to the their profile.
+
+    On first login the user is presented with a set of brands and store the user can like or dislike, to get the "stylefeed" started.
+    On access of an item, the user is presented with related items, and the ability to add the item to a collection.
+    When the user wants to buy an item, the site will redirect the user to the store selling the item.
+    \begin{table}[H]
+        \centering
+        \begin{tabular}{l|l}
+            \toprule
+            \emph{Strengths} & \emph{Weaknesses} \\ \hline
+            \pbox{9cm}{
+                - Can follow brands and stores \\
+                - Connected with facebook \\
+                - Ability to add item to a "want list" \\
+                - "Stylfeed" based the user's follow list \\
+                - Show related items
+            } & \pbox{9cm}{
+                - No personalized recommendations \\
+            } \\ \bottomrule
+        \end{tabular}
+        \caption[Recommendation related strengths and weaknesses of Lyst~\cite{lyst}]{This table is the list of the recommendation related strengths and weaknesses of e-commerce fashion web site Lyst~\cite{lyst}}
+        \label{table:ecommenreceLyst}
+    \end{table}
+% paragraph lyst (end)
+
+\paragraph{Motilo} % (fold)
+\label{par:motilo}
+    "Motilo was launched in 2011 to answer that perennial fashion dilemma all women face – what shall I wear tonight?" - About Motilo~\cite{motilo}.
+
+    Items on the web page are gathered by the Motilo stylists.
+    This give the page a fresh set of items for the user to select from.
+
+    Motilo gives the user the ability to put together item sets though dragging and dropping the items into a "fashion dilemma", or simply like items.
+    The user can ask friends, the Motilo community or the Motilo stylists about suggestions regarding what to wear, and put together.
+    If the user wants to buy an item, Motilo redirects the user to the page which sells the item in question.
+    \begin{table}[H]
+        \centering
+        \begin{tabular}{l|l}
+            \toprule
+            \emph{Strengths} & \emph{Weaknesses} \\ \hline
+            \pbox{9cm}{
+                - Connected with facebook \\
+                - Ability to add item to a "want list" \\
+                - A feed with the most trending item collections
+            } & \pbox{9cm}{
+                - No personalized recommendations \\
+            } \\ \bottomrule
+        \end{tabular}
+        \caption[Recommendation related strengths and weaknesses of Motilo~\cite{motilo}]{This table is the list of the recommendation related strengths and weaknesses of e-commerce fashion web site Motilo~\cite{motilo}}
+        \label{table:ecommenreceMotilo}
+    \end{table}
+% paragraph motilo (end)
+
+
+\paragraph{Farfetch} % (fold)
+\label{par:farfetch}
+    "farfetch.com forms the hub of a global fashion community that unites independent boutiques around the world with fashion lovers" - About Farfetch~\cite{Farfetch}
+
+    Farfetch is a collection of over 1000 boutiques from all over the world gathered on one web page.
+    The user can shop directly on the page, and get the item delivered to the doorstep with only one checkout process.
+
+    When browsing an item the user is presented with a set of recommendations related to the current item, and previous browsing history.
+    The item can be added to a "want list" or to the shopping chart.
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=5in]{image/farfetchedRecommendationExample.png}
+        \caption[Example of Farfetch's recommendations]{In this figure we can see in red how Farfetch is recommending items which are might be of interest to the user. As we can see the first item is a shoe, which was the last item accessed by the user, the next four items are related to the current item the user is watching}
+        \label{figure:farfetchedRecommendationExample}
+    \end{figure}
+    \begin{table}[H]
+        \centering
+        \begin{tabular}{l|l}
+            \toprule
+            \emph{Strengths} & \emph{Weaknesses} \\ \hline
+            \pbox{9cm}{
+                - Ability to add item to a "want list" \\
+                - A feed with the most popular items \\
+                - A feed with new items \\
+                - A list of recommendations for the user
+            } & \pbox{9cm}{
+                - No option to follow other users
+            } \\ \bottomrule
+        \end{tabular}
+        \caption[Recommendation related strengths and weaknesses of Farfetch~\cite{Farfetch}]{This table is the list of the recommendation related strengths and weaknesses of e-commerce fashion web site Farfetch~\cite{Farfetch}}
+        \label{table:ecommenreceFarfetch}
+    \end{table}
+% paragraph farfetch (end)
+
+
+\paragraph{ModCloth} % (fold)
+\label{par:modcloth}
+    "A top e-retailer of indie clothing, accessories, and decor, and provide an engaging shopping experience where you, our customer, can have a voice" - About ModCloth~\cite{modcloth}
+
+    ModCloth focuses on giving what the community is looking for.
+    The user is given the opportunity to both be the seller and the buyer.
+    The item base is affected by the user trough voting.
+    \begin{table}[H]
+        \centering
+        \begin{tabular}{l|l}
+            \toprule
+            \emph{Strengths} & \emph{Weaknesses} \\ \hline
+            \pbox{9cm}{
+                - Ability to add item to a "want list" \\
+                - A feed with the most popular items \\
+                - A feed with new items \\
+                - A list of similar items
+            } & \pbox{9cm}{
+                - No personalized recommendations \\
+            } \\ \bottomrule
+        \end{tabular}
+        \caption[Recommendation related strengths and weaknesses of ModCloth~\cite{ModCloth}]{This table is the list of the recommendation related strengths and weaknesses of e-commerce fashion web site ModCloth~\cite{ModCloth}}
+        \label{table:ecommenreceModCloth}
+    \end{table}
+% paragraph modcloth (end)
+
+
+\paragraph{UsTrendy} % (fold)
+\label{par:ustrendy}
+    "UsTrendy allows you to shop and discover one-of-a-kind fashions from all over the world." - About UsTrendy~\cite{UsTrendy}
+
+    UsTrendy has a large item database of more than hundred thousand unique items.
+
+    When the user is viewing an item, UsTrendy displays other items the user might like, which have common traits as with the on the user is currently watching.
+    The currently viewed item can be added to a sopping cart.
+    \begin{table}[H]
+        \centering
+        \begin{tabular}{l|l}
+            \toprule
+            \emph{Strengths} & \emph{Weaknesses} \\ \hline
+            \pbox{9cm}{
+                - Ability to add item to a "want list" \\
+                - A feed with the most popular items \\
+                - A feed with new items \\
+                - A list of similar items
+            } & \pbox{9cm}{
+                - No personalized recommendations \\
+            } \\ \bottomrule
+        \end{tabular}
+        \caption[Recommendation related strengths and weaknesses of UsTrendy~\cite{UsTrendy}]{This table is the list of the recommendation related strengths and weaknesses of e-commerce fashion web site UsTrendy~\cite{UsTrendy}}
+        \label{table:ecommenreceUsTrendy}
+    \end{table}
+% paragraph ustrendy (end)
+
+
+\paragraph{Polyvore} % (fold)
+\label{par:polyvore}
+    "Polyvore is a new way to discover and shop for things you love." - About Polyvore~\cite{polyvore}
+
+    In Polyvore the user can put together sets of items and show them off to their friends and others.
+    The items show on Polyvoreare gathered based on the community of Polyvore.
+
+    When accessing an item the user is shown similar items to the one which is currently watched.
+    When the user want to purchase an item, the user is redirected to the page which sells the item.
+    \begin{table}[H]
+        \centering
+        \begin{tabular}{l|l}
+            \toprule
+            \emph{Strengths} & \emph{Weaknesses} \\ \hline
+            \pbox{9cm}{
+                - Ability to add item to a "want list" \\
+                - The user can follow other users \\
+                - Crawl other fashion sites to add to their item base \\
+                - A feed with trending items \\
+                - A list of recently viewed items
+            } & \pbox{9cm}{
+                - No personalized recommendations \\
+            } \\ \bottomrule
+        \end{tabular}
+        \caption[Recommendation related strengths and weaknesses of Polyvore~\cite{Polyvore}]{This table is the list of the recommendation related strengths and weaknesses of e-commerce fashion web site Polyvore~\cite{Polyvore}}
+        \label{table:ecommenrecePolyvore}
+    \end{table}
+% paragraph polyvore (end)
+
+
+\paragraph{Clothia} % (fold)
+\label{par:clothia}
+    "An online destination where you can mix and match outfits, share looks you love, even try on clothes virtually via your webcam using augmented reality technology" - About Clothia~\cite{clothia}
+
+    The user can put together a set of clothes from the web site and make a "set".
+    The set can be shared with other users and like by other users.
+    If the user is interested in buying an item, the user is redirected to the page the item is sold.
+    \begin{table}[H]
+        \centering
+        \begin{tabular}{l|l}
+            \toprule
+            \emph{Strengths} & \emph{Weaknesses} \\ \hline
+            \pbox{9cm}{
+                - Ability to add item to a "want list" \\
+                - The user can follow other users \\
+                - A feed with trending items
+            } & \pbox{9cm}{
+                - Lack personalized recommendations \\
+            } \\ \bottomrule
+        \end{tabular}
+        \caption[Recommendation related strengths and weaknesses of Clothia~\cite{clothia}]{This table is the list of the recommendation related strengths and weaknesses of e-commerce fashion web site Clothia~\cite{clothia}}
+        \label{table:ecommenreceClothia}
+    \end{table}
+% paragraph clothia (end)
+
+
+\paragraph{Trendabl} % (fold)
+\label{par:trendabl}
+    "Trendabl is a community of people who love fashion" - About Trendable~\cite{trendabl}
+
+    The user is shown a feed with the newest items, and is free to browse different setts of collections, such as collections with shoes and pants.
+    If the user wants to buy an item it can be added to a shopping cart.
+    \begin{table}[H]
+        \centering
+        \begin{tabular}{l|l}
+            \toprule
+            \emph{Strengths} & \emph{Weaknesses} \\ \hline
+            \pbox{9cm}{
+                - Ability to add item to a "want list" \\
+                - The user can follow other users \\
+                - System recommends other users to follow
+            } & \pbox{9cm}{
+                - Recommended users to follow are the top users in the system \\
+            } \\ \bottomrule
+        \end{tabular}
+        \caption[Recommendation related strengths and weaknesses of Trendabl~\cite{trendabl}]{This table is the list of the recommendation related strengths and weaknesses of e-commerce fashion web site Trendabl~\cite{trendabl}}
+        \label{table:ecommenreceTrendabl}
+    \end{table}
+% paragraph trendabl (end)
+
+\paragraph{Rue La La} % (fold)
+\label{par:rue_la_la}
+    "Rue La La is the destination for the most desired brands" - About Rue La La~\cite{RueLaLa}
+
+    Rue La La is a sale on site e-commerce web site.
+    It is built up of a set of different boutiques, which can be browsed by the user.
+    When the user is watching an item, Rue La La shows other items from the current boutique.
+
+    \begin{table}[H]
+        \centering
+        \begin{tabular}{l|l}
+            \toprule
+            \emph{Strengths} & \emph{Weaknesses} \\ \hline
+            \pbox{9cm}{
+                - Ability to add item to a "want list" \\
+                - List of most popular items
+            } & \pbox{9cm}{
+                - No personalized recommendations \\
+            } \\ \bottomrule
+        \end{tabular}
+        \caption[Recommendation related strengths and weaknesses of Rue La La~\cite{RueLaLa}]{This table is the list of the recommendation related strengths and weaknesses of e-commerce fashion web site Rue La La~\cite{RueLaLa}}
+        \label{table:ecommenreceRueLaLa}
+    \end{table}
+% paragraph rue_la_la (end)
+
+\paragraph{Zalando} % (fold)
+\label{par:zalando}
+    "Clothes, accessories, sports items, beauty products" - About Zalando~\cite{Zalando}
+
+    Zalando has a large set of items.
+    When browsing an item the user is shown a set of similar items the user might also like, and a set of items which might "go well"  with the currently viewed item.
+    \begin{table}[H]
+        \centering
+        \begin{tabular}{l|l}
+            \toprule
+            \emph{Strengths} & \emph{Weaknesses} \\ \hline
+            \pbox{9cm}{
+                - Ability to add item to a "want list" \\
+                - Shop on site \\
+                - Similar items
+            } & \pbox{9cm}{
+                - No personalized recommendations \\
+            } \\ \bottomrule
+        \end{tabular}
+        \caption[Recommendation related strengths and weaknesses of Zalando~\cite{Zalando}]{This table is the list of the recommendation related strengths and weaknesses of e-commerce fashion web site Zalando~\cite{Zalando}}
+        \label{table:ecommenreceZalando}
+    \end{table}
+% paragraph zalando (end)
+
+\paragraph{Ellos~\cite{Ellos}} % (fold)
+\label{par:ellos}
+    Ellos is a e-commerce web site, which specializes in fashion.
+
+    When browsing an item, similar items to the one currently being watched is presented to the user.
+    Other items which might go well with the item is also presented for the user.
+    \begin{table}[H]
+        \centering
+        \begin{tabular}{l|l}
+            \toprule
+            \emph{Strengths} & \emph{Weaknesses} \\ \hline
+            \pbox{9cm}{
+                - Ability to add item to a "want list" \\
+                - Shop on site \\
+                - Similar items \\
+                - On site most popular list \\
+                - Items which might go well with the current
+            } & \pbox{9cm}{
+                - No personalized recommendations \\
+            } \\ \bottomrule
+        \end{tabular}
+        \caption[Recommendation related strengths and weaknesses of Ellos~\cite{Ellos}]{This table is the list of the recommendation related strengths and weaknesses of e-commerce fashion web site Ellos~\cite{Ellos}}
+        \label{table:ecommenreceEllos}
+    \end{table}
+% paragraph ellos (end)
+
+\paragraph{LookBook} % (fold)
+\label{par:lookbook}
+    "LOOKBOOK is the \#1 source for fashion inspiration from real people around the world." - About LookBook~\cite{LookBook}
+
+    LookBook is a leafing online community which is centered around the looks of the users.
+    The users can share their own looks and keep up with other users through watching their uploads.
+    With over 1.2 million members LookBook is constantly up to date on the newest fashion trends.
+    \begin{table}[H]
+        \centering
+        \begin{tabular}{l|l}
+            \toprule
+            \emph{Strengths} & \emph{Weaknesses} \\ \hline
+            \pbox{9cm}{
+                - Ability to add item to a "want list" \\
+                - Shop on site \\
+                - Similar items \\
+                - Most popular items list \\
+                - Hot items list
+            } & \pbox{9cm}{
+                - No personalized recommendations \\
+            } \\ \bottomrule
+        \end{tabular}
+        \caption[Recommendation related strengths and weaknesses of LookBook~\cite{LookBook}]{This table is the list of the recommendation related strengths and weaknesses of e-commerce fashion web site LookBook~\cite{LookBook}}
+        \label{table:ecommenreceLookBook}
+    \end{table}
+% paragraph lookbook (end)
+
+\paragraph{Fashiolista} % (fold)
+\label{par:fashiolista}
+    "Let Fashiolista's community be your style guide in the online fashion jungle" - About Fasho~\cite{Fashiolista}
+
+    The items on Fashiolista is selected by the users of Fashiolista, and the sites is therefore customized to fit the user crowds wishes and interests.
+
+    When accessing an item, the user is presented with the item, and a set of other items from the store the current item originated from.
+    Other users who liked the item are also shown, so the user can browse their personal want lists
+    \begin{table}[H]
+        \centering
+        \begin{tabular}{l|l}
+            \toprule
+            \emph{Strengths} & \emph{Weaknesses} \\ \hline
+            \pbox{9cm}{
+                - Ability to add item to a "want list" \\
+                - On site most popular list \\
+            } & \pbox{9cm}{
+                - No personalized recommendations \\
+            } \\ \bottomrule
+        \end{tabular}
+        \caption[Recommendation related strengths and weaknesses of Fahiolista~\cite{Fahiolista}]{This table is the list of the recommendation related strengths and weaknesses of e-commerce fashion web site Fahiolista~\cite{Fahiolista}}
+        \label{table:ecommenreceFahiolista}
+    \end{table}
+% paragraph fashiolista (end)
+
+\paragraph{ShopStyle} % (fold)
+\label{par:shopstyle}
+    "POPSUGAR is a global women's lifestyle brand focused in media, commerce, and technology" - About ShopStyle~\cite{ShopStyle}
+
+    ShopStyle is a commerce brand of POPSUGAR.
+    ShopStyle displays items from other e-commerce web sites, and redirects the user directly to the e-commerce web site from which the item clicked originated.
+    Items can be liked on ShopStyle, and view in less detail at the web page of ShopStyle.
+    \begin{table}[H]
+        \centering
+        \begin{tabular}{l|l}
+            \toprule
+            \emph{Strengths} & \emph{Weaknesses} \\ \hline
+            \pbox{9cm}{
+                - Ability to add item to a "want list" \\
+                - Similar items \\
+                - Editor's picks
+            } & \pbox{9cm}{
+                - No personalized recommendations \\
+            } \\ \bottomrule
+        \end{tabular}
+        \caption[Recommendation related strengths and weaknesses of ShopStyle~\cite{ShopStyle}]{This table is the list of the recommendation related strengths and weaknesses of e-commerce fashion web site ShopStyle~\cite{ShopStyle}}
+        \label{table:ecommenreceShopStyle}
+    \end{table}
+% paragraph shopstyle (end)
+
+\paragraph{MyHabit} % (fold)
+\label{par:myhabit}
+    "MyHabit is a private fashion sale site offering up to 60% off hand-picked selections from designer and boutique brands." - About MyHabit~\cite{MyHabit}
+
+    MyHabit was founded by Amazon in response to the desire from the users of Amazon to shop fashion in an easy manner.
+
+    The site displays a feed.
+    This feed is fed by a team from MyHabit, and is constantly updating with new sales and new products.
+    The items put into the feed are handpicked.
+
+    When browsing items on MyHabit, other similar items are suggested to the user.
+    \begin{table}[H]
+        \centering
+        \begin{tabular}{l|l}
+            \toprule
+            \emph{Strengths} & \emph{Weaknesses} \\ \hline
+            \pbox{9cm}{
+                - Shop on site \\
+                - Similar items
+            } & \pbox{9cm}{
+                - No personalized recommendations \\
+            } \\ \bottomrule
+        \end{tabular}
+        \caption[Recommendation related strengths and weaknesses of MyHabit~\cite{MyHabit}]{This table is the list of the recommendation related strengths and weaknesses of e-commerce fashion web site MyHabit~\cite{MyHabit}}
+        \label{table:ecommenreceMyHabit}
+    \end{table}
+% paragraph myhabit (end)
+
+\paragraph{Competitors Recommendation Overview} % (fold)
+\label{par:competitors_recommendation_overview}
+    In table~\ref{table:ecommerceCommpetiros} we see that there is a very low count of fashion related e-commerce applications, which actually produces a personalized recommendations for the user.
+
+    Most of applications are tanking a simpler approach when making recommendations for the user, like most popular or similar items.
+    There is no obvious relation between recommendations and that the site has a form of "want list", but the system which allows the users to follow each other are usually not in-application-purchase-applications.
+
+    There where no indications of the "want list" being used directly to some personalized recommendations and neither was it with the following of other users.
+    The main usage of user following was to recommend other users, which the users might like to follow.
+    The "want list" was primarily there so that the user could go back to a liked item, and maybe interact with it later.
+    \begin{table}[H]
+        \centering
+        \begin{tabular}{l l l l l l l}
+            \toprule
+            \emph{Competitor} &
+            \pbox{5cm}{\emph{In App} \\ \emph{Purchase}} &
+            \pbox{5cm}{\emph{Most} \\ \emph{Popular}} &
+            \pbox{5cm}{\emph{Similar} \\ \emph{Items}} &
+            \pbox{5cm}{\emph{Want} \\ \emph{List}} &
+            \pbox{5cm}{\emph{Follow} \\ \emph{Other Users}} &
+            \pbox{5cm}{\emph{Personalized} \\ \emph{Recommendations}} \\ \hline
+
+            Myntra  & \cmark & \cmark & \cmark & \cmark & \xmark & \xmark \\
+            Flink   & \xmark & \cmark & ?? & \cmark & \cmark & \xmark \\
+            Lyst    & \xmark & \cmark & \cmark & \cmark & \cmark & \xmark \\
+            Motilo  & \xmark & \cmark & \xmark & \cmark & \cmark & \xmark \\
+            Farfetch & \cmark & \cmark & \cmark & \cmark & \xmark & \xmark/\cmark~\tablefootnote{How the recommendations are produced is not mentioned} \\
+            ModCloth  & \cmark & \cmark & \cmark & \cmark & \xmark & \xmark \\
+            UsTrendy  & \cmark & \cmark & \cmark & \cmark & \xmark & \xmark \\
+            Polyvore  & \xmark & \cmark & \cmark & \cmark & \cmark & \xmark \\
+            Clothia  & \xmark & \cmark & \cmark & \cmark & \cmark & \xmark \\
+            Trendabl  & \cmark & \cmark & \cmark & \cmark & \cmark & \xmark \\
+            Zalando  & \cmark & \cmark & \cmark & \cmark & \xmark & \xmark \\
+            Ellos  & \cmark & \cmark & \cmark & \cmark & \xmark & \xmark \\
+            LookBook  & \xmark & \cmark & \cmark & \cmark & \cmark & \xmark \\
+            Fahsiolista  & \xmark & \cmark & \xmark & \cmark & \cmark & \xmark \\
+            ShopStyle  & \xmark & \xmark & \cmark & \cmark & \xmark & \xmark \\
+            MyHabit  & \cmark & \xmark & \cmark & \xmark & \xmark & \xmark \\
+            \bottomrule
+        \end{tabular}
+        \caption[Properties of different e-commerce application]{This table is the list of the different properties of some of the different competitor to soBazar. The properties are in regards of their recommendation ability, and how they let their user expand their item set}
+        \label{table:ecommerceCommpetiros}
+    \end{table}
+% paragraph competitors_recommendation_overview (end)
+
+% e-commerce presenting items from designers (not other stores)
+% \paragraph{uncovet} % (fold)
+% \label{par:uncovet}
+%     \begin{chapquote}[30pt]{About Uncovet}
+%         "Uncovet.com is a carefully curated e-commerce destination with unique and versatile accessories for you and your home"
+%     \end{chapquote}
+%     Uncovet~\cite{uncovet} gives the user a simple way of interacting the items through the web page with focus on showing the items to the user.
+
+%     \subparagraph{Strengths} % (fold)
+%         \begin{itemize}
+%             \item Easy interaction with the items
+%             \item New set of items daily on front page
+%             \item Shopping chart on web-page
+%             \item Everything happens on uncovet's page
+%         \end{itemize}
+%     % subparagraph strengths (end)
+%     \subparagraph{Weaknesses} % (fold)
+%         \begin{itemize}
+%             \item No personalized recommendations
+%             \item Small set of items on page
+%         \end{itemize}
+    % subparagraph weaknesses (end)
+% paragraph uncovet (end)
+
+% \paragraph{Clotheshor} % (fold)
+% \label{par:clotheshor}
+%     https://clotheshor.se/
+%     How does it work?
+%     Shoppers simply answer a few brief questions about themselves and their favorite garments (only takes about 30 seconds, and no measuring tapes involved so don’t get all worked up!), and can then experience accurate recommendations at any Clothes Horse enabled retailer on the web.
+%     We’re intrigued. Can this really work?  Well, today Clothes Horse has released a case study with a leading menswear brand, Bonobos, that demonstrates how they brought about a 13\% sales increase as well as created a more engaging customer experience.
+%     “We’re very encouraged with the initial results we’ve seen from Clothes Horse. The team has been an incredibly responsive and open partner throughout the whole process,” said Craig Elbert, Bonobos VP of Finance + Analytics.
+%     We think this a pretty smart innovation.  Think about it.  As more and more retailers start opening their sites and business to a global audience, this is an extremely valuable tool. ~\cite{ClothesHorseCaseStudy}
+%     \begin{chapquote}[30pt]{About Gilt~\cite{Gilt}}
+%         "Gilt provides instant insider access to today’s top designer labels, at up to 60\% off retail. Become a member and find something new every day for women, men, kids and home as well as exclusive local services and experiences"
+%     \end{chapquote}
+
+%     \subparagraph{Strengths} % (fold)
+%         \begin{itemize}
+%             \item Stare items
+%             \item Large collection of items
+%             \item Countdown till new releases
+%             \item Shopping chart on page
+%         \end{itemize}
+%     % subparagraph strengths (end)
+%     \subparagraph{Weaknesses} % (fold)
+%         \begin{itemize}
+%             \item No personalized recommendations
+%             \item No connection to social media other than sharing
+%         \end{itemize}
+    % subparagraph weaknesses (end)
+% paragraph clotheshor (end)
+
+
+% % user sell application, interesting?
+% \paragraph{Threadflip} % (fold)
+% \label{par:threadflip}
+% % paragraph threadflip (end)
+% \paragraph{Le Tote} % (fold)
+% \label{par:le_tote}
+%     Le Tote is a pay-per-month service.
+%     The service provided is to receive a set of personalized items on the doorstep.
+%     The user can pick between different payment packages.
+%     Based on the chosen package the user user will receive items.
+%     To decided what the user receives the user must "hear" items the user is interested in, based on this information the user is sent a set of items.
+%     When the user is tired of this set of items, they can be sent back to Le Tote, and the user will receive a new set of items.
+%     The personalized items are recommended by a resident stylist.
+%     \subparagraph{Strengths} % (fold)
+%         \begin{itemize}
+%             \item Personalization of the items received
+%             \item User will get new items as soon they are not interested in the current set
+%             \item Received items can be purchased
+%         \end{itemize}
+%     % subparagraph strengths (end)
+%     \subparagraph{Weaknesses} % (fold)
+%         \begin{itemize}
+%             \item Payed service
+%         \end{itemize}
+    % subparagraph weaknesses (end)
+% paragraph le_tote (end)
+% \paragraph{Twice~\cite{twice}} % (fold)
+% \label{par:twice}
+%     Twice allows the user to donate their clothes and receive a payment.
+%     Twice will then sell the clothes.
+%     \subparagraph{Strengths} % (fold)
+%         \begin{itemize}
+%             \item Cheap clothes
+%             \item Large collection of different kinds of clothes
+%         \end{itemize}
+%     % subparagraph strengths (end)
+%     \subparagraph{Weaknesses} % (fold)
+%         \begin{itemize}
+%             \item No personalized recommendations
+%         \end{itemize}
+    % subparagraph weaknesses (end)
+% paragraph twice (end)
+% \paragraph{Fancy} % (fold)
+% \label{par:fancy}
+%     "Fancy is the place for you to discover and buy amazing things curated by our global community." - About Fancy~\cite{fancy}
+
+
+%     sdf
+
+%     \subparagraph{Strengths} % (fold)
+%         \begin{itemize}
+%             \item "Fancy" or like items and earn credits
+%             \item Shopping chart in application
+%             \item Upload own items
+%             \item Suggest users to follow based on what the user likes
+%             \item High novelty on the suggested items
+%         \end{itemize}
+    % subparagraph strengths (end)
+    % \subparagraph{Weaknesses} % (fold)
+    %     \begin{itemize}
+    %         \item Limited personalized recommendation
+    %     \end{itemize}
+    % subparagraph weaknesses (end)
+% paragraph fancy (end)
 \subsubsection{What Other Fashion Recommender Systems Has Done?}
 \marginpar{A shorter and more precise way of saying this}
 
@@ -1544,6 +2185,9 @@ This feature gives the user a set of items and the option to either like or disl
 
         \subparagraph{Usage Clusters} % (fold)
         \label{subp:usage_clusters}
+            The usage clusters are usually built up from the different features of the events in the session.
+            Where the features are collected an used to model the user.
+
             \begin{table}[H]
                 \centering
                 \begin{tabular}{l|l}
@@ -1554,7 +2198,7 @@ This feature gives the user a set of items and the option to either like or disl
                     Time on items under the different conditions mentioned above & -\\ \hline
                     Overall average time on items & - \\ \hline
                     Click to buy rate & - \\ \hline
-                    What was done before a specific action & - \\ \hline
+                    Search query~\cite{Zhang:2006:MSE:1135777.1136004} & - \\ \hline
                     What was done before a specific action & - \\ \hline
                     What was done before a specific action & - \\
                 \end{tabular}
@@ -1563,33 +2207,49 @@ This feature gives the user a set of items and the option to either like or disl
             \end{table}
         % subparagraph usage_clusters (end)
 
-        % \subparagraph{Page Clusters} % (fold)
-        % \label{subp:page_clusters}
-
-        % % subparagraph page_clusters (end)
+        \subparagraph{Page Clusters} % (fold)
+        \label{subp:page_clusters}
+            Page clustering will help the system to understand which pages belong together.
+            For instance when searching for Harry Potter, the user might have interest in knowing more about the author J.K. Rowling, and the system might benefit from clustering queries of here with Harry Potter~\cite{Zhang:2006:MSE:1135777.1136004}.
+        % subparagraph page_clusters (end)
 
         % \subparagraph{User Classification} % (fold)
         % \label{subp:user_classification}
 
         % subparagraph user_classification (end)
 
-\paragraph{Multi-Armed Bandit} % (fold)
-\label{par:multi_armed_bandit}
+\paragraph{Session Examples} % (fold)
+\label{par:session_examples}
 
-% paragraph multi_armed_bandit (end)
+\begin{lstlisting}
+    { "event_id" : "app_started", "product_id" : "NULL", "ts" : NumberLong("1382689141084") }
+    { "event_id" : "storefront_clicked", "product_id" : "NULL", "ts" : NumberLong("1382689144152") }
+    { "event_id" : "storefront_clicked", "product_id" : "NULL", "ts" : NumberLong("1382689172026") }
+    { "event_id" : "storefront_clicked", "product_id" : "NULL", "ts" : NumberLong("1382689179152") }
+    { "event_id" : "product_detail_clicked", "product_id" : 2028030, "ts" : NumberLong("1382689192035") }
+    { "event_id" : "product_purchase_intended", "product_id" : 2028030, "ts" : NumberLong("1382689197749") }
+    { "event_id" : "product_detail_clicked", "product_id" : 2038024, "ts" : NumberLong("1382689263384") }
+    { "event_id" : "storefront_clicked", "product_id" : "NULL", "ts" : NumberLong("1382689284693") }
+    { "event_id" : "storefront_clicked", "product_id" : "NULL", "ts" : NumberLong("1382689297864") }
+    { "event_id" : "storefront_clicked", "product_id" : "NULL", "ts" : NumberLong("1382689322201") }
+    { "event_id" : "storefront_clicked", "product_id" : "NULL", "ts" : NumberLong("1382689326804") }
+    { "event_id" : "storefront_clicked", "product_id" : "NULL", "ts" : NumberLong("1382689352841") }
+    { "event_id" : "product_detail_clicked", "product_id" : 2028032, "ts" : NumberLong("1382689357563") }
+    { "event_id" : "product_detail_clicked", "product_id" : 2038025, "ts" : NumberLong("1382689363957") }
+\end{lstlisting}
+
+purchase time: 14068.69687
+want time: 17859.1539
+
+% paragraph session_examples (end)
+
     % paragraph pattern_discovery (end)
 % ~\cite{Kelly:2003:IFI:959258.959260}
 
-% \subsubsection{How To Model}
-%     How to use the gathered information to model the user.
-%     Event features:
-%         - Amount of purchases
-%         - Amount of views
-%         - Amount of wants
-%         - Time on items under the different conditions mentioned above
-%         - What was done before a specific action
-%         - Overall average time on items
-%         - Click to buy rate
+\paragraph{Multi-Armed Bandit} % (fold)
+\label{par:multi_armed_bandit}
+    \marginpar{might be interesting as an most popular approach, suggest the most popular at any one time if, belongs with most popular approach}
+% paragraph multi_armed_bandit (end)
 
 \paragraph{Analyzing}
     Analyzing the model of the user
