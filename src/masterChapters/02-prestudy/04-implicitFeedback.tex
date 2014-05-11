@@ -165,13 +165,26 @@ challenge to obtain higher confidence in our implicit ratings. For further
 information on matrix factorization and latent factors refer to Section~\ref{}
 or to Hu et.\ al.\ original research~\cite{Hu2008}.
 
-\subsubsection{Classifying levels of frequency}
+\subsubsection{Implicit ratings for binary domains}
 
-The naive way of quantifying implicit feedback is to use a simple
-\textit{counting scheme} where ratings are made based on frequency of certain
-events. The two most important factors in such a scheme is how one choses these
-events and how to weight them. We can imagine that in a e-commerce store the
-following events would be useful:
+In the last sub-section we saw how $r_{ui}$, a score for user $u$ on item $i$,
+was set based on e.g. number of clicks but perhaps more commonly the duration
+or amount of which the user has consumed the item. This way, in a domain such
+as television a user would obtain $r_{ui} = 1.0$ if the whole programme was
+watched, and similarily $r_{ui} = 0.5$ if half of the show was watched, and so
+forth. Now, this works well in domains where actions on an item are continious,
+but in many domains such as a e-commerce store we mostly have binary events
+such as clicks or purchases. One scheme, proposed by
+~\cite{pkghost2014implicit} is to differentiate between different events and by
+weighting these by importance or relevence we can create ratings using the
+whole scale between 0.0 and 1.0.
+
+This is just one example of how the domain and data available affects our
+methods, techniques and reliability to our predicted numbers. This is common
+theme when dealing with implicit ratings, and it is an important aspect that
+the reader should be aware of and keep in the back of his/hers mind. Now, in a
+proposed e-commerce domain where our data is based on web-access logs we may
+have the following events to choose from:
 
 \begin{table}[H]
   \centering
