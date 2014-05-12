@@ -2161,7 +2161,7 @@ products.  This poses an issue for recommending items based on their content.
     Shen et al.~\cite{Shen:2007:AIG:1216295.1216368} proposed a recommender system which produce recommendations not only based on the metadata of the products, but also on a user written input.
     Knowledge used to handle the user input, is derived from Open Mind Common Sense~\cite{Singh02openmind}.
 
-    The user uploads his or her clothes and adds brand(e.g. Nike), type(e.g. jeans), material and a description about the item (e.g. "I put these on when I get home").
+    The user uploads his or her clothes and adds brand (e.g.Nike), type (e.g.jeans), material and a description about the item (e.g."I put these on when I get home").
     The systems makes recommendations based on the scenario the user is needing help to find suiting clothes to wear.
     The typical use case of the system is when a user is unsure what to where under different circumstances, but knows something about the scenario or occasion the clothes will be worn in.
     For instance: "I am going to the beach".
@@ -2173,6 +2173,15 @@ products.  This poses an issue for recommending items based on their content.
     The different describing fields are given a default value, which can be changed by the user if that this necessary. But it seems like this has to be done for all brands, material and type manually to initialize the system.
 
     This is an interesting approach to fashion and clothes recommendations but the need for user scenario input and a six-tuple description of the different describing fields, might not be desirable for the user or the system administrator in the long run.
+
+    Ying et al.~\cite{Ying2011} made a recommender based on the a similar concept, namely, what to wear in different situations.
+    The system recommends two sets of top-to-toe clothing based on the current season, the occasion and the items the user has uploaded.
+    The uploaded items must be given a set of descriptions, including the occasion to use the item.
+
+    To recommend, the system uses the user profile of the user, which describes the interests of the user and the information give by the user about the different items in his or hers wardrobe.
+
+    Liu et al.~\cite{Liu:2012:HMC:2393347.2393433} also made a similar recommender.
+    Their
 
 \subsection{Session Based Approach}
     Different ways of personalizing recommendations have been explored earlier in this chapter, such as: collaborative filtering and content based filtering.
@@ -2268,26 +2277,27 @@ products.  This poses an issue for recommending items based on their content.
 
 \paragraph{Session Examples} % (fold)
 \label{par:session_examples}
+    \marginpar{Show three common user session patterns (average purchase time, want time and view time)}
+    A user session of a user randomly chosen user.
+    \begin{lstlisting}
+        { "event_id" : "app_started", "product_id" : "NULL", "ts" : NumberLong("1382689141084") }
+        { "event_id" : "storefront_clicked", "product_id" : "NULL", "ts" : NumberLong("1382689144152") }
+        { "event_id" : "storefront_clicked", "product_id" : "NULL", "ts" : NumberLong("1382689172026") }
+        { "event_id" : "storefront_clicked", "product_id" : "NULL", "ts" : NumberLong("1382689179152") }
+        { "event_id" : "product_detail_clicked", "product_id" : 2028030, "ts" : NumberLong("1382689192035") }
+        { "event_id" : "product_purchase_intended", "product_id" : 2028030, "ts" : NumberLong("1382689197749") }
+        { "event_id" : "product_detail_clicked", "product_id" : 2038024, "ts" : NumberLong("1382689263384") }
+        { "event_id" : "storefront_clicked", "product_id" : "NULL", "ts" : NumberLong("1382689284693") }
+        { "event_id" : "storefront_clicked", "product_id" : "NULL", "ts" : NumberLong("1382689297864") }
+        { "event_id" : "storefront_clicked", "product_id" : "NULL", "ts" : NumberLong("1382689322201") }
+        { "event_id" : "storefront_clicked", "product_id" : "NULL", "ts" : NumberLong("1382689326804") }
+        { "event_id" : "storefront_clicked", "product_id" : "NULL", "ts" : NumberLong("1382689352841") }
+        { "event_id" : "product_detail_clicked", "product_id" : 2028032, "ts" : NumberLong("1382689357563") }
+        { "event_id" : "product_detail_clicked", "product_id" : 2038025, "ts" : NumberLong("1382689363957") }
+    \end{lstlisting}
 
-\begin{lstlisting}
-    { "event_id" : "app_started", "product_id" : "NULL", "ts" : NumberLong("1382689141084") }
-    { "event_id" : "storefront_clicked", "product_id" : "NULL", "ts" : NumberLong("1382689144152") }
-    { "event_id" : "storefront_clicked", "product_id" : "NULL", "ts" : NumberLong("1382689172026") }
-    { "event_id" : "storefront_clicked", "product_id" : "NULL", "ts" : NumberLong("1382689179152") }
-    { "event_id" : "product_detail_clicked", "product_id" : 2028030, "ts" : NumberLong("1382689192035") }
-    { "event_id" : "product_purchase_intended", "product_id" : 2028030, "ts" : NumberLong("1382689197749") }
-    { "event_id" : "product_detail_clicked", "product_id" : 2038024, "ts" : NumberLong("1382689263384") }
-    { "event_id" : "storefront_clicked", "product_id" : "NULL", "ts" : NumberLong("1382689284693") }
-    { "event_id" : "storefront_clicked", "product_id" : "NULL", "ts" : NumberLong("1382689297864") }
-    { "event_id" : "storefront_clicked", "product_id" : "NULL", "ts" : NumberLong("1382689322201") }
-    { "event_id" : "storefront_clicked", "product_id" : "NULL", "ts" : NumberLong("1382689326804") }
-    { "event_id" : "storefront_clicked", "product_id" : "NULL", "ts" : NumberLong("1382689352841") }
-    { "event_id" : "product_detail_clicked", "product_id" : 2028032, "ts" : NumberLong("1382689357563") }
-    { "event_id" : "product_detail_clicked", "product_id" : 2038025, "ts" : NumberLong("1382689363957") }
-\end{lstlisting}
-
-purchase time: 14068.69687
-want time: 17859.1539
+    purchase time: 14068.69687
+    want time: 17859.1539
 
 % paragraph session_examples (end)
 
