@@ -19,7 +19,7 @@ We have the following goals for our experiment:
 	\item Does our proposed implicit rating methods improve the recommendation quality over
 	binary preference data?
 	\item Compare the different implicit rating functions.
-	\item Select the best combination of methods for the SoBazar recommender system. 
+	\item Select the best combination of methods for the SoBazar recommender system.
 \end{itemize}
 
 \marginpar{Supervisors: Any suggestions?}
@@ -67,15 +67,15 @@ following dataset properties:
 \begin{itemize}
 	\item Size of dataset: Preferable as close as possible to Sobazar (6 months from now)
 	in terms of number of ratings, users and items.
-	
+
 	\item Different types of user feedback: Preferable different types of implicit feedback
 	such as browsing and buying behavior.
-	
+
 	\item Domain: Preferably a domain as close to possible as the e-commerce domain with respect
 	to the importance of factors such as recentness.
-	
+
 	\item Presence of features: To evaluate the hybrid methods.
-	
+
 	\item Timestamps: To evaluate the recentness mapping
 \end{itemize}
 
@@ -192,7 +192,7 @@ When increasing the number of folds we could see that it was unable to generate
 any recommendations at all for some folds, or getting really poor results, meaning
 that we get some difficult splits. E.g. when using 30 folds, IBCF was unable to
 provide any recommendations for 8 folds out of 30. By using more than 10 folds
-it is increasingly likely that we end up with a few or more \emph{unrecommendable} 
+it is increasingly likely that we end up with a few or more \emph{unrecommendable}
 instances in the test set, yielding no test result. Based on these results,
 and the general consensus that more folds are better for small datasets we
 believe that using between $5-10$-folds would be a good choice for model validation.
@@ -296,7 +296,7 @@ this process should be repeated multiple times, as the chance of getting an
 
 %TODO - Discussion of evaluation metrics
 
-%http://www.slideshare.net/gunnar-schroeder	
+%http://www.slideshare.net/gunnar-schroeder
 
 A large variety of metrics have been published, and some of these metrics are highly correlated \cite{Herlocker2004}.
 There is little guidance for evaluating recommender systems and choosing metrics. However, there are
@@ -339,12 +339,12 @@ the items all preference values for the user have to be known. Since the user ca
 items, the list will again contain groups of items that can appear in arbitrary order. However, the largest problem
 is posed by items for which no rating is known. These items could hold an arbitrary place within the ranking.
 The bottom line is that in most cases a rank metric for partial ordering would be more appropriate for comparing
-recommendation lists that are produced by recommenders to item rankings from known user preferences. 
+recommendation lists that are produced by recommenders to item rankings from known user preferences.
 
 MAP vs. nDCG, rank distance, ERR, Expected Discounted Rank Correlation.
 Also see: Computing distances between partial rankings
 
-\margin{TODO: Discussion on suitedness/weaknesses of different rank accuracy metrics}
+\marginpar{TODO: Discussion on suitedness/weaknesses of different rank accuracy metrics}
 
 %TODO - Select K value based on user interface
 %TODO - Justify why these metrics combined will give a good overview of the performance.

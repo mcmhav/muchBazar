@@ -78,6 +78,52 @@ Scalability / extensibility issues (Ensure that the system can handle the increa
 % #4 - How to weight a blending of recommendation algorithms as time progresses.
 %   Goal: Use weights based on evaluation and findings through literary study
 
+\section{System Overview}
+  \begin{center}
+    \begin{tikzpicture}
+      [node distance = 1cm, auto,font=\footnotesize,
+      % STYLES
+      every node/.style={node distance=1.5cm},
+      % The comment style is used to describe the characteristics of each force
+      comment/.style={rectangle, inner sep= 5pt, text width=4cm, node distance=0.25cm, font=\scriptsize\sffamily},
+      % The force style is used to draw the forces' name
+      force/.style={rectangle, draw, fill=black!10, inner sep=5pt, text width=4cm, text badly centered, minimum height=1.2cm, font=\bfseries\footnotesize\sffamily}]
+      \centering
+      % Draw forces
+      \node [force] (inputData) {Input data based on implicit feedback (events)};
+      \node [force, below of=inputData] (implicitConverter) {Convert implicit feedback to implicit ratings};
+      \node [force, below of=implicitConverter] (ratings) {Ratings for the items};
+      \node [force, below of=ratings] (recommendations) {Make recommendations};
+      \node [force, below of=recommendations] (evaluations) {Evaluate recommendations};
+
+      %%%%%%%%%%%%%%%
+      % Comments
+      \node [comment, right=0.25 of inputData] (comment-inputData) {
+        Feedback gathered from the soBazar application data dump
+      };
+      \node [comment, right=0.25 of implicitConverter] (comment-implicitConverter) {
+        Coverts the inputed implicit feedback to implicit ratings based on different conversion schemes
+      };
+      \node [comment, right=0.25 of ratings] (comment-ratings) {
+        The output of the conversion is a set of ratings on the different items from the soBazar dataset
+      };
+      \node [comment, right=0.25 of recommendations] (comment-recommendations) {
+        Makes recommendations based on the inputed ratings. Different approaches to make the recommendations can be take, such as matrix factorization
+      };
+      \node [comment, right=0.25 of evaluations] (comment-evaluations) {
+        Evaluate the resulting predictions from the recommendations. Different evaluation metrics can be used, such as AUR and nDCG
+      };
+      %%%%%%%%%%%%%%%%
+
+      % Draw the links between forces
+      \path[->,thick]
+        (inputData) edge (implicitConverter)
+        (implicitConverter) edge (ratings)
+        (ratings) edge (recommendations)
+        (recommendations) edge (evaluations);
+    \end{tikzpicture}
+    \captionof{figure}[System Overview]{Overview of the system}
+  \end{center}
 
 \section{Outline}
 \begin{table}[H]
