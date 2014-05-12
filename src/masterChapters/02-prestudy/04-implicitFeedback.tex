@@ -342,6 +342,8 @@ looking at the 2D-plot below:
     \addplot [domain=-5:5, samples=2, dashed] {0.5454*x+1.3787};
     \end{axis}
   \end{tikzpicture}
+  \caption{Regression analysis showing a mathmatical model fitting the 5
+  observed datapoints}
 \end{figure}
 
 Now, using this methodology on implicit feedback we need a regression model that
@@ -386,20 +388,51 @@ discussion surrounding this topic. % \todo{link to correct section}
 
 A hybrid approach using sequential pattern analysis and collaborative filtering
 techniques are presented by Choi et al.~\cite{choi2012hybrid}. In their
-algorithm they calculate an implicit rating by finding the absolute preference
-AP\@:
+method, coined HOPE, they calculate an implicit rating by finding the
+absolute preference $AP$ between users and items. These preferences are further
+used to find the relative preference which finally are normalized into a
+implicit rating. Once the implicit ratings are derived they calculate
+similarity scores and find K-nearest neighbours in a traditional fashion.
+Finally these neighbours are used in order to calculate a CF-based predicted
+preference (CFPP). This score is integrated with a Sequential Pattern
+Analysis-based predicted preference (SPAPP) which is derived from matching
+subsequences of common sequential patterns between users. This process is
+summarized in Figure~\ref{hope-system}.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[scale=0.3]{image/hope-system}
+  \label{hope-system}
+  \caption{Overall framework of HOPE system, calculating implicit ratings and
+  combining these with sequential pattern analysis}
+\end{figure}
+
+We will continue this section focusing on the convertion from transaction data
+into implicit ratings, rather than going in depth into sequential pattern
+analysis and calculating the CFPP and SPAPP-scores, as the interested reader
+rather should consult the original research for a clearer overview. When
+calculating the $AP$ score we focus solely on the purchase data of the user
+$u$, but it can easily be extended to other types of events such as clicks,
+likes or activities such as listening to a song or viewing a movie. However,
+the score does makes more sense when using it on domains having a high degree
+of repeated actions - such as e-commerce stores selling convienience products
+with short life spans or a music service having users listening to a song
+multiple times. The absolute preference is calculated as follows:
 
 \begin{equation}
   AP(u,i) = \ln(\frac{trans(u,i)}{\sum_{e \in E}{trans(u, e)}} + 1)
 \end{equation}
 
-% \todo{Helge: E=?, hvilke sett er det}
-
-where $trans(u,i)$ is the number of transactions for user $u$ on item $i$.
-However, this absolute preference only takes into account the frequency of
-purchases and because the frequency is heavily dependent on price, item
-category and lifespan of an item — they compare it with other users finding the
-relative preference RP@\:
+where $trans(u,i)$ is the number of transactions for user $u$ on item $i$, and
+E is the set of all items in our system. As an example if a user $u$ purchases an
+item $i$ four times out of ten transactions the $AP(u,i) = 1.4$, but another
+user $p$ who has bought the same item one time out of one transaction the
+$AP(p,i) = 2.0$, and as one can see we should consider a relative preference so
+that repeated actions are rewarded. Further, the absolute preference only takes
+into account the frequency of purchases and because the frequency is heavily
+dependent on price, item category and lifespan of an item — so in the original
+research they propose the following equation in order to calcualte the relative
+preference@:
 
 \begin{equation}
   RP(u,i) = \frac{AP(u,i)}{Max_{c \in U}(AP(c,i))}
@@ -414,9 +447,10 @@ multiplying with $k$:
   ImplicitRating(u,i) = \lceil k * RP(u,i) \rceil
 \end{equation}
 
-% \todo{Explain a bit about Sequential pattern analysis}
-% TODO: Expand based on this:
-% http://blog.ub.ac.id/nikeastria/files/2012/04/A-hybrid-online-product-recommendation-system-Combining-implicit.pdf
+Here we round up in order to range from 1 to 5, but one could either round down
+instead and have ratings range from 0 to 4 or one could use the normalization
+equation defined in Equation~\ref{eq-normalization}, and setting $a = 0$ and $b
+= 5$.
 
 \subsection{Challenges and weaknesses}
 \label{implicit-weaknesses}
@@ -438,23 +472,46 @@ all-purpose rules for describing how behavior can be used as implicit relevance
 feedback.
 
 In a classic recommender system we need three parts: ratings, a
-recommender-algorithm/predictor and evaluation. Each of these parts needs to
-fit with each other and compliment each others advantages and disadvantages.
-When considering explicit ratings the first stage in this three-stage process
-is often considered a ground-truth and whilst it is common to remove artifacts
-and noisiness~\cite{netflix-study-thingy} in the ratings, they are still not
-that ..
+recommender model and evaluation. Each of these parts needs to compliment each
+others advantages and disadvantages. If we start top-down then we say that the
+evaluation metrics used need to consider the fact that we are basing our model
+on implicit ratings, and thus a preference based metric is perhaps not the best
+metric (See Section~\ref{evaluation}). Further given that we choose a
+precision/recall scheme then we need to choose good parameters showing both the
+strengths and weaknesses found in the data and recommender model. How many
+recommendations should we provide the user in order to calculate precision and
+recall? And which metrics should we focus on; F1; MPR or others? When
+considering the recommender model there are as many countless possibibilites -
+ranging from traditional approcahes such as Pearson-correlation and K-nearest
+neighbours to more advanced and perhaps more specialized approaches such as
+SVD++. A common theme when using more advanced models are the number of
+parameters available for adjustments increases almost linearily. In a simple
+KNN-approach we can get various results by varying K - whilst in SVD++ we can
+vary the learning rate, alpha, number of features and many
+others~\ref{svdplusplus}. The approach we use in order to create our
+recommender model should consider the \textit{type} of ratings (explicit or
+implicit), the sparsity, the domain, number of items vs. number of users and
+many others. And lastly when we are creating ratings we should, as this section
+has mentioned several times, choose an approach matching the domain - as there
+can be large differences between e.g.\ an online TV-streaming service and
+an E-commerce store selling jewels.
 
-% Show the three-stage pipeline, where we keep parameters in last two stages and
-% only change parameters in first stage -> Which makes it difficult to evaluate
-% and shows that changing a parameter in first stage have consequences in last
-% stage.
-
-
-% \todo{Add weaknesses of explicit ratings}
+This large choice of different models and their parameters in all stages from
+generation of ratings to evaluation, makes the pipeline quite vulnerable to
+fluxuations in results by small adjustments early in the pipeline. That is, by
+adjusting parameters in our first stage (generation of implicit ratings) it can
+have great effects on both our mathematical model and evaluation metrics. The
+number of different approaches makes it difficult to effectivly show all
+possibilites to the user and for some domains, even those focused on in this
+paper, it would not make sense to test some models or metrics.
 
 % \todo{Mention fashion-specific challenges, e.g.\ clicks does not equal high
 % rating}
+When considering the domain of e-commerce websites a common approach is to both
+count transactions and clicks~\cite{}, but 
+
+% \todo{Add weaknesses of explicit ratings}
+
 
 % \subsection{Evaluating conversion to implicit ratings}
 
