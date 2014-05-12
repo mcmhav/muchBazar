@@ -93,7 +93,10 @@ popular datasets containing additional information:
 
 \item The Million Song Dataset~\cite{Bertin-Mahieux2011}: The million song
 	dataset is a implicit dataset. This data also includes information on the users,
-	and metadata about the songs
+	and metadata about the songs.
+	
+\item BookCrossing: The bookcrossing dataset consists of both implicit and explicit feedback,
+	demographic information about users and some content based information about the books.
 \end{itemize}
 
 \paragraph{Explicit-feedback}
@@ -115,11 +118,11 @@ Unlike explicit feedback, we do not have nay direct input from the user
 regarding their personal preferences. In particular we do not have any
 substantial evidence of which items the user dislikes, such as low ratings.
 However, implicit-feedback is more easily collected, and usually more abundant.
-Types of implicit feedback include purchase history, browsing history, search patters, or even mouse movements. For example, a user who purchases many clothes from the same brand probably likes that brand. For a larger discussion surrounding the differences between
-implicit and explicit feedback, see Section~\ref{implicit-feedback}
-%TODO - Herman, maybe you want to add something more?
-%	Implicit feedback classfication (Type, confidence, precision)
-
+Types of implicit feedback include purchase history, browsing history,
+search patters, or even mouse movements. For example, a user who purchases
+many clothes from the same brand probably likes that brand. For a larger
+discussion surrounding the differences between implicit and explicit
+feedback, see Section~\ref{implicit-feedback}
 
 \subsubsection{Validation Methods}
 Validation techniques are motivated by two fundamental problems; model
@@ -162,13 +165,18 @@ sparse datasets, one may wish to train as many examples as possible. A common
 choice is $K$ value between 5 and 10.
 
 \subparagraph{Advantages}
-One positive aspect with k-fold cross-validation is that is does not matter much where the split is set, since the result is averaged over the $K$ experiments. The strongest argument for using cross-validation is the potential of using the entire training set for testing (albeit not at once), creating the largest possible test set for a fixed training data set
-
+One positive aspect with k-fold cross-validation is that is does not matter
+much where the split is set, since the result is averaged over the $K$ experiments.
+The strongest argument for using cross-validation is the potential of using the
+entire training set for testing (albeit not at once), creating the largest possible
+test set for a fixed training data set.
 
 \subparagraph{Disadvantages}
-The main disadvantage with K-fold Cross-Validation is the training algorithm has to be run $K$ times, and thereby increasing the runtime for producing an evaluation of the system.
-If the dataset is large, an increase of $K$ runs could prove to be disadvantageous.
-% todo - more?
+The main disadvantage with K-fold Cross-Validation is the training algorithm has
+to be run $K$ times, and thereby increasing the runtime for producing an
+evaluation of the system. If the dataset is large, an increase of $K$ runs could
+prove to be disadvantageous.
+%TODO - more?
 
 \paragraph{Bootstrapping~\cite{efron1994introduction}}
 Bootstrapping is used to estimate the sampling distribution of statistics. % and estimating the properties of an estimator.
