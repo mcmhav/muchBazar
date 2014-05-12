@@ -1429,14 +1429,11 @@ as the current season.  The recentness of an item and how long an item is of
 interest for a customer is greatly affected by the customers social groups, and
 the trend in this group.
 
-\marginpar{no universal lifespan of an item, satisfied with the newly introduced items from the stores?}
-
 \paragraph{How to use user feedback}
 The feedback from the user will mainly be implicit~\ref{sec:implicit}.  As seen
 earlier in this section, it can be assumed that an increased interest in an
 item have some correlation with increased interacting with the item.  To what
-degree this increased interest can be mapped to a more substant
-\marginpar{checkout substance/ (substanse, mer fast/solid/handfast)} feedback
+degree this increased interest can be mapped to a more tangible feedback
 varies from customer to customer.
 How the item interaction feedback retrieved will be used is explored in~\ref{sec:implicit}
 
@@ -1449,7 +1446,6 @@ How the item interaction feedback retrieved will be used is explored in~\ref{sec
 The product database consist of items from multiple stores with multiple
 languages and multiple ways of labeling, describing and categorizing their
 products.  This poses an issue for recommending items based on their content.
-\marginpar{extend?, make own content-based for out system subsection in the prestudy?}
 
 % Building Recommender Systems using a Knowledge Base of product semantics
 % http://images.accenture.ca/SiteCollectionDocuments/PDF/recommenderws02.pdf
@@ -1459,10 +1455,46 @@ products.  This poses an issue for recommending items based on their content.
         % E.g. keywords, when descriptions are in multiple languages
     % - Can rating infromation from similar items be used to decrease sparsity? (Content infromation - Hybrid approaches)
 
+\subsubsection{Fashion in E-commerce}
+    \label{subsubs:fashionInEcom}
+    E-commerce is usually known as trading service and products via the Internet. There are many different services and products traded, such as fashion products. Fashion is one of the sectors in e-commerce increasing the most in many countries. In UK the online fashion sector has grown 258\% in five years~\cite{Divante2014}. Three months after GANT~\cite{gant} launched their update on their e-commerce solution, their orders increased by 340\%~\cite{magentoGant}.
+
+    \begin{figure}[H]
+        \includegraphics[width=5in]{image/ecommerceFashionBenchmark.png}
+        \centering
+        \caption[E-commerce benchmark and Fashion]{This figure is taken from~\cite{Jorij2012} and how the different e-commerce fashion retailers focuses their products.
+        This figure is based on 70 different fashion companies.
+        It is clear that the large portion of the e-commerce fashion companies are putting their focus on women's clothing.}
+    \end{figure}
+
+    \begin{figure}[H]
+        \includegraphics[width=5in]{image/trafficSourcesInFashion.png}
+        \centering
+        \caption[Traffic Sources In Fashion]{This figure is taken from~\cite{Jorij2012} and shows where the users originated from in e-commerce fashion.
+        Paid and Organic are search engine origins, and makes up of 53\% of traffic origin in e-commerce fashion.
+        As see, direct traffic is at 15\%, the average direct hit in e-commerce application is 22.3\%.
+        \cite{Jorij2012} explains this with the fact that the same products are often available on multiple e-commerce web sites, and the user browses for the best offer.
+        Even though the viral/social origin segment is rather small (8\%) the average for e-commerce companies is 4\%.
+        The social media is much more influential on e-commerce companies regarding fashion than other e-commerce companies.}
+    \end{figure}
+
+    \begin{figure}[H]
+        \includegraphics[width=5in]{image/conversionRate.png}
+        \centering
+        \caption[Conversion Rate in Fashion Retail]{This figure is taken from~\cite{Jorij2012} and shows where the conversion rate in the fashion domain.
+        Conversion rate is the portion of users who visits a website, who goes beyond only browsing items and reaches some goal achievements.
+        These goal achievements can be actions such as product purchase or advertisement interaction.
+        The conversion rate is then $Conversion rate = \frac{\# of Goal Achievments}{Visits}$~\cite{nielsen2013}.
+        As seen from this figure, womens fashion has the lowest conversion rate in the different types of e-commerce fashion.
+        The average conversion rate was around 3\% in 2013~\cite{nielsen2013}.
+        }
+    \end{figure}
+
 \subsubsection{Competitors to soBazar}
-SoBazar is built up of a collection of e-commerce store front applications and social interactions, but soBazar is not the first of its kind.
-There is a set of other similar applications providing the user with similar possibilities as soBazar.
-This section will be used to explore some of these systems, and look into their strengths and weaknesses regarding item recommendation for the user.
+    As seen from~\ref{subsubs:fashionInEcom} soBazar is not the only e-commerce application for fashion, and has therefore some competitors.
+    SoBazar is built up of a collection of e-commerce store front applications and social interactions, but soBazar is not the first of its kind.
+    There is a set of other similar applications providing the user with similar possibilities as soBazar.
+    This section will be used to explore some of these systems, and look into their strengths and weaknesses regarding item recommendation for the user.
 
 \paragraph{Myntra} % (fold)
 \label{par:myntra}
@@ -1879,7 +1911,7 @@ This section will be used to explore some of these systems, and look into their 
                 - No personalized recommendations \\
             } \\ \bottomrule
         \end{tabular}
-        \caption[Recommendation related strengths and weaknesses of Fahiolista~\cite{Fahiolista}]{This table is the list of the recommendation related strengths and weaknesses of e-commerce fashion web site Fahiolista~\cite{Fahiolista}}
+        \caption[Recommendation related strengths and weaknesses of Fashiolista~\cite{Fashiolista}]{This table is the list of the recommendation related strengths and weaknesses of e-commerce fashion web site Fashiolista~\cite{Fashiolista}}
         \label{table:ecommenreceFahiolista}
     \end{table}
 % paragraph fashiolista (end)
@@ -2099,32 +2131,48 @@ This section will be used to explore some of these systems, and look into their 
     %     \end{itemize}
     % subparagraph weaknesses (end)
 % paragraph fancy (end)
-\subsubsection{What Other Fashion Recommender Systems Has Done?}
-\marginpar{A shorter and more precise way of saying this}
-
-This subsection will look methods of other fashion recommender systems and
-other proposed methods to recommend products in the fashion domain.
+\subsubsection{Other Fashion Recommender Systems}
+    This subsection will look methods of other fashion recommender systems and
+    other proposed methods to recommend products in the fashion domain.
 
 \paragraph{Photograph based approach}
-Fashion and the products it regards are highly dependent on visuals.  A fashion
-product would not be very interesting if no one saw it.  An approach to use the
-importance of how the product looks regarding recommending is to utilize images
-of the product.  Fashion Coordinates Recommender System Using Photographs from
-Fashion Magazines~\cite{Iwata:2011} is a system doing this.  They teach their
-system by using fashion magazines with full body images.  They segment the
-image into two parts, top and bottom.  From this the system learns which top
-matches to which bottom and collects visual features of the products.  From
-this the system can recommend other tops to go with a selected bottom, or other
-way around.  The proposed system scored better\footnote{Accuracy of 50\% on the
-top 5 suggested items, whereas naive and random managed 18\% and under 5\%
-respectively} than both a more naive approach and a random selection.  Runtime
-was at 0.04 seconds per recommendation.
+    Fashion and the products it regards are highly dependent on visuals.  A fashion
+    product would not be very interesting if no one saw it.  An approach to use the
+    importance of how the product looks regarding recommending is to utilize images
+    of the product.  Fashion Coordinates Recommender System Using Photographs from
+    Fashion Magazines~\cite{Iwata:2011} is a system doing this.  They teach their
+    system by using fashion magazines with full body images.  They segment the
+    image into two parts, top and bottom.  From this the system learns which top
+    matches to which bottom and collects visual features of the products.  From
+    this the system can recommend other tops to go with a selected bottom, or other
+    way around.  The proposed system scored better\footnote{Accuracy of 50\% on the
+    top 5 suggested items, whereas naive and random managed 18\% and under 5\%
+    respectively} than both a more naive approach and a random selection.  Runtime
+    was at 0.04 seconds per recommendation.
 
 \paragraph{Hot-or-not}
-A recommender system called SuitUp~\cite{SuitUp} did a survey on some of their potential users.
-One interesting finding was that many of the users enjoyed the Hot-or-Not feature of the system.
-This feature gives the user a set of items and the option to either like or dislike.
-% mtodo
+    A recommender system called SuitUp~\cite{SuitUp} did a survey on some of their potential users.
+    One interesting finding was that many of the users enjoyed the Hot-or-Not feature of the system.
+    This feature gives the user a set of items and the option to either like or dislike.
+    This did not only make the participants in the survey more engaged in the system, but also produced ratings, both negative and positive, for the system.
+    For cold start users and in a cold stat system this extra information and ratings makes it much easier to make recommendations for the users.
+
+\paragraph{Scenario-Oriented Recommendation}
+    Shen et al.~\cite{Shen:2007:AIG:1216295.1216368} proposed a recommender system which produce recommendations not only based on the metadata of the products, but also on a user written input.
+    Knowledge used to handle the user input, is derived from Open Mind Common Sense~\cite{Singh02openmind}.
+
+    The user uploads his or her clothes and adds brand(e.g. Nike), type(e.g. jeans), material and a description about the item (e.g. "I put these on when I get home").
+    The systems makes recommendations based on the scenario the user is needing help to find suiting clothes to wear.
+    The typical use case of the system is when a user is unsure what to where under different circumstances, but knows something about the scenario or occasion the clothes will be worn in.
+    For instance: "I am going to the beach".
+    It is also possible to interact with other users and the system relates similar users.
+
+    The different describing fields about the items are given a six-tuple style value.
+    The six tuples are: luxurious, formal, funky, elegant, trendy and sporty.
+    Which each are given a value from 0 to 10 based on how much the describing field of the items is the current tuple.
+    The different describing fields are given a default value, which can be changed by the user if that this necessary. But it seems like this has to be done for all brands, material and type manually to initialize the system.
+
+    This is an interesting approach to fashion and clothes recommendations but the need for user scenario input and a six-tuple description of the different describing fields, might not be desirable for the user or the system administrator in the long run.
 
 \subsection{Session Based Approach}
     Different ways of personalizing recommendations have been explored earlier in this chapter, such as: collaborative filtering and content based filtering.
@@ -2203,7 +2251,7 @@ This feature gives the user a set of items and the option to either like or disl
                     What was done before a specific action & - \\
                 \end{tabular}
                 \caption[Event Features]{Set of event features used for finding usage clusters and model the users behavior}
-                \label{table:evaluationcoldstart}
+                \label{table:uasageCluster}
             \end{table}
         % subparagraph usage_clusters (end)
 
