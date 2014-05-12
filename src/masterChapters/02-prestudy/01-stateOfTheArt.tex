@@ -792,7 +792,7 @@ expressed few ratings, but also typically have expressed trust in few users. In
 order for trust-aware recommenders to help cold-start users they need to have
 expressed trust in atleast one user. But choosing who to connect to is often a
 difficult task. To help cold-start users find trusted users, Victor et al.
-propose using key figures or mavens (users who write many reviews), frequent 
+propose using key figures or mavens (users who write many reviews), frequent
 raters (users who evaluate many items) and connectors (users with
 many trust connections). By connecting to these key figures, cold-start users
 shown a significant increase in coverage while still maintaining good accuracy.
@@ -1075,7 +1075,7 @@ e.g. could chose to follow people either because they have a good taste in
 clothes or that you simply are friends, and you want to keep up with what your
 friends are buying. We imagine the \emph{follow user} functionality, that has
 not yet been implemented, could be used to collect the trust statements. We
-believe that trust aware recommender systems is something that should be looked 
+believe that trust aware recommender systems is something that should be looked
 into at a later point when this functionality is in place, to further enhance
 the recommendation quality.
 
@@ -2179,12 +2179,19 @@ products.  This poses an issue for recommending items based on their content.
     The system recommends two sets of top-to-toe clothing based on the current season, the occasion and the items the user has uploaded.
     The uploaded items must be given a set of descriptions, including the occasion to use the item.
 
-    To recommend, the system uses the user profile of the user, which describes the interests of the user and the information give by the user about the different items in his or hers wardrobe.
+    To recommend, the system uses the user profile of the user, which describes the interests of the user and the information given by the user about the different items in his or hers wardrobe.
 
 \paragraph{Photograph Recommendation Integrated with Occasion} % (fold)
 \label{par:photograph_recommendation_integrated_with_occasion}
-    Liu et al.~\cite{Liu:2012:HMC:2393347.2393433} also made a similar recommender.
-    Their
+    Liu et al.~\cite{Liu:2012:HMC:2393347.2393433} combined the two approaches from Iwata et al.~\cite{Iwata:2011} and Ying et al.~\cite{Ying2011} and Shen et al.~\cite{Shen:2007:AIG:1216295.1216368} and suggested a system which recommend clothes both based on the photographies and the occasion the clothes are to be worn.
+
+    They do this by incorporating fashion rules like, what can you wear to which occasion, and what can you wear as a complete set to different occasions.
+    The recommender learn the clothing recommendations through a latent support vector machine framework.
+    They use this framework to match four potential functions: visual features vs. attribute, visual features vs. occasion, attributes vs. occasion and attribute vs. attribute.
+    These are used together in a scoring function for clothing recommendation.
+
+    Their system preformed better than the baselines, but was highly dependent on the human detection accuracy, since the learner was learning from fashion photographs.
+
 % paragraph photograph_recommendation_integrated_with_occasion (end)
 
 \subsection{Session Based Approach}
