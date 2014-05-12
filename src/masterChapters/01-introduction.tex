@@ -84,17 +84,20 @@ Scalability / extensibility issues (Ensure that the system can handle the increa
       [node distance = 1cm, auto,font=\footnotesize,
       % STYLES
       every node/.style={node distance=1.5cm},
-      % The comment style is used to describe the characteristics of each force
+      % The comment style is used to describe the characteristics of each process
       comment/.style={rectangle, inner sep= 5pt, text width=4cm, node distance=0.25cm, font=\scriptsize\sffamily},
-      % The force style is used to draw the forces' name
-      force/.style={rectangle, draw, fill=black!10, inner sep=5pt, text width=4cm, text badly centered, minimum height=1.2cm, font=\bfseries\footnotesize\sffamily}]
-      \centering
-      % Draw forces
-      \node [force] (inputData) {Input data based on implicit feedback (events)};
-      \node [force, below of=inputData] (implicitConverter) {Convert implicit feedback to implicit ratings};
-      \node [force, below of=implicitConverter] (ratings) {Ratings for the items};
-      \node [force, below of=ratings] (recommendations) {Make recommendations};
-      \node [force, below of=recommendations] (evaluations) {Evaluate recommendations};
+      % The nonProcess style
+      nonProcess/.style={rectangle, draw, inner sep=5pt, text width=4cm, text badly centered, minimum height=1.2cm, font=\footnotesize\sffamily},
+      % The process style is used to draw the processs' name
+      process/.style={rectangle, draw, fill=black!10, inner sep=5pt, text width=4cm, text badly centered, minimum height=1.2cm, font=\bfseries\footnotesize\sffamily}]
+
+      % Draw processs
+      \node [nonProcess] (inputData) {Input data based on implicit feedback (events)};
+      \node [process, below of=inputData] (implicitConverter) {Convert implicit feedback to implicit ratings};
+      \node [nonProcess, below of=implicitConverter] (ratings) {Ratings for the items};
+      \node [process, below of=ratings] (recommendations) {Make recommendations};
+      \node [process, below of=recommendations] (evaluations) {Evaluate recommendations};
+      \node [nonProcess, below of=evaluations] (evaluationValue) {Recommendation score};
 
       %%%%%%%%%%%%%%%
       % Comments
@@ -113,16 +116,20 @@ Scalability / extensibility issues (Ensure that the system can handle the increa
       \node [comment, right=0.25 of evaluations] (comment-evaluations) {
         Evaluate the resulting predictions from the recommendations. Different evaluation metrics can be used, such as AUR and nDCG
       };
+      \node [comment, right=0.25 of evaluationValue] (comment-evaluationValue) {
+        The score of the recommendations done on the ratings
+      };
       %%%%%%%%%%%%%%%%
 
-      % Draw the links between forces
+      % Draw the links between processs
       \path[->,thick]
         (inputData) edge (implicitConverter)
         (implicitConverter) edge (ratings)
         (ratings) edge (recommendations)
-        (recommendations) edge (evaluations);
+        (recommendations) edge (evaluations)
+        (evaluations) edge (evaluationValue);
     \end{tikzpicture}
-    \captionof{figure}[System Overview]{Overview of the system}
+    \captionof{figure}[System Overview]{Overview of the system. Boxes in white represents input and output data. Boxes in gray represents processes}
   \end{center}
 
 \section{Outline}
