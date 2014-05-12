@@ -3,23 +3,54 @@
 In this section we present the experimental results...
 
 
-\subsection{The Sobazar Dataset}
+\subsection{The Sobazar Dataset (Implicit Ratings)}
+
+This subsection will present the experimental results for the Sobazar dataset using implicit ratings.
 
 \begin{table}
 \centering
-\begin{tabular}{|l|l|l|l|l|l|l|l|l|l|l|}
+\begin{tabular}{|c|*{18}{c|}c|}
 \hline
-								 					&			\multicolumn{3}{c|}{MAE?} 		&			\multicolumn{3}{c|}{Item-Space Coverage}		&		\multicolumn{3}{c|}{User-Space Coverage}		& 		-		\\ 
-							Model 			& 	30\%		& 	60\%	 	& 		75\%				& 	30\%			& 				60\%	 				& 			75\%	 			& 	30\%				& 			60\%	 			& 	75\%						&					\\ \hline	
-\emph{ItemAverage}		&						&						&									&							&												&										& 							& 				 					& 									&					\\ \hline	
-\emph{UBCF}						&						&			 			&									&							&			 									&										& 							& 			 						& 									&					\\ \hline	
-\emph{IBCF}						&						&			 			&									&							&												&										& 							& 			 						& 									&					\\ \hline	
-\emph{ALS-WR}				&						&			 			&									&							&												&										& 							& 				 					& 									&					\\ \hline	
-\emph{RLFM}						&						&			 			&									&							&												&										& 							& 				 					& 									&					\\ \hline	
+&	 \multicolumn{3}{c|}{AUC} & \multicolumn{3}{c|}{MPR} &	 \multicolumn{3}{c|}{MAP} &	 \multicolumn{3}{c|}{nDCG} & \multicolumn{3}{c|}{IS Coverage} & \multicolumn{3}{c|}{US Coverage} & 	-	\\\hline 
+Model 		& - & - & - & - & - & - & - & - & - & - & - & - & - & - & - & - & - & - & -  \\ \hline
+Rec 1 		& - & - & - & - & - & - & - & - & - & - & - & - & - & - & - & - & - & - & -  \\ \hline
+Rec 2 		& - & - & - & - & - & - & - & - & - & - & - & - & - & - & - & - & - & - & -  \\ \hline
+Rec 3 		& - & - & - & - & - & - & - & - & - & - & - & - & - & - & - & - & - & - & -  \\ \hline
+Rec 4			& - & - & - & - & - & - & - & - & - & - & - & - & - & - & - & - & - & - & -  \\ \hline
+Rec 5			& - & - & - & - & - & - & - & - & - & - & - & - & - & - & - & - & - & - & -  \\ \hline
 \end{tabular}
-\caption{Sobazar Experimental Results}
+\caption{Sobazar Cold-start System Evaluation Results using Implicit Ratings}
 \end{table}
 
+\begin{table}
+\centering
+\begin{tabular}{|c|*{18}{c|}c|}
+\hline
+&	 \multicolumn{3}{c|}{AUC} & \multicolumn{3}{c|}{MPR} &	 \multicolumn{3}{c|}{MAP} &	 \multicolumn{3}{c|}{nDCG} & \multicolumn{3}{c|}{IS Coverage} & \multicolumn{3}{c|}{US Coverage} & 	-	\\\hline 
+Model 		& - & - & - & - & - & - & - & - & - & - & - & - & - & - & - & - & - & - & -  \\ \hline
+Rec 1 		& - & - & - & - & - & - & - & - & - & - & - & - & - & - & - & - & - & - & -  \\ \hline
+Rec 2 		& - & - & - & - & - & - & - & - & - & - & - & - & - & - & - & - & - & - & -  \\ \hline
+Rec 3 		& - & - & - & - & - & - & - & - & - & - & - & - & - & - & - & - & - & - & -  \\ \hline
+Rec 4			& - & - & - & - & - & - & - & - & - & - & - & - & - & - & - & - & - & - & -  \\ \hline
+Rec 5			& - & - & - & - & - & - & - & - & - & - & - & - & - & - & - & - & - & - & -  \\ \hline
+\end{tabular}
+\caption{Sobazar Cold-start Item Evaluation Results using Implicit Ratings}
+\end{table}
+
+\begin{table}
+\centering
+\begin{tabular}{|c|*{18}{c|}c|}
+\hline
+&	 \multicolumn{3}{c|}{AUC} & \multicolumn{3}{c|}{MPR} &	 \multicolumn{3}{c|}{MAP} &	 \multicolumn{3}{c|}{nDCG} & \multicolumn{3}{c|}{IS Coverage} & \multicolumn{3}{c|}{US Coverage} & 	-	\\\hline 
+Model 		& - & - & - & - & - & - & - & - & - & - & - & - & - & - & - & - & - & - & -  \\ \hline
+Rec 1 		& - & - & - & - & - & - & - & - & - & - & - & - & - & - & - & - & - & - & -  \\ \hline
+Rec 2 		& - & - & - & - & - & - & - & - & - & - & - & - & - & - & - & - & - & - & -  \\ \hline
+Rec 3 		& - & - & - & - & - & - & - & - & - & - & - & - & - & - & - & - & - & - & -  \\ \hline
+Rec 4			& - & - & - & - & - & - & - & - & - & - & - & - & - & - & - & - & - & - & -  \\ \hline
+Rec 5			& - & - & - & - & - & - & - & - & - & - & - & - & - & - & - & - & - & - & -  \\ \hline
+\end{tabular}
+\caption{Sobazar Cold-start User Evaluation Results using Implicit Ratings}
+\end{table}
 
 
 

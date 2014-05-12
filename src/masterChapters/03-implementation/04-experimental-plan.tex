@@ -22,15 +22,36 @@ We have the following goals for our experiment:
 	\item Select the best combination of methods for the SoBazar recommender system. 
 \end{itemize}
 
-\marginpar{Any suggestions?}
-
-Our first goal is to see whether or not our implicit rating method actually improve the
-recommendation quality over using binary preference data.
-
-We also wish to compare the different implicit rating mapping functions.
+\marginpar{Supervisors: Any suggestions?}
 \marginpar{TODO: Discussion on how}
 
-where the goal of the experiment is to evaluate the properties
+Then the question is, how can we determine whether a method is better than another. The
+main reasons for implementing a recommender system is the desire to improve user
+satisfaction and to increase the economic success of a platform. Although both goals
+are interrelated they may be competing in some scenarios. The user might be more interested
+in purchasing the products with the best price-performance ratio, while the \emph{owners}
+are more interested in showing the products that lead to the highest revenue for the
+business. For this purpose, a commercial recommender could/should consider implementing
+a reward attribute for items that show how much the company profits from its sale. This
+information can then e.g. be used in a combination with a classification accuracy metric
+to determine the recommendation list.
+
+%TODO - Make "reward" from sale a factor for recommendation ranking. FUTURE WORK!
+
+In order to further specify our goals we therefore have to take a closer look at the recommender's task,
+its interface and the available data.
+
+The most typical task for a e-commerce recommender system is to determine an order of items,
+often with the purpose of creating a top-k list of items that is shown in a sidebar or on a
+dedicated page.
+
+\marginpar{TODO: Screenshot of SoBazar Recommendations}
+
+The figure shows...
+
+\marginpar{TODO: Short section on Sobazar Interface in relation to evaluation}
+
+Ultimately, the goal of the experiment is to evaluate and measure the properties
 of the system, which we have identified as the most important for the systems success,
 and select the method that performs the best overall with respect to these properties.
 
@@ -65,8 +86,9 @@ And we therefore had to turn for other domains for datasets...
 
 \subsubsection{Book-Crossing Dataset?}
 
-Use implicit feedback as \emph{item-clicked} and explicit ratings greater than 5 as \emph{likes}.
+Use implicit feedback as \emph{item-clicked} and explicit ratings greater than 5 as \emph{item-liked}.
 
+\subsection{Simulating user behavior?}
 
 %General statistics and averages
 %Interesting findings/properties
@@ -132,8 +154,6 @@ Use implicit feedback as \emph{item-clicked} and explicit ratings greater than 5
 
 \subsubsection{The Sobazar Dataset}
 
-%Highlight limitations of the sobazar dataset for evaluation.
-	%-> Implications for evaluation
 The Sobazar dataset is smallest and sparsest of our datasets used for evaluation.
 The dataset contain ratings 15,252 given by 1,235 users to 3,386 items.
 We also have access to semi-structured product information collected/crawled from
@@ -166,7 +186,7 @@ K-fold & 	$min_{RMSE}$ 	&	$max_{RMSE}$ 	& Average 	& Variance 					\\ \hline
 \caption{Evaluation results from experimenting with different k-fold splits on the Sobazar dataset}
 \end{table}
 
-\marginpar{This table is not really necessary to include...}
+\marginpar{TODO: This table is not really necessary to include...}
 
 When increasing the number of folds we could see that it was unable to generate
 any recommendations at all for some folds, or getting really poor results, meaning
@@ -176,8 +196,8 @@ it is increasingly likely that we end up with a few or more \emph{unrecommendabl
 instances in the test set, yielding no test result. Based on these results,
 and the general consensus that more folds are better for small datasets we
 believe that using between $5-10$-folds would be a good choice for model validation.
-Another alternative well suited for sparse datasets is the \emph{all but one} or
-\emph{leave one out} method, in which one remove one rating from the test users
+Another alternative well suited for sparse datasets is the \emph{all but one} or the
+\emph{leave one out} method, in which we remove one rating from the test users
 and try to predict the hidden ratings.
 
 Another important concern is whether or not to take the timestamps into consideration,
@@ -185,8 +205,10 @@ which directly speaks against the use of cross-validation, as we wish to use the
 interactions to predict future actions. When using the \emph{leave one out} method one
 could e.g. select a predetermined set of test users based on some criteria and remove
 their latest rating and try to predict it and repeat the process any number of times.
+This is particularly relevance as our implicit mapping function takes recency into account.
 
 %TODO - Cross-validation time-based splits?
+	%ARTICLE - Time-split cross-validation as a method for estimating the goodness of prospective prediction
 %TODO - Look at what others have done
 
 \subsubsection{Overview of the Datasets}
@@ -208,7 +230,6 @@ Table \ref{table:datasets} shows an overview of the datasets used for evaluation
     \label{table:datasets}
     \caption [Overview of the datasets used for evaluation]{Overview of the datasets used for evaluation}
 \end{table}
-
 
 \subsection{Simulating the Cold-Start Problem}
 
@@ -235,27 +256,27 @@ views per item.
 To simulate the cold-start user problem we propose splitting the users into two disjoint
 sets, similarly as in \cite{Stern2009, Lam2008}, using 90\% of the users for training and
 setting aside the remaining 10\% for evaluation. We then train the model with e.g. 5, 15,
-25 and 35 ratings and predict the remaining values. This process is repeated $k$ times.
-
-Similarly, to simulate the cold-start item problem we again split the items into two
-disjoint sets, using 90\% of the items for training and the remaining 10\% for
-evaluation.  We then train the model with e.g. 20, 40, 60 and 80 ratings and predict
-the remaining values. This process is repeated $k$ times.
-
-The selection criteria for test items and users can differ from dataset from dataset.
-E.g. in \cite{Rashid2002, Rashid2008} the authors selected a subset of the users with
-more than 200 ratings, but you can not expect 10\% all the users for all datasets
-to have provided 200 ratings, so this number might be lowered if necessary. The 
-implications of removing the top 10\% of the raters from the Sobazar dataset is 
-fairly large as they stand for a large portion of the few ratings we have.
+25 and 35 ratings and predict the remaining values. Alternatively one could train the model
+using e.g. 25\% and 75\% of each test users ratings. Similarly, to simulate the cold-start
+item problem we again split the items into two disjoint sets, using 90\% of the items
+for training and the remaining 10\% for evaluation.  We then train the model with
+e.g. 20, 40, 60 and 80 ratings and predict the remaining values. The selection criteria
+for test items and users can differ from dataset from dataset. E.g. in \cite{Rashid2002, Rashid2008}
+the authors selected a subset of the users with more than 200 ratings, but you can not
+expect 10\% all the users for all datasets to have provided 200 ratings, so this number
+might be lowered if necessary. The implications of removing the top 10\% of the
+raters from the Sobazar dataset is fairly large as they stand for a large portion
+of the few ratings we have.
 
 To evaluate the cold-start system performance we use the same method as described
 in ~\cite{Agarwal2009} where the authors propose using a 75:25 training/test split,
 where we at random draw e.g. 35\%, 50\% and then finally use all (75\%) of the
-ratings in the training set and predict the remaining 25\%. This process is
-repeated $k$ times.
+ratings in the training set and predict the remaining 25\%.
+
+\marginpar{TODO: Add some justification...}
 
 %TODO - How is this implemented on the sobazar data?
+
 For the Sobazar dataset we select 10\% of the users as test users, for a user to be
 selected as a test user, the user must have provided at least 25 ratings. We then train
 the model using 10, 15, 20 of their ratings and try to predict their remaining ratings.
@@ -264,8 +285,9 @@ only 2\% of the items as test items, where each test item have been rated atleas
 We train the model using 5, 10, 15 of their ratings and try to predict their remaining
 ratings. To evaluate the cold-start system performance we split the dataset in a test
 and training set using 20\% of the ratings for testing and then train the model
-using 40\%, 60\% and 80\% of the ratings for training.
-
+using 40\%, 60\% and 80\% of the ratings for training. It is important to note that
+this process should be repeated multiple times, as the chance of getting an
+\emph{unfortunate} split is highly probable due to the dataset size.
 
 %TODO - How is this implemented on the x dataset?
 
@@ -275,12 +297,10 @@ using 40\%, 60\% and 80\% of the ratings for training.
 %TODO - Discussion of evaluation metrics
 
 %http://www.slideshare.net/gunnar-schroeder	
-	
+
 A large variety of metrics have been published, and some of these metrics are highly correlated \cite{Herlocker2004}.
-
-Little guidance for evaluating recommender systems and choosing metrics.
-
-Some important questions to ask oneself is:
+There is little guidance for evaluating recommender systems and choosing metrics. However, there are
+some important questions one should ask oneself when selecting evaluation metrics:
 
 \begin{itemize}
 	\item Which aspects of the usage scenario and the data influence the choice?
@@ -291,33 +311,56 @@ Some important questions to ask oneself is:
 	\item How much do the metrics suffer biases?
 \end{itemize}
 
-What factors influence the choice of evaluation metrics?
+It is safe to assume that the users are more interested in the top ranked items, than rating
+predictions for the entire item collection. Evaluation of top-k recommendations suggests a
+classification or ranking task, evaluation should therefore focus on classification or ranking metrics.
+Furthermore, we can also assume that a limited list of top-ranked items is shown. This implicates
+that a metric that measures the overall ranking is not appropriate, and that we only should measure
+the ranking quality of the $k$ items being shown, the other items are irrelevant. The above reasoning
+lead us to delve deeper into classification and ranking accuracy metrics.
 
-Business goals, User interests
-Recommender task and interaction (Prediction, Classification, Ranking...)
-Preference data (Explicit, Implicit, ...)
+%TODO - Add some more cites
 
-Area under curve (AUC)
+The area under curve (AUC) is a popular classification accuracy metric and can be used as a single
+measure for the overall quality of a recommender system. However, a frequently uttered point of criticism is
+that users are often more interested in the items at the top of a recommendation list but that the AUC
+measure is equally affected by swaps at the top or the bottom. To \emph{complement} AUC, we chose to
+also measure the rank accuracy.
 
-%Why AUC?
-ROC related measures are highly popular \cite{Agarwal2009, Gantner2010, Schein2002, Liu2011, Gantner2010}
+%TODO - What is the "best" rank-accuracy metric?
 
-AUC vs. Limited Area under curve|
+When using rank accuracy metrics, it is worth knowing whether one is measuring total or partial orderings.
+Most rank accuracy metrics (e.g. Kendall's tau and Spearman's rho) compare two total ordering. The problem
+with these measures is that we in most cases are not provided with a full ranking of the items as most recommendation
+algorithms only generate a partial list of items that are likely to be preferred by a user. The remaining items
+would therefore have to be concatenated in random order. The recommendation list can also consist of several
+items with similar rating that can appear in varying orders. Therefore, in order to create a full ranking of
+the items all preference values for the user have to be known. Since the user can express the same rating for similar
+items, the list will again contain groups of items that can appear in arbitrary order. However, the largest problem
+is posed by items for which no rating is known. These items could hold an arbitrary place within the ranking.
+The bottom line is that in most cases a rank metric for partial ordering would be more appropriate for comparing
+recommendation lists that are produced by recommenders to item rankings from known user preferences. 
 
-Useful metric for top-k recommender evaluations
+MAP vs. nDCG, rank distance, ERR, Expected Discounted Rank Correlation.
+Also see: Computing distances between partial rankings
 
-MAP@K
+\margin{TODO: Discussion on suitedness/weaknesses of different rank accuracy metrics}
 
+%TODO - Select K value based on user interface
 %TODO - Justify why these metrics combined will give a good overview of the performance.
-
-
 %TODO - Cold-start evaluation Metrics
 
 In addition to looking at the above mentioned metrics it would be interesting to see how
 the different sparsity levels affect both the user- and item-space coverage of the different
-when evaluating the cold-start system performance. The user-space coverage is the number of
-users the recommender is able to produce recommendations for while the item-space
+methods when evaluating the cold-start system performance, as having a recommender that can only
+recommend a limited set of items to a small portion of the users is \emph{unfortunate}. The
+user-space coverage is the number of users the recommender is able to produce recommendations for while the item-space
 coverage is measured by looking at how many of the items are recommendable.
 
+
+%TODO - How will these experiment be carried out and validated?
+\subsection{Implicit Ratings vs. Binary Preference}
+\subsection{A Comparison of Implicit Rating Mapping Functions}
+\subsection{Combining Implicit Ratings With Existing Cold-Start Solutions}
 
 
