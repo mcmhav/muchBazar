@@ -6,25 +6,66 @@
 %For example, we can check an e-commerce website revenue with and without the
 %recommender system and thereby estimate the value of the system to the website.
 
-Section \ref{sec:evaluation} covers a wide range of evaluation metrics that measure different properties of the recommender system. This section will cover our experimental plan where the goal of the experiment is to evaluate the properties of the system, which we have identified as the most important for the systems success, and select the method that performs the best overall with respect to these properties. The section will describe the datasets used for evaluation, our evaluation methodology and our evaluation metrics of choice.
+Section \ref{sec:evaluation} covers a wide range of evaluation metrics that
+measure different properties of the recommender system. This section will cover
+our experimental plan, starting off by looking at the goals for our experiments.
+The remaining parts of the section will describe the datasets used for evaluation,
+our evaluation methodology and our evaluation metrics of choice.
+The section will also describe the datasets used for evaluation, our evaluation methodology
+
+We have the following goals for our experiment:
+
+\begin{itemize}
+	\item Does our proposed implicit rating methods improve the recommendation quality over
+	binary preference data?
+	\item Compare the different implicit rating functions.
+	\item Select the best combination of methods for the SoBazar recommender system. 
+\end{itemize}
+
+\marginpar{Any suggestions?}
+
+Our first goal is to see whether or not our implicit rating method actually improve the
+recommendation quality over using binary preference data.
+
+We also wish to compare the different implicit rating mapping functions.
+\marginpar{TODO: Discussion on how}
+
+where the goal of the experiment is to evaluate the properties
+of the system, which we have identified as the most important for the systems success,
+and select the method that performs the best overall with respect to these properties.
 
 \subsection{Selecting datasets for evaluation}
 
-In addition to evaluate the methods on the Sobazar dataset we want to make sure that our solution generalizes beyond our experimental dataset, in accordance to the general guidelines for experimental studies \cite{Shani2011}. The data used for offline evaluation should match as closely as possible the data we expect the recommender system to face when it is deployed \cite{Gunawardana2009}. When selecting datasets for evaluation we focused on the following dataset properties:
+In addition to evaluate the methods on the Sobazar dataset we want to make sure that our
+solution generalizes beyond our experimental dataset, in accordance to the general guidelines
+for experimental studies \cite{Shani2011}. The data used for offline evaluation should match
+as closely as possible the data we expect the recommender system to face when it is
+deployed \cite{Gunawardana2009}. When selecting datasets for evaluation we focused on the
+following dataset properties:
 
 \begin{itemize}
-\item Size of dataset: Preferable as close as possible to Sobazar (6 months from now) in terms of number of ratings, users and items.
-\item Different types of user feedback: Preferable different types of implicit feedback such as browsing and buying behavior.
-\item Domain: Preferably a domain as close to possible as the e-commerce domain with respect to the importance of factors such as recentness.
-\item Presence of features: To evaluate the hybrid methods.
-\item Timestamps: To evaluate the recentness mapping
+	\item Size of dataset: Preferable as close as possible to Sobazar (6 months from now)
+	in terms of number of ratings, users and items.
+	
+	\item Different types of user feedback: Preferable different types of implicit feedback
+	such as browsing and buying behavior.
+	
+	\item Domain: Preferably a domain as close to possible as the e-commerce domain with respect
+	to the importance of factors such as recentness.
+	
+	\item Presence of features: To evaluate the hybrid methods.
+	
+	\item Timestamps: To evaluate the recentness mapping
 \end{itemize}
 
-We were unable to acquire any e-commerce datasets containing user browsing history, purchases etc. And we therefore had to turn for other domains for datasets...
+We were unable to acquire any e-commerce datasets containing user browsing history, purchases etc.
+And we therefore had to turn for other domains for datasets...
 
 %The first dataset we chose for evaluation was the MovieLens 1M dataset. The reason for selecting the MovieLens 1M dataset over MovieLens 100K is that the number of users is closer to what we expect the SoBazar to have after the \emph{official} launch this summer in addition to having user- and item features. The MovieLens dataset can also be seen as a \emph{benchmark} dataset as it is one of the most popular recommender systems dataset used for evaluation in countless articles.
 
-\subsubsection{Book-Crossing Dataset}
+\subsubsection{Book-Crossing Dataset?}
+
+Use implicit feedback as \emph{item-clicked} and explicit ratings greater than 5 as \emph{likes}.
 
 
 %General statistics and averages
@@ -93,9 +134,24 @@ We were unable to acquire any e-commerce datasets containing user browsing histo
 
 %Highlight limitations of the sobazar dataset for evaluation.
 	%-> Implications for evaluation
-The Sobazar dataset is smallest and sparsest of our datasets used for evaluation. The dataset contain ratings 15,252 given by 	1,235 users to 3,386 items. We also have access to semi-structured product information collected/crawled from the online retailers for most items. In addition user data from the users can also be downloaded from Facebook.
+The Sobazar dataset is smallest and sparsest of our datasets used for evaluation.
+The dataset contain ratings 15,252 given by 1,235 users to 3,386 items.
+We also have access to semi-structured product information collected/crawled from
+the online retailers for \emph{some} items. In addition user data from the users
+can also be downloaded from Facebook.
 
-Having such a small and sparse dataset has several implications. Firstly we have to avoid \emph{wishful thinking} as we have very thin data, meaning that we cannot rely on getting reliable results. Secondly, our evaluation methodology must be \emph{tailored} for small sparse datasets. When using cross-validation the number of folds depends on the size of the dataset. For large datasets, even 3-fold Cross Validation will be quite accurate, while for very sparse datasets, we may have to use leave-one-out in order to train on as many examples as possible. The advantages of using a large number of folds is that the bias of the true error rate estimators will be small (the estimator will be very accurate), with the disadvantages being that the variance of the true error rate estimator will be large in addition to increased computation time. To exemplify this we ran a small experiment on the Sobazar data using IBCF, with $k-NN=3$, experimenting with different $K$-fold values:
+Having such a small and sparse dataset has several implications. Firstly we have
+to avoid \emph{wishful thinking} as we have very thin data, meaning that we cannot
+rely on getting reliable results. Secondly, our evaluation methodology must be
+\emph{tailored} for small sparse datasets. When using cross-validation the number
+of folds depends on the size of the dataset. For large datasets, even 3-fold Cross
+Validation will be quite accurate, while for very sparse datasets, we may have to
+use leave-one-out in order to train on as many examples as possible. The advantages
+of using a large number of folds is that the bias of the true error rate estimators
+will be small (the estimator will be very accurate), with the disadvantages being that
+the variance of the true error rate estimator will be large in addition to increased
+computation time. To exemplify this we ran a small experiment on the Sobazar data using
+IBCF, with $k-NN=3$, experimenting with different $K$-fold values:
 
 \begin{table}[H]
 \centering
@@ -110,9 +166,25 @@ K-fold & 	$min_{RMSE}$ 	&	$max_{RMSE}$ 	& Average 	& Variance 					\\ \hline
 \caption{Evaluation results from experimenting with different k-fold splits on the Sobazar dataset}
 \end{table}
 
-When increasing the number of folds we could see that it was unable to generate any recommendations at all for some folds, or getting really poor results, meaning that we get some difficult splits. E.g. when using 30 folds, IBCF was unable to provide any recommendations for 8 folds out of 30. By using more than 10 folds it is increasingly likely that we end up with a few or more   \emph{unrecommendable} instances in the test set, yielding no test result. Based on these results, and the general consensus that more folds are better for small datasets we believe that using between $5-10$-folds would be a good choice for model validation. Another alternative well suited for sparse datasets is the \emph{all but one} or \emph{leave one out} method, in which one remove one rating from the test users and try to predict the hidden ratings.
+\marginpar{This table is not really necessary to include...}
 
-Another important concern is whether or not to take the timestamps into consideration, which directly speaks against the use of cross-validation, as we wish to use the past interactions to predict future actions. When using the \emph{leave one out} method one could e.g. select a predetermined set of test users based on some criteria and remove their latest rating and try to predict it and repeat the process any number of times.
+When increasing the number of folds we could see that it was unable to generate
+any recommendations at all for some folds, or getting really poor results, meaning
+that we get some difficult splits. E.g. when using 30 folds, IBCF was unable to
+provide any recommendations for 8 folds out of 30. By using more than 10 folds
+it is increasingly likely that we end up with a few or more \emph{unrecommendable} 
+instances in the test set, yielding no test result. Based on these results,
+and the general consensus that more folds are better for small datasets we
+believe that using between $5-10$-folds would be a good choice for model validation.
+Another alternative well suited for sparse datasets is the \emph{all but one} or
+\emph{leave one out} method, in which one remove one rating from the test users
+and try to predict the hidden ratings.
+
+Another important concern is whether or not to take the timestamps into consideration,
+which directly speaks against the use of cross-validation, as we wish to use the past
+interactions to predict future actions. When using the \emph{leave one out} method one
+could e.g. select a predetermined set of test users based on some criteria and remove
+their latest rating and try to predict it and repeat the process any number of times.
 
 %TODO - Cross-validation time-based splits?
 %TODO - Look at what others have done
@@ -140,68 +212,59 @@ Table \ref{table:datasets} shows an overview of the datasets used for evaluation
 
 \subsection{Simulating the Cold-Start Problem}
 
-To simulate the cold-start problem and evaluate how well our the different methods tackle the different cold-start situations we came up with the following evaluation methodology. As mentioned in Section \ref{sec:cold-start-eval} there is no common framework for assessing the cold-start performance of recommender systems. Our goal is to come up with \emph{comprehensive} framework to assess the cold-start performance of our recommender systems. The following inputs changes the dataset over time:
+To simulate the cold-start problem and evaluate how well our the different
+methods tackle the different cold-start situations we came up with the following
+evaluation methodology. As mentioned in Section \ref{sec:cold-start-eval} there is
+no common framework for assessing the cold-start performance of recommender systems.
+Our goal is to come up with \emph{comprehensive} framework to assess the cold-start
+performance of our recommender systems. The following inputs changes the dataset over time:
 
 \begin{itemize}
-	\item Existing users watch new items in the catalogue
+	\item 	Existing users watch new items in the catalogue
 	\item	New users join the system and view their first item
 	\item	New items are added to the catalogue
 \end{itemize}
 
-	- Existing users watch new items in the catalogue
-	- New users join the system and view their first item
-	- New items are added to the catalogue
+The first input source has the effect of increasing the dataset density, the average user
+profile length, and the average number of views per item. The second input factor has
+the effect of decreasing both the dataset density and the average user profile length,
+as the new users that join the system have watched one movie. Similarly, the third input
+factor has the effect of decreasing both the dataset density and the average number of
+views per item.
 
-The first input source has the effect of increasing the dataset density, the average user profile length, and the
-average number of views per item. The second input factor has the effect of decreasing both the dataset density
-and the average user profile length, as the new users that join the system have watched one movie. Similarly,
-the third input factor has the effect of decreasing both the dataset density and the average number of views per
-item
+To simulate the cold-start user problem we propose splitting the users into two disjoint
+sets, similarly as in \cite{Stern2009, Lam2008}, using 90\% of the users for training and
+setting aside the remaining 10\% for evaluation. We then train the model with e.g. 5, 15,
+25 and 35 ratings and predict the remaining values. This process is repeated $k$ times.
 
-Cold-start user:
-2 Disjoint sets: 90:10
-Use the test users (10\%) and train the model with e.g. 5, 10, 15, 20 ratings and predict the remaining values
-Repeat k times
+Similarly, to simulate the cold-start item problem we again split the items into two
+disjoint sets, using 90\% of the items for training and the remaining 10\% for
+evaluation.  We then train the model with e.g. 20, 40, 60 and 80 ratings and predict
+the remaining values. This process is repeated $k$ times.
 
+The selection criteria for test items and users can differ from dataset from dataset.
+E.g. in \cite{Rashid2002, Rashid2008} the authors selected a subset of the users with
+more than 200 ratings, but you can not expect 10\% all the users for all datasets
+to have provided 200 ratings, so this number might be lowered if necessary. The 
+implications of removing the top 10\% of the raters from the Sobazar dataset is 
+fairly large as they stand for a large portion of the few ratings we have.
 
-Cold-start System:
-Train-test split 75:25
-At random draw 35, 50, all(75) ratings and predict the remaining 25
-Repeat k times
-
-
-Our goal is to come up with comprehensive framework to assess a recommender systems cold-start performance.
-
-%Describe the methodology used to simulate the cold-start problem
-
-%	- Why did we choose this methodology?
-
-%TODO - Look at reasoning in the papers
-
-To simulate the cold-start user problem we propose splitting the users into two disjoint sets as in \cite{Stern2009, Lam2008},
-using 90\% of the users for training and setting aside 10\% for evaluation. We then train the model with e.g. 5, 15, 25 and 35
-ratings and predict the remaining values. This process is repeated $k$ times.
-
-Similarly, to simulate the cold-start item problem we again split the items into two disjoint sets,
- using 90\% of the items for training and the remaining 10\% for evaluation.  We then train the model
- with e.g. 20, 40, 60 and 80 ratings and predict the remaining values. This process is repeated $k$ times.
-
-To evaluate the cold-start system performance we use the same method as described in ~\cite{Agarwal2009}
-where the authors propose using a 75:25 training/test split, where we at random draw 35\%, 50\%
-and then finally use all (75\%) of the ratings in the training set and predict the remaining 25\%. This process is repeated $k$ times.
-
-The selection criteria for test items and users can differ from dataset from dataset. E.g. in \cite{Rashid2002, Rashid2008}
-the authors selected a subset of the users with more than 200 ratings, but you can not expect 10\% all the users for all datasets
-to have provided 200 ratings, so this number might be lowered if necessary. The implications of removing the top 10\% of
-the raters from the Sobazar dataset is fairly large as they stand for a large portion of the few ratings we have.
+To evaluate the cold-start system performance we use the same method as described
+in ~\cite{Agarwal2009} where the authors propose using a 75:25 training/test split,
+where we at random draw e.g. 35\%, 50\% and then finally use all (75\%) of the
+ratings in the training set and predict the remaining 25\%. This process is
+repeated $k$ times.
 
 %TODO - How is this implemented on the sobazar data?
-For the Sobazar dataset we select 10\% of the users as test users, each test user have provided at least 25.
-We then train the model using 10, 15, 20 of their ratings and try to predict their remaining ratings. As we have a very
-low number of ratings and a large item collection we had to use only 2\% of the items as test items, where each
-test item have been rated atleast 20 times. We train the model using 5, 10, 15 of their ratings and try to predict
-their remaining ratings. To evaluate the cold-start system performance we split the dataset in a test and training
-set using 20\% of the ratings for testing and then train the model using 40\%, 60\% and 80\% of the ratings for training.
+For the Sobazar dataset we select 10\% of the users as test users, for a user to be
+selected as a test user, the user must have provided at least 25 ratings. We then train
+the model using 10, 15, 20 of their ratings and try to predict their remaining ratings.
+As we have a very low number of ratings and a large item collection we had to use
+only 2\% of the items as test items, where each test item have been rated atleast 20 times.
+We train the model using 5, 10, 15 of their ratings and try to predict their remaining
+ratings. To evaluate the cold-start system performance we split the dataset in a test
+and training set using 20\% of the ratings for testing and then train the model
+using 40\%, 60\% and 80\% of the ratings for training.
 
 
 %TODO - How is this implemented on the x dataset?
@@ -209,18 +272,59 @@ set using 20\% of the ratings for testing and then train the model using 40\%, 6
 
 \subsection{Evaluation Metrics}
 
+%TODO - Discussion of evaluation metrics
 
+%http://www.slideshare.net/gunnar-schroeder	
+	
+A large variety of metrics have been published, and some of these metrics are highly correlated \cite{Herlocker2004}.
+
+Little guidance for evaluating recommender systems and choosing metrics.
+
+Some important questions to ask oneself is:
+
+\begin{itemize}
+	\item Which aspects of the usage scenario and the data influence the choice?
+	\item Which metrics are applicable?
+	\item What does these metrics express?
+	\item What are the differences among them?
+	\item Which metric represent our user-case best?
+	\item How much do the metrics suffer biases?
+\end{itemize}
+
+What factors influence the choice of evaluation metrics?
+
+Business goals, User interests
+Recommender task and interaction (Prediction, Classification, Ranking...)
+Preference data (Explicit, Implicit, ...)
+
+Area under curve (AUC)
+
+%Why AUC?
+ROC related measures are highly popular \cite{Agarwal2009, Gantner2010, Schein2002, Liu2011, Gantner2010}
+
+AUC vs. Limited Area under curve|
+
+Useful metric for top-k recommender evaluations
+
+MAP@K
+
+%TODO - Justify why these metrics combined will give a good overview of the performance.
+
+<<<<<<< HEAD
 %MPR
 %MAP
 %NDCG
 %ROC/AUC
 %Precision @ N, base N selection on the user interface (how many recommendations are presented?)
+=======
+>>>>>>> 3c6fc027da0615af2ef79632bafd62ba91a2a451
 
 %TODO - Cold-start evaluation Metrics
 
-In addition to looking at the above mentioned metrics it would be interesting to see how the different sparsity
-levels affect both the user- and item-space coverage of the different when evaluating the cold-start system performance.
-The user-space coverage is the number of users the recommender is able to produce recommendations for while the item-space
+In addition to looking at the above mentioned metrics it would be interesting to see how
+the different sparsity levels affect both the user- and item-space coverage of the different
+when evaluating the cold-start system performance. The user-space coverage is the number of
+users the recommender is able to produce recommendations for while the item-space
 coverage is measured by looking at how many of the items are recommendable.
 
 
