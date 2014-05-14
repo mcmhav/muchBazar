@@ -386,9 +386,7 @@ items, the list will again contain groups of items that can appear in arbitrary 
 is posed by items for which no rating is known. These items could hold an arbitrary place within the ranking.
 Again, consider an example where a user e.g. have rated 5 items out of 4000, and the recommender is able to recommend
 only 10 items for that user. To measure the rank accuracy we would have to randomly add 3995 items to the users known
-preference list and 3990 to the users prediction list. Comparing the order of these lists would not make very much sense.
-The bottom line is that in most cases a rank metric for partial ordering would be more appropriate for comparing
-recommendation lists that are produced by recommenders to item rankings from known user preferences.
+preference list and 3990 to the users prediction list. Comparing the order of these lists would not make very much sense. The bottom line is that in most cases a rank metric for partial ordering would be more appropriate for comparing recommendation lists that are produced by recommenders to item rankings from known user preferences.
 
 We assume that we can recommend at most $k$ items for each user at a time. It also pays to submit all $k$
 recommendations, because we are not penalized for bad guesses. We also assume that the order matters, so it
@@ -421,7 +419,7 @@ Example 	& 	Actual	& 	Recommended		&	AP@4   \\ \hline
 \caption{AP@4 Scores}
 \end{table}
 
-As you can see it does average precision does not consider the order of the actual item list. We want a way to
+As you can average precision does not consider the order of the actual item list. We want a way to
 reward to recommender for getting the highly ranked items right.
 
 normalized Discounted Cumulative Gain ($nDCG_{k}$), described in Section \ref{subp:normalized_discounted_cumulative_gain_}
@@ -442,16 +440,16 @@ relevance score, as we could have multiple items with highly similar ratings (th
 \begin{tabular}{|l|l|l|l|}
 \hline
 Example 	& 	Actual					& 	Recommended				&	nDCG 	\\ \hline
-1			& [1,2,3,4]					&	[1,0,0,0]				&	0.470   \\ \hline
-2			& [1,2,3,4]					&	[2,0,0,0]				&	0.360   \\ \hline
-3			& [1,2,3,4]					&	[3,0,0,0]				&	0.330   \\ \hline
-4			& [1,2,3,4,5,6,7,8,9,10] 	& 	[1,2,3,4,5,6,7,8,9,10] 	&   1.000	\\ \hline
-5			& [1,2,3,4,5,6,7,8,9,10] 	& 	[10,9,8,7,6,5,4,3,2,1] 	&   0.900	\\ \hline
-6			& [1,2,3,4,5,6,7,8,9,10] 	& 	[1,2,0,0,0,0,0,0,0,0] 	&   0.440	\\ \hline
-7			& [1,2,3,4,5,6,7,8,9,10] 	& 	[1,0,0,3,0,0,0,0,0,0] 	&   0.390	\\ \hline
-8			& [1,2,3,4,5,6,7,8,9,10] 	& 	[4,0,0,0,8,0,0,0,0,0] 	&   0.280	\\ \hline
-9			& [1,2,3,4,5,6,7,8,9,10] 	& 	[0,0,0,0,5,0,0,0,0,10] 	&   0.130	\\ \hline
-10			& [1,2,3,4,5,6,7,8,9,10] 	& 	[0,0,0,0,0,0,0,0,9,10]	&   0.110	\\
+1			& 	[1,2,3,4]				&	[1,0,0,0]				&	0.470   \\ \hline
+2			& 	[1,2,3,4]				&	[2,0,0,0]				&	0.360   \\ \hline
+3			& 	[1,2,3,4]				&	[3,0,0,0]				&	0.330   \\ \hline
+4			& 	[1,2,3,4,5,6,7,8,9,10] 	& 	[1,2,3,4,5,6,7,8,9,10] 	&   1.000	\\ \hline
+5			& 	[1,2,3,4,5,6,7,8,9,10] 	& 	[10,9,8,7,6,5,4,3,2,1] 	&   0.900	\\ \hline
+6			&	[1,2,3,4,5,6,7,8,9,10] 	& 	[1,2,0,0,0,0,0,0,0,0] 	&   0.440	\\ \hline
+7			& 	[1,2,3,4,5,6,7,8,9,10] 	& 	[1,0,0,3,0,0,0,0,0,0] 	&   0.390	\\ \hline
+8			& 	[1,2,3,4,5,6,7,8,9,10] 	& 	[4,0,0,0,8,0,0,0,0,0] 	&   0.280	\\ \hline
+9			& 	[1,2,3,4,5,6,7,8,9,10] 	& 	[0,0,0,0,5,0,0,0,0,10] 	&   0.130	\\ \hline
+10			& 	[1,2,3,4,5,6,7,8,9,10] 	& 	[0,0,0,0,0,0,0,0,9,10]	&   0.110	\\
 \hline
 \end{tabular}
 \caption{nDCG Results}
@@ -460,8 +458,9 @@ Example 	& 	Actual					& 	Recommended				&	nDCG 	\\ \hline
 As you can see from the above mentioned examples nDCG will give us an indication whether or not our recommender
 ranks \emph{highly relevant} items above those who are less relevant. As for the limitations, nDCG is designed for situations of non-binary notions of relevance, thus cannot be used in our experiment where we wish to compare binary ratings with implicit ratings. The main difficulty encountered in using nDCG is the unavailability of an ideal ordering of results when only partial relevance feedback is available. This is often the case when we have several equally good results! This is especially true when this metric is limited to only first few results as it is done in practice.
 
+\marginpar{TODO: Describe final nDCG evaluation measure}
 \marginpar{Hai: Do you have any thoughts about rank accuracy metrics?}
-\marginpar{TODO: Discussion on suitedness/weaknesses of different rank accuracy metrics}
+\marginpar{TODO: Spend any more time looking at partial order ranking measures?...}
 
 %TODO - Select K value based on user interface
 %TODO - Justify why these metrics combined will give a good overview of the performance.
