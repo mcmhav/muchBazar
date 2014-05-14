@@ -33,8 +33,8 @@ in purchasing the products with the best price-performance ratio, while the \emp
 are more interested in showing the products that lead to the highest revenue for the
 business. For this purpose, a commercial recommender could/should consider implementing
 a reward attribute for items that show how much the company profits from its sale. This
-information can then e.g. be used in a combination with a classification accuracy metric
-to determine the recommendation list.
+information can then e.g. be used in a combination the recommendation list of the recommender
+to produce the final recommendations.
 
 %TODO - Make "reward" from sale a factor for recommendation ranking. FUTURE WORK!
 
@@ -317,15 +317,61 @@ classification or ranking task, evaluation should therefore focus on classificat
 Furthermore, we can also assume that a limited list of top-ranked items is shown. This implicates
 that a metric that measures the overall ranking is not appropriate, and that we only should measure
 the ranking quality of the $k$ items being shown, the other items are irrelevant. The above reasoning
-lead us to delve deeper into classification and ranking accuracy metrics.
+lead us to take a closer look at classification and ranking accuracy metrics.
 
 %TODO - Add some more cites
 
-The area under curve (AUC) is a popular classification accuracy metric and can be used as a single
-measure for the overall quality of a recommender system. However, a frequently uttered point of criticism is
-that users are often more interested in the items at the top of a recommendation list but that the AUC
-measure is equally affected by swaps at the top or the bottom. To \emph{complement} AUC, we chose to
-also measure the rank accuracy.
+The area under curve (AUC) is a popular classification accuracy metric. ROC curves provide a graphical
+representation for the performance of a recommender system, by plotting the recall (True positive rate)
+against the fallout (False positive rate) for increasing recommendation set size. A perfect recommender
+would therefore yield a ROC curve that goes straight up towards 1.0 recall and 0.0 fallout until all
+relevant items are retrieved. Afterwards it would go straight towards 1.0 fallout while the remaining
+irrelevant items follow. One therefore obviously aims to maximize the area under the curve (AUC). The higher
+up all relevant items (True positives) are in the recommendation list, the higher the AUC score will be.
+AUC can therefore be used as a single measure for the overall quality of a recommender system. Table \ref{table:auc}
+shows an example of the AUC values when varying the position of a single relevant document through the
+recommendation list.
+
+\begin{table}[H]
+\label{table:auc}
+\centering
+\begin{tabular}{|l|l|l|l|l|l|l|l|l|l|l|l|}
+\hline
+Example	& R1 & R2 & R3 & R4 & R5 & R6 & R7 & R8 & R9 & R10 & AUC										  \\ \hline
+1		& \cmark & \xmark & \xmark & \xmark & \xmark & \xmark & \xmark & \xmark & \xmark & \xmark & 1.000 \\ \hline
+2		& \xmark & \cmark & \xmark & \xmark & \xmark & \xmark & \xmark & \xmark & \xmark & \xmark & 0.889 \\ \hline
+3		& \xmark & \xmark & \cmark & \xmark & \xmark & \xmark & \xmark & \xmark & \xmark & \xmark & 0.778 \\ \hline
+4		& \xmark & \xmark & \xmark & \cmark & \xmark & \xmark & \xmark & \xmark & \xmark & \xmark & 0.667 \\ \hline
+5		& \xmark & \xmark & \xmark & \xmark & \cmark & \xmark & \xmark & \xmark & \xmark & \xmark & 0.556 \\ \hline
+6		& \xmark & \xmark & \xmark & \xmark & \xmark & \cmark & \xmark & \xmark & \xmark & \xmark & 0.444 \\ \hline
+7		& \xmark & \xmark & \xmark & \xmark & \xmark & \xmark & \cmark & \xmark & \xmark & \xmark & 0.333 \\ \hline
+8		& \xmark & \xmark & \xmark & \xmark & \xmark & \xmark & \xmark & \cmark & \xmark & \xmark & 0.222 \\ \hline
+9		& \xmark & \xmark & \xmark & \xmark & \xmark & \xmark & \xmark & \xmark & \cmark & \xmark & 0.111 \\ \hline
+10		& \xmark & \xmark & \xmark & \xmark & \xmark & \xmark & \xmark & \xmark & \xmark & \cmark & 0.000 \\
+\hline
+\end{tabular}
+\caption{Varying the position of a single relevant item on a four out of ten recommendation list}
+\end{table}
+
+One should also be aware of that the AUC scores can be highly inaccurate, especially for cold-start users,
+users which the recommender is unable to provide more than a handful of recommendations for. This is
+due to the fact that all unknown ratings are appended in random order after the known recommendations.
+E.g. lets say the recommender is able to generate 10 recommendations for a user out of 4000 items,
+and that one out of two hidden items for that user is not in the recommended list from the recommender.
+That last hidden item in the appended list can then mean the difference between a AUC score of above
+0.9 to less than 0.6 if the item is appended at the end of the list, the results can be even more
+severe if none of the items is in the initial recommended list, then the results will be more or less
+completely random. The most obvious solution to this problem would be to use resampling or to repeat
+the experiment multiple times where the items not in the recommendation list are drawn at random and
+the results averaged over all the trials.
+
+However, a frequently uttered point of criticism is that users are often more interested in the items
+at the top of a recommendation list but that the AUC measure is equally affected by swaps at the top
+or the bottom. To \emph{complement} AUC, we also wish to measure the rank accuracy, to get a better
+overall picture of the systems performance. This means that we want to measure whether or not
+highly rated items such as purchases likes etc. are ranked higher than less relevant items such as clicks,
+as having these highly ranked items higher up in the recommendation list aligns with our previously
+mentioned financial incentives.
 
 %TODO - What is the "best" rank-accuracy metric?
 
@@ -338,13 +384,83 @@ items with similar rating that can appear in varying orders. Therefore, in order
 the items all preference values for the user have to be known. Since the user can express the same rating for similar
 items, the list will again contain groups of items that can appear in arbitrary order. However, the largest problem
 is posed by items for which no rating is known. These items could hold an arbitrary place within the ranking.
-The bottom line is that in most cases a rank metric for partial ordering would be more appropriate for comparing
-recommendation lists that are produced by recommenders to item rankings from known user preferences.
+Again, consider an example where a user e.g. have rated 5 items out of 4000, and the recommender is able to recommend
+only 10 items for that user. To measure the rank accuracy we would have to randomly add 3995 items to the users known
+preference list and 3990 to the users prediction list. Comparing the order of these lists would not make very much sense. The bottom line is that in most cases a rank metric for partial ordering would be more appropriate for comparing recommendation lists that are produced by recommenders to item rankings from known user preferences.
 
-MAP vs. nDCG, rank distance, ERR, Expected Discounted Rank Correlation.
-Also see: Computing distances between partial rankings
+We assume that we can recommend at most $k$ items for each user at a time. It also pays to submit all $k$
+recommendations, because we are not penalized for bad guesses. We also assume that the order matters, so it
+is better to submit more certain recommendations first, followed by recommendations we are less sure about.
+Which means that we basically select the $k$ best candidates in order. To reduce the number of randomness in
+the results one could choose to only look at the ranking of the top $k$. However, the problem is that the
+likeliness of finding a \emph{hidden} item in e.g. the top 20 recommended items is not very large when one is working
+with large item catalogs. The problem then, is how to select the value of $k$. Setting it to low you risk
+ending up with many $0.0$ values, and when setting it to high you risk including to many concatenated \emph{random}
+ratings.
 
-\marginpar{TODO: Discussion on suitedness/weaknesses of different rank accuracy metrics}
+%MyMediaLite Problems
+%	Very few 'remaning items' are appended with a rating of 0.0, how do we determine a cutoff point?
+
+%How certain are we about the order? (Do we look at rank? How much weight should be given...?)
+
+Mean average precision (MAP@k), described in Section \ref{subp:mean_average_precision_map_} is a popular metric for search engines and is applied, for example, to report results at the Text Retrieval Conference (TREC). The main weakness with regard to recommender systems is that it assumes that the user is interested in finding many relevant documents for each query, and does not look at the relevance of the items. Consider the following examples where we have three lists of hidden items and three recommendations lists. All none relevant items are labeled with the item-id $0$.
+
+\begin{table}[H]
+\label{table:ap}
+\centering
+\begin{tabular}{|l|l|l|l|}
+\hline
+Example 	& 	Actual	& 	Recommended		&	AP@4   \\ \hline
+1			& [1,2,3,4]	&	[1,0,0,0]		&	0.250  \\ \hline
+2			& [1,2,3,4]	&	[2,0,0,0]		&	0.250  \\ \hline
+3			& [1,2,3,4]	&	[3,0,0,0]		&	0.250  \\
+\hline
+\end{tabular}
+\caption{AP@4 Scores}
+\end{table}
+
+As you can average precision does not consider the order of the actual item list. We want a way to
+reward to recommender for getting the highly ranked items right.
+
+normalized Discounted Cumulative Gain ($nDCG_{k}$), described in Section \ref{subp:normalized_discounted_cumulative_gain_}
+is another metric to measure the rank accuracy. It is based on two main assumptions; (1) Highly relevant items are more useful than marginally relevant ones, (2) The lower the ranked position of a relevant item, the less useful it is for the user, since it is less likely to be \emph{examined}. The maybe most interesting aspect of nDCG is that it contains an utility function $rel_i$. One can replace the original utility function and replace it with a function that is more relevant to
+the designed application. Two such examples include:
+
+\begin{itemize}
+\item $rel_i = 1/log(i+k)$, where i is the index of the item in the actual sorted rating list, where $k$ is a constant.
+\item $rel_i = u(i)$, simply assign the normalized rating as the relevance of the item.
+\end{itemize}
+
+For our application we believe it could be beneficial to use the rating of the item to assign a
+relevance score, as we could have multiple items with highly similar ratings (thus the same relevance). When using a low $k$ value for the logarithmic alternative this could mean that the relevance between two almost similarly rated items might end up being disproportionately large. We will also most likely look at 20 or more items, which means that the difference between the lower ranked items will be fairly small, as the logarithmic function converges. A third alternative would be to also use some linear decay function. The following table shows the $nDCG$ score for a set of examples where $rel_i = 1/log(i+1)$, to give the reader a better idea of how $nDCG$ \emph{works}.
+
+\begin{table}[H]
+\label{table:ap}
+\centering
+\begin{tabular}{|l|l|l|l|}
+\hline
+Example 	& 	Actual					& 	Recommended				&	nDCG 	\\ \hline
+1			& 	[1,2,3,4]				&	[1,0,0,0]				&	0.470   \\ \hline
+2			& 	[1,2,3,4]				&	[2,0,0,0]				&	0.360   \\ \hline
+3			& 	[1,2,3,4]				&	[3,0,0,0]				&	0.330   \\ \hline
+4			& 	[1,2,3,4,5,6,7,8,9,10] 	& 	[1,2,3,4,5,6,7,8,9,10] 	&   1.000	\\ \hline
+5			& 	[1,2,3,4,5,6,7,8,9,10] 	& 	[10,9,8,7,6,5,4,3,2,1] 	&   0.900	\\ \hline
+6			&	[1,2,3,4,5,6,7,8,9,10] 	& 	[1,2,0,0,0,0,0,0,0,0] 	&   0.440	\\ \hline
+7			& 	[1,2,3,4,5,6,7,8,9,10] 	& 	[1,0,0,3,0,0,0,0,0,0] 	&   0.390	\\ \hline
+8			& 	[1,2,3,4,5,6,7,8,9,10] 	& 	[4,0,0,0,8,0,0,0,0,0] 	&   0.280	\\ \hline
+9			& 	[1,2,3,4,5,6,7,8,9,10] 	& 	[0,0,0,0,5,0,0,0,0,10] 	&   0.130	\\ \hline
+10			& 	[1,2,3,4,5,6,7,8,9,10] 	& 	[0,0,0,0,0,0,0,0,9,10]	&   0.110	\\
+\hline
+\end{tabular}
+\caption{nDCG Results}
+\end{table}
+
+As you can see from the above mentioned examples nDCG will give us an indication whether or not our recommender
+ranks \emph{highly relevant} items above those who are less relevant. As for the limitations, nDCG is designed for situations of non-binary notions of relevance, thus cannot be used in our experiment where we wish to compare binary ratings with implicit ratings. The main difficulty encountered in using nDCG is the unavailability of an ideal ordering of results when only partial relevance feedback is available. This is often the case when we have several equally good results! This is especially true when this metric is limited to only first few results as it is done in practice.
+
+\marginpar{TODO: Describe final nDCG evaluation measure}
+\marginpar{Hai: Do you have any thoughts about rank accuracy metrics?}
+\marginpar{TODO: Spend any more time looking at partial order ranking measures?...}
 
 %TODO - Select K value based on user interface
 %TODO - Justify why these metrics combined will give a good overview of the performance.
