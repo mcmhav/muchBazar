@@ -6,7 +6,7 @@
 %For example, we can check an e-commerce website revenue with and without the
 %recommender system and thereby estimate the value of the system to the website.
 
-Section \ref{sec:evaluation} covers a wide range of evaluation metrics that
+Section \ref{evaluation} covers a wide range of evaluation metrics that
 measure different properties of the recommender system. This section will cover
 our experimental plan, starting off by looking at the goals for our experiments.
 The remaining parts of the section will describe the datasets used for evaluation,
@@ -227,8 +227,8 @@ Table \ref{table:datasets} shows an overview of the datasets used for evaluation
 	%Movielens 1M	& 	1,000,029   &	6040 	&	3706	&	95.53164	& Explicit (1-5)			\\ \hline
 	Dataset 2 		& 	-  			& 	-		&	-		&	-			&							\\ \hline
     \end{tabular}
-    \label{table:datasets}
     \caption [Overview of the datasets used for evaluation]{Overview of the datasets used for evaluation}
+    \label{table:datasets}
 \end{table}
 
 \subsection{Simulating the Cold-Start Problem}
@@ -333,24 +333,24 @@ shows an example of the AUC values when varying the position of a single relevan
 recommendation list.
 
 \begin{table}[H]
-\label{table:auc}
-\centering
-\begin{tabular}{|l|l|l|l|l|l|l|l|l|l|l|l|}
-\hline
-Example	& R1 & R2 & R3 & R4 & R5 & R6 & R7 & R8 & R9 & R10 & AUC										  \\ \hline
-1		& \cmark & \xmark & \xmark & \xmark & \xmark & \xmark & \xmark & \xmark & \xmark & \xmark & 1.000 \\ \hline
-2		& \xmark & \cmark & \xmark & \xmark & \xmark & \xmark & \xmark & \xmark & \xmark & \xmark & 0.889 \\ \hline
-3		& \xmark & \xmark & \cmark & \xmark & \xmark & \xmark & \xmark & \xmark & \xmark & \xmark & 0.778 \\ \hline
-4		& \xmark & \xmark & \xmark & \cmark & \xmark & \xmark & \xmark & \xmark & \xmark & \xmark & 0.667 \\ \hline
-5		& \xmark & \xmark & \xmark & \xmark & \cmark & \xmark & \xmark & \xmark & \xmark & \xmark & 0.556 \\ \hline
-6		& \xmark & \xmark & \xmark & \xmark & \xmark & \cmark & \xmark & \xmark & \xmark & \xmark & 0.444 \\ \hline
-7		& \xmark & \xmark & \xmark & \xmark & \xmark & \xmark & \cmark & \xmark & \xmark & \xmark & 0.333 \\ \hline
-8		& \xmark & \xmark & \xmark & \xmark & \xmark & \xmark & \xmark & \cmark & \xmark & \xmark & 0.222 \\ \hline
-9		& \xmark & \xmark & \xmark & \xmark & \xmark & \xmark & \xmark & \xmark & \cmark & \xmark & 0.111 \\ \hline
-10		& \xmark & \xmark & \xmark & \xmark & \xmark & \xmark & \xmark & \xmark & \xmark & \cmark & 0.000 \\
-\hline
-\end{tabular}
-\caption{Varying the position of a single relevant item on a four out of ten recommendation list}
+	\centering
+	\begin{tabular}{|l|l|l|l|l|l|l|l|l|l|l|l|}
+	\toprule
+	Example	& R1 & R2 & R3 & R4 & R5 & R6 & R7 & R8 & R9 & R10 & AUC										  \\ \hline
+	1		& \cmark & \xmark & \xmark & \xmark & \xmark & \xmark & \xmark & \xmark & \xmark & \xmark & 1.000 \\ \hline
+	2		& \xmark & \cmark & \xmark & \xmark & \xmark & \xmark & \xmark & \xmark & \xmark & \xmark & 0.889 \\ \hline
+	3		& \xmark & \xmark & \cmark & \xmark & \xmark & \xmark & \xmark & \xmark & \xmark & \xmark & 0.778 \\ \hline
+	4		& \xmark & \xmark & \xmark & \cmark & \xmark & \xmark & \xmark & \xmark & \xmark & \xmark & 0.667 \\ \hline
+	5		& \xmark & \xmark & \xmark & \xmark & \cmark & \xmark & \xmark & \xmark & \xmark & \xmark & 0.556 \\ \hline
+	6		& \xmark & \xmark & \xmark & \xmark & \xmark & \cmark & \xmark & \xmark & \xmark & \xmark & 0.444 \\ \hline
+	7		& \xmark & \xmark & \xmark & \xmark & \xmark & \xmark & \cmark & \xmark & \xmark & \xmark & 0.333 \\ \hline
+	8		& \xmark & \xmark & \xmark & \xmark & \xmark & \xmark & \xmark & \cmark & \xmark & \xmark & 0.222 \\ \hline
+	9		& \xmark & \xmark & \xmark & \xmark & \xmark & \xmark & \xmark & \xmark & \cmark & \xmark & 0.111 \\ \hline
+	10		& \xmark & \xmark & \xmark & \xmark & \xmark & \xmark & \xmark & \xmark & \xmark & \cmark & 0.000 \\
+	\hline
+	\end{tabular}
+	\caption{Varying the position of a single relevant item on a four out of ten recommendation list}
+	\label{table:auc}
 \end{table}
 
 One should also be aware of that the AUC scores can be highly inaccurate, especially for cold-start users,

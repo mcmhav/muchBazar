@@ -1,20 +1,21 @@
 % !TEX root = ../../report.tex
 
-\section{The SoBazar Data}
+\chapter{The SoBazar Data}
+\minitoc
     This sections is dedicated to exploring the data set to be worked with.
     This includes how the data was preprocessed before utilizing it, the summary of the dataset, statistics and graphs about the data and findings from the data.
 
-\subsection{Data Cleaning}
+\section{Data Cleaning}
     \marginpar{Some better way of saying this; Data Preprocessing, Data Prefiltering, something}
     The data from soBazar came as is from the soBazar database, with the exception that the data had been anonymised, for privacy reasons.
     It contained therefore some unnecessary events.
     The data was therefore cleaned by removing events containing test environment flags such as: test environment and applications run from simulator.
     What was left after the cleaning data was mainly events triggered by the users, and no created during applications testing.
 
-\subsection{Dataset Summary}
+\section{Dataset Summary}
     The data from soBazar is so call implicit~\ref{sec:implicit} and is based on the different set of events triggered by the users of the soBazar application.
 
-\subsubsection{Event Metadata}
+\subsection{Event Metadata}
     When an event is triggered a set of information is stored regarding the event.
     This data is used to make recommendations for the users though converting the implicit feedback to implicit ratings.
 
@@ -39,7 +40,7 @@
 
     %How much preference data?
     %Which events are interesting to look at?
-% \subsubsection{Numbers}
+% \subsection{Numbers}
     \begin{table}[H]
         \centering
         \begin{tabular}{l|l}
@@ -69,12 +70,12 @@
     %     \caption[]{Items in events not in the actual offer database }
     % \end{table}
 
-% \subsubsection{The Expected}
+% \subsection{The Expected}
 %     Event "app\_started", all have user\_id's
 %     Event "app\_first\_started", all user\_id's are NULL
 %     Event "user\_logged\_in", all have user\_id's... (assigned with login, event saved after login?)
 
-% \subsubsection{The Strange}
+% \subsection{The Strange}
 %     NULL valued  for user\_id events: (Not all strange, but put together for readability)
 %     facebook\_share\_changed
 
@@ -117,7 +118,7 @@
 %     The supplier should know that an item is a jacket for instance.  Have something
 %     to show on the 20. Should be better than what is already implemented.
 
-\subsection{Graphs}
+\section{Graphs}
     % Price ranges of all items (groupings)
     % Item time on market TODO maybe not that interesting alone
     % Count for different events
@@ -285,11 +286,11 @@
         \label{figure:viewBuy}
     \end{figure}
 
-\subsubsection{About the view time before tanking an action}
+\subsection{About the view time before tanking an action}
     As seen from the figures~\ref{figure:bounceRate}, ~\ref{figure:viewWant} and~\ref{figure:viewBuy}, the bounce rate is quite small compared to the time it takes for a user to decide to want or buy an item.
     This could be used as an indication of negative feedback, but since there is no explicit feedback to to test this, it might lead to rating an item negatively when the user in fact would like to rate it positively.
 
-\subsection{Session Findings}
+\section{Session Findings}
 \marginpar{Something about session findings perhaps}
 %     Init Hypothesis:
 %     Two users with similar session habits and similar product accessing pattern

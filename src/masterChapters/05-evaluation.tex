@@ -1,8 +1,10 @@
-% !TEX root = ../../report.tex
+% !TEX root = ../report.tex
 
+\chapter{Evaluation}
 \label{evaluation}
-\section{Evaluation}
+\minitoc
 
+\clearpage
 	% What evaluation methodologies exist?
 		% Offline Evaluation
 		% 	Recommender System Datasets
@@ -55,7 +57,7 @@ experimental studies:
 		applications.
 \end{itemize}
 
-\subsection{Offline Evaluation}
+\section{Offline Evaluation}
 Offline experiments are performed using pre-collected dataset\(s\) and a protocol
 that models the user behavior to estimate recommender performance through
 different evaluation measures. Offline experiments are attractive because they
@@ -65,7 +67,7 @@ is that they can answer a very narrow set of questions, typically questions
 about the predictive power of the algorithm, and does not measure other user
 factors.
 
-\subsubsection{Datasets for Offline Evaluation}
+\subsection{Datasets for Offline Evaluation}
 The main aim of a recommender system is to identify the set of items in a
 dataset that might be interesting to a user based on their expressed
 preferences. For a fashion recommender this would mean estimating how much a
@@ -94,12 +96,12 @@ popular datasets containing additional information:
 \item The Million Song Dataset~\cite{Bertin-Mahieux2011}: The million song
 	dataset is a implicit dataset. This data also includes information on the users,
 	and metadata about the songs.
-	
+
 \item BookCrossing: The bookcrossing dataset consists of both implicit and explicit feedback,
 	demographic information about users and some content based information about the books.
 \end{itemize}
 
-\paragraph{Explicit-feedback}
+\subsubsection{Explicit-feedback}
 The definition of explicit is defined as `stated clearly and in detail, leaving
 no room for confusion or doubt'. Explicit feedback are more precise than
 implicit feedback, but more difficult to collect since it requires active user
@@ -113,7 +115,7 @@ noting that explicit feedback tend to concentrate on either side of the rating
 scale, as users are more likely to express their preference if they feel
 strongly for or against an item~\cite{Jawaheer2010}.
 
-\paragraph{Implicit-feedback}
+\subsubsection{Implicit-feedback}
 Unlike explicit feedback, we do not have nay direct input from the user
 regarding their personal preferences. In particular we do not have any
 substantial evidence of which items the user dislikes, such as low ratings.
@@ -124,14 +126,14 @@ many clothes from the same brand probably likes that brand. For a larger
 discussion surrounding the differences between implicit and explicit
 feedback, see Section~\ref{implicit-feedback}
 
-\subsubsection{Validation Methods}
+\subsection{Validation Methods}
 Validation techniques are motivated by two fundamental problems; model
 selection and performance estimation. Almost all pattern recognition techniques
 have one or more free parameters, and we want a way to select the
 \emph{optimal} parameter\(s\) or model for a given problem. Once we have chosen a
 model, we wish to estimate how well it is doing.
 
-\paragraph{The Holdout Method}
+\subsubsection{The Holdout Method}
 When using the holdout method you split the dataset into two groups; a training
 set used to train the classifier and a test set used to estimate the error rate
 of the trained classifier. The Netflix Prize Competition~\cite{Netflix}
@@ -147,7 +149,7 @@ the dataset for testing, (2) Since it is a single train-and-test experiment,
 the holdout estimate can be misleading if we happen to get an `unfortunate'
 split.
 
-\paragraph{Cross-Validation}
+\subsubsection{Cross-Validation}
 K-fold Cross-Validation creates a K-fold partition of the dataset. For each of
 the $K$ experiments, use $K-1$ folds for training and the remaining one for
 testing. By setting $K=2$, this is the same as the holdout method. The true
@@ -164,21 +166,21 @@ large datasets, even 3-Fold Cross Validation will be quite accurate, which for
 sparse datasets, one may wish to train as many examples as possible. A common
 choice is $K$ value between 5 and 10.
 
-\subparagraph{Advantages}
+\paragraph{Advantages}
 One positive aspect with k-fold cross-validation is that is does not matter
 much where the split is set, since the result is averaged over the $K$ experiments.
 The strongest argument for using cross-validation is the potential of using the
 entire training set for testing (albeit not at once), creating the largest possible
 test set for a fixed training data set.
 
-\subparagraph{Disadvantages}
+\paragraph{Disadvantages}
 The main disadvantage with K-fold Cross-Validation is the training algorithm has
 to be run $K$ times, and thereby increasing the runtime for producing an
 evaluation of the system. If the dataset is large, an increase of $K$ runs could
 prove to be disadvantageous.
 %TODO - more?
 
-\paragraph{Bootstrapping~\cite{efron1994introduction}}
+\subsubsection{Bootstrapping~\cite{efron1994introduction}}
 Bootstrapping is used to estimate the sampling distribution of statistics. % and estimating the properties of an estimator.
 The idea is that with information from sample data it is possible to say something about the population.
 The sample data is a subset of the population.
@@ -195,10 +197,10 @@ Since the average on this number only will be an estimate of the actual world wi
 Bootstraping is then used to reduce the error of margin through resampling the sample data a large number of times~\footnote{Numbers vary on sample size, but is often 1 000 to 10 000}, and new averages are calculated.
 With these averages a histogram can be produced, which provides an estimate of the distribution of this average.
 
-\subparagraph{Disadvantages}
+\paragraph{Disadvantages}
 One prominent issue with bootstrapping is that the same sampling data is used to acquire a better understanding and less error margin of the sampling data~\footnote{"Bootstrapping" comes from the phrase, "to pull oneself up by one's bootstraps"~\cite{bootstrapSaying1843}}.
 
-\paragraph{Finding the optimal parameter settings}
+\subsubsection{Finding the optimal parameter settings}
 
 Finding the optimal parameters for a model is usually a crucial task in engineering approaches to classification and modeling tasks. An automated approach is particularly desirable when the number of parameters are high. In order to work well many algorithms and modeling techniques in computer science rely on a careful choice of their parameters. The usual approach is to select parameters based on some prior experience on the problem at hand with a limited heuristic search of possibly optimal parameters. When such prior knowledge is absent or cannot be directly applied to the technique being used, the optimal parameters have to be found either by \emph{blind} search, by e.g. using genetic algorithms or some kind of grid-search procedure.
 
@@ -206,7 +208,7 @@ The \emph{de facto} standard way of performing model selection optimization is g
 
 Many of the most popular Machine Learning libraries now come with methods for performing grid search.
 
-\subsubsection{Offline Evaluation Metrics}
+\subsection{Offline Evaluation Metrics}
 When evaluating a recommender system, you wish to estimate a user's
 satisfaction for a given recommendation. Traditionally recommender systems have
 been evaluated by means of predictive accuracy. However, there is now a widely
@@ -219,7 +221,7 @@ popular metrics used for offline evaluation, a discussion of evaluation
 measures for implicit feedback, and a summary of the cold-start evaluation
 methodologies found in the literature.
 
-\paragraph{Predictive Accuracy Metrics}
+\subsubsection{Predictive Accuracy Metrics}
 Predictive accuracy metrics measure how close the predicted ratings are to the
 true user ratings. More formally, the system tries to predict ratings
 $\hat{u(c,s)}$ for a test set $T$ of user.item pairs $(c, s)$ for which the
@@ -227,7 +229,7 @@ true ratings are known. Traditionally, mean absolute error (MAE) has be used to
 evaluate the performance of collaborative-filtering algorithms, but other
 measures such as root mean squared error (RMSE) are also commonly used.
 
-\subparagraph{Mean Absolute Error (MAE)}
+\paragraph{Mean Absolute Error (MAE)}
 MAE measures how close the predictions are to the actual outcome.
 \begin{equation}
     MAE = \frac{1}{n}\sum_{i=1}^{n}{|\hat{R_i}-R_i|}
@@ -236,7 +238,7 @@ MAE measures how close the predictions are to the actual outcome.
 $R_i$ is the actual outcome and $\hat{R_i}$ is the predicted value.
 As the name suggest, $MAE$ calculates the average absolute error.
 
-\subparagraph{Root Mean Squared Error (RMSE)}
+\paragraph{Root Mean Squared Error (RMSE)}
 Often used to measure difference between a set of predicted values with a set of actual values.
 \begin{equation}
     MSE = \frac{1}{n}\sum_{i=1}^{n}{(\hat{R_i} - R_i)^{2}}
@@ -267,9 +269,9 @@ And was the main metric used in the Netflix price competition to evaluate the pe
 
 
 
-\paragraph{Measuring Usage Prediction}
+\subsubsection{Measuring Usage Prediction}
 \label{para:measuring_usage}
-% \paragraph{Decision Based Metrics}
+% \subsubsection{Decision Based Metrics}
 In many applications the recommender system does not predict the user's
 preferences of items, but tries to recommend to users items that they may use.
 This is often done by giving the user a top-K set of recommendations.
@@ -310,28 +312,28 @@ existence, but after the recommendation exposed that item, the user can decide
 to select it. We can count the number of examples that fall into each cell in
 the table and compute the Precision, Recall, Fallout and $ROC$.
 
-\subparagraph{Precision}
+\paragraph{Precision}
 Precision is the amount of the actually true positives recommended, over the amount of all the items recommended.
 \begin{equation}
     Precision = \frac{TP}{TP+FP}
     \label{equation:precision}
 \end{equation}
 
-\subparagraph{Recall}
+\paragraph{Recall}
 Recall is the ratio of the items of interest for the user which actually where recommended to the user.
 \begin{equation}
     Recall = \frac{TP}{TP+FN}
     \label{equation:recall}
 \end{equation}
 
-\subparagraph{Fallout}
+\paragraph{Fallout}
 Fallout is the amount of retrieved items which is not relevant amongst all the non relevant items (false positive).
 \begin{equation}
     Fallout = \frac{FP}{FP+TN}
     \label{equation:fallout}
 \end{equation}
 
-\subparagraph{F-measure}
+\paragraph{F-measure}
 F-measure combines the precision and the recall.
 \begin{equation}
     F_\beta = \frac{(1 + \beta^2) * (Precision * Recall)}{(\beta^2 * Precision + Recall)}
@@ -339,14 +341,14 @@ F-measure combines the precision and the recall.
 \end{equation}
 $\beta$ is a non negative real value.
 
-\subparagraph{Accuracy}
+\paragraph{Accuracy}
 Accuracy is the amount of correctly recommended items over all the items.
 \begin{equation}
     Accuracy = \frac{TP+TN}{TP+TN+FP+FN}
     \label{equation:accuracy}
 \end{equation}
 
-\subparagraph{Receiver Operating Characteristics (ROC))}
+\paragraph{Receiver Operating Characteristics (ROC))}
 The $ROC$ is the recall rate ($TPR$) against the fallout rate ($FPR$).
 The goal is to maximize the recall while minimizing the fallout.
 \begin{equation}
@@ -366,16 +368,16 @@ The $ROC$ curve is a plotting of the recall rate versus the fallout rate.
 $AUROC$ is the probability that the recommender system will rank positive ranks higher than negative ranks.
 
 
-\subparagraph{Limitations}
+\paragraph{Limitations}
 \label{subp:limitations}
 As mentioned by Powers et al.~\cite{powers2007}, Recall, Precision, F-Measure and Rand Accuracy have a Bias.
 Another drawback or limitation with the measuring of user predictions is that it does not take into account the ranking of the items.
 To handle this, rank based metrics can be used.
 
-\paragraph{Accuracy Ranking} % (fold)
+\subsubsection{Accuracy Ranking} % (fold)
 \label{par:accuracy_ranking}
 \marginpar{if this is the setup, write a little intro}
-\subparagraph{Mean Percentage Ranking (MPR)}
+\paragraph{Mean Percentage Ranking (MPR)}
 \label{subp:mean_percentage_ranking_}
 This measure is a recall-oriented metric.
 A known issue with implicit feedback is that it often lack the actual user's preference.
@@ -391,7 +393,7 @@ $rank_{ui} = 0$ means that $i$ is the most preferred item for $u$.
 $r_{ui}$ indicates whether $u$ has consumed $i$ or not.
 This makes a $MPR$ value of 0\% to be the most preferred value, and a value of 50\% meaning a near randomly produced list.
 
-\subparagraph{Mean Average Precision (MAP)}
+\paragraph{Mean Average Precision (MAP)}
 \label{subp:mean_average_precision_map_}
 MAP~\cite{Manning:2008:IIR:1394399} measures quality across recall levels.
 \begin{equation}
@@ -407,7 +409,7 @@ How to calculate the $MAP$ value is shown in~\ref{equation:map}.
 From \ref{equation:apn}, $P(K)$ is the precision at $k$ in the item list, $n$ is the maximum number of predicted items and $m$ is the actual length of the predicted items list.
 \ref{equation:map} calculates the mean of all the values from \ref{equation:apn}.
 
-\subparagraph{Normalized Discounted Cumulative Gain (nDCG)}
+\paragraph{Normalized Discounted Cumulative Gain (nDCG)}
 \label{subp:normalized_discounted_cumulative_gain_}
 $nDCG$ measures the graded relevance of the recommended item, the ranking quality or the usefulness of the recommended item based on its rank position.
 It is often used to measure the performance of web search recommendation systems.
@@ -425,7 +427,7 @@ Where $k$ is the maximum amount of suggested items, and $rel_i$ is the graded re
 $IDCG_k$, from~\ref{equation:ndcg}, is the ideal $DCG_k$ value.
 This is the result list sorted on relevance.
 
-\subparagraph{Half-life utility~\cite{Breese:1998:EAP:2074094.2074100}}
+\paragraph{Half-life utility~\cite{Breese:1998:EAP:2074094.2074100}}
 Assume that the further down an item is in the list the less chance there is for that item to be viewed by the user.
 The rate of the decaying probability is exponential.
 \begin{equation}
@@ -439,14 +441,14 @@ The half-life utility of all the users are shown in~\ref{equation:HL}
 	\label{equation:HL}
 \end{equation}
 $HL_u^{max}$ is the maximum possible value of the half-life utility value.
-% \subparagraph{Limitations}
+% \paragraph{Limitations}
 % todo maybe
 \marginpar{some overlapping of the algorithms (not really comparing two ranked list, but still evaluating a recommender system producing ranked lists)}
 
 \marginpar{something like this perhaps}
 % paragraph accuracy_ranking (end)
 
-\paragraph{Rank Based Metrics}
+\subsubsection{Rank Based Metrics}
 \label{para:rank_based}
 Rank accuracy metrics measure the ability of a recommendation method to produce
 a recommended ordering of items that matches how the user would have ordered
@@ -464,7 +466,7 @@ most suitable to evaluate algorithms that are used to present ranked lists to
 the user in domains where the user preferences are expressed using numerical
 values.
 
-\subparagraph{AP correlation}
+\paragraph{AP correlation}
 \label{subp:ap_correlation}
 $AP correlation$~\cite{Yilmaz:2008:NRC:1390334.1390435} measures the overall precision and is a variant of $Kendall's$ $tau$.
 It counts the amount of items correctly placed in a ordered predicted rank list $list1$ and a list of the actual rank ordering of the preferences of the user $list2$.
@@ -475,13 +477,13 @@ It counts the amount of items correctly placed in a ordered predicted rank list 
 How to calculate the $AP correlation$ value is shown in ~\ref{equation:ap}.
 $C(i)$ is the number of items ranked correctly above rank $i$.
 The value of AP is between -1 and 1, where a score of 0 means that $list1$ can be considered a randomly generated list and 1 is a perfect match with the actual list $list2$.
-% \subparagraph{Limitations}
+% \paragraph{Limitations}
 % todo maybe
 
-\paragraph{Beyond Accuracy}
+\subsubsection{Beyond Accuracy}
 There is an emerging understanding that good recommendations accuracy alone does not give the users of the recommender system an effective and satisfying experience \cite{Herlocker2004}. The following \emph{measures} attempts to assess a recommender systems usefulness beyond being able to provide accurate recommendations to the users.
 
-\paragraph{Coverage}
+\subsubsection{Coverage}
 The term coverage can refer to several distinct properties of the system. Most
 commonly, the term coverage refers to the proportion of items the
 recommendation system can recommend, also known as \emph{item-space coverage}.
@@ -493,14 +495,14 @@ provide recommendations for some users due to e.g.\\ low confidence in the
 accuracy of predictions for that user. In such cases one may prefer a
 recommender that can provide recommendations to a wider range of users. However, an increase in coverage is only beneficial if the accuracy does not drop significantly.
 
-\subparagraph{Perceived quality}
+\paragraph{Perceived quality}
 To gather the perceived quality the system must ask the user to examine the recommended item, and give feedback regarding the their actual interest in the recommended item.
 For the feedback from the user to be as complete as possible, the system must supply the user with the reason to why the item was suggested, and the metadata of the item.
 When the user has this overview of the item, the user's feedback regarding the item can produce some quality measure.
 One  way of having the user to give this feedback is to re-rate the recommended item on a similar scale as the item was rated.
 A rating scale from 1 to 5 is often used for both~\cite{Schafer:1999:RSE:336992.337035}.
 
-\subparagraph{Novelty and Serendipity}
+\paragraph{Novelty and Serendipity}
 Some recommender systems produce highly accurate recommendations and also have reasonable coverage - and yet that are useless for practical purposes. For instance, a music recommender can recommend Rihanna to every customer who have not yet listened to Rihanna. However, statistically, this is highly accurate as most people have listened to Rihanna or at least knows about her and have consciously chosen not to listen to her. Much more valuable would be a recommendation to a kick-ass indie-rock band that the active user would love, but will never hear about in the news. We therefore need a new dimension for analyzing recommender systems that consider "nonobviousness" of the recommendations. One such dimension is \emph{novelty}. Another related dimension is \emph{serendipity}. A serendipitous recommendation helps a user find a surprisingly interesting item the user might not have discovered otherwise. To clarify the difference between the two, a novel recommendation could be to recommend an unknown album from one of the users favorite artists, that the user likely eventually would have discovered herself. However, a recommendation by an unknown artist is more likely to be serendipitous. Serendipity is therefore a measure of how surprisingly the successful recommendations are.
 
 As novelty is the the degree of new and interesting items recommended for the user, the system must ask the user for feedback to be able to make any assumptions around the novelty.
@@ -526,13 +528,13 @@ For trust in the system and novelty respectively.
 \marginpar{todo - not sure if its ok to use this image (not self made) figure from music recommendation, but long tail applies to fashion}
 \marginpar{todo - if so, something about longtail}
 
-\subparagraph{Diversity}
+\paragraph{Diversity}
 Diversity is generally defined as the opposite of similarity. In some cases suggesting a set of similar items may not be as useful for the user, because it may take longer to explore the range of products. E.g. when presenting a list of 5 recommendations, the system should not recommend 5 Ralph Lauren shirts with different colors. As diversity may come at the expanse of other properties such as accuracy, one should evaluate the decrease in accuracy vs. the increase in diversity.
 
 Other evaluation methods worth knowing about includes confidence, trust, utility, robustness, adaptivity, scalability mentioned in \cite{Herlocker2004, Shani2011}.
 
 
-\subsubsection{Evaluation using Implicit Feedback}
+\subsection{Evaluation using Implicit Feedback}
 Accuracy metrics such as RMSE and MAE are not especially well suited for implicit feedback datasets, as they require knowing which items are undesired by a user~\cite{Hu2008}.
 One way to handle the issue with missing negative feedback is through conversion of the implicit feedback to explicit feedback, and thereby producing a sense of negative feedback.
 One issue with this is what is considered as negative feedback in the sense of implicit feedback.
@@ -546,7 +548,7 @@ Joachims et al.~\cite{Joachims07evaluatingthe} shows that clicks can be biased, 
 
 Two ways of measuring the system is through ranking and usage prediction described earlier.
 
-\paragraph{Rank Based} % (fold)
+\subsubsection{Rank Based} % (fold)
 	\label{par:Ranking_based}
 	The ranking approach can be considered more suited to test recommendation systems using implicit feedback since a subset of the items are meant to be recommended to the user.
 	This subset is usually a ranked top K list of items where the items in this list is the items the system predicts will be most liked by the user.
@@ -558,7 +560,7 @@ Two ways of measuring the system is through ranking and usage prediction describ
 
 \marginpar{maybe hard to differentiate between the names}
 
-\paragraph{Accuracy Ranking} % (fold)
+\subsubsection{Accuracy Ranking} % (fold)
 	\label{par:usage_prediction}
 	When there is lack of explicit user feedback and a actual ranked list of the items cannot be produced, usage prediction is a better way to go.
 	Where the system produces a ranked list of predicted preferred items, but this list is compared to a list of binary interesting or not interesting list, which is often possible to construct from implicit feedback.
@@ -578,8 +580,8 @@ Two ways of measuring the system is through ranking and usage prediction describ
 
 	%TODO - What evaluation measures are suited for implicit feedback, and why are traditional evaluation measures such as RMSE, ... not as suitable when working with implicit feedback?
 
-\subsubsection{Evaluation of Cold-start Recommendations}
-
+\subsection{Evaluation of Cold-start Recommendations}
+\label{sec:cold-start-eval}
 The cold-start problem can be considered a sub problem of coverage because it
 measures the system coverage over a specific set of items and users. When
 evaluating the cold-start system performance one is interested in measuring the
@@ -691,7 +693,7 @@ compare their performance on the testset.
 %Clues
 % http://delivery.acm.org/10.1145/570000/564421/p253-schein.pdf?ip=129.241.103.83&id=564421&acc=ACTIVE%20SERVICE&key=CDADA77FFDD8BE08%2E5386D6A7D247483C%2E4D4702B0C3E38B35%2E4D4702B0C3E38B35&CFID=419807217&CFTOKEN=62708098&__acm__=1394537427_86c608d0d7733db023faa5a09da46de7
 
-\subsection{Online Evaluation}
+\section{Online Evaluation}
 
 Instead of doing offline evaluations on the system, one could also run large
 scale experiments on a deployed system. Such experiments evaluate the
@@ -703,7 +705,7 @@ capture in an offline setting. Thus, the experiment that provides the strongest
 evidence as to the true real value of the system is an online evaluation, where
 the system is used by real users to perform real tasks
 
-\subsubsection{Online Evaluation Metrics}
+\subsection{Online Evaluation Metrics}
 
 Online studies in recommendations and advertisement usually measure the
 click-through-rate (CTR) of the recommendations, which aligns with financial
@@ -718,7 +720,7 @@ CTR = \frac{Clicks}{Recommendations}
 \end{equation}
 
 
-\subsubsection{User-Centric Evaluation}
+\subsection{User-Centric Evaluation}
 User-centric evaluation focuses on the perceived quality of the recommendation system~\cite{Pu:2011:UEF:2043932.2043962,Knijnenburg:2011:PPS:2043932.2043993}.
 To gather this kind of information, user feedback is required.
 User-centric evaluation is meant to handle the short comings of the offline evaluation metrics, such as predictive accuracy metrics.
@@ -729,7 +731,7 @@ When the user feedback has been gathered the data must be analyzed.
 \marginpar{move offline beyond accuracy to here maybe? }
 
 
-\subsection{What To Use}
+\section{What To Use}
 The main idea behind a recommendation system is to produce a set of items which are of interest to the user.
 For the system to be successful, this sets of items needs quality.
 But what needs to be considered when determining the quality of the recommendations?
@@ -737,26 +739,26 @@ According to a user study~\cite{Pu:2011:UEF:2043932.2043962} the most central as
 
 % \todo{as list or in table, or not}
 
-\paragraph{Perceived accuracy}
+\subsubsection{Perceived accuracy}
 The degree of how well the user perceives the recommended items match the actual want of the user.
 
-\paragraph{Novelty}
+\subsubsection{Novelty}
 The degree of new and interesting items recommended for the user.
 
-\paragraph{Attractiveness}
+\subsubsection{Attractiveness}
 How well the recommended items are able to evoke interest or desire in the user.
 
-\paragraph{Diversity}
+\subsubsection{Diversity}
 How different the recommended items are.
 
-\paragraph{Context compatibility}
+\subsubsection{Context compatibility}
 How the system uses contextual factors to supply the recommendations with more personalized recommendations.
 
 
-\subsubsection{The Good}
+\subsection{The Good}
 Since the data at hand is mainly implicit feedback and this data is sparse, some natural ways of approaching the evaluations task would be:
 
-\paragraph{MPR}
+\subsubsection{MPR}
 \begin{itemize}
 	\item good
 	\item Possible to produce a score for a recommender system which relies on implicit feedback
@@ -766,7 +768,7 @@ Since the data at hand is mainly implicit feedback and this data is sparse, some
 	\item Needs distinct ranking of the different items
 \end{itemize}
 
-\paragraph{MAP}
+\subsubsection{MAP}
 \begin{itemize}
 	\item good
 	\item Possible to produce a score for a recommender system which relies on implicit feedback
@@ -778,8 +780,8 @@ Since the data at hand is mainly implicit feedback and this data is sparse, some
 \end{itemize}
 
 
-\subsubsection{The Bad}
-\paragraph{RMSE}
+\subsection{The Bad}
+\subsubsection{RMSE}
 \begin{itemize}
 	\item good
 	\item Well known, so it produces a clear score of the system

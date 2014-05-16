@@ -115,7 +115,6 @@ intervals:
 
 \begin{table}[H]
   \centering
-  \label{implicit-example-scores}
   \begin{tabular}{lll}
     \toprule
     Event type & Min. score & Max. score \\
@@ -127,6 +126,7 @@ intervals:
   \end{tabular}
   \caption{Example of a scoring scheme using continious scores between a min.
   and max value as possible implicit scores}
+  \label{implicit-example-scores}
 \end{table}
 
 \marginpar{\textbf{todo}: do evaluation on different schemes}
@@ -181,7 +181,6 @@ $s_{e}(x,u)$ is presented for each event below:
 
 \begin{table}[H]
   \centering
-  \label{events-example}
   \begin{tabular}{llm{2cm}ll}
     \toprule
     Num. days ($x$) & Event types & Penalization $p_{x}(u)$ & Scores & Highest score \\
@@ -191,6 +190,8 @@ $s_{e}(x,u)$ is presented for each event below:
     15  & 1,2   & 0.5     & 50.0, 70.0         & 70.0 \\
     \bottomrule
   \end{tabular}
+  \caption[]{}
+  \label{events-example}
 \end{table}
 \marginpar{Perhaps represent this differently?}
 
@@ -283,7 +284,7 @@ equation where $c$ is the number of events for user $u$.
 \subsection{Linearly blending the results}
 
 \marginpar{Move this introduction to the pre-study?}
-At this point we have found multiple novel ways of calculating the 
+At this point we have found multiple novel ways of calculating the
 implicit ratings, based on our implicit feedback. However, as one may observe
 each method has its weknesses and strengths. A sigmoid-function considering the
 number of days between events is good for including our implicit knowledge
