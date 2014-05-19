@@ -79,7 +79,7 @@ Calculate similarity between items and make recommendations. Items usually don't
 
 Alternating-least-squares with weighted-$\lambda$-regularization (ALS-WR) was designed fro the Netflix Prize Competition \cite{Netflix}, where it obtained an RMSE score of 0.8975, which was one of the best results based on a pure method.
 
-Alternating-least-squares is a method to solve Equation \ref{equation:minimize}. Since both $q_{s}$ and $p_{c}$ are unknown, the equation is not convex. However if we fix one of the unknowns, the optimization problem becomes quadratic and can be solved optimally. The ALS technique rotate between fixing the $q_{s}$'s and fixing the $p_{c}$'s. When all the $p_{c}$'s are fixed, the system recomputes the $q_{s}$'s by solving a least-squares problem, and vica versa. This ensures that each step decreases the error until convergence. What makes ALS favorable over the simpler and faster stochastic gradient descent is two things. ALS can be parallelized since the system computes the $q_{s}$'s independently of the other item factors, the same can also be applied to the user factors. The second case if for systems centered around implicit data. Because the training set cannot be considered sparse, looping over each single training case as gradient descent would not be practical, but ALS can efficiently handle such cases \cite{Hu2008}.
+Alternating-least-squares is a method to solve Equation \ref{equation:minimize}. Since both $q_{s}$ and $p_{c}$ are unknown, the equation is not convex. However if we fix one of the unknowns, the optimization problem becomes quadratic and can be solved optimally. The ALS technique rotate between fixing the $q_{s}$'s and fixing the $p_{c}$'s. When all the $p_{c}$'s are fixed, the system recomputes the $q_{s}$'s by solving a least-squares problem, and vica versa. This ensures that each step decreases the error until convergence. What makes ALS favorable over the simpler and faster stochastic gradient descent is two things. ALS can be parallelized since the system computes the $q_{s}$'s independently of the other item factors, the same can also be applied to the user factors. The second case if for systems centered around implicit data. Because the training set cannot be considered sparse, looping over each single training case as gradient descent would not be practical, but ALS can efficiently handle such cases \cite{Hu2008}.\newline
 
 ALS solves the low-rank matrix factorization as follows:
 
@@ -90,9 +90,7 @@ ALS solves the low-rank matrix factorization as follows:
 \item Step 4: Repeat Steps 2 and 3 until a stopping criterion is satisfied.
 \end{itemize}
 
-Zhou et. al. \cite{Zhou2008} used the difference in RMSEs between the rounds as a stopping criterion.
-
-Without regularization ALS might lead to overfitting due to the many free parameters. Regularization was therefore introduced in the form of weighted-$\lambda$-regularization to prevent the model from overfitting.
+Zhou et. al. \cite{Zhou2008} used the difference in RMSEs between the rounds as a stopping criterion. Without regularization ALS might lead to overfitting due to the many free parameters. Regularization was therefore introduced in the form of weighted-$\lambda$-regularization to prevent the model from overfitting.
 
 \begin{equation}
 f(P, Q) = \sum_{(c,s)\epsilon C} (u(c,s) - p^{T}_{c}q_{s})^{2} + \lambda (\sum_{c} n_{p_{c}} \Vert p_{c} \Vert ^{2} + \sum_{s} n_{q_{s}} \Vert q_{s} \Vert ^{2})
@@ -101,17 +99,79 @@ f(P, Q) = \sum_{(c,s)\epsilon C} (u(c,s) - p^{T}_{c}q_{s})^{2} + \lambda (\sum_{
 
 where $n_{p_{c}}$ and $n_{q_{s}}$ denote the number of ratings of user $c$ and item $s$ respectively. $S_{c}$ denote the set of items $s$ that user $c$ rated, then $n_{p_{c}}$ is the cardinality of $S_{c}$; similarly $C_{s}$ denotes the set of users who rated item $s$, and $n_{q_{s}}$ is the cardinality of $I_{s}$. A given column of P, $p_{c}$ is found by solving a regularized linear least squares problem involving the known ratings of user $c$, and the feature vectors $q_{s}$ of the items that user $c$ has rated. Similarly, we can compute individual $q_{s}$'s via a regularized linear least squares solution, using the feature vectors of users who rated item $j$, and their ratings of it.
 
-%TODO - Find some fancy cold-start solution methods (Preferably 2-3)
-%TODO - Which of these do we include in our experiments?
-%\subsubsection{Filterbots} ?
+\subsubsection{Content-based}
+
+We also wish to see how well a content-based approach performs compared to our collaborative
+filtering models.
+
+To find the product type, material, style and color we looked at the title, description and meta-description
+fields looking for certain keywords. The fact that descriptions could be either in Norwegian and in English we had to include the words from both languages in the check. To find the words to classify the items we looked through the top keyword lists in both languages, and tried to group them as logically as possible.
+
+E.g. to determine if a product falls under the "sweater" category we check for the following keywords:
+
+$['sweater','cardigan','jumper','hoody','genser','genseren']$
+
+We also experimented with stemming from the nltk software package in python, but we did not feel that it improved
+our results, and we therefore dropped stemming. We attempt to extract the following features from
+the product-database content:
+
+\begin{itemize}
+\item Brand: Bik Bok, InWear, H&M...
+\item Price range: 0-199, 200-399, 400-599...
+\item Product type: Dress, Jacket, Top, Pants, Boots...
+\item Material: Cotton, Wool, Polyester...
+\item Style: Classic, Modern, Luxurious...
+\item Color: Black, Grey, Blue...
+\end{itemize}
+
+The color attribute is missing for most items
+
+It was a pleasant surprise to find that 3400 out of 3600 items could be found in the
+product database and be assigned features.
+%Problems? Limited amount of features
+
+%Table with features?
+
+\subsection{Cold-start Solutions}
+
+%Justify why we only tested out one approach... 
+
+The number of cold-start solutions we are currently able to test out is pretty limited.
+
+As we never got access to more than item-features, we can cross out RBLF and others 
+methods that require user features in addition to item-features. This leaves us with
+Naive Filterbots \cite{Park2006} and Learning Attribute To Feature Mapping \cite{Gantner2010}.
+However, the latter is a model for positive implicit feedback only, meaning that it can not be
+combined with our implicit ratings.
+
+\subsubsection{Filterbots}
+
+As one simple solution to the cold-start problem we decided to experiment with Filterbots, as it easily
+combined with our implicit ratings. Similarly as in \cite{Park2006} we decided to experiment with global bots.
+
+We implemented the following filterbots:
+
+\begin{itemize}
+	\item BrandBot: Rate items based on the brand average,
+	\item AverageBot: Rate items based on their average rating over all users,
+	\item CriticBot: Select $n$ critics among the most active users and rate items based on their average,
+	\item PopularityBot: Rate an item based on its popularity, more ratings equals a higher rating.
+\end{itemize}
+
+Each bot is added as a single user into our training set before we evaluate the methods on the test-set.
+It is also worth noting that we use the training set only (obviously) to generate the bot ratings.
+Potentially help solve the cold-start user problem by making it possible for new users to connect to users
+that capture the general underlying trends of the entire user group. Filterbots were meant to improve
+performance when data is scarce and not degrade performance when data is plentiful. Which means that
+we hopefully will see the best improvements in our cold-start experiments, while getting similar
+or slightly better results when all ratings are used.
+
+\emph{Learning attribute to feature mapping?}
+
+%Cold start item problem
+%Downside... positive only ratings...
+
 %\subsection{Some one-class collaborative filtering...}
-
-\subsubsection{Regression-based latent factor model}
-
-\marginpar{To run this on our dataset we need user features from facebook...}
-
-%\subsubsection{Matchbox} ?
-
 
 \subsubsection{The Good}
 \subsubsection{The Bad}
