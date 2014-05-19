@@ -198,7 +198,7 @@ and the general consensus that more folds are better for small datasets we
 believe that using between $5-10$-folds would be a good choice for model validation.
 Another alternative well suited for sparse datasets is the \emph{all but one} or the
 \emph{leave one out} method, in which we remove one rating from the test users
-and try to predict the hidden ratings.
+and try to predict the hidden rating.
 
 Another important concern is whether or not to take the timestamps into consideration,
 which directly speaks against the use of cross-validation, as we wish to use the past
@@ -249,7 +249,7 @@ performance of our recommender systems. The following inputs changes the dataset
 The first input source has the effect of increasing the dataset density, the average user
 profile length, and the average number of views per item. The second input factor has
 the effect of decreasing both the dataset density and the average user profile length,
-as the new users that join the system have watched one movie. Similarly, the third input
+as the new users that join the system have interacted with only a few items. Similarly, the third input
 factor has the effect of decreasing both the dataset density and the average number of
 views per item.
 
@@ -261,7 +261,7 @@ using e.g. 25\% and 75\% of each test users ratings. Similarly, to simulate the 
 item problem we again split the items into two disjoint sets, using 90\% of the items
 for training and the remaining 10\% for evaluation.  We then train the model with
 e.g. 20, 40, 60 and 80 ratings and predict the remaining values. The selection criteria
-for test items and users can differ from dataset from dataset. E.g. in \cite{Rashid2002, Rashid2008}
+for test items and users can differ from dataset to dataset. E.g. in \cite{Rashid2002, Rashid2008}
 the authors selected a subset of the users with more than 200 ratings, but you can not
 expect 10\% all the users for all datasets to have provided 200 ratings, so this number
 might be lowered if necessary. The implications of removing the top 10\% of the
@@ -432,7 +432,7 @@ the designed application. Two such examples include:
 \end{itemize}
 
 For our application we believe it could be beneficial to use the rating of the item to assign a
-relevance score, as we could have multiple items with highly similar ratings (thus the same relevance). When using a low $k$ value for the logarithmic alternative this could mean that the relevance between two almost similarly rated items might end up being disproportionately large. We will also most likely look at 20 or more items, which means that the difference between the lower ranked items will be fairly small, as the logarithmic function converges. A third alternative would be to also use some linear decay function. The following table shows the $nDCG$ score for a set of examples where $rel_i = 1/log(i+1)$, to give the reader a better idea of how $nDCG$ \emph{works}.
+relevance score, as we could have multiple items with highly similar ratings (thus the same relevance). When using a low $k$ value for the logarithmic alternative this could mean that the relevance between two almost similarly rated items might end up being disproportionately large. We will also most likely look at 20 or more items, which means that the difference between the lower ranked items will be fairly small, as the logarithmic function converges. A third alternative would be to also use some linear decay function. The following table shows the $nDCG$ score for a set of examples where $rel_i = 1/log(i+1)$, to give the reader a better idea of how $nDCG$ \emph{works}.
 
 \begin{table}[H]
 \label{table:ap}
@@ -473,10 +473,7 @@ recommend a limited set of items to a small portion of the users is \emph{unfort
 user-space coverage is the number of users the recommender is able to produce recommendations for while the item-space
 coverage is measured by looking at how many of the items are recommendable.
 
-
 %TODO - How will these experiment be carried out and validated?
 \subsection{Implicit Ratings vs. Binary Preference}
 \subsection{A Comparison of Implicit Rating Mapping Functions}
 \subsection{Combining Implicit Ratings With Existing Cold-Start Solutions}
-
-

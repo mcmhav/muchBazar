@@ -26,7 +26,7 @@ the application. Recommender systems have a variety of properties such as
 accuracy, robustness, scalability, etc. The following section will discuss how
 to compare recommender systems based on the set of properties  relevant for the
 application and how to evaluate the performance of the system. We have several
-different experimental settings which can be used to evaluating recommender systems.
+different experimental settings which can be used to evaluate recommender systems.
 We will focus on two types of experiments:
 Offline experiments where the system is evaluated without user interactions and
 Online experiments where real users interact with the system. This section will
@@ -61,8 +61,8 @@ experimental studies:
 Offline experiments are performed using pre-collected dataset\(s\) and a protocol
 that models the user behavior to estimate recommender performance through
 different evaluation measures. Offline experiments are attractive because they
-require no interactions with real users, and thus allows researchers to compare
-a wide range of algorithms at a low cost. The downside of offline experiments
+require no interactions with real users, and thus allows multiple  researchers to compare
+a wide range of algorithms, using the same data, at a low cost. The downside of offline experiments
 is that they can answer a very narrow set of questions, typically questions
 about the predictive power of the algorithm, and does not measure other user
 factors.
@@ -74,7 +74,7 @@ preferences. For a fashion recommender this would mean estimating how much a
 user might like an item, by e.g.\\ predicting what rating a user might give an
 item. In recent years, various test collections for different domains such as
 books, music, movies have been made available to the public. These datasets
-usually consist of user ratings in the form of \emph{<UserID, ItemID, Rating>}.
+usually consist of user ratings in the form of $<UserID, ItemID, Rating>$.
 
 In recent years more or more datasets have been made available which contains
 additional information such as demographic information about the users,
@@ -94,10 +94,10 @@ popular datasets containing additional information:
 	customer reviews for the website Epinions.com
 
 \item The Million Song Dataset~\cite{Bertin-Mahieux2011}: The million song
-	dataset is a implicit dataset. This data also includes information on the users,
-	and metadata about the songs.
+	dataset is a implicit feedback dataset. This data also includes information on the users,
+	and audio features and song meta-data.
 
-\item BookCrossing: The bookcrossing dataset consists of both implicit and explicit feedback,
+\item The Book-Crossing Dataset: The bookcrossing dataset consists of both implicit and explicit feedback,
 	demographic information about users and some content based information about the books.
 \end{itemize}
 
