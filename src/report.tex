@@ -182,32 +182,33 @@ contributions. Again, thank you.
 
 In recommender systems we seek to predict the rating or preference that a user
 would give to an item. With the advent of modern application such as movie and
-music streaming, E-commerce, social networks and many other platforms –
-recommender systems has gained an important role in both a commercial and
+music streaming, E-commerce, social networks and many other platforms \–
+recommender systems have gained an important role in both a commercial and
 academic setting. When analyzing various approaches to \textit{how} an
 application generates recommendations, the prevalent technique is explicitly
-asking the users for a numeric rating for every item they consume. However,
-this procedure requires important changes to the user interface and also an
-active effort from all users. In this thesis we instead look at how these
-ratings can be determined implicitly from looking at session data and
-the transaction history for every user.
+asking the users for a numeric rating for every item they consume and from
+these observed explicit ratings predict how the user would rate other items.
+However, this procedure often requires important changes to the application
+frontend and also an active effort from all users. In this thesis we instead
+look at how these ratings can be inferred from looking at session data and the
+transaction history for every user.
 
-Using these generated implicit ratings we analyze which recommender models are
-suitable for such an untraditional data source, whilst accounting for a sparse
-dataset with few events – often called a cold start environment. Finally, a
-discussion is made on the various evaluation metrics for both implicit ratings
-and our recommender models, as here as well the untraditional approach of
-choosing implicit ratings as input to our models makes many of the conventional
-metrics inefficacious.
+We analyze which recommender models are suitable for such an untraditional data
+source, whilst accounting for a sparse dataset with few events – often called a
+cold start environment. Multiple novel ways of generating ratings are presented
+taking into account recentness in the data as an important factor. This,
+combined with traditional recommender system approaches makes for a new and
+interesting way of making recommendations in small datasets with high sparsity.
+We then provide valuable insight into using and evaluating implicit ratings in
+recommender system algorithms, spanning from simple global-averages to
+state-of-the-art matrix-factorizations. A promising result is finally made,
+supported by a range of relevant metrics, promoting further research into the
+area of implicit ratings on sparse and small datasets.
 
-Multiple novel ways of generating ratings are presented taking into account
-recentness in the data as an important factor. This, combined with
-content-based approaches makes for a new and interesting way of solving the
-cold start user-problem. We then provide valuable insight into using implicit
-ratings in both traditional and untraditional recommender methods spanning from
-simple global-averages to state-of-the-art matrix-factorizations. A promising
-result is finally made, supported by a range of relevant metrics, promoting
-further research into the area of implicit ratings on sparse and small datasets.
+Finally, a discussion is made on the various evaluation metrics for both
+implicit ratings and our recommender models, as here as well the untraditional
+approach of choosing implicit ratings as input to our models makes many of the
+conventional metrics inefficacious.
 
 \end{abstract}
 \pagenumbering{roman}
