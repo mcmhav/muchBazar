@@ -66,12 +66,12 @@ range from total dislike to high satisfaction with an item.
 \item There is medium noisiness in the data, but the amount is highly dependent
 on the domain in question~\cite{amatriain2009like}. With little noisiness we
 achieve more precise ratings.
-\item Metrics in use are commonly RMSE, MAP or other evaluation schemes where
+\item Metrics in use are commonly RMSE, MAE or other evaluation schemes where
 we consider how well we match a test-set.
 \item Both evaluation schemes and recommendation techniques using explicit
 feedback is heavily researched and used. Many of these are easy to implement,
 and multiple open-source tools and projects are at researchers and developers
-disposal~\cite{}.
+disposal~\cite{something}.
 \end{itemize}
 
 \textbf{Implicit ratings:}
@@ -97,6 +97,9 @@ We will look into more of these charecteristics in our thesis, carefully
 examining the state of the art with regards to both weaknesses and advantages
 and finally introduce some novel techniques facilitating the creation of
 implicit ratings.
+
+\marginpar{Helge: "Rating" her betyr "kjøpt"? Så vi har implicit og explicit i
+kombo?}
 
 \clearpage
 
@@ -167,14 +170,14 @@ or to Hu et.\ al.\ original research~\cite{Hu2008}.
 
 \subsubsection{Implicit ratings for binary domains}
 
-In the last sub-section we saw how $r_{ui}$, a score for user $u$ on item $i$,
-was set based on e.g. number of clicks but perhaps more commonly the duration
-or amount of which the user has consumed the item. This way, in a domain such
-as television a user would obtain $r_{ui} = 1.0$ if the whole programme was
-watched, and similarily $r_{ui} = 0.5$ if half of the show was watched, and so
-forth. Now, this works well in domains where actions on an item are continious,
-but in many domains such as a e-commerce store we mostly have binary events
-such as clicks or purchases. One scheme, proposed by
+In the previous sub-section we saw how $r_{ui}$, a score for user $u$ on item
+$i$, was set based on e.g. number of clicks but perhaps more commonly the
+duration or amount of which the user has consumed the item. This way, in a
+domain such as television a user would obtain $r_{ui} = 1.0$ if the whole
+programme was watched, and similarily $r_{ui} = 0.5$ if half of the show was
+watched, and so forth. Now, this works well in domains where actions on an item
+are continious, but in many domains such as a e-commerce store we mostly have
+binary events such as clicks or purchases. One scheme, proposed by
 ~\cite{pkghost2014implicit} is to differentiate between different events and by
 weighting these by importance or relevence we can create ratings using the
 whole scale between 0.0 and 1.0.
@@ -226,6 +229,9 @@ that uses \textit{levels of frequency}.
 \label{implicit-table}
 \end{table}
 
+\marginpar{Helge: kan score heller være Prob(kjøper gitt E) ? Mulig? Hvorfor
+ikke?}
+
 Now, a user browsing an item $i$ two times, would get a score of 40 and a if
 buying it the score would be 100 (e.g.\ the event type with highest interest
 level supersede all others). Equally, if a user browsed the item 100 times, it
@@ -246,10 +252,13 @@ to understand and works reasonably well, if weights are chosen correctly.
 The latter is also its largest weakness – as finding these weights may be
 difficult. If one had explicit feedback, as well as the implicit, one could
 train a model automatically choosing weights. Further, when using the scores
-defined above we only use a small percentage of the scale 0\-100 and for all
-users the highest score within an event would be the same, even if one user
-triggered the \textit{event type 3} 10 times more often than another user, as
-long as both had reached the highest score of 30.
+defined as above we only use a small percentage of the scale 0-100. This leads
+to problems when a user triggers one type of event many times more than
+another, as both would reach the highest score of the given event type, but
+there would be no difference in scoring even though they had very different
+activity. We would like a scheme where we use the whole scale of scores and
+where there were no global ceiling, but rather let the scoring be normalized to
+the number of events for the user in question.
 
 Improvements to this model are presented in Section~\ref{implementation}
 
@@ -283,7 +292,7 @@ consider the following dataset:
 
 \begin{table}[H]
   \centering
-  \begin{tabular}{ll}
+  \begin{tabular}{rr}
   \toprule
   x & y \\
   \midrule
@@ -310,12 +319,12 @@ want to find the values of $w_0$ and $w_1$:
 \end{equation}
 
 Using a minimization method called \textit{Least squares} we try to minimize
-the residual $e$, using sum of squares between the observed values in the
-dataset and the values predicted by the linear approximation. Mathematically it
-solved the problem of the following form:
+the residual $e = y_i - w^{T}x_{i}$, using sum of squares between the observed
+values in the dataset and the values predicted by the linear approximation.
+Mathematically it solved the problem of the following form:
 
 \begin{equation}
-  \min (SSE = \sum_{i=1}^{n} e_i^2)
+  \hat{w} = \argmin_w \sum_{i} (y - w^{T}x_{i})^2
 \end{equation}
 
 Carrying out this minimization for our equations~\ref{eqs-regression-example},
@@ -350,11 +359,14 @@ Now, using this methodology on implicit feedback we need a regression model that
 correctly explains the correlation between feedback and ratings. Four models
 are proposed~\cite{parra2011walk}:
 
-\noindent
-Model 1: $r_{iu} = w_0 + w_1 if_{iu}$ \\
-Model 2: $r_{iu} = w_{characterisation0} + w_1 if_{iu} + w_2 re_{iu}$ \\
-Model 3: $r_{iu} = w_0 + w_1 if_{iu} + w_2 re_{iu} + w_3 gp_{i}$ \\
-Model 4: $r_{iu} = w_0 + w_1 if_{iu} + w_2 re_{iu} + w_3 if_{iu} \cdot re_{iu}$
+\begin{equation}
+  \begin{aligned}
+    & r_{iu} = w_0 + w_1 if_{iu} \\
+    & r_{iu} = w_0 + w_1 if_{iu} + w_2 re_{iu} \\
+    & r_{iu} = w_0 + w_1 if_{iu} + w_2 re_{iu} + w_3 gp_{i} \\
+    & r_{iu} = w_0 + w_1 if_{iu} + w_2 re_{iu} + w_3 if_{iu} \cdot re_{iu}
+  \end{aligned}
+\end{equation}
 
 where $if_{iu}$ is a number, indicating a bucket of items between 1 and 3,
 dependent on how many times user $u$ used item $i$. Equally $re_{iu}$ depicts
@@ -366,6 +378,7 @@ indicating how well data points fit a statistical model. Training they used
 their $w$-vector, combined with the independent variables to predict future
 ratings.
 
+\marginpar{more information about sampling and the use of buckets}
 The buckets with values between 1 and 3 are used to get a reasonably
 homogeneous sampling of items, as a random sampling strategy might yield only
 very popular items. The three bins from 1 to 3 represent respectively low,
@@ -387,10 +400,10 @@ discussion surrounding this topic. % \todo{link to correct section}
 \subsubsection{Relative preferences using buying frequency}
 
 A hybrid approach using sequential pattern analysis and collaborative filtering
-techniques are presented by Choi et al.~\cite{choi2012hybrid}. In their
+techniques is presented by Choi et al.~\cite{choi2012hybrid}. In their
 method, coined HOPE, they calculate an implicit rating by finding the
-absolute preference $AP$ between users and items. These preferences are further
-used to find the relative preference which finally are normalized into a
+absolute preference $AP$ from users and items. These preferences are further
+used to find the relative preference which finally are normalized into an
 implicit rating. Once the implicit ratings are derived they calculate
 similarity scores and find K-nearest neighbours in a traditional fashion.
 Finally these neighbours are used in order to calculate a CF-based predicted
@@ -410,14 +423,13 @@ summarized in Figure~\ref{hope-system}.
 We will continue this section focusing on the convertion from transaction data
 into implicit ratings, rather than going in depth into sequential pattern
 analysis and calculating the CFPP and SPAPP-scores, as the interested reader
-rather should consult the original research for a clearer overview. When
+rather should consult the original research for a indepth discussion. When
 calculating the $AP$ score we focus solely on the purchase data of the user
-$u$, but it can easily be extended to other types of events such as clicks,
-likes or activities such as listening to a song or viewing a movie. However,
-the score does makes more sense when using it on domains having a high degree
-of repeated actions - such as e-commerce stores selling convienience products
-with short life spans or a music service having users listening to a song
-multiple times. The absolute preference is calculated as follows:
+$u$, but it can easily be extended to other types of events. However, the score
+does makes more sense when using it on domains having a high degree of repeated
+actions - such as e-commerce stores selling convienience products with short
+life spans or a music service having users listening to a song multiple times.
+The absolute preference is calculated as follows:
 
 \begin{equation}
   AP(u,i) = \ln(\frac{trans(u,i)}{\sum_{e \in E}{trans(u, e)}} + 1)
@@ -425,9 +437,9 @@ multiple times. The absolute preference is calculated as follows:
 
 where $trans(u,i)$ is the number of transactions for user $u$ on item $i$, and
 E is the set of all items in our system. As an example if a user $u$ purchases an
-item $i$ four times out of ten transactions the $AP(u,i) = 1.4$, but another
+item $i$ four times out of ten transactions the $AP(u,i) = \ln(1.4)$, but another
 user $p$ who has bought the same item one time out of one transaction the
-$AP(p,i) = 2.0$, and as one can see we should consider a relative preference so
+$AP(p,i) = \ln(2.0)$, and as one can see we should consider a relative preference so
 that repeated actions are rewarded. Further, the absolute preference only takes
 into account the frequency of purchases and because the frequency is heavily
 dependent on price, item category and lifespan of an item — so in the original
@@ -435,7 +447,7 @@ research they propose the following equation in order to calcualte the relative
 preference@:
 
 \begin{equation}
-  RP(u,i) = \frac{AP(u,i)}{Max_{c \in U}(AP(c,i))}
+  RP(u,i) = \frac{AP(u,i)}{\max_{c \in U}(AP(c,i))}
 \end{equation}
 
 where $U$ denotes every user who purchased item $i$. The reason for using a
@@ -447,6 +459,8 @@ multiplying with $k$:
   ImplicitRating(u,i) = \lceil k * RP(u,i) \rceil
 \end{equation}
 
+\marginpar{todo: Do not reference ahead in the thesis. Move equation about
+normalization here}
 Here we round up in order to range from 1 to 5, but one could either round down
 instead and have ratings range from 0 to 4 or one could use the normalization
 equation defined in Equation~\ref{eq-normalization}, and setting $a = 0$ and $b
@@ -456,12 +470,11 @@ equation defined in Equation~\ref{eq-normalization}, and setting $a = 0$ and $b
 \label{implicit-weaknesses}
 
 Almost all of the research on implicit feedback has considered how behaviors
-can be used as positive evidence, rather than negative evidence. This is not to
-say that we can not use user behaviors to get negative feedback, examples may
+can be used as positive, rather than negative evidence. This is not to
+say that we can't use user behaviors to get negative feedback, examples may
 be analyzing bounce rates (e.g.\ reading an article for less than 5 seconds) or
 deleting/hiding something from a feed of items. There are however much fewer of
-these types of events, and they are easier retrieved in certain domains, such
-as news.
+these types of events.
 
 Another challenge facing implicit feedback research is the notion of degree of
 personalization offered by the system. In particular, individual differences
@@ -471,30 +484,35 @@ information-seeking; thus, it is difficult to generate, and dangerous to apply,
 all-purpose rules for describing how behavior can be used as implicit relevance
 feedback.
 
-In a classic recommender system we need three parts: ratings, a
-recommender model and evaluation. Each of these parts needs to compliment each
-others advantages and disadvantages. If we start top-down then we say that the
+In a classic recommender system we need three parts: ratings, a recommender
+model and evaluation. Each of these parts needs to compliment each others
+advantages and disadvantages. If we start top-down then we say that the
 evaluation metrics used need to consider the fact that we are basing our model
 on implicit ratings, and thus a preference based metric is perhaps not the best
 metric (See Section~\ref{evaluation}). Further given that we choose a
 precision/recall scheme then we need to choose good parameters showing both the
 strengths and weaknesses found in the data and recommender model. How many
 recommendations should we provide the user in order to calculate precision and
-recall? And which metrics should we focus on; F1; MPR or others? When
-considering the recommender model there are as many countless possibibilites -
-ranging from traditional approcahes such as Pearson-correlation and K-nearest
-neighbours to more advanced and perhaps more specialized approaches such as
-SVD++. A common theme when using more advanced models are the number of
-parameters available for adjustments increases almost linearily. In a simple
-KNN-approach we can get various results by varying K - whilst in SVD++ we can
-vary the learning rate, alpha, number of features and many
-others~\ref{svdplusplus}. The approach we use in order to create our
+recall? And which metrics should we focus on; F1; MPR or others?
+\marginpar{Are MPR and F1 introduced?} 
+When considering the recommender model there are as many countless
+possibibilites - ranging from traditional approcahes such as
+Pearson-correlation and K-nearest neighbours to more advanced and perhaps more
+specialized approaches such as SVD++. A common theme when using more advanced
+models are the number of parameters available for adjustments increases almost
+linearily. In a simple KNN-approach we can get various results by varying K -
+whilst in SVD++ we can vary the learning rate, alpha, number of features and
+many others~\ref{svdplusplus}. The approach we use in order to create our
 recommender model should consider the \textit{type} of ratings (explicit or
 implicit), the sparsity, the domain, number of items vs. number of users and
 many others. And lastly when we are creating ratings we should, as this section
 has mentioned several times, choose an approach matching the domain - as there
-can be large differences between e.g.\ an online TV-streaming service and
-an E-commerce store selling jewels.
+can be large differences between e.g.\ an online TV-streaming service and an
+E-commerce store selling fashion.
+
+%TODO: Helge sier:
+% I mitt hode skal det optimeres ut fra datatilgang (om det er statisk) eller
+% beslutingsproblem. Ikke god forskning å velge evaluering ut fra metodevalg.
 
 This large choice of different models and their parameters in all stages from
 generation of ratings to evaluation, makes the pipeline quite vulnerable to
@@ -508,10 +526,9 @@ paper, it would not make sense to test some models or metrics.
 % \todo{Mention fashion-specific challenges, e.g.\ clicks does not equal high
 % rating}
 When considering the domain of e-commerce websites a common approach is to both
-count transactions and clicks~\cite{}, but
+count transactions and clicks~\cite{something}, but ...
 
 % \todo{Add weaknesses of explicit ratings}
-
 
 % \subsection{Evaluating conversion to implicit ratings}
 
