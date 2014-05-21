@@ -20,11 +20,11 @@ We have developed a simple most-popular recommender that uses result dithering t
 Dithering adds \emph{noise} to the algorithm, which permutes the results in such a way that the top few results have a high probability of remaining on the top spots, but as one goes deeper into the results, the degree of mixing increases dramatically. It is important to note that dithering is \emph{guaranteed} to make off-line performance worse, but is likely to make the actual performance better. We have experimented with two different methods of dithering:
 
 \begin{itemize}
-\item Score = log2(rank) - runif(x, y)
-\item Score = log2(rank) - x*rexp(y)
+\item Score = log2(rank+x) - runif(y, z)
+\item Score = log2(rank+x) - y*rexp(z)
 \end{itemize}
 
-Given $x=8$ and $y=2$ alternative one generated the following permutations of the original ranking in 10 runs:
+Given $x=1$, $y=8$ and $z=2$ alternative one generated the following permutations of the original ranking in 10 runs:
 
 \begin{enumerate}
 	\item 8, 3, 24, 20, 1, 19, 22, 15, 42, 36
@@ -39,7 +39,7 @@ Given $x=8$ and $y=2$ alternative one generated the following permutations of th
 	\item 5, 1, 0, 8, 3, 18, 25, 24, 2, 28
 \end{enumerate}
 
-Given $x=3.0$ and $y=2.5$ alternative two generates the following permutations of the original most popular ranking in 10 runs:
+Given $x=1$, $y=3.0$ and $z=2.5$ alternative two generates the following permutations of the original most popular ranking in 10 runs:
 
 \begin{enumerate}
 	\item 2, 4, 0, 35, 3, 1, 15, 72, 9, 5
@@ -54,7 +54,7 @@ Given $x=3.0$ and $y=2.5$ alternative two generates the following permutations o
 	\item 0, 1, 21, 70, 11, 20, 2, 10, 9, 3
 \end{enumerate}
 
-Here 0 is the most popular item before the permutation. The results show that alternative two has a higher degree of mixing than alternative one, as the added noise is larger than alternative one. The values of $x$ and $y$ can be modified to achieve the desired degree/level/amount of mixing.
+Here 0 is the most popular item before the permutation. The results show that alternative two has a higher degree of mixing than alternative one, as the added noise is larger than alternative one. The values of $x$, $y$ and $z$ can be modified to achieve the desired degree/level/amount of mixing.
 
 \subsubsection{Item-Average}
 
@@ -101,33 +101,38 @@ where $n_{p_{c}}$ and $n_{q_{s}}$ denote the number of ratings of user $c$ and i
 
 \subsubsection{Content-based}
 
-We also wish to see how well a content-based approach performs compared to our collaborative
-filtering models.
-
-To find the product type, material, style and color we looked at the title, description and meta-description
-fields looking for certain keywords. The fact that descriptions could be either in Norwegian and in English we had to include the words from both languages in the check. To find the words to classify the items we looked through the top keyword lists in both languages, and tried to group them as logically as possible.
-
-E.g. to determine if a product falls under the "sweater" category we check for the following keywords:
+To build features we had to take a closer look at the content in the product database. To find the product-type, material, style and color we looked at the title, description and meta-description fields looking for certain keywords. The fact that descriptions could be either in Norwegian and in English we had to include the words from both languages in the check. To find the words to classify the items we looked through the top keyword lists in both languages, and tried to group them manually as logical as possible. E.g. to determine if a product falls under the "sweater" category we check for the following keywords:
 
 $['sweater','cardigan','jumper','hoody','genser','genseren']$
 
-We also experimented with stemming from the nltk software package in python, but we did not feel that it improved
-our results, and we therefore dropped stemming. We attempt to extract the following features from
-the product-database content:
+As you can see we included the same word but with different suffixes. We experimented with stemming from the nltk software package in python, but we did not feel that it improved
+our results, and we therefore dropped using stemming. We attempt to extract the following features from the product-database content:
 
 \begin{itemize}
-\item Brand: Bik Bok, InWear, H&M...
-\item Price range: 0-199, 200-399, 400-599...
-\item Product type: Dress, Jacket, Top, Pants, Boots...
+\item Brand: Brand or store, easily collected as it is stored in its own unique field.
+\item Price range: Based on the price of an item, group it into brackets.
+\item Product-type: Dress, Jacket, Top, Pants, Boots...
 \item Material: Cotton, Wool, Polyester...
 \item Style: Classic, Modern, Luxurious...
 \item Color: Black, Grey, Blue...
 \end{itemize}
 
-The color attribute is missing for most items
+It was a pleasant surprise to find that 3,263 out of 3,386 items could be found in the
+product database and be assigned features. The following table shows an overview over the percentage of items we managed to extract features for.
 
-It was a pleasant surprise to find that 3400 out of 3600 items could be found in the
-product database and be assigned features.
+\begin{table}
+\begin{tabular}{|l|l|}
+Price 			& 1.000 \\ \hline
+Brand 			& 0.756 \\ \hline
+Product-type 	& 0.625 \\ \hline
+Material 		& 0.44  \\ \hline
+Style 			& 0.234 \\ \hline
+Color 			& 0.203 \\ \hline
+\end{tabular}
+\end{table}
+
+As you can see the price, brand and product-type can be found for \emph{most} items, while material style and color could only be found for a minority of the items.
+
 %Problems? Limited amount of features
 
 %Table with features?
@@ -140,9 +145,7 @@ The number of cold-start solutions we are currently able to test out is pretty l
 
 As we never got access to more than item-features, we can cross out RBLF and others 
 methods that require user features in addition to item-features. This leaves us with
-Naive Filterbots \cite{Park2006} and Learning Attribute To Feature Mapping \cite{Gantner2010}.
-However, the latter is a model for positive implicit feedback only, meaning that it can not be
-combined with our implicit ratings.
+Naive Filterbots \cite{Park2006} which easily could be combined with our implicit ratings.
 
 \subsubsection{Filterbots}
 
@@ -154,22 +157,16 @@ We implemented the following filterbots:
 \begin{itemize}
 	\item BrandBot: Rate items based on the brand average,
 	\item AverageBot: Rate items based on their average rating over all users,
-	\item CriticBot: Select $n$ critics among the most active users and rate items based on their average,
+	\item CriticBot: Select $n$ critics among the most active users and rate items based on their average
 	\item PopularityBot: Rate an item based on its popularity, more ratings equals a higher rating.
 \end{itemize}
 
 Each bot is added as a single user into our training set before we evaluate the methods on the test-set.
 It is also worth noting that we use the training set only (obviously) to generate the bot ratings.
-Potentially help solve the cold-start user problem by making it possible for new users to connect to users
-that capture the general underlying trends of the entire user group. Filterbots were meant to improve
-performance when data is scarce and not degrade performance when data is plentiful. Which means that
-we hopefully will see the best improvements in our cold-start experiments, while getting similar
-or slightly better results when all ratings are used.
+Filterbots can potentially help solve the cold-start user problem by making it possible for new users to connect to users
+that capture the general underlying trends of the entire user group. Filterbots are mainly meant to improve
+performance when data is scarce and not degrade performance when data is plentiful.
 
-\emph{Learning attribute to feature mapping?}
-
-%Cold start item problem
-%Downside... positive only ratings...
 
 %\subsection{Some one-class collaborative filtering...}
 
