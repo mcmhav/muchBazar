@@ -9,47 +9,44 @@ This subsection will present the experimental results for the Sobazar dataset us
 
 \begin{table}
 \centering
-\begin{tabular}{|c|*{18}{c|}c|}
+\begin{tabular}{|c|*{17}{c|}c|}
 \hline
-&	 \multicolumn{3}{c|}{AUC} & \multicolumn{3}{c|}{MPR} &	 \multicolumn{3}{c|}{MAP} &	 \multicolumn{3}{c|}{nDCG} & \multicolumn{3}{c|}{IS Coverage} & \multicolumn{3}{c|}{US Coverage} & 	-	\\\hline 
-Model 		& - & - & - & - & - & - & - & - & - & - & - & - & - & - & - & - & - & - & -  \\ \hline
-Rec 1 		& - & - & - & - & - & - & - & - & - & - & - & - & - & - & - & - & - & - & -  \\ \hline
-Rec 2 		& - & - & - & - & - & - & - & - & - & - & - & - & - & - & - & - & - & - & -  \\ \hline
-Rec 3 		& - & - & - & - & - & - & - & - & - & - & - & - & - & - & - & - & - & - & -  \\ \hline
-Rec 4			& - & - & - & - & - & - & - & - & - & - & - & - & - & - & - & - & - & - & -  \\ \hline
-Rec 5			& - & - & - & - & - & - & - & - & - & - & - & - & - & - & - & - & - & - & -  \\ \hline
+&	 \multicolumn{3}{c|}{AUC} & \multicolumn{3}{c|}{nDCG@20} &	 \multicolumn{3}{c|}{MAP@20} &	 \multicolumn{3}{c|}{HLU} & \multicolumn{3}{c|}{IS Coverage} & \multicolumn{3}{c|}{US Coverage} \\ \hline 
+Model 				& 40\% 	 & 60\%   & 80\%   & 40\% 	 & 60\%  & 80\%   & 40\%   & 60\%   & 80\%   & 40\%   & 60\%   & 80\%   & 40\% & 60\% & 80\% & 40\% & 60\% & 80\%						\\ \hline 
+MostPopular 		& 0.5982 & 0.6028 & 0.6071 & 0.0254 & 0.0256 & 0.0187 & 0.0136 & 0.0156 & 0.0089 & 5.7803 & 5.7803 & 2.8902 & 1.0  & 1.0  & 1.0  & 1.0 	& 1.0  & 1.0						\\ \hline
+MostPopular + FB 	& 0.7557 & 0.7687 & 0.7714 & 0.0254 & 0.0256 & 0.0174 & 0.0157 & 0.0156 & 0.0085 & 5.7803 & 5.7803 & 2.8902 & 1.0  & 1.0  & 1.0  & 1.0 	& 1.0  & 1.0  						\\ \hline
+Rec 3				& -		 & - 	  & - 	   & - 		& - 	 & - 	  & -	   & -		& - 	 & 	   	  & -	   &		&	   &	  &		 &		&	   & - 							\\ \hline
+Rec 4				& -		 & - 	  & - 	   & - 		& - 	 & - 	  & -	   & -		& - 	 & 	   	  & -	   &		&	   &	  &		 &		&	   & - 							\\ \hline
 \end{tabular}
-\caption{Sobazar Cold-start System Evaluation Results using Implicit Ratings}
+\caption{Sobazar Cold-start System Evaluation Results using Implicit Ratings (count_sigmoid_fixed_sr-3.5.txt)}
 \end{table}
 
 \begin{table}
 \centering
-\begin{tabular}{|c|*{18}{c|}c|}
+\begin{tabular}{|c|*{17}{c|}c|}
 \hline
-&	 \multicolumn{3}{c|}{AUC} & \multicolumn{3}{c|}{MPR} &	 \multicolumn{3}{c|}{MAP} &	 \multicolumn{3}{c|}{nDCG} & \multicolumn{3}{c|}{IS Coverage} & \multicolumn{3}{c|}{US Coverage} & 	-	\\\hline 
-Model 		& - & - & - & - & - & - & - & - & - & - & - & - & - & - & - & - & - & - & -  \\ \hline
-Rec 1 		& - & - & - & - & - & - & - & - & - & - & - & - & - & - & - & - & - & - & -  \\ \hline
-Rec 2 		& - & - & - & - & - & - & - & - & - & - & - & - & - & - & - & - & - & - & -  \\ \hline
-Rec 3 		& - & - & - & - & - & - & - & - & - & - & - & - & - & - & - & - & - & - & -  \\ \hline
-Rec 4			& - & - & - & - & - & - & - & - & - & - & - & - & - & - & - & - & - & - & -  \\ \hline
-Rec 5			& - & - & - & - & - & - & - & - & - & - & - & - & - & - & - & - & - & - & -  \\ \hline
+&	 \multicolumn{3}{c|}{AUC} & \multicolumn{3}{c|}{nDCG@20} &	 \multicolumn{3}{c|}{MAP@20} &	 \multicolumn{3}{c|}{HLU} & \multicolumn{3}{c|}{IS Coverage} & \multicolumn{3}{c|}{US Coverage} \\ \hline 
+Model 				& 10\% 	 & 40\%   & 75\%   & 10\%   & 40\%   & 75\%   & 10\%   & 40\% 	& 75\%	 & 10\%   & 40\%   & 75\%   & 10\% & 40\% & 75\% & 10\% & 40\% & 75\%   					\\ \hline
+MostPopular 		& 0.7385 & 0.7391 & 0.7533 & 0.0247 & 0.0400 & 0.0474 & 0.0087 & 0.0135 & 0.0219 & 5.7143 & 7.4561 & 8.7336 & 1.0  & 1.0  & 1.0  & 1.0 	& 1.0  & 1.0						\\ \hline
+MostPopular + FB 	& 0.8569 & 0.8587 & 0.8672 & 0.0254 & 0.0400 & 0.0474 & 0.0089 & 0.0135 & 0.0219 & 2.0179 & 5.7143 & 8.7336 & 1.0  & 1.0  & 1.0  & 1.0 	& 1.0  & 1.0						\\ \hline
+Rec 3				& -		 & - 	  & - 	   & - 		& - 	 & - 	  & -	   & -		& - 	 & 	   	  & -	   &		&	   &	  &		 &		&	   & - 							\\ \hline
+Rec 4				& -		 & - 	  & - 	   & - 		& - 	 & - 	  & -	   & -		& - 	 & 	   	  & -	   &		&	   &	  &		 &		&	   & - 							\\ \hline
 \end{tabular}
-\caption{Sobazar Cold-start Item Evaluation Results using Implicit Ratings}
+\caption{Sobazar Cold-start Item Evaluation Results using Implicit Ratings (count_sigmoid_fixed_sr-3.5.txt)}
 \end{table}
 
 \begin{table}
 \centering
-\begin{tabular}{|c|*{18}{c|}c|}
+\begin{tabular}{|c|*{17}{c|}c|}
 \hline
-&	 \multicolumn{3}{c|}{AUC} & \multicolumn{3}{c|}{MPR} &	 \multicolumn{3}{c|}{MAP} &	 \multicolumn{3}{c|}{nDCG} & \multicolumn{3}{c|}{IS Coverage} & \multicolumn{3}{c|}{US Coverage} & 	-	\\\hline 
-Model 		& - & - & - & - & - & - & - & - & - & - & - & - & - & - & - & - & - & - & -  \\ \hline
-Rec 1 		& - & - & - & - & - & - & - & - & - & - & - & - & - & - & - & - & - & - & -  \\ \hline
-Rec 2 		& - & - & - & - & - & - & - & - & - & - & - & - & - & - & - & - & - & - & -  \\ \hline
-Rec 3 		& - & - & - & - & - & - & - & - & - & - & - & - & - & - & - & - & - & - & -  \\ \hline
-Rec 4			& - & - & - & - & - & - & - & - & - & - & - & - & - & - & - & - & - & - & -  \\ \hline
-Rec 5			& - & - & - & - & - & - & - & - & - & - & - & - & - & - & - & - & - & - & -  \\ \hline
+&	 \multicolumn{3}{c|}{AUC} & \multicolumn{3}{c|}{nDCG@20} &	 \multicolumn{3}{c|}{MAP@20} &	 \multicolumn{3}{c|}{HLU} & \multicolumn{3}{c|}{IS Coverage} & \multicolumn{3}{c|}{US Coverage} \\ \hline 
+Model 				& 10\% 	 & 40\%   & 75\%   & 10\%   & 40\%   & 75\%   & 10\%   & 40\% 	& 75\%	 & 10\%   & 40\%   & 75\%   & 10\% & 40\% & 75\% & 10\% & 40\% & 75\%   					\\ \hline
+MostPopular 		& 0.9775 & 0.9807 & 0.9811 & 0.0804 & 0.0937 & 0.1045 & 0.0449 & 0.0468 & 0.0533 & 4.0595 & 6.0879 & 7.6238 & 1.0  & 1.0  & 1.0  & 1.0 	& 1.0  & 1.0						\\ \hline
+MostPopular + FB 	& 0.9877 & 0.9895 & 0.9897 & 0.0804 & 0.0937 & 0.1045 & 0.0449 & 0.0468 & 0.0533 & 4.0595 & 6.0879 & 7.6238 & 1.0  & 1.0  & 1.0  & 1.0 	& 1.0  & 1.0						\\ \hline
+Rec 3				& -		 & - 	  & - 	   & - 		& - 	 & - 	  & -	   & -		& - 	 & 	   	  & -	   &		&	   &	  &		 &		&	   & - 							\\ \hline
+Rec 4				& -		 & - 	  & - 	   & - 		& - 	 & - 	  & -	   & -		& - 	 & 	   	  & -	   &		&	   &	  &		 &		&	   & - 							\\ \hline
 \end{tabular}
-\caption{Sobazar Cold-start User Evaluation Results using Implicit Ratings}
+\caption{Sobazar Cold-start User Evaluation Results using Implicit Ratings (count_sigmoid_fixed_sr-3.5.txt)}
 \end{table}
 
 

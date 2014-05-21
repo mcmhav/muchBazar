@@ -49,7 +49,7 @@ dedicated page.
 
 The figure shows...
 
-\marginpar{TODO: Short section on Sobazar Interface in relation to evaluation}
+\marginpar{TODO: Short section on how the Sobazar Interface influences the evaluation}
 
 Ultimately, the goal of the experiment is to evaluate and measure the properties
 of the system, which we have identified as the most important for the systems success,
@@ -223,7 +223,7 @@ Table \ref{table:datasets} shows an overview of the datasets used for evaluation
     \begin{tabular}{|l|l|l|l|l|l|}
     \hline
 	Dataset			& 	Ratings 	& 	Users	& 	Items 	& 	Sparsity	& Rating Scale 				\\ \hline
-	Sobazar 		& 	15,252  	& 	1,235	&	3,386	&	99.65599	& Implicit Ratings(1-5)		\\ \hline
+	Sobazar 		& 	27,873  	& 	1,511	&	5855	&	99.69657	& Implicit Ratings(1-5)		\\ \hline
 	%Movielens 1M	& 	1,000,029   &	6040 	&	3706	&	95.53164	& Explicit (1-5)			\\ \hline
 	Dataset 2 		& 	-  			& 	-		&	-		&	-			&							\\ \hline
     \end{tabular}
@@ -278,16 +278,19 @@ ratings in the training set and predict the remaining 25\%.
 %TODO - How is this implemented on the sobazar data?
 
 For the Sobazar dataset we select 10\% of the users as test users, for a user to be
-selected as a test user, the user must have provided at least 25 ratings. We then train
-the model using 10, 15, 20 of their ratings and try to predict their remaining ratings.
+selected as a test user, the user must have provided at least 20 ratings. We then train
+the model using 10\%, 40\% and 75\% of their ratings and try to predict their remaining ratings.
 As we have a very low number of ratings and a large item collection we had to use
-only 2\% of the items as test items, where each test item have been rated atleast 20 times.
-We train the model using 5, 10, 15 of their ratings and try to predict their remaining
-ratings. To evaluate the cold-start system performance we split the dataset in a test
+only 5\% of the items as test items, where each test item have been rated atleast 15 times.
+We train the model using 10\%, 40\% and 75\% of their ratings and try to predict their remaining
+ratings. As we have access time timestamps, we e.g. use the 10\% of the users first rating and try
+predicting the remaining 90\%. To evaluate the cold-start system performance we split the dataset in a test
 and training set using 20\% of the ratings for testing and then train the model
 using 40\%, 60\% and 80\% of the ratings for training. It is important to note that
 this process should be repeated multiple times, as the chance of getting an
-\emph{unfortunate} split is highly probable due to the dataset size.
+\emph{unfortunate} split is highly probable due to the dataset size. For the cold-start
+system task we also split the dataset based on timestamps, meaning that the test set consists
+of the most recent ratings.
 
 %TODO - How is this implemented on the x dataset?
 
@@ -386,7 +389,9 @@ items, the list will again contain groups of items that can appear in arbitrary 
 is posed by items for which no rating is known. These items could hold an arbitrary place within the ranking.
 Again, consider an example where a user e.g. have rated 5 items out of 4000, and the recommender is able to recommend
 only 10 items for that user. To measure the rank accuracy we would have to randomly add 3995 items to the users known
-preference list and 3990 to the users prediction list. Comparing the order of these lists would not make very much sense. The bottom line is that in most cases a rank metric for partial ordering would be more appropriate for comparing recommendation lists that are produced by recommenders to item rankings from known user preferences.
+preference list and 3990 to the users prediction list. Comparing the order of these lists would not make very much sense.
+The bottom line is that in most cases a rank metric for partial ordering would be more appropriate for comparing recommendation
+lists that are produced by recommenders to item rankings from known user preferences.
 
 We assume that we can recommend at most $k$ items for each user at a time. It also pays to submit all $k$
 recommendations, because we are not penalized for bad guesses. We also assume that the order matters, so it
@@ -395,8 +400,8 @@ Which means that we basically select the $k$ best candidates in order. To reduce
 the results one could choose to only look at the ranking of the top $k$. However, the problem is that the
 likeliness of finding a \emph{hidden} item in e.g. the top 20 recommended items is not very large when one is working
 with large item catalogs. The problem then, is how to select the value of $k$. Setting it to low you risk
-ending up with many $0.0$ values, and when setting it to high you risk including to many concatenated \emph{random}
-ratings.
+ending up with many $0.0$ values, and when setting it to high you risk including to many \emph{randomly} concatenated 
+ratings in the results.
 
 %MyMediaLite Problems
 %	Very few 'remaning items' are appended with a rating of 0.0, how do we determine a cutoff point?
@@ -428,7 +433,7 @@ the designed application. Two such examples include:
 
 \begin{itemize}
 \item $rel_i = 1/log(i+k)$, where i is the index of the item in the actual sorted rating list, where $k$ is a constant.
-\item $rel_i = u(i)$, simply assign the normalized rating as the relevance of the item.
+\item $rel_i = u(i)/max(u)$, simply assign the normalized rating as the relevance of the item.
 \end{itemize}
 
 For our application we believe it could be beneficial to use the rating of the item to assign a
@@ -459,7 +464,6 @@ As you can see from the above mentioned examples nDCG will give us an indication
 ranks \emph{highly relevant} items above those who are less relevant. As for the limitations, nDCG is designed for situations of non-binary notions of relevance, thus cannot be used in our experiment where we wish to compare binary ratings with implicit ratings. The main difficulty encountered in using nDCG is the unavailability of an ideal ordering of results when only partial relevance feedback is available. This is often the case when we have several equally good results! This is especially true when this metric is limited to only first few results as it is done in practice.
 
 \marginpar{TODO: Describe final nDCG evaluation measure}
-\marginpar{Hai: Do you have any thoughts about rank accuracy metrics?}
 \marginpar{TODO: Spend any more time looking at partial order ranking measures?...}
 
 %TODO - Select K value based on user interface
