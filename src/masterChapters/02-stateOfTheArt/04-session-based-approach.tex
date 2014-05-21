@@ -1,6 +1,6 @@
 % !TEX root = ../../report.tex
 
-\section{Session Based Approach}
+\section{Session Based Recommendation}
     Different ways of personalizing recommendations, such as collaborative filtering and content based filtering, have been explored earlier in this chapter.
     A common issue with these types recommendations is sparsity in the data, which can lead to poor recommendations.
     Through utilizing usage pattern of the user and producing sessions, some of the sparsity gaps can be filled.
@@ -8,10 +8,14 @@
     This information can also produce interesting relationships between products.
     With this the user preferences can be gathered and be used to reduce the search space when recommending product for the user.
 
-% mtodo - rotetes seksjon. ikke fashion domene spesifikk, passer ikke inn. Move
+    The data from soBazar is based on the actions of its users.
+    From this user sessions can be constructed.
+    A user session is the sequence of events from the time the user opens the application till the user closes the application, a user will therefore often end up with producing many sessions.
 
-% \subsection{E-commerce}
-%     About sessions
+    This section will look into how sessions can be used to tell more about the users and approaches to improve product recommendations based on the user sessions.
+
+% mtodo - rotetes seksjon. ikke fashion domene spesifikk, passer ikke inn.
+
 
 \subsection{Mining}
     How to gather information on the user.
@@ -86,7 +90,7 @@
         % \paragraph{User Classification} % (fold)
         % \label{subp:user_classification}
 
-\subsubsection{Session Examples} % (fold)
+\subsubsection{SoBazar Session Examples} % (fold)
     \label{par:session_examples}
     \marginpar{Show three common user session patterns (average purchase time, want time and view time)}
     A user session of a user randomly chosen user.
@@ -112,10 +116,6 @@
 
 % ~\cite{Kelly:2003:IFI:959258.959260}
 
-
-\subsubsection{Multi-Armed Bandit} % (fold)
-    \label{par:multi_armed_bandit}
-    \marginpar{might be interesting as an most popular approach, suggest the most popular at any one time, belongs with most popular approach}
 
 \subsubsection{Analyzing}
     Analyzing the model of the user
