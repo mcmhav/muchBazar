@@ -2,12 +2,14 @@
 
 \chapter{The SoBazar Data}
 \minitoc
-    This sections is dedicated to exploring the data set to be worked with.
+    This sections is dedicated to exploring the soBazar data set.
     This includes how the data was preprocessed, a summary of the dataset, statistics and graphs about the data and findings from the data.
 
 % mtodo - før vi kan lere dette
     % 1. soBazar info
     % 2. sessions of events m eksempel
+
+\marginpar{Not updated with the newest data}
 
 \section{Data Cleaning}
     \marginpar{Some better way of saying this; Data Preprocessing, Data Prefiltering, something}
@@ -25,7 +27,7 @@
     When an event is triggered a set of information is stored regarding the event.
     This data is used to make recommendations for the users though converting the implicit feedback to implicit ratings.
 
-    %mtod - vet vi hva dette er?
+    %mtodo - vet vi hva dette er?
 
     \begin{table}[H]
         \centering
@@ -327,21 +329,19 @@
     \begin{figure}[H]
         \includegraphics[width=5in]{image/statesInteractionTrue-gvfile.pdf}
         \centering
-        \caption[View time before purchasing an item]{This figure shows the time the users use before purchasing the currently viewed item.
-        The time is in milliseconds.
-        The majority of the users have a view time of less than 32 000 milliseconds before they decide to buy the currently viewed item.}
-        \label{figure:viewBuy}
+        \caption[Minimized states in session and how they interact]{A minimized view of the different states of the system and how they interact with each other.}
+        \label{figure:minStatesInteractions}
     \end{figure}
 
     \begin{figure}[H]
         \includegraphics[width=5in]{image/statesInteractionFalse-gvfile.pdf}
         \centering
-        \caption[View time before purchasing an item]{This figure shows the time the users use before purchasing the currently viewed item.
-        The time is in milliseconds.
-        The majority of the users have a view time of less than 32 000 milliseconds before they decide to buy the currently viewed item.}
-        \label{figure:viewBuy}
+        \caption[States in session and how they interact]{The different states of the system and how they interact with each other.}
+        \label{figure:statesInteractions}
     \end{figure}
 
+    % mtodo - fix lol
+    \marginpar{Will be moved to appendices}
 %     Init Hypothesis:
 %     Two users with similar session habits and similar product accessing pattern
 %     have a stronger correlation to one-another than two users with just similar

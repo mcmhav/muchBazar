@@ -115,12 +115,12 @@ noting that explicit feedback tend to concentrate on either side of the rating
 scale, as users are more likely to express their preference if they feel
 strongly for or against an item~\cite{Jawaheer2010}.
 
-	% mtodo - fix lol
 \subsubsection{Implicit-feedback}
 Unlike explicit feedback, we do not have any direct input from the user
 regarding their personal preferences. In particular we do not have any
 substantial evidence of which items the user dislikes, such as low ratings.
-However, implicit-feedback is more easily collected, and usually more abundant.
+What we do have is indications of whether a user likes an item trough clicks, wants and purchases. Where wants and purchases can be viewed as a form of explicit rating only counting positively.
+Implicit-feedback is more easily collected than explicit-feedback, and usually more abundant.
 Types of implicit feedback include purchase history, browsing history,
 search patters, or even mouse movements. For example, a user who purchases
 many clothes from the same brand probably likes that brand. For a larger
@@ -177,27 +177,36 @@ evaluation of the system. If the dataset is large, an increase of $K$ runs could
 prove to be disadvantageous.
 %TODO - more?
 
-	% mtodo - så poenget her er å finne robusthet av en estimator (som regel...)
 \subsubsection{Bootstrapping~\cite{efron1994introduction}}
-Bootstrapping is used to estimate the sampling distribution of statistics. % and estimating the properties of an estimator.
+Bootstrapping is used to estimate properties of an estimate, such as bias, variance, confidence, intervals and prediction error.
+This is done trough measuring these properties when sampling from an approximated distribution.
+For instance an empirical distribution of the observed data.
 The idea is that with information from sample data it is possible to say something about the population.
 The sample data is a subset of the population.
 Since the population is unknown it will not be possible to calculate the true error from the sample data.
 To handle this the
 Since it will not be possible to perform inference on:
 \emph{sample data} $\rightarrow$ \emph{population} this is modeled as:
-\emph{resample data} $\rightarrow$ \emph{sample data}.
-The \emph{resample data} is a resampling of the sample data.
+\emph{re-sample data} $\rightarrow$ \emph{sample data}.
+The \emph{re-sample data} is a re-sampling of the sample data.
 
 In practice an example to bootstrapping is when we want to calculate the average height of the population worldwide.
 The issue here is that it is not as doable to measure everyone, so a subset of the population is used.
 Since the average on this number only will be an estimate of the actual world wide average a sense of error margin must be introduced.
-Bootstraping is then used to reduce the error of margin through resampling the sample data a large number of times~\footnote{Numbers vary on sample size, but is often 1 000 to 10 000}, and new averages are calculated.
+Bootstrapping is then used to reduce the error of margin through re-sampling the sample data a large number of times~\footnote{Numbers vary on sample size, but is often 1 000 to 10 000}, and new averages are calculated.
 With these averages a histogram can be produced, which provides an estimate of the distribution of this average.
 
-	% mtodo - check this chapter again
+\begin{figure}[H]
+    \includegraphics[width=5in]{image/bootstrap.png}
+    \centering
+    \caption[Bootstrapping principles]{A figure of the principles bootstrapping. Taken from~\cite{Eichler2003}}
+    \label{figure:bootstrapping}
+\end{figure}
+
 \paragraph{Disadvantages}
-One prominent issue with bootstrapping is that the same sampling data is used to acquire a better understanding and less error margin of the sampling data~\footnote{"Bootstrapping" comes from the phrase, "to pull oneself up by one's bootstraps"~\cite{bootstrapSaying1843}}.
+	One prominent issue with bootstrapping is that important properties of the actual data might not be caught when undertaking the bootstrapping analysis
+	~\footnote{"Bootstrapping" comes from the phrase, "to pull oneself up by one's bootstraps"~\cite{bootstrapSaying1843}}.
+
 
 \subsubsection{Finding the optimal parameter settings}
 
@@ -346,7 +355,6 @@ Accuracy is the amount of correctly recommended items over all the items.
     \label{equation:accuracy}
 \end{equation}
 
-	% mtdo - fix that shit bro
 \paragraph{Receiver Operating Characteristics (ROC))}
 The $ROC$ is the recall rate ($TPR$) against the fallout rate ($FPR$).
 The goal is to maximize the recall while minimizing the fallout.
@@ -358,13 +366,14 @@ The goal is to maximize the recall while minimizing the fallout.
     FPR(T) = \int_T^\infty P_1(T)dT
     \label{equation:fpr}
 \end{equation}
-From~\ref{equation:tpr} and~\ref{equation:fpr}, $P_0(T)$ and $P_1(T)$ is the probability of $T$ not belonging to the other class.
-The $ROC$ curve is a plotting of the recall rate versus the fallout rate.
+$T$ is a threshold parameter.
+The ROC curve is $TPR$ plotted together with $FPR$ at various $T$.
 \begin{equation}
     AUROC = \int_\infty^{-\infty} TPR(T)P_0(T)dTdT
     \label{equation:auroc}
 \end{equation}
-$AUROC$ is the probability that the recommender system will rank positive ranks higher than negative ranks.
+Equation~\ref{equation:auroc} can be used to calculate the area under the curve.
+$AUROC$ is the probability that the recommender system will rank positive examples higher than negative examples.
 
 \paragraph{Limitations}
 \label{subp:limitations}
@@ -531,7 +540,6 @@ Diversity is generally defined as the opposite of similarity. In some cases sugg
 
 Other evaluation methods worth knowing about includes confidence, trust, utility, robustness, adaptivity, scalability mentioned in \cite{Herlocker2004, Shani2011}.
 
-	%mtodo - hvordan konvertere implicit til explicit
 \subsection{Evaluation using Implicit Feedback}
 Accuracy metrics such as RMSE and MAE are not especially well suited for implicit feedback datasets, as they require knowing which items are undesired by a user~\cite{Hu2008}.
 One way to handle the issue with missing negative feedback is through conversion of the implicit feedback to explicit feedback, and thereby producing a sense of negative feedback.
@@ -622,11 +630,13 @@ Two ways of measuring the system is through ranking and usage prediction describ
 		% \draw[rectangle connector=-3cm] (gt) to (eval);
 		\draw[>=latex,->] (gt) -- +(-6,0) |- (eval);
     \end{tikzpicture}
-    \captionof{figure}[Implicit Rating Evaluation]{Overview of how the generated ratings can be evaluated.}
+    \captionof{figure}[Implicit Rating Evaluation]{Overview of how the generated ratings from the implicit feedback can be evaluated.}
+  	\label{figure:implicitRatingEvaluation}
   \end{center}
 
-  % mtodo - write some sick notes to this shit
-
+	The blue boxes in figure~\ref{figure:implicitRatingEvaluation} are functions used to produce the implicit ratings based on the implicit feedback.
+	Based on this, the system gets an estimated ground truth, which can be used to evaluate the different recommendation algorithms show in the red boxes.
+	Based on the evaluation score something can be said about the implicit feedback conversion to implicit ratings and the recommendation algorithms used.
 
 \subsubsection{Rank Based} % (fold)
 	\label{par:Ranking_based}
@@ -800,6 +810,39 @@ been made. A high CTR therefore indicates that your system is doing well.
 CTR = \frac{Clicks}{Recommendations}
 \end{equation}
 
+\subsection{A/B Testing}
+	A/B testing or bucket testing is used to test a system on live audience.
+	In its' simplest form the audience is split into two groups, but it is also possible to make multiple groups of users.
+	The different groups are presented with different altered versions of the system and is asked to use the system as they normally would.
+	The goal is to figure out which version is producing the best results, whether it is user satisfaction or revenue.
+	How the altered versions are scored is usually done trough a measure of the applications main goal, for instance with an e-commerce application where the main goal is to sell items, the score could be revenue produced by that version.
+
+\subsubsection{Example}
+	In the case with the soBazar application, on way of doing a A/B testing on the system is as follows:
+	3 groups of users are made, one with the unaltered system, one with method $A$ to produce recommendations and one with method $B$.
+
+\paragraph{Group Split} % (fold)
+\label{par:group_split}
+	The groups of users can either be selected to fit the global distribution of users, or be a set of similar minded users.
+	The latter case might benefit a system where the intended goal is to specialize the system for a set of users, or actually partition the system into fitting a subsets of its' users.
+
+\paragraph{Group Size} % (fold)
+  \label{par:group_size}
+	The size of the groups depends on the amount of splits and intended stability of the system.
+	The group with the original system will be the biggest group to maintain the established image of the application.
+	For a system with a well established image, and a large set of faithful users, changes in the system might produce unwanted results.
+	The two groups with the altered versions of the system can be of the same size to make it simpler to measure the performance of the two system against one another.
+
+\paragraph{System Measuring} % (fold)
+\label{par:system_measuring}
+	After a set period of time, the two altered versions are compared to one another and the original system.
+	This is done trough measuring either the revenue produced or clicks.
+	For a recommender system it is not just interesting to look at the final income number, but also if the user actually showed any interest in the products recommended for the users.
+	If a larger portions of the users from version $A$ showed an increased interest in the recommended items compared to the users from version $B$, that might indicate that version $A$ is a stronger system than system $B$
+
+\subsubsection{Disadvantages}
+	An issue with A/B testing is that when splitting the users into subgroups of users, these subgroups might not possess the same user properties as the complete set of groups had.
+	This might lead to a biased score for the group, which might not reflect the actual score of the system when releasing it on the full set of user groups.
 
 \subsection{User-Centric Evaluation}
 User-centric evaluation focuses on the perceived quality of the recommendation system~\cite{Pu:2011:UEF:2043932.2043962,Knijnenburg:2011:PPS:2043932.2043993}.
@@ -812,10 +855,7 @@ When the user feedback has been gathered the data must be analyzed.
 \marginpar{move offline beyond accuracy to here maybe? }
 
 
-	%mtodo - plain bucket-test virker mest logisk:
-		% system A - 1000.0 brukere -> omsetning for telenor
-		% system B - 1000.0 brukere -> omsetning for telenor
-		% si noe om dette
+
 
 \section{What To Use}
 The main idea behind a recommendation system is to produce a set of items which are of interest to the user.
