@@ -116,10 +116,11 @@ scale, as users are more likely to express their preference if they feel
 strongly for or against an item~\cite{Jawaheer2010}.
 
 \subsubsection{Implicit-feedback}
-Unlike explicit feedback, we do not have nay direct input from the user
+Unlike explicit feedback, we do not have any direct input from the user
 regarding their personal preferences. In particular we do not have any
 substantial evidence of which items the user dislikes, such as low ratings.
-However, implicit-feedback is more easily collected, and usually more abundant.
+What we do have is indications of whether a user likes an item trough clicks, wants and purchases. Where wants and purchases can be viewed as a form of explicit rating only counting positively.
+Implicit-feedback is more easily collected than explicit-feedback, and usually more abundant.
 Types of implicit feedback include purchase history, browsing history,
 search patters, or even mouse movements. For example, a user who purchases
 many clothes from the same brand probably likes that brand. For a larger
@@ -152,7 +153,7 @@ split.
 \subsubsection{Cross-Validation}
 K-fold Cross-Validation creates a K-fold partition of the dataset. For each of
 the $K$ experiments, use $K-1$ folds for training and the remaining one for
-testing. By setting $K=2$, this is the same as the holdout method. The true
+testing. By setting $K=2$, this is the same as the holdout method. The estimated
 error is found by taking the average error from all the experiments.
 
 Leave-one-out is the degenerate case of K-fold Cross-Validation, where $K$ is
@@ -167,11 +168,7 @@ sparse datasets, one may wish to train as many examples as possible. A common
 choice is $K$ value between 5 and 10.
 
 \paragraph{Advantages}
-One positive aspect with k-fold cross-validation is that is does not matter
-much where the split is set, since the result is averaged over the $K$ experiments.
-The strongest argument for using cross-validation is the potential of using the
-entire training set for testing (albeit not at once), creating the largest possible
-test set for a fixed training data set.
+One positive aspect with k-fold cross-validation is that the result is averaged over the $K$ experiments. The strongest argument for using cross-validation is the potential of using the entire training set for testing (albeit not at once), creating the largest possible test set for a fixed training data set.
 
 \paragraph{Disadvantages}
 The main disadvantage with K-fold Cross-Validation is the training algorithm has
@@ -181,24 +178,35 @@ prove to be disadvantageous.
 %TODO - more?
 
 \subsubsection{Bootstrapping~\cite{efron1994introduction}}
-Bootstrapping is used to estimate the sampling distribution of statistics. % and estimating the properties of an estimator.
+Bootstrapping is used to estimate properties of an estimate, such as bias, variance, confidence, intervals and prediction error.
+This is done trough measuring these properties when sampling from an approximated distribution.
+For instance an empirical distribution of the observed data.
 The idea is that with information from sample data it is possible to say something about the population.
 The sample data is a subset of the population.
 Since the population is unknown it will not be possible to calculate the true error from the sample data.
 To handle this the
 Since it will not be possible to perform inference on:
 \emph{sample data} $\rightarrow$ \emph{population} this is modeled as:
-\emph{resample data} $\rightarrow$ \emph{sample data}.
-The \emph{resample data} is a resampling of the sample data.
+\emph{re-sample data} $\rightarrow$ \emph{sample data}.
+The \emph{re-sample data} is a re-sampling of the sample data.
 
 In practice an example to bootstrapping is when we want to calculate the average height of the population worldwide.
 The issue here is that it is not as doable to measure everyone, so a subset of the population is used.
 Since the average on this number only will be an estimate of the actual world wide average a sense of error margin must be introduced.
-Bootstraping is then used to reduce the error of margin through resampling the sample data a large number of times~\footnote{Numbers vary on sample size, but is often 1 000 to 10 000}, and new averages are calculated.
+Bootstrapping is then used to reduce the error of margin through re-sampling the sample data a large number of times~\footnote{Numbers vary on sample size, but is often 1 000 to 10 000}, and new averages are calculated.
 With these averages a histogram can be produced, which provides an estimate of the distribution of this average.
 
+\begin{figure}[H]
+    \includegraphics[width=5in]{image/bootstrap.png}
+    \centering
+    \caption[Bootstrapping principles]{A figure of the principles bootstrapping. Taken from~\cite{Eichler2003}}
+    \label{figure:bootstrapping}
+\end{figure}
+
 \paragraph{Disadvantages}
-One prominent issue with bootstrapping is that the same sampling data is used to acquire a better understanding and less error margin of the sampling data~\footnote{"Bootstrapping" comes from the phrase, "to pull oneself up by one's bootstraps"~\cite{bootstrapSaying1843}}.
+	One prominent issue with bootstrapping is that important properties of the actual data might not be caught when undertaking the bootstrapping analysis
+	~\footnote{"Bootstrapping" comes from the phrase, "to pull oneself up by one's bootstraps"~\cite{bootstrapSaying1843}}.
+
 
 \subsubsection{Finding the optimal parameter settings}
 
@@ -224,7 +232,7 @@ methodologies found in the literature.
 \subsubsection{Predictive Accuracy Metrics}
 Predictive accuracy metrics measure how close the predicted ratings are to the
 true user ratings. More formally, the system tries to predict ratings
-$\hat{u(c,s)}$ for a test set $T$ of user.item pairs $(c, s)$ for which the
+$\hat{r(c,i)}$ for a test set $T$ of user.item pairs $(c, i)$ for which the
 true ratings are known. Traditionally, mean absolute error (MAE) has be used to
 evaluate the performance of collaborative-filtering algorithms, but other
 measures such as root mean squared error (RMSE) are also commonly used.
@@ -232,27 +240,26 @@ measures such as root mean squared error (RMSE) are also commonly used.
 \paragraph{Mean Absolute Error (MAE)}
 MAE measures how close the predictions are to the actual outcome.
 \begin{equation}
-    MAE = \frac{1}{n}\sum_{i=1}^{n}{|\hat{R_i}-R_i|}
+    MAE = \frac{1}{n}\sum_{i=1}^{n}{|\hat{r(c,i)}-r(c,i)|}
     \label{equation:mae}
 \end{equation}
-$R_i$ is the actual outcome and $\hat{R_i}$ is the predicted value.
+$r(c,i)$ is the actual outcome and $\hat{r(c,i)}$ is the predicted value.
 As the name suggest, $MAE$ calculates the average absolute error.
 
 \paragraph{Root Mean Squared Error (RMSE)}
 Often used to measure difference between a set of predicted values with a set of actual values.
 \begin{equation}
-    MSE = \frac{1}{n}\sum_{i=1}^{n}{(\hat{R_i} - R_i)^{2}}
+    MSE = \frac{1}{n}\sum_{i=1}^{n}{(\hat{r(c,i)} - r(c,i))^{2}}
     \label{equation:mse}
 \end{equation}
 \begin{equation}
     RMSE = \sqrt{MSE}
     \label{equation:rmse}
 \end{equation}
-In $MSE$~\ref{equation:mse} $\hat{R_i}$ is the predicted value and $R_i$ is the actual value.
+In $MSE$~\ref{equation:mse} $\hat{r(c,i)}$ is the predicted value and $r(c,i)$ is the actual value.
 Both $MAE$ and $MSE$ are used to measure how correct the predictions are compared to the actual values.
-The main difference is that $MSE$ gives more error for faults.
-$RMSE$ is the square root of $MSE$ and is one of the most used metrics to compare recommender algorithms in collaborative filtering.
-And was the main metric used in the Netflix price competition to evaluate the performance of the competitors recommender systems.
+$RMSE$ is the square root of $MSE$ and is one of the most used metrics to compare recommender algorithms in collaborative filtering, and was the main metric used in the Netflix price competition to evaluate the performance of the competitors recommender systems.
+$RMSE$ is always bigger or equal to $MAE$, $RMSE$ penalize an error more than $MAE$.
 
 % \todo{maybe some sweet table of the different algorithms with their eqations and their contributions}
 % \begin{table}[H]
@@ -339,7 +346,7 @@ F-measure combines the precision and the recall.
     F_\beta = \frac{(1 + \beta^2) * (Precision * Recall)}{(\beta^2 * Precision + Recall)}
     \label{equation:f-measure}
 \end{equation}
-$\beta$ is a non negative real value.
+Based on the value of $\beta$ F-measure will weight precision or recall more. For a $\beta$ over 1 F-measure will emphasize precision over recall, and opposite for $\beta$ between 0 and 1.
 
 \paragraph{Accuracy}
 Accuracy is the amount of correctly recommended items over all the items.
@@ -359,18 +366,18 @@ The goal is to maximize the recall while minimizing the fallout.
     FPR(T) = \int_T^\infty P_1(T)dT
     \label{equation:fpr}
 \end{equation}
-From~\ref{equation:tpr} and~\ref{equation:fpr}, $P_0(T)$ and $P_1(T)$ is the probability of $T$ not belonging to the other class.
-The $ROC$ curve is a plotting of the recall rate versus the fallout rate.
+$T$ is a threshold parameter.
+The ROC curve is $TPR$ plotted together with $FPR$ at various $T$.
 \begin{equation}
     AUROC = \int_\infty^{-\infty} TPR(T)P_0(T)dTdT
     \label{equation:auroc}
 \end{equation}
-$AUROC$ is the probability that the recommender system will rank positive ranks higher than negative ranks.
-
+Equation~\ref{equation:auroc} can be used to calculate the area under the curve.
+$AUROC$ is the probability that the recommender system will rank positive examples higher than negative examples.
 
 \paragraph{Limitations}
 \label{subp:limitations}
-As mentioned by Powers et al.~\cite{powers2007}, Recall, Precision, F-Measure and Rand Accuracy have a Bias.
+As mentioned by Powers et al.~\cite{powers2007}, recall, precision, F-measure and rand accuracy have a bias.
 Another drawback or limitation with the measuring of user predictions is that it does not take into account the ranking of the items.
 To handle this, rank based metrics can be used.
 
@@ -533,13 +540,12 @@ Diversity is generally defined as the opposite of similarity. In some cases sugg
 
 Other evaluation methods worth knowing about includes confidence, trust, utility, robustness, adaptivity, scalability mentioned in \cite{Herlocker2004, Shani2011}.
 
-
 \subsection{Evaluation using Implicit Feedback}
 Accuracy metrics such as RMSE and MAE are not especially well suited for implicit feedback datasets, as they require knowing which items are undesired by a user~\cite{Hu2008}.
 One way to handle the issue with missing negative feedback is through conversion of the implicit feedback to explicit feedback, and thereby producing a sense of negative feedback.
 One issue with this is what is considered as negative feedback in the sense of implicit feedback.
 The reason for a user not to access an item is not necessarily grounded in dislike, but could simply be an overlook.
-On the other hand, if the user accessed the item for a short time without buying it, can that be considered as negative feedback?
+On the other hand, if the user accessed the item for a short time without buying it, the user might not like it.
 These questions raises the need for a different approach when wanting to measure a recommender system using implicit feedback.
 
 Joachims et al.~\cite{Joachims07evaluatingthe} shows that clicks can be biased, and has to be interpreted relative to the order of presentation and relative to the other abstracts.
@@ -548,6 +554,90 @@ Joachims et al.~\cite{Joachims07evaluatingthe} shows that clicks can be biased, 
 
 Two ways of measuring the system is through ranking and usage prediction described earlier.
 
+
+  \begin{center}
+    \begin{tikzpicture}
+		[node distance = 1cm, auto,font=\footnotesize,
+		% STYLES
+		every node/.style={node distance=1.5cm},
+		% The comment style is used to describe the characteristics of each process
+		comment/.style={rectangle, inner sep= 5pt, text width=3cm, node distance=0.25cm, font=\scriptsize\sffamily},
+		% small comment lol
+		comment-small/.style={rectangle, inner sep= 5pt, text width=1cm, node distance=0.25cm, font=\scriptsize\sffamily},
+		% The nonProcess style
+		nonProcess/.style={rectangle, draw, inner sep=5pt, text width=3cm, text badly centered, minimum height=1.2cm, font=\footnotesize\sffamily},
+		% The process style is used to draw the processs' name
+		process/.style={rectangle, draw, fill=black!10, inner sep=5pt, text width=3cm, text badly centered, minimum height=1.2cm, font=\bfseries\footnotesize\sffamily},
+		% ratingsGenerator style
+		ratingsGenerators/.style={rectangle, draw, fill=blue!50, inner sep=5pt, text width=3cm, text badly centered, minimum height=1.2cm, font=\bfseries\footnotesize\sffamily},
+		% racommendation algorithms
+		recAlgs/.style={rectangle, draw, fill=red!40, inner sep=5pt, text width=3cm, text badly centered, minimum height=1.2cm, font=\bfseries\footnotesize\sffamily}]
+
+		% Draw processs
+		\node [ratingsGenerators] (rg1) {sigmoid\_fixed};
+		\node [ratingsGenerators, right=0.25 of rg1] (rg2) {sigmoid\_constant};
+		\node [comment-small, right=0.01 of rg2] (dotdotdot) {..............};
+		\node [ratingsGenerators, right=0.01 of dotdotdot] (rg3) {norm\_dist};
+
+		\node [process, below of=rg2] (gt) {"Ground Truth"};
+
+		\node [recAlgs, below of=gt] (ra2) {ALS};
+		\node [recAlgs, left=0.25 of ra2] (ra1) {KNN};
+		\node [comment-small, right=0.01 of ra2] (dotdotdot2) {..............};
+		\node [recAlgs, right=0.01 of dotdotdot2] (ra3) {wALS};
+
+		\node [process, below of=ra2] (eval) {Evaluation Score};
+
+		% \node [nonProcess, below of=implicitConverter] (ratings) {Ratings for the items};
+		% \node [process, below of=ratings] (recommendations) {Make recommendations};
+		% \node [process, below of=recommendations] (evaluations) {Evaluate recommendations};
+		% \node [nonProcess, below of=evaluations] (evaluationValue) {Recommendation score};
+
+		%%%%%%%%%%%%%%%
+		% Comments
+		\node [comment, right=0.25 of rg3] (comment-rg3) {
+			Implicit ratings
+		};
+		\node [comment, right=0.25 of ra3] (comment-ra3) {
+			Recommendations algorithm
+		};
+		% \node [comment, right=0.25 of ratings] (comment-ratings) {
+		% The output of the conversion is a set of ratings on the different items from the soBazar dataset
+		% };
+		% \node [comment, right=0.25 of recommendations] (comment-recommendations) {
+		% Makes recommendations based on the inputed ratings. Different approaches to make the recommendations can be take, such as matrix factorization or neighborhood based approaches
+		% };
+		% \node [comment, right=0.25 of evaluations] (comment-evaluations) {
+		% Evaluate the recommender system(s). Different evaluation metrics will be usea, such as e.g. AUC and nDCG
+		% };
+
+		%%%%%%%%%%%%%%%%
+		% Draw the links between processs
+		\path[->,thick]
+			(rg1) edge (gt)
+			(rg2) edge (gt)
+			(dotdotdot) edge (gt)
+			(rg3) edge (gt)
+			(gt) edge (ra1)
+			(gt) edge (ra2)
+			(gt) edge (dotdotdot2)
+			(gt) edge (ra3)
+			(ra1) edge (eval)
+			(ra2) edge (eval)
+			(dotdotdot2) edge (eval)
+			(ra3) edge (eval);
+		% \path[>=latex,->] (gt) edge (eval);
+		% \draw[rectangle connector=-3cm] (gt) to (eval);
+		\draw[>=latex,->] (gt) -- +(-6,0) |- (eval);
+    \end{tikzpicture}
+    \captionof{figure}[Implicit Rating Evaluation]{Overview of how the generated ratings from the implicit feedback can be evaluated.}
+  	\label{figure:implicitRatingEvaluation}
+  \end{center}
+
+	The blue boxes in figure~\ref{figure:implicitRatingEvaluation} are functions used to produce the implicit ratings based on the implicit feedback.
+	Based on this, the system gets an estimated ground truth, which can be used to evaluate the different recommendation algorithms show in the red boxes.
+	Based on the evaluation score something can be said about the implicit feedback conversion to implicit ratings and the recommendation algorithms used.
+
 \subsubsection{Rank Based} % (fold)
 	\label{par:Ranking_based}
 	The ranking approach can be considered more suited to test recommendation systems using implicit feedback since a subset of the items are meant to be recommended to the user.
@@ -555,15 +645,16 @@ Two ways of measuring the system is through ranking and usage prediction describ
 
 	One issue with this approach is that the items in the predicted top K list has to be ranked in some way, the same goes for the list this list is to be compared to.
 	Thereby producing the requirement for a ranked list of preferred items from the user.
-	If there is such a ranked list, ranking accuracy is a good way to go, such as~\cite{Yilmaz:2008:NRC:1390334.1390435}.
+	If there is such a ranked list, ranking accuracy will help to tell how well the system is suggesting items for the user, such as~\cite{Yilmaz:2008:NRC:1390334.1390435}.
 % paragraph paragraph_name (end)
 
 \marginpar{maybe hard to differentiate between the names}
 
 \subsubsection{Accuracy Ranking} % (fold)
 	\label{par:usage_prediction}
-	When there is lack of explicit user feedback and a actual ranked list of the items cannot be produced, usage prediction is a better way to go.
-	Where the system produces a ranked list of predicted preferred items, but this list is compared to a list of binary interesting or not interesting list, which is often possible to construct from implicit feedback.
+	When there is lack of explicit user feedback and a ranked list of the items cannot be produced, ranking the predicted list and scoring this list based on the actual user preferences can be used to evaluate the system.
+	The actual user preferences are based on a list of binary values regarding the items, interesting or not interesting.
+	This list is often possible to construct from implicit feedback, but will seldom be a complete list, and most often be a list with only positives (not possible to produce not interesting).
 	Some of the different approaches when dealing with implicit feedback are:
 	Li et al.~\cite{deLace2010} who used $MPR$ and $MAP$ to calculate their performance.
 	Pan et al.~\cite{Pan:2013:GGP:2540128.2540516} who used a set of top-k evaluation metrics: precision, recall, F1, nDCG, ROC and 1-call.
@@ -719,6 +810,39 @@ been made. A high CTR therefore indicates that your system is doing well.
 CTR = \frac{Clicks}{Recommendations}
 \end{equation}
 
+\subsection{A/B Testing}
+	A/B testing or bucket testing is used to test a system on live audience.
+	In its' simplest form the audience is split into two groups, but it is also possible to make multiple groups of users.
+	The different groups are presented with different altered versions of the system and is asked to use the system as they normally would.
+	The goal is to figure out which version is producing the best results, whether it is user satisfaction or revenue.
+	How the altered versions are scored is usually done trough a measure of the applications main goal, for instance with an e-commerce application where the main goal is to sell items, the score could be revenue produced by that version.
+
+\subsubsection{Example}
+	In the case with the soBazar application, on way of doing a A/B testing on the system is as follows:
+	3 groups of users are made, one with the unaltered system, one with method $A$ to produce recommendations and one with method $B$.
+
+\paragraph{Group Split} % (fold)
+\label{par:group_split}
+	The groups of users can either be selected to fit the global distribution of users, or be a set of similar minded users.
+	The latter case might benefit a system where the intended goal is to specialize the system for a set of users, or actually partition the system into fitting a subsets of its' users.
+
+\paragraph{Group Size} % (fold)
+  \label{par:group_size}
+	The size of the groups depends on the amount of splits and intended stability of the system.
+	The group with the original system will be the biggest group to maintain the established image of the application.
+	For a system with a well established image, and a large set of faithful users, changes in the system might produce unwanted results.
+	The two groups with the altered versions of the system can be of the same size to make it simpler to measure the performance of the two system against one another.
+
+\paragraph{System Measuring} % (fold)
+\label{par:system_measuring}
+	After a set period of time, the two altered versions are compared to one another and the original system.
+	This is done trough measuring either the revenue produced or clicks.
+	For a recommender system it is not just interesting to look at the final income number, but also if the user actually showed any interest in the products recommended for the users.
+	If a larger portions of the users from version $A$ showed an increased interest in the recommended items compared to the users from version $B$, that might indicate that version $A$ is a stronger system than system $B$
+
+\subsubsection{Disadvantages}
+	An issue with A/B testing is that when splitting the users into subgroups of users, these subgroups might not possess the same user properties as the complete set of groups had.
+	This might lead to a biased score for the group, which might not reflect the actual score of the system when releasing it on the full set of user groups.
 
 \subsection{User-Centric Evaluation}
 User-centric evaluation focuses on the perceived quality of the recommendation system~\cite{Pu:2011:UEF:2043932.2043962,Knijnenburg:2011:PPS:2043932.2043993}.
@@ -729,6 +853,8 @@ This allows user-centric evaluation to make evaluations on information about the
 When the user feedback has been gathered the data must be analyzed.
 
 \marginpar{move offline beyond accuracy to here maybe? }
+
+
 
 
 \section{What To Use}

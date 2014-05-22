@@ -1,23 +1,33 @@
-% !TEX root = ../../report.tex
+% !TEX root = ../report.tex
 
 \chapter{The SoBazar Data}
 \minitoc
-    This sections is dedicated to exploring the data set to be worked with.
-    This includes how the data was preprocessed before utilizing it, the summary of the dataset, statistics and graphs about the data and findings from the data.
+    This sections is dedicated to exploring the soBazar data set.
+    This includes how the data was preprocessed, a summary of the dataset, statistics and graphs about the data and findings from the data.
+
+% mtodo - før vi kan lere dette
+    % 1. soBazar info
+    % 2. sessions of events m eksempel
+
+\marginpar{Not updated with the newest data}
 
 \section{Data Cleaning}
     \marginpar{Some better way of saying this; Data Preprocessing, Data Prefiltering, something}
-    The data from soBazar came as is from the soBazar database, with the exception that the data had been anonymised, for privacy reasons.
+    The data from soBazar came as is from the soBazar database, with the exception that the data had been anonymised for privacy reasons.
     It contained therefore some unnecessary events.
     The data was therefore cleaned by removing events containing test environment flags such as: test environment and applications run from simulator.
     What was left after the cleaning data was mainly events triggered by the users, and no created during applications testing.
 
 \section{Dataset Summary}
-    The data from soBazar is so call implicit~\ref{sec:implicit} and is based on the different set of events triggered by the users of the soBazar application.
+    The data from soBazar is gathered based on the actions of the users in the application.
+    When a user accesses a store or an item, the information regarding the user and the item is stored, this is often known as implicit feedback~\ref{sec:implicit}.
+    Events such as purchasing an item and "wanting" and item is stored in the same manner, but can in many cases be considered as explicit feedback.
 
 \subsection{Event Metadata}
     When an event is triggered a set of information is stored regarding the event.
     This data is used to make recommendations for the users though converting the implicit feedback to implicit ratings.
+
+    %mtodo - vet vi hva dette er?
 
     \begin{table}[H]
         \centering
@@ -172,11 +182,14 @@
         \label{figure:ratingdistr}
     \end{figure}
 
+    %mtodo - better buckets to better capture the ranges
+    %mtodo - ikke ha all teksten i captionen til figuren, ha det heller i vanlig tekst
+
     \begin{figure}[H]
         \includegraphics[width=5in]{image/event_id.png}
         \centering
         \caption[Count for different events]{This figure displays the count for each of the different events which can be triggered in the soBazar application.
-        From the figure we can see that the "collection\_viewed"-event and "storefront\_clicked"-event are the most common events to be triggered.
+        The "collection\_viewed"-event and "storefront\_clicked"-event are the most common events to be triggered.
         Both of these types of events will send the user to an item overview, and indicates that many users browse the items through looking at the thumbnails rather than accessing the items, since the two named event types are gateways to collections of items, and if most of the users actually accessed most of the items the "product\_detail\_clicked", "product\_wanted" and "product\_purchase\_intended" would have had the majority of the events triggered.}
     \end{figure}
 
@@ -190,6 +203,8 @@
         For instance "Bik Bok" has a much higher item interaction count than storefront access count, whereas stores such as "Reiss" and "Inwear" are mostly accessed and the items not interacted with.
         Different aspects affecting this might be price, style and item presentation.}
     \end{figure}
+
+    % mtodo - session flytdiagram åpne app - se collection - se enkeltitem - kjøpe - skru av, piler mellom og shit
 
     % \begin{figure}[H]
     %     \includegraphics[width=5in]{image/brand_distr.png}
@@ -235,10 +250,11 @@
         \caption[Count of events on each unique item]{This figure shows the unique count of events on each item in the soBazar dataset.
         The majority of the items has only had a interaction count of 10 or less.
         Interaction count is "product\_detail\_clicked", "product\_wanted" and "product\_purchase\_intended".
-        This means that there will not be more than 10 events to use to construct some information about the items to work with for the majority of the items.
-        This might lead to an issue when doing collaborative filtering.
-        About 1 200 users combined not producing more than 10 interactions on the majority of the items leads to a low probability of collaborative overlap.}
+        This means that there will not be more than 10 events for the majority of the items, which might lead to an issue when doing collaborative filtering on the data.
+        When the majority of the events only has 10 events and there are over 4 000 items and 1 200 users, the probability that multiple users have interacted with similar items will be low.}
     \end{figure}
+
+    %mtodo - update numbers
 
     \begin{figure}[H]
         \includegraphics[width=5in]{image/item-timespan-event-count.png}
@@ -250,6 +266,8 @@
         \label{figure:itemTimeSpanEventCount}
     \end{figure}
 
+    % mtodo - si noe om hvorfor ikke? jeg vil vel påstå at dette sier no om viktihet av "nyhetsverdi" for item'et, og ville derfor trodd dette var relevant info?
+
     \begin{figure}[H]
         \includegraphics[width=5in]{image/time-span-count.png}
         \centering
@@ -259,6 +277,11 @@
         Most of the items has a time span of less than 14 000 minutes, which is less than 10 days.}
     \end{figure}
 
+    % hvorfor? er det pga:
+        % a) pga veldig få events
+        % b) pga kort levetid for item i datasettet
+        % c) fordi det bare hadde 10 dagers "nyhetsverdi"?
+
     \begin{figure}[H]
         \includegraphics[width=5in]{image/bounceRate.png}
         \centering
@@ -267,6 +290,8 @@
         The majority of the users have a view time of less than 6 000 milliseconds before they moves on to another item.}
         \label{figure:bounceRate}
     \end{figure}
+
+    % mtodo - hva betyr dette for oss? ha det i seconds, lol
 
     \begin{figure}[H]
         \includegraphics[width=5in]{image/viewBeforeWant.png}
@@ -290,8 +315,33 @@
     As seen from the figures~\ref{figure:bounceRate}, ~\ref{figure:viewWant} and~\ref{figure:viewBuy}, the bounce rate is quite small compared to the time it takes for a user to decide to want or buy an item.
     This could be used as an indication of negative feedback, but since there is no explicit feedback to to test this, it might lead to rating an item negatively when the user in fact would like to rate it positively.
 
+
+    %mtodo - masse fin info, men diskuter!
+        % hva betyr det for oss?
+        % hvordan kan data-pakket brukes av systemet?
+        % dette er hands-on!
+
 \section{Session Findings}
 \marginpar{Something about session findings perhaps}
+
+    % mtodo - fix caption and section :P
+
+    \begin{figure}[H]
+        \includegraphics[width=5in]{image/statesInteractionTrue-gvfile.pdf}
+        \centering
+        \caption[Minimized states in session and how they interact]{A minimized view of the different states of the system and how they interact with each other.}
+        \label{figure:minStatesInteractions}
+    \end{figure}
+
+    \begin{figure}[H]
+        \includegraphics[width=5in]{image/statesInteractionFalse-gvfile.pdf}
+        \centering
+        \caption[States in session and how they interact]{The different states of the system and how they interact with each other.}
+        \label{figure:statesInteractions}
+    \end{figure}
+
+    % mtodo - fix lol
+    \marginpar{Will be moved to appendices}
 %     Init Hypothesis:
 %     Two users with similar session habits and similar product accessing pattern
 %     have a stronger correlation to one-another than two users with just similar

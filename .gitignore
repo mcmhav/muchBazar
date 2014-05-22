@@ -18,3 +18,5 @@
 *.fdb_latexmk
 src/pdf
 *.swp
+*-gvfile
+*.gv
