@@ -64,14 +64,14 @@
         \begin{tabular}{l}
         	\toprule
             \emph{Event features} \\ \midrule
-            Amount of purchases \\ 
-            Amount of views \\ 
-            Amount of wants  \\ 
-            Time spent on items \\ 
+            Amount of purchases \\
+            Amount of views \\
+            Amount of wants  \\
+            Time spent on items \\
             Overall average time on items \\
-            Click to buy rate \\ 
-            Search query~\cite{Zhang:2006:MSE:1135777.1136004}  \\ 
-            What was done before a specific action  \\ 
+            Click to buy rate \\
+            Search query~\cite{Zhang:2006:MSE:1135777.1136004}  \\
+            What was done before a specific action  \\
             \bottomrule
         \end{tabular}
         \caption[Event Features]{Set of event features used for finding usage clusters and model the users behavior}
@@ -83,7 +83,16 @@
     Page clustering will help the system to understand which pages belong together.
     For instance when searching for Harry Potter, the user might have interest in knowing more about the author J.K. Rowling, and the system might benefit from clustering queries of here with Harry Potter~\cite{Zhang:2006:MSE:1135777.1136004}.
 
-\subsubsection{SoBazar Session Examples} % (fold)
+
+\subsection{Analyzing}
+    Analyzing the model of the user
+
+
+\subsection{Recommending}
+    Using the model to help personalizing the recommendation for the user
+
+
+\subsection{SoBazar Session Examples} % (fold)
     \label{par:session_examples}
     \marginpar{Show three common user session patterns (average purchase time, want time and view time)
     Will be updated with the new data from soBazar}
@@ -111,17 +120,13 @@
 
     % ~\cite{Kelly:2003:IFI:959258.959260}
 
-\subsubsection{Analyzing}
-    Analyzing the model of the user
 
+\subsection{Discussion}
 
-\subsection{Recommending}
-    Using the model to help personalizing the recommendation for the user
+\subsubsection{Limitations}
+    What are the limitations of a session based approach to recommendations.
 
-\subsection{Future}
+\subsubsection{Future}
     Time spent and scrolling on page have shown to suggest strong positive relationship with explicit interest~\cite{Claypool01inferringuser}.
 
     Relative preferences derived from clicks are reasonably accurate~\cite{Joachims:2007:EAI:1229179.1229181}
-
-\subsection{Limitations}
-    What are the limitations of a session based approach to recommendations.
