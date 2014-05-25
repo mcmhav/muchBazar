@@ -1,60 +1,57 @@
 % !TEX root = ../../report.tex
 
-% What will be adressed in the section?
-  % Motivation for using implicit feedback
-
-	% Implicit feedback vs. explicit feedback
-		% How is implicit feedback related to user preference
-
-  % Evaluating implicit ratings, extracted from implicit feedback.
-
-  % Closely related article:
-    % Evaluation -> And specifically, evaluation of implicit ratings and
-    % predictions based on these.
-
 \label{implicit-feedback}
 \section{Implicit feedback to implicit ratings}
 \label{sec:implicit}
 
-%Helge: Poenget er at å rate i sobazar koster penger, mens det er "gratis" hos netflix
-
 Explicit feedback is present in many of the largest recommender systems today
-and hence, is extensively researched.% \todo{Ref.} The user is commonly asked to
-rate item $i$ on a Likert scale from $1$ to $k$, ranging from strongly
-disagree to strongly agree with an item. Its advantages are, among others the
-ability to get precise feedback from the user and capturing both positive and
-negative preferences. However, although having a high popularity, the method
-has multiple weaknesses. The most prominent weakness is the difficulty of
-collecting ratings: the method requires the user to spend time rating items and
-the amount of feedback is often scarce, creating sparse data sets. Further,
-explicit ratings are often subject to inconsistencies known as natural
-noise~\cite{amatriain2009like} and users might also be pressed to report
-different preferences due to peer of social pressure % \todo{ref}. The fact that we are
-introducing a user overhead, makes it difficult to have a complete view on the
-user preferences~\cite{Jawaheer2010}.
+and hence, is extensively researched \cite{Adomavicius2005}. The user is
+commonly asked to rate item $i$ on a Likert scale from $1$ to $k$, ranging from
+strongly disagree to strongly agree with an item. Its advantages are, among
+others the ability to get precise feedback from the user and capturing both
+positive and negative preferences. However, although having a high popularity,
+the method has multiple weaknesses. The most prominent weakness is the
+difficulty of collecting ratings: the method requires the user to spend time
+rating items and the amount of feedback is often scarce, creating sparse data
+sets. Further, explicit ratings are often subject to inconsistencies known as
+natural noise~\cite{amatriain2009like} and users might also be pressed to
+report different preferences due to peer pressure \cite{bell2007scalable}. The
+fact that we are introducing a user overhead, makes it difficult to have a
+complete view on the user preferences~\cite{Jawaheer2010}.
 
-There may also be practical reasons for not having explicit ratings, dependent
-on how a website/application interacts and works with its customers. A useful
-example is Netflix, where rating an item does not \textit{cost} anything for
-the user, that is to consume the item is included in a monthly subscription
-price, whilst in a webstore rating an item often require the user to first buy
-it, then consume it and finally rate it. This is often infeasable or
-impractical, and we can create more pleasant experience for the user and achieve
-better results with less sparsity by looking at behavioural statistics. By
-considering analytics data we de not require any extra effort from the user and
-the data on which we can base our recommendations are easier to collect, since
-we do not need a seperate user interface for it, and in most applications one
-have access to the most basic of access logs (Web Server Logs) already.
+There are also practical reasons for not having explicit ratings in form of
+ratings, dependent on how a website/application interacts and works with its
+customers. One of the most popular recommender sites in the world, Netflix, ask
+their users to rate items after consumation. However, this process does not
+\textit{cost} anything for the user, and the possibility to rate is included in
+the monthly subscription price, whilst in a webstore rating an item often
+require the user to first buy it, consume it and finally rate it. Often this
+process is either infeasable or impractical, and we can create more pleasant
+experience for the user and achieve better results with less sparsity by
+looking at already accessible behavioural statistics. By considering analytics
+data we de not require any extra effort from the user and the data on which we
+can base our recommendations are easier to collect, since we do not need a
+seperate user interface for it, and in most applications we have access to the
+access logs (Web Server Logs or similar) already.
+
+In order to use these logs we assume the following information available on
+each event analyzed, which we will use as the backbone data in making
+recommendations for the remainder of this paper:
+
+\begin{enumerate}
+  \item User ID
+  \item Product ID
+  \item Event type (purchase, click etc.)
+  \item Timestamp
+\end{enumerate}
 
 Our end-goal is to predict a rating $r$ for a given user $u$ on item $i$, and
-thus we need some way of translating our implicit feedback (Access logs and so
-forth) into what we call \textbf{implicit ratings} – these are ratings, just
-like explicit ratings, but inferred by user behavior and as we will see in the
-succeeding sections need to be analyzed with this in mind.
-
-In summary, partly inspired by Hu et al.~\cite{Hu2008}, we can identify the
-following key charecterstics and differences between implicit and explicit
-ratings.
+thus we need some way of translating our implicit feedback into what we call
+\textbf{implicit ratings}. It is important to understand that there is several
+fundemental differences between implicit and explicit ratings, in everything
+from \textit{meaning} to \textit{evaluation techniques}. Partly inspired by Hu
+et al.~\cite{Hu2008}, we can identify the following key charecterstics and
+differences between them: 
 
 \textbf{Explicit ratings:}
 \begin{itemize}
@@ -93,13 +90,20 @@ sparsity and catching actual behaviour in the application. Less influenced by
 peer pressure and so forth.
 \end{itemize}
 
+Notice that several events such as purchasing an item may be considered as
+explicitly giving positive feedback, but as we argue in this paper all events
+in the Sobazar dataset (including purchases) are treated as implicit feedback.
+The reasoning behind this lies in the fact that purchasing, in contrast to
+positivly rating, an item happens before actual consumption. Hence the user may
+not like the item in question, it may be a gift for another person or a variety
+of other reasons. Whilst in the scenerio of rating, the user has already
+consumed it and is explicitly answering the question \textit{«To which degree
+did you like it?»}.
+
 We will look into more of these charecteristics in our thesis, carefully
 examining the state of the art with regards to both weaknesses and advantages
 and finally introduce some novel techniques facilitating the creation of
 implicit ratings.
-
-\marginpar{Helge: "Rating" her betyr "kjøpt"? Så vi har implicit og explicit i
-kombo?}
 
 \clearpage
 
