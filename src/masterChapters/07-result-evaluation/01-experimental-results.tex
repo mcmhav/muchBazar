@@ -11,14 +11,46 @@ This subsection will present the experimental results for the Sobazar dataset us
 \begin{table}
     \centering
     \resizebox{\columnwidth}{!}{%
-    \begin{tabular}{|c|*{18}{c|}c|}
-    \hline
-    &	 \multicolumn{3}{c|}{AUC} & \multicolumn{3}{c|}{nDCG@20} &	 \multicolumn{3}{c|}{MAP@20} &	 \multicolumn{3}{c|}{HLU} & \multicolumn{3}{c|}{IS Coverage} & \multicolumn{3}{c|}{US Coverage} \\ \hline
-    Model 				& 40\% 	 & 60\%   & 80\%   & 40\% 	 & 60\%  & 80\%   & 40\%   & 60\%   & 80\%   & 40\%   & 60\%   & 80\%   & 40\% & 60\% & 80\% & 40\% & 60\% & 80\%						\\ \hline
-    MostPopular 		& 0.5982 & 0.6028 & 0.6071 & 0.0254 & 0.0256 & 0.0187 & 0.0136 & 0.0156 & 0.0089 & 5.7803 & 5.7803 & 2.8902 & 1.0  & 1.0  & 1.0  & 1.0 	& 1.0  & 1.0						\\ \hline
-    MostPopular + FB 	& 0.7557 & 0.7687 & 0.7714 & 0.0254 & 0.0256 & 0.0174 & 0.0157 & 0.0156 & 0.0085 & 5.7803 & 5.7803 & 2.8902 & 1.0  & 1.0  & 1.0  & 1.0 	& 1.0  & 1.0  						\\ \hline
-    Rec 3				& -		 & - 	  & - 	   & - 		& - 	 & - 	  & -	   & -		& - 	 & 	   	  & -	   &		&	   &	  &		 &		&	   & - 							\\ \hline
-    Rec 4				& -		 & - 	  & - 	   & - 		& - 	 & - 	  & -	   & -		& - 	 & - 	   	  & -	   &		&	   &	  &		 &		&	   & - 							\\ \hline
+    \begin{tabular}{*{19}l}
+    \toprule
+    &	 
+    \multicolumn{3}{c}{AUC} 			& 
+    \multicolumn{3}{c}{nDCG@20} 		&
+	\multicolumn{3}{c}{MAP@20} 		&
+    \multicolumn{3}{c}{HLU} 			&
+    \multicolumn{3}{c}{IS Coverage} 	&
+    \multicolumn{3}{c}{US Coverage} \\ 
+    \cmidrule(lr){2-4}
+    \cmidrule(lr){5-7}
+    \cmidrule(lr){8-10}
+    \cmidrule(lr){11-13} 
+    \cmidrule(lr){14-16}
+    \cmidrule(lr){17-19}
+    
+    Model &
+    \multicolumn{1}{c}{40\%} &
+    \multicolumn{1}{c}{60\%} & 
+    \multicolumn{1}{c}{80\%} &
+    \multicolumn{1}{c}{40\%} &
+    \multicolumn{1}{c}{60\%} &
+    \multicolumn{1}{c}{80\%} &
+    \multicolumn{1}{c}{40\%} &
+    \multicolumn{1}{c}{60\%} & 
+    \multicolumn{1}{c}{80\%} & 
+    \multicolumn{1}{c}{40\%} & 
+    \multicolumn{1}{c}{60\%} &
+    \multicolumn{1}{c}{80\%} &
+    \multicolumn{1}{c}{40\%} &
+    \multicolumn{1}{c}{60\%} & 
+    \multicolumn{1}{c}{80\%} &
+    \multicolumn{1}{c}{40\%} &
+    \multicolumn{1}{c}{60\%} & 
+    \multicolumn{1}{c}{80\%} \\ \midrule
+    MostPopular 		& 0.5982 & 0.6028 & 0.6071 & 0.0254 & 0.0256 & 0.0187 & 0.0136 & 0.0156 & 0.0089 & 5.7803 & 5.7803 & 2.8902 & 1.0  & 1.0  & 1.0  & 1.0 	& 1.0  & 1.0						\\ 
+    MostPopular + FB 	& 0.7557 & 0.7687 & 0.7714 & 0.0254 & 0.0256 & 0.0174 & 0.0157 & 0.0156 & 0.0085 & 5.7803 & 5.7803 & 2.8902 & 1.0  & 1.0  & 1.0  & 1.0 	& 1.0  & 1.0  						\\ 
+    Rec 3				& -		 & - 	  & - 	   & - 		& - 	 & - 	  & -	   & -		& - 	 & -	  & -	   & - 		& -	   & -	  &	-	 & -	& -    & - 							\\ 
+
+    \bottomrule
     \end{tabular}
     }
     \caption{Sobazar Cold-start System Evaluation Results using Implicit Ratings (count\_sigmoid\_fixed\_sr-3.5.txt)}

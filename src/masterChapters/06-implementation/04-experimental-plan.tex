@@ -171,13 +171,14 @@ IBCF, with $k-NN=3$, experimenting with different $K$-fold values:
 
 \begin{table}[H]
 \centering
-\begin{tabular}{|l|l|l|l|l|}
-\hline
-K-fold & 	$min_{RMSE}$ 	&	$max_{RMSE}$ 	& Average 	& Variance 					\\ \hline
-3	   & 	0.783 			& 	0.789 			& 0.785 	& $8.730 \times 10^{-6}$	\\ \hline
-5	   & 	0.759			& 	0.802 			& 0.781 	& $3.363 \times 10^{-4}$ 	\\ \hline
-8	   & 	0.740			& 	0.781			& 0.758 	& $1.656 \times 10^{-4}$ 	\\ \hline
-10	   & 	0.718 			& 	1.026			& 0.810  	& 0.0125					\\ \hline
+\begin{tabular}{l l l l l }
+\toprule
+K-fold & 	$min_{RMSE}$ 	&	$max_{RMSE}$ 	& Average 	& Variance 					\\ \midrule
+3	   & 	0.783 			& 	0.789 			& 0.785 	& $8.730 \times 10^{-6}$	\\ 
+5	   & 	0.759			& 	0.802 			& 0.781 	& $3.363 \times 10^{-4}$ 	\\ 
+8	   & 	0.740			& 	0.781			& 0.758 	& $1.656 \times 10^{-4}$ 	\\ 
+10	   & 	0.718 			& 	1.026			& 0.810  	& 0.0125					\\
+\bottomrule
 \end{tabular}
 \caption{Evaluation results from experimenting with different k-fold splits on the Sobazar dataset}
 \end{table}
@@ -216,12 +217,13 @@ Table \ref{table:datasets} shows an overview of the datasets used for evaluation
 
 \begin{table}[H]
     \centering
-    \begin{tabular}{|l|l|l|l|l|l|}
-    \hline
-	Dataset			& 	Ratings 	& 	Users	& 	Items 	& 	Sparsity	& Rating Scale 				\\ \hline
-	Sobazar 		& 	27,873  	& 	1,511	&	5855	&	99.69657	& Implicit Ratings(1-5)		\\ \hline
-	%Movielens 1M	& 	1,000,029   &	6040 	&	3706	&	95.53164	& Explicit (1-5)			\\ \hline
-	Dataset 2 		& 	-  			& 	-		&	-		&	-			&							\\ \hline
+    \begin{tabular}{l l l l l l }
+    \toprule
+	Dataset			& 	Ratings 	& 	Users	& 	Items 	& 	Sparsity	& Rating Scale 				\\ \midrule
+	Sobazar 		& 	27,873  	& 	1,511	&	5855	&	99.69657	& Implicit Ratings(1-5)		\\ 
+	%Movielens 1M	& 	1,000,029   &	6040 	&	3706	&	95.53164	& Explicit (1-5)			\\ 
+	Dataset 2 		& 	-  			& 	-		&	-		&	-			&							\\
+	\bottomrule
     \end{tabular}
     \caption [Overview of the datasets used for evaluation]{Overview of the datasets used for evaluation}
     \label{table:datasets}
@@ -333,20 +335,20 @@ recommendation list.
 
 \begin{table}[H]
 	\centering
-	\begin{tabular}{|l|l|l|l|l|l|l|l|l|l|l|l|}
+	\begin{tabular}{*{12}l}
 	\toprule
-	Example	& R1 & R2 & R3 & R4 & R5 & R6 & R7 & R8 & R9 & R10 & AUC										  \\ \hline
-	1		& \cmark & \xmark & \xmark & \xmark & \xmark & \xmark & \xmark & \xmark & \xmark & \xmark & 1.000 \\ \hline
-	2		& \xmark & \cmark & \xmark & \xmark & \xmark & \xmark & \xmark & \xmark & \xmark & \xmark & 0.889 \\ \hline
-	3		& \xmark & \xmark & \cmark & \xmark & \xmark & \xmark & \xmark & \xmark & \xmark & \xmark & 0.778 \\ \hline
-	4		& \xmark & \xmark & \xmark & \cmark & \xmark & \xmark & \xmark & \xmark & \xmark & \xmark & 0.667 \\ \hline
-	5		& \xmark & \xmark & \xmark & \xmark & \cmark & \xmark & \xmark & \xmark & \xmark & \xmark & 0.556 \\ \hline
-	6		& \xmark & \xmark & \xmark & \xmark & \xmark & \cmark & \xmark & \xmark & \xmark & \xmark & 0.444 \\ \hline
-	7		& \xmark & \xmark & \xmark & \xmark & \xmark & \xmark & \cmark & \xmark & \xmark & \xmark & 0.333 \\ \hline
-	8		& \xmark & \xmark & \xmark & \xmark & \xmark & \xmark & \xmark & \cmark & \xmark & \xmark & 0.222 \\ \hline
-	9		& \xmark & \xmark & \xmark & \xmark & \xmark & \xmark & \xmark & \xmark & \cmark & \xmark & 0.111 \\ \hline
+	\#Example	& R1 & R2 & R3 & R4 & R5 & R6 & R7 & R8 & R9 & R10 & AUC \\ \midrule
+	1		& \cmark & \xmark & \xmark & \xmark & \xmark & \xmark & \xmark & \xmark & \xmark & \xmark & 1.000 \\ 
+	2		& \xmark & \cmark & \xmark & \xmark & \xmark & \xmark & \xmark & \xmark & \xmark & \xmark & 0.889 \\ 
+	3		& \xmark & \xmark & \cmark & \xmark & \xmark & \xmark & \xmark & \xmark & \xmark & \xmark & 0.778 \\ 
+	4		& \xmark & \xmark & \xmark & \cmark & \xmark & \xmark & \xmark & \xmark & \xmark & \xmark & 0.667 \\ 
+	5		& \xmark & \xmark & \xmark & \xmark & \cmark & \xmark & \xmark & \xmark & \xmark & \xmark & 0.556 \\ 
+	6		& \xmark & \xmark & \xmark & \xmark & \xmark & \cmark & \xmark & \xmark & \xmark & \xmark & 0.444 \\ 
+	7		& \xmark & \xmark & \xmark & \xmark & \xmark & \xmark & \cmark & \xmark & \xmark & \xmark & 0.333 \\ 
+	8		& \xmark & \xmark & \xmark & \xmark & \xmark & \xmark & \xmark & \cmark & \xmark & \xmark & 0.222 \\ 
+	9		& \xmark & \xmark & \xmark & \xmark & \xmark & \xmark & \xmark & \xmark & \cmark & \xmark & 0.111 \\ 
 	10		& \xmark & \xmark & \xmark & \xmark & \xmark & \xmark & \xmark & \xmark & \xmark & \cmark & 0.000 \\
-	\hline
+	\bottomrule
 	\end{tabular}
 	\caption{Varying the position of a single relevant item on a four out of ten recommendation list}
 	\label{table:auc}
@@ -385,9 +387,7 @@ items, the list will again contain groups of items that can appear in arbitrary 
 is posed by items for which no rating is known. These items could hold an arbitrary place within the ranking.
 Again, consider an example where a user e.g. have rated 5 items out of 4000, and the recommender is able to recommend
 only 10 items for that user. To measure the rank accuracy we would have to randomly add 3995 items to the users known
-preference list and 3990 to the users prediction list. Comparing the order of these lists would not make very much sense.
-The bottom line is that in most cases a rank metric for partial ordering would be more appropriate for comparing recommendation
-lists that are produced by recommenders to item rankings from known user preferences.
+preference list and 3990 to the users prediction list. Comparing the order of these lists would not make very much sense. The bottom line is that in most cases a rank metric for partial ordering would be more appropriate for comparing recommendation lists that are produced by recommenders to item rankings from known user preferences.
 
 We assume that we can recommend at most $k$ items for each user at a time. It also pays to submit all $k$
 recommendations, because we are not penalized for bad guesses. We also assume that the order matters, so it
@@ -409,13 +409,13 @@ Mean average precision (MAP@k), described in Section \ref{subp:mean_average_prec
 \begin{table}[H]
 \label{table:ap}
 \centering
-\begin{tabular}{|l|l|l|l|}
-\hline
-Example 	& 	Actual	& 	Recommended		&	AP@4   \\ \hline
-1			& [1,2,3,4]	&	[1,0,0,0]		&	0.250  \\ \hline
-2			& [1,2,3,4]	&	[2,0,0,0]		&	0.250  \\ \hline
+\begin{tabular}{*{4}l}
+\toprule
+Example 	& 	Actual	& 	Recommended		&	AP@4   \\ \midrule
+1			& [1,2,3,4]	&	[1,0,0,0]		&	0.250  \\ 
+2			& [1,2,3,4]	&	[2,0,0,0]		&	0.250  \\ 
 3			& [1,2,3,4]	&	[3,0,0,0]		&	0.250  \\
-\hline
+\bottomrule
 \end{tabular}
 \caption{AP@4 Scores}
 \end{table}
@@ -429,63 +429,63 @@ the designed application. Two such examples include:
 
 \begin{itemize}
 \item $rel_i = 1/log(i+k)$, where i is the index of the item in the actual sorted rating list, where $k$ is a constant.
-\item $rel_i = u(i)/max(u)$, simply assign the normalized rating as the relevance of the item.
+\item $rel_i = u(i)$, simply assign the rating of an item as its relevance.
 \end{itemize}
 
 For our application we believe it could be beneficial to use the rating of the item to assign a
-relevance score, as we could have multiple items with highly similar ratings (thus the same relevance). When using a low $k$ value for the logarithmic alternative this could mean that the relevance between two almost similarly rated items might end up being disproportionately large. We will also most likely look at 20 or more items, which means that the difference between the lower ranked items will be fairly small, as the logarithmic function converges. A third alternative would be to also use some linear decay function. The following table shows the $nDCG$ score for a set of examples where $rel_i = 1/log(i+1)$, to give the reader a better idea of how $nDCG$ \emph{works}.
+relevance score, as we could have multiple items with highly similar ratings (thus the same relevance). When using a low $k$ value for the logarithmic alternative this could mean that the relevance between two almost similarly rated items might end up being disproportionately large. We will also most likely look at 20 or more items, which means that the difference between the lower ranked items will be fairly small, as the logarithmic function converges. A third alternative would be to also use some linear decay function. The following table shows the $nDCG$ score for a set of examples where the function $rel_i = 1/log(i+1)$ is used to assign the relevance score to item $i$ in the sorted list of actual ratings. E.g. item one is assigned a relevance score of $1/(log(2)$ and so on. We hope the following table will give the reader a better idea of how $nDCG$ \emph{works}.
 
 \begin{table}[H]
 \label{table:ndcg}
 \centering
-\begin{tabular}{|l|l|l|l|}
-\hline
-Example 	& 	Actual					& 	Recommended				&	nDCG 	\\ \hline
-1			& 	[1,2,3,4]				&	[1,0,0,0]				&	0.470   \\ \hline
-2			& 	[1,2,3,4]				&	[2,0,0,0]				&	0.360   \\ \hline
-3			& 	[1,2,3,4]				&	[3,0,0,0]				&	0.330   \\ \hline
-4			& 	[1,2,3,4,5,6,7,8,9,10] 	& 	[1,2,3,4,5,6,7,8,9,10] 	&   1.000	\\ \hline
-5			& 	[1,2,3,4,5,6,7,8,9,10] 	& 	[10,9,8,7,6,5,4,3,2,1] 	&   0.900	\\ \hline
-6			&	[1,2,3,4,5,6,7,8,9,10] 	& 	[1,2,0,0,0,0,0,0,0,0] 	&   0.440	\\ \hline
-7			& 	[1,2,3,4,5,6,7,8,9,10] 	& 	[1,0,0,3,0,0,0,0,0,0] 	&   0.390	\\ \hline
-8			& 	[1,2,3,4,5,6,7,8,9,10] 	& 	[4,0,0,0,8,0,0,0,0,0] 	&   0.280	\\ \hline
-9			& 	[1,2,3,4,5,6,7,8,9,10] 	& 	[0,0,0,0,5,0,0,0,0,10] 	&   0.130	\\ \hline
+\begin{tabular}{*{4}l}
+\toprule
+Example 	& 	Actual					& 	Recommended				&	nDCG 	\\ \midrule
+1			& 	[1,2,3,4]				&	[1,0,0,0]				&	0.470   \\ 
+2			& 	[1,2,3,4]				&	[2,0,0,0]				&	0.360   \\ 
+3			& 	[1,2,3,4]				&	[3,0,0,0]				&	0.330   \\ 
+4			& 	[1,2,3,4,5,6,7,8,9,10] 	& 	[1,2,3,4,5,6,7,8,9,10] 	&   1.000	\\ 
+5			& 	[1,2,3,4,5,6,7,8,9,10] 	& 	[10,9,8,7,6,5,4,3,2,1] 	&   0.900	\\ 
+6			&	[1,2,3,4,5,6,7,8,9,10] 	& 	[1,2,0,0,0,0,0,0,0,0] 	&   0.440	\\ 
+7			& 	[1,2,3,4,5,6,7,8,9,10] 	& 	[1,0,0,3,0,0,0,0,0,0] 	&   0.390	\\ 
+8			& 	[1,2,3,4,5,6,7,8,9,10] 	& 	[4,0,0,0,8,0,0,0,0,0] 	&   0.280	\\ 
+9			& 	[1,2,3,4,5,6,7,8,9,10] 	& 	[0,0,0,0,5,0,0,0,0,10] 	&   0.130	\\ 
 10			& 	[1,2,3,4,5,6,7,8,9,10] 	& 	[0,0,0,0,0,0,0,0,9,10]	&   0.110	\\
-\hline
+\bottomrule
 \end{tabular}
 \caption{nDCG Results}
 \end{table}
 
 As you can see from the above mentioned examples nDCG will give us an indication whether or not our recommender
-ranks \emph{highly relevant} items above those who are less relevant. As for the limitations, nDCG is designed for situations of non-binary notions of relevance, thus cannot be used in our experiment where we wish to compare binary ratings with implicit ratings. The main difficulty encountered in using nDCG is the unavailability of an ideal ordering of results when only partial relevance feedback is available. This is often the case when we have several equally good results! This is especially true when this metric is limited to only first few results as it is done in practice.
+ranks \emph{highly relevant} items above those who are less relevant. As for the limitations, nDCG is designed for situations of non-binary notions of relevance, thus cannot be used in our experiment where we wish to compare binary ratings with implicit ratings. The main difficulty encountered in using nDCG is the unavailability of an ideal ordering of results when only partial relevance feedback is available. This is often the case when we have several equally good results! This is especially true when this metric is limited to only first few results as it is often done in practice.
 
-We chose take a closer look at the different ways of calculating nDCG. There are two commonly used methods to calculate the DCG scores.
+We chose take a closer look at the different ways of calculating nDCG. There are two commonly used methods to calculate the DCG and IDCG scores.
 
 \begin{itemize}
 \item Method 1  $DCG_p = rel_1 + \sum_{i=2}^{p} \frac{rel_i}{log_2(i)}$
 \item Method 2: $DCG_p = \sum_{i=1}^{p} \frac{2^{rel_i}-1}{log_2(i+1})$
 \end{itemize}
 
-The following table shows our comparison between Method 1 and Method 2. Here we set the value of $rel_i$ to be the implicit rating of item $i$.
+The following table shows the differences between Method 1 and Method 2 on a few selected examples. Here we set the value of $rel_i$ equal to the implicit rating of item $i$.
 
 \begin{table}[H]
 \label{table:ndcgfinal}
 \centering
-\begin{tabular}{|l|l|l|l|l|}
-\hline
-Example & 	Actual																	& 	Recommended				&	Method 1  	   & Method 2	\\ \hline
-1 		& 	[[1,5],[2,3.8],[3,3.55],[4,2.78],[5,1.3]]								&	[5,0,0,0,0]				&	0.113 		   & 0.026  \\ \hline
-2 		& 	[[1,5],[2,3.8],[3,3.55],[4,2.78],[5,1.3]]								&	[0,0,1,0,0]				&	0.217 		   & 0.275   \\ \hline
-3   	& 	[[1,5],[2,4.8],[3,3.55],[4,2.78],[5,2.2],[6,2.0],[7,1.77],[8,1.3]]		&	[2,3,4,5,6,7,8,0]		&	0.827		   & 0.682   \\ \hline
-4  		& 	[[1,5],[2,4.8],[3,3.55],[4,2.78],[5,2.2],[6,2.0],[7,1.77],[8,1.3]]		&	[1,2,0,0,0,0,0,0]		&	0.592 		   & 0.805   \\ \hline
-5 		& 	[[1,5],[2,4.93],[3,2.88],[4,1.85],[5,1.8],[6,1.77],[7,1.63],[8,1.52]]	&	[1,0,0,0,0,0,0,0]		&	0.394 		   & 0.544   \\ \hline
-6 		& 	[[1,5],[2,4.93],[3,2.88],[4,1.85],[5,1.8],[6,1.77],[7,1.63],[8,1.52]]	&	[3,4,5,6,7,8,0,0]		&	0.542 		   & 0.206   \\
-\hline
+\begin{tabular}{*{5}l}
+\toprule
+\#Ex & 	Actual																	& 	Recommended				&	$nDCG^1$  	   & $nDCG^2$	\\ \midrule
+1 		& 	[$1_{5}, 2_{3.8}, 3_{3.55}, 4_{2.78},5_{1.3}$]								&	[5,0,0,0,0]				&	0.113 		   & 0.026  \\ 
+2 		& 	[$1_{5}, 2_{3.8}, 3_{3.55}, 4_{2.78},5_{1.3}$]								&	[0,0,1,0,0]				&	0.217 		   & 0.275   \\ 
+3   	& 	[$1_{5},2_{4.8}, 3_{3.55}, 4_{2.78}, 5_{2.2}, 6_{2.0},7_{1.77},8_{1.3}$]		&	[2,3,4,5,6,7,8,0]		&	0.827		   & 0.682   \\ 
+4  		& 	[$1_{5},2_{4.8}, 3_{3.55}, 4_{2.78}, 5_{2.2}, 6_{2.0},7_{1.77},8_{1.3}$]		&	[1,2,0,0,0,0,0,0]		&	0.592 		   & 0.805   \\
+5 		& 	[$1_{5},2_{4.93},3_{2.88}, 4_{1.85},5_{1.8},6_{1.77}, 7_{1.63},8_{1.52}$]	&	[1,0,0,0,0,0,0,0]		&	0.394 		   & 0.544   \\
+6 		& 	[$1_{5},2_{4.93},3_{2.88}, 4_{1.85},5_{1.8},6_{1.77}, 7_{1.63},8_{1.52}$]	&	[3,4,5,6,7,8,0,0]		&	0.542 		   & 0.206   \\
+\bottomrule
 \end{tabular}
-\caption{Comparison of nDCG scores for different methods of computing DCG. Each item in the Actual list is on the form [ItemId, Rating], the first item in the actual list of example one therefore has en ItemId of 1 and a Rating of 5. All non relevant items are given the ItemId 0 in the Recommended list.}
+\caption{Comparison of nDCG scores for different methods of computing DCG. Each item in the Actual list is on the form $ItemId_{Rating}$, the first item in the actual list of example one therefore has en ItemId of 1 and a Rating of 5. All non relevant items are given the ItemId 0 in the Recommended list.}
 \end{table}
 
-As you can see Method 1 is a bit more \emph{balanced} than Method 2, as it does not give as much weight to highly rated items. Especially example 5 and 6 highlights this as Method 2 prefers retrieving highly rated item right over retrieving multiple less relevant ones. Method 2 is ultimately closer to what we want in addition to being commonly used by web search companies and on the data science competition platform Kaggle. We have also chosen to truncate the recommendation list and only calculate the nDCG of the $k$ top items.
+As you can see Method 1 is a bit more \emph{balanced} than Method 2, as it does not give as much weight to highly rated items. Especially example 5 and 6 highlights this as Method 2 prefers retrieving one highly rated item over retrieving multiple less relevant ones. Method 2 is ultimately closer to what we want in addition to being commonly used by web search companies and on the data science competition platform Kaggle \cite{kaggle}. We have also chosen to truncate the recommendation list and only calculate the nDCG of the $k$ top items.
 
 \marginpar{TODO: Spend any more time looking at partial order ranking measures?...}
 
@@ -502,5 +502,89 @@ coverage is measured by looking at how many of the items are recommendable.
 
 %TODO - How will these experiment be carried out and validated?
 \subsection{Implicit Ratings vs. Binary Preference}
+
+\begin{center}
+    \begin{tikzpicture}
+		[node distance = 1cm, auto,font=\footnotesize,
+		% STYLES
+		every node/.style={node distance=1.5cm},
+		% The comment style is used to describe the characteristics of each process
+		comment/.style={rectangle, inner sep= 5pt, text width=3cm, node distance=0.25cm, font=\scriptsize\sffamily},
+		% small comment lol
+		comment-small/.style={rectangle, inner sep= 5pt, text width=1cm, node distance=0.25cm, font=\scriptsize\sffamily},
+		% The nonProcess style
+		nonProcess/.style={rectangle, draw, inner sep=5pt, text width=3cm, text badly centered, minimum height=1.2cm, font=\footnotesize\sffamily},
+		% The process style is used to draw the processs' name
+		process/.style={rectangle, draw, fill=black!10, inner sep=5pt, text width=3cm, text badly centered, minimum height=1.2cm, font=\bfseries\footnotesize\sffamily},
+		% ratingsGenerator style
+		ratingsGenerators/.style={rectangle, draw, fill=blue!50, inner sep=5pt, text width=3cm, text badly centered, minimum height=1.2cm, font=\bfseries\footnotesize\sffamily},
+		% racommendation algorithms
+		recAlgs/.style={rectangle, draw, fill=red!40, inner sep=5pt, text width=3cm, text badly centered, minimum height=1.2cm, font=\bfseries\footnotesize\sffamily}]
+
+		% Draw processs
+		\node [ratingsGenerators] (rg1) {sigmoid\_fixed};
+		\node [ratingsGenerators, right=0.25 of rg1] (rg2) {sigmoid\_constant};
+		\node [comment-small, right=0.01 of rg2] (dotdotdot) {..............};
+		\node [ratingsGenerators, right=0.01 of dotdotdot] (rg3) {norm\_dist};
+
+		\node [process, below of=rg2] (gt) {"Ground Truth"};
+
+		\node [recAlgs, below of=gt] (ra2) {ALS};
+		\node [recAlgs, left=0.25 of ra2] (ra1) {KNN};
+		\node [comment-small, right=0.01 of ra2] (dotdotdot2) {..............};
+		\node [recAlgs, right=0.01 of dotdotdot2] (ra3) {wALS};
+
+		\node [process, below of=ra2] (eval) {Evaluation Score};
+
+		% \node [nonProcess, below of=implicitConverter] (ratings) {Ratings for the items};
+		% \node [process, below of=ratings] (recommendations) {Make recommendations};
+		% \node [process, below of=recommendations] (evaluations) {Evaluate recommendations};
+		% \node [nonProcess, below of=evaluations] (evaluationValue) {Recommendation score};
+
+		%%%%%%%%%%%%%%%
+		% Comments
+		\node [comment, right=0.25 of rg3] (comment-rg3) {
+			Implicit ratings
+		};
+		\node [comment, right=0.25 of ra3] (comment-ra3) {
+			Recommendations algorithm
+		};
+		% \node [comment, right=0.25 of ratings] (comment-ratings) {
+		% The output of the conversion is a set of ratings on the different items from the soBazar dataset
+		% };
+		% \node [comment, right=0.25 of recommendations] (comment-recommendations) {
+		% Makes recommendations based on the inputed ratings. Different approaches to make the recommendations can be take, such as matrix factorization or neighborhood based approaches
+		% };
+		% \node [comment, right=0.25 of evaluations] (comment-evaluations) {
+		% Evaluate the recommender system(s). Different evaluation metrics will be usea, such as e.g. AUC and nDCG
+		% };
+
+		%%%%%%%%%%%%%%%%
+		% Draw the links between processs
+		\path[->,thick]
+			(rg1) edge (gt)
+			(rg2) edge (gt)
+			(dotdotdot) edge (gt)
+			(rg3) edge (gt)
+			(gt) edge (ra1)
+			(gt) edge (ra2)
+			(gt) edge (dotdotdot2)
+			(gt) edge (ra3)
+			(ra1) edge (eval)
+			(ra2) edge (eval)
+			(dotdotdot2) edge (eval)
+			(ra3) edge (eval);
+		% \path[>=latex,->] (gt) edge (eval);
+		% \draw[rectangle connector=-3cm] (gt) to (eval);
+		\draw[>=latex,->] (gt) -- +(-6,0) |- (eval);
+    \end{tikzpicture}
+    \captionof{figure}[Implicit Rating Evaluation]{Overview of how the generated ratings from the implicit feedback can be evaluated.}
+  	\label{figure:implicitRatingEvaluation}
+  \end{center}
+
+	The blue boxes in figure~\ref{figure:implicitRatingEvaluation} are functions used to produce the implicit ratings based on the implicit feedback.
+	Based on this, the system gets an estimated ground truth, which can be used to evaluate the different recommendation algorithms show in the red boxes.
+	Based on the evaluation score something can be said about the implicit feedback conversion to implicit ratings and the recommendation algorithms used.
+
 \subsection{A Comparison of Implicit Rating Mapping Functions}
 \subsection{Combining Implicit Ratings With Existing Cold-Start Solutions}

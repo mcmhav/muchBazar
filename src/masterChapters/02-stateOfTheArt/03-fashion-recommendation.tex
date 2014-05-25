@@ -309,6 +309,11 @@
       It is clear that the large portion of the e-commerce fashion companies are putting their focus on women's clothing.}
   \end{figure}
 
+\marginpar{use tikz or these fine ass pie charts?}
+%  \begin{tikzpicture}
+%  \pie[text=legend]{10/first, 20/second, 70/third}
+%  \end{tikzpicture}
+
   \begin{figure}[H]
       \includegraphics[width=4in]{image/trafficsources.png}
       \centering
@@ -877,13 +882,13 @@
         \centering
         \begin{tabular}{l l l l l l l}
             \toprule
-            \emph{Competitor} &
-            \pbox{5cm}{\emph{In App} \\ \emph{Purchase}} &
-            \pbox{5cm}{\emph{Most} \\ \emph{Popular}} &
-            \pbox{5cm}{\emph{Similar} \\ \emph{Items}} &
-            \pbox{5cm}{\emph{Want} \\ \emph{List}} &
-            \pbox{5cm}{\emph{Follow} \\ \emph{Other Users}} &
-            \pbox{5cm}{\emph{Personalized} \\ \emph{Recommendations}} \\ \hline
+            Competitor &
+            \multicolumn{1}{l}{\parbox{1.3cm}{ In App \\ Purchase}} &
+            \multicolumn{1}{l}{\parbox{1.0cm}{ Most \\ Popular}} & 
+            \multicolumn{1}{l}{\parbox{1.0cm}{ Similar \\ Items}} & 
+            \multicolumn{1}{l}{\parbox{1.0cm}{ Want \\ List}} &
+            \multicolumn{1}{l}{\parbox{1.9cm}{ Follow \\ Other Users}} &
+            \multicolumn{1}{l}{\parbox{2.6cm}{ Personalized \\ Recommendations}} \\ \midrule
 
             Myntra  & \cmark & \cmark & \cmark & \cmark & \xmark & \xmark \\
             Flink   & \xmark & \cmark & ?? & \cmark & \cmark & \xmark \\

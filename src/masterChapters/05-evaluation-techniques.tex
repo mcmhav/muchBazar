@@ -290,26 +290,29 @@ items.
 
 \begin{table}[H]
 	\centering
-	\begin{tabular}{l|l|l}
-					&	Relevant			&	Not Relevant \\ \hline
-	Recommended		&	True-Positive (TP) 	&	False-Positive (FP)	\\ \hline
-	Not Recommended	&	False-Negative (FN)	&	True-Negative (TN)	\\ \hline
+	\begin{tabular}{l l l}
+	\toprule
+					&	Relevant			&	Not Relevant \\ \midrule
+	Recommended		&	True-Positive (TP) 	&	False-Positive (FP)	\\ 
+	Not Recommended	&	False-Negative (FN)	&	True-Negative (TN)	\\ 
+	\bottomrule
 	\end{tabular}
 	\label{table:usageprediction}
 	\caption[Usage prediction (Confusion Matrix)]{This table is showing the different categories recommended items can end up in.}
 \end{table}
 
-\begin{table}[H]
-	\centering
-	\begin{tabular}{l|l}
-		True-Positive (TP)	& The recommended item is of interest to the user \\ \hline
-		False-Positive (FP)	& The recommended item is not of interest to the user \\ \hline
-		False-Negative (FN)	& The item is of interest to the user, but is not recommended \\ \hline
-		True-Negative (TN)	& The item is not of interest to the user, but is not recommended \\
-	\end{tabular}
-	\label{table:predictionCategories}
-	\caption[Prediction Categories]{}
-\end{table}
+%\begin{table}[H]
+%	\centering
+%	\begin{tabular}{l|l}
+%		\toprule
+%		True-Positive (TP)	& The recommended item is of interest to the user \\ \hline
+%		False-Positive (FP)	& The recommended item is not of interest to the user \\ \hline
+%		False-Negative (FN)	& The item is of interest to the user, but is not recommended \\ \hline
+%		True-Negative (TN)	& The item is not of interest to the user, but is not recommended \\
+%	\end{tabular}
+%	\label{table:predictionCategories}
+%	\caption[Prediction Categories]{}
+%\end{table}
 
 This model assumes that not relevant items would not have been relevant if they had been
 recommended to a user. This assumption may be false, such as when the set of
@@ -355,7 +358,7 @@ Accuracy is the amount of correctly recommended items over all the items.
     \label{equation:accuracy}
 \end{equation}
 
-\paragraph{Receiver Operating Characteristics (ROC))}
+\paragraph{Receiver Operating Characteristics (ROC)}
 The $ROC$ is the recall rate ($TPR$) against the fallout rate ($FPR$).
 The goal is to maximize the recall while minimizing the fallout.
 \begin{equation}
@@ -381,7 +384,38 @@ As mentioned by Powers et al.~\cite{powers2007}, recall, precision, F-measure an
 Another drawback or limitation with the measuring of user predictions is that it does not take into account the ranking of the items.
 To handle this, rank based metrics can be used.
 
-\subsubsection{Accuracy Ranking} % (fold)
+\subsubsection{Rank Based Metrics}
+\label{para:rank_based}
+Rank accuracy metrics measure the ability of a recommendation method to produce
+a recommended ordering of items that matches how the user would have ordered
+the same items. Shani et al.~\cite{Shani2011} lists two different approaches
+for measuring the ranking accuracy: Try determining the correct order of a set
+of items for each user and measure how close a system comes to this correct
+order, or we can attempt to measure the utility of the system's ranking to a
+user.
+
+Herlocker et al.~\cite{Herlocker2004} argue that rank accuracy metrics may be
+overly sensitive for domains where the user just wants an item that is `good
+enough' (binary preferences) since the user won't be concerned about the
+ordering of items beyond the binary classification. These metrics are therefore
+most suitable to evaluate algorithms that are used to present ranked lists to
+the user in domains where the user preferences are expressed using numerical
+values.
+
+\paragraph{AP correlation}
+\label{subp:ap_correlation}
+$AP correlation$~\cite{Yilmaz:2008:NRC:1390334.1390435} measures the overall precision and is a variant of $Kendall's$ $tau$.
+It counts the amount of items correctly placed in a ordered predicted rank list $list1$ and a list of the actual rank ordering of the preferences of the user $list2$.
+\begin{equation}
+	AP = \frac{2}{N - 1} * \sum_{i=2}^{N}{(\frac{C(i)}{i - 1})} - 1
+	\label{equation:ap}
+\end{equation}
+How to calculate the $AP correlation$ value is shown in ~\ref{equation:ap}.
+$C(i)$ is the number of items ranked correctly above rank $i$.
+The value of AP is between -1 and 1, where a score of 0 means that $list1$ can be considered a randomly generated list and 1 is a perfect match with the actual list $list2$.
+% \paragraph{Limitations}
+% todo maybe
+
 \label{par:accuracy_ranking}
 \marginpar{if this is the setup, write a little intro}
 \paragraph{Mean Percentage Ranking (MPR)}
@@ -455,37 +489,7 @@ $HL_u^{max}$ is the maximum possible value of the half-life utility value.
 \marginpar{something like this perhaps}
 % paragraph accuracy_ranking (end)
 
-\subsubsection{Rank Based Metrics}
-\label{para:rank_based}
-Rank accuracy metrics measure the ability of a recommendation method to produce
-a recommended ordering of items that matches how the user would have ordered
-the same items. Shani et al.~\cite{Shani2011} lists two different approaches
-for measuring the ranking accuracy: Try determining the correct order of a set
-of items for each user and measure how close a system comes to this correct
-order, or we can attempt to measure the utility of the system's ranking to a
-user.
 
-Herlocker et al.~\cite{Herlocker2004} argue that rank accuracy metrics may be
-overly sensitive for domains where the user just wants an item that is `good
-enough' (binary preferences) since the user won't be concerned about the
-ordering of items beyond the binary classification. These metrics are therefore
-most suitable to evaluate algorithms that are used to present ranked lists to
-the user in domains where the user preferences are expressed using numerical
-values.
-
-\paragraph{AP correlation}
-\label{subp:ap_correlation}
-$AP correlation$~\cite{Yilmaz:2008:NRC:1390334.1390435} measures the overall precision and is a variant of $Kendall's$ $tau$.
-It counts the amount of items correctly placed in a ordered predicted rank list $list1$ and a list of the actual rank ordering of the preferences of the user $list2$.
-\begin{equation}
-	AP = \frac{2}{N - 1} * \sum_{i=2}^{N}{(\frac{C(i)}{i - 1})} - 1
-	\label{equation:ap}
-\end{equation}
-How to calculate the $AP correlation$ value is shown in ~\ref{equation:ap}.
-$C(i)$ is the number of items ranked correctly above rank $i$.
-The value of AP is between -1 and 1, where a score of 0 means that $list1$ can be considered a randomly generated list and 1 is a perfect match with the actual list $list2$.
-% \paragraph{Limitations}
-% todo maybe
 
 \subsubsection{Beyond Accuracy}
 There is an emerging understanding that good recommendations accuracy alone does not give the users of the recommender system an effective and satisfying experience \cite{Herlocker2004}. The following \emph{measures} attempts to assess a recommender systems usefulness beyond being able to provide accurate recommendations to the users.
@@ -555,88 +559,7 @@ Joachims et al.~\cite{Joachims07evaluatingthe} shows that clicks can be biased, 
 Two ways of measuring the system is through ranking and usage prediction described earlier.
 
 
-  \begin{center}
-    \begin{tikzpicture}
-		[node distance = 1cm, auto,font=\footnotesize,
-		% STYLES
-		every node/.style={node distance=1.5cm},
-		% The comment style is used to describe the characteristics of each process
-		comment/.style={rectangle, inner sep= 5pt, text width=3cm, node distance=0.25cm, font=\scriptsize\sffamily},
-		% small comment lol
-		comment-small/.style={rectangle, inner sep= 5pt, text width=1cm, node distance=0.25cm, font=\scriptsize\sffamily},
-		% The nonProcess style
-		nonProcess/.style={rectangle, draw, inner sep=5pt, text width=3cm, text badly centered, minimum height=1.2cm, font=\footnotesize\sffamily},
-		% The process style is used to draw the processs' name
-		process/.style={rectangle, draw, fill=black!10, inner sep=5pt, text width=3cm, text badly centered, minimum height=1.2cm, font=\bfseries\footnotesize\sffamily},
-		% ratingsGenerator style
-		ratingsGenerators/.style={rectangle, draw, fill=blue!50, inner sep=5pt, text width=3cm, text badly centered, minimum height=1.2cm, font=\bfseries\footnotesize\sffamily},
-		% racommendation algorithms
-		recAlgs/.style={rectangle, draw, fill=red!40, inner sep=5pt, text width=3cm, text badly centered, minimum height=1.2cm, font=\bfseries\footnotesize\sffamily}]
-
-		% Draw processs
-		\node [ratingsGenerators] (rg1) {sigmoid\_fixed};
-		\node [ratingsGenerators, right=0.25 of rg1] (rg2) {sigmoid\_constant};
-		\node [comment-small, right=0.01 of rg2] (dotdotdot) {..............};
-		\node [ratingsGenerators, right=0.01 of dotdotdot] (rg3) {norm\_dist};
-
-		\node [process, below of=rg2] (gt) {"Ground Truth"};
-
-		\node [recAlgs, below of=gt] (ra2) {ALS};
-		\node [recAlgs, left=0.25 of ra2] (ra1) {KNN};
-		\node [comment-small, right=0.01 of ra2] (dotdotdot2) {..............};
-		\node [recAlgs, right=0.01 of dotdotdot2] (ra3) {wALS};
-
-		\node [process, below of=ra2] (eval) {Evaluation Score};
-
-		% \node [nonProcess, below of=implicitConverter] (ratings) {Ratings for the items};
-		% \node [process, below of=ratings] (recommendations) {Make recommendations};
-		% \node [process, below of=recommendations] (evaluations) {Evaluate recommendations};
-		% \node [nonProcess, below of=evaluations] (evaluationValue) {Recommendation score};
-
-		%%%%%%%%%%%%%%%
-		% Comments
-		\node [comment, right=0.25 of rg3] (comment-rg3) {
-			Implicit ratings
-		};
-		\node [comment, right=0.25 of ra3] (comment-ra3) {
-			Recommendations algorithm
-		};
-		% \node [comment, right=0.25 of ratings] (comment-ratings) {
-		% The output of the conversion is a set of ratings on the different items from the soBazar dataset
-		% };
-		% \node [comment, right=0.25 of recommendations] (comment-recommendations) {
-		% Makes recommendations based on the inputed ratings. Different approaches to make the recommendations can be take, such as matrix factorization or neighborhood based approaches
-		% };
-		% \node [comment, right=0.25 of evaluations] (comment-evaluations) {
-		% Evaluate the recommender system(s). Different evaluation metrics will be usea, such as e.g. AUC and nDCG
-		% };
-
-		%%%%%%%%%%%%%%%%
-		% Draw the links between processs
-		\path[->,thick]
-			(rg1) edge (gt)
-			(rg2) edge (gt)
-			(dotdotdot) edge (gt)
-			(rg3) edge (gt)
-			(gt) edge (ra1)
-			(gt) edge (ra2)
-			(gt) edge (dotdotdot2)
-			(gt) edge (ra3)
-			(ra1) edge (eval)
-			(ra2) edge (eval)
-			(dotdotdot2) edge (eval)
-			(ra3) edge (eval);
-		% \path[>=latex,->] (gt) edge (eval);
-		% \draw[rectangle connector=-3cm] (gt) to (eval);
-		\draw[>=latex,->] (gt) -- +(-6,0) |- (eval);
-    \end{tikzpicture}
-    \captionof{figure}[Implicit Rating Evaluation]{Overview of how the generated ratings from the implicit feedback can be evaluated.}
-  	\label{figure:implicitRatingEvaluation}
-  \end{center}
-
-	The blue boxes in figure~\ref{figure:implicitRatingEvaluation} are functions used to produce the implicit ratings based on the implicit feedback.
-	Based on this, the system gets an estimated ground truth, which can be used to evaluate the different recommendation algorithms show in the red boxes.
-	Based on the evaluation score something can be said about the implicit feedback conversion to implicit ratings and the recommendation algorithms used.
+  
 
 \subsubsection{Rank Based} % (fold)
 	\label{par:Ranking_based}
