@@ -10,6 +10,7 @@ This subsection will present the experimental results for the Sobazar dataset us
 
 \begin{table}
     \centering
+    \resizebox{\columnwidth}{!}{%
     \begin{tabular}{|c|*{18}{c|}c|}
     \hline
     &	 \multicolumn{3}{c|}{AUC} & \multicolumn{3}{c|}{nDCG@20} &	 \multicolumn{3}{c|}{MAP@20} &	 \multicolumn{3}{c|}{HLU} & \multicolumn{3}{c|}{IS Coverage} & \multicolumn{3}{c|}{US Coverage} \\ \hline
@@ -19,11 +20,13 @@ This subsection will present the experimental results for the Sobazar dataset us
     Rec 3				& -		 & - 	  & - 	   & - 		& - 	 & - 	  & -	   & -		& - 	 & 	   	  & -	   &		&	   &	  &		 &		&	   & - 							\\ \hline
     Rec 4				& -		 & - 	  & - 	   & - 		& - 	 & - 	  & -	   & -		& - 	 & - 	   	  & -	   &		&	   &	  &		 &		&	   & - 							\\ \hline
     \end{tabular}
+    }
     \caption{Sobazar Cold-start System Evaluation Results using Implicit Ratings (count\_sigmoid\_fixed\_sr-3.5.txt)}
 \end{table}
 
 \begin{table}
 \centering
+\resizebox{\columnwidth}{!}{%
 \begin{tabular}{|c|*{18}{c|}c|}
 \hline
 &	 \multicolumn{3}{c|}{AUC} & \multicolumn{3}{c|}{nDCG@20} &	 \multicolumn{3}{c|}{MAP@20} &	 \multicolumn{3}{c|}{HLU} & \multicolumn{3}{c|}{IS Coverage} & \multicolumn{3}{c|}{US Coverage} \\ \hline
@@ -33,11 +36,13 @@ MostPopular + FB 	& 0.8569 & 0.8587 & 0.8672 & 0.0254 & 0.0400 & 0.0474 & 0.0089
 Rec 3				& -		 & - 	  & - 	   & - 		& - 	 & - 	  & -	   & -		& - 	 & 	   	  & -	   &		&	   &	  &		 &		&	   & - 							\\ \hline
 Rec 4				& -		 & - 	  & - 	   & - 		& - 	 & - 	  & -	   & -		& - 	 & 	   	  & -	   &		&	   &	  &		 &		&	   & - 							\\ \hline
 \end{tabular}
+}
 \caption{Sobazar Cold-start Item Evaluation Results using Implicit Ratings (count\_sigmoid\_fixed\_sr-3.5.txt)}
 \end{table}
 
 \begin{table}
 \centering
+\resizebox{\columnwidth}{!}{%
 \begin{tabular}{|c|*{18}{c|}c|}
 \hline
 &	 \multicolumn{3}{c|}{AUC} & \multicolumn{3}{c|}{nDCG@20} &	 \multicolumn{3}{c|}{MAP@20} &	 \multicolumn{3}{c|}{HLU} & \multicolumn{3}{c|}{IS Coverage} & \multicolumn{3}{c|}{US Coverage} \\ \hline
@@ -47,5 +52,6 @@ MostPopular + FB 	& 0.9877 & 0.9895 & 0.9897 & 0.0804 & 0.0937 & 0.1045 & 0.0449
 Rec 3				& -		 & - 	  & - 	   & - 		& - 	 & - 	  & -	   & -		& - 	 & 	   	  & -	   &		&	   &	  &		 &		&	   & - 							\\ \hline
 Rec 4				& -		 & - 	  & - 	   & - 		& - 	 & - 	  & -	   & -		& - 	 & 	   	  & -	   &		&	   &	  &		 &		&	   & - 							\\ \hline
 \end{tabular}
+}
 \caption{Sobazar Cold-start User Evaluation Results using Implicit Ratings (count\_sigmoid\_fixed\_sr-3.5.txt)}
 \end{table}

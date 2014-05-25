@@ -100,13 +100,14 @@ user-interactions with the applications, and optionally use product information 
 quality. In addition, the design should provide a solution to the problem of giving accurate recommendations
 to new users of the system.
 
-Recommender systems have been applied to a wide range of different domains including music, movies, e-commerce
+Recommender systems have been applied to a wide range of different domains including music, movies, e-commerce, news
 and many others. Since each application domain has its own specific needs, the methods used for recommendations differ. 
-This leads us to our first research goal(s), which is the following:
+This leads us to our first research goals, which are the following:
 
 \begin{itemize}
-  \item G1: What are the domain specific challenges of the fashion domain?
-  \item G2: How can existing technologies be adapted to mitigate or overcome these challanges?
+	\item G1: Gain a better understanding of the fashion domain.
+  	\item G2: Identify the specific challenges of making fashion recommendations.
+  	\item G3: How can existing technologies be adapted to mitigate or overcome these challenges?
 \end{itemize}
 
 Most recommender systems base their recommendations of previous feedback given by the user. A central problem for
@@ -116,37 +117,31 @@ of user-interactions. Poor recommendations can result in customer defection and 
 The above reasoning lead us to the following goal, which is to:
 
 \begin{itemize}
-  \item G3: Find the existing solutions to the cold-start problem presented in the recommender system literature
-  		and present the possible solution(s)
+  \item G4: Find the existing solutions to the cold-start problem presented in the recommender system literature
+  		and present the possible solution(s) best suited for our application and needs.
 \end{itemize}
 
-We focus mainly on finding \emph{complete} solutions to the cold-start problem, that can handle both new users, items
+We focus mainly on finding \emph{complete} solutions to the cold-start problem, that can handle both new users, new items
 and general sparsity related problems.
 
 As previously mentioned, recommender systems base their recommendations on feedback given by the user. SoBazar records
 all the users interactions with the application, which then could be interpreted as user feedback given by users to items.
 We have multiple types of interactions such as e.g. browsing, wanting and purchasing items. We would like to figure out
-how these events could be used to learn the users true preferences. This lead us to the following goal(s):
+how these events could be used to learn the users true preferences. This lead us to the following goals:
 
-\begin{Itemize}
- 	\item G4: What solutions exists, what can be used
-	\item G5: How can the different event types be combined into \emph{implicit ratings}?
-  	\item G6: How can we evaluate the implicit ratings generated from implicit feedback?
- 	\item G7: Establish user interaction patterns to better evaluate.
-\end{enumerate}
+\begin{itemize}
+ 	\item G5: Explore the existing solutions of how to infer user preference from implicit feedback data.
+ 	\item G6: Establish user interaction patterns to support our assumptions.
+	\item G7: Find different methods of combining various event types into \emph{implicit ratings}?
+  	\item G8: Evaluate the \emph{implicit ratings}.
+\end{itemize}
 
 We would like to combine the solutions found through our work with the above mentioned goals and combine these in a 
 proposal to a design for a fashion e-commerce recommender system.
 
-\subsection{Other Challenges}
+\marginpar{TODO? Assumptions and Constraints}
 
-%Pragmatic approach - start off simple, extend system
-%Scalability / extensibility issues (Ensure that the system can handle the increased load as it goes live)
-
-% #1 - How to make content-based recommendations based on content information from multiple providers in (two)different languages
-%   Goal: Select features/feature engineering based on literature study + observations. What features are the most informative? #2
-% #4 - How to weight a blending of recommendation algorithms as time progresses.
-%   Goal: Use weights based on evaluation and findings through literary study
+%E.g. Due to data limitations we have excluded cold-start articles looking at how demographic data can be incorporated to solve the cold-start user problem.
 
 \section{System Overview}
   \marginpar{maybe reference to the chapters/section the boxes are referring to}
@@ -168,7 +163,7 @@ proposal to a design for a fashion e-commerce recommender system.
       \node [nonProcess, below of=implicitConverter] (ratings) {Ratings for the items};
       \node [process, below of=ratings] (recommendations) {Make recommendations};
       \node [process, below of=recommendations] (evaluations) {Evaluate recommendations};
-      \node [nonProcess, below of=evaluations] (evaluationValue) {Recommendation score};
+     
 
       %%%%%%%%%%%%%%%
       % Comments
@@ -195,8 +190,8 @@ proposal to a design for a fashion e-commerce recommender system.
         (inputData) edge (implicitConverter)
         (implicitConverter) edge (ratings)
         (ratings) edge (recommendations)
-        (recommendations) edge (evaluations)
-        (evaluations) edge (evaluationValue);
+        (recommendations) edge (evaluations);
+        
     \end{tikzpicture}
     \captionof{figure}[System Overview]{Overview of the system. Boxes in white represents input and output data. Boxes in gray represents processes}
   \end{center}
