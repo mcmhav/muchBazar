@@ -1,60 +1,57 @@
 % !TEX root = ../../report.tex
 
-% What will be adressed in the section?
-  % Motivation for using implicit feedback
-
-	% Implicit feedback vs. explicit feedback
-		% How is implicit feedback related to user preference
-
-  % Evaluating implicit ratings, extracted from implicit feedback.
-
-  % Closely related article:
-    % Evaluation -> And specifically, evaluation of implicit ratings and
-    % predictions based on these.
-
 \label{implicit-feedback}
 \section{Implicit feedback to implicit ratings}
 \label{sec:implicit}
 
-%Helge: Poenget er at å rate i sobazar koster penger, mens det er "gratis" hos netflix
-
 Explicit feedback is present in many of the largest recommender systems today
-and hence, is extensively researched.% \todo{Ref.} The user is commonly asked to
-rate item $i$ on a Likert scale from $1$ to $k$, ranging from strongly
-disagree to strongly agree with an item. Its advantages are, among others the
-ability to get precise feedback from the user and capturing both positive and
-negative preferences. However, although having a high popularity, the method
-has multiple weaknesses. The most prominent weakness is the difficulty of
-collecting ratings: the method requires the user to spend time rating items and
-the amount of feedback is often scarce, creating sparse data sets. Further,
-explicit ratings are often subject to inconsistencies known as natural
-noise~\cite{amatriain2009like} and users might also be pressed to report
-different preferences due to peer of social pressure % \todo{ref}. The fact that we are
-introducing a user overhead, makes it difficult to have a complete view on the
-user preferences~\cite{Jawaheer2010}.
+and hence, is extensively researched \cite{Adomavicius2005}. The user is
+commonly asked to rate item $i$ on a Likert scale from $1$ to $k$, ranging from
+strongly disagree to strongly agree with an item. Its advantages are, among
+others the ability to get precise feedback from the user and capturing both
+positive and negative preferences. However, although having a high popularity,
+the method has multiple weaknesses. The most prominent weakness is the
+difficulty of collecting ratings: the method requires the user to spend time
+rating items and the amount of feedback is often scarce, creating sparse data
+sets. Further, explicit ratings are often subject to inconsistencies known as
+natural noise~\cite{amatriain2009like} and users might also be pressed to
+report different preferences due to peer pressure \cite{bell2007scalable}. The
+fact that we are introducing a user overhead, makes it difficult to have a
+complete view on the user preferences~\cite{Jawaheer2010}.
 
-There may also be practical reasons for not having explicit ratings, dependent
-on how a website/application interacts and works with its customers. A useful
-example is Netflix, where rating an item does not \textit{cost} anything for
-the user, that is to consume the item is included in a monthly subscription
-price, whilst in a webstore rating an item often require the user to first buy
-it, then consume it and finally rate it. This is often infeasable or
-impractical, and we can create more pleasant experience for the user and achieve
-better results with less sparsity by looking at behavioural statistics. By
-considering analytics data we de not require any extra effort from the user and
-the data on which we can base our recommendations are easier to collect, since
-we do not need a seperate user interface for it, and in most applications one
-have access to the most basic of access logs (Web Server Logs) already.
+There are also practical reasons for not having explicit ratings in form of
+ratings, dependent on how a website/application interacts and works with its
+customers. One of the most popular recommender sites in the world, Netflix, ask
+their users to rate items after consumation. However, this process does not
+\textit{cost} anything for the user, and the possibility to rate is included in
+the monthly subscription price, whilst in a webstore rating an item often
+require the user to first buy it, consume it and finally rate it. Often this
+process is either infeasable or impractical, and we can create more pleasant
+experience for the user and achieve better results with less sparsity by
+looking at already accessible behavioural statistics. By considering analytics
+data we de not require any extra effort from the user and the data on which we
+can base our recommendations are easier to collect, since we do not need a
+seperate user interface for it, and in most applications we have access to the
+access logs (Web Server Logs or similar) already.
+
+In order to use these logs we assume the following information available on
+each event analyzed, which we will use as the backbone data in making
+recommendations for the remainder of this paper:
+
+\begin{enumerate}
+  \item User ID
+  \item Product ID
+  \item Event type (purchase, click etc.)
+  \item Timestamp
+\end{enumerate}
 
 Our end-goal is to predict a rating $r$ for a given user $u$ on item $i$, and
-thus we need some way of translating our implicit feedback (Access logs and so
-forth) into what we call \textbf{implicit ratings} – these are ratings, just
-like explicit ratings, but inferred by user behavior and as we will see in the
-succeeding sections need to be analyzed with this in mind.
-
-In summary, partly inspired by Hu et al.~\cite{Hu2008}, we can identify the
-following key charecterstics and differences between implicit and explicit
-ratings.
+thus we need some way of translating our implicit feedback into what we call
+\textbf{implicit ratings}. It is important to understand that there is several
+fundemental differences between implicit and explicit ratings, in everything
+from \textit{meaning} to \textit{evaluation techniques}. Partly inspired by Hu
+et al.~\cite{Hu2008}, we can identify the following key charecterstics and
+differences between them: 
 
 \textbf{Explicit ratings:}
 \begin{itemize}
@@ -93,13 +90,20 @@ sparsity and catching actual behaviour in the application. Less influenced by
 peer pressure and so forth.
 \end{itemize}
 
+Notice that several events such as purchasing an item may be considered as
+explicitly giving positive feedback, but as we argue in this paper all events
+in the Sobazar dataset (including purchases) are treated as implicit feedback.
+The reasoning behind this lies in the fact that purchasing, in contrast to
+positivly rating, an item happens before actual consumption. Hence the user may
+not like the item in question, it may be a gift for another person or a variety
+of other reasons. Whilst in the scenerio of rating, the user has already
+consumed it and is explicitly answering the question \textit{«To which degree
+did you like it?»}.
+
 We will look into more of these charecteristics in our thesis, carefully
 examining the state of the art with regards to both weaknesses and advantages
 and finally introduce some novel techniques facilitating the creation of
 implicit ratings.
-
-\marginpar{Helge: "Rating" her betyr "kjøpt"? Så vi har implicit og explicit i
-kombo?}
 
 \clearpage
 
@@ -165,8 +169,9 @@ a bit from the generation of implicit ratings, we will stop our analysis of it
 here. But is shows an important aspect which we will return to in subsequent
 sections, namely the confidence in repetative events and our continuious
 challenge to obtain higher confidence in our implicit ratings. For further
-information on matrix factorization and latent factors refer to Section~\ref{}
-or to Hu et.\ al.\ original research~\cite{Hu2008}.
+information on matrix factorization and latent factors refer to
+Section~\ref{model-based-methods} or to Hu et.\ al.\ original
+research~\cite{Hu2008}.
 
 \subsubsection{Implicit ratings for binary domains}
 
@@ -264,96 +269,129 @@ Improvements to this model are presented in Section~\ref{implementation}
 
 \subsubsection{Regression analysis}
 
+\paragraph{Introduction}
 A different method for converting events to ratings is finding a mathematical
 model which fits our observed data. Using this model we can predict new ratings
-by extrapolation or intrapolaton. The process of finding such a model within
-statistics is called regression analysis, and have been done in a study by
-Parra et.\ al.~\cite{parra2011walk}. As will be clear the method requires some
-form of \textit{ground truth} which in the referenced study was done by doing a
-quantitative user study asking 114 active users of the music service Last.fm to
-rate items which was found in their activity history. These ratings were used
-as \textit{dependent variables} and the implicit feedback/events, combined with
-other factors were used as \textit{independent variables} - the details of
-which will be exlained below.
+by extrapolation or intrapolaton. Our observed data can be in N-dimensions, but
+in the figure below we consider two dimensions of observed properties, in which
+the goal is to find a regression line matching the data points with minimal
+errors. An example regression line matching five data points is provided below:
 
-A regression analysis is using multiple data points in order to learn how the
-independent variables relate to the dependent variable. Often the linear
-regression model is formulated as:
+\begin{figure}[H]
+  \centering
+  \label{fig-regression}
+  \begin{tikzpicture}
+    \begin{axis}[
+        xlabel=Feature 1,
+        ylabel=Rating,
+        ymax=5.5, ymin=0,
+        xmax=35, xmin=0,
+        ymajorgrids=true,
+    ]
+    \addplot[only marks]table[]{
+      1 1
+      2 2
+      10 3
+      25 4
+      30 5
+    };
+    \addplot [dashed, color=red, domain=-3:35, samples=40] {0.114861*x + 1.437889};
+    \end{axis}
+  \end{tikzpicture}
+  \caption{Regression line fitting the 5 observed datapoints}
+\end{figure}
+
+In this example we consider the relationship between one feature (the
+independent variable) and the rating (ground truth/dependent variable), using
+five observed datapoints. We can then, given a feature-value, predict future
+ratings. The process of finding the regression line is better generalized by
+solving the following equation, where we are given a number of independent and
+dependent values: 
 
 \begin{equation}
   \label{eq-regression}
   \hat{y}(w,x) = w_0 + w_1 x_1 + \cdots + w_p x_p
 \end{equation}
 
-where we want to find the values of the $w$, also called the unknown
-parameters. Using a dataset of $x$ (independent) and $y$ (dependent) values we
-can solve the equation above and perform the analysis. As a simple example,
-consider the following dataset:
+where we want to find the values of the $w$-parameters, also called the unknown
+parameters. This is done by using multipe known values for $x$ and $y$, the
+independent and dependent variables respectivly. In Figure \ref{fig-regression}
+we have the following datapoints:
 
 \begin{table}[H]
   \centering
-  \begin{tabular}{rr}
+  \begin{tabular}{ll}
   \toprule
-  x & y \\
+  Feature-value (x) & Rating (y) \\
   \midrule
-   -2 & 3 \\
-   3  & -1 \\
-   1  & 1 \\
-   -1 & 3 \\
-   2  & 3 \\
-   4  & -2 \\
+   1 & 1 \\
+   2  & 2 \\
+   10  & 3 \\
+   25 & 4 \\
+   30  & 5 \\
    \bottomrule
   \end{tabular}
 \end{table}
 
-Solving equation~\ref{eq-regression} we have the following equations where we
-want to find the values of $w_0$ and $w_1$:
+Which, solving Equation~\ref{eq-regression}, five different equations are
+used with the unknown parameters $w_0$ and $w_1$:
 
 \begin{equation}
   \label{eqs-regression-example}
   \begin{split}
-    -2 = w_0 + 3 w_1 \\
-    \dots \\
-    4 = w_0 - 2 w_1
+    1 = w_0 + 1 w_1 \\
+    2 = w_0 + 2 w_1 \\
+    3 = w_0 + 10 w_1 \\
+    4 = w_0 + 25 w_1 \\
+    5 = w_0 + 30 w_1
   \end{split}
 \end{equation}
 
 Using a minimization method called \textit{Least squares} we try to minimize
 the residual $e = y_i - w^{T}x_{i}$, using sum of squares between the observed
-values in the dataset and the values predicted by the linear approximation.
-Mathematically it solved the problem of the following form:
+values in the dataset and the values predicted by the linear approximation. In
+other words we want a minimal distance between all observed datapoints the the
+final regression line. Mathematically it solved the problem of the following
+form:
 
 \begin{equation}
   \hat{w} = \argmin_w \sum_{i} (y - w^{T}x_{i})^2
 \end{equation}
 
 Carrying out this minimization for our equations~\ref{eqs-regression-example},
-we obtain an intercept value ($w_0$) of $1.3787$ and a slope ($w_1$) of
-$0.5454$, this can be validated as a good approximation to the data points, by
-looking at the 2D-plot below:
+we obtain an intercept value ($w_0$) of $1.4379$ and a slope ($w_1$) of
+$0.1149$, which matches the regression line plotted in
+Figure~\ref{fig-regression}. Predicting a new rating based on a feature value
+in now very simple - as an example we assume a new independent value is
+provided with the value 15 and an unknown rating, that is $x=15$ and we can
+solve the equation $y = 0.1149 \cdot 15 + 1.4379$ which yields the $y$-value or
+rating $3.1614$.
 
-\begin{figure}[H]
-  \centering
-  \begin{tikzpicture}
-    \begin{axis}[
-        axis lines=middle,
-        xmin=-5, xmax=5,
-        ymin=-5, ymax=5,
-        xtick=\empty, ytick=\empty
-    ]
-    \addplot[only marks]table[]{-2 -3
-      -3 -1
-      1 1
-      -4 -2
-      2 3
-      -1 3
-    };
-    \addplot [domain=-5:5, samples=2, dashed] {0.5454*x+1.3787};
-    \end{axis}
-  \end{tikzpicture}
-  \caption{Regression analysis showing a mathmatical model fitting the 5
-  observed datapoints}
-\end{figure}
+\paragraph{Using regression analysis on implicit feedback}
+
+The process of using regression analysis in order to predict ratings based on
+implicit feedback has already been done, in a different domain, by Parra et.\
+al.~\cite{parra2011walk}. Where they first did a quantitiative user study
+asking 114 active users of the music service Last.fm to rate items which was
+found in their activity history. These ratings were used as dependent variables
+and then using various schemes described below they mapped these to the
+independent variables. Now, a key point in their study is the fact that all
+models found used explicit feedback from a user study as a \textit{ground
+truth}. The necessity of such a ground truth is the largest weakness in terms
+of regression analysis on implicit datasets - as it is per definition
+non-existent. A possibility is to give various events scores based on
+importance in the system, with e.g. a purchase having top-score and clicking on
+an item a low score. This is discussed further in Section~\ref{} where an
+implimentaiton and evaluation of such a design is presented as well.
+
+The study looked at three different features for each item, found in the
+dataset:
+
+\begin{itemize}
+  \item User activity on the item
+  \item Global popularity of the item
+  \item How recent the user had acitivity on the item
+\end{itemize}
 
 Now, using this methodology on implicit feedback we need a regression model that
 correctly explains the correlation between feedback and ratings. Four models
