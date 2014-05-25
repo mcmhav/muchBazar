@@ -286,61 +286,64 @@ shown in Table \ref{table:ratingMatrix} containing the rating of four users $C$
 for four items $S$, giving us a $C \times S$ matrix with explicit ratings on a
   scale from 1 to 5.
 
-\begin{table}[!htbp]
-    \centering
-    \begin{tabular}{|c|c|c|c|}
-    \hline
-    5.00    & 5.00  & 2.00 & -    \\ \hline
-    2.00    & -     & 3.00 & 5.00 \\ \hline
-     -      & 5.00  & -    & 3.00 \\ \hline
-    3.00    & -     & -    & 5.00 \\ \hline
-    \end{tabular}
-    \caption{Rating matrix R ($C \times S$)}
-    \label{table:ratingMatrix}
-\end{table}
+\begin{figure}[H]
+	\centering
+	$
+	\begin{bmatrix}
+		5.00    & 5.00  & 2.00 & -    \\ 
+		2.00    & -     & 3.00 & 5.00 \\ 
+		-       & 5.00  & -    & 3.00 \\ 
+		3.00    & -     & -    & 5.00 
+	\end{bmatrix}
+	$
+	\caption{Rating matrix $R$}
+	\label{table:ratingMatrix}
+\end{figure}
 
 Given that $f = 3$, we might end up with the following matrix $P$ and $Q$
 
-\begin{table}[!htbp]
+\begin{figure}[H]
 \centering
-\begin{tabular}{|c|c|c|}
-\hline
-1.81    &1.62   &0.74\\ \hline
-2.66    &1.71   &-1.08\\ \hline
-1.73    &-0.23  &0.78\\ \hline
-3.16    &-0.24  &0.90\\ \hline
-\end{tabular}
-\label{table:ItemFeature}
-\caption{User factor matrix $P$ ($C \times f$)}
-\end{table}
+$
+\begin{bmatrix}
+1.81    &1.62   &0.74\\ 
+2.66    &1.71   &-1.08\\ 
+1.73    &-0.23  &0.78\\ 
+3.16    &-0.24  &0.90
+\end{bmatrix}
+$
+\caption{User factor matrix $P$}
+\end{figure}
 
-\begin{table}[!htbp]
+\begin{figure}[H]
 \centering
-\begin{tabular}{|c|c|c|c|}
-\hline
-1.12    &   1.49    &   0.48\\ \hline
-1.31    &-0.52  &0.59\\ \hline
-1.13    &0.67&  -0.52\\ \hline
-1.39    &0.05&  0.45\\ \hline
-\end{tabular}
-\label{table:UserFeature}
-\caption{Item factor matrix $Q$ ($S \times f$)}
-\end{table}
+$
+\begin{bmatrix}
+1.12    &	1.49   &	0.48\\ 
+1.31    &	-0.52  &	0.59\\ 
+1.13    &	0.67	&	-0.52\\
+1.39    &	0.05	&	0.45
+\end{bmatrix}
+$
+\caption{Item factor matrix $Q$}
+\end{figure}
 
 Equation \ref{equation:dotproduct} then gives us the following rating prediction matrix $\hat{R}$.
 
-\begin{table}[!htbp]
+\begin{figure}[H]
 \centering
-\begin{tabular}{|c|c|c|c|}
-\hline
-4.79    &5.01   &1.97   &3.61 \\ \hline
-1.97    &1.96   &2.85   &4.80 \\ \hline
-2.75    &4.71   &1.40   &2.94 \\ \hline
-2.93    &3.30   &2.74   &4.78 \\ \hline
-\end{tabular}
-\label{table:PredictionMatrix}
+$
+\begin{bmatrix}
+4.79    &5.01   &1.97   &3.61 \\ 
+1.97    &1.96   &2.85   &4.80 \\ 
+2.75    &4.71   &1.40   &2.94 \\ 
+2.93    &3.30   &2.74   &4.78 
+\end{bmatrix}
+$
 \caption{Rating prediction matrix $\hat{R}$}
-\end{table}
+\end{figure}
+
+
 
 As you can see the values of known ratings in Table \ref{table:ratingMatrix}
 are fairly similar to the corresponding ratings in the rating prediction

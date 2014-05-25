@@ -70,11 +70,17 @@ being large enough.
 \end{itemize}
 
 The cold-start user problem is present both in content-based and collaborative-filtering systems.
-Collaborative Filtering is based on the idea that like-minded users have similar tastes and preferences.
-A new user therefore poses a challenge to a CF recommender, since the system has no knowledge about
-the preferences of the new user, and can therefore not provide any personalized recommendations. The system must therefore acquire some
-information about the new user before it can start making personalized recommendations. In a typical domain, for example in the domain of books, the number of items is very large (in the order of tens of thousands) while the number of items rated by every single user is in general small (in the order of dozens or less). This means that it is very unlikely two random users have rated any items in common and hence they are not comparable. The system will therefore most likely struggle to find users with tastes that are \emph{truly} similar to the target user. Similarly, in content-based systems, the lack of ratings given by the target user, means that the target user will have a limited
-content-profile, since the users content profile is constructed using content-information from his/hers rated items. In both cases, recommendation quality is most likely bound to suffer.\newline
+Since Collaborative Filtering is based on the idea that like-minded users have similar tastes and
+preferences, a new user therefore naturally poses a challenge to a CF recommender, since the system has no knowledge about
+the preferences of the new user, and can therefore not find any like-minded users. The system must therefore acquire some
+information about the new user before it can start making personalized recommendations. In a typical domain, for example
+in the domain of books, the number of items is very large (in the order of tens of thousands) while the number of items
+rated by every single user is in general small (in the order of dozens or less). This means that it is very unlikely two
+random selected users have rated any items in common and hence they are not comparable. The system will therefore most
+likely struggle to find users with tastes that are \emph{truly} similar to the target user. Similarly, in content-based
+systems, the lack of ratings given by the target user, means that the target user will have a limited content-profile,
+since the users content profile is constructed using content-information from his/hers rated items. In both cases,
+recommendation quality is most likely bound to suffer.\newline
 
 This section will present a few different solutions to the cold-start problem, focusing mainly on \emph{complete} solutions to the cold-start problem.
 
@@ -86,7 +92,6 @@ cold-start user problem, primarily since the trust statements between users can
 be propagated and aggregated, and consequently connect more people and
 products. By making clever connections in the trust network, newcomers can
 immediately gain access to a wide range of connections.
-
 
 %Due to the popularity of social networks such as Facebook, more and more
 %researchers turn to incorporate the social relationships (e.g. trust) of users
@@ -158,7 +163,7 @@ set the maximum propagation distance $d$, a user at distance $n$ from the
 source user will have a predicted trust value of:
 
 \begin{equation}
-t_{u,v} = (d-n+1)/d
+t_{u,v} = \frac{d-n+1}{d}
 \end{equation}
 
 Giving users not reachable within the maximum propagation distance a trust of
@@ -198,7 +203,6 @@ matrix, the estimated trust matrix or a combination of both in order to
 calculate the predicted ratings.
 
 % Using a Trust Network to Improve Top-N Recommendation
-
 
 Jamali et al. \cite{Jamali2009} propose two different methods for getting
 around the cold-start user problem using a trust network. Their first approach
@@ -416,7 +420,7 @@ on user effort and accuracy:
 
 \begin{itemize}
 \item \emph{Entropy0}: Entropy Considering Missing Values
-\item \emph{HELF:} Harmonic mean of Entropy and Logarithm of Frequency
+%\item \emph{HELF:} Harmonic mean of Entropy and Logarithm of Frequency
 \item \emph{IGCN:} Information Gain through Clustered Neighbors
 \end{itemize}
 
@@ -485,7 +489,7 @@ items and users start out with profiles based on their known features that gets
 refined smoothly with the availability of more data. The model also supports
 dynamic updates, which gives more weight to recent data. Their proposal is a
 batched online learning scheme which updates the model on fixed time intervals
-or after a predetermined of new observations have been made.
+or after a predetermined amount of new observations have been made.
 
 Their model outperformed all other models on both the MovieLens and EachMovie
 datasets, and their dynamic model in particular significantly outperformed all
@@ -748,12 +752,12 @@ Compare the models based on the following properties:
     \centering
     \begin{tabular}{|l|l|l|l|l|}
     \hline
-    Method & Accuracy & Cold-start performance & Scalability & User-effort \\ \hline
-    Trust-aware RS & & & \\ \hline
-    Filterbots & & & \\ \hline
-    Seed users & & & \\ \hline
-    Intelligent selection & & & \\ \hline
-    Hybrid Methods & & & \\ \hline
+    Method					& Accuracy & Cold-start performance & Scalability & User-effort \\ \hline
+    Trust-aware RS 			& 		   & 						& \\ \hline
+    Filterbots 				& 		   & 						& \\ \hline
+    Seed users 				& 		   & 						& \\ \hline
+    Intelligent selection 	& 		   & 						& \\ \hline
+    Hybrid Methods 			& 		   & 						&	 \\ \hline
     \end{tabular}
     \caption[Evaluation of cold-start methods]{Evaluation of cold-start methods}
     \label{table:evaluationcoldstart}

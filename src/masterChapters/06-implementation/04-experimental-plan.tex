@@ -67,15 +67,11 @@ following dataset properties:
 \begin{itemize}
 	\item Size of dataset: Preferable as close as possible to Sobazar (6 months from now)
 	in terms of number of ratings, users and items.
-
 	\item Different types of user feedback: Preferable different types of implicit feedback
 	such as browsing and buying behavior.
-
 	\item Domain: Preferably a domain as close to possible as the e-commerce domain with respect
 	to the importance of factors such as recentness.
-
 	\item Presence of features: To evaluate the hybrid methods.
-
 	\item Timestamps: To evaluate the recentness mapping
 \end{itemize}
 
@@ -440,7 +436,7 @@ For our application we believe it could be beneficial to use the rating of the i
 relevance score, as we could have multiple items with highly similar ratings (thus the same relevance). When using a low $k$ value for the logarithmic alternative this could mean that the relevance between two almost similarly rated items might end up being disproportionately large. We will also most likely look at 20 or more items, which means that the difference between the lower ranked items will be fairly small, as the logarithmic function converges. A third alternative would be to also use some linear decay function. The following table shows the $nDCG$ score for a set of examples where $rel_i = 1/log(i+1)$, to give the reader a better idea of how $nDCG$ \emph{works}.
 
 \begin{table}[H]
-\label{table:ap}
+\label{table:ndcg}
 \centering
 \begin{tabular}{|l|l|l|l|}
 \hline
@@ -463,7 +459,34 @@ Example 	& 	Actual					& 	Recommended				&	nDCG 	\\ \hline
 As you can see from the above mentioned examples nDCG will give us an indication whether or not our recommender
 ranks \emph{highly relevant} items above those who are less relevant. As for the limitations, nDCG is designed for situations of non-binary notions of relevance, thus cannot be used in our experiment where we wish to compare binary ratings with implicit ratings. The main difficulty encountered in using nDCG is the unavailability of an ideal ordering of results when only partial relevance feedback is available. This is often the case when we have several equally good results! This is especially true when this metric is limited to only first few results as it is done in practice.
 
-\marginpar{TODO: Describe final nDCG evaluation measure}
+We chose take a closer look at the different ways of calculating nDCG. There are two commonly used methods to calculate the DCG scores.
+
+\begin{itemize}
+\item Method 1  $DCG_p = rel_1 + \sum_{i=2}^{p} \frac{rel_i}{log_2(i)}$
+\item Method 2: $DCG_p = \sum_{i=1}^{p} \frac{2^{rel_i}-1}{log_2(i+1})$
+\end{itemize}
+
+The following table shows our comparison between Method 1 and Method 2. Here we set the value of $rel_i$ to be the implicit rating of item $i$.
+
+\begin{table}[H]
+\label{table:ndcgfinal}
+\centering
+\begin{tabular}{|l|l|l|l|l|}
+\hline
+Example & 	Actual																	& 	Recommended				&	Method 1  	   & Method 2	\\ \hline
+1 		& 	[[1,5],[2,3.8],[3,3.55],[4,2.78],[5,1.3]]								&	[5,0,0,0,0]				&	0.113 		   & 0.026  \\ \hline
+2 		& 	[[1,5],[2,3.8],[3,3.55],[4,2.78],[5,1.3]]								&	[0,0,1,0,0]				&	0.217 		   & 0.275   \\ \hline
+3   	& 	[[1,5],[2,4.8],[3,3.55],[4,2.78],[5,2.2],[6,2.0],[7,1.77],[8,1.3]]		&	[2,3,4,5,6,7,8,0]		&	0.827		   & 0.682   \\ \hline
+4  		& 	[[1,5],[2,4.8],[3,3.55],[4,2.78],[5,2.2],[6,2.0],[7,1.77],[8,1.3]]		&	[1,2,0,0,0,0,0,0]		&	0.592 		   & 0.805   \\ \hline
+5 		& 	[[1,5],[2,4.93],[3,2.88],[4,1.85],[5,1.8],[6,1.77],[7,1.63],[8,1.52]]	&	[1,0,0,0,0,0,0,0]		&	0.394 		   & 0.544   \\ \hline
+6 		& 	[[1,5],[2,4.93],[3,2.88],[4,1.85],[5,1.8],[6,1.77],[7,1.63],[8,1.52]]	&	[3,4,5,6,7,8,0,0]		&	0.542 		   & 0.206   \\
+\hline
+\end{tabular}
+\caption{Comparison of nDCG scores for different methods of computing DCG. Each item in the Actual list is on the form [ItemId, Rating], the first item in the actual list of example one therefore has en ItemId of 1 and a Rating of 5. All non relevant items are given the ItemId 0 in the Recommended list.}
+\end{table}
+
+As you can see Method 1 is a bit more \emph{balanced} than Method 2, as it does not give as much weight to highly rated items. Especially example 5 and 6 highlights this as Method 2 prefers retrieving highly rated item right over retrieving multiple less relevant ones. Method 2 is ultimately closer to what we want in addition to being commonly used by web search companies and on the data science competition platform Kaggle. We have also chosen to truncate the recommendation list and only calculate the nDCG of the $k$ top items.
+
 \marginpar{TODO: Spend any more time looking at partial order ranking measures?...}
 
 %TODO - Select K value based on user interface
