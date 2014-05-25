@@ -269,96 +269,129 @@ Improvements to this model are presented in Section~\ref{implementation}
 
 \subsubsection{Regression analysis}
 
+\paragraph{Introduction}
 A different method for converting events to ratings is finding a mathematical
 model which fits our observed data. Using this model we can predict new ratings
-by extrapolation or intrapolaton. The process of finding such a model within
-statistics is called regression analysis, and have been done in a study by
-Parra et.\ al.~\cite{parra2011walk}. As will be clear the method requires some
-form of \textit{ground truth} which in the referenced study was done by doing a
-quantitative user study asking 114 active users of the music service Last.fm to
-rate items which was found in their activity history. These ratings were used
-as \textit{dependent variables} and the implicit feedback/events, combined with
-other factors were used as \textit{independent variables} - the details of
-which will be exlained below.
+by extrapolation or intrapolaton. Our observed data can be in N-dimensions, but
+in the figure below we consider two dimensions of observed properties, in which
+the goal is to find a regression line matching the data points with minimal
+errors. An example regression line matching five data points is provided below:
 
-A regression analysis is using multiple data points in order to learn how the
-independent variables relate to the dependent variable. Often the linear
-regression model is formulated as:
+\begin{figure}[H]
+  \centering
+  \label{fig-regression}
+  \begin{tikzpicture}
+    \begin{axis}[
+        xlabel=Feature 1,
+        ylabel=Rating,
+        ymax=5.5, ymin=0,
+        xmax=35, xmin=0,
+        ymajorgrids=true,
+    ]
+    \addplot[only marks]table[]{
+      1 1
+      2 2
+      10 3
+      25 4
+      30 5
+    };
+    \addplot [dashed, color=red, domain=-3:35, samples=40] {0.114861*x + 1.437889};
+    \end{axis}
+  \end{tikzpicture}
+  \caption{Regression line fitting the 5 observed datapoints}
+\end{figure}
+
+In this example we consider the relationship between one feature (the
+independent variable) and the rating (ground truth/dependent variable), using
+five observed datapoints. We can then, given a feature-value, predict future
+ratings. The process of finding the regression line is better generalized by
+solving the following equation, where we are given a number of independent and
+dependent values: 
 
 \begin{equation}
   \label{eq-regression}
   \hat{y}(w,x) = w_0 + w_1 x_1 + \cdots + w_p x_p
 \end{equation}
 
-where we want to find the values of the $w$, also called the unknown
-parameters. Using a dataset of $x$ (independent) and $y$ (dependent) values we
-can solve the equation above and perform the analysis. As a simple example,
-consider the following dataset:
+where we want to find the values of the $w$-parameters, also called the unknown
+parameters. This is done by using multipe known values for $x$ and $y$, the
+independent and dependent variables respectivly. In Figure \ref{fig-regression}
+we have the following datapoints:
 
 \begin{table}[H]
   \centering
-  \begin{tabular}{rr}
+  \begin{tabular}{ll}
   \toprule
-  x & y \\
+  Feature-value (x) & Rating (y) \\
   \midrule
-   -2 & 3 \\
-   3  & -1 \\
-   1  & 1 \\
-   -1 & 3 \\
-   2  & 3 \\
-   4  & -2 \\
+   1 & 1 \\
+   2  & 2 \\
+   10  & 3 \\
+   25 & 4 \\
+   30  & 5 \\
    \bottomrule
   \end{tabular}
 \end{table}
 
-Solving equation~\ref{eq-regression} we have the following equations where we
-want to find the values of $w_0$ and $w_1$:
+Which, solving Equation~\ref{eq-regression}, five different equations are
+used with the unknown parameters $w_0$ and $w_1$:
 
 \begin{equation}
   \label{eqs-regression-example}
   \begin{split}
-    -2 = w_0 + 3 w_1 \\
-    \dots \\
-    4 = w_0 - 2 w_1
+    1 = w_0 + 1 w_1 \\
+    2 = w_0 + 2 w_1 \\
+    3 = w_0 + 10 w_1 \\
+    4 = w_0 + 25 w_1 \\
+    5 = w_0 + 30 w_1
   \end{split}
 \end{equation}
 
 Using a minimization method called \textit{Least squares} we try to minimize
 the residual $e = y_i - w^{T}x_{i}$, using sum of squares between the observed
-values in the dataset and the values predicted by the linear approximation.
-Mathematically it solved the problem of the following form:
+values in the dataset and the values predicted by the linear approximation. In
+other words we want a minimal distance between all observed datapoints the the
+final regression line. Mathematically it solved the problem of the following
+form:
 
 \begin{equation}
   \hat{w} = \argmin_w \sum_{i} (y - w^{T}x_{i})^2
 \end{equation}
 
 Carrying out this minimization for our equations~\ref{eqs-regression-example},
-we obtain an intercept value ($w_0$) of $1.3787$ and a slope ($w_1$) of
-$0.5454$, this can be validated as a good approximation to the data points, by
-looking at the 2D-plot below:
+we obtain an intercept value ($w_0$) of $1.4379$ and a slope ($w_1$) of
+$0.1149$, which matches the regression line plotted in
+Figure~\ref{fig-regression}. Predicting a new rating based on a feature value
+in now very simple - as an example we assume a new independent value is
+provided with the value 15 and an unknown rating, that is $x=15$ and we can
+solve the equation $y = 0.1149 \cdot 15 + 1.4379$ which yields the $y$-value or
+rating $3.1614$.
 
-\begin{figure}[H]
-  \centering
-  \begin{tikzpicture}
-    \begin{axis}[
-        axis lines=middle,
-        xmin=-5, xmax=5,
-        ymin=-5, ymax=5,
-        xtick=\empty, ytick=\empty
-    ]
-    \addplot[only marks]table[]{-2 -3
-      -3 -1
-      1 1
-      -4 -2
-      2 3
-      -1 3
-    };
-    \addplot [domain=-5:5, samples=2, dashed] {0.5454*x+1.3787};
-    \end{axis}
-  \end{tikzpicture}
-  \caption{Regression analysis showing a mathmatical model fitting the 5
-  observed datapoints}
-\end{figure}
+\paragraph{Using regression analysis on implicit feedback}
+
+The process of using regression analysis in order to predict ratings based on
+implicit feedback has already been done, in a different domain, by Parra et.\
+al.~\cite{parra2011walk}. Where they first did a quantitiative user study
+asking 114 active users of the music service Last.fm to rate items which was
+found in their activity history. These ratings were used as dependent variables
+and then using various schemes described below they mapped these to the
+independent variables. Now, a key point in their study is the fact that all
+models found used explicit feedback from a user study as a \textit{ground
+truth}. The necessity of such a ground truth is the largest weakness in terms
+of regression analysis on implicit datasets - as it is per definition
+non-existent. A possibility is to give various events scores based on
+importance in the system, with e.g. a purchase having top-score and clicking on
+an item a low score. This is discussed further in Section~\ref{} where an
+implimentaiton and evaluation of such a design is presented as well.
+
+The study looked at three different features for each item, found in the
+dataset:
+
+\begin{itemize}
+  \item User activity on the item
+  \item Global popularity of the item
+  \item How recent the user had acitivity on the item
+\end{itemize}
 
 Now, using this methodology on implicit feedback we need a regression model that
 correctly explains the correlation between feedback and ratings. Four models

@@ -26,33 +26,45 @@ Dithering adds \emph{noise} to the algorithm, which permutes the results in such
 
 Given $x=1$, $y=8$ and $z=2$ alternative one generated the following permutations of the original ranking in 10 runs:
 
-\begin{enumerate}
-	\item 8, 3, 24, 20, 1, 19, 22, 15, 42, 36
-	\item 2, 0, 1, 32, 20, 3, 35, 34, 43, 10
-	\item 7, 1, 3, 12, 2, 25, 0, 9, 24, 27
-	\item 0, 4, 3, 5, 7, 16, 26, 22, 13, 33
-	\item 0, 10, 8, 1, 15, 5, 30, 17, 11, 35
-	\item 7, 4, 6, 12, 2, 1, 19, 0, 27, 9
-	\item 1, 5, 0, 2, 9, 3, 20, 12, 4, 31
-	\item 0, 1, 2, 5, 39, 4, 15, 41, 10, 22
-	\item 4, 6, 0, 3, 1, 29, 36, 31, 35, 20
-	\item 5, 1, 0, 8, 3, 18, 25, 24, 2, 28
-\end{enumerate}
+\begin{table}[H]
+	\centering
+	\begin{tabular}{*{11}l}
+	\toprule
+	\multicolumn{1}{l}{\#Run} & \multicolumn{10}{l}{Result} \\ \midrule
+	1 	& 8 & 3 &  24 &  20 &  1 &  19 &  22 &  15 &  42 &  36 \\
+	2 	& 2 &  0 &  1 &  32 &  20 &  3 &  35 &  34 &  43 &  10 \\
+	3	& 7 &  1 &  3 &  12 &  2 &  25 &  0 &  9 &  24 &  27\\
+	4	& 0 &  4 &  3 &  5 &  7 &  16 &  26 &  22 &  13 &  33\\
+	5	& 0 &  10 &  8 &  1 &  15 &  5 &  30 &  17 &  11 &  35\\
+	6	& 7 &  4 &  6 &  12 &  2 &  1 &  19 &  0 &  27 &  9\\
+	7	& 1 &  5 &  0 &  2 &  9 &  3 &  20 &  12 &  4 &  31\\
+	8	& 0 &  1 &  2 &  5 &  39 &  4 &  15 &  41 &  10 &  22\\
+	9	& 4 &  6 &  0 &  3 &  1 &  29 &  36 &  31 &  35 &  20\\
+	10	& 5 &  1 &  0 &  8 &  3 &  18 &  25 & 24 & 2 & 28\\
+	\bottomrule
+\end{tabular}
+\end{table}
 
 Given $x=1$, $y=3.0$ and $z=2.5$ alternative two generates the following permutations of the original most popular ranking in 10 runs:
 
-\begin{enumerate}
-	\item 2, 4, 0, 35, 3, 1, 15, 72, 9, 5
-	\item 0, 10, 11, 17, 1, 3, 8, 41, 15, 5
-	\item 44, 1, 0, 15, 9, 4, 5, 59, 26, 2
-	\item 0, 98, 1, 4, 2, 41, 8, 26, 11, 94
-	\item 0, 6, 1, 2, 70, 4, 19, 14, 8, 3
-	\item 2, 5, 0, 16, 15, 18, 1, 3, 32, 6
-	\item 2, 65, 4, 0, 3, 45, 8, 1, 48, 36
-	\item 3, 49, 5, 0, 2, 82, 8, 77, 11, 4
-	\item 0, 1, 21, 8, 4, 85, 2, 6, 47, 3
-	\item 0, 1, 21, 70, 11, 20, 2, 10, 9, 3
-\end{enumerate}
+\begin{table}[H]
+	\centering
+	\begin{tabular}{*{11}l}
+	\toprule
+	\multicolumn{1}{l}{\#Run} & \multicolumn{10}{l}{Result} \\ \midrule
+	1& 2 &  4 &  0 &  35 &  3 &  1 &  15 &  72 &  9 &  5\\
+	2& 0 &  10 &  11 &  17 &  1 &  3 &  8 &  41 &  15 &  5\\
+	3 & 44 &  1 &  0 &  15 &  9 &  4 &  5 &  59 &  26 &  2\\
+	4& 0 &  98 &  1 &  4 &  2 &  41 &  8 &  26 &  11 &  94\\
+	5& 0 &  6 &  1 &  2 &  70 &  4 &  19 &  14 &  8 &  3\\
+	6& 2 &  5 &  0 &  16 &  15 &  18 &  1 &  3 &  32 &  6\\
+	7& 2 &  65 &  4 &  0 &  3 &  45 &  8 &  1 &  48 &  36\\
+	8& 3 &  49 &  5 &  0 &  2 &  82 &  8 &  77 &  11 &  4\\
+	9& 0 &  1 &  21 &  8 &  4 &  85 &  2 &  6 &  47 &  3\\
+	10& 0 &  1 &  21 &  70 &  11 &  20 &  2 & 10 & 9& 3 \\
+	\bottomrule
+\end{tabular}
+\end{table}
 
 Here 0 is the most popular item before the permutation. The results show that alternative two has a higher degree of mixing than alternative one, as the added noise is larger than alternative one. The values of $x$, $y$ and $z$ can be modified to achieve the desired degree/level/amount of mixing.
 
@@ -101,42 +113,30 @@ where $n_{p_{c}}$ and $n_{q_{s}}$ denote the number of ratings of user $c$ and i
 
 \subsubsection{Content-based}
 
-To build features we had to take a closer look at the content in the product database. To find the product-type, material, style and color we looked at the title, description and meta-description fields looking for certain keywords. The fact that descriptions could be either in Norwegian and in English we had to include the words from both languages in the check. To find the words to classify the items we looked through the top keyword lists in both languages, and tried to group them manually as logical as possible. E.g. to determine if a product falls under the "sweater" category we check for the following keywords:
+To build features we had to take a closer look at the content in the product database. To find the product-type, material, style and color we looked at the title, description and meta-description fields looking for certain keywords. The fact that descriptions could be either in Norwegian and in English we had to include the words from both languages in the check. To find the words to classify the items we looked through the top keyword lists in both languages, and tried to group them manually as logical as possible. E.g. to determine if a product falls under the \emph{sweater} category we check for the following keywords: \emph{sweater, cardigan, jumper, hoody , genser and genseren}. As you can see we included the same word but with different suffixes. We experimented with stemming from the nltk software package in python, but we did not feel that it improved
+our results, we therefore decided to not use stemming. We attempt to extract the following features from the product-database content: brand or storename which is easily collected as it is stored in its own unique field, the price which we grouped into price brackets, the product-type such as e.g dress, jacket, top, pants boots, the product-material such as e.g. cotton, wool polyester etc., the style or genre of an item, and lastly the color of an item. 
 
-$['sweater','cardigan','jumper','hoody','genser','genseren']$
+It was a pleasant surprise to find out that 3,263 out of 3,386 items could be found in the
+product database and be assigned features. The following table shows an overview over how many items we were able to extract the different features for.
 
-As you can see we included the same word but with different suffixes. We experimented with stemming from the nltk software package in python, but we did not feel that it improved
-our results, and we therefore dropped using stemming. We attempt to extract the following features from the product-database content:
-
-\begin{itemize}
-
-\item Brand: Brand or store, easily collected as it is stored in its own unique field.
-\item Price range: Based on the price of an item, group it into brackets.
-\item Product-type: Dress, Jacket, Top, Pants, Boots...
-
-\item Material: Cotton, Wool, Polyester...
-\item Style: Classic, Modern, Luxurious...
-\item Color: Black, Grey, Blue...
-\end{itemize}
-
-It was a pleasant surprise to find that 3,263 out of 3,386 items could be found in the
-product database and be assigned features. The following table shows an overview over the percentage of items we managed to extract features for.
-
-\begin{table}
-\begin{tabular}{|l|l|}
-Price 			& 1.000 \\ \hline
-Brand 			& 0.756 \\ \hline
-Product-type 	& 0.625 \\ \hline
-Material 		& 0.44  \\ \hline
-Style 			& 0.234 \\ \hline
-Color 			& 0.203 \\ \hline
-\end{tabular}
+\begin{table}[H]
+	\centering
+	\begin{tabular}{l l}
+	\toprule
+	Attribute & Percentage \\ \midrule
+	Price 			& 1.000 \\ 
+	Brand 			& 0.756 \\ 
+	Product-type 	& 0.625 \\ 
+	Material 		& 0.44  \\ 
+	Style 			& 0.234 \\ 
+	Color 			& 0.203
+	\\ \bottomrule
+	\end{tabular}
 \end{table}
 
 As you can see the price, brand and product-type can be found for \emph{most} items, while material style and color could only be found for a minority of the items.
 
-%Problems? Limited amount of features
-
+%Problems? Limited amount of features\documentclass[options]{class}
 %Table with features?
 
 \subsection{Cold-start Solutions}
@@ -153,21 +153,10 @@ Naive Filterbots \cite{Park2006} which easily could be combined with our implici
 
 As one simple solution to the cold-start problem we decided to experiment with Filterbots, as it easily
 combined with our implicit ratings. Similarly as in \cite{Park2006} we decided to experiment with global bots.
+We implemented the following filterbots: A \emph{BrandBot} which rates an item based on the brands average rating, an \emph{AverageBot} which rates an item based on their average rating given to it, a \emph{CriticBot} which selects $n$ critics among the most active users and rate items based on their average rating, a \emph{PopularityBot} which rates an item based on its popularity, more ratings equals a higher rating.
 
-We implemented the following filterbots:
 
-\begin{itemize}
-	\item BrandBot: Rate items based on the brand average,
-	\item AverageBot: Rate items based on their average rating over all users,
-	\item CriticBot: Select $n$ critics among the most active users and rate items based on their average
-	\item PopularityBot: Rate an item based on its popularity, more ratings equals a higher rating.
-\end{itemize}
-
-Each bot is added as a single user into our training set before we evaluate the methods on the test-set.
-It is also worth noting that we use the training set only (obviously) to generate the bot ratings.
-Filterbots can potentially help solve the cold-start user problem by making it possible for new users to connect to users
-that capture the general underlying trends of the entire user group. Filterbots are mainly meant to improve
-performance when data is scarce and not degrade performance when data is plentiful.
+Each bot is added as a single user into our training set. It is also worth noting that we use the training set only (obviously) to generate the bot ratings. Filterbots can potentially help solve the cold-start user problem by making it possible for new users to connect to users that capture the general underlying trends of the entire user group. Filterbots are mainly meant to improve performance when data is scarce and not to degrade performance when data is plentiful.
 
 
 %\subsection{Some one-class collaborative filtering...}

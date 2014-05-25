@@ -31,21 +31,21 @@
 
     \begin{table}[H]
         \centering
-        \begin{tabular}{l|l}
+        \begin{tabular}{l l}
             \toprule
-            \emph{Variable}     & \emph{Explanation}   \\ \hline
-            "price"             & The price of the item which triggered the event \\ \hline
-            "product\_id"       & The id of the item which triggered the event \\ \hline
-            "storefront\_id"    & The store id from which the item originated \\ \hline
-            "event\_id"         & What kind of event was triggered~\tablefootnote{Complete list of the different types of events can be found in table~\ref{table:events}} \\ \hline
-            "event\_location"   & The location of the user when the event was triggered \\ \hline
-            "ts"                & Unix timestamp in milliseconds of when the event was triggered \\ \hline
-            "session"           & Which session number the event belongs too~\tablefootnote{This value is added at a later time. For two events to end up in the same session, the event has to be triggered within a certain period of time, and both be after the same application started-flag} \\ \hline
-            "user\_id"          & The unique id of the user who triggered the event \\
+            Variable     & Explanation   \\ \midrule
+            price             & The price of the item which triggered the event \\ 
+            product\_id       & The id of the item which triggered the event \\ 
+            storefront\_id    & The store id from which the item originated \\ 
+            event\_id         & What kind of event was triggered~\tablefootnote{Complete list of the different types of events can be found in table~\ref{table:events}} \\ 
+            event\_location   & The location of the user when the event was triggered \\
+            ts                & Unix timestamp in milliseconds of when the event was triggered \\ 
+            session           & Which session number the event belongs too~\tablefootnote{This value is added at a later time. For two events to end up in the same session, the event has to be triggered within a certain period of time, and both be after the same application started-flag} \\
+            user\_id          & The unique id of the user who triggered the event \\
             \bottomrule
-        \caption[Event Metadata]{Table of some of the metadata collected from an event. The complete list can be found in table~\ref{table:completeEventData}}
-        \label{table:eventData}
         \end{tabular}
+        \label{table:eventData}
+        \caption[Event Metadata]{Metadata collected from an event. The complete list can be found in table~\ref{table:completeEventData}}
     \end{table}
 
     %How much preference data?
@@ -53,17 +53,17 @@
 % \subsection{Numbers}
     \begin{table}[H]
         \centering
-        \begin{tabular}{l|l}
+        \begin{tabular}{l l}
             \toprule
-            \emph{What}        & \emph{Count}   \\ \hline
-            Unique users ids   & 1235           \\ \hline
-            Unique item ids    & 3386           \\ \hline
-            Unique brands      & 16             \\ \hline
-            Purchases          & 1484           \\ \hline
-            Wants              & 7726           \\ \hline
+            Attribute       & Count   \\ \midrule
+            Unique users ids   & 1235           \\ 
+            Unique item ids    & 3386           \\ 
+            Unique brands      & 16             \\ 
+            Purchases          & 1484           \\ 
+            Wants              & 7726           \\ 
             Item Clicks        & 14036          \\
             \bottomrule
-        \caption[Dataset summary]{Table of the basic numbers regarding the soBazar dataset}
+        \caption[Dataset summary]{Overview of the key figures in the soBazar dataset}
         \label{table:datasetSummary}
         \end{tabular}
     \end{table}
@@ -184,7 +184,7 @@
 
     %mtodo - better buckets to better capture the ranges
     %mtodo - ikke ha all teksten i captionen til figuren, ha det heller i vanlig tekst
-
+    \marginpar{TODO - Make it pretty}
     \begin{figure}[H]
         \includegraphics[width=5in]{image/event_id.png}
         \centering
@@ -192,7 +192,7 @@
         The "collection\_viewed"-event and "storefront\_clicked"-event are the most common events to be triggered.
         Both of these types of events will send the user to an item overview, and indicates that many users browse the items through looking at the thumbnails rather than accessing the items, since the two named event types are gateways to collections of items, and if most of the users actually accessed most of the items the "product\_detail\_clicked", "product\_wanted" and "product\_purchase\_intended" would have had the majority of the events triggered.}
     \end{figure}
-
+	\marginpar{TODO - Make it pretty}
     \begin{figure}[H]
         \includegraphics[width=5in]{image/event_distr.png}
         \centering
@@ -228,7 +228,7 @@
         We can see that the majority of the users are located in and around Oslo.}
         \label{figure:croppedGeoplot}
     \end{figure}
-
+	\marginpar{TODO: Cut at 70? (on the x-axis)}
     \begin{figure}[H]
         \includegraphics[width=5in]{image/sessionsCount.png}
         \centering
@@ -243,7 +243,7 @@
     %     \caption[Count of sessions per user mapped with count of user with give
     %     session amount]{TODOsome awesome text}
     % \end{figure}
-
+	\marginpar{TODO: cut on x-axis, make pretty}
     \begin{figure}[H]
         \includegraphics[width=5in]{image/item-event-count.png}
         \centering
@@ -255,7 +255,7 @@
     \end{figure}
 
     %mtodo - update numbers
-
+	\marginpar{First to last event in days/weeks not minutes, remove text on a-axis (only confusing). Why is this important, clearify text, what can we learn from the plots?}
     \begin{figure}[H]
         \includegraphics[width=5in]{image/item-timespan-event-count.png}
         \centering
@@ -267,7 +267,7 @@
     \end{figure}
 
     % mtodo - si noe om hvorfor ikke? jeg vil vel påstå at dette sier no om viktihet av "nyhetsverdi" for item'et, og ville derfor trodd dette var relevant info?
-
+	\marginpar{TODO: Change x axis from minutes to days (or preferably weeks). Does this give us any hints regarding time decay factors?}
     \begin{figure}[H]
         \includegraphics[width=5in]{image/time-span-count.png}
         \centering
@@ -281,7 +281,7 @@
         % a) pga veldig få events
         % b) pga kort levetid for item i datasettet
         % c) fordi det bare hadde 10 dagers "nyhetsverdi"?
-
+	\marginpar{TODO - Use seconds?}
     \begin{figure}[H]
         \includegraphics[width=5in]{image/bounceRate.png}
         \centering
@@ -292,7 +292,7 @@
     \end{figure}
 
     % mtodo - hva betyr dette for oss? ha det i seconds, lol
-
+	
     \begin{figure}[H]
         \includegraphics[width=5in]{image/viewBeforeWant.png}
         \centering
@@ -325,7 +325,7 @@
 \marginpar{Something about session findings perhaps}
 
     % mtodo - fix caption and section :P
-
+	\marginpar{TODO: Remove all arrows with less than e.g. 50 events}
     \begin{figure}[H]
         \includegraphics[width=5in]{image/statesInteractionTrue-gvfile.pdf}
         \centering
