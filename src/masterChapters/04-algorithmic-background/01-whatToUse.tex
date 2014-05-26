@@ -158,6 +158,12 @@ We implemented the following filterbots: A \emph{BrandBot} which rates an item b
 
 Each bot is added as a single user into our training set. It is also worth noting that we use the training set only (obviously) to generate the bot ratings. Filterbots can potentially help solve the cold-start user problem by making it possible for new users to connect to users that capture the general underlying trends of the entire user group. Filterbots are mainly meant to improve performance when data is scarce and not to degrade performance when data is plentiful.
 
+\marginpar{TODO: Write in incorporation of recency and similar in our filterbots}
+\marginpar{Incorporating recency in filterbots}
+
+%E.g. most popular recommender, only look at most popular items for the last week (used to give recommendations to new users)
+%Item-average: Only include items rated the last 2-3 months
+
 
 %\subsection{Some one-class collaborative filtering...}
 

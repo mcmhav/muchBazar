@@ -485,7 +485,7 @@ The following table shows the differences between Method 1 and Method 2 on a few
 \caption{Comparison of nDCG scores for different methods of computing DCG. Each item in the Actual list is on the form $ItemId_{Rating}$, the first item in the actual list of example one therefore has en ItemId of 1 and a Rating of 5. All non relevant items are given the ItemId 0 in the Recommended list.}
 \end{table}
 
-As you can see Method 1 is a bit more \emph{balanced} than Method 2, as it does not give as much weight to highly rated items. Especially example 5 and 6 highlights this as Method 2 prefers retrieving one highly rated item over retrieving multiple less relevant ones. Method 2 is ultimately closer to what we want in addition to being commonly used by web search companies and on the data science competition platform Kaggle \cite{kaggle}. We have also chosen to truncate the recommendation list and only calculate the nDCG of the $k$ top items.
+As you can see Method 1 is a bit more \emph{balanced} than Method 2, as it does not give as much weight to highly rated items. Especially example 5 and 6 highlights this as Method 2 prefers retrieving one highly rated item over retrieving multiple less relevant ones. Method 2 is ultimately closer to what we want in addition to being commonly used by web search companies and on the data science competition platform Kaggle \cite{kaggle}. We have also chosen to truncate the recommendation list and only calculate the nDCG of the $k$ top items. Because nDCG has a relatively low positional discount, it allows us to set $k$ fairly high, but this only makes sense if we believe that the user will read large portions of the recommendation list. 
 
 \marginpar{TODO: Spend any more time looking at partial order ranking measures?...}
 
@@ -502,6 +502,12 @@ coverage is measured by looking at how many of the items are recommendable.
 
 %TODO - How will these experiment be carried out and validated?
 \subsection{Implicit Ratings vs. Binary Preference}
+
+This subsection will attempt to explain how we will attempt to determine whether our implicit gives some added
+qualities in form of improved recommendations produced using binary preferences.
+
+Problems: Methods that can incorporate both types of feedback...
+Problems: Methods for implicit ratings (Explain why traditional item-based cf is not suited...)
 
 \begin{center}
     \begin{tikzpicture}
@@ -582,9 +588,36 @@ coverage is measured by looking at how many of the items are recommendable.
   	\label{figure:implicitRatingEvaluation}
   \end{center}
 
-	The blue boxes in figure~\ref{figure:implicitRatingEvaluation} are functions used to produce the implicit ratings based on the implicit feedback.
-	Based on this, the system gets an estimated ground truth, which can be used to evaluate the different recommendation algorithms show in the red boxes.
-	Based on the evaluation score something can be said about the implicit feedback conversion to implicit ratings and the recommendation algorithms used.
+The blue boxes in figure~\ref{figure:implicitRatingEvaluation} are functions used to produce the implicit ratings based on the implicit feedback. Based on this, the system gets an estimated \emph{ground truth}, which can be used to evaluate the different recommendation algorithms show in the red boxes. Based on the evaluation score something can be said about the implicit feedback conversion to implicit ratings and the recommendation algorithms used.
+
+
 
 \subsection{A Comparison of Implicit Rating Mapping Functions}
+
+Figure \ref{implicitRatingEvaluation} shows our little dilemma when it comes to evaluation of the different mapping functions.
+
+Our initial theories:
+
+\begin{itemize}
+\item Alternative 1: Can we justify why one method is better than another by looking at the rating distribution and backing it up with observations from the data?
+\item Alternative 2: Can the log data be used as ground truth?
+\item Alternative 3: Use recommendation results as a measure of how well the ratings "work". And in this case, which evaluation metrics can be used? (e.g. AUC?)
+\end{itemize}
+
+The bottom line is that evaluating the quality of a set of generated ratings is hard. 
+
+Weighting of alternatives:
+Alternative 1: Too weak or too hard?
+Alternative 2: How?...
+Alternative 3: Does this really work? What evaluation metrics measure the overall quality of a model or method
+
+We could say that we believe that better ratings gives us better recommendation results, and use this as a basis for our evaluation. However, this means that the results we get from testing the different algorithms with different rating sets should be comparable. This automatically disqualifies any evaluation metrics that consider the rating values such as e.g. MAE.
+
+The output from the mapping functions is used as ground truth when evaluating a recommender system built using the same dataset.
+
 \subsection{Combining Implicit Ratings With Existing Cold-Start Solutions}
+
+Only use cold-start system splits for this sections related tables.
+Comparison of recency functions in filterbots?
+All time vs. factoring in recency
+Mainly most popular, averageRating, criticBot already covered by rating generator.
