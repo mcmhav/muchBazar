@@ -1,7 +1,7 @@
 % !TEX root = ../../report.tex
 
 \section{Sessions}
-    Different ways of personalizing recommendations, such as collaborative filtering and content based filtering, have been explored earlier in this chapter.
+    Different ways of personalizing recommendations, such as collaborative filtering and content based filtering, have been explored in~\ref{sec:recsys}.
     A common issue with these types of recommendations is that when the data is sparse the recommendations suffer.
     Through utilizing the usage patterns from the users to construct sessions, some of the sparsity gaps can be filled.
     The patterns can help to understand the pre-purchase patterns, products they see and what they buy.
@@ -13,8 +13,6 @@
 
     This section will look into how sessions can be used to tell more about the users and approaches to improve product recommendations based on the user sessions.
 
-    \marginpar{Not sure where to put this section}
-
 \subsection{Mining}
     Data mining can be split into two main steps~\cite{Cho2002329}:
     \begin{itemize}
@@ -25,11 +23,13 @@
 \subsubsection{Data Preparation} % (fold)
     \label{par:Data_Preparation}
     When a user accesses an application or web page, the system can store the footprints of the user.
-    Within these footprints the system can embed information as: which browser used by user, location of the user, event triggered by user and time stamp.
-    This bundle of information is called an event, a the set of event produced by the user during on application or web page visit, is called a session.
+    Within these footprints the system can embed information such as, which browser used by user, location of the user, event triggered by user and time stamp.
+    This bundle of information is called an event, a the set of events produced by the user during an application visit or web page visit, is called a session.
 
 \subsubsection{Pattern Discovery} % (fold)
-\label{par:pattern_discovery}
+    \label{par:pattern_discovery}
+    Pattern discovery can be done after the data has been collected from the events.
+    The patterns discovered can help the system to infer relationships between users and items.
 
 \paragraph{Association Rules} % (fold)
     \label{subp:association_rules}
@@ -39,9 +39,10 @@
 
     With this set of rules for the items, item taxonomies can be used to infer knowledge regarding the items.
     For instance; sessions when buying blue skirts often include buying of red shoes.
-% easy example: http://nikhilvithlani.blogspot.no/2012/03/apriori-algorithm-for-data-mining-made.html
+    More generally the association rules would allow the system to make assumptions regarding which items to suggest in context of other items.
+    % easy example: http://nikhilvithlani.blogspot.no/2012/03/apriori-algorithm-for-data-mining-made.html
 \paragraph{Sequential Patterns} % (fold)
-\label{subp:sequential_patterns}
+    \label{subp:sequential_patterns}
     The sequential patterns can be used to build Markov models to predict the next step the user will take based on the sequential pattern of the events from the sessions~\cite{Deshpande:2004:SMM:990301.990304}.
 
     An issue with using the Markov model is that if first-order is being used, the accuracy can be faulty, since the model will not be looking far enough behind.
@@ -55,10 +56,8 @@
 
     One issue with the Markov model is that a user will not get predicted new items if the sessions used to predict future actions are only based on the own users sessions.
     One way of making use of the patterns and producing new recommendations is trough matching sequential patterns from users with one-another. \marginpar{something not right}
-
-
 \paragraph{Usage Clusters} % (fold)
-\label{subp:usage_clusters}
+    \label{subp:usage_clusters}
     The usage clusters are usually built up from the different features from the events in the session, where the features are collected and used to model the user.
 
     \begin{table}[H]
@@ -66,27 +65,34 @@
         \begin{tabular}{l}
         	\toprule
             \emph{Event features} \\ \midrule
-            Amount of purchases \\ 
-            Amount of views \\ 
-            Amount of wants  \\ 
-            Time spent on items \\ 
+            Amount of purchases \\
+            Amount of views \\
+            Amount of wants  \\
+            Time spent on items \\
             Overall average time on items \\
-            Click to buy rate \\ 
-            Search query~\cite{Zhang:2006:MSE:1135777.1136004}  \\ 
-            What was done before a specific action  \\ 
+            Click to buy rate \\
+            Search query~\cite{Zhang:2006:MSE:1135777.1136004}  \\
+            What was done before a specific action  \\
             \bottomrule
         \end{tabular}
         \caption[Event Features]{Set of event features used for finding usage clusters and model the users behavior}
         \label{table:uasageCluster}
     \end{table}
-
 \paragraph{Page Clusters} % (fold)
-\label{subp:page_clusters}
+    \label{subp:page_clusters}
     Page clustering will help the system to understand which pages belong together.
     For instance when searching for Harry Potter, the user might have interest in knowing more about the author J.K. Rowling, and the system might benefit from clustering queries of here with Harry Potter~\cite{Zhang:2006:MSE:1135777.1136004}.
 
 
-\subsubsection{SoBazar Session Examples} % (fold)
+\subsection{Analyzing}
+    Analyzing the model of the user
+
+
+\subsection{Recommending}
+    Using the model to help personalizing the recommendation for the user
+
+
+\subsection{SoBazar Session Examples} % (fold)
     \label{par:session_examples}
     \marginpar{Show three common user session patterns (average purchase time, want time and view time)
     Will be updated with the new data from soBazar}
@@ -112,14 +118,15 @@
     purchase time: 14068.69687
     want time: 17859.1539
 
-% ~\cite{Kelly:2003:IFI:959258.959260}
+    % ~\cite{Kelly:2003:IFI:959258.959260}
 
-\subsubsection{Analyzing}
-    Analyzing the model of the user
 
-\subsection{Recommending}
-    Using the model to help personalizing the recommendation for the user
+\subsection{Discussion}
 
-\subsection{Limitations}
+\subsubsection{Limitations}
     What are the limitations of a session based approach to recommendations.
 
+\subsubsection{Future}
+    Time spent and scrolling on page have shown to suggest strong positive relationship with explicit interest~\cite{Claypool01inferringuser}.
+
+    Relative preferences derived from clicks are reasonably accurate~\cite{Joachims:2007:EAI:1229179.1229181}

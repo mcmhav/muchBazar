@@ -101,7 +101,7 @@ quality. In addition, the design should provide a solution to the problem of giv
 to new users of the system.
 
 Recommender systems have been applied to a wide range of different domains including music, movies, e-commerce, news
-and many others. Since each application domain has its own specific needs, the methods used for recommendations differ. 
+and many others. Since each application domain has its own specific needs, the methods used for recommendations differ.
 This leads us to our first research goals, which are the following:
 
 \begin{itemize}
@@ -136,7 +136,7 @@ how these events could be used to learn the users true preferences. This lead us
   	\item G8: Evaluate the \emph{implicit ratings}.
 \end{itemize}
 
-We would like to combine the solutions found through our work with the above mentioned goals and combine these in a 
+We would like to combine the solutions found through our work with the above mentioned goals and combine these in a
 proposal to a design for a fashion e-commerce recommender system.
 
 \marginpar{TODO? Assumptions and Constraints}
@@ -163,7 +163,7 @@ proposal to a design for a fashion e-commerce recommender system.
       \node [nonProcess, below of=implicitConverter] (ratings) {Ratings for the items};
       \node [process, below of=ratings] (recommendations) {Make recommendations};
       \node [process, below of=recommendations] (evaluations) {Evaluate recommendations};
-     
+
 
       %%%%%%%%%%%%%%%
       % Comments
@@ -191,7 +191,7 @@ proposal to a design for a fashion e-commerce recommender system.
         (implicitConverter) edge (ratings)
         (ratings) edge (recommendations)
         (recommendations) edge (evaluations);
-        
+
     \end{tikzpicture}
     \captionof{figure}[System Overview]{Overview of the system. Boxes in white represents input and output data. Boxes in gray represents processes}
   \end{center}
