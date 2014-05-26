@@ -23,11 +23,13 @@
 \subsubsection{Data Preparation} % (fold)
     \label{par:Data_Preparation}
     When a user accesses an application or web page, the system can store the footprints of the user.
-    Within these footprints the system can embed information as: which browser used by user, location of the user, event triggered by user and time stamp.
-    This bundle of information is called an event, a the set of event produced by the user during on application or web page visit, is called a session.
+    Within these footprints the system can embed information such as, which browser used by user, location of the user, event triggered by user and time stamp.
+    This bundle of information is called an event, a the set of events produced by the user during an application visit or web page visit, is called a session.
 
 \subsubsection{Pattern Discovery} % (fold)
     \label{par:pattern_discovery}
+    Pattern discovery can be done after the data has been collected from the events.
+    The patterns discovered can help the system to infer relationships between users and items.
 
 \paragraph{Association Rules} % (fold)
     \label{subp:association_rules}
@@ -37,8 +39,8 @@
 
     With this set of rules for the items, item taxonomies can be used to infer knowledge regarding the items.
     For instance; sessions when buying blue skirts often include buying of red shoes.
+    More generally the association rules would allow the system to make assumptions regarding which items to suggest in context of other items.
     % easy example: http://nikhilvithlani.blogspot.no/2012/03/apriori-algorithm-for-data-mining-made.html
-
 \paragraph{Sequential Patterns} % (fold)
     \label{subp:sequential_patterns}
     The sequential patterns can be used to build Markov models to predict the next step the user will take based on the sequential pattern of the events from the sessions~\cite{Deshpande:2004:SMM:990301.990304}.
@@ -54,7 +56,6 @@
 
     One issue with the Markov model is that a user will not get predicted new items if the sessions used to predict future actions are only based on the own users sessions.
     One way of making use of the patterns and producing new recommendations is trough matching sequential patterns from users with one-another. \marginpar{something not right}
-
 \paragraph{Usage Clusters} % (fold)
     \label{subp:usage_clusters}
     The usage clusters are usually built up from the different features from the events in the session, where the features are collected and used to model the user.
@@ -77,7 +78,6 @@
         \caption[Event Features]{Set of event features used for finding usage clusters and model the users behavior}
         \label{table:uasageCluster}
     \end{table}
-
 \paragraph{Page Clusters} % (fold)
     \label{subp:page_clusters}
     Page clustering will help the system to understand which pages belong together.
