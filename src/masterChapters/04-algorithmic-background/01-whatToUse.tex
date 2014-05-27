@@ -10,11 +10,11 @@
 
 
 \subsection{Some Awesome Algorithms (Build up with project progress)}
-
+\marginpar{change name}
 This section aims to describe the algorithms which will be evaluated in our experiment.
 
 \subsubsection{Most-popular Recommender}
-
+\marginpar{Hvorfor?}
 We have developed a simple most-popular recommender that uses result dithering to \emph{randomize} the recommendations to the users. One could imagine to final system to leverage multiple recommendation techniques. When users are new to the system they are recommended the most popular items, until enough data is collected to provide personalized recommendations. One could imagine multiple categories of most popular recommendations: Most viewed, most wanted, most bought or a combination of all.
 
 Dithering adds \emph{noise} to the algorithm, which permutes the results in such a way that the top few results have a high probability of remaining on the top spots, but as one goes deeper into the results, the degree of mixing increases dramatically. It is important to note that dithering is \emph{guaranteed} to make off-line performance worse, but is likely to make the actual performance better. We have experimented with two different methods of dithering:
@@ -114,7 +114,7 @@ where $n_{p_{c}}$ and $n_{q_{s}}$ denote the number of ratings of user $c$ and i
 \subsubsection{Content-based}
 
 To build features we had to take a closer look at the content in the product database. To find the product-type, material, style and color we looked at the title, description and meta-description fields looking for certain keywords. The fact that descriptions could be either in Norwegian and in English we had to include the words from both languages in the check. To find the words to classify the items we looked through the top keyword lists in both languages, and tried to group them manually as logical as possible. E.g. to determine if a product falls under the \emph{sweater} category we check for the following keywords: \emph{sweater, cardigan, jumper, hoody , genser and genseren}. As you can see we included the same word but with different suffixes. We experimented with stemming from the nltk software package in python, but we did not feel that it improved
-our results, we therefore decided to not use stemming. We attempt to extract the following features from the product-database content: brand or storename which is easily collected as it is stored in its own unique field, the price which we grouped into price brackets, the product-type such as e.g dress, jacket, top, pants boots, the product-material such as e.g. cotton, wool polyester etc., the style or genre of an item, and lastly the color of an item. 
+our results, we therefore decided to not use stemming. We attempt to extract the following features from the product-database content: brand or storename which is easily collected as it is stored in its own unique field, the price which we grouped into price brackets, the product-type such as e.g dress, jacket, top, pants boots, the product-material such as e.g. cotton, wool polyester etc., the style or genre of an item, and lastly the color of an item.
 
 It was a pleasant surprise to find out that 3,263 out of 3,386 items could be found in the
 product database and be assigned features. The following table shows an overview over how many items we were able to extract the different features for.
@@ -124,11 +124,11 @@ product database and be assigned features. The following table shows an overview
 	\begin{tabular}{l l}
 	\toprule
 	Attribute & Percentage \\ \midrule
-	Price 			& 1.000 \\ 
-	Brand 			& 0.756 \\ 
-	Product-type 	& 0.625 \\ 
-	Material 		& 0.44  \\ 
-	Style 			& 0.234 \\ 
+	Price 			& 1.000 \\
+	Brand 			& 0.756 \\
+	Product-type 	& 0.625 \\
+	Material 		& 0.44  \\
+	Style 			& 0.234 \\
 	Color 			& 0.203
 	\\ \bottomrule
 	\end{tabular}

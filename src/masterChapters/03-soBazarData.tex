@@ -18,6 +18,8 @@
     The data was therefore cleaned by removing events containing test environment flags such as: test environment and applications run from simulator.
     What was left after the cleaning data was mainly events triggered by the users, and no created during applications testing.
 
+    %mtdo - why do we need data cleaning?
+
 \section{Dataset Summary}
     The data from soBazar is gathered based on the actions of the users in the application.
     When a user accesses a store or an item, the information regarding the user and the item is stored, this is often known as implicit feedback~\ref{sec:implicit}.
@@ -34,12 +36,12 @@
         \begin{tabular}{l l}
             \toprule
             Variable     & Explanation   \\ \midrule
-            price             & The price of the item which triggered the event \\ 
-            product\_id       & The id of the item which triggered the event \\ 
-            storefront\_id    & The store id from which the item originated \\ 
-            event\_id         & What kind of event was triggered~\tablefootnote{Complete list of the different types of events can be found in table~\ref{table:events}} \\ 
+            price             & The price of the item which triggered the event \\
+            product\_id       & The id of the item which triggered the event \\
+            storefront\_id    & The store id from which the item originated \\
+            event\_id         & What kind of event was triggered~\tablefootnote{Complete list of the different types of events can be found in table~\ref{table:events}} \\
             event\_location   & The location of the user when the event was triggered \\
-            ts                & Unix timestamp in milliseconds of when the event was triggered \\ 
+            ts                & Unix timestamp in milliseconds of when the event was triggered \\
             session           & Which session number the event belongs too~\tablefootnote{This value is added at a later time. For two events to end up in the same session, the event has to be triggered within a certain period of time, and both be after the same application started-flag} \\
             user\_id          & The unique id of the user who triggered the event \\
             \bottomrule
@@ -56,11 +58,11 @@
         \begin{tabular}{l l}
             \toprule
             Attribute       & Count   \\ \midrule
-            Unique users ids   & 1235           \\ 
-            Unique item ids    & 3386           \\ 
-            Unique brands      & 16             \\ 
-            Purchases          & 1484           \\ 
-            Wants              & 7726           \\ 
+            Unique users ids   & 1235           \\
+            Unique item ids    & 3386           \\
+            Unique brands      & 16             \\
+            Purchases          & 1484           \\
+            Wants              & 7726           \\
             Item Clicks        & 14036          \\
             \bottomrule
         \caption[Dataset summary]{Overview of the key figures in the soBazar dataset}
@@ -292,7 +294,7 @@
     \end{figure}
 
     % mtodo - hva betyr dette for oss? ha det i seconds, lol
-	
+
     \begin{figure}[H]
         \includegraphics[width=5in]{image/viewBeforeWant.png}
         \centering
@@ -320,6 +322,8 @@
         % hva betyr det for oss?
         % hvordan kan data-pakket brukes av systemet?
         % dette er hands-on!
+        % mange fine figurer uten konkrete beskrivelser og refereanser i teksten
+        % prøv heller å lage gode forklaringer til fiugurene i teksten så referer deretter
 
 \section{Session Findings}
 \marginpar{Something about session findings perhaps}

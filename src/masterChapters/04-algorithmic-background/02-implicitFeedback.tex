@@ -4,7 +4,7 @@
 \section{Implicit feedback to implicit ratings}
 \label{sec:implicit}
 
-Explicit feedback is present in many of the largest recommender systems today
+0Explicit feedback is present in many of the largest recommender systems today
 and hence, is extensively researched \cite{Adomavicius2005}. The user is
 commonly asked to rate item $i$ on a Likert scale from $1$ to $k$, ranging from
 strongly disagree to strongly agree with an item. Its advantages are, among
@@ -51,7 +51,7 @@ thus we need some way of translating our implicit feedback into what we call
 fundemental differences between implicit and explicit ratings, in everything
 from \textit{meaning} to \textit{evaluation techniques}. Partly inspired by Hu
 et al.~\cite{Hu2008}, we can identify the following key charecterstics and
-differences between them: 
+differences between them:
 
 \textbf{Explicit ratings:}
 \begin{itemize}
@@ -306,7 +306,7 @@ independent variable) and the rating (ground truth/dependent variable), using
 five observed datapoints. We can then, given a feature-value, predict future
 ratings. The process of finding the regression line is better generalized by
 solving the following equation, where we are given a number of independent and
-dependent values: 
+dependent values:
 
 \begin{equation}
   \label{eq-regression}
@@ -532,7 +532,7 @@ precision/recall scheme then we need to choose good parameters showing both the
 strengths and weaknesses found in the data and recommender model. How many
 recommendations should we provide the user in order to calculate precision and
 recall? And which metrics should we focus on; F1; MPR or others?
-\marginpar{Are MPR and F1 introduced?} 
+\marginpar{Are MPR and F1 introduced?}
 When considering the recommender model there are as many countless
 possibibilites - ranging from traditional approcahes such as
 Pearson-correlation and K-nearest neighbours to more advanced and perhaps more
