@@ -109,6 +109,18 @@ implicit ratings.
 
 \subsection{Quantifying implicit feedback}
 
+In this sub-section several \textit{existing} methods will be presented, all
+solving the following problem:
+
+\textit{Given:} A dataset containing event logs with the following information
+available: event type, product id, user id and timestamp of the event.
+
+\textit{Output:} For every user $u$, a rating between 1 and $k$ on every item that
+the user has interacted with.
+
+In Section~\ref{implementation-implicit} novel ways of solving the given
+problem are presented, based on ideas presented below.
+
 \subsubsection{Binary implicit ratings}
 
 One of the most common techniques of quantifying implicit feedback to implicit
@@ -234,9 +246,6 @@ that uses \textit{levels of frequency}.
 \label{implicit-table}
 \end{table}
 
-\marginpar{Helge: kan score heller være Prob(kjøper gitt E) ? Mulig? Hvorfor
-ikke?}
-
 Now, a user browsing an item $i$ two times, would get a score of 40 and a if
 buying it the score would be 100 (e.g.\ the event type with highest interest
 level supersede all others). Equally, if a user browsed the item 100 times, it
@@ -355,6 +364,7 @@ final regression line. Mathematically it solved the problem of the following
 form:
 
 \begin{equation}
+  \label{least-squares}
   \hat{w} = \argmin_w \sum_{i} (y - w^{T}x_{i})^2
 \end{equation}
 
@@ -393,9 +403,15 @@ dataset:
   \item How recent the user had acitivity on the item
 \end{itemize}
 
-Now, using this methodology on implicit feedback we need a regression model that
-correctly explains the correlation between feedback and ratings. Four models
-are proposed~\cite{parra2011walk}:
+For each feature all items are categorized into three buckets, so that items
+are equally distributed across one feature. Thus bucket one for the feature of
+global popularity contains items with low popularity and bucket three those
+with the highest popularity, and so forth. The main reason for having this
+sampling strategy is to create a homogenous set of items where outliers are
+accounted for, and we are less prone to over or underfitting.
+
+Four models are proposed, utilizing the features above and the ratings provided
+in the user study:
 
 \begin{equation}
   \begin{aligned}
@@ -406,34 +422,31 @@ are proposed~\cite{parra2011walk}:
   \end{aligned}
 \end{equation}
 
-where $if_{iu}$ is a number, indicating a bucket of items between 1 and 3,
-dependent on how many times user $u$ used item $i$. Equally $re_{iu}$ depicts
-how recently user $u$ used item $i$ and $gp_{i}$ how popular product $i$ is,
-globally. By accounting for recentness in their regression model (model 2\-4)
-they achieved an improvement in the $R^2$ value by 10\%. $R^2$, also called the
-coefficient of determination, is a standard metric in regression analysis
-indicating how well data points fit a statistical model. Training they used
-their $w$-vector, combined with the independent variables to predict future
-ratings.
+where every independent variable ($if_{iu}$, $re_{iu}$ and $gp_{i}$) is the
+bucket number between 1 and 3. $if_{iu}$ indicates how many times user $u$ used
+item $i$, $re_{iu}$ how recently user $u$ used item $i$ and $gp_{i}$ the global
+popularity of item $i$.
 
-\marginpar{more information about sampling and the use of buckets}
-The buckets with values between 1 and 3 are used to get a reasonably
-homogeneous sampling of items, as a random sampling strategy might yield only
-very popular items. The three bins from 1 to 3 represent respectively low,
-medium and high activity on an item within a independent variable. As suggested
-in the article one may get better results by using fewer or more buckets. With
-3 buckets and accounting for 3 different feedbacks (Implicit feedback, global
-popularity and recentness) this creates in effect 27 buckets per user.
+Evaluating a regression model is done by confirming the \textit{goodness of
+fit}, and the most common metric is to calculate the $R^2$ which based on
+residual values in Equation~\ref{least-squares} yields a number between 0 and
+1, indicating a bad or good fit, respectivly. By accounting for recentness in
+their regression model (model 2\-4) they achieved an improvement in the $R^2$
+value by \textit{10\%}.
 
-As one may see, this approach requires some form of explicit feedback, in order
-to train our model with independent and dependent variables. In the research
-done by Parra et al.\ they performed a user survey based on 114 active users,
-that is they had more than 5000 events in the system. This requirement makes
-regression analysis not suitable for domains where the relation between
-implicit and explicit feedback are not linear nor symmetric, e.g.\ a purchase on
-an item does not imply many clicks on the item, by the same user – whilst the
-probability of the opposite is larger. See Section~\ref{} for a larger
-discussion surrounding this topic. % \todo{link to correct section}
+Summarizing, the following requirements are needed in order to perform
+regression analysis on implicit feedback:
+
+\begin{itemize}
+  \item A ground-truth score.
+  \item A set of numeric features.
+  \item Each feature have to be transitive, that is a linear relationship in
+  the values have to exist.
+\end{itemize}
+
+The fact that the features have to be transitive implies that one can not use
+e.g. \textit{item category} as training feature, unless the brands (or rather
+the brand ids) themselves are sorted by price or equality, then renumbered.
 
 \subsubsection{Relative preferences using buying frequency}
 
