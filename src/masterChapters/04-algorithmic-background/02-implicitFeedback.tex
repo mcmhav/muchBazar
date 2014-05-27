@@ -1,8 +1,33 @@
 % !TEX root = ../../report.tex
 
+\clearpage
+
 \label{implicit-feedback}
 \section{Implicit feedback to implicit ratings}
 \label{sec:implicit}
+
+In this section several \textit{existing} methods will be presented, all
+solving the following problem: 
+
+\vspace{5 mm}
+
+\noindent \textit{Input:} A dataset with \textbf{implicit feedback} containing event logs
+with the following information available: event type, product id, user id and
+timestamp of the event.
+
+\vspace{3 mm}
+
+\noindent \textit{Output:} For every user $u$, a rating between 1 and $k$ on every item that
+the user has interacted with. These ratings are called \textbf{implicit
+ratings}.
+
+\vspace{5 mm}
+
+This problem definition is further used in
+Section~\ref{implementation-implicit} where multiple novel ways of
+quantification are presented based on ideas found in this section. First
+however, a deeper understanding on the relationship between implicit and
+explicit feedback is needed.
 
 Explicit feedback is present in many of the largest recommender systems today
 and hence, is extensively researched \cite{Adomavicius2005}. The user is
@@ -19,39 +44,24 @@ report different preferences due to peer pressure \cite{bell2007scalable}. The
 fact that we are introducing a user overhead, makes it difficult to have a
 complete view on the user preferences~\cite{Jawaheer2010}.
 
-There are also practical reasons for not having explicit ratings in form of
+There are also practical reasons for not having explicit feedback in form of
 ratings, dependent on how a website/application interacts and works with its
 customers. One of the most popular recommender sites in the world, Netflix, ask
 their users to rate items after consumation. However, this process does not
 \textit{cost} anything for the user, and the possibility to rate is included in
 the monthly subscription price, whilst in a webstore rating an item often
-require the user to first buy it, consume it and finally rate it. Often this
-process is either infeasable or impractical, and we can create more pleasant
-experience for the user and achieve better results with less sparsity by
-looking at already accessible behavioural statistics. By considering analytics
-data we de not require any extra effort from the user and the data on which we
-can base our recommendations are easier to collect, since we do not need a
-seperate user interface for it, and in most applications we have access to the
-access logs (Web Server Logs or similar) already.
+require the user to first buy it, consume it and finally rate it. 
 
-In order to use these logs we assume the following information available on
-each event analyzed, which we will use as the backbone data in making
-recommendations for the remainder of this paper:
+Implicit feedback on the other hand utilizes, often already collected,
+analytics data and hence does not require any extra effort neither for the user
+nor the frontend-developers. This creates a more pleasant experience for the
+user, but can also yield better recommender results since often the event log
+is less sparse than rating datasets.
 
-\begin{enumerate}
-  \item User ID
-  \item Product ID
-  \item Event type (purchase, click etc.)
-  \item Timestamp
-\end{enumerate}
-
-Our end-goal is to predict a rating $r$ for a given user $u$ on item $i$, and
-thus we need some way of translating our implicit feedback into what we call
-\textbf{implicit ratings}. It is important to understand that there is several
-fundemental differences between implicit and explicit ratings, in everything
-from \textit{meaning} to \textit{evaluation techniques}. Partly inspired by Hu
-et al.~\cite{Hu2008}, we can identify the following key charecterstics and
-differences between them:
+It is important to understand that there are several fundemental differences
+between implicit and explicit ratings, in everything from \textit{meaning} to
+\textit{evaluation techniques}. Partly inspired by Hu et al.~\cite{Hu2008}, we
+can identify the following key charecterstics and differences between them: 
 
 \textbf{Explicit ratings:}
 \begin{itemize}
@@ -109,21 +119,7 @@ implicit ratings.
 
 \clearpage
 
-\subsection{Quantifying implicit feedback}
-
-In this sub-section several \textit{existing} methods will be presented, all
-solving the following problem:
-
-\textit{Given:} A dataset containing event logs with the following information
-available: event type, product id, user id and timestamp of the event.
-
-\textit{Output:} For every user $u$, a rating between 1 and $k$ on every item that
-the user has interacted with.
-
-In Section~\ref{implementation-implicit} novel ways of solving the given
-problem are presented, based on ideas presented below.
-
-\subsubsection{Binary implicit ratings}
+\subsection{Binary implicit ratings}
 
 One of the most common techniques of quantifying implicit feedback to implicit
 ratings is to use binary ratings - that is if a user has shown any interest in
@@ -187,7 +183,7 @@ information on matrix factorization and latent factors refer to
 Section~\ref{model-based-methods} or to Hu et.\ al.\ original
 research~\cite{Hu2008}.
 
-\subsubsection{Implicit ratings for binary domains}
+\subsection{Implicit ratings for binary domains}
 
 In the previous sub-section we saw how $r_{ui}$, a score for user $u$ on item
 $i$, was set based on e.g. number of clicks but perhaps more commonly the
@@ -278,7 +274,7 @@ the number of events for the user in question.
 
 Improvements to this model are presented in Section~\ref{implementation}
 
-\subsubsection{Regression analysis}
+\subsection{Regression analysis}
 
 \paragraph{Introduction}
 A different method for converting events to ratings is finding a mathematical
@@ -450,7 +446,7 @@ The fact that the features have to be transitive implies that one can not use
 e.g. \textit{item category} as training feature, unless the brands (or rather
 the brand ids) themselves are sorted by price or equality, then renumbered.
 
-\subsubsection{Relative preferences using buying frequency}
+\subsection{Relative preferences using buying frequency}
 
 A hybrid approach using sequential pattern analysis and collaborative filtering
 techniques is presented by Choi et al.~\cite{choi2012hybrid}. In their
