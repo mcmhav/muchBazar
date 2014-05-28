@@ -179,11 +179,11 @@ prove to be disadvantageous.
 \paragraph{Bootstrapping~\cite{efron1994introduction}}
 
 \marginpar{Helge: Føler at bootstrapping er på et annet nivå enn holdout og cross-validation. Passer det, og passer det her?}
+\marginpar{Fix}
 Bootstrapping is used to estimate properties of an estimate, such as bias, variance, confidence, intervals and prediction error. This is done trough measuring these properties when sampling from an approximated distribution,
 creating an empirical distribution of the observed data.
-The idea is that with this information from sample data it is possible to say something about the population.
-Since the population is unknown it will not be possible to calculate the true error from the sample data.
-To handle this the ???????????????????
+Since the entire population is unknown it will not be possible to calculate the true error from the sample data.
+The idea then is that with this information from sample data it is possible to say something about the population.
 Since it will not be possible to perform inference on:
 
 \emph{sample data} $\rightarrow$ \emph{population} this is modeled as:
@@ -391,7 +391,7 @@ The ROC curve is $TPR$ plotted together with $FPR$ at various $T$.
 Equation~\ref{equation:auroc} can be used to calculate the area under the curve.
 $AUROC$ is the probability that the recommender system will rank positive examples higher than negative examples.
 The Area Under is a commonly used evaluation method for binary choice problems. If somebody makes random guesses,
-the ROC curve will be a diagonal line stretching from (0,0) to (1,1), as shown by the blue line in Figure \ref{fig:aucroc}, scoring an AUC of 0.5. A perfect model will score an AUC of 1.0. In practice, almost all models will fit somewhere in between.
+the ROC curve should be a diagonal line stretching from (0,0) to (1,1), as shown by the blue line in Figure \ref{fig:aucroc}, scoring an AUC of 0.5. A perfect model will score an AUC of 1.0. In practice, almost all models will fit somewhere in between.
 
 \begin{figure}[H]
 \label{fig:aucroc}
@@ -415,15 +415,14 @@ the ROC curve will be a diagonal line stretching from (0,0) to (1,1), as shown b
                 };
       \end{axis}
     \end{tikzpicture}
-    \caption{Probability density function, exponential distribution}
+    \caption{ROC curves}
 \end{figure}
 
 \subparagraph{Limitations}
 \label{subp:limitations}
 As mentioned by Powers et al.~\cite{powers2007}, recall, precision, F-measure have a bias.
 Recall, precision and F-measure ignore performance in correctly handling negative examples, they propagate the marginal Prevalences and biases, and they fail to take account the chance level performance.
-Another drawback or limitation with the measuring of user predictions is that it does not take into account the ranking of the items.
-To handle this, rank based metrics can be used.
+Another drawback or limitation with the measuring of user predictions is that it does not take into account the ranking of the items. To handle this, rank based metrics can be used.
 
 \paragraph{Rank Based Metrics}
 \label{para:rank_based}
@@ -658,12 +657,16 @@ Two ways of measuring the system is through ranking and usage prediction describ
 
 \subsubsection{Evaluation of Cold-start Recommendations}
 \label{sec:cold-start-eval}
-The cold-start problem can be considered a sub problem of coverage because it
-measures the system coverage over a specific set of items and users. When
-evaluating the cold-start system performance one is interested in measuring the
-system accuracy for these users and items.\newline
+\marginpar{Helge: Pros og Cons plz}
+\marginpar{Fix pros pg cons, for mye "synsing}
 
-The evaluation metric used seem to depend on the type of feedback available.
+The cold-start problem can be considered a sub problem of coverage. The cold-start
+problem occurs when the recommender system cannot draw any inferences for user or items
+which it has not yet gathered sufficient information. When
+evaluating the cold-start system performance one is interested in measuring the
+system accuracy for these users and items.
+
+The evaluation metric used depends on the type of feedback available.
 Most experiments carried out have used \emph{traditional} explicit feedback datasets such as
 MovieLens, EachMovie, Netflix etc. Accuracy metrics such as MAE~\cite{Rashid2002, Rashid2008, Massa2004,
 Massa2007, Stern2009} and RMSE~\cite{Agarwal2009, Agarwal2010} are therefore
@@ -693,7 +696,6 @@ normalized MAE (NMAE) by macro-averaging, which first calculates the mean
 average error of each users and taking the average of all users.
 
 To simulate the cold-start scenario, different approaches have been employed:
-
 One popular way to simulate a cold-start user scenario used by~\cite{Stern2009,
 Lam2008} is to split the dataset in two disjoint sets, a training set
 containing 90\% of the users and the remaining 10\% being in the test set. For
@@ -708,15 +710,34 @@ case of~\cite{Rashid2002} 30, 45, 60 and 90 ratings was used. After training
 the model one computes the error on the hidden ratings for the same user.
 Stern et. al. \cite{Stern1998} also used a similar method which they called Given $n$, in which
 they trained their model using 2, 5 and 10 ratings for each test user and predict
-the remaining values. Another \emph{simpler} approach employed by~\cite{Massa2007, Jamali2009} is to
+the remaining values.
+
+%Pros & Cons
+The advantage of the latter approach is that they use a selection criteria for the test users
+to avoid users with really few ratings which might be crucial on a cold-start dataset.
+The obvious problem with this approach is that for cold-start datasets these users might stand for a large portion of the ratings. There are both pros and cons of using a fixed subset of ratings rather than using the percentage of ratings, the best choice will most likely depend on the dataset. Using a fixed subset of ratings would be preferable e.g. if the number number of ratings given by the users are fairly uniform.
+
+Another \emph{simpler} approach employed by~\cite{Massa2007, Jamali2009} is to
 determine a cutoff point for what is considered a cold-start user. E.g.\ that
 every user with less than 5 ratings is considered a cold-start user. Then
 separately measure the error on predictions made to these users.
+
+%Pros & Cons
+The problem with this approach is that it does not measure how well the recommendation quality improves as
+users provide an increasing amount of ratings, giving a less detailed view of the systems performance.
+The number of ratings predicted is also likely to be fairly small given a cold-start dataset.
 
 To simulate a cold-start system scenario Agarwal et al.~\cite{Agarwal2009}
 split the dataset in two using 75\% of the dataset for training and 25\% for
 testing. They then train the model using 30\%, 60\% and 75\% of the data and
 compare their performance on the testset.
+
+%Pros & Cons
+Good and simple model as it is likely to generate three different training sets
+with different sparsity levels, which is exactly what we want to test. However,
+if the training examples are drawn at random the experiment should be repeated multiple
+times to avoid getting \emph{unfortunate} splits.
+
 
 %Summary of articles read
 
@@ -777,7 +798,7 @@ variety of factors such as user’s intent, the user’s context and how the
 recommendations are presented to the user. All these factors are hard to
 capture in an offline setting. Thus, the experiment that provides the strongest
 evidence as to the true real value of the system is an online evaluation, where
-the system is used by real users to perform real tasks
+the system is used by real users to perform real tasks.
 
 \subsubsection{Online Evaluation Metrics}
 
@@ -828,6 +849,39 @@ CTR = \frac{Clicks}{Recommendations}
 	This might lead to a biased score for the group, which might not reflect the actual score of the system when releasing it on the full set of user groups.
 
 
+\subsubsection{Multi-armed bandit experiments \cite{googlebandit}}
+	
+	A multi-armed bandit is a type of experiment where:
+	
+	\begin{itemize}
+	\item The goal is to find the best or most profitable action
+	\item The randomization distribution can be updated as the experiment progresses
+	\end{itemize}
+	
+	The "multi-armed bandit" described a hypothetical example where you face several slot machines ("one-armed bandits")
+	with potentially different payouts. You wish to find the slot machine with the best payout rate, but you also want to
+	maximize your winnings. The fundamental tension is between "exploiting" arms that have performed well in the past
+	and "exploring" new or seemingly inferior arms in case they might perform better. 
+	
+	In normal A/B testing, you will split the traffic equally between both systems, meaning that both get 50\% of the
+	traffic each, all the time. When using bandits you can continuously adjust the traffic each variation receives based on its
+	performance. Variations that appear to do well gets more traffic, and variations that clearly is underperforming
+	gets less. The adjustments are made based on a statistical test that considers both the sample size and performance
+	metrics together.
+	
+	\paragraph{Advantages}
+	
+	The main advantage of using multi-armed bandit experiments is that it usually performs better than A/B testing
+	when we look at average conversion rates, which in turn will decrease the cost of the experiment.
+	Saved testing time is another advantage highlighted in the Google article.
+		
+	\paragraph{Disadvantages}
+	
+	Statistical significance. Instead of sending equal traffic to each of the test pages, the page which performs
+	better will start to get more traffic. If you are running tests across pages which do not get huge amounts of
+	traffic, one variant can run away while the others are left in the dust without getting a fair chance. Of course,
+	if your variation is performing badly you will loose some sales or conversions in the process of A/B testing,
+	but that is the price one have to pay for finding out if a variation really did perform badly.
 
 \subsection{Discussion}
 The main idea behind a recommendation system is to produce a set of items which are of interest to the user.
