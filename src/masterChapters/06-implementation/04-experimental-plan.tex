@@ -36,20 +36,31 @@ a reward attribute for items that show how much the company profits from its sal
 information can then e.g. be used in a combination the recommendation list of the recommender
 to produce the final recommendations.
 
-%TODO - Make "reward" from sale a factor for recommendation ranking. FUTURE WORK!
+\begin{figure}[H]
+		\centering
+	  	\includegraphics[height=0.65\linewidth]{image/evaluationpipeline.png}
+		\caption[A Traditional Evaluation Pipeline]{A traditional evaluation pipeline for evaluating recommender systems}
+		\label{figure:evaluationpipeline}
+\end{figure}
 
 In order to further specify our goals we therefore have to take a closer look at the recommender's task,
-its interface and the available data.
-
-The most typical task for a e-commerce recommender system is to determine an order of items,
-often with the purpose of creating a top-k list of items that is shown in a sidebar or on a
+its interface and the available data. The most typical task for a e-commerce recommender system is to determine an order of items, often with the purpose of creating a top-k list of items that is shown in a sidebar or on a
 dedicated page.
 
-\marginpar{TODO: Screenshot of SoBazar Recommendations}
+\begin{figure}[H]
+		\centering
+		\begin{minipage}{.45\linewidth}
+	  		\includegraphics[height=1.2\linewidth]{image/sobazarfeed2.png}
+		\end{minipage}
+		\begin{minipage}{.45\linewidth}
+			\includegraphics[height=1.2\linewidth]{image/sobazarsale.png} 
+		\end{minipage}
+		\caption[Sobazar news feed - version 0.5.1]{Sobazar news feed}
+		\label{figure:sobazarfeed}
+\end{figure}
 
-The figure shows...
 
-\marginpar{TODO: Short section on how the Sobazar Interface influences the evaluation}
+The above figure shows the Sobazar feed. Recommendations are likely to be shown in a similar fashion, but instead as \emph{recommended for you}. The interface currently let you scroll sideways over up to 20 items.
 
 Ultimately, the goal of the experiment is to evaluate and measure the properties
 of the system, which we have identified as the most important for the systems success,
@@ -204,9 +215,6 @@ could e.g. select a predetermined set of test users based on some criteria and r
 their latest rating and try to predict it and repeat the process any number of times.
 This is particularly relevance as our implicit mapping function takes recency into account.
 
-%TODO - Cross-validation time-based splits?
-	%ARTICLE - Time-split cross-validation as a method for estimating the goodness of prospective prediction
-%TODO - Look at what others have done
 
 \subsubsection{Overview of the Datasets}
 
@@ -232,7 +240,7 @@ Table \ref{table:datasets} shows an overview of the datasets used for evaluation
 \subsection{Simulating the Cold-Start Problem}
 
 To simulate the cold-start problem and evaluate how well our the different
-methods tackle the different cold-start situations we came up with the following
+methods tackle the different cold-start situations we used the following
 evaluation methodology. As mentioned in Section \ref{sec:cold-start-eval} there is
 no common framework for assessing the cold-start performance of recommender systems.
 Our goal is to come up with \emph{comprehensive} framework to assess the cold-start
@@ -276,13 +284,16 @@ ratings in the training set and predict the remaining 25\%.
 %TODO - How is this implemented on the sobazar data?
 
 For the Sobazar dataset we select 10\% of the users as test users, for a user to be
-selected as a test user, the user must have provided at least 20 ratings. We then train
+selected as a test user, the user must have provided at least 20 ratings. The test user are drawn
+at random from the eligible candidates. We then train
 the model using 10\%, 40\% and 75\% of their ratings and try to predict their remaining ratings.
-As we have a very low number of ratings and a large item collection we had to use
-only 5\% of the items as test items, where each test item have been rated atleast 15 times.
+The reason for choosing percentages over hard limits is due to the fact that the ratings are
+distributed unevenly among the users. As we have a very low number of ratings and a large item collection we had to use
+only 5\% of the items as test items, where each test item have been rated by atleast 15 users.
 We train the model using 10\%, 40\% and 75\% of their ratings and try to predict their remaining
-ratings. As we have access time timestamps, we e.g. use the 10\% of the users first rating and try
-predicting the remaining 90\%. To evaluate the cold-start system performance we split the dataset in a test
+ratings. As we have access time timestamps, we split the users and items based on timestamp.
+E.g. for the 10\% user split we train the model with their initial ratings and try to predict
+their following ratings. To evaluate the cold-start system performance we split the dataset in a test
 and training set using 20\% of the ratings for testing and then train the model
 using 40\%, 60\% and 80\% of the ratings for training. It is important to note that
 this process should be repeated multiple times, as the chance of getting an
@@ -315,10 +326,16 @@ some important questions one should ask oneself when selecting evaluation metric
 It is safe to assume that the users are more interested in the top ranked items, than rating
 predictions for the entire item collection. Evaluation of top-k recommendations suggests a
 classification or ranking task, evaluation should therefore focus on classification or ranking metrics.
-Furthermore, we can also assume that a limited list of top-ranked items is shown. This implicates
-that a metric that measures the overall ranking is not appropriate, and that we only should measure
-the ranking quality of the $k$ items being shown, the other items are irrelevant. The above reasoning
-lead us to take a closer look at classification and ranking accuracy metrics.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[height=.5\linewidth]{image/sobazarmostpop.png}
+  \caption[Sobazar most-popular recommendation]{The Figure shows how the most-popular recommendations are shown in the application}
+\label{figure:mostpopular}
+\end{figure}
+
+Much like the social feed shown in Figure \ref{figure:sobazarfeed} up to 20 popular items can be shown.
+It would also be beneficial to rank these recommendations putting the most popular/relevant items in the first 4 slots and sorting the remaining items in descending order based on popularity. This implicates that a metric that measures the overall ranking is not appropriate, and that we only should measure the ranking quality of the $k$ items being shown, the other items are irrelevant. The above reasoning lead us to take a closer look at classification and ranking accuracy metrics.
 
 %TODO - Add some more cites
 
@@ -358,11 +375,10 @@ One should also be aware of that the AUC scores can be highly inaccurate, especi
 users which the recommender is unable to provide more than a handful of recommendations for. This is
 due to the fact that all unknown ratings are appended in random order after the known recommendations.
 E.g. lets say the recommender is able to generate 10 recommendations for a user out of 4000 items,
-and that one out of two hidden items for that user is not in the recommended list from the recommender.
-That last hidden item in the appended list can then mean the difference between a AUC score of above
+and that one out of two test items for that user is not in the recommended list from the recommender.
+Where the last test item is appended in the recommendation list can mean the difference between a AUC score of above
 0.9 to less than 0.6 if the item is appended at the end of the list, the results can be even more
-severe if none of the items is in the initial recommended list, then the results will be more or less
-completely random. The most obvious solution to this problem would be to use resampling or to repeat
+severe if none of the items is in the initial recommended list, then the results for that user will be completely random. The most obvious solution to this problem would be to use resampling or to repeat
 the experiment multiple times where the items not in the recommendation list are drawn at random and
 the results averaged over all the trials.
 
@@ -370,7 +386,7 @@ However, a frequently uttered point of criticism is that users are often more in
 at the top of a recommendation list but that the AUC measure is equally affected by swaps at the top
 or the bottom. To \emph{complement} AUC, we also wish to measure the rank accuracy, to get a better
 overall picture of the systems performance. This means that we want to measure whether or not
-highly rated items such as purchases likes etc. are ranked higher than less relevant items such as clicks,
+highly rated items such as purchases, likes etc. are ranked higher than less relevant items such as clicks,
 as having these highly ranked items higher up in the recommendation list aligns with our previously
 mentioned financial incentives.
 
@@ -387,7 +403,7 @@ items, the list will again contain groups of items that can appear in arbitrary 
 is posed by items for which no rating is known. These items could hold an arbitrary place within the ranking.
 Again, consider an example where a user e.g. have rated 5 items out of 4000, and the recommender is able to recommend
 only 10 items for that user. To measure the rank accuracy we would have to randomly add 3995 items to the users known
-preference list and 3990 to the users prediction list. Comparing the order of these lists would not make very much sense. The bottom line is that in most cases a rank metric for partial ordering would be more appropriate for comparing recommendation lists that are produced by recommenders to item rankings from known user preferences.
+preference list and 3990 to the users prediction list. Comparing the order of these lists would not make much sense. The bottom line is that in most cases a rank metric for partial ordering would be more appropriate for comparing recommendation lists that are produced by recommenders to item rankings from known user preferences.
 
 We assume that we can recommend at most $k$ items for each user at a time. It also pays to submit all $k$
 recommendations, because we are not penalized for bad guesses. We also assume that the order matters, so it
@@ -421,19 +437,18 @@ Example 	& 	Actual	& 	Recommended		&	AP@4   \\ \midrule
 \end{table}
 
 As you can average precision does not consider the order of the actual item list. We want a way to
-reward to recommender for getting the highly ranked items right.
+reward the recommender for getting the highly ranked items right.
 
-normalized Discounted Cumulative Gain ($nDCG_{k}$), described in Section \ref{subp:normalized_discounted_cumulative_gain_}
-is another metric to measure the rank accuracy. It is based on two main assumptions; (1) Highly relevant items are more useful than marginally relevant ones, (2) The lower the ranked position of a relevant item, the less useful it is for the user, since it is less likely to be \emph{examined}. The maybe most interesting aspect of nDCG is that it contains an utility function $rel_i$. One can replace the original utility function and replace it with a function that is more relevant to
-the designed application. Two such examples include:
+Normalized Discounted Cumulative Gain ($nDCG_{k}$), described in Section \ref{subp:normalized_discounted_cumulative_gain_}
+is another metric to measure the rank accuracy. It is based on two main assumptions; (1) Highly relevant items are more useful than marginally relevant ones, (2) The lower the ranked position of a relevant item, the less useful it is for the user, since it is less likely to be \emph{examined}. The maybe most interesting aspect of nDCG is that it contains an utility function $rel_i$. One can replace the original utility function and replace it with a function that is more relevant to the application. Two such examples include:
 
 \begin{itemize}
 \item $rel_i = 1/log(i+k)$, where i is the index of the item in the actual sorted rating list, where $k$ is a constant.
 \item $rel_i = u(i)$, simply assign the rating of an item as its relevance.
 \end{itemize}
 
-For our application we believe it could be beneficial to use the rating of the item to assign a
-relevance score, as we could have multiple items with highly similar ratings (thus the same relevance). When using a low $k$ value for the logarithmic alternative this could mean that the relevance between two almost similarly rated items might end up being disproportionately large. We will also most likely look at 20 or more items, which means that the difference between the lower ranked items will be fairly small, as the logarithmic function converges. A third alternative would be to also use some linear decay function. The following table shows the $nDCG$ score for a set of examples where the function $rel_i = 1/log(i+1)$ is used to assign the relevance score to item $i$ in the sorted list of actual ratings. E.g. item one is assigned a relevance score of $1/(log(2)$ and so on. We hope the following table will give the reader a better idea of how $nDCG$ \emph{works}.
+For our application we believe it to be beneficial to use the rating of the item as a
+relevance score, as we could have multiple items with highly similar ratings (thus the same relevance). When using a low $k$ value for the logarithmic alternative this could mean that the relevance between two almost similarly rated items might end up being disproportionately large. We will also most likely look at the 20 top items, which means that the difference between the lower ranked items will be fairly small, as the logarithmic function converges. A third alternative would be to also use some linear decay function. The following table shows the $nDCG$ score for a set of examples where the function $rel_i = 1/log(i+1)$ is used to assign the relevance score to item $i$ in the sorted list of actual ratings. E.g. item one is assigned a relevance score of $1/(log(2)$ and so on. We hope the following table will give the reader a better idea of how $nDCG$ \emph{works}.
 
 \begin{table}[H]
 \label{table:ndcg}
@@ -453,13 +468,13 @@ Example 	& 	Actual					& 	Recommended				&	nDCG 	\\ \midrule
 10			& 	[1,2,3,4,5,6,7,8,9,10] 	& 	[0,0,0,0,0,0,0,0,9,10]	&   0.110	\\
 \bottomrule
 \end{tabular}
-\caption{nDCG Results}
+\caption{nDCG Test Examples}
 \end{table}
 
 As you can see from the above mentioned examples nDCG will give us an indication whether or not our recommender
-ranks \emph{highly relevant} items above those who are less relevant. As for the limitations, nDCG is designed for situations of non-binary notions of relevance, thus cannot be used in our experiment where we wish to compare binary ratings with implicit ratings. The main difficulty encountered in using nDCG is the unavailability of an ideal ordering of results when only partial relevance feedback is available. This is often the case when we have several equally good results! This is especially true when this metric is limited to only first few results as it is often done in practice.
+ranks \emph{highly relevant} items above those who are less relevant. As for the limitations, nDCG is designed for situations of non-binary notions of relevance, thus it cannot be used in our experiment where we wish to compare binary ratings with implicit ratings. The main difficulty encountered in using nDCG is the unavailability of an ideal ordering of results when only partial relevance feedback is available. This is often the case when we have several equally good results. This is especially true when the metric is limited to only first few results as it is often done in practice.
 
-We chose take a closer look at the different ways of calculating nDCG. There are two commonly used methods to calculate the DCG and IDCG scores.
+We chose take a closer look at the different ways of calculating nDCG. There are two commonly used methods used to calculate the DCG and IDCG scores.
 
 \begin{itemize}
 \item Method 1  $DCG_p = rel_1 + \sum_{i=2}^{p} \frac{rel_i}{log_2(i)}$
@@ -501,6 +516,34 @@ user-space coverage is the number of users the recommender is able to produce re
 coverage is measured by looking at how many of the items are recommendable.
 
 %TODO - How will these experiment be carried out and validated?
+
+\subsection{Comparing ratings}
+
+Figure \ref{implicitRatingEvaluation} shows the process of evaluating a set of generated ratings. The \emph{million dollar question} is: how to do we evaluate a set of ratings?
+
+\begin{figure}[H]
+		\centering
+	  	\includegraphics[height=0.65\linewidth]{image/ratinggeneval.png}
+		\caption[Comparing Ratings]{The Figure shows the process of comparing ratings}
+		\label{figure:compareratings}
+\end{figure}
+
+Evaluating and comparing a set of ratings is not something you often encounter in the literature.
+\marginpar{TODO: Are there any articles on something similar?}
+We have a few initial theories of how it can be done:
+
+\begin{enumerate}
+\item Using the log data as the ground truth. Is it possible to justify that one method is better than another with observations from the log data?
+\item Can we put the ratings into a traditional recommender system evaluation pipeline and use the results from that to compare the ratings. In that case, what evaluation metrics are suitable?
+\end{enumerate}
+
+The bottom line is that evaluating the quality of a set of generated ratings is hard. 
+
+
+
+We could say that we believe that better ratings gives us better recommendation results, and use this as a basis for our evaluation. However, this means that the results we get from testing the different algorithms with different rating sets should be comparable. The problem with this is that most evaluation metrics consider the supplied ratings as the ground truth and bases its evaluation on these numbers. This automatically disqualifies any evaluation metrics that consider the rating values such as e.g. MAE.
+
+
 \subsection{Implicit Ratings vs. Binary Preference}
 
 This subsection will attempt to explain how we will attempt to determine whether our implicit gives some added
@@ -591,33 +634,17 @@ Problems: Methods for implicit ratings (Explain why traditional item-based cf is
 The blue boxes in figure~\ref{figure:implicitRatingEvaluation} are functions used to produce the implicit ratings based on the implicit feedback. Based on this, the system gets an estimated \emph{ground truth}, which can be used to evaluate the different recommendation algorithms show in the red boxes. Based on the evaluation score something can be said about the implicit feedback conversion to implicit ratings and the recommendation algorithms used.
 
 
-
 \subsection{A Comparison of Implicit Rating Mapping Functions}
 
-Figure \ref{implicitRatingEvaluation} shows our little dilemma when it comes to evaluation of the different mapping functions.
 
-Our initial theories:
-
-\begin{itemize}
-\item Alternative 1: Can we justify why one method is better than another by looking at the rating distribution and backing it up with observations from the data?
-\item Alternative 2: Can the log data be used as ground truth?
-\item Alternative 3: Use recommendation results as a measure of how well the ratings "work". And in this case, which evaluation metrics can be used? (e.g. AUC?)
-\end{itemize}
-
-The bottom line is that evaluating the quality of a set of generated ratings is hard. 
-
-Weighting of alternatives:
-Alternative 1: Too weak or too hard?
-Alternative 2: How?...
-Alternative 3: Does this really work? What evaluation metrics measure the overall quality of a model or method
-
-We could say that we believe that better ratings gives us better recommendation results, and use this as a basis for our evaluation. However, this means that the results we get from testing the different algorithms with different rating sets should be comparable. This automatically disqualifies any evaluation metrics that consider the rating values such as e.g. MAE.
-
-The output from the mapping functions is used as ground truth when evaluating a recommender system built using the same dataset.
 
 \subsection{Combining Implicit Ratings With Existing Cold-Start Solutions}
 
-Only use cold-start system splits for this sections related tables.
+
+Only use cold-start splits for this sections tables.
+
 Comparison of recency functions in filterbots?
-All time vs. factoring in recency
-Mainly most popular, averageRating, criticBot already covered by rating generator.
+E.g. does the PopularityBot perform better when only considering the last x weeks or all the data?
+Similarly for the criticBot
+
+
