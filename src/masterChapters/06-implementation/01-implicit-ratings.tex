@@ -3,15 +3,40 @@
 \section{Generating implicit ratings}
 \label{implementation-implicit}
 
-As discussed in Section~\ref{implicit-feedback} we can generate ratings based
-on observed user behaviours in order to create a better experience for the
-users, by not asking them to explicitly rate items. Hence, by having robust
-methods for generating (implicit) ratings based on these logs we can create
-common recommender systems models and recommend items without the user actively
-taking part in the process.
+In this section we continue solving the problem of generating ratings based on
+implicit feedback found in analytics logs, as defined in
+Section~\ref{implicit-feedback}. Our goal is two-fold:
 
-\ref{levels-frequency}
+\begin{itemize}
+  \item Find novel ways of creating implicit ratings, remedying as many
+  weaknesses and challenges, depicted in Section~\ref{implicit-weaknesses}, as
+  possible
+  \item Customize existing and new algorithms to our fashion domain, described
+  in Section~\ref{motivation}
+\end{itemize}
+
+But first, we need a clear insight into evaluation of generated ratings –
+as this will guide our choice of methods and give us clear metrics for
+comparison of various techniques.
+
+\subsection{Evaluating generated ratings}
+
+The most important factor when creating ratings is to understand which implicit
+data are available and what they mean and imply. When ratings are not explicit,
+the implicit ratings becomes the recommender systems equivelent of a ground
+truth and all later stages in the recommender pipeline (See Section~\ref{}) are
+dependent on the ratings representing a users preferences.  Hence, when
+evaluating conversion methods we can do an initial analysis without any metrics
+by answering \textit{«Given our data, does this generalization make sense?»}.
+
+As a good example we our fashion store, Sobazaar, but any other e-commerce
+application is applicable. The naive way of creating implicit ratings in such a
+domain would be to count the number of times the user clicked on an item, and
+draw the conclusion that the higher number of clicks equalled a higher rating.
+However, 
+
 \subsection{Levels of frequency, with global popularity}
+\ref{levels-frequency}
 
 Considering the weaknesses presented in Section~\ref{levels-frequency}, namely
 choosing good weights and only using a small percentage of the scale between
