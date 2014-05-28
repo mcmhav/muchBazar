@@ -2,10 +2,10 @@
 
 \chapter{The SoBazar Data}
 \minitoc
-    This sections is dedicated to exploring the soBazar data set.
+    This sections is dedicated to exploring the Sobazar data set.
     This includes how the data was preprocessed, a summary of the dataset, statistics and graphs about the data and findings from the data.
 
-% mtodo - før vi kan lere dette
+% mtodo - før vi kan lære dette
     % 1. soBazar info
     % 2. sessions of events m eksempel
 
@@ -13,13 +13,15 @@
 
 \section{Data Cleaning}
     \marginpar{Some better way of saying this; Data Preprocessing, Data Prefiltering, something}
-    The data from soBazar came as is from the soBazar database, with the exception that the data had been anonymised for privacy reasons.
+    The data from Sobazar came as is from the Sobazar database, with the exception that the data had been anonymised for privacy reasons.
     It contained therefore some unnecessary events.
     The data was therefore cleaned by removing events containing test environment flags such as: test environment and applications run from simulator.
     What was left after the cleaning data was mainly events triggered by the users, and no created during applications testing.
 
+    %mtdo - why do we need data cleaning?
+
 \section{Dataset Summary}
-    The data from soBazar is gathered based on the actions of the users in the application.
+    The data from Sobazar is gathered based on the actions of the users in the application.
     When a user accesses a store or an item, the information regarding the user and the item is stored, this is often known as implicit feedback~\ref{sec:implicit}.
     Events such as purchasing an item and "wanting" and item is stored in the same manner, but can in many cases be considered as explicit feedback.
 
@@ -34,12 +36,12 @@
         \begin{tabular}{l l}
             \toprule
             Variable     & Explanation   \\ \midrule
-            price             & The price of the item which triggered the event \\ 
-            product\_id       & The id of the item which triggered the event \\ 
-            storefront\_id    & The store id from which the item originated \\ 
-            event\_id         & What kind of event was triggered~\tablefootnote{Complete list of the different types of events can be found in table~\ref{table:events}} \\ 
+            price             & The price of the item which triggered the event \\
+            product\_id       & The id of the item which triggered the event \\
+            storefront\_id    & The store id from which the item originated \\
+            event\_id         & What kind of event was triggered~\tablefootnote{Complete list of the different types of events can be found in table~\ref{table:events}} \\
             event\_location   & The location of the user when the event was triggered \\
-            ts                & Unix timestamp in milliseconds of when the event was triggered \\ 
+            ts                & Unix timestamp in milliseconds of when the event was triggered \\
             session           & Which session number the event belongs too~\tablefootnote{This value is added at a later time. For two events to end up in the same session, the event has to be triggered within a certain period of time, and both be after the same application started-flag} \\
             user\_id          & The unique id of the user who triggered the event \\
             \bottomrule
@@ -56,18 +58,18 @@
         \begin{tabular}{l l}
             \toprule
             Attribute       & Count   \\ \midrule
-            Unique users ids   & 1235           \\ 
-            Unique item ids    & 3386           \\ 
-            Unique brands      & 16             \\ 
-            Purchases          & 1484           \\ 
-            Wants              & 7726           \\ 
+            Unique users ids   & 1235           \\
+            Unique item ids    & 3386           \\
+            Unique brands      & 16             \\
+            Purchases          & 1484           \\
+            Wants              & 7726           \\
             Item Clicks        & 14036          \\
             \bottomrule
-        \caption[Dataset summary]{Overview of the key figures in the soBazar dataset}
+        \caption[Dataset summary]{Overview of the key figures in the Sobazar dataset}
         \label{table:datasetSummary}
         \end{tabular}
     \end{table}
-    \marginpar{input the updated data when/if we get a new dump from soBazar}
+    \marginpar{input the updated data when/if we get a new dump from Sobazar}
 
     % \begin{table}[H]
     %     \centering
@@ -188,7 +190,7 @@
     \begin{figure}[H]
         \includegraphics[width=5in]{image/event_id.png}
         \centering
-        \caption[Count for different events]{This figure displays the count for each of the different events which can be triggered in the soBazar application.
+        \caption[Count for different events]{This figure displays the count for each of the different events which can be triggered in the Sobazar application.
         The "collection\_viewed"-event and "storefront\_clicked"-event are the most common events to be triggered.
         Both of these types of events will send the user to an item overview, and indicates that many users browse the items through looking at the thumbnails rather than accessing the items, since the two named event types are gateways to collections of items, and if most of the users actually accessed most of the items the "product\_detail\_clicked", "product\_wanted" and "product\_purchase\_intended" would have had the majority of the events triggered.}
     \end{figure}
@@ -233,7 +235,7 @@
         \includegraphics[width=5in]{image/sessionsCount.png}
         \centering
         \caption[Total max session count for the users]{The maximum number of sessions for each user grouped to show how the count of how many users has the different amount of sessions.
-        The majority of the users of soBazar has a session count of 20 and less.
+        The majority of the users of Sobazar has a session count of 20 and less.
         This means that they have not used the applications more than 20 separate times, over the time the data was collected.}
     \end{figure}
 
@@ -247,7 +249,7 @@
     \begin{figure}[H]
         \includegraphics[width=5in]{image/item-event-count.png}
         \centering
-        \caption[Count of events on each unique item]{This figure shows the unique count of events on each item in the soBazar dataset.
+        \caption[Count of events on each unique item]{This figure shows the unique count of events on each item in the Sobazar dataset.
         The majority of the items has only had a interaction count of 10 or less.
         Interaction count is "product\_detail\_clicked", "product\_wanted" and "product\_purchase\_intended".
         This means that there will not be more than 10 events for the majority of the items, which might lead to an issue when doing collaborative filtering on the data.
@@ -261,8 +263,8 @@
         \centering
         \caption[Life time of items mapped with event count]{This figure shows the total life span of each item mapped together with the amount of events triggered on them.
         The life span of an item is the time since the first event on the item till the last event on the item.
-        Time is shown in minutes, so the longest time span of an item is about 105 days, which is close to the time span of the events gathered from soBazar.
-        Even though an item has had a long time span does not mean that the item has been of measurable interest to the users in the soBazar application.}
+        Time is shown in minutes, so the longest time span of an item is about 105 days, which is close to the time span of the events gathered from Sobazar.
+        Even though an item has had a long time span does not mean that the item has been of measurable interest to the users in the Sobazar application.}
         \label{figure:itemTimeSpanEventCount}
     \end{figure}
 
@@ -292,7 +294,7 @@
     \end{figure}
 
     % mtodo - hva betyr dette for oss? ha det i seconds, lol
-	
+
     \begin{figure}[H]
         \includegraphics[width=5in]{image/viewBeforeWant.png}
         \centering
@@ -320,6 +322,8 @@
         % hva betyr det for oss?
         % hvordan kan data-pakket brukes av systemet?
         % dette er hands-on!
+        % mange fine figurer uten konkrete beskrivelser og refereanser i teksten
+        % prøv heller å lage gode forklaringer til fiugurene i teksten så referer deretter
 
 \section{Session Findings}
 \marginpar{Something about session findings perhaps}

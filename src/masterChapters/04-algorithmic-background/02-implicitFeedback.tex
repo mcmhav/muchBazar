@@ -1,8 +1,33 @@
 % !TEX root = ../../report.tex
 
+\clearpage
+
 \label{implicit-feedback}
 \section{Implicit feedback to implicit ratings}
 \label{sec:implicit}
+
+In this section several \textit{existing} methods will be presented, all
+solving the following problem: 
+
+\vspace{5 mm}
+
+\noindent \textit{Input:} A dataset with \textbf{implicit feedback} containing event logs
+with the following information available: event type, product id, user id and
+timestamp of the event.
+
+\vspace{3 mm}
+
+\noindent \textit{Output:} For every user $u$, a rating between 1 and $k$ on every item that
+the user has interacted with. These ratings are called \textbf{implicit
+ratings}.
+
+\vspace{5 mm}
+
+This problem definition is further used in
+Section~\ref{implementation-implicit} where multiple novel ways of
+quantification are presented based on ideas found in this section. First
+however, a deeper understanding on the relationship between implicit and
+explicit feedback is needed.
 
 Explicit feedback is present in many of the largest recommender systems today
 and hence, is extensively researched \cite{Adomavicius2005}. The user is
@@ -19,39 +44,24 @@ report different preferences due to peer pressure \cite{bell2007scalable}. The
 fact that we are introducing a user overhead, makes it difficult to have a
 complete view on the user preferences~\cite{Jawaheer2010}.
 
-There are also practical reasons for not having explicit ratings in form of
+There are also practical reasons for not having explicit feedback in form of
 ratings, dependent on how a website/application interacts and works with its
 customers. One of the most popular recommender sites in the world, Netflix, ask
 their users to rate items after consumation. However, this process does not
 \textit{cost} anything for the user, and the possibility to rate is included in
 the monthly subscription price, whilst in a webstore rating an item often
-require the user to first buy it, consume it and finally rate it. Often this
-process is either infeasable or impractical, and we can create more pleasant
-experience for the user and achieve better results with less sparsity by
-looking at already accessible behavioural statistics. By considering analytics
-data we de not require any extra effort from the user and the data on which we
-can base our recommendations are easier to collect, since we do not need a
-seperate user interface for it, and in most applications we have access to the
-access logs (Web Server Logs or similar) already.
+require the user to first buy it, consume it and finally rate it. 
 
-In order to use these logs we assume the following information available on
-each event analyzed, which we will use as the backbone data in making
-recommendations for the remainder of this paper:
+Implicit feedback on the other hand utilizes, often already collected,
+analytics data and hence does not require any extra effort neither for the user
+nor the frontend-developers. This creates a more pleasant experience for the
+user, but can also yield better recommender results since often the event log
+is less sparse than rating datasets.
 
-\begin{enumerate}
-  \item User ID
-  \item Product ID
-  \item Event type (purchase, click etc.)
-  \item Timestamp
-\end{enumerate}
-
-Our end-goal is to predict a rating $r$ for a given user $u$ on item $i$, and
-thus we need some way of translating our implicit feedback into what we call
-\textbf{implicit ratings}. It is important to understand that there is several
-fundemental differences between implicit and explicit ratings, in everything
-from \textit{meaning} to \textit{evaluation techniques}. Partly inspired by Hu
-et al.~\cite{Hu2008}, we can identify the following key charecterstics and
-differences between them: 
+It is important to understand that there are several fundemental differences
+between implicit and explicit ratings, in everything from \textit{meaning} to
+\textit{evaluation techniques}. Partly inspired by Hu et al.~\cite{Hu2008}, we
+can identify the following key charecterstics and differences between them: 
 
 \textbf{Explicit ratings:}
 \begin{itemize}
@@ -100,6 +110,8 @@ of other reasons. Whilst in the scenerio of rating, the user has already
 consumed it and is explicitly answering the question \textit{«To which degree
 did you like it?»}.
 
+\marginpar{heri-notes: merpresis formulering}
+% referer til seksjonene som kommer til å se nærmere på det kanskje?
 We will look into more of these charecteristics in our thesis, carefully
 examining the state of the art with regards to both weaknesses and advantages
 and finally introduce some novel techniques facilitating the creation of
@@ -107,9 +119,7 @@ implicit ratings.
 
 \clearpage
 
-\subsection{Quantifying implicit feedback}
-
-\subsubsection{Binary implicit ratings}
+\subsection{Binary implicit ratings}
 
 One of the most common techniques of quantifying implicit feedback to implicit
 ratings is to use binary ratings - that is if a user has shown any interest in
@@ -134,9 +144,9 @@ research, when we have implicit rather than explicit feedback there may be
 multiple reasons beyond preference that decide consumation of an item. It may
 be due to the items availability or price; the users knowledge of the item
 caused by e.g. the user interface or one of many other factors different from
-the user preffering or dislinking the item. To remidate this they introduce a
+the user preferring or disliking the item. To remidate this they introduce a
 variable $c_{ui}$ which measure the confidence in observing $p_{ui}$, where
-their main hypthesis is that as the $r_{ui}$ grows the confidence is stronger.
+their main hypothesis is that as the $r_{ui}$ grows the confidence is stronger.
 Hence, a plausible choice for $c_{ui}$ would be:
 
 \begin{equation}
@@ -144,10 +154,10 @@ c_{ui} = 1 + \alpha r_{ui}
 \end{equation}
 
 Where $\alpha$ controls the rate of increase, and is set to $40$ in their
-expiriments as this produced good results. They now use these two scores
+experiments as this produced good results. They now use these two scores
 ($p_{ui}$ and $c_{ui}$) in parallel when finding latent factors and training
 their model. In short they find both a user and item vector ($x_u$ and $y_i$,
-respectivly) where the preference is assumed to be their inner product: $p_{ui}
+respectively) where the preference is assumed to be their inner product: $p_{ui}
 = x_{u}^{T} y_{i}$. Notice as well how this method stand out from similar
 matrix factorization methods (see Section~\ref{}) by accounting for varying
 confidence levels:
@@ -167,13 +177,13 @@ and our user/item-models are minimized and perhaps more importantly multiplied
 by our confidence. As the details on this topic are quite detailed and diverges
 a bit from the generation of implicit ratings, we will stop our analysis of it
 here. But is shows an important aspect which we will return to in subsequent
-sections, namely the confidence in repetative events and our continuious
+sections, namely the confidence in repetitive events and our continuous
 challenge to obtain higher confidence in our implicit ratings. For further
 information on matrix factorization and latent factors refer to
 Section~\ref{model-based-methods} or to Hu et.\ al.\ original
 research~\cite{Hu2008}.
 
-\subsubsection{Implicit ratings for binary domains}
+\subsection{Implicit ratings for binary domains}
 
 In the previous sub-section we saw how $r_{ui}$, a score for user $u$ on item
 $i$, was set based on e.g. number of clicks but perhaps more commonly the
@@ -234,9 +244,6 @@ that uses \textit{levels of frequency}.
 \label{implicit-table}
 \end{table}
 
-\marginpar{Helge: kan score heller være Prob(kjøper gitt E) ? Mulig? Hvorfor
-ikke?}
-
 Now, a user browsing an item $i$ two times, would get a score of 40 and a if
 buying it the score would be 100 (e.g.\ the event type with highest interest
 level supersede all others). Equally, if a user browsed the item 100 times, it
@@ -267,7 +274,7 @@ the number of events for the user in question.
 
 Improvements to this model are presented in Section~\ref{implementation}
 
-\subsubsection{Regression analysis}
+\subsection{Regression analysis}
 
 \paragraph{Introduction}
 A different method for converting events to ratings is finding a mathematical
@@ -306,7 +313,7 @@ independent variable) and the rating (ground truth/dependent variable), using
 five observed datapoints. We can then, given a feature-value, predict future
 ratings. The process of finding the regression line is better generalized by
 solving the following equation, where we are given a number of independent and
-dependent values: 
+dependent values:
 
 \begin{equation}
   \label{eq-regression}
@@ -355,6 +362,7 @@ final regression line. Mathematically it solved the problem of the following
 form:
 
 \begin{equation}
+  \label{least-squares}
   \hat{w} = \argmin_w \sum_{i} (y - w^{T}x_{i})^2
 \end{equation}
 
@@ -393,9 +401,15 @@ dataset:
   \item How recent the user had acitivity on the item
 \end{itemize}
 
-Now, using this methodology on implicit feedback we need a regression model that
-correctly explains the correlation between feedback and ratings. Four models
-are proposed~\cite{parra2011walk}:
+For each feature all items are categorized into three buckets, so that items
+are equally distributed across one feature. Thus bucket one for the feature of
+global popularity contains items with low popularity and bucket three those
+with the highest popularity, and so forth. The main reason for having this
+sampling strategy is to create a homogenous set of items where outliers are
+accounted for, and we are less prone to over or underfitting.
+
+Four models are proposed, utilizing the features above and the ratings provided
+in the user study:
 
 \begin{equation}
   \begin{aligned}
@@ -406,36 +420,33 @@ are proposed~\cite{parra2011walk}:
   \end{aligned}
 \end{equation}
 
-where $if_{iu}$ is a number, indicating a bucket of items between 1 and 3,
-dependent on how many times user $u$ used item $i$. Equally $re_{iu}$ depicts
-how recently user $u$ used item $i$ and $gp_{i}$ how popular product $i$ is,
-globally. By accounting for recentness in their regression model (model 2\-4)
-they achieved an improvement in the $R^2$ value by 10\%. $R^2$, also called the
-coefficient of determination, is a standard metric in regression analysis
-indicating how well data points fit a statistical model. Training they used
-their $w$-vector, combined with the independent variables to predict future
-ratings.
+where every independent variable ($if_{iu}$, $re_{iu}$ and $gp_{i}$) is the
+bucket number between 1 and 3. $if_{iu}$ indicates how many times user $u$ used
+item $i$, $re_{iu}$ how recently user $u$ used item $i$ and $gp_{i}$ the global
+popularity of item $i$.
 
-\marginpar{more information about sampling and the use of buckets}
-The buckets with values between 1 and 3 are used to get a reasonably
-homogeneous sampling of items, as a random sampling strategy might yield only
-very popular items. The three bins from 1 to 3 represent respectively low,
-medium and high activity on an item within a independent variable. As suggested
-in the article one may get better results by using fewer or more buckets. With
-3 buckets and accounting for 3 different feedbacks (Implicit feedback, global
-popularity and recentness) this creates in effect 27 buckets per user.
+Evaluating a regression model is done by confirming the \textit{goodness of
+fit}, and the most common metric is to calculate the $R^2$ which based on
+residual values in Equation~\ref{least-squares} yields a number between 0 and
+1, indicating a bad or good fit, respectivly. By accounting for recentness in
+their regression model (model 2\-4) they achieved an improvement in the $R^2$
+value by \textit{10\%}.
 
-As one may see, this approach requires some form of explicit feedback, in order
-to train our model with independent and dependent variables. In the research
-done by Parra et al.\ they performed a user survey based on 114 active users,
-that is they had more than 5000 events in the system. This requirement makes
-regression analysis not suitable for domains where the relation between
-implicit and explicit feedback are not linear nor symmetric, e.g.\ a purchase on
-an item does not imply many clicks on the item, by the same user – whilst the
-probability of the opposite is larger. See Section~\ref{} for a larger
-discussion surrounding this topic. % \todo{link to correct section}
+Summarizing, the following requirements are needed in order to perform
+regression analysis on implicit feedback:
 
-\subsubsection{Relative preferences using buying frequency}
+\begin{itemize}
+  \item A ground-truth score.
+  \item A set of numeric features.
+  \item Each feature have to be transitive, that is a linear relationship in
+  the values have to exist.
+\end{itemize}
+
+The fact that the features have to be transitive implies that one can not use
+e.g. \textit{item category} as training feature, unless the brands (or rather
+the brand ids) themselves are sorted by price or equality, then renumbered.
+
+\subsection{Relative preferences using buying frequency}
 
 A hybrid approach using sequential pattern analysis and collaborative filtering
 techniques is presented by Choi et al.~\cite{choi2012hybrid}. In their
@@ -532,7 +543,7 @@ precision/recall scheme then we need to choose good parameters showing both the
 strengths and weaknesses found in the data and recommender model. How many
 recommendations should we provide the user in order to calculate precision and
 recall? And which metrics should we focus on; F1; MPR or others?
-\marginpar{Are MPR and F1 introduced?} 
+\marginpar{Are MPR and F1 introduced?}
 When considering the recommender model there are as many countless
 possibibilites - ranging from traditional approcahes such as
 Pearson-correlation and K-nearest neighbours to more advanced and perhaps more
@@ -573,3 +584,5 @@ count transactions and clicks~\cite{something}, but ...
 % Map against user study.
 
 % Refer to evaluation section, written by Martin.
+
+\marginpar{heri-notes: dere presenterer mange fine teorier her. det er dog ikke klart for meg hva som er deres egne og hva dere har lånt fra andre}

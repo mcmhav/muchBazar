@@ -27,7 +27,7 @@ the following categories, based on how the recommendations are made
 
 \begin{itemize}
 \item \emph{Content-based recommendations:} The user will be recommended items with similar content to the ones the user preferred in the past;
-\item \emph{Collaborative recommendations:} The user will be recommended items that people with similar testes and preferences have liked in the past;
+\item \emph{Collaborative recommendations:} The user will be recommended items that people with similar tastes and preferences have liked in the past;
 \item \emph{Hybrid approaches:} These methods combine collaborative and content-based methods.
 \end{itemize}
 
@@ -86,8 +86,8 @@ r(u,i) = score(ContentBasedProfile(u), Content(i)).
 \label{subsec:cf}
 
 The goal of collaborative filtering methods is to suggest new items or to
-predict the utility $u(c, s)$ of a certain item s for a particular user c based
-on the user's previous activities and/or likings and similarity to other users.
+predict the utility $u(c, s)$ of a certain item $s$ for a particular user $c$ based
+on the user's previous activities and/or likings and similarity to other users~\cite{Sammut:2011:EML:2011878}.
 In a typical CF scenario, there is a list of $n$ users $C = {c_{1}, ... c_{n}}$
 and a list of $m$ items $S = {s_{1},...s_{m}}$. Each user $c_{i}$ has a list of
 items $S_{si}$, which the user have expressed her opinion about, which makes up
@@ -122,7 +122,7 @@ algorithms \cite{Su2009}.\linebreak[4]
 \subsubsection{Memory-based Methods}
 
 Memory-based Collaborative Filtering methods utilize the entire user-item
-database to generate predictions. More formally, the value of an unknown
+database to generate predictions~\cite{Lin1994}. More formally, the value of an unknown
 utility $u(c,s)$ for user $c$ and item $s$ is usually computed by taking the
 weighted average of the utilities assigned by the $N$ most similar users for
 the same item $s$. The similarity between user $c$ and $c'$, $sim(c, c')$ is
@@ -149,7 +149,7 @@ sim(c, c') = \frac{\sum_{s \epsilon S_{cc'}} (u(c, s)-\bar{u_{c}})(u(c',s)-\bar{
 \end{equation}
 
 Where $u_{c}$ is the mean utility of user $c$. The Pearson Correlation
-Coefficient and other similarity measures such as consine based approaches are
+Coefficient and other similarity measures such as cosine based approaches are
 more commonly known user-based collaborative filtering.\newline
 
 Item-based Top-N Recommendation methods calculates the similarity between items
@@ -203,7 +203,7 @@ will be the recommended as the item-based Top-N list \cite{Karypis2001}.
 \label{model-based-methods}
 
 As the name implies, Model-based approaches provide recommendations by first
-developing a model of the user ratings, which is then used to make predictions.
+developing a model of the user ratings, which is then used to make predictions~\cite{Su:2009:SCF:1592474.1722966}.
 These algorithms develop a model of user ratings rather than identify a
 neighborhood of similar users or items. These models can be built using various
 strategies, such as Singular Value Decomposition (SVD), Principal Component
@@ -290,10 +290,10 @@ for four items $S$, giving us a $C \times S$ matrix with explicit ratings on a
 	\centering
 	$
 	\begin{bmatrix}
-		5.00    & 5.00  & 2.00 & -    \\ 
-		2.00    & -     & 3.00 & 5.00 \\ 
-		-       & 5.00  & -    & 3.00 \\ 
-		3.00    & -     & -    & 5.00 
+		5.00    & 5.00  & 2.00 & -    \\
+		2.00    & -     & 3.00 & 5.00 \\
+		-       & 5.00  & -    & 3.00 \\
+		3.00    & -     & -    & 5.00
 	\end{bmatrix}
 	$
 	\caption{Rating matrix $R$}
@@ -306,9 +306,9 @@ Given that $f = 3$, we might end up with the following matrix $P$ and $Q$
 \centering
 $
 \begin{bmatrix}
-1.81    &1.62   &0.74\\ 
-2.66    &1.71   &-1.08\\ 
-1.73    &-0.23  &0.78\\ 
+1.81    &1.62   &0.74\\
+2.66    &1.71   &-1.08\\
+1.73    &-0.23  &0.78\\
 3.16    &-0.24  &0.90
 \end{bmatrix}
 $
@@ -319,8 +319,8 @@ $
 \centering
 $
 \begin{bmatrix}
-1.12    &	1.49   &	0.48\\ 
-1.31    &	-0.52  &	0.59\\ 
+1.12    &	1.49   &	0.48\\
+1.31    &	-0.52  &	0.59\\
 1.13    &	0.67	&	-0.52\\
 1.39    &	0.05	&	0.45
 \end{bmatrix}
@@ -334,10 +334,10 @@ Equation \ref{equation:dotproduct} then gives us the following rating prediction
 \centering
 $
 \begin{bmatrix}
-4.79    &5.01   &1.97   &3.61 \\ 
-1.97    &1.96   &2.85   &4.80 \\ 
-2.75    &4.71   &1.40   &2.94 \\ 
-2.93    &3.30   &2.74   &4.78 
+4.79    &5.01   &1.97   &3.61 \\
+1.97    &1.96   &2.85   &4.80 \\
+2.75    &4.71   &1.40   &2.94 \\
+2.93    &3.30   &2.74   &4.78
 \end{bmatrix}
 $
 \caption{Rating prediction matrix $\hat{R}$}
@@ -383,6 +383,8 @@ following approaches to building hybrid recommender systems:
 \item Constructing a general unifying model that incorporates both
 content-based and collaborative characteristics
 \end{itemize}
+
+\marginpar{heri-notes: Which approach relevant to this work?}
 
 \subsection{Recommender System Challenges}
 
@@ -446,6 +448,8 @@ precautions to discourage such kind of manipulation.
 %TODO - Any more RS related terminology that needs explaining?
 
 \subsubsection{Explanations / Transparency}
+
+\marginpar{heri-notes: Hvorfor har dere med dette?}
 
 Tintarev et al. \cite{Tintarev2007} lists seven roles a that can be played by explanations in recommender systems:
 

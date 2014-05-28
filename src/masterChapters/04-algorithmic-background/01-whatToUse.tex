@@ -10,11 +10,23 @@ are recommended the most popular items, until enough data is collected to provid
 
 \subsection{Recommender algorithms}
 
+<<<<<<< HEAD
 The section will describe the different recommendation algorithms included in our experiments.
 
 \subsubsection{Most-popular Recommender}
 
 We developed a simple most-popular recommender that uses result dithering to \emph{randomize} the recommendations to the users. One could imagine multiple categories of most popular recommendations: Most wanted, most purchased or a combination. Dithering adds \emph{noise} to the algorithm, which permutes the results in such a way that the top few results have a high probability of remaining on the top spots, but as one goes deeper into the results, the degree of mixing increases dramatically. It is important to note that dithering is \emph{guaranteed} to make off-line performance worse, but is likely to make the actual performance better as the user is not presented with the same list of recommendations every time. We have experimented with two different methods of dithering:
+=======
+\subsection{Some Awesome Algorithms (Build up with project progress)}
+\marginpar{change name}
+This section aims to describe the algorithms which will be evaluated in our experiment.
+
+\subsubsection{Most-popular Recommender}
+\marginpar{Hvorfor?}
+We have developed a simple most-popular recommender that uses result dithering to \emph{randomize} the recommendations to the users. One could imagine to final system to leverage multiple recommendation techniques. When users are new to the system they are recommended the most popular items, until enough data is collected to provide personalized recommendations. One could imagine multiple categories of most popular recommendations: Most viewed, most wanted, most bought or a combination of all.
+
+Dithering adds \emph{noise} to the algorithm, which permutes the results in such a way that the top few results have a high probability of remaining on the top spots, but as one goes deeper into the results, the degree of mixing increases dramatically. It is important to note that dithering is \emph{guaranteed} to make off-line performance worse, but is likely to make the actual performance better. We have experimented with two different methods of dithering:
+>>>>>>> 2214ec85e58d6425bdba2be4f853529d04aecf58
 
 \begin{itemize}
 \item $Score = log_2(rank+x) - runif(y, z)$
@@ -138,10 +150,15 @@ where $n_{p_{c}}$ and $n_{q_{s}}$ denote the number of ratings of user $c$ and i
 
 \subsubsection{Content-based}
 
+<<<<<<< HEAD
 As previously mentioned content-based recommendation does not suffer as much from the cold-start problem as
 collaborative filtering approaches. 
 
 To build features for content-based recommendations we examined the content in the product database. To find the product-type, material, style and color we analyzed the content of the title, description and meta-description fields extracting the most used keywords after removing the stopwords, which we combined and grouped for the different attributes. Since product descriptions could be either in Norwegian or in English we had to include the words from both languages. We also experimented with stemming from the nltk software package in python, but since it did not improve our results it was not used in the final implementation. E.g. to determine if a product-type falls under the \emph{sweater} category we check for the following keywords: \emph{sweater, cardigan, jumper, hoody ,genser and genseren}.We attempt to extract the following features from the product-database content:
+=======
+To build features we had to take a closer look at the content in the product database. To find the product-type, material, style and color we looked at the title, description and meta-description fields looking for certain keywords. The fact that descriptions could be either in Norwegian and in English we had to include the words from both languages in the check. To find the words to classify the items we looked through the top keyword lists in both languages, and tried to group them manually as logical as possible. E.g. to determine if a product falls under the \emph{sweater} category we check for the following keywords: \emph{sweater, cardigan, jumper, hoody , genser and genseren}. As you can see we included the same word but with different suffixes. We experimented with stemming from the nltk software package in python, but we did not feel that it improved
+our results, we therefore decided to not use stemming. We attempt to extract the following features from the product-database content: brand or storename which is easily collected as it is stored in its own unique field, the price which we grouped into price brackets, the product-type such as e.g dress, jacket, top, pants boots, the product-material such as e.g. cotton, wool polyester etc., the style or genre of an item, and lastly the color of an item.
+>>>>>>> 2214ec85e58d6425bdba2be4f853529d04aecf58
 
 \begin{itemize}
 \item Price: Grouped into price brackets
@@ -159,6 +176,7 @@ product database and be assigned features. The following table shows an overview
 	\centering
 	\begin{tabular}{l l}
 	\toprule
+<<<<<<< HEAD
 	Attribute & Percentage  \\ \midrule
 	Price 			& 1.000 \\ 
 	Brand 			& 0.742 \\ 
@@ -166,6 +184,15 @@ product database and be assigned features. The following table shows an overview
 	Material 		& 0.408 \\ 
 	Style 			& 0.314 \\ 
 	Color 			& 0.162
+=======
+	Attribute & Percentage \\ \midrule
+	Price 			& 1.000 \\
+	Brand 			& 0.756 \\
+	Product-type 	& 0.625 \\
+	Material 		& 0.44  \\
+	Style 			& 0.234 \\
+	Color 			& 0.203
+>>>>>>> 2214ec85e58d6425bdba2be4f853529d04aecf58
 	\\ \bottomrule
 	\end{tabular}
 \end{table}
