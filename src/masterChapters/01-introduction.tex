@@ -36,7 +36,7 @@ is one click away, gaining customer loyalty is an essential customer strategy.
 Recommender systems improve loyalty by creating a value added relationship
 between the site and the customer.
 
-SoBazar is a new fashion e-commerce application for web and hand held devices
+SoBazaar is a new fashion e-commerce application for web and hand held devices
 developed by Telenor, Norway's largest Telco company. The application
 aggregates fashion products from various brands and stores into one
 \emph{webstore}. The app is planned to be \emph{officially launched} this
@@ -87,7 +87,7 @@ networks can be of great help when recommending fashion products.
 %research done on the combination of implicit feedback and the fashion domain
 %in comparison to explicit feedback and domains such as the movie domain is
 %small, which makes this an cutting edge topic to explore in depth.  The main
-%task of this thesis is therefore to provide the SoBazar application with
+%task of this thesis is therefore to provide the SoBazaar application with
 %recommendation based on the implicit feedback.
 
 \marginpar{heri-notes: Motivating example ville være nyttig for å få leseren til å forstå bedre tankegangen}
@@ -114,7 +114,7 @@ This leads us to our first research goals, which are the following:
 
 Most recommender systems base their recommendations of previous feedback given by the user. A central problem for
 recommender systems is therefore the cold-start problem. How do you recommend items when you have little or no
-user feedback. SoBazar is a \emph{brand new} application, and have therefore naturally recorded a limited amount
+user feedback. SoBazaar is a \emph{brand new} application, and have therefore naturally recorded a limited amount
 of user-interactions. Poor recommendations can result in customer defection and loss of revenue for Telenor.
 The above reasoning lead us to the following goal, which is to:
 
@@ -126,7 +126,7 @@ The above reasoning lead us to the following goal, which is to:
 We focus mainly on finding \emph{complete} solutions to the cold-start problem, that can handle both new users, new items
 and general sparsity related problems.
 
-As previously mentioned, recommender systems base their recommendations on feedback given by the user. SoBazar records
+As previously mentioned, recommender systems base their recommendations on feedback given by the user. SoBazaar records
 all the users interactions with the application, which then could be interpreted as user feedback given by users to items.
 We have multiple types of interactions such as e.g. browsing, wanting and purchasing items. We would like to figure out
 how these events could be used to learn the users true preferences. This lead us to the following goals:
@@ -180,13 +180,13 @@ proposal to a design for a fashion e-commerce recommender system.
       %%%%%%%%%%%%%%%
       % Comments
       \node [comment, right=0.25 of inputData] (comment-inputData) {
-        Feedback gathered from the soBazar application data dump
+        Feedback gathered from the SoBazaar application data dump
       };
       \node [comment, right=0.25 of implicitConverter] (comment-implicitConverter) {
         Coverts the inputed implicit feedback to implicit ratings based on different conversion schemes
       };
       \node [comment, right=0.25 of ratings] (comment-ratings) {
-        The output of the conversion is a set of ratings on the different items from the soBazar dataset
+        The output of the conversion is a set of ratings on the different items from the SoBazaar dataset
       };
       \node [comment, right=0.25 of recommendations] (comment-recommendations) {
         Makes recommendations based on the inputed ratings. Different approaches to make the recommendations can be take, such as matrix factorization or neighborhood based approaches
