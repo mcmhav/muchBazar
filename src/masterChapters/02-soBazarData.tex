@@ -5,7 +5,7 @@
     This sections is dedicated to exploring the Sobazar data set.
     This includes how the data was preprocessed, a summary of the dataset, statistics and graphs about the data and findings from the data.
 
-% mtodo - før vi kan lære dette
+% mtodo - før vi kan lære detteq
     % 2. sessions of events m eksempel
 
 \section{Data Cleaning}
@@ -183,15 +183,14 @@
 
     %mtodo - better buckets to better capture the ranges
     %mtodo - ikke ha all teksten i captionen til figuren, ha det heller i vanlig tekst
-    \marginpar{TODO - Make it pretty}
     \begin{figure}[H]
-        \includegraphics[width=5in]{image/event_id.png}
+        \includegraphics[width=5in]{image/event_iddistribution.png}
         \centering
         \caption[Count for different events]{This figure displays the count for each of the different events which can be triggered in the Sobazar application.
         The "collection\_viewed"-event and "storefront\_clicked"-event are the most common events to be triggered.
         Both of these types of events will send the user to an item overview, and indicates that many users browse the items through looking at the thumbnails rather than accessing the items, since the two named event types are gateways to collections of items, and if most of the users actually accessed most of the items the "product\_detail\_clicked", "product\_wanted" and "product\_purchase\_intended" would have had the majority of the events triggered.}
     \end{figure}
-	\marginpar{TODO - Make it pretty}
+
     \begin{figure}[H]
         \includegraphics[width=5in]{image/event_distr.png}
         \centering
@@ -310,6 +309,43 @@
         \label{figure:viewBuy}
     \end{figure}
 
+
+
+    \begin{figure}[H]
+        \includegraphics[width=5in]{image/storefront_namedistribution.png}
+        \centering
+        \caption[View time before purchasing an item]{mtodo}
+        \label{figure:viewBuy}
+    \end{figure}
+
+    \begin{figure}[H]
+        \includegraphics[width=5in]{image/retailer_branddistribution.png}
+        \centering
+        \caption[View time before purchasing an item]{mtodo}
+        \label{figure:viewBuy}
+    \end{figure}
+
+    \begin{figure}[H]
+        \includegraphics[width=5in]{image/hrdistribution.png}
+        \centering
+        \caption[View time before purchasing an item]{mtodo}
+        \label{figure:viewBuy}
+    \end{figure}
+
+    \begin{figure}[H]
+        \includegraphics[width=5in]{image/user_iddistribution.png}
+        \centering
+        \caption[View time before purchasing an item]{mtodo}
+        \label{figure:viewBuy}
+    \end{figure}
+
+    \begin{figure}[H]
+        \includegraphics[width=5in]{image/user_idcumdistribution.png}
+        \centering
+        \caption[View time before purchasing an item]{mtodo}
+        \label{figure:viewBuy}
+    \end{figure}
+
 \subsection{About the view time before tanking an action}
     As seen from the figures~\ref{figure:bounceRate}, ~\ref{figure:viewWant} and~\ref{figure:viewBuy}, the bounce rate is quite small compared to the time it takes for a user to decide to want or buy an item.
     This could be used as an indication of negative feedback, but since there is no explicit feedback to to test this, it might lead to rating an item negatively when the user in fact would like to rate it positively.
@@ -345,7 +381,6 @@
     order to reduce number of arrows}
 
     % mtodo - fix lol
-    \marginpar{Will be moved to appendices}
 %     Init Hypothesis:
 %     Two users with similar session habits and similar product accessing pattern
 %     have a stronger correlation to one-another than two users with just similar
