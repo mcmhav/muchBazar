@@ -72,15 +72,26 @@ preferences. For a fashion recommender this would mean estimating how much a
 user might like an item, by e.g.\\ predicting what rating a user might give an
 item. In recent years, various test collections for different domains such as
 books, music, movies have been made available to the public. These datasets
-usually consist of user ratings in the form of $(UserID, ItemID, Rating)$,
-but may also include a timestamp.
+usually consist of user ratings in the following form:
+
+\begin{table}[H]
+\centering
+	\begin{tabular}{*{4}l}
+	\toprule
+		User ID & Item ID & Rating & Timestamp \\ \midrule
+		1		&	11	  &	5	  &  2014-12-15 10:14:51 \\
+		1		&	19	  &	2	  &  2014-12-12 11:44:31 \\
+		3		&	112	  &	4	  &  2014-12-10 06:19:27 \\
+		...		&	...	  &	...	  &  ... \\
+	\bottomrule
+	\end{tabular}
+\caption{Classical recommender system dataset}
+\end{table}
 
 In recent years more or more datasets have been made available which contains
 additional information such as demographic information about the users,
 trust-networks, user-assigned tags and etc. Under we have listed a few selected
 popular datasets containing additional information:
-
-%TODO - Find more cool dataset
 
 \begin{itemize}
 
@@ -391,7 +402,7 @@ The ROC curve is $TPR$ plotted together with $FPR$ at various $T$.
 Equation~\ref{equation:auroc} can be used to calculate the area under the curve.
 $AUROC$ is the probability that the recommender system will rank positive examples higher than negative examples.
 The Area Under is a commonly used evaluation method for binary choice problems. If somebody makes random guesses,
-the ROC curve should be a diagonal line stretching from (0,0) to (1,1), as shown by the blue line in Figure \ref{fig:aucroc}, scoring an AUC of 0.5. A perfect model will score an AUC of 1.0. In practice, almost all models will fit somewhere in between.
+the ROC curve should be a diagonal line stretching from (0,0) to (1,1), as shown by the blue line in Figure \ref{fig:aucroc}, scoring an AUC of 0.5. A perfect model will score an AUC of 1.0. In practice, almost all models will fit somewhere in between e.g. somewhat like the red or green line.
 
 \begin{figure}[H]
 \label{fig:aucroc}

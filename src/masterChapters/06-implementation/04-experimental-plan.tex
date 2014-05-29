@@ -19,11 +19,8 @@ We have the following goals for our experiment:
 	\item Does our proposed implicit rating methods improve the recommendation quality over
 	binary preference data?
 	\item Compare the different implicit rating functions.
-	\item Select the best combination of methods for the SoBazaar recommender system.
+	\item Select the best combination of methods for the SoBazar recommender system.
 \end{itemize}
-
-\marginpar{Supervisors: Any suggestions?}
-\marginpar{TODO: Discussion on how}
 
 Then the question is, how can we determine whether a method is better than another. The
 main reasons for implementing a recommender system is the desire to improve user
@@ -55,12 +52,12 @@ dedicated page.
 		\begin{minipage}{.45\linewidth}
 			\includegraphics[height=1.2\linewidth]{image/SoBazaarsale.png} 
 		\end{minipage}
-		\caption[SoBazaar news feed - version 0.5.1]{SoBazaar news feed}
-		\label{figure:SoBazaarfeed}
+		\caption[Sobazaar News Feed - Version 0.5.1]{SobBazaar news feed items}
+		\label{figure:sobazarfeed}
 \end{figure}
 
 
-The above figure shows the SoBazaar feed. Recommendations are likely to be shown in a similar fashion, but instead as \emph{recommended for you}. The interface currently let you scroll sideways over up to 20 items.
+The above figure shows the Sobazar feed. Recommendations are likely to be shown in a similar fashion, but instead as \emph{recommended for you}. The interface currently let you scroll sideways over up to 20 items.
 
 Ultimately, the goal of the experiment is to evaluate and measure the properties
 of the system, which we have identified as the most important for the systems success,
@@ -68,7 +65,7 @@ and select the method that performs the best overall with respect to these prope
 
 \subsection{Selecting datasets for evaluation}
 
-In addition to evaluate the methods on the SoBazaar dataset we want to make sure that our
+In addition to evaluate the methods on the Sobazar dataset we want to make sure that our
 solution generalizes beyond our experimental dataset, in accordance to the general guidelines
 for experimental studies \cite{Shani2011}. The data used for offline evaluation should match
 as closely as possible the data we expect the recommender system to face when it is
@@ -76,7 +73,7 @@ deployed \cite{Gunawardana2009}. When selecting datasets for evaluation we focus
 following dataset properties:
 
 \begin{itemize}
-	\item Size of dataset: Preferable as close as possible to SoBazaar (6 months from now)
+	\item Size of dataset: Preferable as close as possible to Sobazar (6 months from now)
 	in terms of number of ratings, users and items.
 	\item Different types of user feedback: Preferable different types of implicit feedback
 	such as browsing and buying behavior.
@@ -89,7 +86,7 @@ following dataset properties:
 We were unable to acquire any e-commerce datasets containing user browsing history, purchases etc.
 And we therefore had to turn for other domains for datasets...
 
-%The first dataset we chose for evaluation was the MovieLens 1M dataset. The reason for selecting the MovieLens 1M dataset over MovieLens 100K is that the number of users is closer to what we expect the SoBazaar to have after the \emph{official} launch this summer in addition to having user- and item features. The MovieLens dataset can also be seen as a \emph{benchmark} dataset as it is one of the most popular recommender systems dataset used for evaluation in countless articles.
+%The first dataset we chose for evaluation was the MovieLens 1M dataset. The reason for selecting the MovieLens 1M dataset over MovieLens 100K is that the number of users is closer to what we expect the SoBazar to have after the \emph{official} launch this summer in addition to having user- and item features. The MovieLens dataset can also be seen as a \emph{benchmark} dataset as it is one of the most popular recommender systems dataset used for evaluation in countless articles.
 
 \subsubsection{Book-Crossing Dataset?}
 
@@ -159,9 +156,9 @@ Use implicit feedback as \emph{item-clicked} and explicit ratings greater than 5
 %
 %As the sparsity of this dataset is fairly low (95.53164), we decided to evaluate this dataset using the holdout method. As the dataset include time-stamps we split the dataset based on time, meaning that all ratings given before a given time will be used to train the model and all ratings given after this point will be used as a testset. We set aside the last 25\% ratings for evaluation and train the model using the remaining 75\%.
 
-\subsubsection{The SoBazaar Dataset}
+\subsubsection{The Sobazar Dataset}
 
-The SoBazaar dataset is smallest and sparsest of our datasets used for evaluation.
+The Sobazar dataset is smallest and sparsest of our datasets used for evaluation.
 The dataset contain ratings 15,252 given by 1,235 users to 3,386 items.
 We also have access to semi-structured product information collected/crawled from
 the online retailers for \emph{some} items. In addition user data from the users
@@ -172,12 +169,12 @@ to avoid \emph{wishful thinking} as we have very thin data, meaning that we cann
 rely on getting reliable results. Secondly, our evaluation methodology must be
 \emph{tailored} for small sparse datasets. When using cross-validation the number
 of folds depends on the size of the dataset. For large datasets, even 3-fold Cross
-Validation will be quite accurate, while for very sparse datasets, we may have to
+Validation will be quite accurate, while for very sparse datasets, one may have to
 use leave-one-out in order to train on as many examples as possible. The advantages
 of using a large number of folds is that the bias of the true error rate estimators
 will be small (the estimator will be very accurate), with the disadvantages being that
 the variance of the true error rate estimator will be large in addition to increased
-computation time. To exemplify this we ran a small experiment on the SoBazaar data using
+computation time. To exemplify this we ran a small experiment on the Sobazar data using
 IBCF, with $k-NN=3$, experimenting with different $K$-fold values:
 
 \begin{table}[H]
@@ -191,7 +188,7 @@ K-fold & 	$min_{RMSE}$ 	&	$max_{RMSE}$ 	& Average 	& Variance 					\\ \midrule
 10	   & 	0.718 			& 	1.026			& 0.810  	& 0.0125					\\
 \bottomrule
 \end{tabular}
-\caption{Evaluation results from experimenting with different k-fold splits on the SoBazaar dataset}
+\caption{Evaluation results from experimenting with different k-fold splits on the Sobazar dataset}
 \end{table}
 
 \marginpar{TODO: This table is not really necessary to include...}
@@ -228,7 +225,7 @@ Table \ref{table:datasets} shows an overview of the datasets used for evaluation
     \begin{tabular}{l l l l l l }
     \toprule
 	Dataset			& 	Ratings 	& 	Users	& 	Items 	& 	Sparsity	& Rating Scale 				\\ \midrule
-	SoBazaar 		& 	27,873  	& 	1,511	&	5855	&	99.69657	& Implicit Ratings(1-5)		\\ 
+	Sobazar 		& 	27,873  	& 	1,511	&	5855	&	99.69657	& Implicit Ratings(1-5)		\\ 
 	%Movielens 1M	& 	1,000,029   &	6040 	&	3706	&	95.53164	& Explicit (1-5)			\\ 
 	Dataset 2 		& 	-  			& 	-		&	-		&	-			&							\\
 	\bottomrule
@@ -255,8 +252,8 @@ performance of our recommender systems. The following inputs changes the dataset
 The first input source has the effect of increasing the dataset density, the average user
 profile length, and the average number of views per item. The second input factor has
 the effect of decreasing both the dataset density and the average user profile length,
-as the new users that join the system have interacted with only a few items. Similarly, the third input
-factor has the effect of decreasing both the dataset density and the average number of
+as the new users that join the system have interacted with only a few items. Similarly,
+the third input factor has the effect of decreasing both the dataset density and the average number of
 views per item.
 
 To simulate the cold-start user problem we propose splitting the users into two disjoint
@@ -271,7 +268,7 @@ for test items and users can differ from dataset to dataset. E.g. in \cite{Rashi
 the authors selected a subset of the users with more than 200 ratings, but you can not
 expect 10\% all the users for all datasets to have provided 200 ratings, so this number
 might be lowered if necessary. The implications of removing the top 10\% of the
-raters from the SoBazaar dataset is fairly large as they stand for a large portion
+raters from the Sobazar dataset is fairly large as they stand for a large portion
 of the few ratings we have.
 
 To evaluate the cold-start system performance we use the same method as described
@@ -281,9 +278,9 @@ ratings in the training set and predict the remaining 25\%.
 
 \marginpar{TODO: Add some justification...}
 
-%TODO - How is this implemented on the SoBazaar data?
+%TODO - How is this implemented on the sobazar data?
 
-For the SoBazaar dataset we select 10\% of the users as test users, for a user to be
+For the Sobazar dataset we select 10\% of the users as test users, for a user to be
 selected as a test user, the user must have provided at least 20 ratings. The test user are drawn
 at random from the eligible candidates. We then train
 the model using 10\%, 40\% and 75\% of their ratings and try to predict their remaining ratings.
@@ -330,11 +327,11 @@ classification or ranking task, evaluation should therefore focus on classificat
 \begin{figure}[H]
   \centering
   \includegraphics[height=.5\linewidth]{image/SoBazaarmostpop.png}
-  \caption[SoBazaar most-popular recommendation]{The Figure shows how the most-popular recommendations are shown in the application}
+  \caption[Sobazar most-popular recommendation]{The Figure shows how the most-popular recommendations are shown in the application}
 \label{figure:mostpopular}
 \end{figure}
 
-Much like the social feed shown in Figure \ref{figure:SoBazaarfeed} up to 20 popular items can be shown.
+Much like the social feed shown in Figure \ref{figure:sobazarfeed} up to 20 popular items can be shown.
 It would also be beneficial to rank these recommendations putting the most popular/relevant items in the first 4 slots and sorting the remaining items in descending order based on popularity. This implicates that a metric that measures the overall ranking is not appropriate, and that we only should measure the ranking quality of the $k$ items being shown, the other items are irrelevant. The above reasoning lead us to take a closer look at classification and ranking accuracy metrics.
 
 %TODO - Add some more cites
@@ -535,6 +532,7 @@ We have a few initial theories of how it can be done:
 \begin{enumerate}
 \item Using the log data as the ground truth. Is it possible to justify that one method is better than another with observations from the log data?
 \item Can we put the ratings into a traditional recommender system evaluation pipeline and use the results from that to compare the ratings. In that case, what evaluation metrics are suitable?
+\item User studies. Ask user to evaluate how well the produced ratings fit their actual preferences.
 \end{enumerate}
 
 The bottom line is that evaluating the quality of a set of generated ratings is hard. 
@@ -546,8 +544,8 @@ We could say that we believe that better ratings gives us better recommendation 
 
 \subsection{Implicit Ratings vs. Binary Preference}
 
-This subsection will attempt to explain how we will attempt to determine whether our implicit gives some added
-qualities in form of improved recommendations produced using binary preferences.
+This subsection will attempt to explain how we will attempt to determine whether our implicit gives any added value to the system over using binary preferences.
+
 
 Problems: Methods that can incorporate both types of feedback...
 Problems: Methods for implicit ratings (Explain why traditional item-based cf is not suited...)
@@ -599,7 +597,7 @@ Problems: Methods for implicit ratings (Explain why traditional item-based cf is
 			Recommendations algorithm
 		};
 		% \node [comment, right=0.25 of ratings] (comment-ratings) {
-		% The output of the conversion is a set of ratings on the different items from the SoBazaar dataset
+		% The output of the conversion is a set of ratings on the different items from the soBazar dataset
 		% };
 		% \node [comment, right=0.25 of recommendations] (comment-recommendations) {
 		% Makes recommendations based on the inputed ratings. Different approaches to make the recommendations can be take, such as matrix factorization or neighborhood based approaches

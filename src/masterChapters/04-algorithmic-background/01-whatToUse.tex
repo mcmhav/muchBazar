@@ -2,21 +2,17 @@
 
 \section{Recommendation methods}
 
-This section aims to describe the algorithms and methods which we have developed or borrowed from others which will be included in our experiments.
-
-\marginpar{TODO: Motivate the explanation of the methods}
-One could imagine to final system to leverage multiple recommendation techniques. When users are new to the system they
-are recommended the most popular items, until enough data is collected to provide personalized recommendations. Another solution would be to use pre-computed item similarities and recommend similar items to the item currently being viewed by the user. We also wish to use these methods as benchmarks.
-
+This section aims to describe the algorithms and methods which we have developed or borrowed from others that will be included in our experiments.
 
 \subsection{Recommender algorithms}
 
-The section will describe the different recommendation algorithms included in our experiments.
+The section will describe the different recommendation algorithms included in our experiments in closer detail.
+One could imagine to final system to leverage multiple recommendation techniques. When users are new to the system they
+are recommended the most popular items, until enough data is collected to provide personalized recommendations. Another solution would be to use pre-computed item similarities and recommend similar items to the item currently being viewed by the user. These methods are also well suited as benchmark models.
 
 \subsubsection{Most-popular Recommender}
 
 We developed a simple most-popular recommender that uses result dithering to \emph{randomize} the recommendations to the users. One could imagine multiple categories of most popular recommendations: Most wanted, most purchased or a combination. Dithering adds \emph{noise} to the algorithm, which permutes the results in such a way that the top few results have a high probability of remaining on the top spots, but as one goes deeper into the results, the degree of mixing increases dramatically. It is important to note that dithering is \emph{guaranteed} to make off-line performance worse, but is likely to make the actual performance better as the user is not presented with the same list of recommendations every time. We have experimented with two different methods of dithering:
-
 
 \begin{itemize}
 \item $Score = log_2(rank+x) - runif(y, z)$
@@ -39,15 +35,13 @@ The $runif$ function draw samples from a uniform distribution where $y$ specifie
       ]
       \addplot[thick,smooth,red]{exp(-x)};
       \addplot[thick,smooth,blue]{1.5*exp(-1.5*x)};
-      \addplot[thick,smooth,green]{2.0*exp(-2.0*x)};
+%%      \addplot[thick,smooth,green]{2.0*exp(-2.0*x)};tt
       \end{axis}
     \end{tikzpicture}
     \caption{Probability density function, exponential distribution}
 \end{figure}
 
 Given $x=5$, $y=0$ and $z=6$ using the uniform distribution we get the following permutations of the original ranking in 10 runs:
-
-%http://tex.stackexchange.com/questions/131595/plot-with-min-max-bar-and-two-average-points
 
 \begin{table}[H]
 	\centering
@@ -66,9 +60,10 @@ Given $x=5$, $y=0$ and $z=6$ using the uniform distribution we get the following
 	10	& 5 &  1 &  0 &  8 &  3 &  18 &  25 & 24 & 2 & 28\\
 	\bottomrule
 \end{tabular}
+\caption{Result Dithering - Uniform Distribution}
 \end{table}
 
-Given $x=1$, $y=3.0$ and $z=2.5$ using the exponential distribution we get the following permutations of the original ranking in 10 runs:
+where 0 is the most popular item before the permutation. Given $x=1$, $y=3.0$ and $z=2.5$ using the exponential distribution we get the following permutations of the original ranking in 10 runs:
 
 \begin{table}[H]
 	\centering
@@ -87,9 +82,64 @@ Given $x=1$, $y=3.0$ and $z=2.5$ using the exponential distribution we get the f
 	10	& 0 &  1 &  21 &  70 &  11 &  20 &  2 & 10 & 9& 3 \\
 	\bottomrule
 \end{tabular}
+\caption{Result Dithering - Exponential Distribution}
 \end{table}
 
-where 0 is the most popular item before the permutation. The results show that alternative two has a larger occurrence of items that are further down in the list. This is due to the fact that the exponential distribution can output large values, in theory up to infinity, with a decreasing probability. The values of $x$, $y$ and $z$ can be modified to achieve the desired degree of mixing.
+The following Figure shows the minimum, maximum and average position of the first 10 items for 100 recommendations
+given the same parameters as above:
+
+\pgfplotstableread{
+x    y    	y-max  	y-min
+0 	1.40 	3.60 	1.40
+1 	3.18 	6.82 	3.18
+2 	5.25 	6.75 	5.25
+3 	6.40 	7.60 	6.40
+4 	9.28 	10.72 	9.28
+5 	10.77 	13.23 	10.77
+6 	11.57 	12.43 	11.57
+7 	13.73 	15.27 	13.73
+8 	15.42 	13.58 	15.42
+9 	16.04 	13.96 	16.04
+}{\expdist}
+
+\pgfplotstableread{
+x    y    	y-max  	y-min
+0	3.56	15.44	3.56	
+1	5.91	25.09	5.91
+2	8.69	22.31	8.69
+3	12.31	34.69	12.31
+4	12.69	40.31	12.69
+5	15.74	36.26	15.74
+6	19.99	42.01	19.99
+7	21.05	41.95	20.05
+8	24.73	42.27	23.73
+9	23.71	45.29	23.71
+}{\uniformdist}
+
+\begin{figure}[H]
+	\label{fig:minmaxuniform}
+	\centering   
+	\begin{tikzpicture}
+	\begin{axis} [
+		ymin=-5,
+		xlabel={Original Position},
+		ylabel={Position After Dithering},
+	    symbolic x coords={0,1,2,3,4,5,6,7,8,9},
+	    xtick=data
+	]
+	\addplot [only marks, red] 
+	  plot [error bars/.cd, y dir=both, y explicit, error bar style={line width=2pt}]
+	  table [y error plus=y-max, y error minus=y-min] {\uniformdist};
+	\addplot [only marks, blue] 
+	  plot [error bars/.cd, y dir=both, y explicit]
+	  table [y error plus=y-max, y error minus=y-min] {\expdist};
+	\end{axis} 
+	\end{tikzpicture}
+	\caption{Minimum, maximum and average position for the 10 first items for 100 recommendations using the exponential distribution (blue) and uniform distribution (red)}
+
+\end{figure}
+
+The results show that exponential distribution alternative has a larger occurrence of items that are further down in the list. This is due to the fact that the exponential distribution can output large values, in theory up to infinity, with a decreasing probability. But it is much more consistent in keeping the top 10 items in the top 30 positions. The values of $x$, $y$ and $z$ can be modified to achieve the desired degree of mixing.
 
 \subsubsection{Item-Average}
 
@@ -112,7 +162,7 @@ Calculate similarity between items and make recommendations. Items usually don't
 
 \subsubsection{ALS-WR}
 
-%ALS-WR only? matrix factorization method which can be combined with our implicit ratings
+ALS-WR is the only method which we have found that \emph{supports} implicit ratings, and will therefore naturally be a part of our experiment.
 
 Alternating-least-squares with weighted-$\lambda$-regularization (ALS-WR) was designed fro the Netflix Prize Competition \cite{Netflix}, where it obtained an RMSE score of 0.8975, which was one of the best results based on a pure method.
 in theory up to infinity
@@ -136,7 +186,7 @@ f(P, Q) = \sum_{(c,s)\epsilon C} (u(c,s) - p^{T}_{c}q_{s})^{2} + \lambda (\sum_{
 
 where $n_{p_{c}}$ and $n_{q_{s}}$ denote the number of ratings of user $c$ and item $s$ respectively. $S_{c}$ denote the set of items $s$ that user $c$ rated, then $n_{p_{c}}$ is the cardinality of $S_{c}$; similarly $C_{s}$ denotes the set of users who rated item $s$, and $n_{q_{s}}$ is the cardinality of $I_{s}$. A given column of P, $p_{c}$ is found by solving a regularized linear least squares problem involving the known ratings of user $c$, and the feature vectors $q_{s}$ of the items that user $c$ has rated. Similarly, we can compute individual $q_{s}$'s via a regularized linear least squares solution, using the feature vectors of users who rated item $j$, and their ratings of it.
 
-%Description of implicit extension of ALS-WR
+\marginpar{TODO: Move implicit extension of ALS-WR here from implicit rating section}
 
 \subsubsection{Content-based}
 
@@ -144,8 +194,9 @@ where $n_{p_{c}}$ and $n_{q_{s}}$ denote the number of ratings of user $c$ and i
 As previously mentioned content-based recommendation does not suffer as much from the cold-start problem as
 collaborative filtering approaches. 
 
-To build features for content-based recommendations we examined the content in the product database. To find the product-type, material, style and color we analyzed the content of the title, description and meta-description fields extracting the most used keywords after removing the stopwords, which we combined and grouped for the different attributes. Since product descriptions could be either in Norwegian or in English we had to include the words from both languages. We also experimented with stemming from the nltk software package in python, but since it did not improve our results it was not used in the final implementation. E.g. to determine if a product-type falls under the \emph{sweater} category we check for the following keywords: \emph{sweater, cardigan, jumper, hoody ,genser and genseren}. We attempt to extract the following features from the product-database content:
+\paragraph{Extracting Content-Features}
 
+To build features for content-based recommendations we examined the content in the product database. To find the product-type, material, style and color we analyzed the content of the title, description and meta-description fields extracting the most used keywords after removing the stopwords, which we combined and grouped for the different attributes. Since product descriptions could be either in Norwegian or in English we had to include the words from both languages. We also experimented with stemming from the nltk software package in python, but since it did not improve our results it was not used in the final implementation. E.g. to determine if a product-type falls under the \emph{sweater} category we check for the following keywords: \emph{sweater, cardigan, jumper, hoody ,genser and genseren}. We attempt to extract the following features from the product-database content:
 
 \begin{itemize}
 \item Price: Grouped into price brackets
@@ -176,7 +227,7 @@ product database and be assigned features. The following table shows an overview
 
 Price, brand and product-type can be found for \emph{most} items, while material style and color could only be found for a minority of the items. The dataset is in no way ideal for content-based recommendation as it highlights on of the main weakness of content-based methods, namely that they require rich descriptions of items to build well informed user profiles. As mentioned in \cite{meyer2012recommender} this is most often not the case in real applications. 
 
-\marginpar{Mention what item-based methods will be used}
+\paragraph{Content-based recommender}
 
 \subsection{Cold-start Solutions}
 
@@ -190,8 +241,7 @@ Naive Filterbots \cite{Park2006} which easily could be combined with our implici
 The main reasons for experimenting with filterbots is simplicity, the fact that it easily could
 be combined with our implicit ratings in addition to the fact that previous experiments \cite{Agarwal2009, Agarwal2010} show that its performance is close to the state-of-the-art methods. It is worth to keep in mind that filterbots was developed for traditional collaborative filtering methods and it will be interesting to see how the filterbots affect the performance of ALS-WR. Filterbots can potentially help solve the cold-start user problem by making it possible for new users to connect to users that capture the general underlying trends of the entire user group. Filterbots are mainly meant to improve performance when data is scarce and not to degrade performance when data is plentiful.
 
-Similarly as in \cite{Park2006} we decided to experiment with global bots. We have currently implemented the following bots:
-A \emph{BrandBot} which rates an item based on the brands average rating, an \emph{AverageBot} which rates an item based on their average rating given to it, a \emph{CriticBot} which selects $n$ critics among the most active users and rate items based on their average rating, a \emph{PopularityBot} which rates an item based on its popularity, more ratings equals a higher rating. A filterbot takes the training set as input and generates a set of ratings which are then added to the training set. Both the \emph{AverageBot} and \emph{BrandBot} can be seen to incorporate the implicit rating factors such as recency into the ratings generated. However, for the \emph{PopularityBot} and \emph{Critic} but we wish to implement additional functionality to ensure that the new users are connected with items that are relevant right now and not consider outdated items or users which are no longer active. Since we have access to timestamps we could e.g. make the \emph{PopularityBot} rate items based on their popularity the last couple of weeks instead of over the entire dataset period. Similarly, critics can be selected based on their activity the couple of weeks/months.
+Similarly as in \cite{Park2006} we decided to experiment with global bots. We have currently implemented the following bots: A \emph{BrandBot} which rates an item based on the brands average rating, an \emph{AverageBot} which rates an item based on their average rating given to it, a \emph{CriticBot} which selects $n$ critics among the most active users and rate items based on their average rating, a \emph{PopularityBot} which rates an item based on its popularity, more ratings equals a higher rating. A filterbot takes the training set as input and generates a set of ratings which are then added to the training set. Both the \emph{AverageBot} and \emph{BrandBot} can be seen to incorporate the implicit rating factors such as recency into the ratings generated. However, for the \emph{PopularityBot} and \emph{Critic} but we wish to implement additional functionality to ensure that the new users are connected with items that are relevant right now and not consider outdated items or users which are no longer active. Since we have access to timestamps we could e.g. make the \emph{PopularityBot} rate items based on their popularity the last couple of weeks instead of over the entire dataset period. Similarly, critics can be selected based on their activity the couple of weeks/months.
 
-\marginpar{TODO: Describe implementation?}
+\marginpar{TODO: More detailed implementation details?}
 

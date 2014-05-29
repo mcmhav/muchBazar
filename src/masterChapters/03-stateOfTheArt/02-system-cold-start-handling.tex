@@ -610,7 +610,7 @@ clothes or that you simply are friends, and you want to keep up with what your
 friends are buying. We imagine the \emph{follow user} functionality, that has
 not yet been implemented, could be used to collect the trust statements. We
 believe that trust aware recommender systems is something that should be looked
-into at a later point when this functionality is in place, to further enhance
+into at a later point when more social functionality is in place, to further enhance
 the recommendation quality.
 
 %Scalability & Final Verdict
@@ -618,7 +618,7 @@ Propagating trust is expensive. The trust propagation must be computed in
 addition addition to the user-user or item-item similarities, and it therefore
 scales worse than collaborative filtering methods. It is however, a good general model for
 sparsity and increasing robustness of recommender systems, with the downsides
-being scalability challenges and the added complexity to the system.
+being scalability challenges, the added data collection needed and the added complexity to the system.
 
 \subsubsection{Interview Process}
 
@@ -644,8 +644,8 @@ be sufficient to like/dislike it, so we should give more weight to the accuracy
 of the system after the interview process than user effort. It is also worth
 noting that calculating entropy using implicit ratings is tricky, since the
 rating distribution does not range from dislike to like. We can therefore not
-find \emph{high-entropy} or \emph{controversial} items which users either tend
-to like or dislike, as we have no data about items users dislike.
+find \emph{controversial} items which users either tend
+to like or dislike, as we have no data about items users dislike. 
 We are also currently constrained to unobtrusively learn user-profiles from
 the natural interactions of users with the system, meaning
 that we can not require the user to rate e.g. 10 items before we can start
@@ -664,17 +664,18 @@ theory approach is used this would be a good model for dealing with sparsity,
 as the number of ratings would sky-rocket in addition to having ratings for a
 large portion of the item collection (not only limited to the most popular
 items). The negative aspects of this approach is mainly limited to the fact
-that it requires active user involvement.
+that it requires some active user involvement.
 
 \subsubsection{Seed users}
 
 In our opinion, this approach is not that suited for our domain, as it fairly
 dynamic and we are working with a large item collection. For an item to be
 recommendable it must be rated by all representative users, which is highly
-unlikely given the size of the item collection itself. E.g. if we have 15
-representative users and a spring collection launches containing 6000 items,
+unlikely given the size of the item collection itself. E.g. if we have e.g. 20, 40 or 100
+representative users and a spring collection is launched containing 6000 items,
 for all these items to be recommendable these 15 representative users must rate
-all these items.
+all these items. However, their method shows some promise as a selection criteria
+for items to ask the user to rate for an interview process.
 
 \subsubsection{Filterbots}
 
@@ -732,38 +733,45 @@ be incrementally trained.
 %TODO - Summary of all the methods, what can we use?
 \marginpar{helge - I problem statementdelen bør dere definere (uten å bruke foreløpig ikke definerte termer) hva som er ønskede egenskaper, og prioriter disse. Ta igjen dette her. Col-start og user effort må være mest sentralt foreløpig eller? Holder å gi kvalitativ vurdering (type +/- eller ++/+/-), så fravær av sammenlignbare forsøk virker ikke viktig på meg. Domenet er for spesielt til at vi kan generalisere ggodt tror jeg}
 
-It is hard to compare the performance of the different methods as they have
-experimented with different datasets and evaluation measures...
 
-\marginpar{What are the most important 'attributes' to consider?}
-I would also argue that having the option to incrementally update the model is
-an important feature to further improve cold-start performance. As having a
-model that is already updated will instantly incorporate data about new users
-and items.
-
-Compare the models based on the following properties:
+It is hard to compare the performance of the different methods as the authors have
+experimented with different datasets and evaluation measures. We therefore opted to do qualitative assessment of the methods in question. It is worth nothing that qualitative methods are less about attempting to prove something than about to understand something. Our ordinal rating scale spans from \ding{55} meaning that the results are bad/not optimal, \checkmark means that the results appear to be satisfactory or simply better than the solutions marked with \ding{55} and finally \checkmark	\checkmark means that the results appear to be excellent or very good. The assessment will factor in the following properties:
 
 \begin{itemize}
-    \item Accuracy: How accurate is the method...
-    \item Cold-start performance: How well does it handle the cold-start related problems?
-    \item Scalability: How well does the method scale for larger datasets
-    \item User-effort: How much user involvement is required?
+    \item Accuracy: How accurate is the system overall?
+    \item Cold-start performance: How well does the method handle the cold-start related problems?
+    \item User-effort: How much user involvement is required before the system can start producing accurate
+    recommendations?
 \end{itemize}
+
+The following table shows our final qualitative assessment of the different cold-start solutions:
+
+\marginpar{Remove accuracy column? (Not informative)}
 
 \begin{table}[H]
     \centering
-    \begin{tabular}{|l|l|l|l|l|}
-    \hline
-    Method					& Accuracy & Cold-start performance & Scalability & User-effort \\ \hline
-    Trust-aware RS 			& 		   & 						& \\ \hline
-    Filterbots 				& 		   & 						& \\ \hline
-    Seed users 				& 		   & 						& \\ \hline
-    Intelligent selection 	& 		   & 						& \\ \hline
-    Hybrid Methods 			& 		   & 						&	 \\ \hline
+    \begin{tabular}{*{4}l}
+    \toprule
+    Method					& Accuracy 				& Cold-start performance  & User-effort \\ 			\midrule
+    Trust-aware RS 			& 		   				& \checkmark			  &	\ding{55}				\\ 
+    Filterbots 				& 		   				& \checkmark			  &	\checkmark\checkmark	\\ 
+    Seed users 				& \checkmark			& \checkmark			  &	\ding{55}				\\ 
+    Intelligent selection 	& 		   				& \checkmark			  &	\checkmark				\\
+    Hybrid Methods 			& \checkmark\checkmark	& \checkmark \checkmark	  &	\checkmark\checkmark	\\
+    \bottomrule
     \end{tabular}
     \caption[Evaluation of cold-start methods]{Evaluation of cold-start methods}
     \label{table:evaluationcoldstart}
 \end{table}
 
-We believe it would be interesting too see how the hybrid methods (RBLF) and Naive Filterbots could be
-combined with our implicit ratings to improve the cold-start performance of our system.
+Intelligent selection, Filterbots and Trust-aware RS have not been given an accuracy score as it is not a recommender system in itself. Trust-aware recommender systems get a \ding{55} in user effort as it is hard to find users to connect to,
+this problem could however be mitigated by implementing a system like the one described by
+Victor et al. \cite{Victor2008} to recommend users to connect to. Seed users also get a \ding{55} in
+user-effort, mainly due to its solution to the new item problem where all representative users
+must rate an item for it to be recommendable. Filterbots and the Hybrid methods both get two checkmarks for requiring no extra user involvement. Intelligent selection could pretty seamlessly be integrated into the solution using e.g. a simple \emph{hot or not} interface, requiring minimal user effort.
+
+We would like to argue that having the option to incrementally update the model is an important feature which could further improve cold start performance, as it instantly can incorporate the ratings given
+by new users and to new items. The hybrid methods therefore gets (++) for their cold-start performance.
+
+From the above table we believe that Filterbots, Intelligent selection and Hybrid Methods, in particular RBLF and Matchbox
+could provide us with a sufficiently good solution to the cold-start problem. However, the hybrid methods are both dependent on good user and item features.
