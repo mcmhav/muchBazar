@@ -306,21 +306,21 @@
         This means that there will not be more than 10 events for the majority of the items, which might lead to an issue when doing collaborative filtering on the data.
         When the majority of the events only has 10 events and there are over 4 000 items and 1 200 users, the probability that multiple users have interacted with similar items will be low.}
     \end{figure}
-	
+
 	\marginpar{Long tail vs Pareto principle}
-	    
+
 	    For a given distribution such as sales of a catalog of items, when the Pareto principle applies, the first 20\% of the item hits account for 80\% of sales.
-	    
+
 	    or
-	    
+
 	    Long tail: the most frequent-occurring items represent less than 50\% of the occurrences in the logs.
-	
-	
+
+
 
     %mtodo - update numbers
 	\marginpar{First to last event in days/weeks not minutes, remove text on a-axis (only confusing). Why is this important, clearify text, what can we learn from the plots?}
     \begin{figure}[H]
-        \includegraphics[width=5in]{image/item-timespan-event-count.png}
+        \includegraphics[width=5in]{image/itemTimeSpansortedoneventcount.png}
         \centering
         \caption[Life time of items mapped with event count]{This figure shows the total life span of each item mapped together with the amount of events triggered on them.
         The life span of an item is the time since the first event on the item till the last event on the item.
@@ -328,12 +328,12 @@
         Even though an item has had a long time span does not mean that the item has been of measurable interest to the users in the SoBazaar application.}
         \label{figure:itemTimeSpanEventCount}
     \end{figure}
-   
-    
+
+
     % mtodo - si noe om hvorfor ikke? jeg vil vel påstå at dette sier no om viktihet av "nyhetsverdi" for item'et, og ville derfor trodd dette var relevant info?
 	\marginpar{TODO: Change x axis from minutes to days (or preferably weeks). Does this give us any hints regarding time decay factors?}
     \begin{figure}[H]
-        \includegraphics[width=5in]{image/time-span-count.png}
+        \includegraphics[width=5in]{image/itemTimespansdistribution.png}
         \centering
         \caption[Count of the different time spans of the items]{This figure shows the count of items which has the different time spans.
         The numbers on the x-axis is in minutes.
@@ -347,7 +347,7 @@
         % c) fordi det bare hadde 10 dagers "nyhetsverdi"?
 	\marginpar{TODO - Use seconds?}
     \begin{figure}[H]
-        \includegraphics[width=5in]{image/bounceRate.png}
+        \includegraphics[width=5in]{image/product_detail_clickeddistribution.png}
         \centering
         \caption[View time before leaving an item (Bounce Rate)]{This figure shows the time the users use before not taking any more action towards the item (purchase it or want it).
         The time is in milliseconds.
@@ -358,7 +358,7 @@
     % mtodo - hva betyr dette for oss? ha det i seconds, lol
 
     \begin{figure}[H]
-        \includegraphics[width=5in]{image/viewBeforeWant.png}
+        \includegraphics[width=5in]{image/product_wanteddistribution.png}
         \centering
         \caption[View time before wanting an item]{This figure shows the time the users use before wanting the currently viewed item.
         The time is in milliseconds.
