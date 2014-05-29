@@ -245,7 +245,7 @@
     \end{figure}
 
     \begin{figure}[H]
-        \includegraphics[width=5in]{image/event_distr.png}
+        \includegraphics[width=5in]{image/storefront_nameandEventdistribution.png}
         \centering
         \caption[Distribution of events on storefronts]{The events triggered in context with the different storefronts.
         The events are segmented to show the different event counts on the different storefronts, and stacked to show the complete count, to be able to clearly see how the events are distributed over the different stores.
@@ -255,13 +255,6 @@
         Different aspects affecting this might be price, style and item presentation.}
     \end{figure}
 
-    % mtodo - session flytdiagram åpne app - se collection - se enkeltitem - kjøpe - skru av, piler mellom og shit
-
-    % \begin{figure}[H]
-    %     \includegraphics[width=5in]{image/brand_distr.png}
-    %     \centering
-    %     \caption[Distribution of events on brands]{This figure shows how the users are interacting with the different brands. }
-    % \end{figure}
 
     \begin{figure}[H]
         \includegraphics[width=5in]{image/eventsPerDay.png}
@@ -279,9 +272,18 @@
         We can see that the majority of the users are located in and around Oslo.}
         \label{figure:croppedGeoplot}
     \end{figure}
-	\marginpar{TODO: Cut at 70? (on the x-axis)}
+
+
     \begin{figure}[H]
-        \includegraphics[width=5in]{image/sessionsCount.png}
+        \includegraphics[width=5in]{image/sessionsCountdistribution.png}
+        \centering
+        \caption[Total max session count for the users]{The maximum number of sessions for each user grouped to show how the count of how many users has the different amount of sessions.
+        The majority of the users of SoBazaar has a session count of 20 and less.
+        This means that they have not used the applications more than 20 separate times, over the time the data was collected.}
+    \end{figure}
+
+    \begin{figure}[H]
+        \includegraphics[width=5in]{image/sessioncumdistribution.png}
         \centering
         \caption[Total max session count for the users]{The maximum number of sessions for each user grouped to show how the count of how many users has the different amount of sessions.
         The majority of the users of SoBazaar has a session count of 20 and less.
@@ -296,7 +298,7 @@
     % \end{figure}
 	\marginpar{TODO: cut on x-axis, make pretty}
     \begin{figure}[H]
-        \includegraphics[width=5in]{image/item-event-count.png}
+        \includegraphics[width=5in]{image/product_iddistribution.png}
         \centering
         \caption[Count of events on each unique item]{This figure shows the unique count of events on each item in the SoBazaar dataset.
         The majority of the items has only had a interaction count of 10 or less.
@@ -355,7 +357,7 @@
     \end{figure}
 
     \begin{figure}[H]
-        \includegraphics[width=5in]{image/viewBeforePurchase.png}
+        \includegraphics[width=5in]{image/product_purchase_intendeddistribution.png}
         \centering
         \caption[View time before purchasing an item]{This figure shows the time the users use before purchasing the currently viewed item.
         The time is in milliseconds.
@@ -411,6 +413,137 @@
         % dette er hands-on!
         % mange fine figurer uten konkrete beskrivelser og refereanser i teksten
         % prøv heller å lage gode forklaringer til fiugurene i teksten så referer deretter
+
+
+\clearpage
+\subsection{Conversion rate properties}
+
+In many domains the number of activities on an item given a specific user
+implies preference. The activity in question may be the number of plays in a
+music service~\cite{parra2011walk} or the amount of minutes used watching a
+specific TV-show~\cite{study-on-implicit-tv}. We want to validate this
+hyptohesis in the SoBazaar data, determining if the \textit{number of clicks}
+on an item implies higher preference, that is an higher probability of buying
+the item.
+
+If the hyphothesis holds true, we can use this fact in order improve
+classification of our models in future sections. In addition we can customize
+the user interface so that if a user has clicked the item, we should with a
+higher frequency show the item to the user – as he/she is more probable of
+buying it once seen in detail.
+
+In order to validate the hyphothesis we iterate through all users and look at
+their respecitive events, summarizing the number of times the user has clicked
+an item $n$ times and of these how many times the user also bought it. We do
+this for all values of $n$, where $n \in [1,9[$ and obtain the following table
+of conversion rates and standard errors.
+
+\begin{table}[H]
+  \centering
+  \begin{tabular}{lllll}
+    \toprule
+    N & Clicks & Purchases & Rate & Standard Error \\
+    \midrule
+    1 & 15602 & 1039  & 0.0667 & 0.20\% \\
+    2 & 2672  & 323   & 0.1208 & 0.63\% \\
+    3 & 433   & 84    & 0.1939 & 1.89\% \\
+    4 & 173   & 36    & 0.2081 & 3.10\% \\
+    5 & 65    & 19    & 0.2923 & 5.63\% \\
+    6 & 54    & 20    & 0.3703 & 6.57\% \\
+    7 & 11    & 0     & 0.0000 & 0.00\% \\
+    8 & 13    & 6     & 0.4615 & 13.82\% \\
+    9 & 6     & 1     & 0.1667 & 15.34\% \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+The standard error gives a useful indication on how certain we can be that the
+results are statisically significant, and is calculated based on the sample
+size (number of clicks) and the amount of conversions. Given the rate as $r$
+and sample size as $S$ we calculate the standard error $e$ as:
+
+\begin{equation}
+  e = \sqrt{\frac{r(1 - r)}{S}}
+\end{equation}
+
+Using the standard error we want to perform an hypothesis test determining if
+the results are significant within our accepted confidence of 95\%. In other
+words we want to be 95\% sure that the patterns found in the data are not just
+random. Our two hypothesis which we want to test are thus:
+
+$\mathbf{H_0:}$ The differences in conversion rates between our first
+(baseline) and second scenerio is random.
+
+$\mathbf{H_1:}$ The difference is significant, such that one scenario have a
+higher probability of conversion.
+
+and we want to do multiple tests when $n \in [2,9[$, using $n-1$ as baseline
+and $n$ as the second scenario. For each test we calculate the
+\textit{P-value}, which is the probability of obtaining a result at least as
+extreme as the one that was actually observed. When the p-value becomes less
+that our predetermined significance level ($0.05$ when we do a 95\%
+significance test) we can reject our null-hypothesis, which is what we want to
+do. In order to find this P-value we use the Standard Score, also called the
+\textit{z-score}, which is the number of standard deviations an observation is
+above the mean. As we have two samples we can calculate the difference in
+conversion rates and use the cummulated standard error in order to find the
+Z-score:
+
+\begin{equation}
+  \label{eq-z-score}
+  Z = \frac{r_b - r_v}{\sqrt{e_{b}^{2} + e_{v}^{2}}}
+\end{equation}
+
+where $r_b$ and $r_v$ are the conversion rates for the baseline and second
+scenario respecivly. $e_b$ and $e_v$ are equally the standard errors for the
+two scenarios. Using standard normal deviate (normallly distributed random
+variable with expected value 0 ($s$) and standard deviation 1 ($h$)) we can
+find the cumulative probability for validity of the model - the P-value.
+
+We calculate the P-value using $n=1$ as baseline and $n=2$ as our second
+scenario. The Z-score is calculated by Equation~\ref{eq-z-score} and we obtain
+our result:
+
+\begin{equation}
+  Z = \frac{0.0667-0.1208}{\sqrt{0.0020^2 + 0.0063^2}} = \frac{-0.05}{\sqrt{0.4369}} = -8.1848
+\end{equation}
+
+This is a very low Z-score, and when we are this many standard deviations away
+from the mean in a standard normal deviate the P-value or area under the curve
+is approximated to 0. This is a value lower than our predetermined significance
+level ($0.05$) and thus we can reject the null-hypothesis and state with
+statistical accuracy and correctness that there is a higher probability of
+buying the item given that the user has clicked on the item twice, rather than
+having clicked on the item only once. In our first scenarios we have sufficient
+data to come to this conclusion, however, when comparing later scenerios we see
+that our numbers stop being significant as a reult of the dataset being too
+small.
+
+\begin{table}[H]
+  \centering
+  \begin{tabular}{lllll}
+  \toprule
+  Baseline & Alternative & Z-score & P-value & Significant \\
+  \midrule
+  1 & 2 & -8.1848 & 0.0000 & \cmark \\
+  2 & 3 & -3.6516 & 0.0001 & \cmark \\
+  3 & 4 & -0.3889 & 0.3487 & \xmark \\
+  4 & 5 & -1.3096 & 0.0952 & \xmark \\
+  5 & 6 & -0.9013 & 0.1837 & \xmark \\
+  6 & 7 & 5.6360  & 1.0000 & \xmark \\
+  7 & 8 & -3.3381 & 0.0004 & \cmark \\
+  8 & 9 & 1.4343  & 0.9243 & \xmark \\
+  \bottomrule
+  \end{tabular}
+\end{table}
+
+Not that when using scenario 7 clicks as baseline and comparing to 8 clicks,
+the number of purchases and clicks are so low that even though the P-value is
+smaller than our significance level, we can reject the hypothesis. Our
+conclusion is then that when a user has clicked on an item two times there is a
+higher probability of buying it compared to when the user has only clicked it
+once. This is also true when the user has clicked an item three times, but we
+can not defend it statistically for any higher value of clicks.
 
 \section{Session Findings}
 \marginpar{Something about session findings perhaps}
