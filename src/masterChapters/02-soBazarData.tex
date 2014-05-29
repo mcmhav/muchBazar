@@ -296,7 +296,7 @@
     %     \caption[Count of sessions per user mapped with count of user with give
     %     session amount]{TODOsome awesome text}
     % \end{figure}
-	\marginpar{TODO: cut on x-axis, make pretty}
+	\marginpar{TODO: change x and y labels?}
     \begin{figure}[H]
         \includegraphics[width=5in]{image/product_iddistribution.png}
         \centering
@@ -306,6 +306,16 @@
         This means that there will not be more than 10 events for the majority of the items, which might lead to an issue when doing collaborative filtering on the data.
         When the majority of the events only has 10 events and there are over 4 000 items and 1 200 users, the probability that multiple users have interacted with similar items will be low.}
     \end{figure}
+	
+	\marginpar{Long tail vs Pareto principle}
+	    
+	    For a given distribution such as sales of a catalog of items, when the Pareto principle applies, the first 20\% of the item hits account for 80\% of sales.
+	    
+	    or
+	    
+	    Long tail: the most frequent-occurring items represent less than 50\% of the occurrences in the logs.
+	
+	
 
     %mtodo - update numbers
 	\marginpar{First to last event in days/weeks not minutes, remove text on a-axis (only confusing). Why is this important, clearify text, what can we learn from the plots?}
@@ -319,7 +329,7 @@
         \label{figure:itemTimeSpanEventCount}
     \end{figure}
    
-
+    
     % mtodo - si noe om hvorfor ikke? jeg vil vel påstå at dette sier no om viktihet av "nyhetsverdi" for item'et, og ville derfor trodd dette var relevant info?
 	\marginpar{TODO: Change x axis from minutes to days (or preferably weeks). Does this give us any hints regarding time decay factors?}
     \begin{figure}[H]
