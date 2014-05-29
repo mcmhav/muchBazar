@@ -19,3 +19,4 @@ src/pdf
 *.swp
 *-gvfile
 *.gv
+*.pdf
