@@ -1,11 +1,11 @@
-% !TEX root = ../../report.tex
+%As  !TEX root = ../../report.tex
 
 \section{Generating implicit ratings}
 \label{implementation-implicit}
 
 In this section we continue solving the problem of generating ratings based on
 implicit feedback found in analytics logs, as defined in
-Section~\ref{implicit-feedback}. Our goal is two-fold:
+Section~\ref{implicit-feedback}. Our goals are two-fold:
 
 \begin{itemize}
   \item Find novel ways of creating implicit ratings, remedying as many
@@ -15,36 +15,208 @@ Section~\ref{implicit-feedback}. Our goal is two-fold:
   in Section~\ref{motivation}
 \end{itemize}
 
-But first, we need a clear insight into evaluation of generated ratings –
-as this will guide our choice of methods and give us clear metrics for
-comparison of various techniques.
-
-\subsection{Evaluating generated ratings}
-
 The most important factor when creating ratings is to understand which implicit
-data are available and what they mean and imply. When ratings are not explicit,
-the implicit ratings becomes the recommender systems equivelent of a ground
-truth and all later stages in the recommender pipeline (See Section~\ref{}) are
-dependent on the ratings representing a users preferences.  Hence, when
-evaluating conversion methods we can do an initial analysis without any metrics
-by answering \textit{«Given our data, does this generalization make sense?»}.
+data are available and their implications on user preferences. In order to best
+understand the data one should do a quantitative study as presented in
+Chapter~\ref{sobazaar-data}, but always keeping in mind the domain in question.
+When an understanding is obtained one can begin selecting features capturing
+the wanted properties and use these generalizations in order to generate
+ratings for different users inhabiting unique patterns and product
+interactions.
 
-As a good example we our fashion store, SoBazaar, but any other e-commerce
-application is applicable. The naive way of creating implicit ratings in such a
-domain would be to count the number of times the user clicked on an item, and
-draw the conclusion that the higher number of clicks equalled a higher rating.
-However, 
+Then, upon evaluation of conversion features we can do an intitial analysis
+without any metrics by attempting to answer the question \textit{does this
+generalization capture the domain and data properties?} 
+One such generalization, often done, is counting the number of a specified
+activity on an item, correlating it with preference. In the case of SoBazaar
+we've seen that a higher number of clicks yields a higher probability of
+purchasing an item, thus we can use the number of clicks as a feature in
+generating ratings - correlating a higher number of clicks to a higher rating.
 
-\subsection{Levels of frequency, with global popularity}
-\ref{levels-frequency}
+Other properties, which we will discuss in this section and consequently
+utilize, found in the \textit{fashion store aggregation} domain are:
 
-Considering the weaknesses presented in Section~\ref{levels-frequency}, namely
-choosing good weights and only using a small percentage of the scale between
-0-100. Further, the method presented does not differentiate between active and
-less active users, thus ignoring the entropy once the maximal level is reached.
-Instead we extend the method by considering the global popularity of each item,
-so that the user that.. \marginpar{Finish the subsection about improving leveled
-freq}
+\begin{itemize}
+  \item Items have a short lifespan, due to:
+  \begin{itemize}
+    \item Seasons
+    \item Fashion and trends
+    \item Sales and price fluctuations
+  \end{itemize}
+  \item Items are not bought regularily, as with food and other convenience
+  products
+  \item Users are cost and brand-aware
+\end{itemize}
+
+Given a good set of chosen features we should, for all users that have
+interacted with various items, obtain a well-distributed list of ratings - and
+with more implicit feedback available for a user, we should obtain a higher
+probability of the user having an unique set of ratings. This is easily seen in
+the scenario where we do not consider social-graphs between users, and we have
+two users $u_1$ and $u_2$ who has the equal implicit feedback - e.g. they
+viewed the same items. If we only use global features, such as item popularity,
+we have no way of giving unique ratings to the two users. However, if we
+instead look at user-features such as \textit{when} did the users last look at
+the items and \textit{in which order}, we have a higher probability of
+obtaining unique sets of ratings.
+
+When ratings are not explicit, the implicit ratings becomes the recommender
+systems equivelent of a ground truth and all later stages in the recommender
+pipeline (See Section~\ref{}) are dependent on the ratings representing a users
+preferences. This highlights the importance of generating high quality ratings
+and selecting good features and methods for doing so.
+
+\subsection{Linearily weighting features}
+
+In Section~\ref{implicit-binary-domains} Pranab Ghosh proposes a global rating
+mapping without any specific justification of why the different values are
+chosen~\cite{pkghost2014implicit}. In order to use this method we wanted our
+weighting of various events to be grounded in statistical properties found in
+the dataset. Further we would like to create ratings on a continious scale
+between a min and max-value for the given event, not manually define levels of
+scores. This way we could use a \textit{penalization function}, that based on
+our selected feature ensured an even distrubution between the mininmum and
+maximum value for the event in question. For example giving an often clicked
+product for a user the maximum value and conversly the minimum value for
+infrequent clicks.
+
+To select good weights we thus considered the probability of each event that we
+wanted to base our ratings on. These events were the ones having a
+\textit{product id} as well as possibly inhabiting the implicit properties
+described above. Instead of manually map events to an arbitrary score we used
+the probability obtaining the given event type, given all events. Thus, our
+score mapping looks like:
+
+\begin{table}[H]
+  \centering
+  \begin{tabular}{llll}
+    \toprule
+      Event type & Probability & Min & Max \\
+    \midrule
+      \textit{product\_detail\_clicked}     & $\frac{25416}{40686} \approx 62$  & 0   & 62  \\[1.5ex]
+      \textit{product\_wanted}              & $\frac{13252}{40686} \approx 33$  & 62  & 95  \\[1.5ex]
+      \textit{prodcut\_purchase\_intended}  & $\frac{2018}{40686} \approx 5$    & 95  & 100 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+Notice that the total number of events having a product id is 40686, and the
+sum of all three fractions is 1, thus covering 100\% of all events.
+
+How then do we distrubute the feature-values  between the min and max limits
+above? In our first implementation we use a \textit{linear} function, set in
+such a way that $0 \leq p(x) \leq 1$ and $0 \leq x \leq M_u$ where $M_u$ is the
+maximal observed value for user $u$ of the feature in question. Hence our
+penalization function is defined as:
+
+\begin{equation}
+  p(x, u) = \frac{x}{M_u}
+\end{equation}
+
+Given $p(x, u)$ we formulize an equation for finding $S_e(x, u)$, the score
+given to event $e$ after penalization, given a max $M_u$ and min $m_u$ value.
+
+\begin{equation}
+  S_e(x,u) = M_e - (M_e - m_e) \cdot p(x, u)
+\end{equation}
+
+The last component needed is a way of normalizing the ratings. The equation is
+based on which values are apparent as $x_{min}$ and $x_{max}$ (in our case 0
+and 100) and two values to normalize to $a$ and $b$, which in a recommender
+system often is chosen to be 1 and 5. Hence we use these variables in order to
+normalize any value $x_{min} \leq x \leq x_{max}$:
+
+\begin{equation}
+  \label{eq-normalization}
+  N(x, a, b, x_{min}, x_{max}) = a + \frac{(x-x_{min})(b-a)}{x_{max}-x_{min}}
+\end{equation}
+
+And now we have all components ready in order to do a rating generation. In
+order to see all parts working together, we imagine an example where a user has
+six events on three items, as presented in the table below. The ratings are
+normalized between 1 and 5 and the product IDs are there for illustrative
+purposes. We choose to look at the number of days since the user did the event
+in question as the implicit feature, where $x=0$ means the event was registered
+today (or as the most recent) and in our example $x=14$ is the oldest event
+happening two weeks ago. 
+
+\begin{table}[H]
+  \centering
+  \begin{tabular}{llllll}
+  \toprule
+  Event type & Product ID & x (days) & P(x) & Score & Rating \\
+  \midrule
+  \textit{product\_purchase\_intended}  & 1 & 0   & $\frac{0}{14} = 0.00$  & 100 & 5.00 \\[1.5ex]
+  \textit{product\_purchase\_intended}  & 2 & 3   & $\frac{3}{14} = 0.21$  & 98.95 & 4.96 \\[1.5ex]
+  \textit{product\_wanted}              & 2 & 7   & $\frac{7}{14} = 0.50$  & 78.5 & 4.14 \\[1.5ex]
+  \textit{product\_detail\_clicked}     & 1 & 0   & $\frac{0}{14} = 0.00$  & 62 & 3.48 \\[1.5ex]
+  \textit{product\_detail\_clicked}     & 3 & 7   & $\frac{7}{14} = 0.50$  & 31 & 2.24 \\[1.5ex]
+  \textit{product\_detail\_clicked}     & 2 & 14  & $\frac{14}{14} = 1.00$ & 62 & 1.0  \\
+  \bottomrule
+  \end{tabular}
+\end{table}
+
+When finally selecting a rating for the user/product pair, we choose the
+one yielding the highest value for the given product. Hence for the three items
+with IDs 1, 2 and 3 above we obtain the ratings 5.00, 4.96 and 2.24, respectivly.
+
+Using the same method on the SoBazaar dataset yields the following distribution
+of ratings:
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[scale=0.6]{image/dist-recentness-linear}
+  \caption{Distribution of ratings using number of days since event as feature
+  and a linear penalization function}
+\end{figure}
+
+We can see two ratings are widely more popular than others: 3.48 and 1.0. This
+makes sense, as every user that has more than two clicks registered are
+guaranteed to have the penalizations 1.0 and 0.0 apparent. As this is an
+obvious weakness we change our penalizations such that $M_u$ and $m_u$ are not
+longer based on the oldest and most recent events for user $u$, but rather the
+oldest and newest event in the dataset globally. Changing these factors yield
+the following distribution:
+
+\begin{figure}[H]
+  \centering
+  \label{dist-recentness-linear-global}
+  \includegraphics[scale=0.6]{image/dist-recentness-linear-global}
+ \caption{Distribution of ratings using number of days since event, a linear
+ penalization function and global min/max feature-values} 
+\end{figure}
+
+This is a much more interesting result, having an more even distribution of
+ratings with few gaps. The average rating is \textit{3.29} with a median
+\textit{3.37}. The weakness in these results however is easy to spot given the
+scenario when a user is absent from the application over a longer time and then
+returns. In this scenario all the items the user has previously looked at,
+wanted or bought will all suffer from large penalization values - and hence low
+ratings, since the x for all items is very high. In addition the method does
+not scale well, unless one limit the $M_u$ value, so that the difference
+between two adjecent x values are significant. As SoBazaar is a relativly new
+application this proved not to be a problem with our experiments, but given a
+larger dataset with older events we would recommend testing $M_u = \min(O_e,
+L)$ where $O_e$ is the number of days since the oldest event and $L$ is the
+limit, set at e.g. 200.
+
+In order to mitigate the returning user problem we adjust our feature to
+instead consider the ordering of events for user $u$. This way, given $n$
+events registered for this user, the newest event would obtain $x=0$ and the
+oldest $x=n$. This yields the following distribution:
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[scale=0.6]{image/dist-count-linear}
+ \caption{Distribution of ratings using ordering of events, and a linear
+ penalization function} 
+\end{figure}
+
+With much the same average and median values at \textit{3.26} and \textit{3.45}
+respectivly, we still have a distribution with a unique pattern where the
+ratings are more evenly distributed (the highest number of duplicate ratings
+is 700, compared to Figure~\ref{dist-recentness-linear-global} where the same
+number is 1250.
 
 \subsection{Introduction to the sigmoid-function}
 
@@ -193,17 +365,19 @@ following logistic function:
 
 As one can see, an event happening 15 days after the most recent event for user
 $u$ will get a penalization of $0.5$ whilst an event with $x=5$ recieves
-$0.018$. Following up on Table~\ref{events-example} we can calculate the
-various penalizations and final scores for each day, by taking the highest
-possible score for event $i$ and penalizing it in the following manner:
+$0.018$. 
 
-\begin{equation}
-  s_{e}(x,u) = b_e - (b_e - w_e) \cdot p_{x}(u)
-\end{equation}
-
-where $p_x$ is the penalization after $x$ days. $b_e$ and $w_e$ are the best
-and worst scores achievable for event $e$, respectivly. The final score
-$s_{e}(x,u)$ is presented for each event below:
+% Following up on Table~\ref{events-example} we can calculate the
+% various penalizations and final scores for each day, by taking the highest
+% possible score for event $i$ and penalizing it in the following manner:
+%
+% \begin{equation}
+%   s_{e}(x,u) = b_e - (b_e - w_e) \cdot p_{x}(u)
+% \end{equation}
+%
+% where $p_x$ is the penalization after $x$ days. $b_e$ and $w_e$ are the best
+% and worst scores achievable for event $e$, respectivly. The final score
+% $s_{e}(x,u)$ is presented for each event below:
 
 \begin{table}[H]
   \centering
@@ -231,11 +405,11 @@ non-overlapping event type scores/intervals, as we have per
 Table~\ref{implicit-example-scores}. We can now normalize $s$ and get a rating
 $r$ between $a$ and $b$ by using the following equation, knowing that $X_{max}
 = 100$ and $X_{min} = 0$:
-
-\begin{equation}
-  X' = a + \frac{(X-X_{min})\cdot(b-a)}{X_{max}-X_{min}}
-  \label{eq-normalization}
-\end{equation}
+%
+% \begin{equation}
+%   X' = a + \frac{(X-X_{min})\cdot(b-a)}{X_{max}-X_{min}}
+%   \label{eq-normalization}
+% \end{equation}
 
 Setting $a$ to 0 and $b$ to 5, as is common in recommender systems we get the
 rating $X' = 4.982$ when $s = 99.64$. Intuitivly this makes sense, if we assume
