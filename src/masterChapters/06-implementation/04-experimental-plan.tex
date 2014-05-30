@@ -516,7 +516,7 @@ coverage is measured by looking at how many of the items are recommendable.
 
 \subsection{Comparing ratings}
 
-Figure \ref{implicitRatingEvaluation} shows the process of evaluating a set of generated ratings. The \emph{million dollar question} is: how to do we evaluate a set of ratings?
+Figure \ref{implicitRatingEvaluation} shows the process of evaluating a set of generated ratings. 
 
 \begin{figure}[H]
 		\centering
@@ -525,9 +525,10 @@ Figure \ref{implicitRatingEvaluation} shows the process of evaluating a set of g
 		\label{figure:compareratings}
 \end{figure}
 
-Evaluating and comparing a set of ratings is not something you often encounter in the literature.
+However, \emph{million dollar question} is: how to do we evaluate a set of ratings? Evaluating and comparing
+a set of ratings is not something you often encounter in the literature.
 \marginpar{TODO: Are there any articles on something similar?}
-Initial theories of how it can be done:
+Initial theories on how it can be done:
 
 \begin{enumerate}
 \item Using the log data as the ground truth. Is it possible to justify that one method is better than another with observations from the log data?
@@ -541,18 +542,21 @@ The bottom line is that evaluating the quality of a set of generated ratings is 
 
 We could say that we believe that better ratings gives us better recommendation results, and use this as a basis for our evaluation. However, this means that the results we get from testing the different algorithms with different rating sets should be comparable. The problem with this is that most evaluation metrics consider the supplied ratings as the ground truth and bases its evaluation on these numbers. This automatically disqualifies any evaluation metrics that consider the rating values such as e.g. MAE.
 
+Suitable metrics: AUC, MAP, Recommendation - Summarize (Bought, liked, clicked) for both methods
 
-\subsection{Implicit Ratings vs. Binary Preference}
+\subsubsection{Implicit Ratings vs. Binary Preference}
 
 This subsection will attempt to explain how we will attempt to determine whether our implicit gives any added value to the system over using binary preferences.
 
+Problems:
+
 \begin{itemize}
-\item Methods that can incorporate both types of feedback
+\item Recommendation methods that can be used for comparison that can incorporate both types of feedback
 \item 
 \end{itemize}
 
-Problems: ...
-Problems: Methods for implicit ratings (Explain why traditional item-based cf is not suited...)
+There is also not an abundance of methods developed for implicit ratings.
+Most are focused around explicit ratings and binary ratings.
 
 \begin{center}
     \begin{tikzpicture}
@@ -636,7 +640,7 @@ Problems: Methods for implicit ratings (Explain why traditional item-based cf is
 The blue boxes in figure~\ref{figure:implicitRatingEvaluation} are functions used to produce the implicit ratings based on the implicit feedback. Based on this, the system gets an estimated \emph{ground truth}, which can be used to evaluate the different recommendation algorithms show in the red boxes. Based on the evaluation score something can be said about the implicit feedback conversion to implicit ratings and the recommendation algorithms used.
 
 
-\subsection{A Comparison of Implicit Rating Mapping Functions}
+\subsubsection{A Comparison of Implicit Rating Mapping Functions}
 
 
 
