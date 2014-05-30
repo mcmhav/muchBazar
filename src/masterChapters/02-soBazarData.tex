@@ -306,21 +306,21 @@
         This means that there will not be more than 10 events for the majority of the items, which might lead to an issue when doing collaborative filtering on the data.
         When the majority of the events only has 10 events and there are over 4 000 items and 1 200 users, the probability that multiple users have interacted with similar items will be low.}
     \end{figure}
-	
+
 	\marginpar{Long tail vs Pareto principle}
-	    
+
 	    For a given distribution such as sales of a catalog of items, when the Pareto principle applies, the first 20\% of the item hits account for 80\% of sales.
-	    
+
 	    or
-	    
+
 	    Long tail: the most frequent-occurring items represent less than 50\% of the occurrences in the logs.
-	
-	
+
+
 
     %mtodo - update numbers
 	\marginpar{First to last event in days/weeks not minutes, remove text on a-axis (only confusing). Why is this important, clearify text, what can we learn from the plots?}
     \begin{figure}[H]
-        \includegraphics[width=5in]{image/item-timespan-event-count.png}
+        \includegraphics[width=5in]{image/itemTimeSpansortedoneventcount.png}
         \centering
         \caption[Life time of items mapped with event count]{This figure shows the total life span of each item mapped together with the amount of events triggered on them.
         The life span of an item is the time since the first event on the item till the last event on the item.
@@ -328,12 +328,12 @@
         Even though an item has had a long time span does not mean that the item has been of measurable interest to the users in the SoBazaar application.}
         \label{figure:itemTimeSpanEventCount}
     \end{figure}
-   
-    
+
+
     % mtodo - si noe om hvorfor ikke? jeg vil vel påstå at dette sier no om viktihet av "nyhetsverdi" for item'et, og ville derfor trodd dette var relevant info?
 	\marginpar{TODO: Change x axis from minutes to days (or preferably weeks). Does this give us any hints regarding time decay factors?}
     \begin{figure}[H]
-        \includegraphics[width=5in]{image/time-span-count.png}
+        \includegraphics[width=5in]{image/itemTimespansdistribution.png}
         \centering
         \caption[Count of the different time spans of the items]{This figure shows the count of items which has the different time spans.
         The numbers on the x-axis is in minutes.
@@ -347,7 +347,7 @@
         % c) fordi det bare hadde 10 dagers "nyhetsverdi"?
 	\marginpar{TODO - Use seconds?}
     \begin{figure}[H]
-        \includegraphics[width=5in]{image/bounceRate.png}
+        \includegraphics[width=5in]{image/product_detail_clickeddistribution.png}
         \centering
         \caption[View time before leaving an item (Bounce Rate)]{This figure shows the time the users use before not taking any more action towards the item (purchase it or want it).
         The time is in milliseconds.
@@ -358,7 +358,7 @@
     % mtodo - hva betyr dette for oss? ha det i seconds, lol
 
     \begin{figure}[H]
-        \includegraphics[width=5in]{image/viewBeforeWant.png}
+        \includegraphics[width=5in]{image/product_wanteddistribution.png}
         \centering
         \caption[View time before wanting an item]{This figure shows the time the users use before wanting the currently viewed item.
         The time is in milliseconds.
@@ -436,6 +436,11 @@ hyptohesis in the SoBazaar data, determining if the \textit{number of clicks}
 on an item implies higher preference, that is an higher probability of buying
 the item.
 
+\marginpar{Herman: Implicit Feedback Recommendation via Implicit-to-Explicit
+Ordinal Logistic Regression Mapping
+ Check out related work for similar articles}
+
+
 If the hyphothesis holds true, we can use this fact in order improve
 classification of our models in future sections. In addition we can customize
 the user interface so that if a user has clicked the item, we should with a
@@ -445,7 +450,7 @@ buying it once seen in detail.
 In order to validate the hyphothesis we iterate through all users and look at
 their respecitive events, summarizing the number of times the user has clicked
 an item $n$ times and of these how many times the user also bought it. We do
-this for all values of $n$, where $n \in [1,9[$ and obtain the following table
+this for all values of $n$, where $n \in [1,6[$ and obtain the following table
 of conversion rates and standard errors.
 
 \begin{table}[H]
@@ -460,9 +465,6 @@ of conversion rates and standard errors.
     4 & 173   & 36    & 0.2081 & 3.10\% \\
     5 & 65    & 19    & 0.2923 & 5.63\% \\
     6 & 54    & 20    & 0.3703 & 6.57\% \\
-    7 & 11    & 0     & 0.0000 & 0.00\% \\
-    8 & 13    & 6     & 0.4615 & 13.82\% \\
-    9 & 6     & 1     & 0.1667 & 15.34\% \\
     \bottomrule
   \end{tabular}
 \end{table}
@@ -487,7 +489,7 @@ $\mathbf{H_0:}$ The differences in conversion rates between our first
 $\mathbf{H_1:}$ The difference is significant, such that one scenario have a
 higher probability of conversion.
 
-and we want to do multiple tests when $n \in [2,9[$, using $n-1$ as baseline
+and we want to do multiple tests when $n \in [2,6[$, using $n-1$ as baseline
 and $n$ as the second scenario. For each test we calculate the
 \textit{P-value}, which is the probability of obtaining a result at least as
 extreme as the one that was actually observed. When the p-value becomes less
@@ -540,20 +542,14 @@ small.
   3 & 4 & -0.3889 & 0.3487 & \xmark \\
   4 & 5 & -1.3096 & 0.0952 & \xmark \\
   5 & 6 & -0.9013 & 0.1837 & \xmark \\
-  6 & 7 & 5.6360  & 1.0000 & \xmark \\
-  7 & 8 & -3.3381 & 0.0004 & \cmark \\
-  8 & 9 & 1.4343  & 0.9243 & \xmark \\
   \bottomrule
   \end{tabular}
 \end{table}
 
-Not that when using scenario 7 clicks as baseline and comparing to 8 clicks,
-the number of purchases and clicks are so low that even though the P-value is
-smaller than our significance level, we can reject the hypothesis. Our
-conclusion is then that when a user has clicked on an item two times there is a
-higher probability of buying it compared to when the user has only clicked it
-once. This is also true when the user has clicked an item three times, but we
-can not defend it statistically for any higher value of clicks.
+Our conclusion is then that when a user has clicked on an item two times there
+is a higher probability of buying it compared to when the user has only
+clicked it once. This is also true when the user has clicked an item three
+times, but we can not defend it statistically for any higher value of clicks.
 
 \section{Session Findings}
 \marginpar{Something about session findings perhaps}
