@@ -2,13 +2,69 @@
 
 \section{Recommendation methods}
 
-This section aims to describe the algorithms and methods which we have developed or borrowed from others that will be included in our experiments.
 
-\subsection{Recommender algorithms}
 
-The section will describe the different recommendation algorithms included in our experiments in closer detail.
-One could imagine to final system to leverage multiple recommendation techniques. When users are new to the system they
-are recommended the most popular items, until enough data is collected to provide personalized recommendations. Another solution would be to use pre-computed item similarities and recommend similar items to the item currently being viewed by the user. These methods are also well suited as benchmark models.
+The section will describe the different recommendation methods included in our experiments in closer detail. Our experiment requires us to test multiple recommender systems to get a better overview of added value of including implicit
+factors and finally our implicit ratings.
+We have also chosen to include some simpler non-personalized methods to be used as baseline models to assess whether
+the current system is ready for a personalized recommendation system. Similarly to assess the improvement, if any,
+over the simple non-personalized methods for cold-start recommendations. E.g. one could imagine to final system to leverage multiple recommendation techniques. When users are new to the system they
+are recommended the most popular items, until enough data is collected to start providing personalized recommendations. This system could be complemented by pre-computed item similarities for recommendations in the context of the user
+\emph{examining} an item. If the cold-start performance of these simpler models outperform the more sophisticated ones
+include in our experiments, why not just use them? However, our greatest problem was to find methods which in some ways
+could bridge the broken divide between binary and non-binary recommendation systems to make our results valid. Our solution to this is to include the methods that are considered the state-of-the-art methods from both classes in an attempt to bridge this highly \emph{unfortunate} gap, and weakness in our experiment.
+
+\subsection{Common Algorithms}
+
+This subsection will describe the algorithms that will be used on both the binary and non-binary.
+
+
+
+\subsubsection{Content-boosted collaborative filtering}
+
+\marginpar{TODO: Complete motivation. Are we doing content-based filtering og content-boosted collaborative filtering?}
+As previously mentioned content-based recommendation does not suffer as much from the cold-start problem as
+collaborative filtering approaches. 
+
+\paragraph{Extracting Content-Features}
+
+To build features for content-based recommendations we examined the content in the product database. To find the product-type, material, style and color we analyzed the content of the title, description and meta-description fields extracting the most used keywords after removing the stopwords, which we combined and grouped for the different attributes. Since product descriptions could be either in Norwegian or in English we had to include the words from both languages. We also experimented with stemming from the nltk software package in python, but since it did not improve our results it was not used in the final implementation. E.g. to determine if a product-type falls under the \emph{sweater} category we check for the following keywords: \emph{sweater, cardigan, jumper, hoody ,genser and genseren}. We attempt to extract the following features from the product-database content:
+
+\begin{itemize}
+\item Price: Grouped into price brackets
+\item Brand/Storename
+\item Category: E.g. dress, jacket, top, pants and boots
+\item Material: E.g. Cotton, wool, polyester, leather
+\item Style: E.g. Classic, Modern, Comfy, Sexy
+\item Color
+\end{itemize}
+
+It was a pleasant surprise to find out that 5,060 out of 5,855 items could be found in the
+product database and be assigned features. The following table shows an overview over how many items we were able to extract the different features for.
+
+\begin{table}[H]
+	\centering
+	\begin{tabular}{l l}
+	\toprule
+	Attribute & Percentage  \\ \midrule
+	Price 			& 1.000 \\ 
+	Brand 			& 0.742 \\ 
+	Category 		& 0.628 \\ 
+	Material 		& 0.408 \\ 
+	Style 			& 0.314 \\ 
+	Color 			& 0.162
+	\\ \bottomrule
+	\end{tabular}
+\end{table}
+
+Price, brand and product-type can be found for \emph{most} items, while material style and color could only be found for a minority of the items. The dataset is in no way ideal for content-based recommendation as it highlights on of the main weakness of content-based methods, namely that they require rich descriptions of items to build well informed user profiles. As mentioned in \cite{meyer2012recommender} this is most often not the case in real applications. 
+
+\paragraph{Content-based recommender}
+
+
+\subsection{Binary Algorithms}
+
+This subsection will describe the algorithms used on the binary datasets.
 
 \subsubsection{Most-popular Recommender}
 
@@ -141,24 +197,24 @@ x    y    	y-max  	y-min
 
 The results show that exponential distribution alternative has a larger occurrence of items that are further down in the list. This is due to the fact that the exponential distribution can output large values, in theory up to infinity, with a decreasing probability. But it is much more consistent in keeping the top 10 items in the top 30 positions. The values of $x$, $y$ and $z$ can be modified to achieve the desired degree of mixing.
 
-\subsubsection{Item-Average}
-
-Item average is a simple recommender that always estimates the preference for an item to be the average of all known preference values for that item. No information about the individual users is taken into account. This recommender can therefore be considered a \emph{highest rated} recommender, as it is likely to recommend the highest rated items. The following equation shows the rating prediction procedure:
-
-\begin{equation}
-\label{equation:itemaverageratingprediction}
-u(c,s) = k * \sum_{c' \epsilon C} u(c',s)
-\end{equation}
-
-where $k$ is a normalization factor ($1/|C|$). This is very similar to collaborative filtering, except for the fact that the user similarity $sim(c, c')$ has been taken out of the equation. This is the same as saying that all user similarities are the same. It is also worth mentioning that this method is not suited for binary ratings, as the result is likely to be highly random, and should therefore not be used without item ratings to average.
-
-\subsubsection{User-based Collaborative Filtering}
+\subsubsection{Positive Feedback only Item-based KNN Collaborative Filtering}
 
 Recommend items by finding similar users. This is often harder to scale because of the dynamic nature of users. The pearson correlation coefficient is used to calculate the user similarities. For a more in depth description of user-based collaborative filtering see Section \ref{subsec:cf}.
 
-\subsubsection{Item-based Collaborative Filtering}
+\subsection{BPR: Bayesian Personalized Ranking from Implicit Feedback}
+
+
+
+\subsection{Implicit Rating Algorithms}
+
+This subsection will describe the algorithms used on the non-binary datasets.
+
+\subsubsection{Item-based Top-N Collaborative Filtering}
+
+Not really designed for 
 
 Calculate similarity between items and make recommendations. Items usually don't change much, so this often can be computed offline. For a more in depth description of item-based collaborative filtering see Section \ref{subsec:cf}.%
+
 
 \subsubsection{ALS-WR}
 
@@ -188,46 +244,17 @@ where $n_{p_{c}}$ and $n_{q_{s}}$ denote the number of ratings of user $c$ and i
 
 \marginpar{TODO: Move implicit extension of ALS-WR here from implicit rating section}
 
-\subsubsection{Content-based}
+\subsubsection{Item-Average}
 
-\marginpar{TODO: Complete motivation}
-As previously mentioned content-based recommendation does not suffer as much from the cold-start problem as
-collaborative filtering approaches. 
+Item average is a simple recommender that always estimates the preference for an item to be the average of all known preference values for that item. No information about the individual users is taken into account. This recommender can therefore be considered a \emph{highest rated} recommender, as it is likely to recommend the highest rated items. The following equation shows the rating prediction procedure:
 
-\paragraph{Extracting Content-Features}
+\begin{equation}
+\label{equation:itemaverageratingprediction}
+u(c,s) = k * \sum_{c' \epsilon C} u(c',s)
+\end{equation}
 
-To build features for content-based recommendations we examined the content in the product database. To find the product-type, material, style and color we analyzed the content of the title, description and meta-description fields extracting the most used keywords after removing the stopwords, which we combined and grouped for the different attributes. Since product descriptions could be either in Norwegian or in English we had to include the words from both languages. We also experimented with stemming from the nltk software package in python, but since it did not improve our results it was not used in the final implementation. E.g. to determine if a product-type falls under the \emph{sweater} category we check for the following keywords: \emph{sweater, cardigan, jumper, hoody ,genser and genseren}. We attempt to extract the following features from the product-database content:
+where $k$ is a normalization factor ($1/|C|$). This is very similar to collaborative filtering, except for the fact that the user similarity $sim(c, c')$ has been taken out of the equation. This is the same as saying that all user similarities are the same. It is also worth mentioning that this method is not suited for binary ratings, as the result is likely to be highly random, and should therefore not be used without item ratings to average.
 
-\begin{itemize}
-\item Price: Grouped into price brackets
-\item Brand/Storename
-\item Category: E.g. dress, jacket, top, pants and boots
-\item Material: E.g. Cotton, wool, polyester, leather
-\item Style: E.g. Classic, Modern, Comfy, Sexy
-\item Color
-\end{itemize}
-
-It was a pleasant surprise to find out that 5,060 out of 5,855 items could be found in the
-product database and be assigned features. The following table shows an overview over how many items we were able to extract the different features for.
-
-\begin{table}[H]
-	\centering
-	\begin{tabular}{l l}
-	\toprule
-	Attribute & Percentage  \\ \midrule
-	Price 			& 1.000 \\ 
-	Brand 			& 0.742 \\ 
-	Category 		& 0.628 \\ 
-	Material 		& 0.408 \\ 
-	Style 			& 0.314 \\ 
-	Color 			& 0.162
-	\\ \bottomrule
-	\end{tabular}
-\end{table}
-
-Price, brand and product-type can be found for \emph{most} items, while material style and color could only be found for a minority of the items. The dataset is in no way ideal for content-based recommendation as it highlights on of the main weakness of content-based methods, namely that they require rich descriptions of items to build well informed user profiles. As mentioned in \cite{meyer2012recommender} this is most often not the case in real applications. 
-
-\paragraph{Content-based recommender}
 
 \subsection{Cold-start Solutions}
 
