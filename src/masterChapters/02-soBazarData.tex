@@ -450,7 +450,7 @@ buying it once seen in detail.
 In order to validate the hyphothesis we iterate through all users and look at
 their respecitive events, summarizing the number of times the user has clicked
 an item $n$ times and of these how many times the user also bought it. We do
-this for all values of $n$, where $n \in [1,9[$ and obtain the following table
+this for all values of $n$, where $n \in [1,6[$ and obtain the following table
 of conversion rates and standard errors.
 
 \begin{table}[H]
@@ -465,9 +465,6 @@ of conversion rates and standard errors.
     4 & 173   & 36    & 0.2081 & 3.10\% \\
     5 & 65    & 19    & 0.2923 & 5.63\% \\
     6 & 54    & 20    & 0.3703 & 6.57\% \\
-    7 & 11    & 0     & 0.0000 & 0.00\% \\
-    8 & 13    & 6     & 0.4615 & 13.82\% \\
-    9 & 6     & 1     & 0.1667 & 15.34\% \\
     \bottomrule
   \end{tabular}
 \end{table}
@@ -492,7 +489,7 @@ $\mathbf{H_0:}$ The differences in conversion rates between our first
 $\mathbf{H_1:}$ The difference is significant, such that one scenario have a
 higher probability of conversion.
 
-and we want to do multiple tests when $n \in [2,9[$, using $n-1$ as baseline
+and we want to do multiple tests when $n \in [2,6[$, using $n-1$ as baseline
 and $n$ as the second scenario. For each test we calculate the
 \textit{P-value}, which is the probability of obtaining a result at least as
 extreme as the one that was actually observed. When the p-value becomes less
@@ -545,20 +542,14 @@ small.
   3 & 4 & -0.3889 & 0.3487 & \xmark \\
   4 & 5 & -1.3096 & 0.0952 & \xmark \\
   5 & 6 & -0.9013 & 0.1837 & \xmark \\
-  6 & 7 & 5.6360  & 1.0000 & \xmark \\
-  7 & 8 & -3.3381 & 0.0004 & \cmark \\
-  8 & 9 & 1.4343  & 0.9243 & \xmark \\
   \bottomrule
   \end{tabular}
 \end{table}
 
-Not that when using scenario 7 clicks as baseline and comparing to 8 clicks,
-the number of purchases and clicks are so low that even though the P-value is
-smaller than our significance level, we can reject the hypothesis. Our
-conclusion is then that when a user has clicked on an item two times there is a
-higher probability of buying it compared to when the user has only clicked it
-once. This is also true when the user has clicked an item three times, but we
-can not defend it statistically for any higher value of clicks.
+Our conclusion is then that when a user has clicked on an item two times there
+is a higher probability of buying it compared to when the user has only
+clicked it once. This is also true when the user has clicked an item three
+times, but we can not defend it statistically for any higher value of clicks.
 
 \section{Session Findings}
 \marginpar{Something about session findings perhaps}
