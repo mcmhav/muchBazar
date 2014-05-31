@@ -76,7 +76,6 @@
     When a user accesses a store or an item, the information regarding the user and the item is stored, this is often known as implicit feedback~\ref{sec:implicit}.
     Events such as purchasing an item and "wanting" and item is stored in the same manner, but can in many cases be considered as explicit feedback.
 
-\subsection{Event Metadata}
     When an event is triggered a set of information is stored regarding the event.
     This data is used to make recommendations for the users though converting the implicit feedback to implicit ratings.
 
@@ -103,7 +102,6 @@
 
     %How much preference data?
     %Which events are interesting to look at?
-% \subsection{Numbers}
     \begin{table}[H]
         \centering
         \begin{tabular}{l l}
@@ -114,24 +112,15 @@
             Unique brands      & 16             \\
             Purchases          & 1484           \\
             Wants              & 7726           \\
-            Item Clicks        & 14036          \\
+            Item clicks        & 14036          \\
+            Average rating on item & 6.5941     \\
+            Average rating per user & 19.6889   \\
             \bottomrule
         \caption[Dataset summary]{Overview of the key figures in the SoBazaar dataset}
         \label{table:datasetSummary}
         \end{tabular}
     \end{table}
     \marginpar{input the updated data when/if we get a new dump from SoBazaar}
-
-    % \begin{table}[H]
-    %     \centering
-    %     \begin{tabular}{l|l|l}
-    %         Offer database length           & 7854   & ~ \\ \hline
-    %         Event items length              & 4042   & ~ \\ \hline
-    %         NonMatching values:             & 620    & ~ \\ \hline
-    %         Items from Events not in Offer  & 7.89 \% & ~ \\
-    %     \end{tabular}
-    %     \caption[]{Items in events not in the actual offer database }
-    % \end{table}
 
 % \subsection{The Expected}
 %     Event "app\_started", all have user\_id's
@@ -176,7 +165,7 @@
     %     item timespan (first item interest - last item interest)
     % User stats: items, likes, intented purchased, events, session avg, max event, fequency
 
-\subsection{User}
+\subsection{User properties}
     \begin{figure}[H]
         \includegraphics[width=5in]{image/event_iddistribution.png}
         \centering
@@ -235,6 +224,7 @@
         We can see that the majority of the users are located in and around Oslo.
 
 \subsection{Product properties}
+
     \begin{figure}[H]
         \includegraphics[width=5in]{image/priceDistribution.png}
         \centering
@@ -258,7 +248,7 @@
         When the majority of the events only has 10 events and there are over 4 000 items and 1 200 users, the probability that multiple users have interacted with similar items will be low.
 
 
-    Long tail vs Pareto principle
+\subsubsection{Long tail and the Pareto principle}
 
     For a given distribution such as sales of a catalog of items, when the Pareto principle applies, the first 20\% of the item hits account for 80\% of sales.
 
@@ -266,7 +256,8 @@
 
     Long tail: the most frequent-occurring items represent less than 50\% of the occurrences in the logs. ~\cite{DBLP:journals/corr/abs-1203-4487}
 
-    \begin{figure}
+
+    \begin{figure}[H]
         \centering
         \begin{tikzpicture}
             \begin{axis}[
@@ -391,7 +382,7 @@
         \centering
         \begin{tabular}{lll}
         \toprule
-        Threshold &   Cut at &      Percentage of ratings \\
+        Threshold &   Cut at~\tablefootnote{Cut top down} &      Percentage of ratings \\
         \midrule
         20.0    &    1206   &    59.1701 \\
         40.0    &    2411   &    79.5309 \\
@@ -415,6 +406,7 @@
     \label{table:longtail}
     \end{table}
 
+
     % mtodo - price for store dist
     \begin{figure}[H]
         \includegraphics[width=5in]{image/storefront_nameandEventdistribution.png}
@@ -435,6 +427,7 @@
         \caption{mtodo}
     \label{figure:retailerBDist}
     \end{figure}
+
 
 \subsection{Time properties}
 
@@ -537,7 +530,7 @@
 
 
 \clearpage
-\subsection{Conversion rate properties}
+\section{Conversion rate properties}
 
 In many domains the number of activities on an item given a specific user
 implies preference. The activity in question may be the number of plays in a
