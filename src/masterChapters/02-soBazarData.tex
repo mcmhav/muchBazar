@@ -1,6 +1,7 @@
 % !TEX root = ../report.tex
 
 \chapter{The SoBazaar Data}
+\label{sobazaar-data}
 \minitoc
 
     This sections will introduce the SoBazaar application and explore the SoBazaar data set.
@@ -152,53 +153,13 @@
 %                 storefront\_id's from session
 %                     Populate collection\_viewed-user-id with session-user-id
 
-%     Potential faulty user-id setting for ip-switch during a session, but expect few
-%     occurrences of this
-
-%     wantlist\_menu\_entry\_clicked
-%     app\_became\_active
-
-%     app\_first\_started
-%     facebook\_login\_failed
-
-%     > db.prod.distinct('event\_json.ipAddress').length
-%     9033
-%     > db.prod.distinct('event\_json.eventData.device\_id').length
-%     2644
-%     > db.prod.distinct('user\_id').length
-%     1660
-
-%     More devices than users, can't fill the blanks with device\_id
-
-%     Q's:
-%         app\_became\_active id's for better sessions?
-%         store\_clicked vs. storefront\_clicked (23 vs. 19744)
-%         API item-id's mapping to event product\_id's; how to map?
-
-
-%     SoBazaar want to build a proper model.  Give input on how to build this model.
-%     The supplier should know that an item is a jacket for instance.  Have something
-%     to show on the 20. Should be better than what is already implemented.
-
 \section{Graphs}
-    % Price ranges of all items (groupings)
-    % Item time on market TODO maybe not that interesting alone
-    % Count for different events
-    % Distinct events done on stores (shady)
-    % peak online (slope-style) (events per day)
     % Price range of items in stores
-    % count User eventes
     % user-item (how many items has a user "interacted" with)
     % Count of unique items in item db also in event db
     % Usable events regarding userid (events types with not null userid)
-    % (Plotting locations)
     % unique Stores count for users
-
-    % complex 3.Deg:
-    %     count Sessions for users (aprox: sessioncount)TODO
     %     price span for user
-    % complex 4.Deg:
-    %     Stats for sessions:
     %         Timespann of sessions for users (avg, max, min)
     %         Events per session (avg, max, min)
     %         Item viewtime for user in session
@@ -207,104 +168,114 @@
     %         relationship with view, want and purchase
     %         time of session over lifetime of app
     %         user preferred price in session
-
-    % complex 5.Deg:
-    %     Stats for global session stats:
     %         price vs view, want and purchase
     %         avg viewtime for an item (i know)
     %         Similarity of user favorite store, items viewed and items wanted?
     %         time of session over lifetime of app for all users (slope-style)
-
     % new:
     %     item timespan (first item interest - last item interest)
-    % Blobs of smaller bubbles with eventid
-    % Blobs for eventcount on stores with items items from stores (populate "storename" for "itemevents")
-    % Show occurence of event after other event?
     % User stats: items, likes, intented purchased, events, session avg, max event, fequency
-    % Find prices for stores: prize ranges
 
-    % is viewing a item (with the possible, albeit unknown intent of consuming) really the same class of problems as actually consuming a item, and how does amount of looking map to amount of consumption?
-
-    \begin{figure}[H]
-        \includegraphics[width=5in]{image/priceDistribution.png}
-        \centering
-        \caption[Price distribution of items]{Here we see how them items are distributed on amount of items and price. The red bars indicates the amount of items with the belonging price.
-        All items priced over 3 000 are put in the same bucket, and is the reason for the last spike we see at 3 000.
-        We can see from this graph that the majority of the items are priced under 1 000 NOK}
-        \label{figure:ratingdistr}
-    \end{figure}
-
-    %mtodo - better buckets to better capture the ranges
-    %mtodo - ikke ha all teksten i captionen til figuren, ha det heller i vanlig tekst
+\subsection{User}
     \begin{figure}[H]
         \includegraphics[width=5in]{image/event_iddistribution.png}
         \centering
-        \caption[Count for different events]{This figure displays the count for each of the different events which can be triggered in the SoBazaar application.
+        \caption{Count for different events}
+    \label{figure:eventIDDistribution}
+    \end{figure}
+        This figure displays the count for each of the different events which can be triggered in the SoBazaar application.
         The "collection\_viewed"-event and "storefront\_clicked"-event are the most common events to be triggered.
-        Both of these types of events will send the user to an item overview, and indicates that many users browse the items through looking at the thumbnails rather than accessing the items, since the two named event types are gateways to collections of items, and if most of the users actually accessed most of the items the "product\_detail\_clicked", "product\_wanted" and "product\_purchase\_intended" would have had the majority of the events triggered.}
+        Both of these types of events will send the user to an item overview, and indicates that many users browse the items through looking at the thumbnails rather than accessing the items, since the two named event types are gateways to collections of items, and if most of the users actually accessed most of the items the "product\_detail\_clicked", "product\_wanted" and "product\_purchase\_intended" would have had the majority of the events triggered.
+
+    \begin{figure}[H]
+        \centering
+        \begin{subfigure}{.5\textwidth}
+            \centering
+            \includegraphics[width=\dualGraphWidth]{image/user_iddistribution.png}
+            \caption{mtodo}
+    \label{figure:userEventDist}
+        \end{subfigure}%
+        \begin{subfigure}{.5\textwidth}
+            \centering
+            \includegraphics[width=\dualGraphWidth]{image/user_idcumdistribution.png}
+            \caption{mtodo}
+    \label{figure:userEventCumDist}
+        \end{subfigure}
+        %
     \end{figure}
 
     \begin{figure}[H]
-        \includegraphics[width=5in]{image/storefront_nameandEventdistribution.png}
         \centering
-        \caption[Distribution of events on storefronts]{The events triggered in context with the different storefronts.
-        The events are segmented to show the different event counts on the different storefronts, and stacked to show the complete count, to be able to clearly see how the events are distributed over the different stores.
-        We can see that "Bik Bok" is the most popular store on all fields.
-        One interesting find to take from this graph is the "storefront\_clicked" to the item interaction related events ("product\_detail\_clicked", "product\_wanted" and "product\_purchase\_intended") ratio.
-        For instance "Bik Bok" has a much higher item interaction count than storefront access count, whereas stores such as "Reiss" and "Inwear" are mostly accessed and the items not interacted with.
-        Different aspects affecting this might be price, style and item presentation.}
+        \begin{subfigure}{.5\textwidth}
+            \centering
+            \includegraphics[width=\dualGraphWidth]{image/sessionsCountdistribution.png}
+            \caption{Distribution of sessions for users}
+    \label{figure:sessCountDist}
+        \end{subfigure}%
+        \begin{subfigure}{.5\textwidth}
+            \centering
+            \includegraphics[width=\dualGraphWidth]{image/sessioncumdistribution.png}
+            \caption{View times before purchasing an item}
+    \label{figure:sessCountCumDist}
+        \end{subfigure}
+        %
     \end{figure}
-
-
-    \begin{figure}[H]
-        \includegraphics[width=5in]{image/eventsPerDay.png}
-        \centering
-        \caption[Distribution of events per day]{This figure shows the event distribution per day over the time period the events were stored.
-        The spikes we see happens on a weekly basis, and is centered around the weekends.
-        The larger spike from the start of January to the start of March might be due to increase in publicity or other outside factors.}
-    \end{figure}
+        The maximum number of sessions for each user grouped to show how the count of how many users has the different amount of sessions.
+        The majority of the users of SoBazaar has a session count of 20 and less.
+        This means that they have not used the applications more than 20 separate times, over the time the data was collected.
 
     \begin{figure}[H]
         \includegraphics[width=5in]{image/simpleGeoPlot.png}
         \centering
-        \caption[Simple plotting of event location]{This figure shows the location of the user at the time of the different event triggers.
+        \caption{Simple plotting of event location}
+    \label{figure:croppedGeoplot}
+    \end{figure}
+        This figure shows the location of the user at the time of the different event triggers.
         It is cropped to show events triggered in and around Norway.
-        We can see that the majority of the users are located in and around Oslo.}
-        \label{figure:croppedGeoplot}
-    \end{figure}
+        We can see that the majority of the users are located in and around Oslo.
 
+\subsection{Product properties}
+    \begin{figure}[H]
+        \includegraphics[width=5in]{image/priceDistribution.png}
+        \centering
+        \caption{Price distribution of items}
+    \label{figure:priceDistribution}
+    \end{figure}
+        Here we see how them items are distributed on amount of items and price. The red bars indicates the amount of items with the belonging price.
+        All items priced over 3 000 are put in the same bucket, and is the reason for the last spike we see at 3 000.
+        We can see from this graph that the majority of the items are priced under 1 000 NOK.
 
     \begin{figure}[H]
-        \includegraphics[width=5in]{image/sessionsCountdistribution.png}
+        \includegraphics[width=5in]{image/product_idcumdistribution.png}
         \centering
-        \caption[Total max session count for the users]{The maximum number of sessions for each user grouped to show how the count of how many users has the different amount of sessions.
-        The majority of the users of SoBazaar has a session count of 20 and less.
-        This means that they have not used the applications more than 20 separate times, over the time the data was collected.}
+        \caption{Count of events on each unique item}
+    \label{figure:eventOnProductDist}
     \end{figure}
-
-    \begin{figure}[H]
-        \includegraphics[width=5in]{image/sessioncumdistribution.png}
-        \centering
-        \caption[Total max session count for the users]{The maximum number of sessions for each user grouped to show how the count of how many users has the different amount of sessions.
-        The majority of the users of SoBazaar has a session count of 20 and less.
-        This means that they have not used the applications more than 20 separate times, over the time the data was collected.}
-    \end{figure}
-
-    % \begin{figure}[H]
-    %     \includegraphics[width=5in]{image/global_sessioncount.png}
-    %     \centering
-    %     \caption[Count of sessions per user mapped with count of user with give
-    %     session amount]{TODOsome awesome text}
-    % \end{figure}
-	\marginpar{TODO: change x and y labels?}
-    \begin{figure}[H]
-        \includegraphics[width=5in]{image/product_iddistribution.png}
-        \centering
-        \caption[Count of events on each unique item]{This figure shows the unique count of events on each item in the SoBazaar dataset.
+        This figure shows the unique count of events on each item in the SoBazaar dataset.
         The majority of the items has only had a interaction count of 10 or less.
         Interaction count is "product\_detail\_clicked", "product\_wanted" and "product\_purchase\_intended".
         This means that there will not be more than 10 events for the majority of the items, which might lead to an issue when doing collaborative filtering on the data.
-        When the majority of the events only has 10 events and there are over 4 000 items and 1 200 users, the probability that multiple users have interacted with similar items will be low.}
+        When the majority of the events only has 10 events and there are over 4 000 items and 1 200 users, the probability that multiple users have interacted with similar items will be low.
+
+    % mtodo - price for store dist
+    \begin{figure}[H]
+        \includegraphics[width=5in]{image/storefront_nameandEventdistribution.png}
+        \centering
+        \caption{Distribution of events on storefronts}
+    \label{figure:eventOnStoreFrontDist}
+    \end{figure}
+        The events triggered in context with the different storefronts.
+        The events are segmented to show the different event counts on the different storefronts, and stacked to show the complete count, to be able to clearly see how the events are distributed over the different stores.
+        We can see that "Bik Bok" is the most popular store on all fields.
+        One interesting find to take from this graph is the "storefront\_clicked" to the item interaction related events ("product\_detail\_clicked", "product\_wanted" and "product\_purchase\_intended") ratio.
+        For instance "Bik Bok" has a much higher item interaction count than storefront access count, whereas stores such as "Reiss" and "Inwear" are mostly accessed and the items not interacted with.
+        Different aspects affecting this might be price, style and item presentation.
+
+    \begin{figure}[H]
+        \includegraphics[width=5in]{image/retailer_branddistribution.png}
+        \centering
+        \caption{mtodo}
+    \label{figure:retailerBDist}
     \end{figure}
 
 	\marginpar{Long tail vs Pareto principle}
@@ -316,101 +287,92 @@
 	    Long tail: the most frequent-occurring items represent less than 50\% of the occurrences in the logs.
 
 
+\subsection{Time properties}
 
-    %mtodo - update numbers
-	\marginpar{First to last event in days/weeks not minutes, remove text on a-axis (only confusing). Why is this important, clearify text, what can we learn from the plots?}
+    \marginpar{First to last event in days/weeks not minutes, remove text on a-axis (only confusing). Why is this important, clearify text, what can we learn from the plots?}
+    % mtodo - si noe om hvorfor ikke? jeg vil vel påstå at dette sier no om viktihet av "nyhetsverdi" for item'et, og ville derfor trodd dette var relevant info?
+    % mtodo - fix while watching AT wooo
     \begin{figure}[H]
         \includegraphics[width=5in]{image/itemTimeSpansortedoneventcount.png}
         \centering
-        \caption[Life time of items mapped with event count]{This figure shows the total life span of each item mapped together with the amount of events triggered on them.
+        \caption[Life time of items mapped with event count]{}
+    \label{figure:itemTimeSpanEventCount}
+    \end{figure}
+        This figure shows the total life span of each item mapped together with the amount of events triggered on them.
         The life span of an item is the time since the first event on the item till the last event on the item.
         Time is shown in minutes, so the longest time span of an item is about 105 days, which is close to the time span of the events gathered from SoBazaar.
-        Even though an item has had a long time span does not mean that the item has been of measurable interest to the users in the SoBazaar application.}
-        \label{figure:itemTimeSpanEventCount}
-    \end{figure}
+        Even though an item has had a long time span does not mean that the item has been of measurable interest to the users in the SoBazaar application.
 
-
-    % mtodo - si noe om hvorfor ikke? jeg vil vel påstå at dette sier no om viktihet av "nyhetsverdi" for item'et, og ville derfor trodd dette var relevant info?
-	\marginpar{TODO: Change x axis from minutes to days (or preferably weeks). Does this give us any hints regarding time decay factors?}
+    \marginpar{TODO: Change x axis from minutes to days (or preferably weeks). Does this give us any hints regarding time decay factors?}
     \begin{figure}[H]
         \includegraphics[width=5in]{image/itemTimespansdistribution.png}
         \centering
-        \caption[Count of the different time spans of the items]{This figure shows the count of items which has the different time spans.
+        \caption{Count of the different time spans of the items}
+    \label{figure:itemLifes}
+    \end{figure}
+        This figure shows the count of items which has the different time spans.
         The numbers on the x-axis is in minutes.
         This figure makes it clearer than figure~\ref{figure:itemTimeSpanEventCount} how long the majority of the the items have lived.
-        Most of the items has a time span of less than 14 000 minutes, which is less than 10 days.}
-    \end{figure}
+        Most of the items has a time span of less than 14 000 minutes, which is less than 10 days.
 
     % hvorfor? er det pga:
         % a) pga veldig få events
         % b) pga kort levetid for item i datasettet
         % c) fordi det bare hadde 10 dagers "nyhetsverdi"?
-	\marginpar{TODO - Use seconds?}
     \begin{figure}[H]
-        \includegraphics[width=5in]{image/product_detail_clickeddistribution.png}
         \centering
-        \caption[View time before leaving an item (Bounce Rate)]{This figure shows the time the users use before not taking any more action towards the item (purchase it or want it).
-        The time is in milliseconds.
-        The majority of the users have a view time of less than 6 000 milliseconds before they moves on to another item.}
-        \label{figure:bounceRate}
+        \begin{subfigure}{.5\textwidth}
+            \centering
+            \includegraphics[width=\dualGraphWidth]{image/product_wanteddistribution.png}
+            \caption{View times before wanting an item}
+    \label{figure:viewWant}
+        \end{subfigure}%
+        \begin{subfigure}{.5\textwidth}
+            \centering
+            \includegraphics[width=\dualGraphWidth]{image/product_purchase_intendeddistribution.png}
+            \caption{View times before purchasing an item}
+    \label{figure:viewBuy}
+        \end{subfigure}
+        %
     \end{figure}
 
     % mtodo - hva betyr dette for oss? ha det i seconds, lol
-
     \begin{figure}[H]
-        \includegraphics[width=5in]{image/product_wanteddistribution.png}
+        \includegraphics[width=5in]{image/product_detail_clickeddistribution.png}
         \centering
-        \caption[View time before wanting an item]{This figure shows the time the users use before wanting the currently viewed item.
+        \caption{View times before leaving an item (Bounce Rate)}
+    \label{figure:bounceRate}
+    \end{figure}
+
+        This figure shows the time the users use before not taking any more action towards the item (purchase it or want it).
         The time is in milliseconds.
-        The majority of the users have a view time of less than 30 000 milliseconds before they want the currently viewed item.}
-        \label{figure:viewWant}
-    \end{figure}
+        The majority of the users have a view time of less than 6 000 milliseconds before they moves on to another item.
 
-    \begin{figure}[H]
-        \includegraphics[width=5in]{image/product_purchase_intendeddistribution.png}
-        \centering
-        \caption[View time before purchasing an item]{This figure shows the time the users use before purchasing the currently viewed item.
+        Figure~\ref{figure:viewWant} shows the time the users use before wanting the currently viewed item.
         The time is in milliseconds.
-        The majority of the users have a view time of less than 32 000 milliseconds before they decide to buy the currently viewed item.}
-        \label{figure:viewBuy}
-    \end{figure}
+        The majority of the users have a view time of less than 30 000 milliseconds before they want the currently viewed item.
 
-
-
-    \begin{figure}[H]
-        \includegraphics[width=5in]{image/storefront_namedistribution.png}
-        \centering
-        \caption[View time before purchasing an item]{mtodo}
-        \label{figure:viewBuy}
-    \end{figure}
+        This figure~\ref{figure:viewBuy} shows the time the users use before purchasing the currently viewed item.
+        The time is in milliseconds.
+        The majority of the users have a view time of less than 32 000 milliseconds before they decide to buy the currently viewed item.
 
     \begin{figure}[H]
-        \includegraphics[width=5in]{image/retailer_branddistribution.png}
+        \includegraphics[width=5in]{image/eventsPerDay.png}
         \centering
-        \caption[View time before purchasing an item]{mtodo}
-        \label{figure:viewBuy}
+        \caption{Distribution of events per day}
+    \label{figure:eventOnDaysDist}
     \end{figure}
+        This figure shows the event distribution per day over the time period the events were stored.
+        The spikes we see happens on a weekly basis, and is centered around the weekends.
+        The larger spike from the start of January to the start of March might be due to increase in publicity or other outside factors.
 
     \begin{figure}[H]
         \includegraphics[width=5in]{image/hrdistribution.png}
         \centering
-        \caption[View time before purchasing an item]{mtodo}
-        \label{figure:viewBuy}
+        \caption{mtodo}
+    \label{figure:timeOfDayDistr}
     \end{figure}
 
-    \begin{figure}[H]
-        \includegraphics[width=5in]{image/user_iddistribution.png}
-        \centering
-        \caption[View time before purchasing an item]{mtodo}
-        \label{figure:viewBuy}
-    \end{figure}
-
-    \begin{figure}[H]
-        \includegraphics[width=5in]{image/user_idcumdistribution.png}
-        \centering
-        \caption[View time before purchasing an item]{mtodo}
-        \label{figure:viewBuy}
-    \end{figure}
 
 \subsection{About the view time before tanking an action}
     As seen from the figures~\ref{figure:bounceRate}, ~\ref{figure:viewWant} and~\ref{figure:viewBuy}, the bounce rate is quite small compared to the time it takes for a user to decide to want or buy an item.
