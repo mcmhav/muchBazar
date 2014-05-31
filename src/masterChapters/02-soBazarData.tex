@@ -257,21 +257,23 @@
         This means that there will not be more than 10 events for the majority of the items, which might lead to an issue when doing collaborative filtering on the data.
         When the majority of the events only has 10 events and there are over 4 000 items and 1 200 users, the probability that multiple users have interacted with similar items will be low.
 
+
     Long tail vs Pareto principle
 
     For a given distribution such as sales of a catalog of items, when the Pareto principle applies, the first 20\% of the item hits account for 80\% of sales.
 
     or
 
-    Long tail: the most frequent-occurring items represent less than 50\% of the occurrences in the logs.
-    \begin{center}
+    Long tail: the most frequent-occurring items represent less than 50\% of the occurrences in the logs. ~\cite{DBLP:journals/corr/abs-1203-4487}
+
+    \begin{figure}
+        \centering
         \begin{tikzpicture}
             \begin{axis}[
                 xlabel=Treshold,
                 ylabel=Percentage of ratings,
                 grid=major,
             ]
-            \centering
             \addplot+[color=blue,sharp plot] coordinates
                 {(0,80) (100,80)};
             \addplot+[color=blue,sharp plot] coordinates
@@ -381,7 +383,9 @@
             };
             \end{axis}
         \end{tikzpicture}
-    \end{center}
+        \caption{Pareto's principle values graphed}
+    \label{figure:paretosPrinciple}
+    \end{figure}
 
     \begin{table}[H]
         \centering
@@ -394,8 +398,8 @@
         50.0    &    3014   &    86.0226 \\
         \bottomrule
         \end{tabular}
-        \label{table:paretosPrinciple}
         \caption{Pareto's principle values}
+    \label{table:paretosPrinciple}
     \end{table}
 
     \begin{table}[H]
@@ -406,8 +410,9 @@
         \midrule
         6.5941   &    1833   & 69.5868 &   28.5408 \\
         \bottomrule
-        \caption{Long tail values}
         \end{tabular}
+        \caption{Long tail values}
+    \label{table:longtail}
     \end{table}
 
     % mtodo - price for store dist
