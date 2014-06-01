@@ -1,5 +1,4 @@
 %As  !TEX root = ../../report.tex
-
 \section{Generating implicit ratings}
 \label{implementation-implicit}
 
@@ -188,10 +187,10 @@ the following distribution:
 
 \begin{figure}[H]
   \centering
-  \label{dist-recentness-linear-global}
   \includegraphics[scale=0.6]{image/dist-recentness-linear-global}
  \caption{Distribution of ratings using number of days since event, a linear
  penalization function and global min/max feature-values}
+  \label{fig:dist-recentness-linear-global}
 \end{figure}
 
 This is a much more interesting result, having an more even distribution of
@@ -215,10 +214,10 @@ oldest $x=n$. This yields the following distribution:
 
 \begin{figure}[H]
   \centering
-  \label{dist-count-linear}
   \includegraphics[scale=0.6]{image/dist-count-linear}
- \caption{Distribution of ratings using ordering of events, and a linear
+  \caption{Distribution of ratings using ordering of events, and a linear
  penalization function}
+  \label{fig:dist-count-linear}
 \end{figure}
 
 With much the same average and median values at \textit{3.26} and \textit{3.45}
@@ -381,6 +380,7 @@ ratio changes the logistic function in the following way:
     \sigmoidfixed{4.5}{235}{0.5}
     \caption{$r = 4.5$}
   \end{subfigure}
+  \label{fig:sigmoid-penalizations}
 \end{figure}
 
 As we want a good distribution, but still not penalize most recent items
@@ -390,10 +390,10 @@ good selection.
 
 \begin{figure}[H]
   \centering
-  \label{dist-recentness-sigmoid}
   \includegraphics[scale=0.5]{image/dist-sigmoid-fixed-recentness-3-5}
   \caption{Distribution of ratings using number of days since earliest event,
   a logistic penalization function and global min/max feature-values}
+  \label{fig:dist-recentness-sigmoid}
 \end{figure}
 
 As discussed in the previous section, using number of days since most recent
@@ -404,10 +404,10 @@ as well. Continuing with a ratio of $3.5$ we obtain the following distribution:
 
 \begin{figure}[H]
   \centering
-  \label{dist-count-sigmoid}
   \includegraphics[scale=0.5]{image/dist-sigmoid-fixed-count-3-5}
   \caption{Distribution using ordering of events, a logistic penalization
   function and global min/max feature-values}
+  \label{fig:dist-count-sigmoid}
 \end{figure}
 
 \subsection{Linearly blending implicit ratings}
@@ -477,13 +477,13 @@ capture properties found in the domain both intutivly and quantitativly.  Then
 for $M$ different models we assume they all contribute an equal amount to the
 final results thus having the weights $f_i = 1/M$. By using this simple
 linear blending we can combine our methods looking at recentness and ordering
-using a linear penalization function (Figure~\ref{dist-recentness-linear}
-and~\ref{dist-count-linear} respectivly) with the ratings generated on the
-same features with a logistic penalization function
-(Figure~\ref{dist-recentness-sigmoid} and~\ref{dist-count-sigmoid}). This
-yields the following distribution of ratings with the average $3.30$ and median
-at $3.63$, where the distributions overlayed with the kernel density function,
-showing the trend of histogram:
+using a linear penalization function
+(Figure~\ref{fig:dist-recentness-linear-global} and~\ref{fig:dist-count-linear}
+respectivly) with the ratings generated on the same features with a logistic
+penalization function (Figure~\ref{fig:dist-recentness-sigmoid}
+and~\ref{fig:dist-count-sigmoid}). This yields the following distribution of
+ratings with the average $3.30$ and median at $3.63$, where the distributions
+overlayed with the kernel density function, showing the trend of histogram:
 
 \begin{figure}[H]
   \centering
@@ -494,32 +494,13 @@ showing the trend of histogram:
   function}
 \end{figure}
 
-As we have multiple proposed models we present our results given various
-evaluation metrics and combinations of weights. Note that when a model has the
-weight 1.0 its equal to that the model has not been blended with any other
-model, and is included in the table below as a baseline.
-
-\begin{table}[H]
-  \centering
-  \begin{tabular}{lll|ll}
-    \toprule
-    \textbf{Naive} &  \textbf{Sigmoid Count} & \textbf{Sigmoid Recent} &
-    \textbf{RMSE} & \textbf{MAE} \\
-    \midrule
-    1.0  &      0.0        &      0.0       &  X   &  X  \\
-    0.0  &      1.0        &      0.0       &  X   &  X  \\
-    0.0  &      0.0        &      1.0       &  X   &  X  \\
-    \midrule
-    0.6  &      0.2        &      0.2       &  X   &  X  \\
-    0.5  &      0.3        &      0.2       &  X   &  X  \\
-    0.4  &      0.3        &      0.3       &  X   &  X  \\
-    0.3  &      0.3        &      0.4       &  X   &  X  \\
-    0.2  &      0.4        &      0.4       &  X   &  X  \\
-    0.1  &      0.4        &      0.5       &  X   &  X  \\
-    0.0  &      0.5        &      0.5       &  X   &  X  \\
-    \bottomrule
-  \end{tabular}
-\end{table}
-
-As one may see, the best results are achivied when blending with...
-\marginpar{todo: analyze and finish this table}
+Especially noticable in this distribution is that we've achieved a even
+distribution without too many fluxuations. In addition there is a rounded peak
+aroung the rating 4, which by looking at other public datasets such as in the
+Netflix Prize~\cite{Netflix} or Million Song Dataset~\cite{Bertin-Mahieux-2011}
+is a common peak found in explicit environments. Indeed, there is a small gap
+where the scores between our two events \textit{click} and \textit{want} are
+bordering, a result of our sigmoid functions having a ratio of $3.5$ which
+yields a gradual slope - hence when we have x-values close to $M_u$ and $0$ we
+approximate $1$ and $0$ respectivly, but we do not reach it exactly. This can
+be seen on Figure~\ref{fig:sigmoid-penalizations}
