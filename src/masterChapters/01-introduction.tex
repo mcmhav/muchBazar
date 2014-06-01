@@ -4,7 +4,6 @@
 \minitoc
 \setcounter{page}{1}
 \pagenumbering{arabic}
-
 \clearpage
 
 \section{Motivation}
@@ -150,14 +149,16 @@ proposal to a design for a fashion e-commerce recommender system.
 
 \section{System Overview}
 
-  \marginpar{Hai said: Maybe remove the evaluate recommender box?}
-  \marginpar{If filterbots makes it to the 'final system', include it in a more detailed system 'drawing'?}
-  
-  
-  The following figure shows an overview of the process from data collection to recommendations.
+  \marginpar{Include filterbots in a more detailed system overview?}
   \marginpar{Extend introduction with ref to the chapters/section the boxes are referring to}
   
-  \begin{center}
+  This thesis proposes a system for making recommendations based on implicit
+  data, where the input is implicit feedback collected on a set of users and
+  items and the output is personalized recommendations to all users, proposing
+  new and relevant products to their preferences.
+ 
+  \begin{figure}[H]
+    \centering
     \begin{tikzpicture}
       [node distance = 1cm, auto,font=\footnotesize,
       % STYLES
@@ -172,63 +173,103 @@ proposal to a design for a fashion e-commerce recommender system.
       % Draw processs
       \node [nonProcess] (inputData) {Input data based on implicit feedback (events)};
       \node [process, below of=inputData] (implicitConverter) {Convert implicit feedback to implicit ratings};
-      \node [nonProcess, below of=implicitConverter] (ratings) {Ratings for the items};
-      \node [process, below of=ratings] (recommendations) {Make recommendations};
-      \node [process, below of=recommendations] (evaluations) {Evaluate recommendations};
+      \node [nonProcess, below of=implicitConverter] (ratings) {Ratings};
+      \node [process, below of=ratings] (recommendations) {Recommending};
 
-
-      %%%%%%%%%%%%%%%
-      % Comments
       \node [comment, right=0.25 of inputData] (comment-inputData) {
-        Feedback gathered from the SoBazaar application data dump
-      };
-      \node [comment, right=0.25 of implicitConverter] (comment-implicitConverter) {
-        Coverts the inputed implicit feedback to implicit ratings based on different conversion schemes
-      };
-      \node [comment, right=0.25 of ratings] (comment-ratings) {
-        The output of the conversion is a set of ratings on the different items from the SoBazaar dataset
-      };
-      \node [comment, right=0.25 of recommendations] (comment-recommendations) {
-        Makes recommendations based on the inputed ratings. Different approaches to make the recommendations can be take, such as matrix factorization or neighborhood based approaches
-      };
-      \node [comment, right=0.25 of evaluations] (comment-evaluations) {
-        Evaluate the recommender system(s). Different evaluation metrics will be used, e.g. AUC and nDCG
+        Implicit Feedback (clicks, purhcases etc.) collected from the SoBazaar
+        analytics logs. Detailed description in Section~\ref{sec:sobazaar-data}
       };
 
-      %%%%%%%%%%%%%%%%
+      \node [comment, right=0.25 of implicitConverter] (comment-implicitConverter) {
+        Converts the inputed implicit feedback to implicit ratings based on
+        different conversion schemes. Detailed description in
+        Section~\ref{sec:implementation-implicit}
+      };
+
+      \node [comment, right=0.25 of ratings] (comment-ratings) {
+        Set of rating triplets, on the form \textit{user, product, rating}.
+      };
+
+      \node [comment, right=0.25 of recommendations] (comment-recommendations) {
+        Makes recommendations based on the inputed ratings. Different
+        approaches to make the recommendations can be take, such as matrix
+        factorization or neighborhood based approaches. Detailed description in
+        Section~\ref{sec:making-recommendations}
+      };
 
       % Draw the links between processs
       \path[->,thick]
         (inputData) edge (implicitConverter)
         (implicitConverter) edge (ratings)
-        (ratings) edge (recommendations)
-        (recommendations) edge (evaluations);
+        (ratings) edge (recommendations);
 
     \end{tikzpicture}
-    \captionof{figure}[System Overview]{Overview of the system. Boxes in white represents input and output data. Boxes in gray represents processes}
-  \end{center}
+    \caption{Overview of the system. Boxes in white represents input and output
+    data. Boxes in gray represents processes}
+  \end{figure}
+
+  Traditionally in most recommender systems this process does not include the
+  first two stages of our system, hence going directly from a set of explicitly
+  provided ratings to a set of recommendations. However, as we will see, making
+  ourselves non-dependent on explicit ratings can both provide us with a good
+  set of recommendations and take us one step closer to true artificial
+  intelligence, as we require no extra effort from the users – rather learning
+  preferences from their behaviour.
+
+  \paragraph{The limitiations} of this thesis are primarly linked to having
+  only one available dataset with both sparse and modest data. As a result,
+  making conclusions based user behaviour proved difficult due to lack of
+  statistical significance on many observations. Limitiations in both time
+  available and number of existing users with sufficient activity made is also
+  impossible to conduct a thorough user study, which could confirm possible
+  found user patterns. 
+
+  In addition, as seen in the overview, external sources of information such as
+  social networks and trust-based networks are not considered – as the dataset
+  provided did not warrant this. As the products in the SoBazaar application
+  are aggregated from multiple sources, and hence product databases, the
+  quality of information are notably diverse. Consequently, since extracting
+  basic content features different from product titles became close to
+  impossible without large engineering efforts, the main focus does not lie on
+  hybrid recommender systems (combining content and user-based
+  recommendations), although some work is done in this area.
 
 \section{Outline}
 \begin{table}[H]
   \centering
-  \begin{tabularx}{\textwidth}{ l X l }
+  \begin{tabular}{lp{11cm}}
   \toprule
-    \textbf{Chapter}      & \textbf{Description} \\ \midrule
-    Chapter 1 & The Introduction chapter gives an overview of the project to the reader. It also outlines the purpose and motivation of the project. \\
-    \hline \\ [-1.5ex]
-    Chapter 2 & The Dataset chapter presents the results from our dataset analysis. \\
-    \hline \\ [-1.5ex]
-    Chapter 3 & The Preliminary Study chapter documents knowledge, research and technology that is relevant to the project, and how and why some of them were prioritized over others when it comes to how they are used in the project. \\
-    \hline \\ [-1.5ex]
-    Chapter 4 & The implementation chapter describes the design of the system and how the design has be implemented. \\
-    \hline \\ [-1.5ex]
-    Chapter 5 & Evaluation chapter discussed the development process, testing of results and major issues. \\
-    \hline \\ [-1.5ex]
-    Chapter 6 & The Conclusion chapter sums up the project and describes the findings and reflects on them. It also describes further work to be done. \\
- 	\hline \\ [-1.5ex]
-    Appendix & The appendix contains extended information such as a full list of the requirements. \\
+    \textbf{Chapter}      & \textbf{Description} \\ 
+  \midrule
+
+    Chapter 1 & \textbf{The Introduction} chapter gives an overview of the
+    project to the reader. It also outlines the purpose and motivation of the
+    project.  \\[1.5ex]
+
+    Chapter 2 & \textbf{The Dataset} chapter presents the results from our
+    dataset analysis. \\[1.5ex]
+
+    Chapter 3 & \textbf{The Preliminary Study} chapter documents knowledge,
+    research and technology that is relevant to the project, and how and why
+    some of them were prioritized over others when it comes to how they are
+    used in the project. \\[1.5ex]
+
+    Chapter 4 & \textbf{The implementation} chapter describes the design of the
+    system and how the design has be implemented. \\[1.5ex]
+
+    Chapter 5 & \textbf{Evaluation} chapter discussed the development process,
+    testing of results and major issues. \\[1.5ex]
+
+    Chapter 6 & \textbf{The Conclusion} chapter sums up the project and describes the
+    findings and reflects on them. It also describes further work to be done.
+    \\[1.5ex]
+
+    Appendix & \textbf{The Appendix} contains extended information such as a
+    full list of the requirements. \\
+
   \bottomrule
-  \end{tabularx}
-  \caption{Structure and chapters of the report.}
+  \end{tabular}
+  \caption{Overview of structure and chapters in the thesis}
   \label{table-reportstructure}
 \end{table}
