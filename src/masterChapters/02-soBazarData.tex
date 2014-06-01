@@ -7,8 +7,6 @@
     This sections will introduce the SoBazaar application and explore the SoBazaar data set.
     This includes how the data was preprocessed, a summary of the dataset, statistics and graphs about the data and findings from the data.
 
-	%SoBazaar introo
-
 	\section{The SoBazaar Application}\mbox{}\\
 
 	\begin{chapquote}[30pt]{About SoBazaar}
@@ -63,13 +61,10 @@
     % 2. sessions of events m eksempel
 
 \section{Preprocessing}
-    \marginpar{Some better way of saying this; Data Preprocessing, Data Prefiltering, something}
     The data from SoBazaar came as is from the SoBazaar database, with the exception that the data had been anonymised for privacy reasons.
-    It contained therefore some unnecessary events.
+    It therefore contained some unwanted events, such as automated queries producing unnatural spikes of events on items and events with missing fields.
     The data was therefore cleaned by removing events containing test environment flags such as: test environment and applications run from simulator.
-    What was left after the cleaning data was mainly events triggered by the users, and no created during applications testing.
-
-    %mtdo - why do we need data cleaning?
+    What was left after the cleaning data was mainly events triggered by the users, and not created during applications testing.
 
 \section{Dataset Summary}
     The data from SoBazaar is gathered based on the actions of the users in the application.
@@ -78,8 +73,6 @@
 
     When an event is triggered a set of information is stored regarding the event.
     This data is used to make recommendations for the users though converting the implicit feedback to implicit ratings.
-
-    %mtodo - vet vi hva dette er.?
 
     \begin{table}[H]
         \centering
@@ -100,47 +93,29 @@
         \caption[Event Metadata]{Metadata collected from an event. The complete list can be found in table~\ref{table:completeEventData}}
     \end{table}
 
-    %How much preference data?
-    %Which events are interesting to look at?
     \begin{table}[H]
         \centering
         \begin{tabular}{l l}
             \toprule
             Attribute       & Count   \\ \midrule
-            Unique users ids   & 1235           \\
-            Unique item ids    & 3386           \\
-            Unique brands      & 16             \\
-            Purchases          & 1484           \\
-            Wants              & 7726           \\
-            Item clicks        & 14036          \\
-            Average rating on item & 6.5941     \\
-            Average rating per user & 19.6889   \\
+            Total number of events  &    218975 \\
+            Unique users ids    &    2021 \\
+            Unique item ids     &    6092 \\
+            Unique storefronts  &    147 \\
+            Unique brands   &    24 \\
+            Item clicks     &    25491 \\
+            Item wants   &    13262 \\
+            Item purchases   &    2020 \\
+            Average item click count per user   &    12.6130 \\
+            Average purchase count per user     &    6.5620 \\
+            Average rating per user     &    19.6889 \\
+            Average rating per item     &    6.6796 \\
             \bottomrule
         \caption[Dataset summary]{Overview of the key figures in the SoBazaar dataset}
         \label{table:datasetSummary}
         \end{tabular}
     \end{table}
     \marginpar{input the updated data when/if we get a new dump from SoBazaar}
-
-% \subsection{The Expected}
-%     Event "app\_started", all have user\_id's
-%     Event "app\_first\_started", all user\_id's are NULL
-%     Event "user\_logged\_in", all have user\_id's... (assigned with login, event saved after login?)
-
-% \subsection{The Strange}
-%     NULL valued  for user\_id events: (Not all strange, but put together for readability)
-%     facebook\_share\_changed
-
-%     collection\_viewed  ignoring collection view-event as of now since the user\_id
-%     is null. Could be valuable to use, though (30 000 events ignored) ...
-%     potential workaround:
-%         for each session do:
-%             Filter all events on:
-%                 session-ts-start to session-ts-end,
-%                 allow: user\_id session-user-id and NULL
-%                 Ip of user-session and ip of collection\_viewed
-%                 storefront\_id's from session
-%                     Populate collection\_viewed-user-id with session-user-id
 
 \section{Graphs}
     % Price range of items in stores
@@ -213,8 +188,27 @@
         The majority of the users of SoBazaar has a session count of 20 and less.
         This means that they have not used the applications more than 20 separate times, over the time the data was collected.
 
+
     \begin{figure}[H]
-        \includegraphics[width=5in]{image/simpleGeoPlot.png}
+        \centering
+        \begin{subfigure}{.5\textwidth}
+            \includegraphics[width=\dualGraphWidth]{image/ratingsPerUserdistribution.png}
+            \centering
+            \caption{Count of ratings for users}
+    \label{figure:ratingsPerUser}
+        \end{subfigure}%
+        \begin{subfigure}{.5\textwidth}
+            \includegraphics[width=\dualGraphWidth]{image/ratingsPerUsercumdistribution.png}
+            \centering
+            \caption{Cumulative count of ratings for users}
+    \label{figure:ratingsPerUserCum}
+        \end{subfigure}
+        %
+    \end{figure}
+
+
+    \begin{figure}[H]
+        \includegraphics[width=5in]{image/simpleGeoPlotNorway.png}
         \centering
         \caption{Simple plotting of event location}
     \label{figure:croppedGeoplot}
@@ -246,7 +240,6 @@
         Interaction count is "product\_detail\_clicked", "product\_wanted" and "product\_purchase\_intended".
         This means that there will not be more than 10 events for the majority of the items, which might lead to an issue when doing collaborative filtering on the data.
         When the majority of the events only has 10 events and there are over 4 000 items and 1 200 users, the probability that multiple users have interacted with similar items will be low.
-
 
 \subsubsection{Long tail and the Pareto principle}
 
