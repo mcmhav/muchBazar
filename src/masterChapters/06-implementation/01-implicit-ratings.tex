@@ -125,25 +125,15 @@ given to event $e$ after penalization, given a max $M_u$ and min $m_u$ value.
   S_e(x,u) = M_e - (M_e - m_e) \cdot p(x, u)
 \end{equation}
 
-The last component needed is a way of normalizing the ratings. The equation is
-based on which values are apparent as $x_{min}$ and $x_{max}$ (in our case 0
-and 100) and two values to normalize to $a$ and $b$, which in a recommender
-system often is chosen to be 1 and 5. Hence we use these variables in order to
-normalize any value $x_{min} \leq x \leq x_{max}$:
-
-\begin{equation}
-  \label{eq-normalization}
-  N(x, a, b, x_{min}, x_{max}) = a + \frac{(x-x_{min})(b-a)}{x_{max}-x_{min}}
-\end{equation}
-
-And now we have all components ready in order to do a rating generation. In
-order to see all parts working together, we imagine an example where a user has
-six events on three items, as presented in the table below. The ratings are
-normalized between 1 and 5 and the product IDs are there for illustrative
-purposes. We choose to look at the number of days since the user did the event
-in question as the implicit feature, where $x=0$ means the event was registered
-today (or as the most recent) and in our example $x=14$ is the oldest event
-happening two weeks ago. 
+The last component needed is normalizing the ratings. Which is described in
+Equation~\ref{eq-normalization}. And now we have all components ready in order
+to do a rating generation. In order to see all parts working together, we
+imagine an example where a user has six events on three items, as presented in
+the table below. The ratings are normalized between 1 and 5 and the product IDs
+are there for illustrative purposes. We choose to look at the number of days
+since the user did the event in question as the implicit feature, where $x=0$
+means the event was registered today (or as the most recent) and in our example
+$x=14$ is the oldest event happening two weeks ago. 
 
 \begin{table}[H]
   \centering
