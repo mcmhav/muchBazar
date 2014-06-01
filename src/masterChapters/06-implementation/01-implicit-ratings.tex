@@ -147,7 +147,6 @@ happening two weeks ago.
 
 \begin{table}[H]
   \centering
-  \label{implicit-ratings-example}
   \begin{tabular}{llllll}
   \toprule
   Event type & Product ID & x (days) & P(x) & Score & Rating \\
@@ -160,6 +159,8 @@ happening two weeks ago.
   \textit{product\_detail\_clicked}     & 2 & 14  & $\frac{14}{14} = 1.00$ & 62 & 1.0  \\
   \bottomrule
   \end{tabular}
+  \caption{Showing penalizations and ratings on example data}
+  \label{implicit-ratings-example}
 \end{table}
 
 When finally selecting a rating for the user/product pair, we choose the
@@ -290,7 +291,7 @@ to include $s$, the \textit{steepness coefficient}, and $c$, the \textit{shift
 coefficient}.
 
 \begin{equation}
-  \frac{1}{1+\exp^{-s(x - c)}}
+  p(x) = \frac{1}{1+\exp^{-s(x - c)}}
 \end{equation}
 
 In the standard sigmoid function these are $1$ and $0$ respectively, but by
@@ -312,7 +313,6 @@ and most recent event, in our example equalling 7.
 
 \begin{table}[H]
   \centering
-  \label{implicit-ratings-example}
   \begin{tabular}{llllll}
   \toprule
   Event type & Product ID & x (days) & P(x) & Score & Rating \\
@@ -325,10 +325,11 @@ and most recent event, in our example equalling 7.
   \textit{product\_detail\_clicked}     & 2 & 14  & $\frac{1}{1 + \exp^{-0.8(14*7)}} = 1.00$ & 62 & 1.0  \\
   \bottomrule
   \end{tabular}
+  \label{implicit-ratings-example-sigmoid}
 \end{table}
 
 Notice how the purchase of product with ID 2 went from $4.96$ in
-Table~\ref{implicit-ratings-example} to $4.99$ here, as we have lower
+Table~\ref{implicit-ratings-example} to $4.99$ here, as we have lower
 penalization for lower x-values. Equally, the penalizations are equal ($0.50$
 and $1.00$) when the x-values are 7 and 14 respectivly. However, while this
 works fine in the example above we need to set the ratio between the steepness
@@ -337,7 +338,7 @@ shift-coefficient is imprecise and non-scientific. Instead we alter our
 logistic function to instead using a ratio $r$ between the two constants:
 
 \begin{equation}
-  \frac{1}{1+e^{-(r/c) \cdot (x - c)}}
+  p(x) = \frac{1}{1+e^{-(r/c) \cdot (x - c)}}
 \end{equation}
 
 Here the $c$ equals the steepest point (shift coefficient), and we set it so
@@ -380,6 +381,8 @@ ratio changes the logistic function in the following way:
     \sigmoidfixed{4.5}{235}{0.5}
     \caption{$r = 4.5$}
   \end{subfigure}
+  \caption{Penalization functions for various ratios controlling steepness and
+  shift}
   \label{fig:sigmoid-penalizations}
 \end{figure}
 
