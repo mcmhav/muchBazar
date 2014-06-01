@@ -112,7 +112,6 @@
         \label{table:datasetSummary}
         \end{tabular}
     \end{table}
-    \marginpar{input the updated data when/if we get a new dump from SoBazaar}
 
 \section{Graphs}
     % Price range of items in stores
@@ -133,9 +132,6 @@
     %         avg viewtime for an item (i know)
     %         Similarity of user favorite store, items viewed and items wanted?
     %         time of session over lifetime of app for all users (slope-style)
-    % new:
-    %     item timespan (first item interest - last item interest)
-    % User stats: items, likes, intented purchased, events, session avg, max event, fequency
 
 \subsection{User properties}
     \begin{figure}[H]
@@ -144,26 +140,36 @@
         \caption{Count for different events}
     \label{figure:eventIDDistribution}
     \end{figure}
-        This figure displays the count for each of the different events which can be triggered in the SoBazaar application.
-        The "collection\_viewed"-event and "storefront\_clicked"-event are the most common events to be triggered.
-        Both of these types of events will send the user to an item overview, and indicates that many users browse the items through looking at the thumbnails rather than accessing the items, since the two named event types are gateways to collections of items, and if most of the users actually accessed most of the items the "product\_detail\_clicked", "product\_wanted" and "product\_purchase\_intended" would have had the majority of the events triggered.
+        Figure~\ref{figure:eventIDDistribution} displays the count for each of the different events which can be triggered in the SoBazaar application.
+        As seen from the graph the "product\_detail\_clicked"-event and the "storefront\_clicked"-event are the two most common events to be triggered, which is natural, since most of the items are located in the stores fronts.
+        The fact that accessing the store front is the most occurring event, over item view, indicates that many users browse the items through looking at the thumbnails rather than accessing the actual item.
+        The "product\_wanted"-event is the fourth most occurring event, and is about half the size of the "product\_detail\_clicked"-event, this does not mean that half of the accessed items are added to a want list, since it is possible to want an item without accessing the item.
+        "product\_purchase\_intended" on the other hand has to come after a "product\_detail\_clicked", about 8\% of item accesses progressed therefore into an intended purchase.
 
     \begin{figure}[H]
         \centering
         \begin{subfigure}{.5\textwidth}
             \centering
             \includegraphics[width=\dualGraphWidth]{image/user_iddistribution.png}
-            \caption{mtodo}
+            \caption{Distribution of events on users}
     \label{figure:userEventDist}
         \end{subfigure}%
         \begin{subfigure}{.5\textwidth}
             \centering
             \includegraphics[width=\dualGraphWidth]{image/user_idcumdistribution.png}
-            \caption{mtodo}
+            \caption{Cumulative distribution of events on users}
     \label{figure:userEventCumDist}
         \end{subfigure}
         %
     \end{figure}
+        Figure~\ref{figure:userEventDist} and figure~\ref{figure:userEventCumDist} are displaying the amount of events for the users.
+
+        Figure~\ref{figure:userEventDist} is showing the actual amount of users with the different counts of events.
+        The majority of the users has 50 or less events, with the most common amount being at 5 events, clearer shown in figure~\ref{figure:userEventCumDist}, where it is clearer that about 78\% of the users have 50 events or less.
+        The figures are capped at 250 to better show the distribution of events where the majority of the users resides.
+        Max count of events for one user is 6055.
+
+        There are over 6000 products in the database, when 78\% of the users have less than 50 events, and as seen from figure~\ref{figure:eventIDDistribution}, the majority of events triggered by users are not directly item-related events, the information about items based on user actions alone will be sparse.
 
     \begin{figure}[H]
         \centering
@@ -176,41 +182,47 @@
         \begin{subfigure}{.5\textwidth}
             \centering
             \includegraphics[width=\dualGraphWidth]{image/sessioncumdistribution.png}
-            \caption{View times before purchasing an item}
+            \caption{Cumulative distribution of sessions for users}
     \label{figure:sessCountCumDist}
         \end{subfigure}
         %
     \end{figure}
-        The maximum number of sessions for each user grouped to show how the count of how many users has the different amount of sessions.
-        The majority of the users of SoBazaar has a session count of 20 and less.
-        This means that they have not used the applications more than 20 separate times, over the time the data was collected.
+        Figure~\ref{figure:sessCountDist} and figure~\ref{figure:sessCountCumDist} shows the amounts of sessions for the users in the data.
+        The maximum number of sessions for each user is grouped to show the count of how many users has the different amount of sessions.
 
+        The majority of the users of SoBazaar has a session count of 10 and less.
+        This means that they have not used the applications more than 10 separate times, over the time the data was collected, and strengthens the hypothesis that the data from SoBazaar is sparse.
 
     \begin{figure}[H]
         \centering
         \begin{subfigure}{.5\textwidth}
             \includegraphics[width=\dualGraphWidth]{image/ratingsPerUserdistribution.png}
             \centering
-            \caption{Count of ratings for users}
+            \caption{Count of item interactions for users}
     \label{figure:ratingsPerUser}
         \end{subfigure}%
         \begin{subfigure}{.5\textwidth}
             \includegraphics[width=\dualGraphWidth]{image/ratingsPerUsercumdistribution.png}
             \centering
-            \caption{Cumulative count of ratings for users}
+            \caption{Cumulative count of item interactions for users}
     \label{figure:ratingsPerUserCum}
         \end{subfigure}
         %
     \end{figure}
+        Figure~\ref{figure:ratingsPerUser} and figure~\ref{figure:ratingsPerUserCum} shows the amounts of item interactions for the users in the data, with the first bar being 0 item interactions.
+        The graphs are cut at 60 to give focus to the numbers where the majority of the users are.
 
+        As seen from figure~\ref{figure:ratingsPerUserCum}, over 20\% of the users have never interacted with an item, and about 10\% of the users have more than 40 item interactions.
+
+        Even though the data is sparse, as seen from the previous figures, the fact that the majority of the users have in some way interacted with items, opens for the possibility of drawing conclusions based on other users' item interactions.
 
     \begin{figure}[H]
         \includegraphics[width=5in]{image/simpleGeoPlotNorway.png}
         \centering
-        \caption{Simple plotting of event location}
+        \caption{Plot of event location in and around Norway}
     \label{figure:croppedGeoplot}
     \end{figure}
-        This figure shows the location of the user at the time of the different event triggers.
+        Figure~\ref{figure:croppedGeoplot} shows the location of the user at the time the different events was triggered.
         It is cropped to show events triggered in and around Norway.
         We can see that the majority of the users are located in and around Oslo.
 
@@ -660,17 +672,11 @@ times, but we can not defend it statistically for any higher value of clicks.
     \begin{figure}[H]
         \includegraphics[width=5in]{image/statesInteractionTrue-gvfile.pdf}
         \centering
-        \caption[Minimized states in session and how they interact]{A minimized view of the different states of the system and how they interact with each other.}
+        \caption{A minimized view of the different states of the system and how they interact with each other.}
         \label{figure:minStatesInteractions}
     \end{figure}
 
     Full view see~\ref{figure:statesInteractions}
-
-
-    \marginpar{This is way too much information. Consider adding a threshold in
-    order to reduce number of arrows}
-
-
 
     \begin{figure}[H]
         \centering
