@@ -2,8 +2,6 @@
 
 \section{Recommendation methods}
 
-
-
 The section will describe the different recommendation methods included in our experiments in closer detail. Our experiment requires us to test multiple recommender systems to get a better overview of added value of including implicit
 factors and finally our implicit ratings.
 We have also chosen to include some simpler non-personalized methods to be used as baseline models to assess whether
@@ -12,7 +10,7 @@ over the simple non-personalized methods for cold-start recommendations. E.g. on
 are recommended the most popular items, until enough data is collected to start providing personalized recommendations. This system could be complemented by pre-computed item similarities for recommendations in the context of the user
 \emph{examining} an item. If the cold-start performance of these simpler models outperform the more sophisticated ones
 include in our experiments, why not just use them? However, our greatest problem was to find methods which in some ways
-could bridge the broken divide between binary and non-binary recommendation systems to make our results valid. Our solution to this is to include the methods that are considered the state-of-the-art methods from both classes in an attempt to bridge this highly \emph{unfortunate} gap, and weakness in our experiment.
+could bridge the broken divide between binary and non-binary recommendation systems to make our results valid. Our solution to this is to include the methods that are considered the state-of-the-art methods from both classes in an attempt to bridge this highly \emph{unfortunate} weakness in our experiment.
 
 \subsection{Common Algorithms}
 
@@ -197,11 +195,14 @@ x    y    	y-max  	y-min
 
 The results show that exponential distribution alternative has a larger occurrence of items that are further down in the list. This is due to the fact that the exponential distribution can output large values, in theory up to infinity, with a decreasing probability. But it is much more consistent in keeping the top 10 items in the top 30 positions. The values of $x$, $y$ and $z$ can be modified to achieve the desired degree of mixing.
 
-\subsubsection{Positive Feedback only Item-based KNN Collaborative Filtering}
+\subsubsection{Binary Item-based KNN}
 
+Adaptive k-nearest-neighbor (kNN)
 
+\subsubsection{BPR: Bayesian Personalized Ranking}
 
-\subsection{BPR: Bayesian Personalized Ranking}
+BPR presented by Rendle et. al. \cite{Rendle2009} is designed for the item prediction task and optimized for
+ranking. 
 
 
 

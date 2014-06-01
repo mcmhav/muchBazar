@@ -1,13 +1,7 @@
 % !TEX root = ../../report.tex
 \section{The Cold-start Problem}
 
-%Can the different approaches be classified? E.g. 3 main categories of approaches
-    %Initial categorization
-        %Interview process
-        %Hybrid approaches
-        %Key figures / Seed users
-        %Filterbots
-        %Trust-aware / Trust propagation
+\marginpar{What can improve this section? Cold-start solution classification? ...}
 
 In the literature, the term cold is used about an object in a system, or a
 whole system, which is new \cite{Schein2002, Park2006}. Cold-start scenarios in recommender systems are
@@ -24,7 +18,6 @@ for certain users or items. The cold-start problem can be divided into three sub
   \item \emph{Cold-start user}: The problem of giving accurate recommendations
   to a user who is new to a recommender system.
 \end{itemize}
-
 
 For example in a scenario where the average item in an item collection have 5
 000 ratings, a new item with only 5 ratings would be considered a
@@ -263,10 +256,9 @@ CF methods.
 %   - Pretty good general model for dealing with sparsity
 %   - Requires no additional information such as product details, demographic information about userstrus
 
-
 Papagelis et al. \cite{Papagelis2005} proposed to alleviate sparsity using
 trust inferred from user-user similarity. This approach does therefore not
-require users to explicitly express their trust in other users, unlike the
+require users to explicitly express their trust in other
 approaches described above, the trust information is inferred from the
 underlying social network of the rating matrix. Their approach is based on the
 assumption that the more similar two users are, the greater their established
@@ -443,6 +435,8 @@ domain. They concluded that 10 ratings is \emph{enough}, but that this number
 depends on the recommendation method and the dataset used.
 
 \subsection{Hybrid Methods}
+
+\marginpar{This subset requires some polishing...}
 
 %TODO - Add some fancy math, wait until matrix factorization intro is in place (so we do not mess up notations)
 %TODO - Find some sweet cf articles incorporating demographic information
@@ -735,10 +729,10 @@ be incrementally trained.
 
 
 It is hard to compare the performance of the different methods as the authors have
-experimented with different datasets and evaluation measures. We therefore opted to do qualitative assessment of the methods in question. It is worth nothing that qualitative methods are less about attempting to prove something than about to understand something. Our ordinal rating scale spans from \ding{55} meaning that the results are bad/not optimal, \checkmark means that the results appear to be satisfactory or simply better than the solutions marked with \ding{55} and finally \checkmark	\checkmark means that the results appear to be excellent or very good. The assessment will factor in the following properties:
+experimented with different datasets and evaluation measures. We therefore opted to do qualitative assessment of the methods in question. It is worth nothing that qualitative methods are less about attempting to prove something than about to understand something. Our ordinal rating scale spans from \ding{55} meaning that the results are bad/not optimal, \checkmark means that the results appear to be satisfactory or simply better than the solutions marked with \ding{55} and finally \checkmark\checkmark means that the results appear to be excellent or very good. The assessment will factor in the following properties:
 
 \begin{itemize}
-    \item Accuracy: How accurate is the system overall?
+    \item Accuracy: How does it affect the systems overall performance?
     \item Cold-start performance: How well does the method handle the cold-start related problems?
     \item User-effort: How much user involvement is required before the system can start producing accurate
     recommendations?
@@ -753,8 +747,8 @@ The following table shows our final qualitative assessment of the different cold
     \begin{tabular}{*{4}l}
     \toprule
     Method					& Accuracy 				& Cold-start performance  & User-effort \\ 			\midrule
-    Trust-aware RS 			& 		   				& \checkmark			  &	\ding{55}				\\ 
-    Filterbots 				& 		   				& \checkmark			  &	\checkmark\checkmark	\\ 
+    Trust-aware RS 			& \checkmark			& \checkmark			  &	\ding{55}				\\ 
+    Filterbots 				& \checkmark		   	& \checkmark			  &	\checkmark\checkmark	\\ 
     Seed users 				& \checkmark			& \checkmark			  &	\ding{55}				\\ 
     Intelligent selection 	& 		   				& \checkmark			  &	\checkmark				\\
     Hybrid Methods 			& \checkmark\checkmark	& \checkmark \checkmark	  &	\checkmark\checkmark	\\
@@ -764,14 +758,12 @@ The following table shows our final qualitative assessment of the different cold
     \label{table:evaluationcoldstart}
 \end{table}
 
-Intelligent selection, Filterbots and Trust-aware RS have not been given an accuracy score as it is not a recommender system in itself. Trust-aware recommender systems get a \ding{55} in user effort as it is hard to find users to connect to,
+Intelligent selection have not been given an accuracy score as it is not a recommender system in itself. Trust-aware recommender systems get a \ding{55} in user effort as it is hard to find users to connect to,
 this problem could however be mitigated by implementing a system like the one described by
 Victor et al. \cite{Victor2008} to recommend users to connect to. Seed users also get a \ding{55} in
 user-effort, mainly due to its solution to the new item problem where all representative users
 must rate an item for it to be recommendable. Filterbots and the Hybrid methods both get two checkmarks for requiring no extra user involvement. Intelligent selection could pretty seamlessly be integrated into the solution using e.g. a simple \emph{hot or not} interface, requiring minimal user effort.
-
 We would like to argue that having the option to incrementally update the model is an important feature which could further improve cold start performance, as it instantly can incorporate the ratings given
 by new users and to new items. The hybrid methods therefore gets (++) for their cold-start performance.
-
 From the above table we believe that Filterbots, Intelligent selection and Hybrid Methods, in particular RBLF and Matchbox
-could provide us with a sufficiently good solution to the cold-start problem. However, the hybrid methods are both dependent on good user and item features.
+could provide us with a good solution to the cold-start problem. However, the hybrid methods are both dependent on good user and item features.

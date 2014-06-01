@@ -1,8 +1,6 @@
 \section{Evaluation Metrics}
 \label{sec:eval-metrics}
 
-%TODO - Discussion of evaluation metrics
-
 %http://www.slideshare.net/gunnar-schroeder
 
 A large variety of metrics have been published, and some of these metrics are highly correlated \cite{Herlocker2004}.
@@ -19,8 +17,8 @@ some important questions one should ask oneself when selecting evaluation metric
 \end{itemize}
 
 It is safe to assume that the users are more interested in the top ranked items, than rating
-predictions for the entire item collection. Evaluation of top-k recommendations suggests a
-classification or ranking task, evaluation should therefore focus on classification or ranking metrics.
+predictions for the entire item collection. The social feed shown in Figure \ref{figure:sobazarfeed}
+shows that the interface currently supports showing up to 20 items.
 
 \begin{figure}[H]
   \centering
@@ -29,26 +27,26 @@ classification or ranking task, evaluation should therefore focus on classificat
 \label{figure:mostpopular}
 \end{figure}
 
-Much like the social feed shown in Figure \ref{figure:sobazarfeed} up to 20 popular items can be shown.
-It would also be beneficial to rank these recommendations putting the most popular/relevant items (purchases) in the first 4 slots
-and sorting the remaining items in descending order based on popularity. This implicates that a metric that measures the
-overall ranking is not appropriate, and that we only should measure the ranking quality of the $k$ items being shown,
-the other items are irrelevant. The above reasoning lead us to take a closer look at classification and ranking
-accuracy metrics.
-
-
+Evaluation of top-k recommendations suggests a classification or ranking task, the evaluation
+should therefore focus on classification or ranking accuracy. A classification accuracy metric
+will tell us something about the recommenders ability to retrieve relevant items. The ranking
+accuracy metric should measure how well the different methods are at putting the most relevant items
+e.g. purchases consistently over the assumed less relevant ones such as e.g. clicks. This gives us
+two hints with regards to our evaluation: (1) a ranking accuracy that measures the overall ranking
+is not appropriate, (2) the ranking accuracy metric should be able to factor in difference relevance
+values for the different event types.
 
 %TODO - Add some more cites
 
 \subsection{Accuracy Metrics}
 
-The area under curve (AUC) is a popular classification accuracy metric. ROC curves provide a graphical
-representation for the performance of a recommender system, by plotting the recall (True positive rate)
-against the fallout (False positive rate) for increasing recommendation set size. A perfect recommender
+The Area Under Curve (AUC) is a popular classification accuracy metric. ROC curves provide a graphical
+representation for the performance of a recommender system, by plotting the recall (true positive rate)
+against the fallout (false positive rate) for increasing recommendation set size. A perfect recommender
 would therefore yield a ROC curve that goes straight up towards 1.0 recall and 0.0 fallout until all
 relevant items are retrieved. Afterwards it would go straight towards 1.0 fallout while the remaining
 irrelevant items follow. One therefore obviously aims to maximize the area under the curve (AUC). The higher
-up all relevant items (True positives) are in the recommendation list, the higher the AUC score will be.
+up all relevant items (true positives) are in the recommendation list, the higher the AUC score.
 AUC can therefore be used as a single measure for the overall quality of a recommender system. Table \ref{table:auc}
 shows an example of the AUC values when varying the position of a single relevant document through the
 recommendation list.
@@ -75,20 +73,22 @@ recommendation list.
 \end{table}
 
 One should also be aware of that the AUC scores can be highly inaccurate, especially for cold-start users,
-users which the recommender is unable to provide more than a handful of recommendations for. This is
-due to the fact that all unknown ratings are appended in random order after the known recommendations.
-E.g. lets say the recommender is able to generate 10 recommendations for a user out of 4000 items,
-and that one out of two test items for that user is not in the recommended list from the recommender.
+users which the recommender is unable to provide more than a handful of recommendations for. AUC requires
+a total ordering of all items not yet rated by the user. This means that the items not recommendable
+to the user will be appended in a random order after the known recommendations.
+E.g. lets say the recommender is able to generate 10 recommendations for a user out of 4000 items.
+The recommender was only able to retrieve one out of two relevant test items. The remaining 3990
+items are therefor appended in random order to the users recommendation list.
 Where the last test item is appended in the recommendation list can mean the difference between a AUC score of above
 0.9 to less than 0.6 if the item is appended at the end of the list, the results can be even more
 severe if none of the items is in the initial recommended list, then the results for that user will be
 completely random. The most obvious solution to this problem would be to use resampling or to repeat
-the experiment multiple times where the items not in the recommendation list are drawn at random and
+the experiment multiple times where the order of the items not in the recommendation list are drawn at random and
 the results averaged over all the trials.
 
 However, a frequently uttered point of criticism is that users are often more interested in the items
 at the top of a recommendation list but that the AUC measure is equally affected by swaps at the top
-or the bottom. To \emph{complement} AUC, we also wish to measure the rank accuracy, to get a better
+or the bottom. To \emph{complement} AUC, we also wish to measure the rank accuracy to get a better
 overall picture of the systems performance. This means that we want to measure whether or not
 highly rated items such as purchases, likes etc. are ranked higher than less relevant items such as clicks,
 as having these highly ranked items higher up in the recommendation list aligns with our previously
@@ -96,7 +96,9 @@ mentioned financial incentives.
 
 %TODO - What is the "best" rank-accuracy metric?
 
-\emph{Rank accuracy}
+\subsection{Rank accuracy}
+
+\marginpar{TODO: Move to evaluation section?...}
 
 When using rank accuracy metrics, it is worth knowing whether one is measuring total or partial orderings.
 Most rank accuracy metrics (e.g. Kendall's tau and Spearman's rho) compare two total ordering. The problem
@@ -116,19 +118,18 @@ recommendation lists that are produced by recommenders to item rankings from kno
 We assume that we can recommend at most $k$ items for each user at a time. It also pays to submit all $k$
 recommendations, because we are not penalized for bad guesses. We also assume that the order matters, so it
 is better to submit more certain recommendations first, followed by recommendations we are less sure about.
-Which means that we basically select the $k$ best candidates in order. To reduce the number of randomness in
-the results one could choose to only look at the ranking of the top $k$. However, the problem is that the
-likeliness of finding a \emph{hidden} item in e.g. the top 20 recommended items is not very large when one is working
-with large item catalogs. The problem then, is how to select the value of $k$. Setting it to low you risk
-ending up with many $0.0$ values, and when setting it to high you risk including to many \emph{randomly} concatenated 
-ratings in the results.
+Which means that we basically select the $k$ best candidates in order.
+However, a problem is that the likeliness of finding a \emph{hidden} item in e.g. the top 20 recommended items
+is not very large when one is working with large item catalogs. The problem then, is how to select the value of $k$.
+Setting it to low you risk ending up with many $0.0$ values, and when setting it to high you risk including to many
+\emph{randomly} concatenated ratings in the results. We believe a value of \textit{20} is natural choice for our
+application as up to 20 recommendations can be shown in the user interface.
 
-%MyMediaLite Problems
-%	Very few 'remaning items' are appended with a rating of 0.0, how do we determine a cutoff point?
-
-%How certain are we about the order? (Do we look at rank? How much weight should be given...?)
-
-Mean average precision (MAP@k), described in Section \ref{subp:mean_average_precision_map_} is a popular metric for search engines and is applied, for example, to report results at the Text Retrieval Conference (TREC). The main weakness with regard to recommender systems is that it assumes that the user is interested in finding many relevant documents for each query, and does not look at the relevance of the items. Consider the following examples where we have three lists of hidden items and three recommendations lists. All none relevant items are labeled with the item-id $0$.
+Mean average precision (MAP@k), described in Section \ref{subp:mean_average_precision_map_} is a popular metric for search
+engines and is applied, for example, to report results at the Text Retrieval Conference (TREC). The main weakness with regard
+to recommender systems is that it assumes that the user is interested in finding many relevant documents for each query, and
+does not look at the relevance of the items. Consider the following examples where we have three lists of hidden items and
+three recommendations lists. All none relevant items are labeled with the item-id $0$.
 
 \begin{table}[H]
 \label{table:ap}
@@ -151,29 +152,36 @@ Example 	& 	Actual					& 	Recommended					&	AP@10   \\ \midrule
 \caption{AP@10 Examples}
 \end{table}
 
-As you see from example two and three average precision does not consider the order of the actual item list. We want a way to
-reward the recommender for getting the purchased ranked higher than both wants and clicks. Normalized Discounted Cumulative Gain (nDCG)
-described in Section \ref{subp:normalized_discounted_cumulative_gain_} is another metric to measure the rank accuracy. It is based on two
-main assumptions; (1) Highly relevant items are more useful than marginally relevant ones, (2) The lower the ranked position of a relevant
-item, the less useful it is for the user, since it is less likely to be \emph{examined}. The maybe most interesting aspect of nDCG is that
-it contains an utility function $rel_i$. One can replace the original utility function and replace it with a function that is more relevant
-to the application. Two such examples include:
+As you see from example two and three average precision does not consider the order of the actual item list. We want some way to
+reward the recommender for getting the purchased ranked higher than both wants and clicks.
+
+
+Normalized Discounted Cumulative Gain (nDCG) described in Section \ref{subp:normalized_discounted_cumulative_gain_} is another metric to
+measure the rank accuracy. It is based on two main assumptions; (1) Highly relevant items are more useful than marginally relevant ones,
+(2) The lower the ranked position of a relevant item, the less useful it is for the user, since it is less likely to be \emph{examined}.
+The maybe most interesting aspect of nDCG is that it contains an utility function $rel_i$. One can replace the original utility function
+and replace it with a function that is more suited to the application. One could e.g. assign the relevance of an item using
+the following functions:
 
 \begin{itemize}
 \item $rel_i = 1/log(i+k)$, where i is the index of the item in the actual sorted rating list, where $k$ is a constant.
 \item $rel_i = u(i)$, simply assign a relevance or utility score.
 \end{itemize}
 
-The latter would have been perfect, given that we could specify the importance of each event e.g. purchase gets a relevance of 5, want a relevance of 3 and so on,
-as it would give us a single number on the ranking quality of the recommendations. However, we do not
-not know these values, meaning that nDCG cannot be used.
+The latter would have been perfect, given that we could specify the importance of each event e.g. purchase gets a relevance of 3, want
+a relevance of 2 and a click a relevance of 1, as it would give us a single number on the ranking quality of the recommendations.
+However, we do not not know these values, meaning that nDCG cannot be used without making assumptions of the importance of the different
+event types.
 
-%Write something about making assumptions, and how we feel it is 'wrong'
+\marginpar{Mention why we think it is wrong to make these assumptions?}
 
-To solve this problem we decided to chose a \emph{simpler} approach. We separately measure the recall for purchases, wants and clicks separately. In addition to measuring the MAP\@20 scores for the different event types separately. Given the relevance of the different event types nDCG could have given us all these numbers summarized in one column, instead we now have to use twelve columns. 
+To solve this problem we decided to chose a \emph{simpler} approach. We separately measure the recall for purchases, wants and
+clicks separately in addition to measuring the MAP\@20 scores for the different event types. Given that we have known the relevance of
+the different event types nDCG could have given us all these numbers summarized in one column, instead we now have twelve. 
 
-By combing the AUC which gives us the recall for the entire recommendation list for each user, the MAP\@20 to measure the precision of the top 20 recommendations and then give individual numbers for the different event types we believe we would get a good overview of the systems overall performance with the main emphasis on the top 20 recommendations.
-
+By combing the AUC which gives us the recall for the entire recommendation list for each user, the MAP\@20 to measure the precision of
+the top 20 recommendations and then give individual numbers for the different event types we believe we would get a good overview of
+the systems overall performance with the main emphasis on the top 20 recommendations.
 
 %Normalized Discounted Cumulative Gain ($nDCG_{k}$), described in Section \ref{subp:normalized_discounted_cumulative_gain_}
 % 
@@ -219,11 +227,11 @@ By combing the AUC which gives us the recall for the entire recommendation list 
 %\centering
 %\begin{tabular}{*{5}l}
 %\toprule
-%\#Ex & 	Actual																	& 	Recommended				&	$nDCG^1$  	   & $nDCG^2$	\\ \midrule
+%\#Ex & 	Actual																		& 	Recommended				&	$nDCG^1$  	   & $nDCG^2$	\\ \midrule
 %1 		& 	[$1_{5}, 2_{3.8}, 3_{3.55}, 4_{2.78},5_{1.3}$]								&	[5,0,0,0,0]				&	0.113 		   & 0.026  \\ 
 %2 		& 	[$1_{5}, 2_{3.8}, 3_{3.55}, 4_{2.78},5_{1.3}$]								&	[0,0,1,0,0]				&	0.217 		   & 0.275   \\ 
-%3   	& 	[$1_{5},2_{4.8}, 3_{3.55}, 4_{2.78}, 5_{2.2}, 6_{2.0},7_{1.77},8_{1.3}$]		&	[2,3,4,5,6,7,8,0]		&	0.827		   & 0.682   \\ 
-%4  		& 	[$1_{5},2_{4.8}, 3_{3.55}, 4_{2.78}, 5_{2.2}, 6_{2.0},7_{1.77},8_{1.3}$]		&	[1,2,0,0,0,0,0,0]		&	0.592 		   & 0.805   \\
+%3   	& 	[$1_{5},2_{4.8}, 3_{3.55}, 4_{2.78}, 5_{2.2}, 6_{2.0},7_{1.77},8_{1.3}$]	&	[2,3,4,5,6,7,8,0]		&	0.827		   & 0.682   \\ 
+%4  	& 	[$1_{5},2_{4.8}, 3_{3.55}, 4_{2.78}, 5_{2.2}, 6_{2.0},7_{1.77},8_{1.3}$]	&	[1,2,0,0,0,0,0,0]		&	0.592 		   & 0.805   \\
 %5 		& 	[$1_{5},2_{4.93},3_{2.88}, 4_{1.85},5_{1.8},6_{1.77}, 7_{1.63},8_{1.52}$]	&	[1,0,0,0,0,0,0,0]		&	0.394 		   & 0.544   \\
 %6 		& 	[$1_{5},2_{4.93},3_{2.88}, 4_{1.85},5_{1.8},6_{1.77}, 7_{1.63},8_{1.52}$]	&	[3,4,5,6,7,8,0,0]		&	0.542 		   & 0.206   \\
 %\bottomrule
@@ -239,11 +247,11 @@ By combing the AUC which gives us the recall for the entire recommendation list 
 %%TODO - Justify why these metrics combined will give a good overview of the performance.
 %%TODO - Cold-start evaluation Metrics
 
+\subsection{Cold-Start Metrics}
+
 In addition to looking at the above mentioned metrics it would be interesting to see how
 the different sparsity levels affect both the user- and item-space coverage of the different
 methods when evaluating the cold-start system performance, as having a recommender that can only
 recommend a limited set of items to a small portion of the users is \emph{unfortunate}. The
 user-space coverage is the number of users the recommender is able to produce recommendations for while the item-space
 coverage is measured by looking at how many of the items are recommendable.
-
-%TODO - How will these experiment be carried out and validated?
