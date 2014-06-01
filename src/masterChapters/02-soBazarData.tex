@@ -57,9 +57,6 @@
 
 	The application is currently in a beta phase and is planned for a final release after the summer.
 
-% mtodo - før vi kan lære dette
-    % 2. sessions of events m eksempel
-
 \section{Preprocessing}
     The data from SoBazaar came as is from the SoBazaar database, with the exception that the data had been anonymised for privacy reasons.
     It therefore contained some unwanted events, such as automated queries producing unnatural spikes of events on items and events with missing fields.
@@ -667,15 +664,36 @@ times, but we can not defend it statistically for any higher value of clicks.
         \label{figure:minStatesInteractions}
     \end{figure}
 
-    \begin{figure}[H]
-        \includegraphics[width=5in]{image/statesInteractionFalse-gvfile.pdf}
-        \centering
-        \caption[States in session and how they interact]{The different states of the system and how they interact with each other.}
-        \label{figure:statesInteractions}
-    \end{figure}
+    Full view see~\ref{figure:statesInteractions}
+
 
     \marginpar{This is way too much information. Consider adding a threshold in
     order to reduce number of arrows}
+
+
+
+    \begin{figure}[H]
+        \centering
+        \begin{subfigure}{.33\textwidth}
+            \includegraphics[width=2in]{image/403session-2-gvfile.pdf}
+            \centering
+            \caption{mtodo}
+    \label{subfigure:statesInteractions}
+        \end{subfigure}%
+        \begin{subfigure}{.33\textwidth}
+            \includegraphics[width=2in]{image/309session-3-gvfile.pdf}
+            \centering
+            \caption{mtodo}
+    \label{subfigure:statesInteractions}
+        \end{subfigure}%
+        \begin{subfigure}{.33\textwidth}
+            \includegraphics[width=2in]{image/56session-17-gvfile.pdf}
+            \centering
+            \caption{mtodo}
+    \label{subfigure:statesInteractions}
+        \end{subfigure}
+        %
+    \end{figure}
 
     % mtodo - fix lol
 %     Init Hypothesis:
