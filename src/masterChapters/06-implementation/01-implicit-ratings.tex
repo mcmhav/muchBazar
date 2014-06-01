@@ -215,6 +215,7 @@ oldest $x=n$. This yields the following distribution:
 
 \begin{figure}[H]
   \centering
+  \label{dist-count-linear}
   \includegraphics[scale=0.6]{image/dist-count-linear}
  \caption{Distribution of ratings using ordering of events, and a linear
  penalization function}
@@ -389,6 +390,7 @@ good selection.
 
 \begin{figure}[H]
   \centering
+  \label{dist-recentness-sigmoid}
   \includegraphics[scale=0.5]{image/dist-sigmoid-fixed-recentness-3-5}
   \caption{Distribution of ratings using number of days since earliest event,
   a logistic penalization function and global min/max feature-values}
@@ -402,58 +404,95 @@ as well. Continuing with a ratio of $3.5$ we obtain the following distribution:
 
 \begin{figure}[H]
   \centering
+  \label{dist-count-sigmoid}
   \includegraphics[scale=0.5]{image/dist-sigmoid-fixed-count-3-5}
   \caption{Distribution using ordering of events, a logistic penalization
   function and global min/max feature-values}
 \end{figure}
 
-\subsection{Linearly blending the results}
+\subsection{Linearly blending implicit ratings}
 
-\marginpar{Move this introduction to the pre-study?}
-At this point we have found multiple novel ways of calculating the
-implicit ratings, based on our implicit feedback. However, as one may observe
-each method has its weknesses and strengths. A sigmoid-function considering the
-number of days between events is good for including our implicit knowledge
-about seasons into the ratings, but is not as effective if users has high
-spread in between events or low activity. Further, there may exist some clothes
-that has longer life-span than others, e.g. warm jackets that generally are
-bought from September to March (7 months) compared to shorts which are
-generally bought from May to August (4 months), depending on where the store
-reside. Our second sigmoid function has the strength of always keeping the
-ratings for a user fresh, also for less active users, but it is weaker in
-differentiating between seasons - which can be seen if a user is on a hiatus
-between January and August, not using the application. Upon return all ratings
-would be based on his/hers winter activity, not penalizing the fact that the
-type of clothes generally bought in the store at this time are different than
-in January.
+At this point we have found multiple ways of calculating the implicit ratings,
+based on our implicit feedback. However, each method has its weknesses,
+strengths and captures different feature-sets in our data. Thus the
+distributions reflect a large difference in ratings. Selecting a feature such
+as number of days since the event in question captures our implicit knowledge
+about seasons and items having a short life-span. However, as pointed out
+earlier given many events on the same day there are no way of differentiating
+them - unless we consider the ordering of items, saying the most recent item
+shall be higher rated than older events. However, exclusivly changing the
+feature like this forces us to loose some of our implicit data about items
+having a fixed lifespan. What we want to do is \textit{combine the two
+features} in a procedure that often in recommender systems are coined
+\textit{blending} or \textit{ensamble methods}. Combining them enables us to
+create more robust ratings where weaknesses such as outliers or inconsistencies
+in one method can be averaged out by the strengths of others. If two features
+independently finds the same properties and ratings for some items and users,
+then the result and our belief is strenghtened.
 
-Optimally we would like to combine these two methods, taking their strenghts
-and weaknesses together trying to average them out in order to end up with
-generally better ratings - where we cannot trivally imagine scenarios as
-depicted above where our models would fail. The process of combining such
-ratings are in the Recommender Systems community called \textbf{blending} and
-is in many ways a seperate research area in itself, if done advanced enough.
-However, in the case of the naive and linear blend on can achieve results a
-magninute higher than for each method seperatly as seen in \ref{}
-\marginpar{find some refs using linear blending}.
+When linearly blending $M$ models $m_1 \dots m_M$, we choose $M$ factors $f_i$
+all adding up to 1.0, representing the weight of model $m_{i}$ in the final
+blend. Eeach model then have $k$ ratings on the triplet form \textit{(user,
+product, rating)} and noted noted as $r_{ij}$ - the rating of item $j$ in model
+$i$. 
 
-When linearly blending $M$ models $m$, we choose $M$ factors $f$ all adding up
-to 1.0, representing the weight of model $m_{i}$ in the final blend. Then when
-calculating the final rating for item $j$ we sum over all models:
+Then when calculating the final rating for item $j$ we sum over all
+models:
 
 \begin{equation}
-  r_j = \sum _{i=1}^{M} f_{i} * m_{j}
+  r_j = \sum _{i=1}^{M} f_{i} * r_{ij}
 \end{equation}
 
-As one may observe given the linear blend between with factors $f_1 = 0.7$ and
-$f_2 = 0.3$ and the two ratings $m_1 = 5$ and $m_2 = 3$ for a given item, we
-can calculate the final rating as $0.7 \cdot 5 + 0.3 \cdot 3 = 4.4$. A weakness
-when linearly blending models in this way is the need for manually finding good
-weights for the $M$ factors. There exists methods where this given a good test
-set can be done automatically, such as using Linear Regression or KNN blending.
-Many other blending schemes exists as well, such as Binned Linear Regression,
-Bagged Gradient Boosted Decision Tree (BGBDT), Neural Networks and Kernel Ridge
-Regression Blending \cite{jahrer2010combining} \cite{toscher2009bigchaos}.
+Given two models, we can observe the result of performing a blend between with
+factors $f_1 = 0.7$ and $f_2 = 0.3$ and the two ratings $r_{11} = 5$ and
+$m_{21} = 3$ for a given item, we can calculate the final rating as $(0.7
+\times 5) + (0.3 \times 3) = 4.4$. The obvious weakness in this approach is the
+need for manually setting weights for $M$ different factors. Optimally we would
+like to run one blend, look at the result, compare it to previous results and
+make adjustments to the weights based these. This is what is done in simple
+blending schemes using Linear Regression or KNN, but many state-of-the-art
+schemes exists as well such as Binned Linear Regression, Bagged Gradient
+Boosted Decision Tree (BGBDT), Neural Networks and Kernel Ridge Regression
+Blending \cite{jahrer2010combining} \cite{toscher2009bigchaos} which are based
+on the same principles.
+
+However, as discussed in Section~\ref{}, when creating ratings from implicit
+feedback we lack a ground truth – that is we make several assumptions on which
+implicit features contribute towards higher preference and thus higher ratings,
+but with no real means of confirming the assumptions. A user buying an item as
+a gift for a friend may not actually like the item and would not give a high
+rating - and this, with a traditional collaborative filtering approach based on
+explicit feedback would be accounted for, looking at the user pattern of the
+user and labeling the purchase as an outlier. Without this ground truth however
+we can not without injecting negative feedback, based on assumptions, make
+classifications of outliers nor evaluate our implicit ratings in a reliable and
+quantiative fashion. Without a good evaluation metric and grund truth there
+does not exists a simple way of comparing different blends with eachothers
+neither, hence making it difficult to find custom weights for each method.
+
+Instead, we return to our introductionary text where we notice some factors
+important to evaluating ratings: it needs to be evenly distributed, it should
+have an average confirming our hypthesis and the features selected should
+capture properties found in the domain both intutivly and quantitativly.  Then
+for $M$ different models we assume they all contribute an equal amount to the
+final results thus having the weights $f_i = 1/M$. By using this simple
+linear blending we can combine our methods looking at recentness and ordering
+using a linear penalization function (Figure~\ref{dist-recentness-linear}
+and~\ref{dist-count-linear} respectivly) with the ratings generated on the
+same features with a logistic penalization function
+(Figure~\ref{dist-recentness-sigmoid} and~\ref{dist-count-sigmoid}). This
+yields the following distribution of ratings with the average $3.30$ and median
+at $3.63$, where the distributions overlayed with the kernel density function,
+showing the trend of histogram:
+
+\begin{figure}[H]
+  \centering
+  \label{dist-blend}
+  \includegraphics[scale=0.5]{image/dist-blend}
+  \caption{Distribution using blend of ordering and number of days since event,
+  with logistic and linear penalization functions, overlayed with density
+  function}
+\end{figure}
 
 As we have multiple proposed models we present our results given various
 evaluation metrics and combinations of weights. Note that when a model has the
