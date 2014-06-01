@@ -199,9 +199,9 @@ The results show that exponential distribution alternative has a larger occurren
 
 \subsubsection{Positive Feedback only Item-based KNN Collaborative Filtering}
 
-Recommend items by finding similar users. This is often harder to scale because of the dynamic nature of users. The pearson correlation coefficient is used to calculate the user similarities. For a more in depth description of user-based collaborative filtering see Section \ref{subsec:cf}.
 
-\subsection{BPR: Bayesian Personalized Ranking from Implicit Feedback}
+
+\subsection{BPR: Bayesian Personalized Ranking}
 
 
 
@@ -211,16 +211,14 @@ This subsection will describe the algorithms used on the non-binary datasets.
 
 \subsubsection{Item-based Top-N Collaborative Filtering}
 
-Not really designed for 
 
-Calculate similarity between items and make recommendations. Items usually don't change much, so this often can be computed offline. For a more in depth description of item-based collaborative filtering see Section \ref{subsec:cf}.%
 
 
 \subsubsection{ALS-WR}
 
 %Implicit Feedback Recommendation via Implicit-to-Explicit Ordinal Logistic Regression Mapping
 
-ALS-WR is the only method which we have found that \emph{supports} implicit ratings, and will therefore naturally be a part of our experiment.
+ALS-WR is the only method which we have found that \emph{supports} implicit ratings, making it a natural part of our experiment.
 
 Alternating-least-squares with weighted-$\lambda$-regularization (ALS-WR) was designed fro the Netflix Prize Competition \cite{Netflix}, where it obtained an RMSE score of 0.8975, which was one of the best results based on a pure method.
 in theory up to infinity
@@ -255,8 +253,8 @@ Item average is a simple recommender that always estimates the preference for an
 u(c,s) = k * \sum_{c' \epsilon C} u(c',s)
 \end{equation}
 
-where $k$ is a normalization factor ($1/|C|$). This is very similar to collaborative filtering, except for the fact that the user similarity $sim(c, c')$ has been taken out of the equation. This is the same as saying that all user similarities are the same. It is also worth mentioning that this method is not suited for binary ratings, as the result is likely to be highly random, and should therefore not be used without item ratings to average.
-
+where $k$ is a normalization factor ($1/|C|$). This is very similar to collaborative filtering, except for the fact that the user similarity $sim(c, c')$ has been taken out of the equation. This is the same as saying that all user similarities are the same. It is also worth mentioning that this method is not suited for binary ratings, as it becomes a most
+popular algorithm.
 
 \subsection{Cold-start Solutions}
 

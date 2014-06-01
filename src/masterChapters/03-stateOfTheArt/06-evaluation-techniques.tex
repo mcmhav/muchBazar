@@ -57,7 +57,18 @@ experimental studies:
 \subsection{Offline Evaluation}
 Offline experiments are performed using pre-collected dataset\(s\) and a protocol
 that models the user behavior to estimate recommender performance through
-different evaluation measures. Offline experiments are attractive because they
+different evaluation measures. The following figure shows a \emph{traditional}
+offline evaluation pipeline:
+
+\begin{figure}[H]
+		\centering
+	  	\includegraphics[height=0.65\linewidth]{image/evaluationpipeline.png}
+		\caption[A Traditional Evaluation Pipeline]{A traditional evaluation pipeline for evaluating recommender systems}
+		\label{figure:evaluationpipeline}
+\end{figure}
+
+
+Offline experiments are attractive because they
 require no interactions with real users, and thus allows multiple  researchers to compare
 a wide range of algorithms, using the same data, at a low cost. The downside of offline experiments
 is that they can answer a very narrow set of questions, typically questions

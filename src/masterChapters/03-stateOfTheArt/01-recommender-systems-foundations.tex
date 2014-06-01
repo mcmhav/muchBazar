@@ -150,7 +150,9 @@ sim(c, c') = \frac{\sum_{s \epsilon S_{cc'}} (u(c, s)-\bar{u_{c}})(u(c',s)-\bar{
 
 Where $u_{c}$ is the mean utility of user $c$. The Pearson Correlation
 Coefficient and other similarity measures such as cosine based approaches are
-more commonly known user-based collaborative filtering.\newline
+more commonly known user-based collaborative filtering. This is often harder to scale because of the dynamic nature of users. \newline
+
+
 
 Item-based Top-N Recommendation methods calculates the similarity between items
 instead of users. In these approaches, the historical information is analyzed
@@ -198,6 +200,7 @@ calculate the similarities between each item of the set $C$ and the set
 $S_{c}$, using only the $k$ most similar items for each item in $S_{c}$. The
 resulting set of items in $C$ are sorted in descending order of similarity and
 will be the recommended as the item-based Top-N list \cite{Karypis2001}.
+Items usually do not change as much as users, so this often can be computed offline.
 
 \subsubsection{Model-based Methods}
 \label{model-based-methods}

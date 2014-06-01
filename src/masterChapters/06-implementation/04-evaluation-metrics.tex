@@ -1,4 +1,5 @@
 \section{Evaluation Metrics}
+\label{sec:eval-metrics}
 
 %TODO - Discussion of evaluation metrics
 
@@ -151,22 +152,31 @@ Example 	& 	Actual					& 	Recommended					&	AP@10   \\ \midrule
 \end{table}
 
 As you see from example two and three average precision does not consider the order of the actual item list. We want a way to
-reward the recommender for getting the purchased ranked higher than both wants and clicks. Normalized Discounted Cumulative Gain (nDCG) described in Section \ref{subp:normalized_discounted_cumulative_gain_}
-would have been perfect, given that we could specify the relevance the different events, which we cannot.
+reward the recommender for getting the purchased ranked higher than both wants and clicks. Normalized Discounted Cumulative Gain (nDCG)
+described in Section \ref{subp:normalized_discounted_cumulative_gain_} is another metric to measure the rank accuracy. It is based on two
+main assumptions; (1) Highly relevant items are more useful than marginally relevant ones, (2) The lower the ranked position of a relevant
+item, the less useful it is for the user, since it is less likely to be \emph{examined}. The maybe most interesting aspect of nDCG is that
+it contains an utility function $rel_i$. One can replace the original utility function and replace it with a function that is more relevant
+to the application. Two such examples include:
 
-To solve this problem we decided to chose a \emph{simpler} approach.
-We separately measure the recall for purchases, wants and clicks separately. In this way get a better overview of how well the results are ranked.
+\begin{itemize}
+\item $rel_i = 1/log(i+k)$, where i is the index of the item in the actual sorted rating list, where $k$ is a constant.
+\item $rel_i = u(i)$, simply assign a relevance or utility score.
+\end{itemize}
 
+The latter would have been perfect, given that we could specify the importance of each event e.g. purchase gets a relevance of 5, want a relevance of 3 and so on,
+as it would give us a single number on the ranking quality of the recommendations. However, we do not
+not know these values, meaning that nDCG cannot be used.
 
+%Write something about making assumptions, and how we feel it is 'wrong'
+
+To solve this problem we decided to chose a \emph{simpler} approach. We separately measure the recall for purchases, wants and clicks separately. In addition to measuring the MAP\@20 scores for the different event types separately. Given the relevance of the different event types nDCG could have given us all these numbers summarized in one column, instead we now have to use twelve columns. 
+
+By combing the AUC which gives us the recall for the entire recommendation list for each user, the MAP\@20 to measure the precision of the top 20 recommendations and then give individual numbers for the different event types we believe we would get a good overview of the systems overall performance with the main emphasis on the top 20 recommendations.
 
 
 %Normalized Discounted Cumulative Gain ($nDCG_{k}$), described in Section \ref{subp:normalized_discounted_cumulative_gain_}
-%is another metric to measure the rank accuracy. It is based on two main assumptions; (1) Highly relevant items are more useful than marginally relevant ones, (2) The lower the ranked position of a relevant item, the less useful it is for the user, since it is less likely to be \emph{examined}. The maybe most interesting aspect of nDCG is that it contains an utility function $rel_i$. One can replace the original utility function and replace it with a function that is more relevant to the application. Two such examples include:
-%
-%\begin{itemize}
-%\item $rel_i = 1/log(i+k)$, where i is the index of the item in the actual sorted rating list, where $k$ is a constant.
-%\item $rel_i = u(i)$, simply assign the rating of an item as its relevance.
-%\end{itemize}
+% 
 %
 %For our application we believe it to be beneficial to use the rating of the item as a
 %relevance score, as we could have multiple items with highly similar ratings (thus the same relevance). When using a low $k$ value for the logarithmic alternative this could mean that the relevance between two almost similarly rated items might end up being disproportionately large. We will also most likely look at the 20 top items, which means that the difference between the lower ranked items will be fairly small, as the logarithmic function converges. A third alternative would be to also use some linear decay function. The following table shows the $nDCG$ score for a set of examples where the function $rel_i = 1/log(i+1)$ is used to assign the relevance score to item $i$ in the sorted list of actual ratings. E.g. item one is assigned a relevance score of $1/(log(2)$ and so on. We hope the following table will give the reader a better idea of how $nDCG$ \emph{works}.

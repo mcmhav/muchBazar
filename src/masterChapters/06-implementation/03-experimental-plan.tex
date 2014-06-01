@@ -24,14 +24,16 @@ As baselines for our project we wish to first test a set of binary methods on th
 looking only at \emph{purchases}. We do the same for a binary dataset including the events
 \emph{purchase}, \emph{wants} and \emph{likes}. We then want to test our \emph{implicit ratings}
 considering different factors such as \emph{implicit factor weighting}, \emph{global popularity},
-\emph{recency} and factors blended together using different \emph{intelligent} schemes.
+\emph{recency} and factors blended together using different schemes and see if they improve the
+recommendation quality.
 
 \subsection{Challenges}
 
 %Every researchers wet dream - online system
 The main problem with our experiment is the evaluation part. Namely, how can be determine
-whether one set of ratings is better than another?. The main reasons for implementing a
-recommender system is the desire to improve user satisfaction and to increase the economic
+whether one set of ratings is better than another, and thereby validating our experiments?
+The main reasons for implementing a recommender system is the desire to improve user
+satisfaction and to increase the economic
 success of a platform. Although both goals are interrelated they may be competing in some
 scenarios. The user might be more interested in purchasing the products with the best
 price-performance ratio, while the \emph{owners}
@@ -39,14 +41,13 @@ are more interested in showing the products that lead to the highest revenue for
 business. For this purpose, a commercial recommender could/should consider implementing
 a reward attribute for items that show how much the company profits from its sale. However,
 this is something that could be factored in during online testing at a later point.
-The following figure shows an overview of a traditional recommender system evaluation
-pipeline:
+The following figure shows an overview of the rating evaluation pipeline:
 
 \begin{figure}[H]
 		\centering
-	  	\includegraphics[height=0.65\linewidth]{image/evaluationpipeline.png}
-		\caption[A Traditional Evaluation Pipeline]{A traditional evaluation pipeline for evaluating recommender systems}
-		\label{figure:evaluationpipeline}
+	  	\includegraphics[height=0.65\linewidth]{image/ratinggeneval.png}
+		\caption[Comparing Ratings]{The Figure shows the process of comparing ratings}
+		\label{figure:compareratings}
 \end{figure}
 
 In order to further specify our goals we therefore have to take a closer look at the recommender's task,
@@ -68,10 +69,6 @@ dedicated page. The following figure shows the Sobazar newsfeed. Recommendations
 Ultimately, the goal of the experiment is to evaluate and measure the properties
 of the system, which we have identified as the most important for the systems success,
 and select the method that performs the best overall with respect to these properties.
-However, then the problem becomes: What are the most important properties? 
-
-\marginpar{We are only looking at the sobazar data now right? However, it would be nice to see
-if our implicit rating methods work on other domains also...}
 
 \subsubsection{Dataset}
 
@@ -137,45 +134,91 @@ Table \ref{table:datasets} shows an overview of the sobazar dataset.
     \centering
     \begin{tabular}{l l l l l l }
     \toprule
-	Dataset						& 	Ratings	& 	Users		& 	Items 		& 	Sparsity			& Rating Scale 				    \\ \midrule
-	Sobazar	(Purchases Only) 	&	1,592	&	466			&	1188		&	99.71243			& Binary						\\
-	Sobazar (All events)		& 	27,873  & 	1,511		&	5855		& 	99.69657			& Binary/Implicit Ratings(1-5)	\\ 
-	%Movielens 1M				& 	1,000,029   &	6040 		&	3706	&	95.53164			& Explicit (1-5)				\\ 
+	Dataset						& 	Ratings		& 	Users		& 	Items 		& 	Sparsity			& Rating Scale 				    \\ \midrule
+	Sobazar	(Purchases Only) 	&	1,592		&	466			&	1188		&	99.71243			& Binary						\\
+	Sobazar (All events)		& 	27,873  	& 	1,511		&	5855		& 	99.69657			& Binary/Implicit Ratings		\\ 
+	%Movielens 1M				& 	1,000,029   &	6040 		&	3706		&	95.53164			& Explicit (1-5)				\\ 
 	\bottomrule
     \end{tabular}
     \caption [Overview of the datasets used for evaluation]{Overview of the datasets used for evaluation}
     \label{table:datasets}
 \end{table}
 
-As you can see the recommender can cover a much portion of the user group and items when including multiple event types.
+As you can see the recommender can cover a much larger portion of the user group and items when including multiple event types.
 
-\subsection{Purchase Only Vs. Multiple Implicit Factors}
+\subsection{Comparing Ratings}
 
-%What we want to do
-We want to evaluate whether a recommender system utilizing multiple implicit factors outperform a recommender system
-utilizing purchase data only.
+The success on our experiment mainly relies on whether we can successfully compare a set of ratings.
+Evaluating and comparing a set of ratings is not something you often encounter in the literature. And the
+bottom line is that evaluating and comparing a set of ratings is hard. However, we have a few theories on
+how it can be done:
 
-%Challanges/Problems of actually doing it
-How do we determine one as better than the other?
-	- Different datasets, as one contains 1045 users and 4667 items more than the other.
-	- How do we treat the items and users occurring only in one dataset?
-	- How do we \emph{treat} the events types only occurring in one dataset?
-	- Only \emph{sensible} thing to do is to compare the purchased items in some way
-	- How much should the additional coverage factor in?
+\begin{enumerate}
+\item Can we put the ratings into a traditional recommender system evaluation pipeline and use the
+	  results from that to compare the ratings. In that case, what evaluation metrics are suitable?
+\item User studies. Ask users to evaluate how well the produced ratings fit their actual preferences.
+\item Online experiments measuring e.g. the increased revenue generated or the click-through-rate.
+\end{enumerate}
 
-%How do we plan to solve them
-	%Assumptions & Weaknesses
+Where we \emph{chose} to go for the first alternative. User studies are expensive and we simply do not
+have the time or resources to interview hundreds of actual users. We do also not have the option of
+performing any online experiments. Either way it would be best to get some kind of validation on
+our results before deploying the system to minimize the risk of giving low-quality recommendations to
+the users.
 
-\subsection{Comparing Implicit Rating Methods}
+We could say that we believe that better ratings gives us better recommendation results, and use this
+as a basis for our evaluation. However, this means that the results we get from testing them
+on different algorithms should be comparable. The problem with this is that some evaluation metrics
+consider the supplied ratings as the \emph{ground truth} and bases its evaluation score on these numbers.
+This automatically disqualifies any evaluation metrics that consider the rating values such as e.g. MAE.
+The evaluation metrics used must should therefore be chosen wisely. After some thought and consideration
+we identified the following properties as the best indicators of improved recommendation quality.
+
+\begin{itemize}
+\item Does it improve the recall?
+\item Does it improve the recommenders ability to rank the items?
+\end{itemize}
+
+A further discussion on evaluation metrics will follow in the next Section \ref{sec:eval-metrics}.
+
+\subsubsection{Purchase Only Vs. Multiple Implicit Factors}
+
+\marginpar{I cannot see how we possibly can compare these two...}
+
+We want to evaluate whether a recommender system utilizing multiple implicit factors outperform
+a recommender system utilizing purchase data only.
+How, then, do we determine one as better than the other? We can see the following challanges:
+Firstly, we have two different datasets, as one contains 1045 users and 4667 items more than the
+other. How much should the additional coverage factor in? How do we treat the items and users
+occurring only in one dataset when evaluating? How do we \emph{treat} the events types only
+occurring in one dataset? Only \emph{sensible} thing to do is to compare the purchased items
+in some way, the question is how? Currently we can not see how we possibly could compare the
+two using traditional offline evaluation methods. Meaning that our comparison of the two will
+be made on somewhat of a \emph{subjective} basis.
+	
+\subsubsection{Comparing Binary and Non-Binary Models}
+
+\marginpar{The question then, is how critical this flaw is to our experiment}
+We want to quantify the improvements if any from using implicit ratings over binary ratings.
+The main challenges of comparing the binary ratings with the non-binary ones are the fact
+that the models for making recommendations differ. Optimally you would like to fix every
+\emph{variable} when doing this comparison, however, it is not possible in this case.
+To \emph{solve} this problem we decided that the best solution was to select \emph{state-of-the-art}
+methods from both classes and compare their results. Worst case scenario we find out that the
+methods for non-binary implicit feedback are not as \emph{good} as the binary models and thus
+should not be used.
+
+\subsubsection{Comparing Implicit Rating Methods}
 
 %What we want to do
 We want to figure out how to evaluate and compare the different implicit rating methods. 
+This is mainly a evaluation metric problem. 
 
 %Challanges/Problems of actually doing it
 How can we determine if one set of recommendations is better than another?
 	- Evaluation metric problem
 	- One obvious solution would be to analyze the amount of purchases, wants and clicks
-	  in the recommendation lists
+	  in the recommendation lists individually.
 	  	- How much at the list do we take into consideration?
 	  		- 20 is a pretty obvious choice based on the UI of the application
 	  	- How do we weight the different events
@@ -186,57 +229,21 @@ How can we determine if one set of recommendations is better than another?
 %How do we plan to solve them
 	%Assumptions & Weaknesses
 
-\subsection{Comparing Binary and Non-Binary Models}
-
-%What we want to do
-We want to quantify the improvements if any from using implicit ratings over binary ratings.
-
-%Challanges/Problems of actually doing it
-How can we determine the best solution?
-	- Methods of recommendation differ
-		- How critical is this?
-	- Again, consider recall and ordering of recommendation results at $k$
 
 
-%How do we plan to solve them
-	%Assumptions & Weaknesses
 
-This subsection will attempt to explain how we will attempt to determine whether our implicit gives any added value to the system over using binary preferences.
-When we compare the methods training we mainly wish to examine the following:
-
-\begin{itemize}
-\item Does the implicit ratings improve the recall
-\item Does the implicit ratings improve the methods ability to present the purchases higher up in the recommendation list,
-in other words, improve the ranking quality.
-\end{itemize}
 
 
 \subsection{Comparing the Implicit Rating Functions}
 
 Figure \ref{implicitRatingEvaluation} shows the process of evaluating a set of generated ratings. The \emph{million dollar question} is: how to do we evaluate a set of ratings?
 
-\begin{figure}[H]
-		\centering
-	  	\includegraphics[height=0.65\linewidth]{image/ratinggeneval.png}
-		\caption[Comparing Ratings]{The Figure shows the process of comparing ratings}
-		\label{figure:compareratings}
-\end{figure}
-
-Evaluating and comparing a set of ratings is not something you often encounter in the literature.
-\marginpar{TODO: Are there any articles on something similar?}
-Initial theories of how it can be done:
-
-\begin{enumerate}
-\item Using the log data as the ground truth. Is it possible to justify that one method is better than another with observations from the log data?
-\item Can we put the ratings into a traditional recommender system evaluation pipeline and use the results from that to compare the ratings. In that case, what evaluation metrics are suitable?
-\item User studies. Ask user to evaluate how well the produced ratings fit their actual preferences.
-\end{enumerate}
-
-The bottom line is that evaluating the quality of a set of generated ratings is hard. 
 
 
 
-We could say that we believe that better ratings gives us better recommendation results, and use this as a basis for our evaluation. However, this means that the results we get from testing the different algorithms with different rating sets should be comparable. The problem with this is that most evaluation metrics consider the supplied ratings as the ground truth and bases its evaluation on these numbers. This automatically disqualifies any evaluation metrics that consider the rating values such as e.g. MAE.
+
+
+
 
 
 \subsection{Combining Implicit Ratings With Existing Cold-Start Solutions}
