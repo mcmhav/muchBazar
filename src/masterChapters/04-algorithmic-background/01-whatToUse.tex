@@ -1,26 +1,108 @@
 % !TEX root = ../../report.tex
 
 \section{Recommendation methods}
-\label{sec:making-recommendations}
 
-This section aims to describe the algorithms and methods which we have developed or borrowed from others that will be included in our experiments.
+The section will describe the different recommendation methods included in our experiments in closer detail.
+Our experiment requires us to test multiple recommender systems to get a better overview of added value of including implicit
+factors and finally our implicit ratings. We have also chosen to include some simpler non-personalized
+methods to be used as baseline models to assess whether the current system is ready for a personalized recommendation
+system. Similarly to assess the improvement, if any, over the simple non-personalized methods for cold-start recommendations.
+E.g. one could imagine to final system to leverage multiple recommendation techniques. When users are new to the system they
+are recommended the most popular items, until enough data is collected to start providing personalized recommendations.
+This system could be complemented by pre-computed item similarities for recommendations in the context of the user
+\emph{examining} an item. If the cold-start performance of these simpler models outperform the more sophisticated ones
+include in our experiments, why not just use them? However, our greatest problem was to find methods which in some ways
+could bridge the broken divide between binary and non-binary recommendation systems to make our results valid. Our
+solution to this is to include the methods that are considered the state-of-the-art methods from both classes in
+an attempt to bridge this highly \emph{unfortunate} weakness in our experiment.
 
-\subsection{Recommender algorithms}
+\subsection{Common Algorithms}
 
-The section will describe the different recommendation algorithms included in our experiments in closer detail.
-One could imagine to final system to leverage multiple recommendation techniques. When users are new to the system they
-are recommended the most popular items, until enough data is collected to provide personalized recommendations. Another solution would be to use pre-computed item similarities and recommend similar items to the item currently being viewed by the user. These methods are also well suited as benchmark models.
+This subsection will describe the algorithms that will be used on both the binary and non-binary.
+
+\subsubsection{Content-boosted Collaborative Filtering}
+
+\marginpar{TODO: Complete motivation. Are we doing content-based filtering og content-boosted collaborative filtering?}
+As previously mentioned content-based recommendation does not suffer as much from the cold-start problem as
+collaborative filtering approaches. 
+
+\paragraph{Extracting Content-Features}
+
+To build features for content-based recommendations we examined the content in the product database. To find
+the product-type, material, style and color we analyzed the content of the title, description and meta-description
+fields extracting the most used keywords after removing the stopwords, which we combined and grouped for the different
+attributes. Since product descriptions could be either in Norwegian or in English we had to include the words from
+both languages. We also experimented with stemming from the nltk software package in python, but since it did not
+improve our results it was not used in the final implementation. E.g. to determine if a product-type falls under
+the \emph{sweater} category we check for the following
+keywords: \emph{sweater, cardigan, jumper, hoody ,genser and genseren}. We attempt to extract the following
+features from the product-database content:
+
+\begin{itemize}
+\item Price: Grouped into price brackets
+\item Brand/Storename
+\item Category: E.g. dress, jacket, top, pants and boots
+\item Material: E.g. Cotton, wool, polyester, leather
+\item Style: E.g. Classic, Modern, Comfy, Sexy
+\item Color
+\end{itemize}
+
+It was a pleasant surprise to find out that 5,060 out of 5,855 items could be found in the
+product database and be assigned features. The following table shows an overview over how many items
+we were able to extract the different features for.
+
+\begin{table}[H]
+	\centering
+	\begin{tabular}{l l}
+	\toprule
+	Attribute & Percentage  \\ \midrule
+	Price 			& 1.000 \\ 
+	Brand 			& 0.742 \\ 
+	Category 		& 0.628 \\ 
+	Material 		& 0.408 \\ 
+	Style 			& 0.314 \\ 
+	Color 			& 0.162
+	\\ \bottomrule
+	\end{tabular}
+\end{table}
+
+Price, brand and product-type can be found for \emph{most} items, while material style
+and color could only be found for a minority of the items. The dataset is in no way ideal
+for content-based recommendation as it highlights on of the main weakness of content-based
+methods, namely that they require rich descriptions of items to build well informed user
+profiles. As mentioned in \cite{meyer2012recommender} this is most often not the case in
+real applications. 
+
+\paragraph{Content-based recommender}
+
+\marginpar{Explain how the content information will be used}
+
+\subsection{Binary Algorithms}
+
+This subsection will describe the algorithms used on the binary datasets.
 
 \subsubsection{Most-popular Recommender}
 
-We developed a simple most-popular recommender that uses result dithering to \emph{randomize} the recommendations to the users. One could imagine multiple categories of most popular recommendations: Most wanted, most purchased or a combination. Dithering adds \emph{noise} to the algorithm, which permutes the results in such a way that the top few results have a high probability of remaining on the top spots, but as one goes deeper into the results, the degree of mixing increases dramatically. It is important to note that dithering is \emph{guaranteed} to make off-line performance worse, but is likely to make the actual performance better as the user is not presented with the same list of recommendations every time. We have experimented with two different methods of dithering:
+We developed a simple most-popular recommender that uses result dithering to \emph{randomize}
+the recommendations to the users. One could imagine multiple categories of most popular recommendations:
+Most wanted, most purchased or a combination. Dithering adds \emph{noise} to the algorithm, which permutes
+the results in such a way that the top few results have a high probability of remaining on the top spots,
+but as one goes deeper into the results, the degree of mixing increases dramatically. It is important to
+note that dithering is \emph{guaranteed} to make off-line performance worse, but is likely to make the
+actual performance better as the user is not presented with the same list of recommendations every
+time. We have experimented with two different methods of dithering:
 
 \begin{itemize}
 \item $Score = log_2(rank+x) - runif(y, z)$
 \item $Score = log_2(rank+x) - y*rexp(z)$
 \end{itemize}
 
-The $runif$ function draw samples from a uniform distribution where $y$ specifies the lower boundary of the output interval and $z$ specifies the upper boundary. The probability density function of the uniform distribution is $P(x) = \frac{1}{z-y}$ anywhere within the interval $[y, z)$, and zero elsewhere. The $rexp$ function draws a random number from an exponential distribution, where $z$ specifies the $\lambda$ value, which is set to $\frac{1}{z}$. Figure \ref{fig:expdist} shows the exponential probability density function given different $\lambda$ values.
+The $runif$ function draw samples from a uniform distribution where $y$ specifies the lower boundary
+of the output interval and $z$ specifies the upper boundary. The probability density function of the
+uniform distribution is $P(x) = \frac{1}{z-y}$ anywhere within the interval $[y, z)$, and zero elsewhere.
+The $rexp$ function draws a random number from an exponential distribution, where $z$ specifies the
+$\lambda$ value, which is set to $\frac{1}{z}$. Figure \ref{fig:expdist} shows the exponential probability
+density function given different $\lambda$ values.
 
 % Vertical alignment of equation and plot.
 \begin{figure}[H]
@@ -140,36 +222,120 @@ x    y    	y-max  	y-min
 
 \end{figure}
 
-The results show that exponential distribution alternative has a larger occurrence of items that are further down in the list. This is due to the fact that the exponential distribution can output large values, in theory up to infinity, with a decreasing probability. But it is much more consistent in keeping the top 10 items in the top 30 positions. The values of $x$, $y$ and $z$ can be modified to achieve the desired degree of mixing.
+The results show that exponential distribution alternative has a larger occurrence of items that
+are further down in the list. This is due to the fact that the exponential distribution can output
+large values, in theory up to infinity, with a decreasing probability. But it is much more consistent
+in keeping the top 10 items in the top 30 positions. The values of $x$, $y$ and $z$ can be modified to
+achieve the desired degree of mixing.
 
-\subsubsection{Item-Average}
+\subsubsection{Binary Item-based Collaborative Filtering}
 
-Item average is a simple recommender that always estimates the preference for an item to be the average of all known preference values for that item. No information about the individual users is taken into account. This recommender can therefore be considered a \emph{highest rated} recommender, as it is likely to recommend the highest rated items. The following equation shows the rating prediction procedure:
+There are a number of different ways to compute the similarities between items given binary preference data.
+Here we present one such method called \emph{log likelihood}, which is implemented in Mahout \cite{mahout}
+Log Likelihood Similarity is used to score and analyze counts of events, particularly counts of when events occur together.
+The counts you have in these situations are the following:
+
+\begin{itemize}
+\item $c_{11}$ the number of times two events have occurred together
+\item $c_{12}$ and $c_{21}$ the number of times one occurred without the other.
+\item $c_{22}$ the number of times something was observed that was neither.
+\end{itemize}
+
+One you have these counts the log likelihood $G^2$ can be computed as follows:\newline
+
+\begin{subequations}
+$G^2$ = 2(matrixEntropy(c)-rowEntropy(c)-columnEntropy(c))
+\begin{align}
+	rowEntropy(c) = H(c_{11}, c_{12}) + H(c_{21}, c_{22}), \\ 
+	colEntropy(c) = H(c_{11}, c_{21}) + H(c_{12}, c_{22}), \\
+	matrixEntropy(x) = H(c_{11}, c_{12}, c_{21}, c{22}),
+\end{align}
+\end{subequations}
+
+where $H$ is Shannon's entropy, which can be computed using the following formula:
 
 \begin{equation}
-\label{equation:itemaverageratingprediction}
-u(c,s) = k * \sum_{c' \epsilon C} u(c',s)
+H(X) = - \sum_{i} x_i log \frac{x_i}{N} = -N \sum_i \frac{x_i}{N} log \frac{x_i}{N}
 \end{equation}
 
-where $k$ is a normalization factor ($1/|C|$). This is very similar to collaborative filtering, except for the fact that the user similarity $sim(c, c')$ has been taken out of the equation. This is the same as saying that all user similarities are the same. It is also worth mentioning that this method is not suited for binary ratings, as the result is likely to be highly random, and should therefore not be used without item ratings to average.
+where $N$ equals $\sum_i x_i$. Using the above notation Shannon's entropy for $H(c_{11}, c_{21})$ gives us:
 
-\subsubsection{User-based Collaborative Filtering}
+\begin{equation}
+H = (c_{11} + c_{12})log(c_{11} + c_{12})-c_{11} log(c_{11}) - c_{12} log(c_{12})
+\end{equation}
 
-Recommend items by finding similar users. This is often harder to scale because of the dynamic nature of users. The pearson correlation coefficient is used to calculate the user similarities. For a more in depth description of user-based collaborative filtering see Section \ref{subsec:cf}.
+For our experiments we used to Mymedialite \cite{Ganter2011MyMediaLite} implementation. 
 
-\subsubsection{Item-based Collaborative Filtering}
+\subsubsection{BPR: Bayesian Personalized Ranking}
 
-Calculate similarity between items and make recommendations. Items usually don't change much, so this often can be computed offline. For a more in depth description of item-based collaborative filtering see Section \ref{subsec:cf}.%
+BPR presented by Rendle et. al. \cite{Rendle2009} can be used to learn the latent factors of a
+latent factor model using binary implicit feedback. For our experiment we have used to implementation
+found in MyMediaLite \cite{Gantner2011MyMediaLite}
+
+Bayesian Personalized Ranking was designed for the item prediction task and optimized for ranking using implicit
+feedback such as e.g. purchases in an online shop. The task of the recommender system is to provide the
+user with a personalized ranking $>_c \subset I^2$ of all items, where $>_u$ has to meet the properties of a total order.
+Finding the personalized ranking for all items $S \epsilon S$ is to maximize the following posterior probability
+where $\theta$ represents the parameter vector of an arbitrary model class (e.g. matrix factorization).
+
+\begin{equation}
+p(\theta | >_c) \propto p(>_c | \theta) p(\theta)
+\end{equation}
+
+Where $>_u$ is the desired but latent preference structure for user $c$. All users are presumed to act
+independently of each other. The ordering of each pair of items is assumed to independent of every other pair.
+The generic optimization criterion for personalized ranking is the following:
+
+\begin{equation}
+BPR(D_S) = \underset{\theta}{\arg\max} \sum_{(c,i,j)\epsilon D_s} ln \sigma(\hat{u}_{c,i}(\theta)-\hat{u}_{c,j}(\theta)) - \lambda \left\|\theta \right\|
+\end{equation}
+
+Here $D_s$ is the binary dataset used, $\sigma(x)$ is the logistic sigmoid function, $\theta$ represents
+the model parameters, $\hat{u}_{c,s}$ is the predicted score for user $c$ and item $s$ and 
+$\lambda \left\|\theta \right\|$ is the regularization term. It reduces the model learning task to
+a pairwise classification problem.\newline
+
+BPR learns the model parameters $\theta$ as follows using stochastic gradient descent.
+
+\begin{itemize}
+\item Step 1: Draw (c,i,j) from $D_S$
+\item Step 2: $\theta \leftarrow \theta + \alpha \left\lgroup \frac{\exp^{-\hat{x}_{cij}}}{1+\exp{\hat{x}_{cij}}}  \frac{d}{d \theta} \hat{x}_{cij} + \lambda_{\theta} \theta \right\rgroup$
+\item Step 3: Repeat step 1 and 2 until convergence
+\end{itemize}
+
+where $\alpha$ is the learning rate and $\lambda_{\theta}$ is the regularization constant.
+
+\subsection{Implicit Rating Algorithms}
+
+This subsection will describe the algorithms used on the non-binary datasets during our
+experiments.
+
+\subsubsection{Item-based KNN}
+
+For our non-binary item-based collaborative filtering model we will use the Mahout \cite{mahout}
+implementation. The Pearsons Correlation Coefficient \ref{equation:pearson} will be used to compute
+the item similarities.
 
 \subsubsection{ALS-WR}
 
 %Implicit Feedback Recommendation via Implicit-to-Explicit Ordinal Logistic Regression Mapping
 
-ALS-WR is the only method which we have found that \emph{supports} implicit ratings, and will therefore naturally be a part of our experiment.
+ALS-WR is the only method which we have found that \emph{supports} implicit ratings, making
+it a natural part of our experiment. For our experiment we have used the Mahout \cite{mahout} implementation.
 
-Alternating-least-squares with weighted-$\lambda$-regularization (ALS-WR) was designed fro the Netflix Prize Competition \cite{Netflix}, where it obtained an RMSE score of 0.8975, which was one of the best results based on a pure method.
-in theory up to infinity
-Alternating-least-squares is a method to solve Equation \ref{equation:minimize}. Since both $q_{s}$ and $p_{c}$ are unknown, the equation is not convex. However if we fix one of the unknowns, the optimization problem becomes quadratic and can be solved optimally. The ALS technique rotate between fixing the $q_{s}$'s and fixing the $p_{c}$'s. When all the $p_{c}$'s are fixed, the system recomputes the $q_{s}$'s by solving a least-squares problem, and vica versa. This ensures that each step decreases the error until convergence. What makes ALS favorable over the simpler and faster stochastic gradient descent is two things. ALS can be parallelized since the system computes the $q_{s}$'s independently of the other item factors, the same can also be applied to the user factors. The second case if for systems centered around implicit data. Because the training set cannot be considered sparse, looping over each single training case as gradient descent would not be practical, but ALS can efficiently handle such cases \cite{Hu2008}.\newline
+Alternating-least-squares with weighted-$\lambda$-regularization (ALS-WR) was designed fro the Netflix Prize
+Competition \cite{Netflix}, where it obtained an RMSE score of 0.8975, which was one of the best results based
+on a pure method.
+
+Alternating-least-squares is a method to solve Equation \ref{equation:minimize}. Since both $q_{s}$ and $p_{c}$
+are unknown, the equation is not convex. However if we fix one of the unknowns, the optimization problem becomes
+quadratic and can be solved optimally. The ALS technique rotate between fixing the $q_{s}$'s and fixing the $p_{c}$'s.
+When all the $p_{c}$'s are fixed, the system recomputes the $q_{s}$'s by solving a least-squares problem, and vica versa.
+This ensures that each step decreases the error until convergence. What makes ALS favorable over the simpler and faster
+stochastic gradient descent is two things. ALS can be parallelized since the system computes the $q_{s}$'s independently
+of the other item factors, the same can also be applied to the user factors. The second case if for systems centered around
+implicit data. Because the training set cannot be considered sparse, looping over each single training case as gradient descent
+would not be practical, but ALS can efficiently handle such cases \cite{Hu2008}.\newline
 
 ALS solves the low-rank matrix factorization as follows:
 
@@ -180,57 +346,40 @@ ALS solves the low-rank matrix factorization as follows:
 \item Step 4: Repeat Steps 2 and 3 until a stopping criterion is satisfied.
 \end{itemize}
 
-Zhou et. al. \cite{Zhou2008} used the difference in RMSEs between the rounds as a stopping criterion. Without regularization ALS might lead to overfitting due to the many free parameters. Regularization was therefore introduced in the form of weighted-$\lambda$-regularization to prevent the model from overfitting.
+Zhou et. al. \cite{Zhou2008} used the difference in RMSEs between the rounds as a stopping criterion.
+Without regularization ALS might lead to overfitting due to the many free parameters. Regularization was
+therefore introduced in the form of weighted-$\lambda$-regularization to prevent the model from overfitting.
 
 \begin{equation}
 f(P, Q) = \sum_{(c,s)\epsilon C} (u(c,s) - p^{T}_{c}q_{s})^{2} + \lambda (\sum_{c} n_{p_{c}} \Vert p_{c} \Vert ^{2} + \sum_{s} n_{q_{s}} \Vert q_{s} \Vert ^{2})
 \label{WeightedLamba}
 \end{equation}
 
-where $n_{p_{c}}$ and $n_{q_{s}}$ denote the number of ratings of user $c$ and item $s$ respectively. $S_{c}$ denote the set of items $s$ that user $c$ rated, then $n_{p_{c}}$ is the cardinality of $S_{c}$; similarly $C_{s}$ denotes the set of users who rated item $s$, and $n_{q_{s}}$ is the cardinality of $I_{s}$. A given column of P, $p_{c}$ is found by solving a regularized linear least squares problem involving the known ratings of user $c$, and the feature vectors $q_{s}$ of the items that user $c$ has rated. Similarly, we can compute individual $q_{s}$'s via a regularized linear least squares solution, using the feature vectors of users who rated item $j$, and their ratings of it.
+where $n_{p_{c}}$ and $n_{q_{s}}$ denote the number of ratings of user $c$ and item $s$ respectively. $S_{c}$ denote
+the set of items $s$ that user $c$ rated, then $n_{p_{c}}$ is the cardinality of $S_{c}$; similarly $C_{s}$ denotes
+the set of users who rated item $s$, and $n_{q_{s}}$ is the cardinality of $I_{s}$. A given column of P, $p_{c}$ is
+found by solving a regularized linear least squares problem involving the known ratings of user $c$, and the
+feature vectors $q_{s}$ of the items that user $c$ has rated. Similarly, we can compute individual $q_{s}$'s via
+a regularized linear least squares solution, using the feature vectors of users who rated item $j$, and their ratings of it.
 
 \marginpar{TODO: Move implicit extension of ALS-WR here from implicit rating section}
 
-\subsubsection{Content-based}
+\subsubsection{Item-Average}
 
-\marginpar{TODO: Complete motivation}
-As previously mentioned content-based recommendation does not suffer as much from the cold-start problem as
-collaborative filtering approaches. 
+Item average is a simple recommender that always estimates the preference for an item to be the average of
+all known preference values for that item. No information about the individual users is taken into account.
+This recommender can therefore be considered a \emph{highest rated} recommender, as it is likely to recommend
+the highest rated items. The following equation shows the rating prediction procedure:
 
-\paragraph{Extracting Content-Features}
+\begin{equation}
+\label{equation:itemaverageratingprediction}
+u(c,s) = k * \sum_{c' \epsilon C} u(c',s)
+\end{equation}
 
-To build features for content-based recommendations we examined the content in the product database. To find the product-type, material, style and color we analyzed the content of the title, description and meta-description fields extracting the most used keywords after removing the stopwords, which we combined and grouped for the different attributes. Since product descriptions could be either in Norwegian or in English we had to include the words from both languages. We also experimented with stemming from the nltk software package in python, but since it did not improve our results it was not used in the final implementation. E.g. to determine if a product-type falls under the \emph{sweater} category we check for the following keywords: \emph{sweater, cardigan, jumper, hoody ,genser and genseren}. We attempt to extract the following features from the product-database content:
-
-\begin{itemize}
-\item Price: Grouped into price brackets
-\item Brand/Storename
-\item Category: E.g. dress, jacket, top, pants and boots
-\item Material: E.g. Cotton, wool, polyester, leather
-\item Style: E.g. Classic, Modern, Comfy, Sexy
-\item Color
-\end{itemize}
-
-It was a pleasant surprise to find out that 5,060 out of 5,855 items could be found in the
-product database and be assigned features. The following table shows an overview over how many items we were able to extract the different features for.
-
-\begin{table}[H]
-	\centering
-	\begin{tabular}{l l}
-	\toprule
-	Attribute & Percentage  \\ \midrule
-	Price 			& 1.000 \\ 
-	Brand 			& 0.742 \\ 
-	Category 		& 0.628 \\ 
-	Material 		& 0.408 \\ 
-	Style 			& 0.314 \\ 
-	Color 			& 0.162
-	\\ \bottomrule
-	\end{tabular}
-\end{table}
-
-Price, brand and product-type can be found for \emph{most} items, while material style and color could only be found for a minority of the items. The dataset is in no way ideal for content-based recommendation as it highlights on of the main weakness of content-based methods, namely that they require rich descriptions of items to build well informed user profiles. As mentioned in \cite{meyer2012recommender} this is most often not the case in real applications. 
-
-\paragraph{Content-based recommender}
+where $k$ is a normalization factor ($1/|C|$). This is very similar to collaborative filtering, except for
+the fact that the user similarity $sim(c, c')$ has been taken out of the equation. This is the same as saying
+that all user similarities are the same. It is also worth mentioning that this method is not suited for binary
+ratings, as it becomes a most popular algorithm.
 
 \subsection{Cold-start Solutions}
 
@@ -242,9 +391,25 @@ Naive Filterbots \cite{Park2006} which easily could be combined with our implici
 \subsubsection{Filterbots}
 
 The main reasons for experimenting with filterbots is simplicity, the fact that it easily could
-be combined with our implicit ratings in addition to the fact that previous experiments \cite{Agarwal2009, Agarwal2010} show that its performance is close to the state-of-the-art methods. It is worth to keep in mind that filterbots was developed for traditional collaborative filtering methods and it will be interesting to see how the filterbots affect the performance of ALS-WR. Filterbots can potentially help solve the cold-start user problem by making it possible for new users to connect to users that capture the general underlying trends of the entire user group. Filterbots are mainly meant to improve performance when data is scarce and not to degrade performance when data is plentiful.
+be combined with our implicit ratings in addition to the fact that previous experiments \cite{Agarwal2009, Agarwal2010}
+show that its performance is close to the state-of-the-art methods. It is worth to keep in mind that filterbots was
+developed for traditional collaborative filtering methods and it will be interesting to see how the filterbots affect
+the performance of ALS-WR. Filterbots can potentially help solve the cold-start user problem by making it possible for
+new users to connect to users that capture the general underlying trends of the entire user group. Filterbots are mainly
+meant to improve performance when data is scarce and not to degrade performance when data is plentiful.
 
-Similarly as in \cite{Park2006} we decided to experiment with global bots. We have currently implemented the following bots: A \emph{BrandBot} which rates an item based on the brands average rating, an \emph{AverageBot} which rates an item based on their average rating given to it, a \emph{CriticBot} which selects $n$ critics among the most active users and rate items based on their average rating, a \emph{PopularityBot} which rates an item based on its popularity, more ratings equals a higher rating. A filterbot takes the training set as input and generates a set of ratings which are then added to the training set. Both the \emph{AverageBot} and \emph{BrandBot} can be seen to incorporate the implicit rating factors such as recency into the ratings generated. However, for the \emph{PopularityBot} and \emph{Critic} but we wish to implement additional functionality to ensure that the new users are connected with items that are relevant right now and not consider outdated items or users which are no longer active. Since we have access to timestamps we could e.g. make the \emph{PopularityBot} rate items based on their popularity the last couple of weeks instead of over the entire dataset period. Similarly, critics can be selected based on their activity the couple of weeks/months.
+Similarly as in \cite{Park2006} we decided to experiment with global bots. We have currently implemented the
+following bots: A \emph{BrandBot} which rates an item based on the brands average rating, an \emph{AverageBot}
+which rates an item based on their average rating given to it, a \emph{CriticBot} which selects $n$ critics
+among the most active users and rate items based on their average rating, a \emph{PopularityBot} which rates
+an item based on its popularity, more ratings equals a higher rating. A filterbot takes the training set as
+input and generates a set of ratings which are then added to the training set. Both the \emph{AverageBot} and
+\emph{BrandBot} can be seen to incorporate the implicit rating factors such as recency into the ratings generated.
+However, for the \emph{PopularityBot} and \emph{Critic} but we wish to implement additional functionality to ensure
+that the new users are connected with items that are relevant right now and not consider outdated items or users which
+are no longer active. Since we have access to timestamps we could e.g. make the \emph{PopularityBot} rate items based on
+their popularity the last couple of weeks instead of over the entire dataset period. Similarly, critics can be selected
+based on their activity the couple of weeks/months.
 
 \marginpar{TODO: More detailed implementation details?}
 
