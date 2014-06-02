@@ -1,7 +1,6 @@
 %As  !TEX root = ../../report.tex
-
 \section{Generating implicit ratings}
-\label{implementation-implicit}
+\label{sec:implementation-implicit}
 
 In this section we continue solving the problem of generating ratings based on
 implicit feedback found in analytics logs, as defined in
@@ -126,29 +125,18 @@ given to event $e$ after penalization, given a max $M_u$ and min $m_u$ value.
   S_e(x,u) = M_e - (M_e - m_e) \cdot p(x, u)
 \end{equation}
 
-The last component needed is a way of normalizing the ratings. The equation is
-based on which values are apparent as $x_{min}$ and $x_{max}$ (in our case 0
-and 100) and two values to normalize to $a$ and $b$, which in a recommender
-system often is chosen to be 1 and 5. Hence we use these variables in order to
-normalize any value $x_{min} \leq x \leq x_{max}$:
-
-\begin{equation}
-  \label{eq-normalization}
-  N(x, a, b, x_{min}, x_{max}) = a + \frac{(x-x_{min})(b-a)}{x_{max}-x_{min}}
-\end{equation}
-
-And now we have all components ready in order to do a rating generation. In
-order to see all parts working together, we imagine an example where a user has
-six events on three items, as presented in the table below. The ratings are
-normalized between 1 and 5 and the product IDs are there for illustrative
-purposes. We choose to look at the number of days since the user did the event
-in question as the implicit feature, where $x=0$ means the event was registered
-today (or as the most recent) and in our example $x=14$ is the oldest event
-happening two weeks ago. 
+The last component needed is normalizing the ratings. Which is described in
+Equation~\ref{eq-normalization}. And now we have all components ready in order
+to do a rating generation. In order to see all parts working together, we
+imagine an example where a user has six events on three items, as presented in
+the table below. The ratings are normalized between 1 and 5 and the product IDs
+are there for illustrative purposes. We choose to look at the number of days
+since the user did the event in question as the implicit feature, where $x=0$
+means the event was registered today (or as the most recent) and in our example
+$x=14$ is the oldest event happening two weeks ago. 
 
 \begin{table}[H]
   \centering
-  \label{implicit-ratings-example}
   \begin{tabular}{llllll}
   \toprule
   Event type & Product ID & x (days) & P(x) & Score & Rating \\
@@ -161,6 +149,8 @@ happening two weeks ago.
   \textit{product\_detail\_clicked}     & 2 & 14  & $\frac{14}{14} = 1.00$ & 62 & 1.0  \\
   \bottomrule
   \end{tabular}
+  \caption{Showing penalizations and ratings on example data}
+  \label{implicit-ratings-example}
 \end{table}
 
 When finally selecting a rating for the user/product pair, we choose the
@@ -188,10 +178,10 @@ the following distribution:
 
 \begin{figure}[H]
   \centering
-  \label{dist-recentness-linear-global}
   \includegraphics[scale=0.6]{image/dist-recentness-linear-global}
  \caption{Distribution of ratings using number of days since event, a linear
  penalization function and global min/max feature-values}
+  \label{fig:dist-recentness-linear-global}
 \end{figure}
 
 This is a much more interesting result, having an more even distribution of
@@ -216,8 +206,9 @@ oldest $x=n$. This yields the following distribution:
 \begin{figure}[H]
   \centering
   \includegraphics[scale=0.6]{image/dist-count-linear}
- \caption{Distribution of ratings using ordering of events, and a linear
+  \caption{Distribution of ratings using ordering of events, and a linear
  penalization function}
+  \label{fig:dist-count-linear}
 \end{figure}
 
 With much the same average and median values at \textit{3.26} and \textit{3.45}
@@ -290,7 +281,7 @@ to include $s$, the \textit{steepness coefficient}, and $c$, the \textit{shift
 coefficient}.
 
 \begin{equation}
-  \frac{1}{1+\exp^{-s(x - c)}}
+  p(x) = \frac{1}{1+\exp^{-s(x - c)}}
 \end{equation}
 
 In the standard sigmoid function these are $1$ and $0$ respectively, but by
@@ -312,7 +303,6 @@ and most recent event, in our example equalling 7.
 
 \begin{table}[H]
   \centering
-  \label{implicit-ratings-example}
   \begin{tabular}{llllll}
   \toprule
   Event type & Product ID & x (days) & P(x) & Score & Rating \\
@@ -325,10 +315,11 @@ and most recent event, in our example equalling 7.
   \textit{product\_detail\_clicked}     & 2 & 14  & $\frac{1}{1 + \exp^{-0.8(14*7)}} = 1.00$ & 62 & 1.0  \\
   \bottomrule
   \end{tabular}
+  \label{implicit-ratings-example-sigmoid}
 \end{table}
 
 Notice how the purchase of product with ID 2 went from $4.96$ in
-Table~\ref{implicit-ratings-example} to $4.99$ here, as we have lower
+Table~\ref{implicit-ratings-example} to $4.99$ here, as we have lower
 penalization for lower x-values. Equally, the penalizations are equal ($0.50$
 and $1.00$) when the x-values are 7 and 14 respectivly. However, while this
 works fine in the example above we need to set the ratio between the steepness
@@ -337,7 +328,7 @@ shift-coefficient is imprecise and non-scientific. Instead we alter our
 logistic function to instead using a ratio $r$ between the two constants:
 
 \begin{equation}
-  \frac{1}{1+e^{-(r/c) \cdot (x - c)}}
+  p(x) = \frac{1}{1+e^{-(r/c) \cdot (x - c)}}
 \end{equation}
 
 Here the $c$ equals the steepest point (shift coefficient), and we set it so
@@ -380,6 +371,9 @@ ratio changes the logistic function in the following way:
     \sigmoidfixed{4.5}{235}{0.5}
     \caption{$r = 4.5$}
   \end{subfigure}
+  \caption{Penalization functions for various ratios controlling steepness and
+  shift}
+  \label{fig:sigmoid-penalizations}
 \end{figure}
 
 As we want a good distribution, but still not penalize most recent items
@@ -392,6 +386,7 @@ good selection.
   \includegraphics[scale=0.5]{image/dist-sigmoid-fixed-recentness-3-5}
   \caption{Distribution of ratings using number of days since earliest event,
   a logistic penalization function and global min/max feature-values}
+  \label{fig:dist-recentness-sigmoid}
 \end{figure}
 
 As discussed in the previous section, using number of days since most recent
@@ -405,82 +400,100 @@ as well. Continuing with a ratio of $3.5$ we obtain the following distribution:
   \includegraphics[scale=0.5]{image/dist-sigmoid-fixed-count-3-5}
   \caption{Distribution using ordering of events, a logistic penalization
   function and global min/max feature-values}
+  \label{fig:dist-count-sigmoid}
 \end{figure}
 
-\subsection{Linearly blending the results}
+\subsection{Linearly blending implicit ratings}
 
-\marginpar{Move this introduction to the pre-study?}
-At this point we have found multiple novel ways of calculating the
-implicit ratings, based on our implicit feedback. However, as one may observe
-each method has its weknesses and strengths. A sigmoid-function considering the
-number of days between events is good for including our implicit knowledge
-about seasons into the ratings, but is not as effective if users has high
-spread in between events or low activity. Further, there may exist some clothes
-that has longer life-span than others, e.g. warm jackets that generally are
-bought from September to March (7 months) compared to shorts which are
-generally bought from May to August (4 months), depending on where the store
-reside. Our second sigmoid function has the strength of always keeping the
-ratings for a user fresh, also for less active users, but it is weaker in
-differentiating between seasons - which can be seen if a user is on a hiatus
-between January and August, not using the application. Upon return all ratings
-would be based on his/hers winter activity, not penalizing the fact that the
-type of clothes generally bought in the store at this time are different than
-in January.
+At this point we have found multiple ways of calculating the implicit ratings,
+based on our implicit feedback. However, each method has its weknesses,
+strengths and captures different feature-sets in our data. Thus the
+distributions reflect a large difference in ratings. Selecting a feature such
+as number of days since the event in question captures our implicit knowledge
+about seasons and items having a short life-span. However, as pointed out
+earlier given many events on the same day there are no way of differentiating
+them - unless we consider the ordering of items, saying the most recent item
+shall be higher rated than older events. However, exclusivly changing the
+feature like this forces us to loose some of our implicit data about items
+having a fixed lifespan. What we want to do is \textit{combine the two
+features} in a procedure that often in recommender systems are coined
+\textit{blending} or \textit{ensamble methods}. Combining them enables us to
+create more robust ratings where weaknesses such as outliers or inconsistencies
+in one method can be averaged out by the strengths of others. If two features
+independently finds the same properties and ratings for some items and users,
+then the result and our belief is strenghtened.
 
-Optimally we would like to combine these two methods, taking their strenghts
-and weaknesses together trying to average them out in order to end up with
-generally better ratings - where we cannot trivally imagine scenarios as
-depicted above where our models would fail. The process of combining such
-ratings are in the Recommender Systems community called \textbf{blending} and
-is in many ways a seperate research area in itself, if done advanced enough.
-However, in the case of the naive and linear blend on can achieve results a
-magninute higher than for each method seperatly as seen in \ref{}
-\marginpar{find some refs using linear blending}.
+When linearly blending $M$ models $m_1 \dots m_M$, we choose $M$ factors $f_i$
+all adding up to 1.0, representing the weight of model $m_{i}$ in the final
+blend. Eeach model then have $k$ ratings on the triplet form \textit{(user,
+product, rating)} and noted noted as $r_{ij}$ - the rating of item $j$ in model
+$i$. 
 
-When linearly blending $M$ models $m$, we choose $M$ factors $f$ all adding up
-to 1.0, representing the weight of model $m_{i}$ in the final blend. Then when
-calculating the final rating for item $j$ we sum over all models:
+Then when calculating the final rating for item $j$ we sum over all
+models:
 
 \begin{equation}
-  r_j = \sum _{i=1}^{M} f_{i} * m_{j}
+  r_j = \sum _{i=1}^{M} f_{i} * r_{ij}
 \end{equation}
 
-As one may observe given the linear blend between with factors $f_1 = 0.7$ and
-$f_2 = 0.3$ and the two ratings $m_1 = 5$ and $m_2 = 3$ for a given item, we
-can calculate the final rating as $0.7 \cdot 5 + 0.3 \cdot 3 = 4.4$. A weakness
-when linearly blending models in this way is the need for manually finding good
-weights for the $M$ factors. There exists methods where this given a good test
-set can be done automatically, such as using Linear Regression or KNN blending.
-Many other blending schemes exists as well, such as Binned Linear Regression,
-Bagged Gradient Boosted Decision Tree (BGBDT), Neural Networks and Kernel Ridge
-Regression Blending \cite{jahrer2010combining} \cite{toscher2009bigchaos}.
+Given two models, we can observe the result of performing a blend between with
+factors $f_1 = 0.7$ and $f_2 = 0.3$ and the two ratings $r_{11} = 5$ and
+$m_{21} = 3$ for a given item, we can calculate the final rating as $(0.7
+\times 5) + (0.3 \times 3) = 4.4$. The obvious weakness in this approach is the
+need for manually setting weights for $M$ different factors. Optimally we would
+like to run one blend, look at the result, compare it to previous results and
+make adjustments to the weights based these. This is what is done in simple
+blending schemes using Linear Regression or KNN, but many state-of-the-art
+schemes exists as well such as Binned Linear Regression, Bagged Gradient
+Boosted Decision Tree (BGBDT), Neural Networks and Kernel Ridge Regression
+Blending \cite{jahrer2010combining} \cite{toscher2009bigchaos} which are based
+on the same principles.
 
-As we have multiple proposed models we present our results given various
-evaluation metrics and combinations of weights. Note that when a model has the
-weight 1.0 its equal to that the model has not been blended with any other
-model, and is included in the table below as a baseline.
+However, as discussed in Section~\ref{}, when creating ratings from implicit
+feedback we lack a ground truth – that is we make several assumptions on which
+implicit features contribute towards higher preference and thus higher ratings,
+but with no real means of confirming the assumptions. A user buying an item as
+a gift for a friend may not actually like the item and would not give a high
+rating - and this, with a traditional collaborative filtering approach based on
+explicit feedback would be accounted for, looking at the user pattern of the
+user and labeling the purchase as an outlier. Without this ground truth however
+we can not without injecting negative feedback, based on assumptions, make
+classifications of outliers nor evaluate our implicit ratings in a reliable and
+quantiative fashion. Without a good evaluation metric and grund truth there
+does not exists a simple way of comparing different blends with eachothers
+neither, hence making it difficult to find custom weights for each method.
 
-\begin{table}[H]
+Instead, we return to our introductionary text where we notice some factors
+important to evaluating ratings: it needs to be evenly distributed, it should
+have an average confirming our hypthesis and the features selected should
+capture properties found in the domain both intutivly and quantitativly.  Then
+for $M$ different models we assume they all contribute an equal amount to the
+final results thus having the weights $f_i = 1/M$. By using this simple
+linear blending we can combine our methods looking at recentness and ordering
+using a linear penalization function
+(Figure~\ref{fig:dist-recentness-linear-global} and~\ref{fig:dist-count-linear}
+respectivly) with the ratings generated on the same features with a logistic
+penalization function (Figure~\ref{fig:dist-recentness-sigmoid}
+and~\ref{fig:dist-count-sigmoid}). This yields the following distribution of
+ratings with the average $3.30$ and median at $3.63$, where the distributions
+overlayed with the kernel density function, showing the trend of histogram:
+
+\begin{figure}[H]
   \centering
-  \begin{tabular}{lll|ll}
-    \toprule
-    \textbf{Naive} &  \textbf{Sigmoid Count} & \textbf{Sigmoid Recent} &
-    \textbf{RMSE} & \textbf{MAE} \\
-    \midrule
-    1.0  &      0.0        &      0.0       &  X   &  X  \\
-    0.0  &      1.0        &      0.0       &  X   &  X  \\
-    0.0  &      0.0        &      1.0       &  X   &  X  \\
-    \midrule
-    0.6  &      0.2        &      0.2       &  X   &  X  \\
-    0.5  &      0.3        &      0.2       &  X   &  X  \\
-    0.4  &      0.3        &      0.3       &  X   &  X  \\
-    0.3  &      0.3        &      0.4       &  X   &  X  \\
-    0.2  &      0.4        &      0.4       &  X   &  X  \\
-    0.1  &      0.4        &      0.5       &  X   &  X  \\
-    0.0  &      0.5        &      0.5       &  X   &  X  \\
-    \bottomrule
-  \end{tabular}
-\end{table}
+  \label{dist-blend}
+  \includegraphics[scale=0.5]{image/dist-blend}
+  \caption{Distribution using blend of ordering and number of days since event,
+  with logistic and linear penalization functions, overlayed with density
+  function}
+\end{figure}
 
-As one may see, the best results are achivied when blending with...
-\marginpar{todo: analyze and finish this table}
+Especially noticable in this distribution is that we've achieved a even
+distribution without too many fluxuations. In addition there is a rounded peak
+aroung the rating 4, which by looking at other public datasets such as in the
+Netflix Prize~\cite{Netflix} or Million Song Dataset~\cite{Bertin-Mahieux-2011}
+is a common peak found in explicit environments. Indeed, there is a small gap
+where the scores between our two events \textit{click} and \textit{want} are
+bordering, a result of our sigmoid functions having a ratio of $3.5$ which
+yields a gradual slope - hence when we have x-values close to $M_u$ and $0$ we
+approximate $1$ and $0$ respectivly, but we do not reach it exactly. This can
+be seen on Figure~\ref{fig:sigmoid-penalizations}

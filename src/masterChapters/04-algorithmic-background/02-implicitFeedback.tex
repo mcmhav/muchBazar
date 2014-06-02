@@ -509,12 +509,20 @@ multiplying with $k$:
   ImplicitRating(u,i) = \lceil k * RP(u,i) \rceil
 \end{equation}
 
-\marginpar{todo: Do not reference ahead in the thesis. Move equation about
-normalization here}
 Here we round up in order to range from 1 to 5, but one could either round down
 instead and have ratings range from 0 to 4 or one could use the normalization
-equation defined in Equation~\ref{eq-normalization}, and setting $a = 0$ and $b
-= 5$.
+equation where we based on minimal and maximal values in an interval $x_{min}$
+and $x_{max}$ shift all values to a new interval $a$ and $b$, keeping the
+ratios between items. Using this equation we can normalize any $x$ defined in
+the interval, that is $x_{min} \leq x \leq x_{max}$:
+
+\begin{equation}
+  \label{eq-normalization}
+  N(x, a, b, x_{min}, x_{max}) = a + \frac{(x-x_{min})(b-a)}{x_{max}-x_{min}}
+\end{equation}
+
+In order to normalize $ImplicitRating(u,i)$ we set $x_{min} = 0$ and $x_{max} =
+1$ and normalize to the new interval $a=1$ and $b=5$.
 
 \subsection{Challenges and weaknesses}
 \label{implicit-weaknesses}
