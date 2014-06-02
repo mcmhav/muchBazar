@@ -120,6 +120,8 @@ algorithms \cite{Su2009}.\linebreak[4]
 \end{figure}
 
 \subsubsection{Memory-based Methods}
+\marginpar{Change to Neighborhood models?}
+\marginpar{Make clearer distinction between user-based and item-based}
 
 Memory-based Collaborative Filtering methods utilize the entire user-item
 database to generate predictions~\cite{Lin1994}. More formally, the value of an unknown
@@ -135,7 +137,7 @@ prediction for $u(c,s)$.
 u(c,s) = k * \sum_{c' \epsilon C} sim(c, c') * u(c',s)
 \end{equation}
 
-Where k serves as a normalization factor, usually being $1/|C|$. Various
+where k serves as a normalization factor, usually being $1/|C|$. Various
 approaches have been used to compute the similarity $sim(c, c')$ between the
 users. Generally these approaches are based on the rating similarities for
 items both users have rated. The most popular similarity measure is The Pearson
@@ -151,8 +153,6 @@ sim(c, c') = \frac{\sum_{s \epsilon S_{cc'}} (u(c, s)-\bar{u_{c}})(u(c',s)-\bar{
 Where $u_{c}$ is the mean utility of user $c$. The Pearson Correlation
 Coefficient and other similarity measures such as cosine based approaches are
 more commonly known user-based collaborative filtering. This is often harder to scale because of the dynamic nature of users. \newline
-
-
 
 Item-based Top-N Recommendation methods calculates the similarity between items
 instead of users. In these approaches, the historical information is analyzed
@@ -200,7 +200,15 @@ calculate the similarities between each item of the set $C$ and the set
 $S_{c}$, using only the $k$ most similar items for each item in $S_{c}$. The
 resulting set of items in $C$ are sorted in descending order of similarity and
 will be the recommended as the item-based Top-N list \cite{Karypis2001}.
-Items usually do not change as much as users, so this often can be computed offline.
+Items usually do not change as much as users, so this can often be computed offline.
+Linden et al \cite{Linden2003} showed that item-based neighborhood methods also provide 
+another advantage over other methods, such as e.g. user-based neighborhood models:
+in many industrial systems, most of the recommendation is made by the contextual 
+recommendation to anonymous users, as on the Amazon's website \marginpar{Add footnote}. This 
+recommendation is called item-to-item recommendation, and generally includes the archetype 
+associated message "people who have seen / bought this item also viewed / purchased these items. 
+This recommendation is directly based on an item-item similarity matrix on click or 
+purchase logs.
 
 \subsubsection{Model-based Methods}
 \label{model-based-methods}
