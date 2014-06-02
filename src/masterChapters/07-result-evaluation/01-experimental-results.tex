@@ -158,12 +158,67 @@ NameID: BPRMF    mode: user &   0.7490  &   0.7408  &   0.7361  &   0.0018  &   
 \end{table}
 
 
+Explanation:
+\begin{table}
+    \centering
+    \resizebox{\columnwidth}{!}{%
+    \begin{tabular}{ll}
+    \toprule
+    Variable & Description \\
+    \midrule
+    AUC &  \\
+    MAP@20 & Mean average precision  \\
+    T\_c & Test  \\
+    T\_w &  \\
+    T\_p &  \\
+    P\_c &  \\
+    P\_w &  \\
+    P\_p &  \\
+    R\_c &  \\
+    R\_w &  \\
+    R\_p &  \\
+    MAP@20-click &  \\
+    MAP@20-want &  \\
+    MAP@20-purchase &  \\
+    \bottomrule
+    \end{tabular}
+    }
+    \caption{Testur}
+\end{table}
 
+\newcommand{\Testur}{
+\begin{table}\centering\resizebox{\columnwidth}{!}{\begin{tabular}{*{19}l}\toprule
+ & AUC &    MAP@20 &    T\_c &  T\_w &  T\_p &  P\_c &  P\_w &  P\_p &  R\_c &  R\_w &  R\_p &  MAP@20-click &  MAP@20-want &   MAP@20-purchase &    \\
+\midrule
+Recentness linear   &   0.708018 &  0.000291 &  10 &    16 &    2 & 1303 &  1196 &  129 &   0.007675 &  0.013378 &  0.015504 &  0.000124 &  0.000381 &  0 &  \\
+Count sigmoid   &   0.702347 &  0.000075 &  13 &    21 &    4 & 1345 &  1261 &  130 &   0.009665 &  0.016653 &  0.030769 &  0.00027 &   0.001134 &  0 &  \\
+Count linear    &   0.694703 &  0.000314 &  16 &    21 &    2 & 1284 &  1305 &  147 &   0.012461 &  0.016092 &  0.013605 &  0.000546 &  0.000021 &  0.000335 &   \\
+Recentness sigmoid  &   0.692772 &  0.000103 &  14 &    23 &    4 & 1300 &  1221 &  107 &   0.010769 &  0.018837 &  0.037383 &  0.000102 &  0.003407 &  0.004902 &   \\
+\bottomrule\end{tabular}}\caption{ItemKNN item recommender}\end{table}
+\begin{table}\centering\resizebox{\columnwidth}{!}{\begin{tabular}{*{19}l}\toprule
+ & AUC &    MAP@20 &    T\_c &  T\_w &  T\_p &  P\_c &  P\_w &  P\_p &  R\_c &  R\_w &  R\_p &  MAP@20-click &  MAP@20-want &   MAP@20-purchase &    \\
+\midrule
+Recentness sigmoid  &   0.756796 &  0.015995 &  66 &    44 &    3 & 1300 &  1221 &  107 &   0.050769 &  0.036036 &  0.028037 &  0.014403 &  0.014909 &  0.018178 &   \\
+Count sigmoid   &   0.754486 &  0.015576 &  71 &    41 &    3 & 1345 &  1261 &  130 &   0.052788 &  0.032514 &  0.023077 &  0.017042 &  0.012642 &  0.001716 &   \\
+Count linear    &   0.756416 &  0.008094 &  51 &    42 &    7 & 1284 &  1305 &  147 &   0.03972 &   0.032184 &  0.047619 &  0.007304 &  0.010585 &  0.020819 &   \\
+Recentness linear   &   0.766472 &  0.013502 &  69 &    32 &    2 & 1303 &  1196 &  129 &   0.052955 &  0.026756 &  0.015504 &  0.017174 &  0.006353 &  0.000484 &   \\
+\bottomrule\end{tabular}}\caption{MostPopular item recommender}\end{table}
+\begin{table}\centering\resizebox{\columnwidth}{!}{\begin{tabular}{*{19}l}\toprule
+ & AUC &    MAP@20 &    T\_c &  T\_w &  T\_p &  P\_c &  P\_w &  P\_p &  R\_c &  R\_w &  R\_p &  MAP@20-click &  MAP@20-want &   MAP@20-purchase &    \\
+\midrule
+Recentness linear   &   0.997048 &  0.013055 &  1245 &  1065 &  116 &   1303 &  1196 &  129 &   0.955487 &  0.890468 &  0.899225 &  0.007546 &  0.032439 &  0.00535 &    \\
+Count sigmoid   &   0.99811 &   0.002525 &  1275 &  1105 &  118 &   1345 &  1261 &  130 &   0.947955 &  0.876289 &  0.907692 &  0.001706 &  0.036871 &  0.000564 &   \\
+Count linear    &   0.995603 &  0.001434 &  1214 &  1150 &  134 &   1284 &  1305 &  147 &   0.945483 &  0.881226 &  0.911565 &  0.004061 &  0.002933 &  0.021142 &   \\
+Recentness sigmoid  &   0.997756 &  0.002663 &  1243 &  1058 &  93 &    1300 &  1221 &  107 &   0.956154 &  0.866503 &  0.869159 &  0.004267 &  0.009715 &  0.026991 &   \\
+\bottomrule\end{tabular}}\caption{ItemKNN None}\end{table}
+}
+
+\Testur
 
 \subsection{Does our proposed implicit rating methods improve the recommendation quality over binary preference data?}
 
 Does our findings support our hypothesis?
-	
+
 \subsection{Compare the different implicit rating functions}
 
 Does our findings support our hypothesis?
