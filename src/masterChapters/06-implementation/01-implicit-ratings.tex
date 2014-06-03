@@ -25,7 +25,7 @@ interactions.
 
 Then, upon evaluation of conversion features we can do an intitial analysis
 without any metrics by attempting to answer the question \textit{does this
-generalization capture the domain and data properties?} 
+generalization capture the domain and data properties?}
 One such generalization, often done, is counting the number of a specified
 activity on an item, correlating it with preference. In the case of SoBazaar
 we've seen that a higher number of clicks yields a higher probability of
@@ -55,28 +55,28 @@ the scenario where we do not consider social-graphs between users, and we have
 two users $u_1$ and $u_2$ who has the equal implicit feedback - e.g. they
 viewed the same items. If we only use global features, such as item popularity,
 we have no way of giving unique ratings to the two users. However, if we
-instead look at user-features such as \textit{when} did the users last look at
+instead look at user-features such as \textit{when} did the users last look at
 the items and \textit{in which order}, we have a higher probability of
 obtaining unique sets of ratings.
 
 When ratings are not explicit, the implicit ratings becomes the recommender
-systems equivelent of a ground truth and all later stages in the recommender
+systems equivalent of a ground truth and all later stages in the recommender
 pipeline (See Section~\ref{}) are dependent on the ratings representing a users
 preferences. This highlights the importance of generating high quality ratings
 and selecting good features and methods for doing so.
 
-\subsection{Linearily penalizing features}
+\subsection{Linearly penalizing features}
 
 In Section~\ref{implicit-binary-domains} Pranab Ghosh proposes a global rating
 mapping without any specific justification of why the different values are
 chosen~\cite{pkghost2014implicit}. In order to use this method we wanted our
 weighting of various events to be grounded in statistical properties found in
-the dataset. Further we would like to create ratings on a continious scale
+the dataset. Further we would like to create ratings on a continuous scale
 between a min and max-value for the given event, not manually define levels of
 scores. This way we could use a \textit{penalization function}, that based on
-our selected feature ensured an even distrubution between the mininmum and
+our selected feature ensured an even distribution between the minimum and
 maximum value for the event in question. For example giving an often clicked
-product for a user the maximum value and conversly the minimum value for
+product for a user the maximum value and conversely the minimum value for
 infrequent clicks.
 
 To select good weights we thus considered the probability of each event that we
@@ -102,7 +102,7 @@ score mapping looks like:
 Notice that the total number of events having a product id is 40686, and the
 sum of all three fractions is 1, thus covering 100\% of all events.
 
-How then do we distrubute the feature-values  between the min and max limits
+How then do we distribute the feature-values  between the min and max limits
 above? In our first implementation we use a \textit{linear} function, set in
 such a way that $0 \leq p(x) \leq 1$ and $0 \leq x \leq M_u$ where $M_u$ is the
 maximal observed value for user $u$ of the feature in question. Hence our
@@ -133,7 +133,7 @@ the table below. The ratings are normalized between 1 and 5 and the product IDs
 are there for illustrative purposes. We choose to look at the number of days
 since the user did the event in question as the implicit feature, where $x=0$
 means the event was registered today (or as the most recent) and in our example
-$x=14$ is the oldest event happening two weeks ago. 
+$x=14$ is the oldest event happening two weeks ago.
 
 \begin{table}[H]
   \centering
@@ -241,7 +241,7 @@ concurrently and we know that in domains such as technology, fashion and other
 consumer-products an item has an age of relevancy, somewhat metaphoric to a
 seasonal threshold. An example of this could be a fashion store recommending
 warm clothes in the months between December to March, but then want to "change"
-product pool based on the users behaviours – who are probably looking for
+product pool based on the users behaviours --- who are probably looking for
 lighter clothes (changing season).
 
 In order to mimic this behaviour we introduce a logistic function, which is a
@@ -427,7 +427,7 @@ When linearly blending $M$ models $m_1 \dots m_M$, we choose $M$ factors $f_i$
 all adding up to 1.0, representing the weight of model $m_{i}$ in the final
 blend. Eeach model then have $k$ ratings on the triplet form \textit{(user,
 product, rating)} and noted noted as $r_{ij}$ - the rating of item $j$ in model
-$i$. 
+$i$.
 
 Then when calculating the final rating for item $j$ we sum over all
 models:
@@ -450,7 +450,7 @@ Blending \cite{jahrer2010combining} \cite{toscher2009bigchaos} which are based
 on the same principles.
 
 However, as discussed in Section~\ref{}, when creating ratings from implicit
-feedback we lack a ground truth – that is we make several assumptions on which
+feedback we lack a ground truth --- that is we make several assumptions on which
 implicit features contribute towards higher preference and thus higher ratings,
 but with no real means of confirming the assumptions. A user buying an item as
 a gift for a friend may not actually like the item and would not give a high

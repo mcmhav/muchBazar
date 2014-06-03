@@ -129,7 +129,7 @@ implicit feedback, but more difficult to collect since it requires active user
 involvement. One serious implication of this is that the amount of feedback
 often is scarce since many users opt not to provide any feedback. Explicit
 feedback mechanisms allow the users to unequivocally express their ratings on a
-scale (usually in the form of a Likert scale (strongly disagree – strongly
+scale (usually in the form of a Likert scale (strongly disagree --- strongly
 agree). Thus explicit feedback is able to capture both negative and positive
 feedback, while implicit feedback \emph{only} can be positive. It is worth
 noting that explicit feedback tend to concentrate on either side of the rating
@@ -323,8 +323,8 @@ items.
 	\begin{tabular}{l l l}
 	\toprule
 					&	Relevant			&	Not Relevant \\ \midrule
-	Recommended		&	True-Positive (TP) 	&	False-Positive (FP)	\\ 
-	Not Recommended	&	False-Negative (FN)	&	True-Negative (TN)	\\ 
+	Recommended		&	True-Positive (TP) 	&	False-Positive (FP)	\\
+	Not Recommended	&	False-Negative (FN)	&	True-Negative (TN)	\\
 	\bottomrule
 	\end{tabular}
 	\label{table:usageprediction}
@@ -335,9 +335,9 @@ items.
 	\centering
 	\begin{tabular}{l l}
 		\toprule
-		True-Positive (TP)	& The recommended item is of interest to the user \\ 
-		False-Positive (FP)	& The recommended item is not of interest to the user \\ 
-		False-Negative (FN)	& The item is of interest to the user, but is not recommended \\ 
+		True-Positive (TP)	& The recommended item is of interest to the user \\
+		False-Positive (FP)	& The recommended item is not of interest to the user \\
+		False-Negative (FN)	& The item is of interest to the user, but is not recommended \\
 		True-Negative (TN)	& The item is not of interest to the user, but is not recommended \\
 		\bottomrule
 	\end{tabular}
@@ -872,33 +872,33 @@ CTR = \frac{Clicks}{Recommendations}
 
 
 \subsubsection{Multi-armed bandit experiments \cite{googlebandit}}
-	
+
 	A multi-armed bandit is a type of experiment where:
-	
+
 	\begin{itemize}
 	\item The goal is to find the best or most profitable action
 	\item The randomization distribution can be updated as the experiment progresses
 	\end{itemize}
-	
+
 	The "multi-armed bandit" described a hypothetical example where you face several slot machines ("one-armed bandits")
 	with potentially different payouts. You wish to find the slot machine with the best payout rate, but you also want to
 	maximize your winnings. The fundamental tension is between "exploiting" arms that have performed well in the past
-	and "exploring" new or seemingly inferior arms in case they might perform better. 
-	
+	and "exploring" new or seemingly inferior arms in case they might perform better.
+
 	In normal A/B testing, you will split the traffic equally between both systems, meaning that both get 50\% of the
 	traffic each, all the time. When using bandits you can continuously adjust the traffic each variation receives based on its
 	performance. Variations that appear to do well gets more traffic, and variations that clearly is underperforming
 	gets less. The adjustments are made based on a statistical test that considers both the sample size and performance
 	metrics together.
-	
+
 	\paragraph{Advantages}
-	
+
 	The main advantage of using multi-armed bandit experiments is that it usually performs better than A/B testing
 	when we look at average conversion rates, which in turn will decrease the cost of the experiment.
 	Saved testing time is another advantage highlighted in the Google article.
-		
+
 	\paragraph{Disadvantages}
-	
+
 	Statistical significance. Instead of sending equal traffic to each of the test pages, the page which performs
 	better will start to get more traffic. If you are running tests across pages which do not get huge amounts of
 	traffic, one variant can run away while the others are left in the dust without getting a fair chance. Of course,
