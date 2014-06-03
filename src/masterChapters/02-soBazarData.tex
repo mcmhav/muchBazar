@@ -106,6 +106,10 @@
             Unique storefronts  &    147~\tablefootnote{A storefront is a access point, with different clusterings of items. Stores can have multiple storefronts} \\
             Unique retailer brands  &    24 \\
             \hline
+            First event & Mon, 07 Oct 2013 10:59:57 GMT \\
+            Last event & Mon, 19 May 2014 22:51:19 GMT \\
+            Lifetime of data & 224 days \\
+            \hline
             Item clicks     &    25491 \\
             Item wants   &    13262 \\
             Item purchases   &    2020 \\
@@ -122,13 +126,14 @@
         \end{tabular}
     \end{table}
 
-    As seen from table~\ref{table:datasetSummary} the average amount of purchases are below one, which would
+    As seen from table~\ref{table:datasetSummary} the average amount of \emph{purchases} per user are below one. Using purchase information alone to make recommendations will therefore in most cases render the recommendations incomplete. If one or more users have more than one purchases, then some users will of course have none purchases. Making personalized recommendations for these users will then be unattainable.
+
+    \emph{Clicks} and \emph{wants} on the other hand have a much higher occurrence. These two events together with \emph{purchases} tops a count of 20 on average per user, and opens for the possibility of more dense personalized recommendations, but the data is still rather sparse.
+
+
 
 \section{Graphs}
     % Price range of items in stores
-    % user-item (how many items has a user "interacted" with)
-    % Count of unique items in item db also in event db
-    % Usable events regarding userid (events types with not null userid)
     % unique Stores count for users
     %     price span for user
     %         Timespann of sessions for users (avg, max, min)
@@ -143,6 +148,9 @@
     %         avg viewtime for an item (i know)
     %         Similarity of user favorite store, items viewed and items wanted?
     %         time of session over lifetime of app for all users (slope-style)
+    % user lifetimes
+    This section will look at the SoBazaar data through graphing and plotting.
+    It will start with the properties of the users seen in the data, then move over to the products and finally the time properties of the data.
 
 \subsection{User properties}
     \begin{figure}[H]
