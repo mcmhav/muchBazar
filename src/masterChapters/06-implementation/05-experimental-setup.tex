@@ -2,18 +2,23 @@
 
 \section{Experimental Setup}
 
-\subsection{Computer Specs}
+\subsection{Computer Specifications}
 
-%How badass is our computer?
-%RAM
-%Number of cores + clock speed
-
-\subsection{Requirements}
-
-%Are there any requirements we would like to meet?
-%	- Scalability
-%	- Recommendation Speed
+The experiments are run on a Ubuntu 14.04 LTS 64-bit
+machine with an Intel Core i7 920 CPU and 12GB of ram.
 
 \subsection{Parameter Settings}
 
 %Parameter settings for our fancy algorithms
+
+In k-NN item-item models, the number of neighbors 
+generally increases system performance (Bell et al., 2007a, 2007b). However, the quadratic 
+complexity of the search for k-NN, whether in time or space, is quadratic. So there's always a 
+tradeoff for an industrial system \cite{Deshpande2004, Cremonesi2010} to select a 
+reasonable value for K. Moreover, many recent studies are limited to a few tens of items for their 
+neighborhood model (Bell et al, 2007c) (Takacs et al., 2007). So we use a number of nearest 
+neighbors of K=200 for all tests, to have good security effectiveness. 
+
+
+
+Say something about that we wished we had more time...
