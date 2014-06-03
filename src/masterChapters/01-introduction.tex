@@ -155,12 +155,32 @@ feedback yields the following goals:
   \item G7: Establish user interaction patterns to support our assumptions.
   \item G8: Identify different methods of combining various event types into
   \emph{implicit ratings}.
-  \item G9: Evaluate the \emph{implicit ratings}.
+  \item G9: Find metrics in order to evaluate the \emph{implicit ratings}.
 \end{itemize}
 
-We would like to combine the solutions found through our work with the above
-mentioned goals and combine these in a proposal to a design for a fashion
-e-commerce recommender system.
+% Introduce limitations
+\paragraph{Limitiations} Our problem statement and consequent goals establish
+the main theme of this thesis, but simultaneously they introduce some
+limitiations. Hence, the reader should be familiar with what this thesis
+\textit{not is}.
+
+The main limitiation of this thesis are primarly linked to having only one
+available dataset with both sparse and modest data. As a result, making
+conclusions based user behaviour proved difficult due to lack of statistical
+significance on many observations. Limitiations in both time available and
+number of existing users with sufficient activity made is also impossible to
+conduct a thorough user study, which could confirm possible found user
+patterns. 
+
+In addition, as seen in the overview, external sources of information such as
+social networks and trust-based networks are not considered – as the dataset
+provided did not warrant this. As the products in the SoBazaar application are
+aggregated from multiple sources, and hence product databases, the quality of
+information are notably diverse. Consequently, since extracting basic content
+features different from product titles became close to impossible without large
+engineering efforts, the \textit{main focus} does not lie on hybrid recommender
+systems (combining content and user-based recommendations), although some work
+is done in this area.
 
 \section{System Overview}
 
@@ -230,27 +250,6 @@ ourselves non-dependent on explicit ratings can both provide us with a good
 set of recommendations and take us one step closer to true artificial
 intelligence, as we require no extra effort from the users – rather learning
 preferences from their behaviour.
-
-\paragraph{The limitiations} of this thesis are primarly linked to having
-only one available dataset with both sparse and modest data. As a result,
-making conclusions based user behaviour proved difficult due to lack of
-statistical significance on many observations. Limitiations in both time
-available and number of existing users with sufficient activity made is also
-impossible to conduct a thorough user study, which could confirm possible
-found user patterns. 
-
-In addition, as seen in the overview, external sources of information such as
-social networks and trust-based networks are not considered – as the dataset
-provided did not warrant this. As the products in the SoBazaar application
-are aggregated from multiple sources, and hence product databases, the
-quality of information are notably diverse. Consequently, since extracting
-basic content features different from product titles became close to
-impossible without large engineering efforts, the main focus does not lie on
-hybrid recommender systems (combining content and user-based
-recommendations), although some work is done in this area.
-
-% E.g. Due to data limitations we have excluded cold-start articles looking at
-% how demographic data can be incorporated to solve the cold-start user problem.
 
 \section{Outline}
 \begin{table}[H]
