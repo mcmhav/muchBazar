@@ -33,7 +33,8 @@
 \usepackage{amssymb}
 \usepackage{pifont}   % Can add check symbol
 \usepackage{tikz}
-\usetikzlibrary{calc,trees,positioning,arrows,chains,shapes.geometric,%
+\usepackage[utf8]{inputenc} % utf-8 for special names
+\usetikzlibrary{calc,trees,positioning,arrows,chains,fit,shapes.geometric,%
     decorations.pathreplacing,decorations.pathmorphing,shapes,%
     matrix,shapes.symbols}
 % \usepackage[utf8]{inputenc}
@@ -73,7 +74,7 @@
 \makeatother
 
 % Custom variables
-\def \thesistitle{Fashion recommendations using small implicit datasets}
+\def \thesistitle{Fashion recommendations using extremly sparse implicit datasets}
 \def \authorname{Thomas Almenningen, Martin Christian Havig and Herman Schistad}
 \def \supheri{Heri Ramampiaro}
 \def \suphelge{Helge Langseth}
@@ -168,13 +169,13 @@ support and ideas when initiating this project. Valuable input and help was
 provided by the Sobazar team and especially \textit{Markus Krüger} and
 \textit{Matias Holte} who we had a meaningful and interesting meeting with
 halfway through. Finally our thanks to \textit{Rana Juwel} who has assisted us
-with regards to content-based approaches for recommending based on the
+with possible content-based approaches for recommending based on the
 Sobazar-dataset.
 
-There are many to thank, but in summary we had the luxury of having multiple
-researchers and supervisors, not only interested in the project, but in helping
-us throughout these last months. We are grateful for all your support and
-contributions. Again, thank you.
+There are many people to thank, but in summary we had the luxury of having
+multiple researchers and supervisors, not only interested in the project, but
+in helping us throughout these last months. We are grateful for all your
+support and contributions. Again, thank you.
 
 \end{abstract}
 
@@ -191,16 +192,16 @@ music streaming, E-commerce, social networks and many other platforms –
 recommender systems have gained an important role in both a commercial and
 academic setting. When analyzing various approaches to \textit{how} an
 application generates recommendations, the prevalent technique is explicitly
-asking the users for a numeric rating for every item they consume and from
-these observed explicit ratings predict how the user would rate other items.
-However, this procedure often requires important changes to the application
-frontend and also an active effort from all users. In this thesis we instead
-look at how these ratings can be inferred from looking at session data and the
-transaction history for every user.
+asking the users for a numeric rating and from these observed \textit{explicit}
+values predict how the user would rate other items.  However, this procedure
+often requires important changes to the application frontend in addition to an
+active assessment effort from all users. In this thesis we instead look at how
+these ratings can be inferred from looking at session data and the transaction
+history for every user.
 
 We analyze which recommender models are suitable for such an untraditional data
 source, whilst accounting for a sparse dataset with few events – often called a
-cold start environment. Multiple novel ways of generating ratings are presented
+cold start environment. Multiple ways of generating ratings are presented
 taking into account recentness in the data as an important factor. This,
 combined with traditional recommender system approaches makes for a new and
 interesting way of making recommendations in small datasets with high sparsity.
