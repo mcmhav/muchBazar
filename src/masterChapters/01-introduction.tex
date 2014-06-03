@@ -102,142 +102,154 @@ deeper understanding of the domain.
 
 \section{Problem Statement and Goals}
 
-\marginpar{TODO: Overall problem statement}
-%Problem statement
-The primary aim of this thesis is to propose a design for a recommender system, that may be used in an
-e-commerce fashion application. The designed system should be able to generate recommendations based on
-user-interactions with the applications, and optionally use product information to improve the recommendation
-quality. In addition, the design should provide a solution to the problem of giving accurate recommendations
-to new users of the system.
+% Overall problem statement
+The primary aim of this thesis is proposing a system, producing personalized
+fashion recommendations based on user behaviour and product features, when both
+resources are extremely limited in both quality and volume.
 
-Recommender systems have been applied to a wide range of different domains including music, movies, e-commerce, news
-and many others. Since each application domain has its own specific needs, the methods used for recommendations differ.
-This leads us to our first research goals, which are the following:
+% Introduce goals related to domain
+In order to propose such a system, one need a exhaustive understanding of both
+the fashion domain and available data. In addition a study is required looking
+at existing solutions, competitors and idientify potential competitive
+advantages. Finally a discussion on how to overcome found challenges with
+respect to both understanding the implicit feedback and making recommendations
+is needed. Hence, our domain specific goals can be defined as:
 
+% Domain-specific goals
 \begin{itemize}
 	\item G1: Gain a better understanding of the fashion domain.
-  	\item G2: Identify the specific challenges of making fashion recommendations.
-  	\item G3: How can existing technologies be adapted to mitigate or overcome these challenges?
+  \item G2: Identify the specific challenges of making fashion recommendations.
+  \item G3: Study how existing technologies can be adapted to mitigate or
+  overcome these challenges.
 \end{itemize}
 
-Most recommender systems base their recommendations of previous feedback given by the user. A central problem for
-recommender systems is therefore the cold-start problem. How do you recommend items when you have little or no
-user feedback. SoBazaar is a \emph{brand new} application, and have therefore naturally recorded a limited amount
-of user-interactions. Poor recommendations can result in customer defection and loss of revenue for Telenor.
-The above reasoning lead us to the following goal, which is to:
+% Introduce goals related to cold-start
+In most recommender systems one base future recommendations on existing
+feedback already given by the user. An important however is what to recommend
+when no feedback has been given, which is the case for any new user. The same
+issue is apparent when a new item is added to the application, where we need a
+strategy for introducing it to users although the product is not connected to
+any existing feedback. Finally, the closely related problem of making
+recommendations in scenarios where feedback is extremely sparse need to be
+addressed. First impressions are important both for retention and customer
+satisfaction and consequently, seperate goals were set specifically concerning
+cold-start issues.
 
 \begin{itemize}
-  \item G4: Find the existing solutions to the cold-start problem presented in the recommender system literature
-  		and present the possible solution(s) best suited for our application and needs.
+  \item G4: Study existing solutions to the cold-start.
+  \item G5: Identify the best suited methods with regards to both application
+  feedback and domain.
 \end{itemize}
 
-We focus mainly on finding \emph{complete} solutions to the cold-start problem, that can handle both new users, new items
-and general sparsity related problems.
-
-As previously mentioned, recommender systems base their recommendations on feedback given by the user. SoBazaar records
-all the users interactions with the application, which then could be interpreted as user feedback given by users to items.
-We have multiple types of interactions such as e.g. browsing, wanting and purchasing items. We would like to figure out
-how these events could be used to learn the users true preferences. This lead us to the following goals:
-
-\marginpar{TODO: Assumptions and Constraints}
-%E.g. Due to data limitations we have excluded cold-start articles looking at how demographic data can be incorporated to solve the cold-start user problem.
+% Introduce goals related to implicit feedback
+There is no explicit way for users to \textit{rate} or give \textit{negative
+feedback} to items in SoBazaar. This forces us to look at user behaviour and
+more specifically interactions on items such as \textit{clicking},
+\textit{wanting} or \textit{purchasing}. We would like to learn how these
+events could be used to predict the users true preferences. Using implicit
+feedback yields the following goals:
 
 \begin{itemize}
- 	\item G5: Explore the existing solutions of how to infer user preference from implicit feedback data.
- 	\item G6: Establish user interaction patterns to support our assumptions.
-	\item G7: Find different methods of combining various event types into \emph{implicit ratings}?
-  	\item G8: Evaluate the \emph{implicit ratings}.
+  \item G6: Explore the existing solutions of how to infer user preference from
+  implicit feedback data.
+  \item G7: Establish user interaction patterns to support our assumptions.
+  \item G8: Identify different methods of combining various event types into
+  \emph{implicit ratings}.
+  \item G9: Find metrics in order to evaluate the \emph{implicit ratings}.
 \end{itemize}
 
-We would like to combine the solutions found through our work with the above mentioned goals and combine these in a
-proposal to a design for a fashion e-commerce recommender system.
+% Introduce limitations
+\paragraph{Limitiations} Our problem statement and consequent goals establish
+the main theme of this thesis, but simultaneously they introduce some
+limitiations. Hence, the reader should be familiar with what this thesis
+\textit{not is}.
+
+The main limitiation of this thesis are primarly linked to having only one
+available dataset with both sparse and modest data. As a result, making
+conclusions based user behaviour proved difficult due to lack of statistical
+significance on many observations. Limitiations in both time available and
+number of existing users with sufficient activity made is also impossible to
+conduct a thorough user study, which could confirm possible found user
+patterns.
+
+In addition, as seen in the overview, external sources of information such as
+social networks and trust-based networks are not considered – as the dataset
+provided did not warrant this. As the products in the SoBazaar application are
+aggregated from multiple sources, and hence product databases, the quality of
+information are notably diverse. Consequently, since extracting basic content
+features different from product titles became close to impossible without large
+engineering efforts, the \textit{main focus} does not lie on hybrid recommender
+systems (combining content and user-based recommendations), although some work
+is done in this area.
 
 \section{System Overview}
 
-  \marginpar{Include filterbots in a more detailed system overview?}
+\marginpar{Include filterbots in a more detailed system overview?}
 
-  This thesis proposes a system for making recommendations based on implicit
-  data, where the input is implicit feedback collected on a set of users and
-  items and the output is personalized recommendations to all users, proposing
-  new and relevant products to their preferences.
+This thesis proposes a system for making recommendations based on implicit
+data, where the input is implicit feedback collected on a set of users and
+items and the output is personalized recommendations to all users, proposing
+new and relevant products to their preferences.
 
-  \begin{figure}[H]
-    \centering
-    \begin{tikzpicture}
-      [node distance = 1cm, auto,font=\footnotesize,
-      % STYLES
-      every node/.style={node distance=1.5cm},
-      % The comment style is used to describe the characteristics of each process
-      comment/.style={rectangle, inner sep= 5pt, text width=4cm, node distance=0.25cm, font=\scriptsize\sffamily},
-      % The nonProcess style
-      nonProcess/.style={rectangle, draw, inner sep=5pt, text width=4cm, text badly centered, minimum height=1.2cm, font=\footnotesize\sffamily},
-      % The process style is used to draw the processs' name
-      process/.style={rectangle, draw, fill=black!10, inner sep=5pt, text width=4cm, text badly centered, minimum height=1.2cm, font=\bfseries\footnotesize\sffamily}]
+\begin{figure}[H]
+  \centering
+  \begin{tikzpicture}
+    [node distance = 1cm, auto,font=\footnotesize,
+    % STYLES
+    every node/.style={node distance=1.5cm},
+    % The comment style is used to describe the characteristics of each process
+    comment/.style={rectangle, inner sep= 5pt, text width=4cm, node distance=0.25cm, font=\scriptsize\sffamily},
+    % The nonProcess style
+    nonProcess/.style={rectangle, draw, inner sep=5pt, text width=4cm, text badly centered, minimum height=1.2cm, font=\footnotesize\sffamily},
+    % The process style is used to draw the processs' name
+    process/.style={rectangle, draw, fill=black!10, inner sep=5pt, text width=4cm, text badly centered, minimum height=1.2cm, font=\bfseries\footnotesize\sffamily}]
 
-      % Draw processs
-      \node [nonProcess] (inputData) {Input data based on implicit feedback (events)};
-      \node [process, below of=inputData] (implicitConverter) {Convert implicit feedback to implicit ratings};
-      \node [nonProcess, below of=implicitConverter] (ratings) {Ratings};
-      \node [process, below of=ratings] (recommendations) {Recommending};
+    % Draw processs
+    \node [nonProcess] (inputData) {Input data based on implicit feedback (events)};
+    \node [process, below of=inputData] (implicitConverter) {Convert implicit feedback to implicit ratings};
+    \node [nonProcess, below of=implicitConverter] (ratings) {Ratings};
+    \node [process, below of=ratings] (recommendations) {Recommending};
 
-      \node [comment, right=0.25 of inputData] (comment-inputData) {
-        Implicit Feedback (clicks, purhcases etc.) collected from the SoBazaar
-        analytics logs. Detailed description in Section~\ref{sec:sobazaar-data}
-      };
+    \node [comment, right=0.25 of inputData] (comment-inputData) {
+      Implicit Feedback (clicks, purhcases etc.) collected from the SoBazaar
+      analytics logs. Detailed description in Section~\ref{sec:sobazaar-data}
+    };
 
-      \node [comment, right=0.25 of implicitConverter] (comment-implicitConverter) {
-        Converts the inputed implicit feedback to implicit ratings based on
-        different conversion schemes. Detailed description in
-        Section~\ref{sec:implementation-implicit}
-      };
+    \node [comment, right=0.25 of implicitConverter] (comment-implicitConverter) {
+      Converts the inputed implicit feedback to implicit ratings based on
+      different conversion schemes. Detailed description in
+      Section~\ref{sec:implementation-implicit}
+    };
 
-      \node [comment, right=0.25 of ratings] (comment-ratings) {
-        Set of rating triplets, on the form \textit{user, product, rating}.
-      };
+    \node [comment, right=0.25 of ratings] (comment-ratings) {
+      Set of rating triplets, on the form \textit{user, product, rating}.
+    };
 
-      \node [comment, right=0.25 of recommendations] (comment-recommendations) {
-        Makes recommendations based on the inputed ratings. Different
-        approaches to make the recommendations can be take, such as matrix
-        factorization or neighborhood based approaches. Detailed description in
-        Section~\ref{sec:making-recommendations}
-      };
+    \node [comment, right=0.25 of recommendations] (comment-recommendations) {
+      Makes recommendations based on the inputed ratings. Different
+      approaches to make the recommendations can be take, such as matrix
+      factorization or neighborhood based approaches. Detailed description in
+      Section~\ref{sec:making-recommendations}
+    };
 
-      % Draw the links between processs
-      \path[->,thick]
-        (inputData) edge (implicitConverter)
-        (implicitConverter) edge (ratings)
-        (ratings) edge (recommendations);
+    % Draw the links between processs
+    \path[->,thick]
+      (inputData) edge (implicitConverter)
+      (implicitConverter) edge (ratings)
+      (ratings) edge (recommendations);
 
-    \end{tikzpicture}
-    \caption{Overview of the system. Boxes in white represents input and output
-    data. Boxes in gray represents processes}
-  \end{figure}
+  \end{tikzpicture}
+  \caption{Overview of the system. Boxes in white represents input and output
+  data. Boxes in gray represents processes}
+\end{figure}
 
-  Traditionally in most recommender systems this process does not include the
-  first two stages of our system, hence going directly from a set of explicitly
-  provided ratings to a set of recommendations. However, as we will see, making
-  ourselves non-dependent on explicit ratings can both provide us with a good
-  set of recommendations and take us one step closer to true artificial
-  intelligence, as we require no extra effort from the users --- rather learning
-  preferences from their behavior.
-
-  \paragraph{The limitations} of this thesis are primary linked to having
-  only one available dataset with both sparse and modest data. As a result,
-  making conclusions based user behavior proved difficult due to lack of
-  statistical significance on many observations. Limitations in both time
-  available and number of existing users with sufficient activity made is also
-  impossible to conduct a thorough user study, which could confirm possible
-  found user patterns.
-
-  In addition, as seen in the overview, external sources of information such as
-  social networks and trust-based networks are not considered --- as the dataset
-  provided did not warrant this. As the products in the SoBazaar application
-  are aggregated from multiple sources, and hence product databases, the
-  quality of information are notably diverse. Consequently, since extracting
-  basic content features different from product titles became close to
-  impossible without large engineering efforts, the main focus does not lie on
-  hybrid recommender systems (combining content and user-based
-  recommendations), although some work is done in this area.
+Traditionally in most recommender systems this process does not include the
+first two stages of our system, hence going directly from a set of explicitly
+provided ratings to a set of recommendations. However, as we will see, making
+ourselves non-dependent on explicit ratings can both provide us with a good
+set of recommendations and take us one step closer to true artificial
+intelligence, as we require no extra effort from the users --- rather learning
+preferences from their behavior.
 
 \section{Outline}
 \begin{table}[H]
