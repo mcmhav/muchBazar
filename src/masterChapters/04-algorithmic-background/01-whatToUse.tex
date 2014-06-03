@@ -52,6 +52,7 @@ product database and be assigned features. The following table shows an overview
 we were able to extract the different features for.
 
 \begin{table}[H]
+\label{table:extracted-content-features}
 	\centering
 	\begin{tabular}{l l}
 	\toprule
@@ -399,13 +400,13 @@ new users to connect to users that capture the general underlying trends of the 
 meant to improve performance when data is scarce and not to degrade performance when data is plentiful.
 
 Similarly as in \cite{Park2006} we decided to experiment with global bots. We have currently implemented the
-following bots: A \emph{BrandBot} which rates an item based on the brands average rating, an \emph{AverageBot}
-which rates an item based on their average rating given to it, a \emph{CriticBot} which selects $n$ critics
+following bots: A \emph{BrandBot} which rates an item based on the brands average rating, 
+multiple \emph{singleBrandBots} which gives all items of a given brand a top rating,
+an \emph{AverageBot} which rates an item based on their average rating given to it, a \emph{CriticBot} which selects $n$ critics
 among the most active users and rate items based on their average rating, a \emph{PopularityBot} which rates
-an item based on its popularity, more ratings equals a higher rating. A filterbot takes the training set as
-input and generates a set of ratings which are then added to the training set. Both the \emph{AverageBot} and
-\emph{BrandBot} can be seen to incorporate the implicit rating factors such as recency into the ratings generated.
-However, for the \emph{PopularityBot} and \emph{Critic} but we wish to implement additional functionality to ensure
+an item based on its popularity, more ratings equals a higher rating.
+
+A filterbot takes the training set as input and generates a set of ratings which are then added to the training set. Both the \emph{AverageBot} and \emph{BrandBot} can be seen to incorporate the implicit rating factors such as recency into the ratings generated. However, for the \emph{PopularityBot} and \emph{Critic} but we wish to implement additional functionality to ensure
 that the new users are connected with items that are relevant right now and not consider outdated items or users which
 are no longer active. Since we have access to timestamps we could e.g. make the \emph{PopularityBot} rate items based on
 their popularity the last couple of weeks instead of over the entire dataset period. Similarly, critics can be selected

@@ -229,7 +229,7 @@ feedback yields the following goals:
 \paragraph{Limitiations} Our problem statement and consequent goals establish
 the main theme of this thesis, but simultaneously they introduce some
 limitiations. Hence, the reader should be familiar with what this thesis
-\textit{not is}.
+\textit{does not set out to do}.
 
 % Small and sparse dataset
 The main limitiation of this thesis are primarly linked to having only one
@@ -250,6 +250,63 @@ features different from product titles became close to impossible without large
 engineering efforts, the \textit{main focus} does not lie on hybrid recommender
 systems (combining content and user-based recommendations), although some work
 is done in this area.
+
+\section{Application Overview}
+
+\begin{figure}[H]
+  \centering
+  \begin{tikzpicture}[
+    % Manually overriden in most of the nodes :-)
+    node distance=2.3cm,
+    block/.style={
+      rectangle,
+      draw,
+      thick,
+      inner sep=5pt,
+      align=center,
+      rounded corners,
+      minimum width=2cm,
+    },
+    % Special style for the social networks
+    social/.style={
+      draw=red,
+      densely dotted,
+    },
+    % Box surrounding the data sources.
+    dsbox/.style={
+      draw,
+      dotted,
+      minimum height=1.2cm,
+    }
+  ]
+
+  % Create nodes - first, data sources.
+  \node(db)     [block] {Product DB};
+  \node(social) [block,social, right of=db] {Social data};
+  \node(log)    [block,right of=social] {Event log};
+
+  % Our various 'systems'
+  \node(coldstart) [block, below = 3.5cm of db] { Cold-start\\booster };
+  \node(converter) [block, below = 3.5cm of log] { Implicit\\Converter };
+  \node(recommender) [block, below = 2cm of coldstart] { Recommender };
+  \node(evaluation) [block, right = 3.5cm of recommender] { Evaluation };
+
+  % Box around data sources.
+  \node (datasources) [dsbox, fit=(db) (social) (log)] {};
+  \node at (datasources.north) [above, inner sep=2mm] {Data sources};
+
+  % Draw the links between systems and data sources.
+  \path[->,thick]
+     (log) edge [] node [sloped, above] {Implicit feedback} (converter)
+     (db) edge [] node [sloped, above, text width=3cm, align=center] {Structured\\product data} (coldstart)
+     (converter) edge [] node [sloped, above] {Ratings} (coldstart)
+     (coldstart) edge [] node [sloped, above] {Ratings} (recommender)
+     (recommender) edge [] node [sloped, above] {Recommendations} (evaluation);
+    
+  \end{tikzpicture}
+  \caption{Application overview, showing input and output from different
+  components in the proposed system}
+\end{figure}
 
 \section{System Overview}
 

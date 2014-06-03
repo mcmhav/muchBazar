@@ -14,14 +14,79 @@
 
 \subsection*{Bad}
 
+%Writing a report is something that takes up the majority of the time
+
 
 \section{Result Evaluation}
+\label{sec:result-evaluation}
 
-\subsubsection{Testing of preliminary study}
 
-\subsubsection{Testing of code functionality}
 
-\subsubsection{Types of testing not used}
+
+\section{Discussion}
+
+In Chapter 1 we introduced a total of 8 goals for our Master's thesis:
+
+\begin{itemize}
+\item G1: Gain a better understanding of the fashion domain.
+\item G2: Identify the specific challenges of making fashion recommendations.
+\item G3: How can existing technologies be adapted to mitigate or overcome these challenges?
+\item G4: Find the existing solutions to the cold-start problem presented in the recommender system literature
+	      and present the possible solution(s) best suited for our application and needs.
+\item G5: Explore the existing solutions of how to infer user preference from implicit feedback data.
+\item G6: Establish user interaction patterns to support our assumptions.
+\item G7: Find different methods of combining various event types into implicit ratings.
+\item G8: Evaluate the implicit ratings.
+\end{itemize}
+
+In the following subsection we will reiterate these goals and discuss whether we have succeeded in reaching our goals. Readers should
+note that we already have performed a detailed analysis of the results of the work on goals G1 in Section \ref{sec:dataset-conclusion},
+G2 in Section \ref{}, G3 in Section \ref{}, G4 in Section \ref{sec:cold-start-discussion}, G5 in Section \ref{implicit-weaknesses},
+G6 in Section \ref{}, G7 in Section \ref{} and finally G8 in Section \ref{sec:result-evaluation}.
+The following discussion will therefore be fairly high-level, and avoid the \emph{nitty-gritty} details.
+
+\subsection{G1, G2 and G3: Solutions to the fashion domain related problems}
+\label{sec:fashion-discussion}
+
+Through thorough examination and analysis of the data and a literature review of fashion articles we came to the following main conclusions...
+
+%Important notes 
+
+\subsection{G4: The Cold-Start Problem}
+\label{sec:cold-start-discussion}
+
+Through our literature review, we closely examined five different classes of solutions to the cold-start problem. Namely trust-aware recommender system, filterbots, seed users, interview process and hybrid methods.
+
+However, a question that should be asked is whether there exists and solutions which we did not discover or was excluded from our review. An issue that could have influenced the results of our review is \emph{researchers bias}, which could have arisen of any of the researchers had preferences for one of the solution types before the literature search. The reason for including multiple methods that never were used was due to uncertainty regarding what data would become available during the project. Trust-aware recommender system and hybrid methods in particular could never be tested out due to a lack of social/demographic data, which we were hoping to get access to.
+
+
+
+After closely examining the different methods we concluded that both filterbots and content-boosted hybrid methods could provide a possible solution for
+our specific scenario...
+
+Demographic information could further improve its performance and usefulness. Agarwal et. al. \cite{Agarwal2009} used 13 filterbots in their experiments, where 11 out of 13 bots rated items based on demographic information.
+
+
+\subsection{G5, G6, G7: Implicit Ratings}
+\label{sec:implicit-discussion}
+
+Importance of implicit factors for the domain
+
+Another question that arises is: when does it become obsolete to look at clicks and wants?
+
+\subsection{Final Words}
+\marginpar{Move somewhere else?}
+
+%http://datacommunitydc.org/blog/2013/05/recommendation-engines-why-you-shouldnt-build-one/
+
+Recommender systems are arguably one of the trendiest uses of data science startups today. However, with the exception of very
+rare cases, it is not \emph{the killer} feature of your application which make users flock to you. The reason it works
+well for Amazon and Netflix is because they have \emph{millions} of titles and a large existing user base. Presenting users
+with recommended movies and products increase usage and sales, but does not create either to begin with.
+
+The more data the better. With little or no data you won't be able to make recommendations \emph{at all}. Unless you have the users, domain expertise, algorithm development skill, massive inventory and frictionless user data entry your recommender
+system will not be \emph{the milkshake that brings all the boys to the yard}. Instead the focus should be on building your core product, optimizing your e-commerce funnel, growing your user base, developing user loyalty and growing your inventory. In the meantime you can drive serendipitous recommendations simply by using a combination of most popular content and editors.
+
 
 
 \section{Issues}\label{sec:issues}

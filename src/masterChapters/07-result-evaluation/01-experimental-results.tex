@@ -4,9 +4,70 @@
 In this section we present the experimental results...
 
 
+
+\section{Binary Purchase Only Dataset}
+
+\begin{table}
+    \centering
+    \begin{tabular}{*{5}l}
+    \toprule
+    Model 			&	AUC			&	$MAP@20$ \\ \midrule
+    Most Popular	&	0.30314		&	0.00000	\\
+    ItemBasedKNN	&	0.52366		&	0.00000	\\
+    UserBasedKNN	&	0.52189		&	0.00000	\\
+    BPR-MF			&	0.34490		&	0.00000	\\
+    \bottomrule
+    \end{tabular}
+\caption[Experimental Results - Purchase Only Dataset]{Experimental Results for the purchase only dataset using random splits. The results are averaged over 5 runs}
+\end{table}
+
+
+\section{Binary Multiple Events Dataset}
+
+
+
+\begin{table}
+    \centering
+    \resizebox{\columnwidth}{!}{%
+    \begin{tabular}{*{15}l}
+    \toprule
+    Model 			&	AUC			&	$MAP@20$		&	$P_c$ 	& 	$P_w$ 	& 	$P_p$ 	& 	$A_c$ 	& 	$A_w$ 	& 	$A_p$ 	& 	$R_c	$	&	$R_w$		& 	$R_p$	& 	$MAP@_p$	& 	$MAP@_w$ & 	$MAP@_p$ \\ \midrule
+    Most Popular	&	0.00000		&	0.00000		&	0.00000	& 	0.00000	& 	0.00000	& 	0.00000	& 0.00000	& 0.00000	& 	0.00000	& 	0.00000	& 	0.00000 & 	0.00000	& 	0.00000	&   0.00000\\
+    %ItemBasedKNN	&	
+    %UserBasedKNN	&	
+    %BPR-MF			&	
+    \bottomrule
+    \end{tabular}
+    }
+\caption{Experimental Results - Purchase Only Dataset}
+\end{table}
+
+
+
+
 \subsection{The SoBazaar Dataset (Implicit Ratings)}
 
 This subsection will present the experimental results for the SoBazaar dataset using implicit ratings.
+
+
+\begin{table}
+    \centering
+    \resizebox{\columnwidth}{!}{%
+    \begin{tabular}{*{15}l}
+    \toprule
+    Model 			&	AUC			&	$MAP@20$		&	$P_c$ 	& 	$P_w$ 	& 	$P_p$ 	& 	$A_c$ 	& 	$A_w$ 	& 	$A_p$ 	& 	$R_c	$	&	$R_w$		& 	$R_p$	& 	$MAP@_p$	& 	$MAP@_w$ & 	$MAP@_p$ \\ \midrule
+    Most Popular	&	0.00000		&	0.00000		&	0.00000	& 	0.00000	& 	0.00000	& 	0.00000	& 0.00000	& 0.00000	& 	0.00000	& 	0.00000	& 	0.00000 & 	0.00000	& 	0.00000	&   0.00000 \\
+    %ItemBasedKNN	&	
+   % UserBasedKNN	&	
+   % ALS-WR			&	
+    \bottomrule
+    \end{tabular}
+    }
+\caption{Experimental Results - Linear Count}
+\end{table}
+
+
+
 
 \begin{table}
     \centering

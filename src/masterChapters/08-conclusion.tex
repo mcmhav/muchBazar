@@ -4,29 +4,55 @@
 \label{chap:conclusion}
 \minitoc
 
-In this thesis we have first...
+In this thesis we have first presented our analysis of the Sobazaar dataset, a highly sparse dataset comprising
+multiple event types which could be considered as implicit feedback. Our main findings (what?) from the data analysis
+lead us to do a state-of-the art review of cold-start solutions, the fashion domain and methods for converting
+implicit feedback into implicit ratings.
 
-Presented the SoBazaar application and the sobazar dataset.
+Our state-of-the-art and related work section focused in particular on the cold-start problem where we evaluated the
+different solution types with respect to initial quality of service or cold-start performance and user-effort required before the system can provide high quality recommendations.
+As a part of the literature review, the solution types were also evaluated in the context of a recommender
+system applied to the fashion domain.
 
-State of the art
+%We found that an interview process in the form of a simple hot or not interface
+%could be a great solution to the cold-start problem by making it \emph{fun} for users to provide both positive
+%and negative feedback, increasing both the quality and amount of user feedback available.
+
+
+
+The key findings from the review of the fashion domain ... are important factors to consider when designing a
+recommender system for the fashion domain.
+
+
+and how implicit feedback could be mapped into \emph{implicit ratings}.
+
+The key findings from the literature review and data analysis were then utilized when we presented our
+design for different implicit rating mapping functions and how these could be combined.
+
+
+The proposed implicit rating functions was implemented and tested against recommender systems utilizing binary
+preferences only. Our findings indicate that...
+
+
+
+
+
 
 
 \clearpage
 
-\section{Final Product}
 
-
-\section{Related Work}
 
 
 \section{Future Work}
 
 
 
+
 As previously mentioned in \ref{sec:experimental-plan} sec the main reasons for implementing a recommender
 system is the desire to improve user satisfaction and to increase the economic success of a platform.
 We believe it would be interesting to look into how one could implement a reward attribute for the
-items, that factors in how much Telenor will profit from its sale.
+items, that factors in how much the retailer will profit from its sale.
 
 \begin{equation}
 ExpectedReturn_i = P(Sale_i) * Reward(i)
@@ -55,23 +81,40 @@ and higher quality data.
 \item Negative feedback in the form of a dislike button or similar.
 \end{itemize}
 
+Adding data entry amounts by adding a step to your funnel could hurt sales more than it helps. One should
+therefore carefully consider adding features the require user effort. If a \emph{hot or not} interface is to be implemented
+one should preferably conduct a study to find the best strategy of selecting items to display to the users.
+
+Especially better quality and structure of the data. Table \ref{table:extracted-content-features} shows an overview of
+the percentage of items we managed to extract the different attributes for. Attributes such as category, color, brand-name ...
+are particulary useful and should be easily extracted from the product database for most products.
+
 %Recommender systems for anonymous users - Context
 	%Recommend other items with a high similarity to the item currently being viewed
 
 Contextual item-to-item recommendations should be considered implemented to display related
-items to anonymous users instead of the current system which recommends "People how love this also love".
+items to anonymous users in the context of viewing an item instead of the current system which
+recommends "People how love this also love".
 
 
-%Demographic filtering as a solution to the cold-start user problem?
 
-%Finding and incorporating more implicit factors
 
-%Personalization of rating generators
-%	 I guess the min and max scores can be estimated for each users if we have enough data.
-% 	 Then we can personalize the scores and provide personalized recommendations.
-%Personalized implicit factors -> Connection to SVD and true big-data methods
-%which basicly boils every user and item down to a set of factors and utility
-%values for these factors.
+Finding and incorporating more implicit factors should also be considered as a possible future direction.
+
+Do trends repeat year after year?
+
+Personalization of the impact of different implicit factors could be interesting to look at.
+Implicit factors such as brand preference, importance of global popularity, weight given
+to the different event types and so on could all be personalized for each user.
+However, we feel it is important to mention the connection to matrix factorization methods
+aka SVD which \emph{basicly} does the same thing automatically. It reduced the rating matrix
+to a set of item and users factors for each individual item and user and a set of utility values
+for these factors.
+
+
+Other implicit factors such as brand preference, ... could all be implemented to
+
+
 
 As shown in \cite{FranceTelecom} most successful commercial recommender incorporate multiple
 sources of information. The following information sources should therefore be examined more
@@ -87,7 +130,7 @@ closely to assess if they can add any value to the system:
 \marginpar{Short discussion on the above mentioned information sources and how they can help. BE EXPLICIT!}
 %Importance of brand
 %Importance of social groups - fashion
-
+%Demographic filtering as a solution to the cold-start user problem?
 
 
 This thesis have only on a small part of the possibilities. There is much work to be done. %%% THE END %%%
