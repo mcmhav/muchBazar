@@ -164,90 +164,90 @@ e-commerce recommender system.
 
 \section{System Overview}
 
-  \marginpar{Include filterbots in a more detailed system overview?}
-  
-  This thesis proposes a system for making recommendations based on implicit
-  data, where the input is implicit feedback collected on a set of users and
-  items and the output is personalized recommendations to all users, proposing
-  new and relevant products to their preferences.
- 
-  \begin{figure}[H]
-    \centering
-    \begin{tikzpicture}
-      [node distance = 1cm, auto,font=\footnotesize,
-      % STYLES
-      every node/.style={node distance=1.5cm},
-      % The comment style is used to describe the characteristics of each process
-      comment/.style={rectangle, inner sep= 5pt, text width=4cm, node distance=0.25cm, font=\scriptsize\sffamily},
-      % The nonProcess style
-      nonProcess/.style={rectangle, draw, inner sep=5pt, text width=4cm, text badly centered, minimum height=1.2cm, font=\footnotesize\sffamily},
-      % The process style is used to draw the processs' name
-      process/.style={rectangle, draw, fill=black!10, inner sep=5pt, text width=4cm, text badly centered, minimum height=1.2cm, font=\bfseries\footnotesize\sffamily}]
+\marginpar{Include filterbots in a more detailed system overview?}
 
-      % Draw processs
-      \node [nonProcess] (inputData) {Input data based on implicit feedback (events)};
-      \node [process, below of=inputData] (implicitConverter) {Convert implicit feedback to implicit ratings};
-      \node [nonProcess, below of=implicitConverter] (ratings) {Ratings};
-      \node [process, below of=ratings] (recommendations) {Recommending};
+This thesis proposes a system for making recommendations based on implicit
+data, where the input is implicit feedback collected on a set of users and
+items and the output is personalized recommendations to all users, proposing
+new and relevant products to their preferences.
 
-      \node [comment, right=0.25 of inputData] (comment-inputData) {
-        Implicit Feedback (clicks, purhcases etc.) collected from the SoBazaar
-        analytics logs. Detailed description in Section~\ref{sec:sobazaar-data}
-      };
+\begin{figure}[H]
+  \centering
+  \begin{tikzpicture}
+    [node distance = 1cm, auto,font=\footnotesize,
+    % STYLES
+    every node/.style={node distance=1.5cm},
+    % The comment style is used to describe the characteristics of each process
+    comment/.style={rectangle, inner sep= 5pt, text width=4cm, node distance=0.25cm, font=\scriptsize\sffamily},
+    % The nonProcess style
+    nonProcess/.style={rectangle, draw, inner sep=5pt, text width=4cm, text badly centered, minimum height=1.2cm, font=\footnotesize\sffamily},
+    % The process style is used to draw the processs' name
+    process/.style={rectangle, draw, fill=black!10, inner sep=5pt, text width=4cm, text badly centered, minimum height=1.2cm, font=\bfseries\footnotesize\sffamily}]
 
-      \node [comment, right=0.25 of implicitConverter] (comment-implicitConverter) {
-        Converts the inputed implicit feedback to implicit ratings based on
-        different conversion schemes. Detailed description in
-        Section~\ref{sec:implementation-implicit}
-      };
+    % Draw processs
+    \node [nonProcess] (inputData) {Input data based on implicit feedback (events)};
+    \node [process, below of=inputData] (implicitConverter) {Convert implicit feedback to implicit ratings};
+    \node [nonProcess, below of=implicitConverter] (ratings) {Ratings};
+    \node [process, below of=ratings] (recommendations) {Recommending};
 
-      \node [comment, right=0.25 of ratings] (comment-ratings) {
-        Set of rating triplets, on the form \textit{user, product, rating}.
-      };
+    \node [comment, right=0.25 of inputData] (comment-inputData) {
+      Implicit Feedback (clicks, purhcases etc.) collected from the SoBazaar
+      analytics logs. Detailed description in Section~\ref{sec:sobazaar-data}
+    };
 
-      \node [comment, right=0.25 of recommendations] (comment-recommendations) {
-        Makes recommendations based on the inputed ratings. Different
-        approaches to make the recommendations can be take, such as matrix
-        factorization or neighborhood based approaches. Detailed description in
-        Section~\ref{sec:making-recommendations}
-      };
+    \node [comment, right=0.25 of implicitConverter] (comment-implicitConverter) {
+      Converts the inputed implicit feedback to implicit ratings based on
+      different conversion schemes. Detailed description in
+      Section~\ref{sec:implementation-implicit}
+    };
 
-      % Draw the links between processs
-      \path[->,thick]
-        (inputData) edge (implicitConverter)
-        (implicitConverter) edge (ratings)
-        (ratings) edge (recommendations);
+    \node [comment, right=0.25 of ratings] (comment-ratings) {
+      Set of rating triplets, on the form \textit{user, product, rating}.
+    };
 
-    \end{tikzpicture}
-    \caption{Overview of the system. Boxes in white represents input and output
-    data. Boxes in gray represents processes}
-  \end{figure}
+    \node [comment, right=0.25 of recommendations] (comment-recommendations) {
+      Makes recommendations based on the inputed ratings. Different
+      approaches to make the recommendations can be take, such as matrix
+      factorization or neighborhood based approaches. Detailed description in
+      Section~\ref{sec:making-recommendations}
+    };
 
-  Traditionally in most recommender systems this process does not include the
-  first two stages of our system, hence going directly from a set of explicitly
-  provided ratings to a set of recommendations. However, as we will see, making
-  ourselves non-dependent on explicit ratings can both provide us with a good
-  set of recommendations and take us one step closer to true artificial
-  intelligence, as we require no extra effort from the users – rather learning
-  preferences from their behaviour.
+    % Draw the links between processs
+    \path[->,thick]
+      (inputData) edge (implicitConverter)
+      (implicitConverter) edge (ratings)
+      (ratings) edge (recommendations);
 
-  \paragraph{The limitiations} of this thesis are primarly linked to having
-  only one available dataset with both sparse and modest data. As a result,
-  making conclusions based user behaviour proved difficult due to lack of
-  statistical significance on many observations. Limitiations in both time
-  available and number of existing users with sufficient activity made is also
-  impossible to conduct a thorough user study, which could confirm possible
-  found user patterns. 
+  \end{tikzpicture}
+  \caption{Overview of the system. Boxes in white represents input and output
+  data. Boxes in gray represents processes}
+\end{figure}
 
-  In addition, as seen in the overview, external sources of information such as
-  social networks and trust-based networks are not considered – as the dataset
-  provided did not warrant this. As the products in the SoBazaar application
-  are aggregated from multiple sources, and hence product databases, the
-  quality of information are notably diverse. Consequently, since extracting
-  basic content features different from product titles became close to
-  impossible without large engineering efforts, the main focus does not lie on
-  hybrid recommender systems (combining content and user-based
-  recommendations), although some work is done in this area.
+Traditionally in most recommender systems this process does not include the
+first two stages of our system, hence going directly from a set of explicitly
+provided ratings to a set of recommendations. However, as we will see, making
+ourselves non-dependent on explicit ratings can both provide us with a good
+set of recommendations and take us one step closer to true artificial
+intelligence, as we require no extra effort from the users – rather learning
+preferences from their behaviour.
+
+\paragraph{The limitiations} of this thesis are primarly linked to having
+only one available dataset with both sparse and modest data. As a result,
+making conclusions based user behaviour proved difficult due to lack of
+statistical significance on many observations. Limitiations in both time
+available and number of existing users with sufficient activity made is also
+impossible to conduct a thorough user study, which could confirm possible
+found user patterns. 
+
+In addition, as seen in the overview, external sources of information such as
+social networks and trust-based networks are not considered – as the dataset
+provided did not warrant this. As the products in the SoBazaar application
+are aggregated from multiple sources, and hence product databases, the
+quality of information are notably diverse. Consequently, since extracting
+basic content features different from product titles became close to
+impossible without large engineering efforts, the main focus does not lie on
+hybrid recommender systems (combining content and user-based
+recommendations), although some work is done in this area.
 
 % E.g. Due to data limitations we have excluded cold-start articles looking at
 % how demographic data can be incorporated to solve the cold-start user problem.
