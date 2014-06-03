@@ -7,6 +7,61 @@
 \pagenumbering{arabic}
 \clearpage
 
+\newcommand{\ecommercenorway}[0]{
+  \begin{figure}[H]
+    \centering
+    \begin{tikzpicture}
+      \begin{axis}[
+        xlabel={Year},
+        ylabel={Percentage},
+        legend style={cells={anchor=east}, legend pos=outer north east,},
+        xtick=data,
+        x tick label style={rotate=45, anchor=east, /pgf/number format/1000 sep=},
+        mark size=1.0pt,
+        grid=major,
+        grid style={dashed},
+      ]
+      \legend{Both sexes, Men, Women}
+      \addplot coordinates {
+        (2005, 0)
+        (2006, 20)
+        (2007, 20)
+        (2008, 22)
+        (2009, 25)
+        (2010, 32)
+        (2011, 31)
+        (2012, 33)
+        (2013, 36)
+      };
+      \addplot coordinates {
+        (2005, 0)
+        (2006, 16)
+        (2007, 18)
+        (2008, 20)
+        (2009, 23)
+        (2010, 30)
+        (2011, 30)
+        (2012, 29)
+        (2013, 30)
+      };
+      \addplot coordinates {
+        (2005, 0)
+        (2006, 24)
+        (2007, 23)
+        (2008, 23)
+        (2009, 27)
+        (2010, 34)
+        (2011, 31)
+        (2012, 37)
+        (2013, 42)
+      };
+      \end{axis}
+    \end{tikzpicture}
+    \label{fig:ecommerce-in-norway}
+    \caption{E-commerce purchases in Norway since 2005}
+  \end{figure}
+}
+
 \section{Motivation}
 \label{sec:motivation}
 
@@ -34,8 +89,8 @@ Recommender systems improve loyalty by creating a value added relationship
 between the site and the customer.
 
 % What is the app and what makes it unique?
-SoBazaar is a new fashion e-commerce application for web and hand held devices
-developed by Telenor, Norway's largest Telco company. The application
+SoBazaar is a new \textit{fashion e-commerce application} for web and hand held
+devices developed by Telenor, Norway's largest Telco company. The application
 aggregates fashion products from various brands and stores into one \emph{news
 feed} with recommended products, enabling the user to shop clothes and
 accessories effortlessly and without the need of registering an account on
@@ -45,6 +100,18 @@ before launching the application this upcoming summer (\the\year) is to improve
 these ratings making them personalized and grounded in a larger array of
 features. This has as noted the potential of improving sales, activity and user
 satisfaction.
+
+% Discuss potential in fashion and e-commerce sales.
+\ecommercenorway{}
+
+The growth potential of such an application is immense in Norway. Numbers from
+Statistics Norway~\cite{statisticsNorway} which are presented in the above
+figure, shows a steady increase in the number of e-commerce sales of about 8\%
+per year, from 2005. Still the competition, especially within personalized
+recommendations, is insubstatial at both a national and international level, as
+we will see in a detailed comptetitor analysis in
+Section~\ref{subsec:competitors}. This underlines the importance of both the
+discoveries made in this thesis and the application itself.
 
 % Limited amount of data -> we need to utilize other sources. Implicit!
 As the application is not yet officially released there is a limited amount of
@@ -164,6 +231,7 @@ the main theme of this thesis, but simultaneously they introduce some
 limitiations. Hence, the reader should be familiar with what this thesis
 \textit{not is}.
 
+% Small and sparse dataset
 The main limitiation of this thesis are primarly linked to having only one
 available dataset with both sparse and modest data. As a result, making
 conclusions based user behaviour proved difficult due to lack of statistical
@@ -172,6 +240,7 @@ number of existing users with sufficient activity made is also impossible to
 conduct a thorough user study, which could confirm possible found user
 patterns.
 
+% No external sources of information (or weak quality)
 In addition, as seen in the overview, external sources of information such as
 social networks and trust-based networks are not considered – as the dataset
 provided did not warrant this. As the products in the SoBazaar application are
