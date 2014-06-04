@@ -7,7 +7,7 @@
 \label{sec:implicit}
 
 In this section several \textit{existing} methods will be presented, all
-solving the following problem: 
+solving the following problem:
 
 \vspace{5 mm}
 
@@ -50,7 +50,7 @@ customers. One of the most popular recommender sites in the world, Netflix, ask
 their users to rate items after consumation. However, this process does not
 \textit{cost} anything for the user, and the possibility to rate is included in
 the monthly subscription price, whilst in a webstore rating an item often
-require the user to first buy it, consume it and finally rate it. 
+require the user to first buy it, consume it and finally rate it.
 
 Implicit feedback on the other hand utilizes, often already collected,
 analytics data and hence does not require any extra effort neither for the user
@@ -61,7 +61,7 @@ is less sparse than rating datasets.
 It is important to understand that there are several fundemental differences
 between implicit and explicit ratings, in everything from \textit{meaning} to
 \textit{evaluation techniques}. Partly inspired by Hu et al.~\cite{Hu2008}, we
-can identify the following key charecterstics and differences between them: 
+can identify the following key charecterstics and differences between them:
 
 \textbf{Explicit ratings:}
 \begin{itemize}
@@ -220,7 +220,7 @@ have the following events to choose from:
 \end{table}
 
 Then, our heuristic would count the frequency of each event for an item $i$ on
-user $u$. However, just counting is not a bounded function – so if one give
+user $u$. However, just counting is not a bounded function --- so if one give
 \textit{Item browsed} the weight of $1$ and the \textit{Item purchased} event
 a weight of $100$, then a user browsing an item more than 100 times would get a
 higher implicit rating than a user buying it.
@@ -262,7 +262,7 @@ by table~\ref{implicit-table}:
 
 The advantage of this heuristic is that it requires no training, it is simple
 to understand and works reasonably well, if weights are chosen correctly.
-The latter is also its largest weakness – as finding these weights may be
+The latter is also its largest weakness --- as finding these weights may be
 difficult. If one had explicit feedback, as well as the implicit, one could
 train a model automatically choosing weights. Further, when using the scores
 defined as above we only use a small percentage of the scale 0-100. This leads

@@ -1,16 +1,17 @@
 % !TEX root = ../report.tex
 
 \chapter{The SoBazaar Data}
+\label{chap:thesobazaardata}
 \minitoc
 
-    This sections will introduce the SoBazaar application and explore the SoBazaar data set.
-    This includes how the data was preprocessed, a summary of the dataset, statistics and graphs about the data and findings from the data.
+    This sections will introduce the SoBazaar application and explore the data set used.
+    This includes how the data was preprocessed, an overview of the dataset, statistics and graphs, findings from the data and finally a summary.
 
 	\section{The SoBazaar Application}\mbox{}\\
   \label{sec:sobazaar-data}
 
 	\begin{chapquote}[30pt]{About SoBazaar}
-	  "SOBAZAAR is a newly developed social shopping experience – a daily fashion bazaar on your mobile."
+	  "SOBAZAAR is a newly developed social shopping experience --- a daily fashion bazaar on your mobile."
 	\end{chapquote}
 
 	SoBazaar is an online marketplace for fashion, but with a social twist. You can find stores like Moods of Norway, BIK BOK, Bianco and many more, which all have their own storefront in the application. The application lets you click through thousands of products. If you find something you like you can purchase it directly from the application or store it for later with the \emph{heart it} function. The following screenshots are taken from the application and highlights some functionality currently found in the application. On the far left you see an item from the \emph{homepage} or newsfeed. The newsfeed currently shows what other users have liked, notifies the user about sales and new products and recommends the most popular products.
@@ -74,32 +75,35 @@
 	The application is currently in a beta phase and is planned for a final release after the summer.
 
 \section{Preprocessing}
-    The data from SoBazaar came as is from the SoBazaar database, with the exception that the data had been anonymised for privacy reasons.
-    It therefore contained some unwanted events, such as automated queries producing unnatural spikes of events on items and events with missing fields.
-    The data was therefore cleaned by removing events containing test environment flags such as: test environment and applications run from simulator.
-    What was left after the cleaning data was mainly events triggered by the users, and not created during applications testing.
+    \label{sec:preprocessing}
+    The data from SoBazaar has been been anonymised for privacy reasons.
+    In addition to anonymization the data was cleaned by removing events containing test environment flags and applications run from simulator.
+    What was left after the cleaning data was mainly events triggered by the users in production environment, and not created during applications testing.
 
-\section{Dataset Summary}
-    The data from SoBazaar is gathered based on the actions of the users in the application.
-    When a user accesses a store or an item, the information regarding the user and the item is stored, this is often known as implicit feedback~\ref{sec:implicit}.
-    Events such as purchasing an item and "wanting" and item is stored in the same manner, but can in many cases be considered as explicit feedback.
+    As part of the preprocessing, an extra field was added to the data, a session field.
+    This field was added to help understand how users use the application, and to be able to see use patterns.
+
+\section{Dataset Overview}
+    The data from SoBazaar is gathered based on the actions of the users using the application.
+    Actions done by the users are called events, such as accessing a store, scrolling a page or purchasing a product.
 
     When an event is triggered a set of information is stored regarding the event.
-    This data is used to make recommendations for the users though converting the implicit feedback to implicit ratings.
+    This data is used to make recommendations for the users though converting the implicit feedback to implicit ratings as we will see in later chapters.
 
     \begin{table}[H]
         \centering
         \begin{tabular}{l l}
             \toprule
-            Variable     & Explanation   \\ \midrule
-            price             & The price of the item which triggered the event \\
+            Variable     & Explanation   \\
+            \midrule
             product\_id       & The id of the item which triggered the event \\
-            storefront\_id    & The store id from which the item originated \\
+            user\_id          & The unique id of the user who triggered the event \\
             event\_id         & What kind of event was triggered~\tablefootnote{Complete list of the different types of events can be found in table~\ref{table:events}} \\
+            price             & The price of the item which triggered the event \\
+            storefront\_id    & The store id from which the item originated \\
             event\_location   & The location of the user when the event was triggered \\
             ts                & Unix timestamp in milliseconds of when the event was triggered \\
-            session           & Which session number the event belongs too~\tablefootnote{This value is added at a later time. For two events to end up in the same session, the event has to be triggered within a certain period of time, and both be after the same application started-flag} \\
-            user\_id          & The unique id of the user who triggered the event \\
+            session           & Which session number the event belongs to~\tablefootnote{This is the value added in the preprocessing phase~\ref{sec:preprocessing}. For two events to end up in the same session, the event has to be triggered within a certain period of time, and both be after the same application started-flag} \\
             \bottomrule
         \end{tabular}
         \label{table:eventData}
@@ -110,30 +114,42 @@
         \centering
         \begin{tabular}{l l}
             \toprule
-            Attribute       & Count   \\ \midrule
+            Attribute       & Count   \\
+            \midrule
             Total number of events  &    218975 \\
             Unique users ids    &    2021 \\
             Unique item ids     &    6092 \\
-            Unique storefronts  &    147 \\
-            Unique brands   &    24 \\
+            Unique storefronts  &    147~\tablefootnote{A storefront is a access point, with different clusterings of items. Stores can have multiple storefronts} \\
+            Unique retailer brands  &    24 \\
+            \hline
+            First event & Mon, 07 Oct 2013 10:59:57 GMT \\
+            Last event & Mon, 19 May 2014 22:51:19 GMT \\
+            Lifetime of data & 224 days \\
+            \hline
             Item clicks     &    25491 \\
             Item wants   &    13262 \\
             Item purchases   &    2020 \\
+            \hline
             Average item click count per user   &    12.6130 \\
-            Average purchase count per user     &    6.5620 \\
-            Average rating per user     &    19.6889 \\
-            Average rating per item     &    6.6796 \\
+            Average item want count per user     &    6.5620 \\
+            Average item purchase count per user     &    0.9995 \\
+            \hline
+            Average item interaction count per user     &    20.1746 \\
+            Average user interaction count per item     &    6.6928 \\
             \bottomrule
         \caption[Dataset summary]{Overview of the key figures in the SoBazaar dataset}
         \label{table:datasetSummary}
         \end{tabular}
     \end{table}
 
+    As seen from table~\ref{table:datasetSummary} the average amount of \emph{purchases} per user are below one. Using purchase information alone to make recommendations will therefore in most cases render the recommendations incomplete. If one or more users have more than one purchases, then some users will of course have none purchases. Making personalized recommendations for these users will then be unattainable.
+
+    \emph{Clicks} and \emph{wants} on the other hand have a much higher occurrence. These two events together with \emph{purchases} tops a count of 20 on average per user, and opens for the possibility of more dense personalized recommendations, but the data is still rather sparse.
+
+
+
 \section{Graphs}
     % Price range of items in stores
-    % user-item (how many items has a user "interacted" with)
-    % Count of unique items in item db also in event db
-    % Usable events regarding userid (events types with not null userid)
     % unique Stores count for users
     %     price span for user
     %         Timespann of sessions for users (avg, max, min)
@@ -148,6 +164,9 @@
     %         avg viewtime for an item (i know)
     %         Similarity of user favorite store, items viewed and items wanted?
     %         time of session over lifetime of app for all users (slope-style)
+    % user lifetimes
+    This section will look at the SoBazaar data through graphing and plotting.
+    It will start with the properties of the users seen in the data, then move over to the products and finally the time properties of the data.
 
 \subsection{User properties}
     \begin{figure}[H]
@@ -157,10 +176,10 @@
     \label{figure:eventIDDistribution}
     \end{figure}
         Figure~\ref{figure:eventIDDistribution} displays the count for each of the different events which can be triggered in the SoBazaar application.
-        As seen from the graph the "product\_detail\_clicked"-event and the "storefront\_clicked"-event are the two most common events to be triggered, which is natural, since most of the items are located in the stores fronts.
+        As seen from the graph the \emph{product\_detail\_clicked}-event and the \emph{storefront\_clicked}-event are the two most common events to be triggered, which is natural, since most of the items are located in the stores fronts.
         The fact that accessing the store front is the most occurring event, over item view, indicates that many users browse the items through looking at the thumbnails rather than accessing the actual item.
-        The "product\_wanted"-event is the fourth most occurring event, and is about half the size of the "product\_detail\_clicked"-event, this does not mean that half of the accessed items are added to a want list, since it is possible to want an item without accessing the item.
-        "product\_purchase\_intended" on the other hand has to come after a "product\_detail\_clicked", about 8\% of item accesses progressed therefore into an intended purchase.
+        The \emph{product\_wanted}-event is the fourth most occurring event, and is about half the size of the \emph{product\_detail\_clicked}-event, this does not mean that half of the accessed items are added to a want list, since it is possible to want an item without accessing the item.
+        \emph{product\_purchase\_intended} on the other hand has to come after a \emph{product\_detail\_clicked}, about 8\% of item accesses progressed therefore into an intended purchase.
 
     \begin{figure}[H]
         \centering
@@ -240,7 +259,10 @@
     \end{figure}
         Figure~\ref{figure:croppedGeoplot} shows the location of the user at the time the different events was triggered.
         It is cropped to show events triggered in and around Norway.
-        We can see that the majority of the users are located in and around Oslo.
+        We can see that the majority of the users are located in and around the capital city of Norway, Oslo.
+
+        \marginpar{fact check that they use GPS and not IP-location, 6 decimals in data 11.575452}
+        If the event is triggered from a phone, the event is as precise as the GPS hardware location of the phone, and would be helpful information to understand more about the user.
 
 \subsection{Product properties}
 
@@ -262,7 +284,7 @@
     \end{figure}
         This figure shows the unique count of events on each item in the SoBazaar dataset.
         The majority of the items has only had a interaction count of 10 or less.
-        Interaction count is "product\_detail\_clicked", "product\_wanted" and "product\_purchase\_intended".
+        Interaction count is \emph{product\_detail\_clicked}, \emph{product\_wanted} and \emph{product\_purchase\_intended}.
         This means that there will not be more than 10 events for the majority of the items, which might lead to an issue when doing collaborative filtering on the data.
         When the majority of the events only has 10 events and there are over 4 000 items and 1 200 users, the probability that multiple users have interacted with similar items will be low.
 
@@ -434,9 +456,9 @@
     \end{figure}
         The events triggered in context with the different storefronts.
         The events are segmented to show the different event counts on the different storefronts, and stacked to show the complete count, to be able to clearly see how the events are distributed over the different stores.
-        We can see that "Bik Bok" is the most popular store on all fields.
-        One interesting find to take from this graph is the "storefront\_clicked" to the item interaction related events ("product\_detail\_clicked", "product\_wanted" and "product\_purchase\_intended") ratio.
-        For instance "Bik Bok" has a much higher item interaction count than storefront access count, whereas stores such as "Reiss" and "Inwear" are mostly accessed and the items not interacted with.
+        We can see that \emph{Bik Bok} is the most popular store on all fields.
+        One interesting find to take from this graph is the \emph{storefront\_clicked} to the item interaction related events (\emph{product\_detail\_clicked}, \emph{product\_wanted} and \emph{product\_purchase\_intended}) ratio.
+        For instance \emph{Bik Bok} has a much higher item interaction count than storefront access count, whereas stores such as \emph{Reiss} and \emph{Inwear} are mostly accessed and the items not interacted with.
         Different aspects affecting this might be price, style and item presentation.
 
     \begin{figure}[H]
@@ -561,7 +583,7 @@ In many domains the number of activities on an item given a specific user
 implies preference. The activity in question may be the number of plays in a
 music service~\cite{parra2011walk} or the amount of minutes used watching a
 specific TV-show~\cite{study-on-implicit-tv}. We want to validate this
-hyptohesis in the SoBazaar data, determining if the \textit{number of clicks}
+hypothesis in the SoBazaar data, determining if the \textit{number of clicks}
 on an item implies higher preference, that is an higher probability of buying
 the item.
 
@@ -570,14 +592,14 @@ Ordinal Logistic Regression Mapping
  Check out related work for similar articles}
 
 
-If the hyphothesis holds true, we can use this fact in order improve
+If the hypothesis holds true, we can use this fact in order improve
 classification of our models in future sections. In addition we can customize
 the user interface so that if a user has clicked the item, we should with a
-higher frequency show the item to the user – as he/she is more probable of
+higher frequency show the item to the user --- as he/she is more probable of
 buying it once seen in detail.
 
-In order to validate the hyphothesis we iterate through all users and look at
-their respecitive events, summarizing the number of times the user has clicked
+In order to validate the hypothesis we iterate through all users and look at
+their respective events, summarizing the number of times the user has clicked
 an item $n$ times and of these how many times the user also bought it. We do
 this for all values of $n$, where $n \in [1,6[$ and obtain the following table
 of conversion rates and standard errors.

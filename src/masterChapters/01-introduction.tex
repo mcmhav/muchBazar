@@ -79,7 +79,7 @@ applications such as \emph{Last.fm} and \emph{iTunes}.
 % What is telenors incentive?
 Many of the largest commerce Web sites have been using recommender systems to
 help their customers find products to purchase for nearly two decades.
-Schafer et. al. \cite{Schafer1999} identified three ways, in which recommender
+Schafer et al. \cite{Schafer1999} identified three ways, in which recommender
 systems increase E-commerce sales: (1) Browser into buyers: Recommender systems
 can help customers find products they wish to purchase, (2) Cross-sell:
 Recommender systems improve cross-sell by suggesting additional products for
@@ -93,13 +93,13 @@ SoBazaar is a new \textit{fashion e-commerce application} for web and hand held
 devices developed by Telenor, Norway's largest Telco company. The application
 aggregates fashion products from various brands and stores into one \emph{news
 feed} with recommended products, enabling the user to shop clothes and
-accessories effortslessly and without the need of registering an account on
-multiple webstores. Currently the application makes global recommendations
-based on popular products and trends within social networks – however, the goal
+accessories effortlessly and without the need of registering an account on
+multiple web stores. Currently the application makes global recommendations
+based on popular products and trends within social networks --- however, the goal
 before launching the application this upcoming summer (\the\year) is to improve
 these ratings making them personalized and grounded in a larger array of
 features. This has as noted the potential of improving sales, activity and user
-satifisfaction.
+satisfaction.
 
 % Discuss potential in fashion and e-commerce sales.
 \ecommercenorway{}
@@ -120,7 +120,7 @@ the possibility to explicitly rate items on a numeric scale, a scheme often
 employed by machine learning engineers and application developers in order to
 understand their users preferences. Combining these two factors makes the
 recommendation scenario both interesting and unique, since we need to utilize
-the implicit information contained in user behaviour such as clicking, wanting
+the implicit information contained in user behavior such as clicking, wanting
 or buying an item. Limited data both in number of users, but also in activity,
 makes the system prone to what is called \textit{cold-start issues}, where
 making recommendations with limited information is resolved by a variety of
@@ -134,22 +134,22 @@ fashion consumption is largely determined by seasons. E.g. one does not buy
 winter jackets in the middle of summer. Most clothes do also go out of
 fashion, the same can not be said for \emph{all} movies. Secondly, there are a
 whole different set of important aspects regarding the items or products when
-recommending in the fashion domain, such as: brand, color and size. 
+recommending in the fashion domain, such as: brand, color and size.
 
 % Brand and price are important!
-Finally, users are highly price and brand-aware. This can be examplified by
+Finally, users are highly price and brand-aware. This can be exemplified by
 looking at an average movie consumer, where typically the director of the movie
-does not gratly affect the way the movie is consumed. However, in the fashion
+does not greatly affect the way the movie is consumed. However, in the fashion
 domain the consumer might mainly look at the product brand when deciding what
 to consume. Price preferences are also related to this property where some
 users prefer making \textit{a good deal} on periodic sales whilst other buys
-clothes not only for induvidual satisfaction, but to show of or make a
+clothes not only for individual satisfaction, but to show of or make a
 statement.
 
 % What are our goals and purpose?
 In our system, there are two sources of information available for making
 recommendations: an aggregated product database and event logs capturing user
-acitivities. Out first goal is to find a technique for translating the implicit
+activities. Out first goal is to find a technique for translating the implicit
 feedback into preferences. These preferences are then combined with product
 features and techniques for mitigating the cold-start problem. Finally the
 user-item preferences are utilized in making recommendations where challenges
@@ -159,8 +159,8 @@ related to both domain and data sources are considered.
 For the users of SoBazaar the final product should not infer with the already
 established user interface. Instead the news feed will evolve from today
 showing the same recommendations to all users, to showing \textit{personalized
-recommendations} to every user, based on their \textit{behaviour} in the
-application. For every user-item interaction the user is implicitily changing
+recommendations} to every user, based on their \textit{behavior} in the
+application. For every user-item interaction the user is implicitly changing
 his/hers preference-profile and will then, by just using the application, get
 novel and more robust recommendations. Further, as personalized recommendations
 hopefully will increase both sales and user activity we will, with a larger set
@@ -205,7 +205,7 @@ cold-start issues.
 \begin{itemize}
   \item G4: Study existing solutions to the cold-start.
   \item G5: Identify the best suited methods with regards to both application
-  feedback and domain. 
+  feedback and domain.
 \end{itemize}
 
 % Introduce goals related to implicit feedback
@@ -238,7 +238,7 @@ conclusions based user behaviour proved difficult due to lack of statistical
 significance on many observations. Limitiations in both time available and
 number of existing users with sufficient activity made is also impossible to
 conduct a thorough user study, which could confirm possible found user
-patterns. 
+patterns.
 
 % No external sources of information (or weak quality)
 In addition, as seen in the overview, external sources of information such as
@@ -374,41 +374,42 @@ first two stages of our system, hence going directly from a set of explicitly
 provided ratings to a set of recommendations. However, as we will see, making
 ourselves non-dependent on explicit ratings can both provide us with a good
 set of recommendations and take us one step closer to true artificial
-intelligence, as we require no extra effort from the users – rather learning
-preferences from their behaviour.
+intelligence, as we require no extra effort from the users --- rather learning
+preferences from their behavior.
 
 \section{Outline}
 \begin{table}[H]
   \centering
   \begin{tabular}{lp{11cm}}
   \toprule
-    \textbf{Chapter}      & \textbf{Description} \\ 
+    \textbf{Chapter}      & \textbf{Description} \\
   \midrule
 
-    Chapter 1 & \textbf{The Introduction} chapter gives an overview of the
+    Chapter \ref{chap:introduction} & The~\nameref{chap:introduction} chapter gives an overview of the
     project to the reader. It also outlines the purpose and motivation of the
     project.  \\[1.5ex]
 
-    Chapter 2 & \textbf{The Dataset} chapter presents the results from our
+    Chapter \ref{chap:thesobazaardata} & \nameref{chap:thesobazaardata} chapter presents the results from our
     dataset analysis. \\[1.5ex]
 
-    Chapter 3 & \textbf{The Preliminary Study} chapter documents knowledge,
+    Chapter \ref{chap:SotA} & The \nameref{chap:SotA} chapter documents knowledge,
     research and technology that is relevant to the project, and how and why
     some of them were prioritized over others when it comes to how they are
     used in the project. \\[1.5ex]
 
-    Chapter 4 & \textbf{The implementation} chapter describes the design of the
+    Chapter \ref{chap:algbackground} & \nameref{chap:algbackground} \\[1.5ex]
+
+    Chapter \ref{chap:implementaion} & The \nameref{chap:implementaion} chapter describes the design of the
     system and how the design has be implemented. \\[1.5ex]
 
-    Chapter 5 & \textbf{Evaluation} chapter discussed the development process,
+    Chapter \ref{chap:resulteval} & the \nameref{chap:resulteval} chapter discussed the development process,
     testing of results and major issues. \\[1.5ex]
 
-    Chapter 6 & \textbf{The Conclusion} chapter sums up the project and describes the
+    Chapter \ref{chap:conclusion} & The \nameref{chap:conclusion} chapter sums up the project and describes the
     findings and reflects on them. It also describes further work to be done.
     \\[1.5ex]
 
-    Appendix & \textbf{The Appendix} contains extended information such as a
-    full list of the requirements. \\
+    Appendix & \textbf{The Appendix} contains extended information such as a full list of the requirements. \\
 
   \bottomrule
   \end{tabular}

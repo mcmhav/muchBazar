@@ -1,13 +1,15 @@
 % !TEX root = ../report.tex
 
 \chapter{Conclusion}
+\label{chap:conclusion}
+\minitoc
 
-In this thesis we have first presented our analysis of the Sobazaar dataset, a highly sparse dataset comprising 
+In this thesis we have first presented our analysis of the Sobazaar dataset, a highly sparse dataset comprising
 multiple event types which could be considered as implicit feedback. Our main findings (what?) from the data analysis
 lead us to do a state-of-the art review of cold-start solutions, the fashion domain and methods for converting
 implicit feedback into implicit ratings.
 
-Our state-of-the-art and related work section focused in particular on the cold-start problem where we evaluated the 
+Our state-of-the-art and related work section focused in particular on the cold-start problem where we evaluated the
 different solution types with respect to initial quality of service or cold-start performance and user-effort required before the system can provide high quality recommendations.
 As a part of the literature review, the solution types were also evaluated in the context of a recommender
 system applied to the fashion domain.
@@ -29,7 +31,7 @@ design for different implicit rating mapping functions and how these could be co
 
 
 The proposed implicit rating functions was implemented and tested against recommender systems utilizing binary
-preferences only. Our findings indicate that... 
+preferences only. Our findings indicate that...
 
 
 
@@ -63,8 +65,8 @@ more \emph{expensive} items to the user.
 
 %Discussion on product database features to improve content-based recommendations
 %Missing color, category, age-group and others
-However, the content-based filtering methods require rich descriptions of items and well built 
-and well informed user profiles. These ideal cases are rare in real applications. This dependence 
+However, the content-based filtering methods require rich descriptions of items and well built
+and well informed user profiles. These ideal cases are rare in real applications. This dependence
 on the quality and structure of data is the main weakness of methods based on content.
 
 
@@ -73,7 +75,7 @@ and higher quality data.
 
 \begin{itemize}
 \item More extensive crawling the webstores collecting likes or popularity information, better content descriptions,
-	  and so on.	 
+	  and so on.
 \item Provide the user with \emph{cool} and \emph{fun} ways of expressing their preferences. A tinder-like \emph{hot or not}
 	  interface, the ability to follow brand or friends are a few such examples.
 \item Negative feedback in the form of a dislike button or similar.
@@ -85,7 +87,7 @@ one should preferably conduct a study to find the best strategy of selecting ite
 
 Especially better quality and structure of the data. Table \ref{table:extracted-content-features} shows an overview of
 the percentage of items we managed to extract the different attributes for. Attributes such as category, color, brand-name ...
-are particulary useful and should be easily extracted from the product database for most products. 
+are particulary useful and should be easily extracted from the product database for most products.
 
 %Recommender systems for anonymous users - Context
 	%Recommend other items with a high similarity to the item currently being viewed
@@ -96,7 +98,7 @@ recommends "People how love this also love".
 
 
 
-	
+
 Finding and incorporating more implicit factors should also be considered as a possible future direction.
 
 Do trends repeat year after year?
@@ -111,7 +113,7 @@ for these factors.
 
 
 Other implicit factors such as brand preference, ... could all be implemented to
-	
+
 
 
 As shown in \cite{FranceTelecom} most successful commercial recommender incorporate multiple
@@ -121,7 +123,7 @@ closely to assess if they can add any value to the system:
 \begin{itemize}
 \item Social information. Trust could be inferred from functionality such as \emph{follow user}, which
 	  could be used to improve recommendation quality and improve cold-start performance.
-\item Content information. 
+\item Content information.
 \item Demographic information.
 \end{itemize}
 
@@ -132,4 +134,4 @@ closely to assess if they can add any value to the system:
 
 
 This thesis have only on a small part of the possibilities. There is much work to be done. %%% THE END %%%
-	
+

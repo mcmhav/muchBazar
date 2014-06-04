@@ -25,7 +25,7 @@ interactions.
 
 Then, upon evaluation of conversion features we can do an intitial analysis
 without any metrics by attempting to answer the question \textit{does this
-generalization capture the domain and data properties?} 
+generalization capture the domain and data properties?}
 One such generalization, often done, is counting the number of a specified
 activity on an item, correlating it with preference. In the case of SoBazaar
 we've seen that a higher number of clicks yields a higher probability of
@@ -60,23 +60,23 @@ the items and \textit{in which order}, we have a higher probability of
 obtaining unique sets of ratings.
 
 When ratings are not explicit, the implicit ratings becomes the recommender
-systems equivelent of a ground truth and all later stages in the recommender
+systems equivalent of a ground truth and all later stages in the recommender
 pipeline (See Section~\ref{}) are dependent on the ratings representing a users
 preferences. This highlights the importance of generating high quality ratings
 and selecting good features and methods for doing so.
 
-\subsection{Linearily penalizing features}
+\subsection{Improving mapping of event types}
 
 In Section~\ref{implicit-binary-domains} Pranab Ghosh proposes a global rating
 mapping without any specific justification of why the different values are
 chosen~\cite{pkghost2014implicit}. In order to use this method we wanted our
 weighting of various events to be grounded in statistical properties found in
-the dataset. Further we would like to create ratings on a continious scale
+the dataset. Further we would like to create ratings on a continuous scale
 between a min and max-value for the given event, not manually define levels of
 scores. This way we could use a \textit{penalization function}, that based on
-our selected feature ensured an even distrubution between the mininmum and
+our selected feature ensured an even distribution between the minimum and
 maximum value for the event in question. For example giving an often clicked
-product for a user the maximum value and conversly the minimum value for
+product for a user the maximum value and conversely the minimum value for
 infrequent clicks.
 
 To select good weights we thus considered the probability of each event that we
@@ -102,11 +102,13 @@ score mapping looks like:
 Notice that the total number of events having a product id is 40686, and the
 sum of all three fractions is 1, thus covering 100\% of all events.
 
-How then do we distrubute the feature-values  between the min and max limits
-above? In our first implementation we use a \textit{linear} function, set in
-such a way that $0 \leq p(x) \leq 1$ and $0 \leq x \leq M_u$ where $M_u$ is the
-maximal observed value for user $u$ of the feature in question. Hence our
-penalization function is defined as:
+\subsection{Penalizing features}
+
+How then do we distribute the feature-values  between the min and max limits
+above? In our first implementation we use a \textit{linear penalization}
+function, set in such a way that $0 \leq p(x) \leq 1$ and $0 \leq x \leq M_u$
+where $M_u$ is the maximal observed value for user $u$ of the feature in
+question, defined as:
 
 \begin{equation}
   p(x, u) = \frac{x}{M_u}
@@ -127,13 +129,17 @@ given to event $e$ after penalization, given a max $M_u$ and min $m_u$ value.
 
 The last component needed is normalizing the ratings. Which is described in
 Equation~\ref{eq-normalization}. And now we have all components ready in order
-to do a rating generation. In order to see all parts working together, we
-imagine an example where a user has six events on three items, as presented in
-the table below. The ratings are normalized between 1 and 5 and the product IDs
-are there for illustrative purposes. We choose to look at the number of days
-since the user did the event in question as the implicit feature, where $x=0$
-means the event was registered today (or as the most recent) and in our example
-$x=14$ is the oldest event happening two weeks ago. 
+to do a rating generation. 
+
+\subsection{Considering recentness}
+
+In order to see all parts working together, we imagine an example where a user
+has six events on three items, as presented in the table below. The ratings are
+normalized between 1 and 5 and the product IDs are there for illustrative
+purposes. We choose to look at the number of days since the user did the event
+in question as the implicit feature, where $x=0$ means the event was registered
+today (or as the most recent) and in our example $x=14$ is the oldest event
+happening two weeks ago.
 
 \begin{table}[H]
   \centering
@@ -201,7 +207,8 @@ limit, set at e.g. 200.
 In order to mitigate the returning user problem we adjust our feature to
 instead consider the ordering of events for user $u$. This way, given $n$
 events registered for this user, the newest event would obtain $x=0$ and the
-oldest $x=n$. This yields the following distribution:
+oldest $x=n$. We continue to use a linear penalization function, which yields
+the following distribution:
 
 \begin{figure}[H]
   \centering
@@ -217,7 +224,7 @@ ratings are more evenly distributed (the largest bin contains 700 ratings in
 the given interval, compared to Figure ~\ref{dist-recentness-linear-global}
 where the same number is 1250.)
 
-\subsection{Penalization with logistic functions}
+\subsubsection{Penalization with logistic functions}
 
 So far we've seen ratings generated by looking at the event recentness,
 capturing important factors such as items having a short life-time and users
@@ -241,7 +248,7 @@ concurrently and we know that in domains such as technology, fashion and other
 consumer-products an item has an age of relevancy, somewhat metaphoric to a
 seasonal threshold. An example of this could be a fashion store recommending
 warm clothes in the months between December to March, but then want to "change"
-product pool based on the users behaviours – who are probably looking for
+product pool based on the users behaviours --- who are probably looking for
 lighter clothes (changing season).
 
 In order to mimic this behaviour we introduce a logistic function, which is a
@@ -403,7 +410,110 @@ as well. Continuing with a ratio of $3.5$ we obtain the following distribution:
   \label{fig:dist-count-sigmoid}
 \end{figure}
 
-\subsection{Linearly blending implicit ratings}
+\subsection{Considering price}
+
+In the same manner as with recentness we want to consider other features
+apparent in our data and domain. As seen in Figure~\ref{} there is, not
+surprisingly, a difference between users in average price on items they
+frequent. Utilizing this variance we can create personalized ratings where we
+try to give high ratings to items in the same price class as the user,
+penalizing products that are too expensive or cheap.
+
+The procedure is done in two steps: first we find the average price $a_u$ on
+all items related to the user $u$. In the second step we make a second pass
+over all items the user has shown interest in and calculate the distance to
+$a_u$, yielding $x = p_i - a_u$ where $p_i$ is the price of item $i$. We then
+find the penalization by:
+
+\begin{equation}
+  p(x,u) = \min{1, \frac{x}{M}}
+\end{equation}
+
+where $M$ is a constant controlling at which point the difference in price
+should be fully penalized. In our experiments setting $M = 1500$ worked well,
+hence making a price difference of $1500$ or more fully penalized yielding a
+rating of 1.
+
+Before applying the penalization function we make the assumption that an item
+having the price difference $x = -d$ (cheaper) should be penalized less than an
+item with the price difference $x = d$ (more expensive). Further we want to
+make the value $x$ absolute, before calculating the penalization since $0 \leq
+p(x,u) \leq 1$. In conclusion we apply $x = |\frac{x}{2}| \text{if} x < 0$
+making cheaper items half as sensitive to penalization, compared to more
+expensive items.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[scale=0.5]{image/dist-price}
+  \caption{Distribution considering item price differences and each users conformity to
+  its average price}
+  \label{fig:dist-price}
+\end{figure}
+
+As seen the many items are penalized heavily for being to expensive, but this
+is by design as we do not want to show too expensive items to the user
+according to our assumptions. By setting $M$ higher, the number of items with
+rating $1$ can be reduced. In addition most items gets a rating $5$ which tells
+us that many users share the price preferences and by penalizing harder we can
+reduce the number of items with rating 5. However, as we will see in subsequent
+sections we are quite happy with the above distribution.
+
+\subsection{Considering item popularity}
+
+By looking at the global popularity of all item we can essentially tell if a
+users activities classifies as conforming to the common standards or if the
+users event patterns are more \textit{unique}. Our goal is to first classify to
+which degree a user like globally popular items and then give penalizations to
+items that are \textit{too popular} (the user is not adhering to peer-pressure)
+or \textit{too obscure} (the user prefers popular items).
+
+By first sorting all products by the number of related events we assign
+a popularity score $0 \leq p \leq 1$, where $p=0$ is the product with the most
+events and $p=1$ the event with the least number of events. Then we calculate
+the average popularity score $a_e$ across all events, yielding $a_e = 0.76$.
+
+In order to find a good penalization function we looked for the following
+properties:
+
+\begin{itemize}
+  \item The top-value of $y$ should be at $x = 0.76$.
+  \item When $x = 0$, that is for the most popular item, we should not penalize
+  with $1.0$ nor $0.0$. A value of $y = 0.5$ was chosen.
+  \item At $x = 1$ we want $y = 1$, giving maximum penalization to
+  inpopular items.
+\end{itemize}
+
+And settled for having two linear functions, one when the popularity of item
+$i$ was below the average popularity ($p_i < a_e$) and the second for when the
+popularity was equal or higher.
+
+\begin{equation}
+  p(x, u) = 
+    \begin{cases}
+      \frac{c}{a_e}x + c                      & \text{if } x < a_e \\[1.5ex]
+      \frac{1}{1-a_e}x - \frac{1}{1-a_e} + 1  & \text{if } x \geq 0
+    \end{cases}
+\end{equation}
+
+where $c$ is the value chosen as penalization to the most popular item. As
+mentioned this was in our experiments set to $0.5$. By using the same
+methodology as in earlier features, we apply the found penalization and
+normalize the obtained score to ratings - yielding the following distribution:
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[scale=0.5]{image/dist-popularity}
+  \caption{Distribution considering item popularity and the users conformity to
+  popular items}
+  \label{fig:dist-popularity}
+\end{figure}
+
+The peak at rating $1$ is a result of many items having close to zero events
+connected to them. More interestingly we observe an evenly distributed spread
+of ratings and, as with price, a peak at rating $5$ is expected as this is
+given to the items close to the \textit{average} popularity.
+
+\subsection{Linearly combining implicit ratings}
 
 At this point we have found multiple ways of calculating the implicit ratings,
 based on our implicit feedback. However, each method has its weknesses,
@@ -423,11 +533,11 @@ in one method can be averaged out by the strengths of others. If two features
 independently finds the same properties and ratings for some items and users,
 then the result and our belief is strenghtened.
 
-When linearly blending $M$ models $m_1 \dots m_M$, we choose $M$ factors $f_i$
+When linearly combining $M$ models $m_1 \dots m_M$, we choose $M$ factors $f_i$
 all adding up to 1.0, representing the weight of model $m_{i}$ in the final
-blend. Eeach model then have $k$ ratings on the triplet form \textit{(user,
-product, rating)} and noted noted as $r_{ij}$ - the rating of item $j$ in model
-$i$. 
+\textit{blend}. Eeach model then have $k$ ratings on the triplet form
+\textit{(user, product, rating)} and noted noted as $r_{ij}$ - the rating of
+item $j$ in model $i$.
 
 Then when calculating the final rating for item $j$ we sum over all
 models:
@@ -450,7 +560,7 @@ Blending \cite{jahrer2010combining} \cite{toscher2009bigchaos} which are based
 on the same principles.
 
 However, as discussed in Section~\ref{}, when creating ratings from implicit
-feedback we lack a ground truth – that is we make several assumptions on which
+feedback we lack a ground truth --- that is we make several assumptions on which
 implicit features contribute towards higher preference and thus higher ratings,
 but with no real means of confirming the assumptions. A user buying an item as
 a gift for a friend may not actually like the item and would not give a high
@@ -468,15 +578,18 @@ important to evaluating ratings: it needs to be evenly distributed, it should
 have an average confirming our hypthesis and the features selected should
 capture properties found in the domain both intutivly and quantitativly.  Then
 for $M$ different models we assume they all contribute an equal amount to the
-final results thus having the weights $f_i = 1/M$. By using this simple
-linear blending we can combine our methods looking at recentness and ordering
-using a linear penalization function
-(Figure~\ref{fig:dist-recentness-linear-global} and~\ref{fig:dist-count-linear}
-respectivly) with the ratings generated on the same features with a logistic
+final results thus having the weights $f_i = 1/M$. 
+
+\subsubsection{Combining recentness features}
+
+We can combine our methods looking at recentness using a linear penalization
+function (Figure~\ref{fig:dist-recentness-linear-global}
+and~\ref{fig:dist-count-linear}) and with the ratings generated with a logistic
 penalization function (Figure~\ref{fig:dist-recentness-sigmoid}
-and~\ref{fig:dist-count-sigmoid}). This yields the following distribution of
-ratings with the average $3.30$ and median at $3.63$, where the distributions
-overlayed with the kernel density function, showing the trend of histogram:
+and~\ref{fig:dist-count-sigmoid}) looking at both days and ordering of events.
+This yields the following distribution of ratings with the average $3.30$ and
+median at $3.63$, where the distributions overlayed with the kernel density
+function, showing the trend of histogram:
 
 \begin{figure}[H]
   \centering
@@ -497,3 +610,39 @@ bordering, a result of our sigmoid functions having a ratio of $3.5$ which
 yields a gradual slope - hence when we have x-values close to $M_u$ and $0$ we
 approximate $1$ and $0$ respectivly, but we do not reach it exactly. This can
 be seen on Figure~\ref{fig:sigmoid-penalizations}
+
+\subsubsection{Combining recentness, popularity and price}
+
+Instead of only looking at recentness, we can combine it with our other
+features found in the previous section - namely price and popularity, as well.
+As we saw by Figure~\ref{dist-price} and Figure~\ref{dist-popularity}, the
+distribution of ratings considering both prices and popularities respectivly
+have peaks at edge values $1$ and $5$. When combined an item with high rating
+in regards to price, but low rating considering popularity will be lowered to a
+rating around $3$ - and if features are chosen coherent to what we expect the
+data to represent, we expect to see a final blend where most ratings are
+allocated a value around $3-4$ with few or none gaps.
+
+\begin{figure}[H]
+  \centering
+  \label{dist-blend-price}
+  \includegraphics[scale=0.5]{image/dist-blend-price-popularity-recentness}
+  \caption{Distribution using blend of price, popularity and recentness with
+  linear penalization, overlayed with density function}
+\end{figure}
+
+By here combinging ratings generated by recentness (both ordering and age of
+events), popularity and price we see our so far "best" distribution in terms of
+non quantifiable metrics. The distribution has an average rating of $3.5305$
+and median $3.5780$, indicating an even spread. In the above example we have
+used logistic penalization functions with constant $3.5$ as depicted in
+Figure~\ref{dist-recentness-sigmoid} and~\ref{dist-count-sigmoid}. Using a
+linear penalization function instead yields the average value $3.5293$ and
+median $3.5883$, hence no large difference. The logistic approach was however
+considered superior and used in future experiments as it captures the linearity
+of the data, whilst in the same time accounting for seasons and the life span
+of items seen in the fashion domain.
+
+% Perhaps tell something about experiemnts that led us to choose sigmoid >
+% linear?
+% Any more comments on this one?

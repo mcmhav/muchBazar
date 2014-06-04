@@ -190,7 +190,101 @@ NameID: BPRMF    mode: user &   0.7490  &   0.7408  &   0.7361  &   0.0018  &   
 
 \subsection{Cold-Start Results}
 
+Explanation:
+\begin{table}
+    \centering
+    \resizebox{\columnwidth}{!}{%
+    \begin{tabular}{ll}
+    \toprule
+    Variable & Description \\
+    \midrule
+    AUC &  \\
+    MAP@20 & Mean average precision  \\
+    T\_c & Test  \\
+    T\_w &  \\
+    T\_p &  \\
+    P\_c &  \\
+    P\_w &  \\
+    P\_p &  \\
+    R\_c &  \\
+    R\_w &  \\
+    R\_p &  \\
+    MAP@20-click &  \\
+    MAP@20-want &  \\
+    MAP@20-purchase &  \\
+    \bottomrule
+    \end{tabular}
+    }
+    \caption{Testur}
+\end{table}
 
+\newcommand{\Testur}{
+\begin{table}\centering\resizebox{\columnwidth}{!}{\begin{tabular}{*{19}l}\toprule
+ & AUC &        MAP@20 &        T\_c &  T\_w &  T\_p &  P\_c &  P\_w &  P\_p &  R\_c &  R\_w &  R\_p &  MAP@20-click &  MAP@20-want &   MAP@20-purchase &        \\
+\midrule
+Count sigmoid   &       -1 &    0 &     1309 &  1327 &  144 &   0 &     0 &     0 &     0 &     0 &     0 &     0 &     0 &     0 &      \\
+Recentness sigmoid      &       -1 &    0 &     1323 &  1274 &  132 &   0 &     0 &     0 &     0 &     0 &     0 &     0 &     0 &     0 &      \\
+Recentness linear       &       -1 &    0 &     1332 &  1313 &  135 &   0 &     0 &     0 &     0 &     0 &     0 &     0 &     0 &     0 &      \\
+Count linear    &       -1 &    0 &     1394 &  1241 &  145 &   0 &     0 &     0 &     0 &     0 &     0 &     0 &     0 &     0 &      \\
+\bottomrule\end{tabular}}\caption{svd mahout}\end{table}
+\begin{table}\centering\resizebox{\columnwidth}{!}{\begin{tabular}{*{19}l}\toprule
+ & AUC &        MAP@20 &        T\_c &  T\_w &  T\_p &  P\_c &  P\_w &  P\_p &  R\_c &  R\_w &  R\_p &  MAP@20-click &  MAP@20-want &   MAP@20-purchase &        \\
+\midrule
+Count linear    &       -1 &    0.001838 &      1394 &  1241 &  145 &   0 &     0 &     0 &     0 &     0 &     0 &     0.001346 &      0.000297 &      0.001961 &       \\
+Recentness sigmoid      &       -1 &    0.001122 &      1323 &  1274 &  132 &   0 &     0 &     0 &     0 &     0 &     0 &     0.002281 &      0.000844 &      0 &      \\
+Recentness linear       &       -1 &    0.001517 &      1332 &  1313 &  135 &   0 &     0 &     0 &     0 &     0 &     0 &     0.0025 &        0.00344 &       0.000387 &       \\
+Count sigmoid   &       -1 &    0.000565 &      1309 &  1327 &  144 &   0 &     0 &     0 &     0 &     0 &     0 &     0.001334 &      0.00035 &       0.001041 &       \\
+\bottomrule\end{tabular}}\caption{loglikelihood mahout}\end{table}
+\begin{table}\centering\resizebox{\columnwidth}{!}{\begin{tabular}{*{19}l}\toprule
+ & AUC &        MAP@20 &        T\_c &  T\_w &  T\_p &  P\_c &  P\_w &  P\_p &  R\_c &  R\_w &  R\_p &  MAP@20-click &  MAP@20-want &   MAP@20-purchase &        \\
+\midrule
+Count linear    &       -1 &    0 &     1394 &  1241 &  145 &   121 &   106 &   13 &    0.086801 &      0.085415 &      0.089655 &      0 &     0 &     0 &      \\
+Recentness sigmoid      &       -1 &    0.000012 &      1323 &  1274 &  132 &   111 &   108 &   17 &    0.0839 &        0.084772 &      0.128788 &      0 &     0 &     0 &      \\
+Recentness linear       &       -1 &    0.000076 &      1332 &  1313 &  135 &   127 &   136 &   14 &    0.095345 &      0.10358 &       0.103704 &      0 &     0 &     0 &      \\
+Count sigmoid   &       -1 &    0 &     1309 &  1327 &  144 &   127 &   109 &   16 &    0.097021 &      0.08214 &       0.111111 &      0 &     0.000207 &      0 &      \\
+\bottomrule\end{tabular}}\caption{UserKNN None}\end{table}
+\begin{table}\centering\resizebox{\columnwidth}{!}{\begin{tabular}{*{19}l}\toprule
+ & AUC &        MAP@20 &        T\_c &  T\_w &  T\_p &  P\_c &  P\_w &  P\_p &  R\_c &  R\_w &  R\_p &  MAP@20-click &  MAP@20-want &   MAP@20-purchase &        \\
+\midrule
+Count linear    &       -1 &    0 &     1394 &  1241 &  145 &   141 &   128 &   17 &    0.101148 &      0.103143 &      0.117241 &      0 &     0 &     0.000207 &       \\
+Recentness sigmoid      &       -1 &    0 &     1323 &  1274 &  132 &   124 &   123 &   8 &     0.093726 &      0.096546 &      0.060606 &      0 &     0.000018 &      0 &      \\
+Recentness linear       &       -1 &    0.000021 &      1332 &  1313 &  135 &   125 &   116 &   17 &    0.093844 &      0.088347 &      0.125926 &      0 &     0.000011 &      0 &      \\
+Count sigmoid   &       -1 &    0 &     1309 &  1327 &  144 &   131 &   124 &   11 &    0.100076 &      0.093444 &      0.076389 &      0 &     0 &     0.000364 &       \\
+\bottomrule\end{tabular}}\caption{ItemKNN None}\end{table}
+\begin{table}\centering\resizebox{\columnwidth}{!}{\begin{tabular}{*{19}l}\toprule
+ & AUC &        MAP@20 &        T\_c &  T\_w &  T\_p &  P\_c &  P\_w &  P\_p &  R\_c &  R\_w &  R\_p &  MAP@20-click &  MAP@20-want &   MAP@20-purchase &        \\
+\midrule
+Count sigmoid   &       -1 &    0.009564 &      1309 &  1327 &  144 &   106 &   125 &   11 &    0.080978 &      0.094197 &      0.076389 &      0.007667 &      0.005249 &      0.008223 &       \\
+Recentness sigmoid      &       -1 &    0.004292 &      1323 &  1274 &  132 &   92 &    123 &   9 &     0.069539 &      0.096546 &      0.068182 &      0.006348 &      0.009645 &      0.017195 &       \\
+Recentness linear       &       -1 &    0.006055 &      1332 &  1313 &  135 &   117 &   118 &   13 &    0.087838 &      0.089871 &      0.096296 &      0.004981 &      0.003477 &      0.000813 &       \\
+Count linear    &       -1 &    0.006872 &      1394 &  1241 &  145 &   108 &   122 &   18 &    0.077475 &      0.098308 &      0.124138 &      0.003901 &      0.02623 &       0.003874 &       \\
+\bottomrule\end{tabular}}\caption{UserKNN item recommender}\end{table}
+\begin{table}\centering\resizebox{\columnwidth}{!}{\begin{tabular}{*{19}l}\toprule
+ & AUC &        MAP@20 &        T\_c &  T\_w &  T\_p &  P\_c &  P\_w &  P\_p &  R\_c &  R\_w &  R\_p &  MAP@20-click &  MAP@20-want &   MAP@20-purchase &        \\
+\midrule
+Count linear    &       -1 &    0.015234 &      1394 &  1241 &  145 &   57 &    36 &    5 &     0.04089 &       0.029009 &      0.034483 &      0.01478 &       0.009365 &      0.011881 &       \\
+Recentness sigmoid      &       -1 &    0.014354 &      1323 &  1274 &  132 &   63 &    45 &    2 &     0.047619 &      0.035322 &      0.015152 &      0.013854 &      0.011252 &      0.002665 &       \\
+Recentness linear       &       -1 &    0.014338 &      1332 &  1313 &  135 &   71 &    35 &    8 &     0.053303 &      0.026657 &      0.059259 &      0.015405 &      0.007984 &      0.022969 &       \\
+Count sigmoid   &       -1 &    0.006715 &      1309 &  1327 &  144 &   55 &    49 &    2 &     0.042017 &      0.036925 &      0.013889 &      0.010057 &      0.006602 &      0.001176 &       \\
+\bottomrule\end{tabular}}\caption{MostPopular item recommender}\end{table}
+\begin{table}\centering\resizebox{\columnwidth}{!}{\begin{tabular}{*{19}l}\toprule
+ & AUC &        MAP@20 &        T\_c &  T\_w &  T\_p &  P\_c &  P\_w &  P\_p &  R\_c &  R\_w &  R\_p &  MAP@20-click &  MAP@20-want &   MAP@20-purchase &        \\
+\midrule
+Count linear    &       -1 &    0.000344 &      1394 &  1241 &  145 &   3 &     3 &     0 &     0.002152 &      0.002417 &      0 &     0.000397 &      0.000529 &      0.000335 &       \\
+Recentness sigmoid      &       -1 &    0.000161 &      1323 &  1274 &  132 &   1 &     3 &     0 &     0.000756 &      0.002355 &      0 &     0.000825 &      0.00076 &       0 &      \\
+Recentness linear       &       -1 &    0.000107 &      1332 &  1313 &  135 &   8 &     3 &     0 &     0.006006 &      0.002285 &      0 &     0.000076 &      0.000113 &      0 &      \\
+Count sigmoid   &       -1 &    0.000386 &      1309 &  1327 &  144 &   6 &     3 &     0 &     0.004584 &      0.002261 &      0 &     0.000501 &      0.000875 &      0.000784 &       \\
+\bottomrule\end{tabular}}\caption{Random item recommender}\end{table}
+\begin{table}\centering\resizebox{\columnwidth}{!}{\begin{tabular}{*{19}l}\toprule
+ & AUC &        MAP@20 &        T\_c &  T\_w &  T\_p &  P\_c &  P\_w &  P\_p &  R\_c &  R\_w &  R\_p &  MAP@20-click &  MAP@20-want &   MAP@20-purchase &        \\
+\midrule
+Count sigmoid   &       -1 &    0.000555 &      1309 &  1327 &  144 &   8 &     19 &    2 &     0.006112 &      0.014318 &      0.013889 &      0.000901 &      0.000043 &      0 &      \\
+Recentness sigmoid      &       -1 &    0.000139 &      1323 &  1274 &  132 &   13 &    23 &    2 &     0.009826 &      0.018053 &      0.015152 &      0.000216 &      0.001771 &      0.000415 &       \\
+Recentness linear       &       -1 &    0.000049 &      1332 &  1313 &  135 &   15 &    18 &    1 &     0.011261 &      0.013709 &      0.007407 &      0.000723 &      0.000072 &      0 &      \\
+Count linear    &       -1 &    0.000139 &      1394 &  1241 &  145 &   15 &    21 &    0 &     0.01076 &       0.016922 &      0 &     0.000193 &      0.002742 &      0.000861 &       \\
+\bottomrule\end{tabular}}\caption{ItemKNN item recommender}\end{table}
+
+<<<<<<< HEAD
 \begin{table}
 \centering
 \resizebox{\columnwidth}{!}{%
@@ -224,9 +318,15 @@ Rec 4				& -		 & - 	  & - 	   & - 		& - 	 & - 	  & -	   & -		& - 	 & 	   	  & -	
 \end{table}
 
 
+}
+
+\Testur
+
+
 \subsection{Does our proposed implicit rating methods improve the recommendation quality over binary preference data?}
 
 Does our findings support our hypothesis?
+
 
 	
 \subsection{Compare the different implicit rating functions}
