@@ -243,37 +243,40 @@
 
   % TODO: Introduce next figure
 
-  \begin{figure}[H]
-      \centering
-      \begin{tikzpicture}
-        \begin{axis}[
-          ybar,
-          symbolic x coords={Women, Men, Body fashion, Baby/children, Fashion general},
-          x tick label style={rotate=45, anchor=east},
-        ]
-        \addplot +[nodes near coords] coordinates {
-          (Women, 1.85)
-          (Men, 2.18)
-          (Body fashion, 2.40)
-          (Baby/children, 1.86)
-          (Fashion general, 1.88)
-        };
-        \end{axis}
-      \end{tikzpicture}
-      \caption{Conversion Rate in Fashion Retail}
-  \end{figure}
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}[scale=0.8]
+      \begin{axis}[
+        ybar,
+        symbolic x coords={Women, Men, Body fashion, Baby/children, Fashion general},
+        x tick label style={rotate=45, anchor=east},
+      ]
+      \addplot +[nodes near coords] coordinates {
+        (Women, 1.85)
+        (Men, 2.18)
+        (Body fashion, 2.40)
+        (Baby/children, 1.86)
+        (Fashion general, 1.88)
+      };
+      \end{axis}
+    \end{tikzpicture}
+    \caption{Conversion rate in various fashion segments}
+\end{figure}
 
-  This figure is taken from~\cite{Jorij2012} and shows the different values for
-  conversion rate in the fashion domain.
-
-  Conversion rate is the portion of users who visits a website, who goes beyond
-  only browsing items and reaches some goal achievements.  These goal
-  achievements can be actions such as product purchase or advertisement
-  interaction.  The conversion rate is then $Conversion rate = \frac{\# of Goal
-  Achievments}{Visits}$~\cite{nielsen2013}.  As seen from this figure, womens
-  fashion has the lowest conversion rate in the different types of e-commerce
-  fashion.  The average conversion rate in e-commerce was around 3\% in
-  2013~\cite{nielsen2013}.
+\marginpar{TODO: Conversion rate in SoBazaar?}
+This figure is taken from~\cite{Jorij2012} and shows the conversion rate for
+various segments in the fashion domain. The conversion rate is the portion of
+users who visits a website, and reaches the target (makes a conversion) set
+by the site. For most e-commerce application, SoBazaar included, a conversion
+is counted when a purchase is made. The conversion rate $r$ can easily be
+calulcated by $r = \frac{|Conversions|}{|Total visits|}$~\ref{nielsen2013}.
+We can see that womens has the lowest conversion rate among the different
+segments, indicating that there is a strong preference based shopping
+tendency and that many users are \textit{browsing} and searching for the
+right product. This hypthesis is strengthed by looking at the general
+conversion rate in the e-commerce industry, which lies at 3\%. The potential
+of a personalized recommender could in other words make browsing easier and
+hence increase the conversion rate.
 
 \begin{figure}[H]
   \begin{tabular}{cc}
