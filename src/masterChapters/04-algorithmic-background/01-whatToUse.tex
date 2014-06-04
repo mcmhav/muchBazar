@@ -377,6 +377,7 @@ the highest rated items. The following equation shows the rating prediction proc
 u(c,s) = k * \sum_{c' \epsilon C} u(c',s)
 \end{equation}
 
+
 where $k$ is a normalization factor ($1/|C|$). This is very similar to collaborative filtering, except for
 the fact that the user similarity $sim(c, c')$ has been taken out of the equation. This is the same as saying
 that all user similarities are the same. It is also worth mentioning that this method is not suited for binary
@@ -394,23 +395,32 @@ Naive Filterbots \cite{Park2006} which easily could be combined with our implici
 The main reasons for experimenting with filterbots is simplicity, the fact that it easily could
 be combined with our implicit ratings in addition to the fact that previous experiments \cite{Agarwal2009, Agarwal2010}
 show that its performance is close to the state-of-the-art methods. It is worth to keep in mind that filterbots was
-developed for traditional collaborative filtering methods and it will be interesting to see how the filterbots affect
+developed for traditional neighborhood collaborative filtering methods and it will be interesting to see how the filterbots affect
 the performance of ALS-WR. Filterbots can potentially help solve the cold-start user problem by making it possible for
 new users to connect to users that capture the general underlying trends of the entire user group. Filterbots are mainly
 meant to improve performance when data is scarce and not to degrade performance when data is plentiful.
 
 Similarly as in \cite{Park2006} we decided to experiment with global bots. We have currently implemented the
 following bots: A \emph{BrandBot} which rates an item based on the brands average rating, 
-multiple \emph{singleBrandBots} which gives all items of a given brand a top rating,
+multiple \emph{SingleBrandBots} which gives all items of a given brand a top rating,
 an \emph{AverageBot} which rates an item based on their average rating given to it, a \emph{CriticBot} which selects $n$ critics
 among the most active users and rate items based on their average rating, a \emph{PopularityBot} which rates
 an item based on its popularity, more ratings equals a higher rating.
+
+The intuition behind the \emph{SingleBrandBots} is as follows: When a new user \emph{rates} an item it will be connected to
+a \emph{psudo-user} which have rated all items of the same brand highly, thus making it more likely  that a new users will
+be recommended items by that brand. The \emph{SingleBrandBots} and \emph{BrandBot} can therefore be considered feature-bots. The \emph{PopularityBot} will have rated popular items highly meaning that 
+users that have co-rated items with the \emph{PopularityBot} user will be recommended the most popular items.
+The \emph{CriticBot} selects $n$ users among the most active users and rate items based on the average rating
+of the critics.
 
 A filterbot takes the training set as input and generates a set of ratings which are then added to the training set. Both the \emph{AverageBot} and \emph{BrandBot} can be seen to incorporate the implicit rating factors such as recency into the ratings generated. However, for the \emph{PopularityBot} and \emph{Critic} but we wish to implement additional functionality to ensure
 that the new users are connected with items that are relevant right now and not consider outdated items or users which
 are no longer active. Since we have access to timestamps we could e.g. make the \emph{PopularityBot} rate items based on
 their popularity the last couple of weeks instead of over the entire dataset period. Similarly, critics can be selected
 based on their activity the couple of weeks/months.
+
+\marginpar{How many seconds does it take to generate the additional ratings, and how many ratings are generated?}
 
 \marginpar{TODO: More detailed implementation details?}
 
