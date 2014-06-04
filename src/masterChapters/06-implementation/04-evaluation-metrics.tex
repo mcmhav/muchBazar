@@ -20,13 +20,6 @@ It is safe to assume that the users are more interested in the top ranked items,
 predictions for the entire item collection. The social feed shown in Figure \ref{figure:sobazarfeed}
 shows that the interface currently supports showing up to 20 items.
 
-\begin{figure}[H]
-  \centering
-  \includegraphics[height=.5\linewidth]{image/SoBazaarmostpop.png}
-  \caption[Sobazar most-popular recommendation]{The Figure shows how the most-popular recommendations are shown in the application}
-\label{figure:mostpopular}
-\end{figure}
-
 Evaluation of top-k recommendations suggests a classification or ranking task, the evaluation
 should therefore focus on classification or ranking accuracy. A classification accuracy metric
 will tell us something about the recommenders ability to retrieve relevant items. The ranking
@@ -149,7 +142,7 @@ Example 	& 	Actual					& 	Recommended					&	AP@10   \\ \midrule
 10			& [1,2,3,4,5,6,7,8,9,10]	&	[0,0,0,0,0,1,2,8,5,3]		&	0.178  \\ 
 \bottomrule
 \end{tabular}
-\caption{AP@10 Examples}
+\caption{AP\@10 Examples}
 \end{table}
 
 As you see from example two and three average precision does not consider the order of the actual item list. We want some way to
@@ -175,13 +168,31 @@ event types.
 
 \marginpar{Mention why we think it is wrong to make these assumptions?}
 
-To solve this problem we decided to chose a \emph{simpler} approach. We separately measure the recall for purchases, wants and
-clicks separately in addition to measuring the MAP\@20 scores for the different event types. Given that we have known the relevance of
-the different event types nDCG could have given us all these numbers summarized in one column, instead we now have twelve. 
+To solve this problem we decided to chose a \emph{simpler} approach. We independently measure the recall and counts of clicks,
+wants and purchases retrieved by the recommender in the top 20 positions. To check if an item is a click, want or purchase
+we create a file which stores the log events in the following format:
 
-By combing the AUC which gives us the recall for the entire recommendation list for each user, the MAP\@20 to measure the precision of
-the top 20 recommendations and then give individual numbers for the different event types we believe we would get a good overview of
-the systems overall performance with the main emphasis on the top 20 recommendations.
+\begin{table}[H]
+\centering
+\begin{tabular}{*{4}l}
+\toprule
+User ID	&	Item ID	 &  Event Type  \\ \midrule
+11		&	21		 &	1			\\
+13		&	213		 &	2			\\
+101		&	202		 &  3			\\
+\bottomrule
+\end{tabular}
+\caption{Event type file format}
+\end{table}
+
+For items which have multiple events for a given user we only use the most \emph{valuable} event. E.g. if a user have
+both clicked and purchased we store the item as a purchase, giving it a value of 3. When evaluating the recommender we 
+first count the occurrences of the different events before looking at the top 20 predictions to see how many of the
+events in the different \emph{buckets} were retrieved. In addition we separately measure the MAP\@20 scores for the different
+event types to give us some information about where in the top 20 the items are placed. We believe that having the raw
+counts coupled with the true-postive rate for the different event type and a measure of their ranking quality will
+be more informative and give us a clearer overview of the systems performance. Given that we have known the relevance of
+the different event types nDCG could have given us all these numbers summarized in one column, but instead we now have twelve. 
 
 %Normalized Discounted Cumulative Gain ($nDCG_{k}$), described in Section \ref{subp:normalized_discounted_cumulative_gain_}
 % 

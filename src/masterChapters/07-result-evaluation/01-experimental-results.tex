@@ -1,13 +1,17 @@
 % !TEX root = ../../report.tex
+
 \section{Experimental Results}
 
-In this section we present the experimental results...
-
-
+The following section will present our experimental results, dicuss our findings and
+discuss whether or not our results supports our hypotheses.
 
 \section{Binary Purchase Only Dataset}
 
-\begin{table}
+Attempting to do collaborative filtering, let alone do recommendations with only 466 users, 1188 items and
+an average of 1.34 ratings per items is no easy task using traditional recommender systems. However, these numbers
+are meant as a baseline to show what one could expect when only looking at purchase data. 
+
+\begin{table}[H]
     \centering
     \begin{tabular}{*{5}l}
     \toprule
@@ -21,133 +25,99 @@ In this section we present the experimental results...
 \caption[Experimental Results - Purchase Only Dataset]{Experimental Results for the purchase only dataset using random splits. The results are averaged over 5 runs}
 \end{table}
 
+To our surprise our Most Popular recommender performed much worse than random guessing. But since the average item
+have been given on average 1.34 ratings one could not expect to much since the ratings are evenly distribution over
+all the items. Both item-based and user-based collaborative filtering performed marginally better than random guessing,
+while BPR-MF performed much worse than random guessing. 
 
 \section{Binary Multiple Events Dataset}
 
+When incorporating both clicks and likes in addition to purchases we ended up with a total of 1,511 users, 5,855 items
+and an average of 4.76 ratings per item. Here each event type is seen as equally important and is not weighted differently.
+These numbers are meant as a baseline to show what is possible using binary positive feedback only recommendation methods.
+
+\subsection{Time-based splits}
+
+As we have access to timestamps we decided to split the dataset on time, making the evaluation more realistic. However,
+there seem to have been particularly little purchase activity over the last two months. The following table shows our
+experimental results performing a 90:10 split based on timestamps, making predictions for the events between 7. may - 
+19. may.
+
+\begin{table}[H]
+\centering
+\resizebox{
+\columnwidth}{!}{
+\begin{tabular}{*{19}l}
+\toprule
+Model & AUC &	$MAP@20$ &	$T_{click}$ &	$T_{want}$ &	$T_{purchase}$ &	$P_{click}$&	$T_{want}$ &	$T_{purchase}$ &	$R_{click}$ &	$R_{want}$ &	$R_{purchase}$ &	$MAP@20_{click}$ &	$MAP@20_{want}$	& $MAP@20_{purchase}$ &	 \\
+\midrule
+Most Popular 			  &	0.627207 &	0.002821 &	1419 &	1280 &	2 &	20 &	10 &	0 &	0.014094 &	0.007812 &	0 &	0.002501 &	0.003635 &	0 &	 \\ 
+ItemBasedKNN k = 10		  &	0.325703 &	0.001104 &	1419 &	1280 &	2 &	6  &	5  &	0 &	0.004228 &	0.003906 &	0 &	0.001006 &	0.001124 &	0 &	 \\
+ItemBasedKNN k = 50		  &	0.417509 &	0.000404 &	1419 &	1280 &	2 &	4  &	0  &	0 &	0.002819 &	0 		 &	0 &	0.000505 &	0 		 &	0 &	 \\
+ItemBasedKNN k = 80 	  & 0.427405 &	0.000433 &	1419 &	1280 &	2 &	5  &	1  &	0 &	0.003523 &	0.000781 &	0 &	0.000504 &	0.000061 &	0 &	 \\
+ItemBasedKNN jaccard k=80 &	0.490309 &	0.001417 &	1419 &	1280 &	2 &	7  &	8  &	0 &	0.004933 &	0.00625 &	0 &	0.000836 &	0.002755 &	0 &	 \\
+ItemBasedKNN k = 100	  & 0.446664 &	0.000376 &	1419 &	1280 &	2 &	4  &	0  &	0 &	0.002819 &	0  		 &	0 &	0.000466 &	0 		 &	0 &	 \\
+UserBasedKNN k = 10 	  &	0.481262 &	0.00442  &	1419 &	1280 &	2 &	16 &	9  &	0 &	0.011276 &	0.007031 &	0 &	0.001998 &	0.0097 &	0 &	 \\
+UserBasedKNN k = 50 	  &	0.496582 &	0.007029 &	1419 &	1280 &	2 &	18 &	11 &	0 &	0.012685 &	0.008594 &	0 &	0.00247 &	0.025629 &	0 &	 \\
+BPR-MF default 			  &	0.606964 &	0.002716 &	1419 &	1280 &	2 &	12 &	5  &	0 &	0.008457 &	0.003906 &	0 &	0.001777 &	0.009149 &	0 &	 \\
+BPR-MF default	    	  &	0.624658 &	0.001764 &	1419 &	1280 &	2 &	9  &	6  &	0 &	0.006342 &	0.004687 &	0 &	0.001049 &	0.002891 &	0 &	 \\
 
 
-\begin{table}
-    \centering
-    \resizebox{\columnwidth}{!}{%
-    \begin{tabular}{*{15}l}
-    \toprule
-    Model 			&	AUC			&	$MAP@20$		&	$P_c$ 	& 	$P_w$ 	& 	$P_p$ 	& 	$A_c$ 	& 	$A_w$ 	& 	$A_p$ 	& 	$R_c	$	&	$R_w$		& 	$R_p$	& 	$MAP@_p$	& 	$MAP@_w$ & 	$MAP@_p$ \\ \midrule
-    Most Popular	&	0.00000		&	0.00000		&	0.00000	& 	0.00000	& 	0.00000	& 	0.00000	& 0.00000	& 0.00000	& 	0.00000	& 	0.00000	& 	0.00000 & 	0.00000	& 	0.00000	&   0.00000\\
-    %ItemBasedKNN	&	
-    %UserBasedKNN	&	
-    %BPR-MF			&	
-    \bottomrule
-    \end{tabular}
-    }
-\caption{Experimental Results - Purchase Only Dataset}
+\bottomrule
+\end{tabular}}
+\caption{Experimental results time-based splits 90:10 (7. May - 19. May)}
 \end{table}
 
+As you can see from the table there have only been recorded two purchase related events in the twelve day period...
 
 
+The following table shows our experimental results predicting the events between 16. April - 22. May:
 
-\subsection{The SoBazaar Dataset (Implicit Ratings)}
+
+\begin{table}[H]
+\centering
+\resizebox{
+\columnwidth}{!}{
+\begin{tabular}{*{19}l}
+\toprule
+Model & AUC &	$MAP@20$ &	$T_{click}$ &	$T_{want}$ &	$T_{purchase}$ &	$P_{click}$&	$T_{want}$ &	$T_{purchase}$ &	$R_{click}$ &	$R_{want}$ &	$R_{purchase}$ &	$MAP@20_{click}$ &	$MAP@20_{want}$	& $MAP@20_{purchase}$ &	 \\
+\midrule
+Most Popular 		 		&	0.613218 &	0.004856 &	3038 &	2328 &	36 &	28 &	10 &	0 &	0.009217 &	0.004296 &	0 		 &	0.004622 &	0.003046 &	0 		 &	 \\
+ItemBasedKNN k = 10  		& 	0.362571 &	0.002441 &	3038 &	2328 &	36 &	14 &	13 &	3 &	0.004608 &	0.005584 &	0.083333 &	0.001399 &	0.00248  &	0.051515 &	 \\
+ItemBasedKNN jaccard k = 50 &	0.418569 &	0.004367 &	3038 &	2328 &	36 &	12 &	9  &	2 &	0.00395  &	0.003866 &	0.055556 &	0.003914 &	0.002017 &	0.014286 &	 \\
+ItemBasedKNN jaccard k = 100& 	0.464325 &	0.002638 &	3038 &	2328 &	36 &	14 &	7  &	1 &	0.004608 &	0.003007 &	0.027778 &	0.002576 &	0.000623 &	0.002778 &	 \\
+UserBasedKNN k = 10  		&	0.392918 &	0.002205 &	3038 &	2328 &	36 &	11 &	8  &	3 &	0.003621 &	0.003436 &	0.083333 &	0.000984 &	0.002686 &	0.063582 &	 \\
+UserBasedKNN k = 50  		& 	0.512886 &	0.003248 &	3038 &	2328 &	36 &	14 &	13 &	3 &	0.004608 &	0.005584 &	0.083333 &	0.001766 &	0.005781 &	0.063005 &	 \\
+UserBasedKNN k = 100 		& 	0.558578 &	0.004608 &	3038 &	2328 &	36 &	15 &	15 &	3 &	0.004937 &	0.006443 &	0.083333 &	0.002867 &	0.009185 &	0.069444 &	 \\
+UserBasedKNN jaccard k = 200&	0.585442 &	0.004358 &	3038 &	2328 &	36 &	17 &	14 &	3 &	0.005596 &	0.006014 &	0.083333 &	0.002927 &	0.007883 &	0.053241 &	 \\
+BPR-MF default 		 		&	0.603602 &	0.003141 &	3038 &	2328 &	36 &	17 &	12 &	0 &	0.005596 &	0.005155 &	0 		 &	0.002522 &	0.003595 &	0 		&	 \\
+BPR-MF default 	     		&	0.601981 &	0.003334 &	3038 &	2328 &	36 &	20 &	11 &	1 &	0.006583 &	0.004725 &	0.027778 &	0.002425 &	0.006161 &	0.00641 &	 \\
+\bottomrule
+\end{tabular}}
+\caption{Experimental results time-based splits 80:20 (16. April - 22. May)}
+\end{table}
+
+Again we see that there are really few purchase events and multiple recommenders are not able to successfully recommend even 1 purchased item...
+
+
+\subsection{Random splits}
+
+The following results are generated using a random dataset splitter. This was performed due to the low amounts of purchase activity the last couple of months.
+
+
+\subsection{Implicit Ratings}
+
 
 This subsection will present the experimental results for the SoBazaar dataset using implicit ratings.
 
 
-\begin{table}
-    \centering
-    \resizebox{\columnwidth}{!}{%
-    \begin{tabular}{*{15}l}
-    \toprule
-    Model 			&	AUC			&	$MAP@20$		&	$P_c$ 	& 	$P_w$ 	& 	$P_p$ 	& 	$A_c$ 	& 	$A_w$ 	& 	$A_p$ 	& 	$R_c	$	&	$R_w$		& 	$R_p$	& 	$MAP@_p$	& 	$MAP@_w$ & 	$MAP@_p$ \\ \midrule
-    Most Popular	&	0.00000		&	0.00000		&	0.00000	& 	0.00000	& 	0.00000	& 	0.00000	& 0.00000	& 0.00000	& 	0.00000	& 	0.00000	& 	0.00000 & 	0.00000	& 	0.00000	&   0.00000 \\
-    %ItemBasedKNN	&	
-   % UserBasedKNN	&	
-   % ALS-WR			&	
-    \bottomrule
-    \end{tabular}
-    }
-\caption{Experimental Results - Linear Count}
-\end{table}
 
 
 
 
-\begin{table}
-    \centering
-    \resizebox{\columnwidth}{!}{%
-    \begin{tabular}{*{19}l}
-    \toprule
-    &
-    \multicolumn{3}{c}{AUC} 			&
-    \multicolumn{3}{c}{nDCG@20} 		&
-	\multicolumn{3}{c}{MAP@20} 		&
-    \multicolumn{3}{c}{HLU} 			&
-    \multicolumn{3}{c}{IS Coverage} 	&
-    \multicolumn{3}{c}{US Coverage} \\
-    \cmidrule(lr){2-4}
-    \cmidrule(lr){5-7}
-    \cmidrule(lr){8-10}
-    \cmidrule(lr){11-13}
-    \cmidrule(lr){14-16}
-    \cmidrule(lr){17-19}
 
-    Model &
-    \multicolumn{1}{c}{40\%} &
-    \multicolumn{1}{c}{60\%} &
-    \multicolumn{1}{c}{80\%} &
-    \multicolumn{1}{c}{40\%} &
-    \multicolumn{1}{c}{60\%} &
-    \multicolumn{1}{c}{80\%} &
-    \multicolumn{1}{c}{40\%} &
-    \multicolumn{1}{c}{60\%} &
-    \multicolumn{1}{c}{80\%} &
-    \multicolumn{1}{c}{40\%} &
-    \multicolumn{1}{c}{60\%} &
-    \multicolumn{1}{c}{80\%} &
-    \multicolumn{1}{c}{40\%} &
-    \multicolumn{1}{c}{60\%} &
-    \multicolumn{1}{c}{80\%} &
-    \multicolumn{1}{c}{40\%} &
-    \multicolumn{1}{c}{60\%} &
-    \multicolumn{1}{c}{80\%} \\ \midrule
-    MostPopular 		& 0.5982 & 0.6028 & 0.6071 & 0.0254 & 0.0256 & 0.0187 & 0.0136 & 0.0156 & 0.0089 & 5.7803 & 5.7803 & 2.8902 & 1.0  & 1.0  & 1.0  & 1.0 	& 1.0  & 1.0						\\
-    MostPopular + FB 	& 0.7557 & 0.7687 & 0.7714 & 0.0254 & 0.0256 & 0.0174 & 0.0157 & 0.0156 & 0.0085 & 5.7803 & 5.7803 & 2.8902 & 1.0  & 1.0  & 1.0  & 1.0 	& 1.0  & 1.0  						\\
-    Rec 3				& -		 & - 	  & - 	   & - 		& - 	 & - 	  & -	   & -		& - 	 & -	  & -	   & - 		& -	   & -	  &	-	 & -	& -    & - 							\\
 
-    \bottomrule
-    \end{tabular}
-    }
-    \caption{SoBazaar Cold-start System Evaluation Results using Implicit Ratings (count\_sigmoid\_fixed\_sr-3.5.txt)}
-\end{table}
 
-\begin{table}
-\centering
-\resizebox{\columnwidth}{!}{%
-\begin{tabular}{|c|*{18}{c|}c|}
-\hline
-&	 \multicolumn{3}{c|}{AUC} & \multicolumn{3}{c|}{nDCG@20} &	 \multicolumn{3}{c|}{MAP@20} &	 \multicolumn{3}{c|}{HLU} & \multicolumn{3}{c|}{IS Coverage} & \multicolumn{3}{c|}{US Coverage} \\ \hline
-Model 				& 10\% 	 & 40\%   & 75\%   & 10\%   & 40\%   & 75\%   & 10\%   & 40\% 	& 75\%	 & 10\%   & 40\%   & 75\%   & 10\% & 40\% & 75\% & 10\% & 40\% & 75\%   					\\ \hline
-MostPopular 		& 0.7385 & 0.7391 & 0.7533 & 0.0247 & 0.0400 & 0.0474 & 0.0087 & 0.0135 & 0.0219 & 5.7143 & 7.4561 & 8.7336 & 1.0  & 1.0  & 1.0  & 1.0 	& 1.0  & 1.0						\\ \hline
-MostPopular + FB 	& 0.8569 & 0.8587 & 0.8672 & 0.0254 & 0.0400 & 0.0474 & 0.0089 & 0.0135 & 0.0219 & 2.0179 & 5.7143 & 8.7336 & 1.0  & 1.0  & 1.0  & 1.0 	& 1.0  & 1.0						\\ \hline
-Rec 3				& -		 & - 	  & - 	   & - 		& - 	 & - 	  & -	   & -		& - 	 & 	   	  & -	   &		&	   &	  &		 &		&	   & - 							\\ \hline
-Rec 4				& -		 & - 	  & - 	   & - 		& - 	 & - 	  & -	   & -		& - 	 & 	   	  & -	   &		&	   &	  &		 &		&	   & - 							\\ \hline
-\end{tabular}
-}
-\caption{SoBazaar Cold-start Item Evaluation Results using Implicit Ratings (count\_sigmoid\_fixed\_sr-3.5.txt)}
-\end{table}
-
-\begin{table}
-\centering
-\resizebox{\columnwidth}{!}{%
-\begin{tabular}{|c|*{18}{c|}c|}
-\hline
-&	 \multicolumn{3}{c|}{AUC} & \multicolumn{3}{c|}{nDCG@20} &	 \multicolumn{3}{c|}{MAP@20} &	 \multicolumn{3}{c|}{HLU} & \multicolumn{3}{c|}{IS Coverage} & \multicolumn{3}{c|}{US Coverage} \\ \hline
-Model 				& 10\% 	 & 40\%   & 75\%   & 10\%   & 40\%   & 75\%   & 10\%   & 40\% 	& 75\%	 & 10\%   & 40\%   & 75\%   & 10\% & 40\% & 75\% & 10\% & 40\% & 75\%   					\\ \hline
-MostPopular 		& 0.9775 & 0.9807 & 0.9811 & 0.0804 & 0.0937 & 0.1045 & 0.0449 & 0.0468 & 0.0533 & 4.0595 & 6.0879 & 7.6238 & 1.0  & 1.0  & 1.0  & 1.0 	& 1.0  & 1.0						\\ \hline
-MostPopular + FB 	& 0.9877 & 0.9895 & 0.9897 & 0.0804 & 0.0937 & 0.1045 & 0.0449 & 0.0468 & 0.0533 & 4.0595 & 6.0879 & 7.6238 & 1.0  & 1.0  & 1.0  & 1.0 	& 1.0  & 1.0						\\ \hline
-Rec 3				& -		 & - 	  & - 	   & - 		& - 	 & - 	  & -	   & -		& - 	 & 	   	  & -	   &		&	   &	  &		 &		&	   & - 							\\ \hline
-Rec 4				& -		 & - 	  & - 	   & - 		& - 	 & - 	  & -	   & -		& - 	 & 	   	  & -	   &		&	   &	  &		 &		&	   & - 							\\ \hline
-\end{tabular}
-}
-\caption{SoBazaar Cold-start User Evaluation Results using Implicit Ratings (count\_sigmoid\_fixed\_sr-3.5.txt)}
-\end{table}
 
 
 \begin{table}
@@ -218,12 +188,46 @@ NameID: BPRMF    mode: user &   0.7490  &   0.7408  &   0.7361  &   0.0018  &   
     \caption{Testur}
 \end{table}
 
+\subsection{Cold-Start Results}
 
+
+\begin{table}
+\centering
+\resizebox{\columnwidth}{!}{%
+\begin{tabular}{|c|*{18}{c|}c|}
+\hline
+&	 \multicolumn{3}{c|}{AUC} & \multicolumn{3}{c|}{nDCG@20} &	 \multicolumn{3}{c|}{MAP@20} &	 \multicolumn{3}{c|}{HLU} & \multicolumn{3}{c|}{IS Coverage} & \multicolumn{3}{c|}{US Coverage} \\ \hline
+Model 				& 10\% 	 & 40\%   & 75\%   & 10\%   & 40\%   & 75\%   & 10\%   & 40\% 	& 75\%	 & 10\%   & 40\%   & 75\%   & 10\% & 40\% & 75\% & 10\% & 40\% & 75\%   					\\ \hline
+MostPopular 		& 0.7385 & 0.7391 & 0.7533 & 0.0247 & 0.0400 & 0.0474 & 0.0087 & 0.0135 & 0.0219 & 5.7143 & 7.4561 & 8.7336 & 1.0  & 1.0  & 1.0  & 1.0 	& 1.0  & 1.0						\\ \hline
+MostPopular + FB 	& 0.8569 & 0.8587 & 0.8672 & 0.0254 & 0.0400 & 0.0474 & 0.0089 & 0.0135 & 0.0219 & 2.0179 & 5.7143 & 8.7336 & 1.0  & 1.0  & 1.0  & 1.0 	& 1.0  & 1.0						\\ \hline
+Rec 3				& -		 & - 	  & - 	   & - 		& - 	 & - 	  & -	   & -		& - 	 & 	   	  & -	   &		&	   &	  &		 &		&	   & - 							\\ \hline
+Rec 4				& -		 & - 	  & - 	   & - 		& - 	 & - 	  & -	   & -		& - 	 & 	   	  & -	   &		&	   &	  &		 &		&	   & - 							\\ \hline
+\end{tabular}
+}
+\caption{SoBazaar Cold-start Item Evaluation Results using Implicit Ratings (count\_sigmoid\_fixed\_sr-3.5.txt)}
+\end{table}
+
+\begin{table}
+\centering
+\resizebox{\columnwidth}{!}{%
+\begin{tabular}{|c|*{18}{c|}c|}
+\hline
+&	 \multicolumn{3}{c|}{AUC} & \multicolumn{3}{c|}{nDCG@20} &	 \multicolumn{3}{c|}{MAP@20} &	 \multicolumn{3}{c|}{HLU} & \multicolumn{3}{c|}{IS Coverage} & \multicolumn{3}{c|}{US Coverage} \\ \hline
+Model 				& 10\% 	 & 40\%   & 75\%   & 10\%   & 40\%   & 75\%   & 10\%   & 40\% 	& 75\%	 & 10\%   & 40\%   & 75\%   & 10\% & 40\% & 75\% & 10\% & 40\% & 75\%   					\\ \hline
+MostPopular 		& 0.9775 & 0.9807 & 0.9811 & 0.0804 & 0.0937 & 0.1045 & 0.0449 & 0.0468 & 0.0533 & 4.0595 & 6.0879 & 7.6238 & 1.0  & 1.0  & 1.0  & 1.0 	& 1.0  & 1.0						\\ \hline
+MostPopular + FB 	& 0.9877 & 0.9895 & 0.9897 & 0.0804 & 0.0937 & 0.1045 & 0.0449 & 0.0468 & 0.0533 & 4.0595 & 6.0879 & 7.6238 & 1.0  & 1.0  & 1.0  & 1.0 	& 1.0  & 1.0						\\ \hline
+Rec 3				& -		 & - 	  & - 	   & - 		& - 	 & - 	  & -	   & -		& - 	 & 	   	  & -	   &		&	   &	  &		 &		&	   & - 							\\ \hline
+Rec 4				& -		 & - 	  & - 	   & - 		& - 	 & - 	  & -	   & -		& - 	 & 	   	  & -	   &		&	   &	  &		 &		&	   & - 							\\ \hline
+\end{tabular}
+}
+\caption{SoBazaar Cold-start User Evaluation Results using Implicit Ratings (count\_sigmoid\_fixed\_sr-3.5.txt)}
+\end{table}
 
 
 \subsection{Does our proposed implicit rating methods improve the recommendation quality over binary preference data?}
 
 Does our findings support our hypothesis?
+
 	
 \subsection{Compare the different implicit rating functions}
 
