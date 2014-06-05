@@ -2,14 +2,6 @@
 
 \section{Fashion Recommendation}
 
-%When you enter a clothing store you are normally confronted with the following suggestions:
-%    - New in/Seasonal highlights
-%    - Special offer/discounts
-%    - Bestsellers
-%    - Are you looking for something in particular?
-
-\marginpar{heri-notes: hvordan relateres dette til arbeidet deres?}
-
 \subsection{Fashion theory}
 \label{subsec:fashion-theory}
 
@@ -62,7 +54,7 @@ hence this should be reflected in both understanding implicit feedback and
 making recommendations.
 
 So fashion is what a \textbf{social group}, or a \textbf{set of groups},
-recognizes and highly advocates \textbf{at any one time}. Hence in broader
+recognizes and highly advocates \textbf{at any one time}. Thus in broader
 terms we can classify music, hair and many other trends as being fashion as
 well – however, when referencing the term \textit{fashion} in this thesis we
 implicitly refer to clothing and accessories.
@@ -71,57 +63,43 @@ Hanf et. al.~\cite{Hanf1994} states that customers are rational, when it comes
 to price and quality. This if further verified by~\cite{dutton2006} where the
 attributes classified as making the largest impact on customers are styling,
 brand, price, store (physical location) and fabrication/quality. The complete
-list of attributes and their relations is shown
-in~\ref{table:ConsumersPurchaseDec}. These attributes are important to take
+list of attributes and their relations is shown in
+Table~\ref{table:ConsumersPurchaseDec}. These attributes are important to take
 note of, as they will become important features in both training and predicting
 recommendations.
+  
+Culture is one of the main factors to determine consumer behavior.  Culture can
+be segmented into two parts: subculture and social class. All consumers are
+included in many smaller subcultures such as nationality, religious subcultures
+and geographical subcultures. The forming of a subculture happens through
+individuals seeking out other individuals with similar tastes regarding a
+variety of aspects.~\cite{vignali2009fashion}. With a larger dataset than what
+is currently is available in SoBazaar on should be able to automatically
+classify subcultures and social classes based on buying behaviour, brands,
+price and popularity scores and demographics.
 
-\subsubsection{Consumer buying behavior}
+Finally, we note that the brand of the product might also greatly affect what
+the consumer buys and what the consumer does not buy. A study done on the
+behavior of the consumer~\cite{deLace2010} showed that knowing the brand of two
+almost identical products made the consumer crowd shift towards the more well
+known brand. In comparison, when the users did not know the actual brands of
+the products, they yielded an almost equal distribution on the products. In
+SoBazaar, as in the fashion domain in general, there is consequently a large
+focus on brands. However, when recommending novelty is a key figure – that is
+we want to introduce users to \textit{new} products as well as brands.
 
-  A lot of information about the consumers behavior is lost due to the reasons
-  for their behavior is held in an unconscious or implicit level.  The reason for
-  a person is interested in a specific product could be based on some distant
-  memory of the consumers life.  This could affect how a consumer views a
-  particular brand or product for better or worse.  Brand choices are often made
-  intuitively, based on their subconscious, and the consumer cannot tell why
-  they made that specific choice~\cite{vignali2009fashion}.
+\subsection{Recommendation challenges}
 
-  Culture is one of the main factors to determine consumer behavior.  Culture can
-  be segmented into three parts: Culture, subculture and social class.  All
-  consumers are included in many smaller subcultures such as nationality,
-  religious subcultures and geographical subcultures.  Subcultures can be a
-  efficient way of constructing marketing campaigns and aim similar products at,
-  since they tend to form market segments.  The forming of a subculture happens
-  through individuals seeking out other individuals with similar tastes regarding
-  a variety of aspects~\cite{vignali2009fashion}.
-
-  There are a lot of different behavior emerging from subcultures, such as peer
-  pressure.  Social psychology is used to understand the behavior of the
-  individuals in subcultures~\cite{vignali2009fashion}.
-
-  The brand of the product might also greatly affect what the consumer buys and
-  what the consumer does not buy.  A study done on the behavior of the
-  consumer~\cite{deLace2010} showed that knowing the brand of two almost
-  identical products made the consumer crowd shift towards the more well known
-  brand.  Whereas before knowing the actual brand of the product, the crowd had a
-  more equal distribution on the products.
-
-\subsubsection{Customer satisfaction}
-  There are two main concepts when it comes to customer satisfaction: Transaction
-  specific and cumulative specific.  The transaction specific satisfaction of the
-  consumer is base on the expectations in the pre-purchase stage and the
-  perceived performance of the product in the post-purchase stage.  Where the
-  cumulative looks at the purchase as a whole, such as: the product, the purchase
-  and the service received~\cite{kumari2012}.  The transaction specific focuses
-  on the post-purchase, if the expectations of the product during the
-  pre-purchase is met in the post-purchase stage, the likeliness of a repeat
-  purchase is increased.
-
-\subsection{Challenges}
-  There is a set of challenges when it comes to making recommendations in the
-  fashion domain compared to other domains.
+There are many challenges regarding recommendations in the fashion domain,
+especially when we compare to other domains. In this subsection we will take a
+look at some challenges already mentioned as well as introduce a brief
+discussion on how one might go about and solve them in a recommender system.
+This is done in order to fulfill our second research goal (\textbf{Goal G2})
+and to lay the foundations upon which we conduct further research and
+implmentations.
 
 \subsubsection{Recentness of items}
+
   As seen from the different definitions of fashion, time is central in fashion.
   Therefore is time also central when it comes to making recommendations in this
   domain.  What is of interest for the customer one month might not be of
