@@ -147,8 +147,6 @@
 
     \emph{Clicks} and \emph{wants} on the other hand have a much higher occurrence. These two events together with \emph{purchases} tops a count of 20 on average per user, and opens for the possibility of more dense personalized recommendations, but the data is still rather sparse.
 
-
-
 \section{Graphs}
     % Price range of items in stores
     % unique Stores count for users
@@ -335,15 +333,14 @@
         This means that there will not be more than 10 events for the majority of the items, which leads to an issue when doing collaborative filtering on the data.
         When the majority of the events only has 10 events and there are over 4 000 items and 1 200 users, the probability that multiple users have interacted with similar items will be marginal.
 
-\subsubsection{Long tail and the Pareto principle on sales}
-    The Figure~\ref{figure:eventsPerproduct}
-    As seen from most of the product properties graphs they have a categorical shape, the long tailed shape?
-    A little something something about the two .... general something
-    why text here?
+\subsubsection{The Pareto principle and Long tail on sales}
+    In e-commerce the distribution of sales or product interactions can be described by the Pareto principle and the phenomenon of long tail.
+    Pareto's principle is used to tell how the distribution is in the \emph{head}~\footnote{Take for example figure~\ref{figure:eventsPerproduct}, the \emph{head} is the left most part where the curve is steep} of the graph, and the long tail phenomenon is used to tell tell how the distribution is in the \emph{tail}~\footnote{Take for example figure~\ref{figure:eventsPerproduct}, the \emph{tail} is the right most part where the curve flattens out} of the graph.
+
+    \marginpar{maybe add a figure showing head and tail of a graph instead of a footnote explaining}
 
 \paragraph{Pareto's Principle}
-    Something more about it here?
-    For a given distribution such as sales of a catalog of items, when the Pareto principle applies, the first 20\% of the products hits account for 80\% of sales.
+    Pareto's principle applies when the 20\% most frequent products account for more than 80\% of the ratings, sales or interactions in the dataset~\cite{newman05power}.
 
     \begin{figure}[H]
         \centering
@@ -470,38 +467,38 @@
         \centering
         \begin{tabular}{lll}
         \toprule
-        Threshold &   Products in threshold~\tablefootnote{The amount of products} &      Percentage of ratings \\
+        Threshold &   Products in threshold~\tablefootnote{The amount of products residing within the percentage threshold} &      Percentage of interactions \\
         \midrule
-        20.0    &    1206   &    59.1701 \\
-        40.0    &    2411   &    79.5309 \\
-        50.0    &    3014   &    86.0226 \\
+        20\%    &    1206   &    59.1701\% \\
+        41\%    &    2472   &    80.2984\% \\
         \bottomrule
         \end{tabular}
         \caption{Pareto's principle values}
     \label{table:paretosPrinciple}
     \end{table}
 
-    Our numbers, what does they mean?
+    Figure~\ref{figure:paretosPrinciple} show the percentages of interactions within the given thresholds.
+    As we can see from table~\ref{table:paretosPrinciple}, the 20\% most frequently interacted with items represents 59.1701\% of the ratings.
+    We have to move up to 41\% to reach 80\% of the interactions, and the Pareto's principle does therefore not apply to the SoBazaar.
 
 \paragraph{Long Tail}
-    Something about tail here
-    Long tail: the most frequent-occurring items represent less than 50\% of the occurrences in the logs. ~\cite{DBLP:journals/corr/abs-1203-4487}
+    The definition of long tail is that the most frequently-occuring items represent less than 50\% of occurrences in logs~\cite{DBLP:journals/corr/abs-1203-4487}.
 
     \begin{table}[H]
         \centering
         \begin{tabular}{llll}
         \toprule
-        Average rating count   & Cut at~\tablefootnote{Cut from bottom and up}  & Coverage & Percentage of ratings \\
+        Average product interaction   & Products in threshold~\tablefootnote{The amount of product residing within the percentage threshold} & Coverage & Percentage of interactions \\
         \midrule
-        6.5941   &    1833   & 69.5868 &   28.5408 \\
+        6.6928   &    4194   & 68.8443\% &   28.5408\% \\
         \bottomrule
         \end{tabular}
         \caption{Long tail values}
     \label{table:longtail}
     \end{table}
 
-    Our numbers, what does they mean?
-
+    As the table above shows the SoBazaar data does not posses a clear long tail behavior.
+    The average interaction count of the products is 6.6928 and there is 4194 products with less than this number of interactions, but these items does only cover 28.5408\% of the total interactions.
 
     % mtodo - price for store dist
     \begin{figure}[H]
@@ -761,7 +758,7 @@ clicked it once. This is also true when the user has clicked an item three
 times, but we can not defend it statistically for any higher value of clicks.
 
 \section{Session Findings}
-\marginpar{Something about session findings perhaps}
+    \marginpar{Something about session findings perhaps}
 
     % mtodo - fix caption and section :P
 	\marginpar{TODO: Remove all arrows with less than e.g. 50 events}
