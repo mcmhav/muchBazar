@@ -205,7 +205,7 @@
         The figures are showing the values from 0 to 250 since 96\% of the users reside in this subset.
         Max count of events for one user is 6055.
 
-        There are over 6000 products in the database, when 78\% of the users have less than 50 events, and as seen from figure~\ref{figure:eventIDDistribution}, the majority of events triggered by users are not directly item-related events, the information about items based on user actions alone will be sparse.
+        As seen from figure~\ref{figure:eventIDDistribution} most of the events are not directly related to products, from table~\ref{table:datasetSummary} we can see that there are over 6000 products, and as mentioned above, 78\% of the users have less than 50 events. Based on these three facts, we can assume that the data is sparse.
 
     \begin{figure}[H]
         \includegraphics[width=5in]{image/userTimespansdistribution.png}
@@ -214,12 +214,16 @@
     \label{figure:userTimespandist}
     \end{figure}
 
+    %mtodo
+
     \begin{figure}[H]
         \includegraphics[width=5in]{image/avglifetimeoncountuser.png}
         \centering
         \caption{Average lifetime of user accounts sorted on event count}
     \label{figure:avglifetimeoncountuser}
     \end{figure}
+
+    %mtodo
 
     \begin{figure}[H]
         \centering
@@ -235,13 +239,17 @@
             \caption{Cumulative distribution of sessions for users}
     \label{figure:sessCountCumDist}
         \end{subfigure}
-        %
+        \caption{Graphs presenting the number of sessions for the users in the data}
     \end{figure}
-        Figure~\ref{figure:sessCountDist} and figure~\ref{figure:sessCountCumDist} shows the number of sessions for the users in the data.
+        \marginpar{Something wrong with sessions graphs, will fix}
+        % mtodo
+        More than 90\% of the users of SoBazaar have a session count of 20 and less.
+        This means that they have not used the applications more than 20 separate times, over the time the data was collected, and strengthens the hypothesis that the data from SoBazaar is sparse.
+
         The maximum number of sessions for each user is grouped to show the count of how many users has the different amount of sessions.
 
-        The majority of the users of SoBazaar has a session count of 10 and less.
-        This means that they have not used the applications more than 10 separate times, over the time the data was collected, and strengthens the hypothesis that the data from SoBazaar is sparse.
+        In figure~\ref{figure:sessCountDist} the 4 first bars sums up to 1000, which is the amount of users who has had 4 or less sessions on the application in total. In other words --- half of the user base used the application less than 4 times.
+
 
     \begin{figure}[H]
         \centering
@@ -257,12 +265,12 @@
             \caption{Cumulative count of item interactions for users}
     \label{figure:ratingsPerUserCum}
         \end{subfigure}
-        %
+        \caption{Figures presenting the number of product interactions for the users in the data}
     \end{figure}
-        Figure~\ref{figure:ratingsPerUser} and figure~\ref{figure:ratingsPerUserCum} shows the amounts of item interactions for the users in the data, with the first bar being 0 item interactions.
-        The graphs are cut at 60 to give focus to the numbers where the majority of the users are.
+        In the figures above the rightmost bar present 0 product interactions.
+        The graphs are limited to only showing interaction amounts up till 60 to give focus to the numbers where more than 90\% of the users resides.
 
-        As seen from figure~\ref{figure:ratingsPerUserCum}, over 20\% of the users have never interacted with an item, and about 10\% of the users have more than 40 item interactions.
+        As seen from figure~\ref{figure:ratingsPerUserCum}, over 20\% of the users have never interacted with an item, and about 10\% of the users have more than 50 item interactions.
 
         Even though the data is sparse, as seen from the previous figures, the fact that the majority of the users have in some way interacted with items, opens for the possibility of drawing conclusions based on other users' item interactions.
 
@@ -279,17 +287,21 @@
         \marginpar{fact check that they use GPS and not IP-location, 6 decimals in data 11.575452}
         If the event is triggered from a phone, the event is as precise as the GPS hardware location of the phone, and would be helpful information to understand more about the user.
 
+        % mtodo check for price distribution based on location.
+
 \subsection{Product properties}
 
     \begin{figure}[H]
         \includegraphics[width=5in]{image/priceDistribution.png}
         \centering
-        \caption{Price distribution of items}
+        \caption{Price distribution of products}
     \label{figure:priceDistribution}
     \end{figure}
-        Here we see how them items are distributed on amount of items and price. The red bars indicates the amount of items with the belonging price.
-        All items priced over 3 000 are put in the same bucket, and is the reason for the last spike we see at 3 000.
-        We can see from this graph that the majority of the items are priced under 1 000 NOK.
+        Here we see how them products are distributed on amount of products and price. The red bars indicates the amount of products with the belonging price.
+        72 products have a price over 4000 and have been left out of this graph.
+
+        82\% of the items have a price lower than 1 000 NOK.
+
 
     \begin{figure}[H]
         \includegraphics[width=5in]{image/product_idcumdistribution.png}
@@ -303,7 +315,7 @@
         This means that there will not be more than 10 events for the majority of the items, which might lead to an issue when doing collaborative filtering on the data.
         When the majority of the events only has 10 events and there are over 4 000 items and 1 200 users, the probability that multiple users have interacted with similar items will be low.
 
-\subsubsection{Long tail and the Pareto principle}
+\subsubsection{Long tail and the Pareto principle on sales}
 
     For a given distribution such as sales of a catalog of items, when the Pareto principle applies, the first 20\% of the item hits account for 80\% of sales.
 
