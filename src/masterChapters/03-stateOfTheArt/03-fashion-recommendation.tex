@@ -90,41 +90,41 @@ we want to introduce users to \textit{new} products as well as brands.
 
 \subsection{Recommendation challenges}
 
-There are many challenges regarding recommendations in the fashion domain,
-especially when we compare to other domains. In this subsection we will take a
-look at some challenges already mentioned as well as introduce a brief
-discussion on how one might go about and solve them in a recommender system.
-This is done in order to fulfill our second research goal (\textbf{Goal G2})
-and to lay the foundations upon which we conduct further research and
-implmentations.
+There are many challenges when making recommendations in the fashion domain,
+especially compared to other domains. In this subsection we will take a look at
+some challenges already mentioned as well as introduce a brief discussion on
+how one might go about and solve them in a recommender system.  This is done in
+order to fulfill our second research goal (\textbf{Goal G2}) and to lay the
+foundations upon which we conduct further research and implementations.
 
-\subsubsection{Recentness of items}
+\paragraph{Recentness and seasons}
+As seen, time is \textit{per definition} a central feature in fashion, and
+consequently an important aspect to consider when analyzing implicit feedback
+and making recommendations. There are many types of recentness to consider:
 
-  As seen from the different definitions of fashion, time is central in fashion.
-  Therefore is time also central when it comes to making recommendations in this
-  domain.  What is of interest for the customer one month might not be of
-  interest the next.  The interest of the customer is not only affected by what
-  is categorized as current fashion, but might be affected by other aspects, such
-  as the current season.  The recentness of an item and how long an item is of
-  interest for a customer is greatly affected by the customers social groups, and
-  the trend in this group.
+\begin{itemize}
+\item Apparel may go out of season.
+\item Or go \textit{out of fashion}, that is experiencing a lowered popularity.
+\item Or be replaced by newer collection.
+\item Users tastes may change, due to a range of external factors.
+\end{itemize}
 
-\subsubsection{How to use user feedback}
-  The feedback from the user will mainly be implicit~\ref{sec:implicit}.  As seen
-  earlier in this section, it can be assumed that an increased interest in an
-  item has some correlation with increased interaction with the item.  To what
-  degree this increased interest can be mapped to a more tangible feedback
-  varies from customer to customer.
-  How the item interaction feedback retrieved will be used is explored in section~\ref{sec:implicit}
+\paragraph{Implicit data}
+The feedback from the user will mainly be implicit~\ref{sec:implicit}.  As seen
+earlier in this section, it can be assumed that an increased interest in an
+item has some correlation with increased interaction with the item.  To what
+degree this increased interest can be mapped to a more tangible feedback
+varies from customer to customer.
+How the item interaction feedback retrieved will be used is explored in section~\ref{sec:implicit}
 
   %   - What do we look at? What information is the most useful
   %       - Item category, item keywords, brand... ?
   %   - Changing interest of users
 
-\subsubsection{Product semantics}
-  The product database consist of items from multiple stores with multiple
-  languages and multiple ways of labeling, describing and categorizing their
-  products.  This poses an issue for recommending items based on their content.
+\paragraph{Product semantics}
+The product database consist of items from multiple stores with multiple
+languages and multiple ways of labeling, describing and categorizing their
+products.  This poses an issue for recommending items based on their content.
 
   % Building Recommender Systems using a Knowledge Base of product semantics
   % http://images.accenture.ca/SiteCollectionDocuments/PDF/recommenderws02.pdf
@@ -134,8 +134,16 @@ implmentations.
           % E.g. keywords, when descriptions are in multiple languages
       % - Can rating infromation from similar items be used to decrease sparsity? (Content infromation - Hybrid approaches)
 
-% mtodo: discussion
-\marginpar{heri-notes: hvorfor er disse utfordringene relevante for oss?}
+\paragraph{Novelty and coverage}
+
+\paragraph{Fluxuating prices}
+
+\paragraph{Demographics, subcultures and social-classes}
+
+% Perhaps change to subsubsection ?
+\paragraph{Discussion}
+Some concluding toughts.
+Why are this relevant for us?
 
 \subsection{E-commerce and the fashion industry}
 \label{subsubs:fashionInEcom}
@@ -249,16 +257,6 @@ rather small at 8\%, but compared to the e-commerce industry in general at
 4\%. Hence we conclude that although a small of users interacts with fashion
 companies by social media, it is a more important segment in this industry
 compared to e-commerce in general.
-
-\subsection{SoBazaar, the e-commerce application}
-  As briefly mentioned in the introduction chapter~\ref{sec:motivation} SoBazaar is a fashion e-commerce application for web and hand held devices.
-  The application is developed by Telenor and aggregates fashion products from various brands and stores, mainly fashion related.
-  Users of the application can choose to log in with their social media account on Facebook~\footnote{Facebook is an online social media service with around 1.28 billion monthly active users~\cite{facebook}} to store and share their fashion findings in the application.
-  This allows the user to have one entry point to get the latest updates on fashion, and see what the user's social network is up in regards to fashion.
-  When the user finds an item especially interesting and is interested in purchasing the item, the user is redirected to the store from which the product originated.
-
-  The fact that SoBazaar utilizes Facebook and a large set of fashion stores lets the users of the application gather at one place to find users with similar taste in fashion.
-  As seen from~\ref{subsec:theory} one important aspect in fashion is the feeling of belonging, which is made easy through the utilization of Facebook.
 
 \subsection{Competitors to SoBazaar}
   \label{subsec:competitors}
