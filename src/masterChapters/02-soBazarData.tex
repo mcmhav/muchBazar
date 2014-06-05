@@ -107,8 +107,8 @@
             session           & Which session number the event belongs to~\tablefootnote{This is the value added in the preprocessing phase~\ref{sec:preprocessing}. For two events to end up in the same session, the event has to be triggered within a certain period of time, and both be after the same application started-flag} \\
             \bottomrule
         \end{tabular}
-        \label{table:eventData}
         \caption[Event Metadata]{Metadata collected from an event. The complete list can be found in table~\ref{table:completeEventData}}
+        \label{table:eventData}
     \end{table}
 
     \begin{table}[H]
@@ -296,13 +296,13 @@
             \includegraphics[width=\dualGraphWidth]{image/priceDistributiondistribution.png}
             \centering
             \caption{Price distribution of products}
-    \label{figure:ratingsPerUser}
+    \label{figure:pricePerProduct}
         \end{subfigure}%
         \begin{subfigure}{.5\textwidth}
             \includegraphics[width=\dualGraphWidth]{image/cumpriceDistributiondistribution.png}
             \centering
             \caption{Cumulative price distribution of products}
-    \label{figure:ratingsPerUserCum}
+    \label{figure:pricePerProductCum}
         \end{subfigure}
         \caption{Figures presenting the distribution of price for the items i SoBazaar}
     \end{figure}
@@ -320,29 +320,30 @@
             \includegraphics[width=\dualGraphWidth]{image/product_iddistribution.png}
             \centering
             \caption{Count of events on products}
-    \label{figure:ratingsPerUser}
+    \label{figure:eventsPerproduct}
         \end{subfigure}%
         \begin{subfigure}{.5\textwidth}
             \includegraphics[width=\dualGraphWidth]{image/product_idcumdistribution.png}
             \centering
             \caption{Cumulative count of events on products}
-    \label{figure:ratingsPerUserCum}
+    \label{figure:eventsPerproductCum}
         \end{subfigure}
         \caption{Figures presenting the distribution of events for the products i SoBazaar}
     \end{figure}
         80\% of the products have only a interaction count of 10 or less.
         Interaction count is \emph{product\_detail\_clicked}, \emph{product\_wanted} and \emph{product\_purchase\_intended}.
-        This means that there will not be more than 10 events for the majority of the items, which might lead to an issue when doing collaborative filtering on the data.
-        When the majority of the events only has 10 events and there are over 4 000 items and 1 200 users, the probability that multiple users have interacted with similar items will be low.
+        This means that there will not be more than 10 events for the majority of the items, which leads to an issue when doing collaborative filtering on the data.
+        When the majority of the events only has 10 events and there are over 4 000 items and 1 200 users, the probability that multiple users have interacted with similar items will be marginal.
 
 \subsubsection{Long tail and the Pareto principle on sales}
+    The Figure~\ref{figure:eventsPerproduct}
+    As seen from most of the product properties graphs they have a categorical shape, the long tailed shape?
+    A little something something about the two .... general something
+    why text here?
 
-    For a given distribution such as sales of a catalog of items, when the Pareto principle applies, the first 20\% of the item hits account for 80\% of sales.
-
-    or
-
-    Long tail: the most frequent-occurring items represent less than 50\% of the occurrences in the logs. ~\cite{DBLP:journals/corr/abs-1203-4487}
-
+\paragraph{Pareto's Principle}
+    Something more about it here?
+    For a given distribution such as sales of a catalog of items, when the Pareto principle applies, the first 20\% of the products hits account for 80\% of sales.
 
     \begin{figure}[H]
         \centering
@@ -469,7 +470,7 @@
         \centering
         \begin{tabular}{lll}
         \toprule
-        Threshold &   Cut at~\tablefootnote{Cut top down} &      Percentage of ratings \\
+        Threshold &   Products in threshold~\tablefootnote{The amount of products} &      Percentage of ratings \\
         \midrule
         20.0    &    1206   &    59.1701 \\
         40.0    &    2411   &    79.5309 \\
@@ -479,6 +480,12 @@
         \caption{Pareto's principle values}
     \label{table:paretosPrinciple}
     \end{table}
+
+    Our numbers, what does they mean?
+
+\paragraph{Long Tail}
+    Something about tail here
+    Long tail: the most frequent-occurring items represent less than 50\% of the occurrences in the logs. ~\cite{DBLP:journals/corr/abs-1203-4487}
 
     \begin{table}[H]
         \centering
@@ -492,6 +499,8 @@
         \caption{Long tail values}
     \label{table:longtail}
     \end{table}
+
+    Our numbers, what does they mean?
 
 
     % mtodo - price for store dist
