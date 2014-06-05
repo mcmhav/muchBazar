@@ -10,140 +10,74 @@
 
 \marginpar{heri-notes: hvordan relateres dette til arbeidet deres?}
 
-\subsection{Theory}
-  \label{subsec:theory}
-  This subsection will look into some background research on fashion.  And look
-  into what fashion is and why a consumer behaves like the consumer does.
+\subsection{Fashion theory}
+\label{subsec:fashion-theory}
 
-\subsubsection{What is fashion}
-  There are a lot of different ways of defining what fashion really is.
+Our first goal (\textbf{Goal G1}) is to better understand the fashion domain.
+To achieve this a detailed study is needed, both to better understand
+\textit{how} we want to predict user preferences, but also to explain various
+effects seen in the dataset. We first study the broad definition of
+\textit{fashion} and what its implications are on consumer behaviour. Next we
+study how the fashion industry is experiencing tremendous growth in the
+e-commerce sector, before finally looking at the SoBazaar application –
+performing a comprehensive comptetitor analysis where we try to identify the
+largest segements of both growth potential and recommendation system
+uniqueness.
 
-  \begin{itemize}
-      \item The entire spectrum of attractive clothes styles at any given time -
-      Anne Hollander
-      \item Fashion is dress in which the key feature is rapid and continual
-      changing of styles - Elisabeth Wilson
-      \item Fashion is usually first raised by a small group of people and then a
-      trend is formed with more and more followers and copycats till it becomes
-      outdated - Cheng \& Huang
-      \item The social norm recognized and advocated by a particular social class
-      at one time. It affects all the fields in society, especially and famously
-      in clothing. Sometimes, short-lived fashion is referred to as style - Fang
-      Ma \cite{Fang2012}
-  \end{itemize}
+\subsubsection{Definition}
 
-  As seen from the different definitions mentioned above, what is reoccurring is;
-  clothes, popularity, time and a cultural grouping.
-  One of the main drives of fashion is the need and want for belonging, for the individuals to become a part of something bigger and sharing a common though or view.
-  So fashion is what a \textbf{social group}, or a \textbf{set of groups}, recognizes and highly advocates \textbf{at any one time}.
-  More generally, fashion is a popular style or practice, other categories such as music style and hairstyle can also be viewed as fashion, but in this case the focus will be directed towards clothing.
+There exists multiple interpretations and different definitions of the term
+\textit{fashion}. However, by looking at a set of definitions we can observe a
+common theme.
 
-\subsubsection{Task of fashion marketing}
-  Fashion is subject to constant change as seen from the different definitions of
-  fashion.
+\begin{itemize}
+    \item \textit{The entire spectrum of attractive clothes styles at any given
+    time} - Anne Hollander
 
-  Some of these changes are due to human changes such as adoption of a new line
-  of clothing, or something less controllable, such as the changing of the
-  seasons.
+    \item \textit{Fashion is dress in which the key feature is rapid and continual
+    changing of styles} - Elisabeth Wilson
 
-  How much of a product should be made to satisfy the need of the consumer, but
-  still remain a desirable product the consumer would find itself unique and
-  special with?
+    \item \textit{Fashion is usually first raised by a small group of people
+    and then a trend is formed with more and more followers and copycats till
+    it becomes outdated} - Cheng \& Huang 
 
-  What is a reasonable price for the product, and how much is the name of the
-  designer worth?  Who can distribute the product without the product loosing its
-  value and fashion status?  These are just some of the questions the fashion
-  industry has to answer.  Without them answered the potential of the product
-  is more difficult to reach.  Which could lead the consumer not to feel the uniqueness and
-  prestige of the item.  Fashion trends comes and goes, and the new fashion
-  starts with the refusal of what is old.
+    \item \textit{The social norm recognized and advocated by a particular
+    social class at one time. It affects all the fields in society, especially
+    and famously in clothing. Sometimes, short-lived fashion is referred to as
+    style} - Fang Ma \cite{Fang2012}
 
-  In fashion there is a big difference between men and women in what, where, when
-  and how they buy.  How to understand the behaviour of the consumers and how they
-  act can come from a vast set of areas, the main factors influencing the
-  consumer according to \cite{kotler2009marketing} is:
+\end{itemize}
 
-  \begin{table}[H]
-      \centering
-      \begin{tabular}{l l}
-      \toprule
-        Factors        			& Examples \\ \midrule
-        Physiological factors   & Physical protection, commodity \\
-        Socio-cultural factors  & Family, friends, work, social groups  \\
-        Personal factors        & Age, life cycle, occupation, personality \\
-        Psychological factors   & Product reliance or sympathy \\  % more expensive because more expensive - increase self-confidence
-        Rational factors        & Brand of product, quality, designer, price \\
-      \bottomrule
-      \end{tabular}
-      \caption[Fashion Factors]{Main factors influencing the consumer when it comes to their buying behaviour}
-      \label{table:FashionFactors}
-  \end{table}
-  When it comes to fashion it is mainly a socio-cultural phenomenon.
+The recurring themes can be classified as being related to clothes, popularity,
+time and cultural grouping. One of the main drives of fashion is the need and
+want for belonging, and for induviduals to become a part of something bigger
+– sharing a common thought or opinion. A common term to use is \textit{making a
+fashion statement}, where a group or induvidual makes their opinion or
+statement heard without words, but through clothing and fashion. When making
+recommendations this is important, as social connections between users become
+important and can potentially be used to enhance predictions and understand
+subcultures within communties. In addition we notice that \textit{per
+definition} recentness and popularity are two important factors to fashion,
+hence this should be reflected in both understanding implicit feedback and
+making recommendations.
 
-  One central factor when it comes to shopping and fashion is price, a rational factor.
-  The consumer acts rational, when it comes to price and quality~\cite{Hanf1994}.
-  In the case of fashion, and a product connected with prestige, this rational
-  behavior might not apply.
+So fashion is what a \textbf{social group}, or a \textbf{set of groups},
+recognizes and highly advocates \textbf{at any one time}. Hence in broader
+terms we can classify music, hair and many other trends as being fashion as
+well – however, when referencing the term \textit{fashion} in this thesis we
+implicitly refer to clothing and accessories.
 
-  There is a set of product criteria a consumer evaluates when it comes to the
-  acquisition of a product~\cite{dutton2006}, attributes found to have the most
-  significant impact is styling, brand , price, place(store), fabrication/fiber
-  content.  The complete list is shown in~\ref{table:ConsumersPurchaseDec}
-
-
-  \marginpar{TODO: Fix some kind of left align centering og content}
-  \begin{table}[H]
-      \centering
-      \begin{tabular}{ccc}
-      \toprule
-        \multicolumn{2}{c}{Concrete Attributes (Product Features)} & Abstract Attributes (Attitude-Based) \\
-        \cmidrule(r{1em}){1-2}
-        \multicolumn{1}{c}{Intrinsic (Hedonic)} & \multicolumn{1}{c}{Extrinsic} 				 	& \\ \midrule
-        Style 				& Price						 	& Fun \\
-        Color				& Brand 					 	& Entertainment \\
-        Patten 				& Country of origin			 	& Enjoyment\\
-        Fabric/fiber 		& Place(Store) 				 	& Need \\
-        Appearance	   	 	& Salespeson's evaluation	 	&  Function\\
-        Fashionability  	& Approval of others 		 	&\\
-        Durability			& Coordination with wardrobe 	&\\
-        Comfort				&								& \\
-        Quality				&								& \\
-        Fit					&								& \\
-        Care 				&								& \\
-      \bottomrule
-      \end{tabular}
-      \caption[Consumers' Purchase Decisions]{The attributes effecting the consumer when in the process of consuming products~\cite{dutton2006}}
-      \label{table:ConsumersPurchaseDec}
-  \end{table}
-
-  The modern consumer finds pleasure with the consumption experience itself, not
-  just the product, and this especially applies to the fashion domain.  The
-  purchase is often not done by need, but for pleasure.
-
-  The society nowadays is driven by consumption and change.
-  Clothes lets the user claim a position of either respectability or outrageousness, economic and social values~\cite{barnard2002fashion}.
-  The clothes of the user is a way of telling the world who the user is.
-  Fashion marketing starts and ends at the customer.
-  The market must identify the way the consumer dresses himself or herself, and the product has to be produced according to the wants and needs of the user.
-  Since this want and need of the user is ever-changing and changing faster and faster, focus must be given to the users actions and want.
-
-  More generally, the fashion marketing must answer the following questions~\cite{vignali2009fashion}:
-  \marginpar{These are not really questions?}
-
-  \begin{itemize}
-    \item Find consumer needs
-    \item The most adequate consumer segment and how to approach
-    \item Ideal positioning to reach this segment
-    \item Design level, colors, quality that the target segment requires
-    \item Price to establish
-    \item Channel distribution demands
-    \item Marketing strategies and policies that best suit the market segment
-  \end{itemize}
-
-  For the market to best answer the customers need, the market must have the best answers to the list above.
-  This makes the domain of fashion more difficult to make recommendations for than many other domain, such as movie recommendations and music.
+Hanf et. al.~\cite{Hanf1994} states that customers are rational, when it comes
+to price and quality. This if further verified by~\cite{dutton2006} where the
+attributes classified as making the largest impact on customers are styling,
+brand, price, store (physical location) and fabrication/quality. The complete
+list of attributes and their relations is shown
+in~\ref{table:ConsumersPurchaseDec}. These attributes are important to take
+note of, as they will become important features in both training and predicting
+recommendations.
 
 \subsubsection{Consumer buying behavior}
+
   A lot of information about the consumers behavior is lost due to the reasons
   for their behavior is held in an unconscious or implicit level.  The reason for
   a person is interested in a specific product could be based on some distant
