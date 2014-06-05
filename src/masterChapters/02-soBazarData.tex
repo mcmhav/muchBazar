@@ -15,7 +15,7 @@
 	\end{chapquote}
 
 	SoBazaar is an online marketplace for fashion, but with a social twist. You can find stores like Moods of Norway, BIK BOK, Bianco and many more, which all have their own storefront in the application. The application lets you click through thousands of products. If you find something you like you can purchase it directly from the application or store it for later with the \emph{heart it} function. The following screenshots are taken from the application and highlights some functionality currently found in the application. On the far left you see an item from the \emph{homepage} or newsfeed. The newsfeed currently shows what other users have liked, notifies the user about sales and new products and recommends the most popular products.
-	
+
 	\begin{figure}[H]
 		\centering
 		\begin{minipage}{.30\linewidth}
@@ -25,7 +25,7 @@
 		\begin{minipage}{.3\linewidth}
 				  \includegraphics[height=1.5\linewidth]{image/SoBazaarsale.png}
 		\end{minipage}
-		\hspace{.02\linewidth}		
+		\hspace{.02\linewidth}
 		\begin{minipage}{.30\linewidth}
 				\includegraphics[height=1.5\linewidth]{image/SoBazaarmostpop.png}
 		\end{minipage}
@@ -33,7 +33,7 @@
 		\label{figure:SoBazaarfeed}
 	\end{figure}
 
-	The application brand screen shows on overview of the brands and storefront currently included in the application. The brand sceen also features an editors pick page among other things. If you find a brand you like you can choose to enter their store and view their products.	
+	The application brand screen shows on overview of the brands and storefront currently included in the application. The brand sceen also features an editors pick page among other things. If you find a brand you like you can choose to enter their store and view their products.
 
 	\begin{figure}[H]
 		\centering
@@ -54,7 +54,7 @@
 
 	From the product screen you can choose to buy items, by being redirected to the stores online webshop. The product screen currently features a \emph{People who like this also love} widget, and also shows other products from the same store. The application also features your own personal page for your saved or \emph{loved} items. In additional the application
 	also supports simple search queries.
-	
+
 	\begin{figure}[H]
 			\centering
 			\begin{minipage}{.30\linewidth}
@@ -71,7 +71,7 @@
 			\caption[SoBazaar functionality screenshots - version 0.5.1]{Screenshots from the SoBazaar Application. From the left to right: product detail screen, the sobazar loved items list and the search screen}
 			\label{figure:SoBazaarfeed}
 	\end{figure}
-	
+
 	The application is currently in a beta phase and is planned for a final release after the summer.
 
 \section{Preprocessing}
@@ -178,11 +178,11 @@
     \end{figure}
         In the figure above (figure~\ref{figure:eventIDDistribution}) we see the count for each of the different events which can be triggered in the SoBazaar application.
         As seen from the graph the \emph{product\_detail\_clicked}-event and the \emph{storefront\_clicked}-event are the two most common events to be triggered.
-        \emph{Storefront} is the main access point to a set of products, as mentioned earlier in~\ref{table:eventData} the main brands are the most common such as H\&M, Cubus and Moods Of Norway,
-        which is natural, since most of the items are located in the stores fronts.
-        The fact that accessing the store front is the most occurring event, over item view, indicates that many users browse the items through looking at the thumbnails rather than accessing the actual item.
+        As mentioned earlier in~\ref{table:eventData}, the \emph{storefront} is the main access point to a set of products, and the high values for this \emph{event\_id} is as expected.
+        The fact that accessing the \emph{storefront} is the most occurring event, over clicking an item, indicates that many users browse the items through looking at the thumbnails rather than accessing the actual item.
+
         The \emph{product\_wanted}-event is the fourth most occurring event, and is about half the size of the \emph{product\_detail\_clicked}-event, this does not mean that half of the accessed items are added to a want list, since it is possible to want an item without accessing the item.
-        \emph{product\_purchase\_intended} on the other hand has to come after a \emph{product\_detail\_clicked}, about 8\% of item accesses progressed therefore into an intended purchase.
+        \emph{product\_purchase\_intended} on the other hand has to come after a \emph{product\_detail\_clicked}, so it is therefore safe to assume that about 8\% of item accesses progressed into an intended purchase.
 
     \begin{figure}[H]
         \centering
@@ -198,16 +198,28 @@
             \caption{Cumulative distribution of events on users}
     \label{figure:userEventCumDist}
         \end{subfigure}
-        %
+        \caption{Graphs presenting the distribution of events per user}
     \end{figure}
-        Figure~\ref{figure:userEventDist} and figure~\ref{figure:userEventCumDist} are displaying the amount of events for the users.
-
         Figure~\ref{figure:userEventDist} is showing the actual amount of users with the different counts of events.
-        The majority of the users has 50 or less events, with the most common amount being at 5 events, clearer shown in figure~\ref{figure:userEventCumDist}, where it is clearer that about 78\% of the users have 50 events or less.
-        The figures are capped at 250 to better show the distribution of events where the majority of the users resides.
+        78\% of the users have 50 or less events, with the most common amount being at 5 events.
+        The figures are showing the values from 0 to 250 since 96\% of the users reside in this subset.
         Max count of events for one user is 6055.
 
         There are over 6000 products in the database, when 78\% of the users have less than 50 events, and as seen from figure~\ref{figure:eventIDDistribution}, the majority of events triggered by users are not directly item-related events, the information about items based on user actions alone will be sparse.
+
+    \begin{figure}[H]
+        \includegraphics[width=5in]{image/userTimespansdistribution.png}
+        \centering
+        \caption{Distribution of user account lifetime}
+    \label{figure:userTimespandist}
+    \end{figure}
+
+    \begin{figure}[H]
+        \includegraphics[width=5in]{image/avglifetimeoncountuser.png}
+        \centering
+        \caption{Average lifetime of user accounts sorted on event count}
+    \label{figure:avglifetimeoncountuser}
+    \end{figure}
 
     \begin{figure}[H]
         \centering
@@ -225,7 +237,7 @@
         \end{subfigure}
         %
     \end{figure}
-        Figure~\ref{figure:sessCountDist} and figure~\ref{figure:sessCountCumDist} shows the amounts of sessions for the users in the data.
+        Figure~\ref{figure:sessCountDist} and figure~\ref{figure:sessCountCumDist} shows the number of sessions for the users in the data.
         The maximum number of sessions for each user is grouped to show the count of how many users has the different amount of sessions.
 
         The majority of the users of SoBazaar has a session count of 10 and less.

@@ -222,6 +222,31 @@ Explanation:
 \begin{table}\centering\resizebox{\columnwidth}{!}{\begin{tabular}{*{19}l}\toprule
  & AUC &        MAP@20 &        T\_c &  T\_w &  T\_p &  P\_c &  P\_w &  P\_p &  R\_c &  R\_w &  R\_p &  MAP@20-click &  MAP@20-want &   MAP@20-purchase &        \\
 \midrule
+Popularity linear       &       0.738389 &      0.016927 &      5291 &  5034 &  554 &   228 &   145 &   16 &    0.043092 &      0.028804 &      0.028881 &      0.020881 &      0.011072 &      0.007437 &       \\
+Count linear    &       0.730184 &      0.017755 &      5262 &  5061 &  556 &   220 &   144 &   14 &    0.041809 &      0.028453 &      0.02518 &       0.020268 &      0.010455 &      0.006983 &       \\
+Price linear    &       0.73874 &       0.018865 &      5308 &  5010 &  561 &   244 &   143 &   13 &    0.045968 &      0.028543 &      0.023173 &      0.021538 &      0.00781 &       0.007513 &       \\
+Recentness linear       &       0.738105 &      0.01637 &       5303 &  5037 &  539 &   246 &   157 &   12 &    0.046389 &      0.031169 &      0.022263 &      0.019596 &      0.009323 &      0.007766 &       \\
+\bottomrule\end{tabular}}\caption{MostPopular item recommender}\end{table}
+\begin{table}\centering\resizebox{\columnwidth}{!}{\begin{tabular}{*{19}l}\toprule
+ & AUC &        MAP@20 &        T\_c &  T\_w &  T\_p &  P\_c &  P\_w &  P\_p &  R\_c &  R\_w &  R\_p &  MAP@20-click &  MAP@20-want &   MAP@20-purchase &        \\
+\midrule
+Recentness linear       &       0.686135 &      0.001207 &      1343 &  1247 &  168 &   11 &    17 &    2 &     0.008191 &      0.013633 &      0.011905 &      0.000618 &      0.001852 &      0.000613 &       \\
+Count linear    &       0.693192 &      0.013636 &      1356 &  1243 &  157 &   47 &    57 &    7 &     0.034661 &      0.045857 &      0.044586 &      0.010733 &      0.01444 &       0.018142 &       \\
+Price linear    &       0.697703 &      0.017927 &      1354 &  1249 &  153 &   37 &    61 &    11 &    0.027326 &      0.048839 &      0.071895 &      0.009474 &      0.02546 &       0.02454 &        \\
+Popularity linear       &       0.69976 &       0.003377 &      1383 &  1233 &  140 &   17 &    29 &    2 &     0.012292 &      0.02352 &       0.014286 &      0.00264 &       0.003427 &      0.006313 &       \\
+\bottomrule\end{tabular}}\caption{ItemKNN item recommender}\end{table}
+\begin{table}\centering\resizebox{\columnwidth}{!}{\begin{tabular}{*{19}l}\toprule
+ & AUC &        MAP@20 &        T\_c &  T\_w &  T\_p &  P\_c &  P\_w &  P\_p &  R\_c &  R\_w &  R\_p &  MAP@20-click &  MAP@20-want &   MAP@20-purchase &        \\
+\midrule
+Popularity linear       &       0.998708 &      0.997118 &      5291 &  5034 &  554 &   4185 &  2993 &  411 &   0.790966 &      0.594557 &      0.741877 &      0.830518 &      0.682226 &      0.522584 &       \\
+Count linear    &       0.998413 &      0.99775 &       5262 &  5061 &  556 &   4191 &  2969 &  412 &   0.796465 &      0.586643 &      0.741007 &      0.823263 &      0.694888 &      0.524698 &       \\
+Recentness linear       &       0.998894 &      0.998045 &      5303 &  5037 &  539 &   4163 &  3013 &  389 &   0.785027 &      0.598174 &      0.721707 &      0.821981 &      0.691218 &      0.524782 &       \\
+Price linear    &       0.99875 &       0.997452 &      5308 &  5010 &  561 &   4167 &  3024 &  439 &   0.785041 &      0.603593 &      0.782531 &      0.829329 &      0.700525 &      0.561059 &       \\
+\bottomrule\end{tabular}}\caption{ItemKNN rank prediction}\end{table}
+
+\begin{table}\centering\resizebox{\columnwidth}{!}{\begin{tabular}{*{19}l}\toprule
+ & AUC &        MAP@20 &        T\_c &  T\_w &  T\_p &  P\_c &  P\_w &  P\_p &  R\_c &  R\_w &  R\_p &  MAP@20-click &  MAP@20-want &   MAP@20-purchase &        \\
+\midrule
 Recentness linear       &       0.000012 &      0 &     1333 &  1240 &  120 &   0 &     0 &     0 &     0 &     0 &     0 &     0 &     0 &     0 &      \\
 Recentness sigmoid      &       0.005239 &      0 &     1333 &  1213 &  147 &   0 &     0 &     0 &     0 &     0 &     0 &     0 &     0 &     0 &      \\
 Count linear    &       -0.008682 &     0 &     1311 &  1248 &  134 &   0 &     0 &     0 &     0 &     0 &     0 &     0 &     0 &     0 &      \\
@@ -284,7 +309,6 @@ Count linear    &       0.760527 &      0.012182 &      1311 &  1248 &  134 &   
 Count sigmoid   &       0.751179 &      0.016094 &      1315 &  1239 &  139 &   61 &    39 &    4 &     0.046388 &      0.031477 &      0.028777 &      0.017719 &      0.016881 &      0.008394 &       \\
 \bottomrule\end{tabular}}\caption{MostPopular item recommender}\end{table}
 
-<<<<<<< HEAD
 \begin{table}
 \centering
 \resizebox{\columnwidth}{!}{%
