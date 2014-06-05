@@ -6,7 +6,10 @@
 In the literature, the term cold is used about an object in a system, or a
 whole system, which is new \cite{Schein2002, Park2006}. Cold-start scenarios in recommender systems are
 situations in which little/no prior events, like ratings or clicks, are known
-for certain users or items. The cold-start problem can be divided into three sub problems:
+for certain users or items. The cold-start problem is important problem to solve
+as one wish to generate personalized recommendations as soon as possible for new users, so
+that these users appreciate the system and will keep using it. The cold-start problem
+can be divided into three sub problems:
 
 \begin{itemize}
   \item \emph{Cold-start system}: A situation where we only have new users and
@@ -19,11 +22,12 @@ for certain users or items. The cold-start problem can be divided into three sub
   to a user who is new to a recommender system.
 \end{itemize}
 
-For example in a scenario where the average item in an item collection have 5
-000 ratings, a new item with only 5 ratings would be considered a
-\emph{cold-item}. Likewise, in a recommender system where the average user has
-rated 25 items, a user who only has rated 2 items, would be considered a
-\emph{cold-user}.
+For example, in a scenario where a new user starts using a fashion recommendation
+system and only have viewed a dress and a pair of jeans, and you know nothing
+else about this user. How do you provide recommendations to this user? Similarly,
+a new item is added to a webstore and have only been purchased by two users.
+How many times must an item be purchased before you confidently can recommend
+it to other users?
 
 The cold-start system problem is mainly a collaborative filtering problem, and
 can be seen as a combination of the cold-start user and cold-start item problem
@@ -81,20 +85,34 @@ This section will present a few different solutions to the cold-start problem, f
 
 \subsection{Trust Aware Recommender Systems}
 
-One promising direction to solve the cold-start problem is the incorporation of
-a trust network. A trust network can significantly help alleviate the
-cold-start user problem, primarily since the trust statements between users can
-be propagated and aggregated, and consequently connect more people and
-products. By making clever connections in the trust network, newcomers can
-immediately gain access to a wide range of connections.
+Due to the popularity of social networks such as Facebook, more and more
+researchers turn to incorporate the social relationships of users to overcome
+the limitations of existing recommender systems. One such promising direction is
+the incorporation of a trust network. A trust network can significantly help alleviate
+the cold-start user problem, primarily since the trust statements between users can be propagated
+and aggregated, and consequently connect more people and products. By making clever connections in
+the trust network, newcomers can immediately gain access to a wide range of connections.
 
 %Due to the popularity of social networks such as Facebook, more and more
 %researchers turn to incorporate the social relationships (e.g. trust) of users
 %to help complement users’ preference in addition to item ratings, in order to overcome the limitations of existing recommender systems
 
-For example, when looking for movie recommendations we often turn to our friends which we share a similar taste in movies with. Trust can be defined as: "believe in the reliability, truth, or ability of", and in the context of recommender systems a trusted user would be a user you trust to provide you with good recommendations. E.g. in the case of the Epinions dataset \cite{Epinions}, users can explicitly state whether they trust or distrust a user [1, -1], i.e. reviewers whose reviews and ratings they have consistently found to be valuable or reviewers which they find consistently offensive, inaccurate or not valuable. In decentralized environments where everyone is free to create content and there
-is no centralized quality control entity, evaluating the quality of the content becomes an important issue. This phenomenon can be observed in online
-marketplaces such as E-bay where users can create "fake" auctions and in peer-to-peer networks where peers can enter corrupted items. In these environments, it is often a good strategy to delegate the quality assessment task to users themselves. E.g. \emph{Ebay.com} allows users to express their level of satisfaction after every interaction with another user. Trust relationships of users are often employed in order to correlate more potential raters for the active users who require recommendations \cite{Massa2004, Massa2007}. Massa et. al. \cite{Massa2004} also show that some of the weaknesses of recommender systems such as data sparseness and their susceptibility to shilling attacks could be alleviated by incorporating trust.
+\emph{Make fashion example smoother...}
+
+For example, when looking for movie recommendations we often turn to our friends which we share a similar
+taste in movies with. Trust can be defined as: "believe in the reliability, truth, or ability of", and in
+the context of recommender systems a trusted user would be a user you trust to provide you with good recommendations.
+E.g. in the case of the Epinions dataset \cite{Epinions}, users can explicitly state whether they trust or distrust a
+user [1, -1], i.e. reviewers whose reviews and ratings they have consistently found to be valuable or reviewers which
+they find consistently offensive, inaccurate or not valuable.
+Imagine a fashion website where you can follow users which e.g. are your friends, users you like you like or simply
+find inspirational, much like Instagram \footnote{www.instagram.com}. By following a user you directly express a 
+certain amount of trust in that user, saying that you are interested in the content of that profile. This
+trust information could then be used to recommend you content which the users you have chosen to follow like
+or have strong preferences for. In recommender systems trust relationships of users are often employed in order to correlate
+more potential raters for the active users who require recommendations \cite{Massa2004, Massa2007}. Massa et. al. \cite{Massa2004}
+also show that some of the weaknesses of recommender systems such as data sparseness and their susceptibility to shilling attacks
+could be alleviated by incorporating trust.
 
 % The formals
 In \cite{Massa2004}, Massa et al. proposes a Trust-Aware recommender system
@@ -104,10 +122,10 @@ value in every other user. This matrix will make up our trust network among the
 users. If $u$ trusts $v$, then there is a value $t_{u,v}$ for this trust which
 is a real number in $[0,1]$. Zero means no trust and one means full trust. This
 additional information can be organized in a trust network and a \emph{trust
-metric} can be used to predict the trustworthiness of other users as well (for
-example, friends of friends). The idea here is to not search for similar users
+metric} can be used to predict the trustworthiness of other users as well
+(e.g. friends of friends). The idea here is to not search for similar users
 as CF does but to search for trust-able users by exploiting trust propagation
-over the trust network. The items appreciated by these users are then
+over the trust network. The items appreciated by these users can then be
 recommended to the active user.
 
 % Web of Trust - Figure explanation
@@ -150,59 +168,37 @@ other users. Trust metrics can either be local and global. Global trust metrics
 produces an estimated trust matrix with all the rows equal, meaning that the
 estimated trust in a certain user (column) is the same for every user (row). A
 simple local trust metric could e.g. for each user assign to every other user a
-predicted trust based on her minimum distance from the source user. More
-sophisticated ones could also be employed. If we again consider Figure
-\ref{figure:weboftrust}, we could employ a local trust metric where the
-predicted trust is based on the minimum distance from the source user. If we
-set the maximum propagation distance $d$, a user at distance $n$ from the
-source user will have a predicted trust value of:
-
-\begin{equation}
-t_{u,v} = \frac{d-n+1}{d}
-\end{equation}
-
-Giving users not reachable within the maximum propagation distance a trust of
-$0$. Using user $A$ as the source user, the users at distance $1$ ($B$ and $C$)
-would get a trust value of $(4-1+1)/4 = 1$, while the user at distance 2 (D)
-would get a predicted trust value of $(4-2+1)/4 = 0.75$. Meaning that we will
-have a linear decay in trust based on the distance from the source user.
+predicted trust based on her minimum distance from the source user. 
 
 Massa et al. \cite{Massa2007} experimented with both local and global trust
-metrics. They used the PageRank algorithm as a global trust metric. PageRank
+metrics. The PageRank algorithm was used as a global trust metric. PageRank
 tries to infer the authority of every single user by examining the structure of
 the network. The algorithm follows a simple idea: if a link from user $A$ to
 user $B$ represent a positive vote casted by $A$ to $B$, then the global rank
 of a page depends on the number (and quality) of the incoming links. The trust
 values assigned by users to users are used to predict the trustworthiness of
-unknown users. Their findings, not surprisingly, indicate that Global Trust
-Metrics are not suited for the task of finding good neighbours, especially for
-providing personalized recommendations, but is more suited to applications such
-as \emph{Ebay.com} to find untrustworthy users. As a local trust metric they
-used MoleTrust, which is a depth-first graph walking algorithm with a tuneable
+unknown users. Their findings, did not surprisingly, indicate that Global Trust
+Metrics are not suited for the task of finding good neighbors, especially for
+providing personalized recommendations, but is more suited for applications such
+as \emph{Ebay.com} or similar to detect untrustworthy users. For their local trust metric
+they used \emph{MoleTrust}, which is a depth-first graph walking algorithm with a tunable
 trust horizon which allowed them to experiment with different propagation
-distances. They found trusted users to be good predictors. For the cold-start
-users they achieved a MAE of 0.674 when looking at friends of friends, compared
-to traditional collaborative filtering which scored 1.094. The difference is
-very high, and particularly relevant as it is important for recommender systems
-to generate personalized recommendations as soon as possible for new users, so
-that these users appreciate the system and keep using it.
+distances. They found trusted users to be good predictors, especially for cold-start
+users and they achieved a 63\% boots in prediction accuracy over traditional collaborative filtering
+methods.
 
 The \emph{Similarity Metric} module computes the user similarities, this is one
-of the standard steps of any traditional collaborative filtering technique,
-user similarities can be found e.g. by using the Pearson Correlation
-Coefficient. The intuition is that, if a user rates in a similar way to another
-user, then her ratings are using for predicting the ratings for that users.
+of the standard steps of any traditional collaborative filtering technique.
 
-The \emph{Rating Predictor} can use the neighbours from the user similarity
+The \emph{Rating Predictor} can use the neighbors from the user similarity
 matrix, the estimated trust matrix or a combination of both in order to
 calculate the predicted ratings.
 
 % Using a Trust Network to Improve Top-N Recommendation
-
 Jamali et al. \cite{Jamali2009} propose two different methods for getting
 around the cold-start user problem using a trust network. Their first approach
 called \emph{Random Walk} only utilize the trust network to provide
-recommendations. Starting from the active user $u$, we perform a random walk on
+recommendations. Starting from the active user $u$, one perform a random walk on
 the trust network. Each random walk stops at a certain user. Then the items
 rated highly by that user will be considered as recommended items, ordered
 according to the ratings expressed by that user. Several random walks are
@@ -231,30 +227,11 @@ the items returned by Trust-based approach are denoted $TR_{u}$.
 The top-N items with the highest value of $\hat{u}(c,s)$ will be returned as
 the top-N recommended items. The authors also experimented with weighted
 averaging in the case where the item appear in both $TR_{u}$ and $CF_{u}$.
-
-The top-N items with the highest value of $\hat{u}(c,s)$ will be returned as
-the top-N recommended items. The authors also experimented with weighted
-averaging in the case where the item appear in both $TR_{u}$ and $CF_{u}$.
 Their approaches showed great improvements in recall for cold-start users,
 improving the performance by 50\% over standard CF methods. The main
 improvements however, are the coverage of the trust-based approaches, while
 still maintaining the same or even slightly better precision than the standard
 CF methods.
-
-% Trust-aware Recommender Systems + Trust-Aware Collaborative Filtering for Recommender Systems
-% Article Comments:
-%   Requires user involvement (explicitly express trust) - is this a acceptable?
-
-%Massa et al. \cite{Massa2004, Massa2007} propose using trust information
-%explicitly expressed by the users. Users are allowed to state how much they
-%consider every other user trustworthy that, in the context of recommender
-%systems, is related to how much they consider the ratings provided by a certain
-%user valuable and relevant.
-
-% Alleviating the Sparsity Problem of Collaborative Filtering Using Trust Inferences
-% Article Comments:
-%   - Pretty good general model for dealing with sparsity
-%   - Requires no additional information such as product details, demographic information about userstrus
 
 Papagelis et al. \cite{Papagelis2005} proposed to alleviate sparsity using
 trust inferred from user-user similarity. This approach does therefore not
@@ -308,15 +285,10 @@ The authors achieved improved accuracy for all sparsity levels. With a sparsity
 level of $99.9\%$ the 2-HOP CF (friend of friends) increased the MAE
 performance by $17\%$ over standard CF methods.
 
-%TODO - READ: A Matrix Factorization Technique with Trust Propagation for Recommendation in Social Networks
-%Jamali et al. propose a technique for incorporating trust using matrix factorization, called SocialMF.
-%Leverage regularization model to fusing the one mode data by minimizing the gap between the taste of a user and the taste of her trusted friends
-%In their model, the users which have not expressed any ratings feature vectors will be learned to be close to their trusted neighbors.
-
 Victor et al. \cite{Victor2008} points out that cold-start users not only have
 expressed few ratings, but also typically have expressed trust in few users. In
 order for trust-aware recommenders to help cold-start users they need to have
-expressed trust in atleast one user. But choosing who to connect to is often a
+expressed trust in at least one user. But choosing who to connect to is often a
 difficult task. To help cold-start users find trusted users, Victor et al.
 propose using key figures or mavens (users who write many reviews), frequent
 raters (users who evaluate many items) and connectors (users with
@@ -364,7 +336,7 @@ And then applying basis selection based on the maximum-volume principle to
 select the $k$ most representative users or items. In order to be able to
 recommend new items to the users it must first be rated by the $k$
 representative users, likewise for new users to be rated they need to rate the
-$k$ most representative items. Their method therefore easily allows new users
+$k$ most representative items. Their method therefore allows new users
 and items to be \emph{folded in}.
 
 \subsection{Intelligent Selection / Interview Process}\mbox{}\\
@@ -378,68 +350,63 @@ and items to be \emph{folded in}.
 As pointed out by Rashid et al. \cite{Rashid2002}, the most direct way of
 acquiring information for use in personalized recommendations from a new users
 is to present item for the user to rate. However, they argue that the system
-must be careful to present useful items to garner information. A food
-recommender should probably not ask whether a new user likes vanilla ice cream
-since most people like vanilla ice cream. Therefore, knowing that a new user
-likes vanilla ice cream tells you very little about the user. The choice of
-what questions to ask a new user, then, is critical. The authors performed a
-study of different item selection strategies that collaborative filtering
-recommender systems can use to learn about new users. They presented the users
+must be careful to present useful items to garner information. A fashion
+recommender should probably not ask whether a new user likes any \emph{essential}
+items as most users already have these items in their wardrobe. Therefore, knowing
+that a new user likes an \emph{essential} item tells you very little about
+the user. The choice of what questions to ask a new user, then, is critical.
+The authors performed a study of different item selection strategies that collaborative
+filtering recommender systems can use to learn about new users. They presented the users
 with a questionnaire with items asking them to rate/select the ones they like.
 Their strategies can be divided into five classes, which they evaluated based
 on user effort and accuracy:
 
 \begin{itemize}
-\item \emph{Random:} strategies: Strategies that avoid bias in the presentation
-of bias
-\item \emph{Popularity:} Select among the top N items where the probability
-that an item is selected is proportionate to the items popularity.
-\item \emph{Pure entropy:} Present the items with the highest entropy that the
-user has not seen
-\item \emph{Balanced strategies:} A balanced approach combining both popularity
-data and entropy.
-\item \emph{Personalized:} As soon as some information is known about a user,
-present items specifically tailored to that user using e.g. item-item
-similarity
+\item Random: strategies: Strategies that avoid bias in the presentation
+	  of bias
+\item Popularity: Select among the top N items where the probability
+	  that an item is selected is proportionate to the items popularity.
+\item Pure entropy: Present the items with the highest entropy that the
+	  user has not seen
+\item Balanced strategies: A balanced approach combining both popularity
+	  data and entropy.
+\item Personalized: As soon as some information is known about a user,
+	  present items specifically tailored to that user using e.g. item-item
+	  similarity
 \end{itemize}
 
 The authors found Popularity and balanced strategies to perform the best. Their
 recommendation for an e-commerce recommender is to start recommending the most
 popular items, rather than the highest rated ones, and then use item-item
-strategies to personalize the recommendations as quickly as possible. This
+strategies to personalize the recommendations as quickly as possible. The same
 study was later extended by Rashid et al. \cite{Rashid2008} where they more
 closely examined information theoretic strategies for item selection. In the
 article they introduced three new strategies, which again was evaluated based
 on user effort and accuracy:
 
 \begin{itemize}
-\item \emph{Entropy0}: Entropy Considering Missing Values
-%\item \emph{HELF:} Harmonic mean of Entropy and Logarithm of Frequency
-\item \emph{IGCN:} Information Gain through Clustered Neighbors
+\item Entropy0: Entropy Considering Missing Values
+\item HELF: Harmonic mean of Entropy and Logarithm of Frequency
+\item IGCN: Information Gain through Clustered Neighbors
 \end{itemize}
 
-The authors point out that approaches like popularity is likely to worsen the
+The authors point out that popularity based approaches are likely to worsen the
 \emph{prefix-bias}, meaning that popular items garner even more evaluations.
 The accuracy differences between the approaches is fairly small, IGNC performed
 the best closely followed by Entropy0 and Popularity. However, the expected
-utility of the profiles built using popularity is much lower than the
-information theoretic approaches.\newline
+utility of the profiles built using popularity is much lower than the ones built
+using information theoretic approaches.\newline
 
 % User effort vs. accuracy in rating-based elicitation
 The question then, is how many items you should ask a user to rate. Cremonesi
 et al. \cite{Cremonesi2012} performed a set of experiments where they looked
 at the trade-off between user-effort and accuracy. More specifically, how many
 ratings are enough to provide good quality recommendations to new users? The
-authors conclusion is that between 5 and 20 ratings are optimal for the movie
-domain. They concluded that 10 ratings is \emph{enough}, but that this number
+authors concluded that between 5 and 20 ratings are optimal for the movie
+domain and that that 10 ratings is generally \emph{enough}, but that this number
 depends on the recommendation method and the dataset used.
 
 \subsection{Hybrid Methods}
-
-\marginpar{This subset requires some polishing...}
-
-%TODO - Add some fancy math, wait until matrix factorization intro is in place (so we do not mess up notations)
-%TODO - Find some sweet cf articles incorporating demographic information
 
 Another line of search for solving the cold-start problem is to utilize
 features of items and users. The content features can be used to capture the
@@ -578,22 +545,12 @@ yields accuracy comparable to state-of-the-art methods.
 \subsection{A Discussion on the Cold-start Solutions}
 \ref{sec:cold-start-discussion}
 
-\subsubsection{Trust-aware recommenders}
+The following discussion will be based on the following points: the user-effort
+required before the system can start providing high quality recommendations, the
+cold-start performance of the system, how well the method fits our application
+and whether or not it is a good match for our specific domain.
 
-%Summarize results
-Massa et al. \cite{Massa2007} found trusted users to be good predictors. When
-looking at directly trusted users they improved the MAE from 1.094 using
-traditional collaborative filtering to 0.674 for cold-start recommendations. By
-propagating the trust they were able to drasticly increase the coverage. The
-average number of directly trusted users were 9.88, while the average number of
-comparable users using the pearson correlation factor was 160.73. Propagating
-at a distance of 2 it is possible to reach 399.89 users, increasing it to 3 and
-4 respectively it is possible to reach respectively 4,386.32 and 16,033.94
-users. Jamali et al. \cite{Jamali2009} got even better results with their
-\emph{Trustwalker} approach by combining trust-based and item-based
-recommendations. Massa et al. \cite{Massa2004} also argue that it is more
-useful for a recommender system to ask for one trust statement than asking for
-one rating for new users.
+\subsubsection{Trust-aware recommenders}
 
 %How can this be implemented in our system?
 Requiring users to explicitly express trust, is not something users necessarily
@@ -602,169 +559,167 @@ will frown upon. Services like Instagram, Facebook and many others offers a
 the users which they have chosen to follow. For SoBazaar we imagine that you
 e.g. could chose to follow people either because they have a good taste in
 clothes or that you simply are friends, and you want to keep up with what your
-friends are buying. We imagine the \emph{follow user} functionality, that has
-not yet been implemented, could be used to collect the trust statements. We
-believe that trust aware recommender systems is something that should be looked
-into at a later point when more social functionality is in place, to further enhance
-the recommendation quality.
+friends are buying. We believe that the \emph{follow user} functionality, is
+a \emph{frictionless} way of collecting high quality user information.
 
-%Scalability & Final Verdict
-Propagating trust is expensive. The trust propagation must be computed in
-addition addition to the user-user or item-item similarities, and it therefore
-scales worse than collaborative filtering methods. It is however, a good general model for
-sparsity and increasing robustness of recommender systems, with the downsides
-being scalability challenges, the added data collection needed and the added complexity to the system.
+As previously mentioned finding trusted users can be hard. Meaning that the
+application itself must be adapted to make it easy to find friends (e.g. from facebook)
+which they can choose connect to. Other ways of finding users to connect to might
+include \emph{most followed} users or something similarly.
 
+As previously mentioned Massa et. al. \cite{Massa2007} found trusted users
+to be good predictors. Looking directly at trusted users improved the
+predictive accuracy by 62\% over traditional collaborative filtering methods
+for cold-start recommendations. E.g. by using the methods described by
+Jamali et. al. \cite{Jamali2009} these methods could be combined with a traditional collaborative
+filtering based system to improve recommendation quality. Massa et al. \cite{Massa2004} also argue that it is more
+useful for a recommender system to ask for one trust statement than asking for
+one rating for new users, making it a good potential solution to the cold-start
+problem given that new users of the application easily can find friends
+to connect to when first using the application.
+
+We believe trust-aware recommenders to be a good fit for the application
+due to its \emph{social nature}. We believe that trust aware recommender systems
+is something that should be considered at a later point when more social functionality
+is in place, to further enhance the recommendation quality
+ 
 \subsubsection{Interview Process}
-
-%Summarize results
-Rashid et al. \cite{Rashid2008} got the best results using information
-theoretic approaches and argues that simpler methods such as most popular is
-likely to worsen the prefix bias. The authors found Information Gain through
-Clustered Neighbours (IGCN) to have the best performance overall, which scored
-5 out of 5 stars for accuracy, and would be a good candidate to find items for
-the user to rate.
 
 %How can this be implemented?
 Our rational behind including these articles is that we envision a simple "hot
-or not" tinder like interface to be used to present items to new users when the
-first log in to the system. And then ask new users that download the app to
-rate e.g. 10 items when first logging in. It is worth mentioning that the
-authors of these articles mainly worked on a solution to the cold-start new
-user problem. The user-effort dimension of their evaluation could also largely
-be ignored as they made a system for movie recommendations. The implications of
-this is that a user must have watched a movie, in order to rate it. This is not
-as important for the fashion domain, as taking a quick look at an item should
-be sufficient to like/dislike it, so we should give more weight to the accuracy
-of the system after the interview process than user effort. It is also worth
-noting that calculating entropy using implicit ratings is tricky, since the
-rating distribution does not range from dislike to like. We can therefore not
-find \emph{controversial} items which users either tend
-to like or dislike, as we have no data about items users dislike. 
-We are also currently constrained to unobtrusively learn user-profiles from
-the natural interactions of users with the system, meaning
-that we can not require the user to rate e.g. 10 items before we can start
-providing recommendations, as this functionality has not been implemented.
+or not" tinder like interface to be presented when new users log into the system.
+You can then ask the user to "rate" e.g. 10 items by quickly \emph{swiping} them
+left or right. However, requiring the user to rate rate a certain amount of items
+can also be \emph{dangerous}. One should therefore perform a user study or similar
+to see how users experience this feature. We also imagine that the tinder interface
+could be available as a feature in the application for users users who just want a 
+fun way of browsing clothes on their mobile phone. If done right this can be
+a great feature for collecting large amounts of both positive and negative feedback
+from the users.
 
-\marginpar{Discussion on suitedness of implicit ratings for entropy
-calculations}.
+An important question to answer is how this interface will select items to 
+present to the user. One could either choose the simple approach of
+recommending the most popular items to the user, but as previously mentioned
+this is likely to worsen the prefix bias. Rashid et al. \cite{Rashid2008} got
+the best results using information theoretic approaches and argues that simpler
+methods such as most popular is likely to worsen the prefix bias. The authors
+found Information Gain through Clustered Neighbours (IGCN) to have the best
+performance overall, which they gave a maximum score for its accuracy. We choose
+to ignore their user effort dimension as rating movies and clothes are two
+completely different things. In order to rate a movie you must have watched
+it, when it comes to clothes a quick glimpses of the item is enough.
+A third strategy could be to present the newest or \emph{freshest} items
+making it a fun way for users to explore the newest additions.
 
 %Scalability & Final Verdict
-The scalability of the approach is also fairly good. It requires another module
-in addition to collaborative filtering which is used in the non-personalized
-step until the user have rated a predetermined amount of items. When enough
-items have been rated the CF algorithm is used to produce recommendations. We
-really like this approach as it is simple and elegant. Given that a information
-theory approach is used this would be a good model for dealing with sparsity,
-as the number of ratings would sky-rocket in addition to having ratings for a
-large portion of the item collection (not only limited to the most popular
-items). The negative aspects of this approach is mainly limited to the fact
+We really like this approach as it is simple and elegant. Having this
+functionality would make the number of user feedback available sky-rocket in addition
+to providing high quality explicit feedback that is both positive and negative.
+By incorporating some smart way of selecting the items which are presented
+one could find ways to garner ratings for large portions of the item collection
+or collecting preference data quickly about new items. However, we believe
+that having negative feedback is one of the strongest arguments for applying
+this method. The negative aspects of this approach is mainly limited to the fact
 that it requires some active user involvement.
 
 \subsubsection{Seed users}
 
 In our opinion, this approach is not that suited for our domain, as it fairly
-dynamic and we are working with a large item collection. For an item to be
+dynamic and we are working with a large and dynamic item collection. For an item to be
 recommendable it must be rated by all representative users, which is highly
 unlikely given the size of the item collection itself. E.g. if we have e.g. 20, 40 or 100
 representative users and a spring collection is launched containing 6000 items,
 for all these items to be recommendable these 15 representative users must rate
-all these items. However, their method shows some promise as a selection criteria
-for items to ask the user to rate for an interview process.
+all these items. However, this method does shows some promise as a selection criteria
+for items to ask the user to rate for a interview process.
 
 \subsubsection{Filterbots}
 
-%TODO - Summarize results
+Filterbots is a simple, but elegant solution to the cold-start problem first
+presented in 1998 by Sarwar et. al. \cite{Sarwar1998}. This method
+requires no user-effort other than requiring the user to rate at least one
+item before recommendations can be made. 
 Park et al. \cite{Park2006} clearly demonstrated the robustness of their Naive
 Filterbot compared to item-based and user-based approaches in all three
-cold-start scenarios. The results in \cite{Agarwal2009, Agarwal2010} also shows
-that the Naive Filterbots performance is very close to the state-of-the-art
-latent factor models.
+cold-start scenarios. The results in \cite{Agarwal2009, Agarwal2010} also show
+that the Naive Filterbots are very close to the state-of-the-art
+latent factor models in terms of performance for all sparsity levels.
 
-%TODO - How can we implement this in our system?
-To incorporate filterbots in our system we would first have to define what
-filterbots we wound want to use. We could e.g. use a Brand-bot that calculates
-ratings of brands over all users. The rating of a brand is the average rating
-of the items of the given brand, which then is injected into the user-item
-matrix. It is worth noting that selecting what bots to add to the system and
-and coding them would require some engineering effort, and involve some testing
-to validate your bots.
+Filterbots could easily be implemented in any system as it only requires
+the data to be run through an additional preprocessing step before it
+is used to train the model. It is worth that filterbots were developed
+for neighborhood models, and you can not expect getting the same kind
+of performance improvements using latent factor models.
 
-%TODO - Scalability & Final Verdict
-Park et al. \cite{Park2006} claim that the added computational complexity of
-adding seven global bots is almost negligible. The downside of this approach is
-the additional engineering effort required and the fact that it's performance
-is not on pair with the more sophisticated latent factor methods.
+To incorporate filterbots in our system we would first have to define what filterbots
+we wound want to use and what we want to achieve be using them. E.g. by using multiple
+brand bots that gives each item of a certain brand a max score would make it possible to give brand specific
+recommendations as soon as a user have expressed preferences for an item, thus connecting
+him to a filterbot with high ratings for all items of the given brand. Similarly
+a \emph{PopularityBot} would \emph{recommend} the most popular items to users which
+they are connected to. These bots can therefore be made to capture the general underlying
+trends of the users or give recommendations based on content-features of the items.
+Given that we use the bots mentioned above, as soon as a new user rates a single item
+rated by both bots he would theoretically be recommended the most popular items of
+the brand which she expressed her preference for, making it a potentially good fit for fashion
+recommendations.
 
 \subsubsection{Hybrid recommenders}
 
 %TODO - Summarize results
-
 Latent factor models are currently the main paradigm within the recommender
 system field and are currently considered the state-of-the-art recommendation
-methods. The hybrid methods achieved state-of-the-art performance as well as
+methods. The all the hybrid methods achieved state-of-the-art performance as well as
 having good fallback methods based on user and item features to solve the
-cold-start problem.
+cold-start problem. In addition to incorporating item-features and/or user-features
+these models also incorporate some notion of recency, reducing the importance of
+items over time. Another advantage of these models are that they support
+online training of the models, which further could improve the cold-start
+performance by \emph{instantly} incorporating new preferences.
 
-%TODO - How can we implement this in our system?
+In order to implement these recommender we would first need access to
+high quality item and user-features. The item-attributes could be extracted
+from the product database, which demographic information could e.g. be
+extracted from Facebook data. Another concern of ours is that our dataset is
+currently to small for latent factor methods, since most of these methods
+rely on binary data (e.g. purchases only) to provide recommendations.
 
-To implement these recommenders we would first have to select and extract
-user-features from Facebook and item-features from our item database. Another
-concern of ours is that our dataset is currently to small for latent factor
-methods, and is therefore likely to produce sub-optimal results.
-
-%TODO - Scalability & Final Verdict
-%   Which of the models are online?
-As most latent factor models, model building is expensive. Matchbox and RLFM
-have to option of being trained online, which should further could increase the
-cold-start performance, as the model always will be up to date. Latent factor
-models are also known to provide quick recommendations. These methods combine
-state-of-the-art performance, elegant solutions to the cold-start problem
-incorporating meta-information as fallback in addition to having the option to
-be incrementally trained.
 
 \subsubsection{Summary}
 
-%TODO - Summary of all the methods, what can we use?
-\marginpar{helge - I problem statementdelen bør dere definere (uten å bruke foreløpig ikke definerte termer) hva som er ønskede egenskaper, og prioriter disse. Ta igjen dette her. Col-start og user effort må være mest sentralt foreløpig eller? Holder å gi kvalitativ vurdering (type +/- eller ++/+/-), så fravær av sammenlignbare forsøk virker ikke viktig på meg. Domenet er for spesielt til at vi kan generalisere ggodt tror jeg}
-
-
 It is hard to compare the performance of the different methods as the authors have
-experimented with different datasets and evaluation measures. We therefore opted to do qualitative assessment of the methods in question. It is worth nothing that qualitative methods are less about attempting to prove something than about to understand something. Our ordinal rating scale spans from \ding{55} meaning that the results are bad/not optimal, \checkmark means that the results appear to be satisfactory or simply better than the solutions marked with \ding{55} and finally \checkmark\checkmark means that the results appear to be excellent or very good. The assessment will factor in the following properties:
+experimented with different datasets and evaluation measures making it hard to do
+a quantitative comparison. We therefore opted to do qualitative assessment of the methods
+in question. It is worth nothing that qualitative methods are less about attempting to prove
+something than about to understand something. Our ordinal rating scale spans from \ding{55} meaning
+\emph{bad}, \checkmark means \emph{good} \ding{55} and finally \checkmark\checkmark means \emph{best}
 
-\begin{itemize}
-    \item Accuracy: How does it affect the systems overall performance?
-    \item Cold-start performance: How well does the method handle the cold-start related problems?
-    \item User-effort: How much user involvement is required before the system can start producing accurate
-    recommendations?
-\end{itemize}
-
-The following table shows our final qualitative assessment of the different cold-start solutions:
-
-\marginpar{Remove accuracy column? (Not informative)}
 
 \begin{table}[H]
     \centering
     \begin{tabular}{*{4}l}
     \toprule
-    Method					& Accuracy 				& Cold-start performance  & User-effort \\ 			\midrule
-    Trust-aware RS 			& \checkmark			& \checkmark			  &	\ding{55}				\\ 
-    Filterbots 				& \checkmark		   	& \checkmark			  &	\checkmark\checkmark	\\ 
-    Seed users 				& \checkmark			& \checkmark			  &	\ding{55}				\\ 
-    Intelligent selection 	& 		   				& \checkmark			  &	\checkmark				\\
-    Hybrid Methods 			& \checkmark\checkmark	& \checkmark \checkmark	  &	\checkmark\checkmark	\\
+    Method					& Cold-start performance  & User-effort \\ 			\midrule
+    Trust-aware RS 			& \checkmark			  &	\ding{55}				\\ 
+    Filterbots 				& \checkmark			  &	\checkmark\checkmark	\\ 
+    Seed users 				& \checkmark			  &	\ding{55}				\\ 
+    Intelligent selection 	& \checkmark			  &	\checkmark				\\
+    Hybrid Methods 			& \checkmark \checkmark	  &	\checkmark\checkmark	\\
     \bottomrule
     \end{tabular}
     \caption[Evaluation of cold-start methods]{Evaluation of cold-start methods}
     \label{table:evaluationcoldstart}
 \end{table}
 
-Intelligent selection have not been given an accuracy score as it is not a recommender system in itself. Trust-aware recommender systems get a \ding{55} in user effort as it is hard to find users to connect to,
-this problem could however be mitigated by implementing a system like the one described by
-Victor et al. \cite{Victor2008} to recommend users to connect to. Seed users also get a \ding{55} in
-user-effort, mainly due to its solution to the new item problem where all representative users
-must rate an item for it to be recommendable. Filterbots and the Hybrid methods both get two checkmarks for requiring no extra user involvement. Intelligent selection could pretty seamlessly be integrated into the solution using e.g. a simple \emph{hot or not} interface, requiring minimal user effort.
-We would like to argue that having the option to incrementally update the model is an important feature which could further improve cold start performance, as it instantly can incorporate the ratings given
-by new users and to new items. The hybrid methods therefore gets (++) for their cold-start performance.
-From the above table we believe that Filterbots, Intelligent selection and Hybrid Methods, in particular RBLF and Matchbox
-could provide us with a good solution to the cold-start problem. However, the hybrid methods are both dependent on good user and item features.
+Trust-aware recommender systems get a \ding{55} in user effort as it is hard to find users to connect to,
+this problem could however be mitigated by implementing a system like the one described by Victor et al. \cite{Victor2008}
+to recommend users to connect to. Seed users also get a \ding{55} in user-effort, mainly due to its solution to the new item
+problem where all representative users must rate an item for it to be recommendable. Filterbots and the Hybrid methods both
+get two checkmarks for requiring no extra user involvement. Intelligent selection could pretty seamlessly be integrated into
+the solution using e.g. a simple \emph{hot or not} interface, requiring minimal user effort. We would also like to argue that having the
+option to incrementally update the model is an important feature which could further improve cold start performance, as it instantly can
+incorporate the ratings given by new users and to new items. The hybrid methods therefore gets to checks for their cold-start performance.
+
+From our discussion we believe filterbots, interview process and hybrid methods such as e.g. RBLF and MatchBox could provide good solutions.
+However, we are currently limited to experiment with filterbots as we do not have access to user and item features or any way
+of testing out an interview process.

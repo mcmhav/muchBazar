@@ -284,7 +284,6 @@
         It is cropped to show events triggered in and around Norway.
         We can see that the majority of the users are located in and around the capital city of Norway, Oslo.
 
-        \marginpar{fact check that they use GPS and not IP-location, 6 decimals in data 11.575452}
         If the event is triggered from a phone, the event is as precise as the GPS hardware location of the phone, and would be helpful information to understand more about the user.
 
         % mtodo check for price distribution based on location.
@@ -292,25 +291,46 @@
 \subsection{Product properties}
 
     \begin{figure}[H]
-        \includegraphics[width=5in]{image/priceDistribution.png}
         \centering
-        \caption{Price distribution of products}
-    \label{figure:priceDistribution}
+        \begin{subfigure}{.5\textwidth}
+            \includegraphics[width=\dualGraphWidth]{image/priceDistributiondistribution.png}
+            \centering
+            \caption{Price distribution of products}
+    \label{figure:ratingsPerUser}
+        \end{subfigure}%
+        \begin{subfigure}{.5\textwidth}
+            \includegraphics[width=\dualGraphWidth]{image/cumpriceDistributiondistribution.png}
+            \centering
+            \caption{Cumulative price distribution of products}
+    \label{figure:ratingsPerUserCum}
+        \end{subfigure}
+        \caption{Figures presenting the distribution of price for the items i SoBazaar}
     \end{figure}
-        Here we see how them products are distributed on amount of products and price. The red bars indicates the amount of products with the belonging price.
-        72 products have a price over 4000 and have been left out of this graph.
+
+        Here we see how the products are distributed in regards to their price.
+        134 products have a price over 2 500 NOK and have been left out of this graph.
 
         82\% of the items have a price lower than 1 000 NOK.
-
+        \marginpar{make avg price for users, is there something there}
+        % mtodo make price user graph
 
     \begin{figure}[H]
-        \includegraphics[width=5in]{image/product_idcumdistribution.png}
         \centering
-        \caption{Count of events on each unique item}
-    \label{figure:eventOnProductDist}
+        \begin{subfigure}{.5\textwidth}
+            \includegraphics[width=\dualGraphWidth]{image/product_iddistribution.png}
+            \centering
+            \caption{Count of events on products}
+    \label{figure:ratingsPerUser}
+        \end{subfigure}%
+        \begin{subfigure}{.5\textwidth}
+            \includegraphics[width=\dualGraphWidth]{image/product_idcumdistribution.png}
+            \centering
+            \caption{Cumulative count of events on products}
+    \label{figure:ratingsPerUserCum}
+        \end{subfigure}
+        \caption{Figures presenting the distribution of events for the products i SoBazaar}
     \end{figure}
-        This figure shows the unique count of events on each item in the SoBazaar dataset.
-        The majority of the items has only had a interaction count of 10 or less.
+        80\% of the products have only a interaction count of 10 or less.
         Interaction count is \emph{product\_detail\_clicked}, \emph{product\_wanted} and \emph{product\_purchase\_intended}.
         This means that there will not be more than 10 events for the majority of the items, which might lead to an issue when doing collaborative filtering on the data.
         When the majority of the events only has 10 events and there are over 4 000 items and 1 200 users, the probability that multiple users have interacted with similar items will be low.
@@ -581,6 +601,8 @@
         This figure shows the event distribution per day over the time period the events were stored.
         The spikes we see happens on a weekly basis, and is centered around the weekends.
         The larger spike from the start of January to the start of March might be due to increase in publicity or other outside factors.
+
+        % mtodo add event splits
 
     \begin{figure}[H]
         \includegraphics[width=5in]{image/hrdistribution.png}
