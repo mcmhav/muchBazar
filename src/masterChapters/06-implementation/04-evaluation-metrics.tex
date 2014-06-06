@@ -171,7 +171,7 @@ event types.
 \marginpar{Mention why we think it is wrong to make these assumptions?}
 
 To solve this problem we decided to chose a \emph{simpler} approach. We independently measure the recall and counts of clicks,
-wants and purchases retrieved by the recommender in the top 20 positions. To check if an item is a click, want or purchase
+wants and purchases retrieved by the recommender in the top 20 positions. To check if an user-item touple is a click, want or purchase
 we create a file which stores the log events in the following format:
 
 \begin{table}[H]
@@ -191,81 +191,89 @@ UserID	&	ItemID	 &  Event Type  \\ \midrule
 \caption{Evaluation - Example event type file}
 \end{table}
 
-For items which have multiple events for a given user we only use the most \emph{valuable} event. E.g. if a user have
-both clicked and purchased and item we store the item as a purchase, giving it a value of 3. Clicks are given a value of 1 and wants are given a value of 2.
-
-When evaluating the recommender we first count the occurrences of the different events before looking at the top 20 predictions to see how many of the
-events in the different \emph{buckets} was retrieved. In addition we separately measure the MAP\@20 scores for the different
-event types to give us some information about where in the top 20 the items are placed. Giving us the following columns:
-
-\begin{itemize}
-	\item $T_{click}$: Number of click events in the testset
-	\item $T_{want}$: Number of test events in the testset
-	\item $T_{purchase}$: Number of purchase events in the testset
-	\item $P_{click}$: Number of click events retrieved in the top 20 prediction lists
-	\item $P_{want}$: Number of want events retrieved in the top 20 prediction lists
-	\item $P_{purchase}$: Number of purchase events retrieved in the top 20 prediction lists
-	\item $R_{click}$: $P_{click}$ / $T_{click}$
-	\item $R_{want}$: $P_{want}$ / $T_{want}$
-	\item $R_{purchase}$: $P_{purchase}$ / $T_{purchase}$
-	\item $MAP@20_{click}$: $MAP@20$ considering only click events as relevant items
-	\item $MAP@20_{want}$: $MAP@20$ considering only want events as relevant items
-	\item $MAP@20_{purchase}$: $MAP@20$ considering only purchase events as relevant items
-\end{itemize}
-
-Consider the following example where we have split our dataset into a training and test set and generated a set
-of predictions for each user. The following table shows our test set:
+For items where a user has multiple events we only use the most \emph{valuable} event. E.g. if a user have
+both clicked and purchased an item we store the item as a purchase, giving it a value of 3.
+When evaluating the recommender we first count the occurrences of the different events in the test set before looking at the top 20 predictions
+for each user to see how many of the events in the different \emph{buckets} was retrieved. In addition we separately measure the MAP\@20 scores
+for the different event types to give us some information about where in the top 20 the items are placed. This gives us the following
+additional columns for our evaluation metric tables:
 
 \begin{table}[H]
-\centering
-	\begin{tabular}{*{3}l}
+	\begin{tabular}{ll}
 	\toprule
-	UserID	&	ItemID	 &  Rating  	\\ \midrule
-	11		&	21		 &	2			\\
-	11		&	101		 &	5			\\
-	13		&	213		 &	4			\\
-	13		&	202		 &  3			\\
-	15		&	202		 &  5			\\
-	15		&	21		 &  2			\\
+	$T_{click}$	 	 		& 	Number of click events in the testset \\
+	$T_{want}$				&	Number of test events in the testset \\
+	$T_{purchase}$	 		&	Number of purchase events in the testset \\
+	$P_{click}$		 		&	Number of click events retrieved in the top 20 prediction lists \\
+	$P_{want}$		 		&	Number of want events retrieved in the top 20 prediction lists \\
+	$P_{purchase}$  		&	Number of purchase events retrieved in the top 20 prediction lists \\
+	$R_{click}$				&	$P_{click}$ / $T_{click}$ \\
+	$R_{want}$		 		&	$P_{want}$ / $T_{want}$  \\
+	$R_{purchase}$	 		&	$P_{purchase}$ / $T_{purchase}$ \\
+	$MAP@20_{click}$ 		&	$MAP@20$ considering only click events as relevant items \\
+	$MAP@20_{want}$  		&	$MAP@20$ considering only want events as relevant items \\ 
+	$MAP@20_{purchase}$: 	& 	$MAP@20$ considering only purchase events as relevant items \\
 	\bottomrule
 	\end{tabular}
-	\caption{Evaluation - Test file example}
 \end{table}
 
-E.g. we can see that we have an interaction between user 11 and item 21 in our testset and from our event file in
-Table \ref{table:event-type} we can see that the user clicked this item. Similarly we can see that user 15 purchased
-item 21 from our event file. Giving us the following event distribution of our test set: $T_{click}$ = 1, $T_{want}$ = 2 and
-$T_{purchase}$ = 3. Our recommender system then outputs the a ordered list of predictions for each user. The retrieved user-item touples matching the test set have been highlighted:
+
+To illustrate this process more clearly consider the following example where we have
+the following test set and prediction lists for three users:
 
 \begin{table}[H]
-\centering
-	\begin{tabular}{*{3}l}
-	\toprule
-	UserID	&	ItemID	 &  Rating  	\\ \midrule
-	\rowcolor{Gray}
-	11		&	21		 &	2			\\
-	11		&	107		 &	5			\\
-	11		&	123		 &	5			\\
-	\rowcolor{Gray}
-	13		&	213		 &	4			\\
-	13		&	1022	 &  3			\\
-	15		&	1202	 &  5			\\
-	\rowcolor{Gray}
-	15		&	21		 &  2			\\
-\bottomrule
-\end{tabular}
-\caption{Evaluation - Example prediction file}
+\parbox{.45\linewidth}{
+	\centering
+		\begin{tabular}{*{3}l}
+		\toprule
+			UserID	&	ItemID	 &  Rating  	\\ \midrule
+			11		&	21		 &	2			\\
+			11		&	101		 &	5			\\
+			13		&	213		 &	4			\\
+			13		&	202		 &  3			\\
+			15		&	202		 &  5			\\
+			15		&	21		 &  2			\\
+		\bottomrule
+		\end{tabular}
+}
+\hfill
+\parbox{.45\linewidth}{
+	\centering
+		\begin{tabular}{*{3}l}
+		\toprule
+			UserID	&	ItemID	 &  Rating  	\\ \midrule
+			\rowcolor{Gray}
+			11		&	21		 &	5.0			\\
+			11		&	123		 &	3.6			\\
+			\rowcolor{Gray}
+			13		&	213		 &	5.0			\\
+			13		&	1022	 &  4.7			\\
+			15		&	1202	 &  4.4			\\
+			\rowcolor{Gray}
+			15		&	21		 &  4.73		\\
+		\bottomrule
+	\end{tabular}	
+}
+\caption[Test and prediction set example]{Test and prediction set. The true positives in the prediction set are highlighted}
 \end{table}
 
+We can see that we have an interaction between user 11 and item 21 in our testset and from our event file in
+Table \ref{table:event-type} we can see that the user clicked this item. Similarly we can see that user 15 purchased
+item 21 from our event file. Giving us the following event distribution of our test set: $T_{click}$ = 1, $T_{want}$ = 2 and
+$T_{purchase}$ = 3. 
 
-We then check each user-item touple against our test file, if it is a match we retrieve the event type for the predictions.  Giving us the following $P$ values: $P_{click}$ = 1, $P_{want}$ = 1 and $P_{purchase}$ = 1. Meaning that we retrieved one of each the item types, giving us the following recall score for the different event type: $P_{click}$ = 1/1, $P_{want}$ = 1/2 and $P_{purchase}$ = 1/3. We can then calculate the different $MAP@20$ scores. E.g. for user 11 the first item in his ranked list is a click meaning that his $AP@20_{click}$ score would be higher than if the item would have been the third item in his list. The $MAP@20$ numbers can therefore be used as a measure of where in the top 20 lists the different events can be found. E.g. a high $MAP@20_{purchase}$ score would indicate that the retrieved purchase events
-normally are found high up in the recommendation list and vica versa.
+We then check each user-item touple in our prediction file against our test file, if it is a match we retrieve the
+event type for the predictions. Giving us the following $P$ values: $P_{click}$ = 1, $P_{want}$ = 1 and $P_{purchase}$ = 1.
+Meaning that we retrieved one of each event type, giving us the following recall score for the different event type:
+$R_{click}$ = 1/1, $R_{want}$ = 1/2 and $R_{purchase}$ = 1/3. We can then calculate the different $MAP@20$ scores. E.g. for user 11
+the first item in his ranked list is a click meaning that his $AP@20_{click}$ score would be higher than if the item
+would have been the third item in his list. The $MAP@20$ numbers can therefore be used as a measure of where in the
+top-20 lists the different events can be found. E.g. a high $MAP@20_{purchase}$ score would indicate that the retrieved
+purchase events normally are found high up in the top-20 recommendation list and vica versa.
  
-
-
-We believe that having the raw counts coupled with the true-postive rate for the different event type and a measure of their ranking quality will be more informative and give us a clearer overview of the systems performance. Given that we have known the relevance of the different event types nDCG could have given us all these numbers summarized in one column, but instead we now have twelve.
-
-
+We believe that having the raw counts coupled with the true-postive rate for the different event type and a measure of their
+ranking quality will be more informative and give us a clearer overview of the systems performance than using a single ranking
+metric.
 
 %Normalized Discounted Cumulative Gain ($nDCG_{k}$), described in Section \ref{subp:normalized_discounted_cumulative_gain_}
 % 
