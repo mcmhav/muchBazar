@@ -34,6 +34,7 @@
 \usepackage{pifont}   % Can add check symbol
 \usepackage{tikz}
 \usepackage[utf8]{inputenc} % utf-8 for special names
+\usepackage{xcolor,colortbl} % highlight table rows and columns
 \usetikzlibrary{calc,trees,positioning,arrows,chains,fit,shapes.geometric,%
     decorations.pathreplacing,decorations.pathmorphing,shapes,%
     matrix,shapes.symbols}
@@ -53,6 +54,8 @@
 % Package configutations
 \newcommand{\notimplies}{\mathrel{{\ooalign{\hidewidth$\not\phantom{=}$\hidewidth\cr$\implies$}}}}
 \newcommand{\HRule}{\rule{\linewidth}{0.5mm}} % Header
+\definecolor{Gray}{gray}{0.90} % table row color
+
 \lstset{
   basicstyle=\ttfamily\tiny,
   breaklines=true,
