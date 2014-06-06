@@ -51,15 +51,15 @@ recommendation list.
 	\begin{tabular}{*{12}l}
 	\toprule
 	\#Example	& R1 & R2 & R3 & R4 & R5 & R6 & R7 & R8 & R9 & R10 & AUC \\ \midrule
-	1		& \cmark & \xmark & \xmark & \xmark & \xmark & \xmark & \xmark & \xmark & \xmark & \xmark & 1.000 \\ 
-	2		& \xmark & \cmark & \xmark & \xmark & \xmark & \xmark & \xmark & \xmark & \xmark & \xmark & 0.889 \\ 
-	3		& \xmark & \xmark & \cmark & \xmark & \xmark & \xmark & \xmark & \xmark & \xmark & \xmark & 0.778 \\ 
-	4		& \xmark & \xmark & \xmark & \cmark & \xmark & \xmark & \xmark & \xmark & \xmark & \xmark & 0.667 \\ 
-	5		& \xmark & \xmark & \xmark & \xmark & \cmark & \xmark & \xmark & \xmark & \xmark & \xmark & 0.556 \\ 
-	6		& \xmark & \xmark & \xmark & \xmark & \xmark & \cmark & \xmark & \xmark & \xmark & \xmark & 0.444 \\ 
-	7		& \xmark & \xmark & \xmark & \xmark & \xmark & \xmark & \cmark & \xmark & \xmark & \xmark & 0.333 \\ 
-	8		& \xmark & \xmark & \xmark & \xmark & \xmark & \xmark & \xmark & \cmark & \xmark & \xmark & 0.222 \\ 
-	9		& \xmark & \xmark & \xmark & \xmark & \xmark & \xmark & \xmark & \xmark & \cmark & \xmark & 0.111 \\ 
+	1		& \cmark & \xmark & \xmark & \xmark & \xmark & \xmark & \xmark & \xmark & \xmark & \xmark & 1.000 \\
+	2		& \xmark & \cmark & \xmark & \xmark & \xmark & \xmark & \xmark & \xmark & \xmark & \xmark & 0.889 \\
+	3		& \xmark & \xmark & \cmark & \xmark & \xmark & \xmark & \xmark & \xmark & \xmark & \xmark & 0.778 \\
+	4		& \xmark & \xmark & \xmark & \cmark & \xmark & \xmark & \xmark & \xmark & \xmark & \xmark & 0.667 \\
+	5		& \xmark & \xmark & \xmark & \xmark & \cmark & \xmark & \xmark & \xmark & \xmark & \xmark & 0.556 \\
+	6		& \xmark & \xmark & \xmark & \xmark & \xmark & \cmark & \xmark & \xmark & \xmark & \xmark & 0.444 \\
+	7		& \xmark & \xmark & \xmark & \xmark & \xmark & \xmark & \cmark & \xmark & \xmark & \xmark & 0.333 \\
+	8		& \xmark & \xmark & \xmark & \xmark & \xmark & \xmark & \xmark & \cmark & \xmark & \xmark & 0.222 \\
+	9		& \xmark & \xmark & \xmark & \xmark & \xmark & \xmark & \xmark & \xmark & \cmark & \xmark & 0.111 \\
 	10		& \xmark & \xmark & \xmark & \xmark & \xmark & \xmark & \xmark & \xmark & \xmark & \cmark & 0.000 \\
 	\bottomrule
 	\end{tabular}
@@ -132,16 +132,16 @@ three recommendations lists. All none relevant items are labeled with the item-i
 \begin{tabular}{*{4}l}
 \toprule
 Example 	& 	Actual					& 	Recommended					&	AP@10   \\ \midrule
-1			& [1,2,3,4,5,6,7,8,9,10]	&	[1,0,0,0,0,0,0,0,0,0]		&	0.100  \\ 
-2			& [1,2,3,4,5,6,7,8,9,10]	&	[1,0,0,0,2,0,0,0,0,0]		&	0.140  \\ 
+1			& [1,2,3,4,5,6,7,8,9,10]	&	[1,0,0,0,0,0,0,0,0,0]		&	0.100  \\
+2			& [1,2,3,4,5,6,7,8,9,10]	&	[1,0,0,0,2,0,0,0,0,0]		&	0.140  \\
 3			& [1,2,3,4,5,6,7,8,9,10]	&	[8,0,0,0,9,0,0,0,0,0]		&	0.140  \\
-4			& [1,2,3,4,5,6,7,8,9,10]	&	[1,0,0,0,3,0,5,0,0,0]		&	0.183  \\ 
-5			& [1,2,3,4,5,6,7,8,9,10]	&	[0,0,0,2,0,0,0,6,5,0]		&	0.083  \\ 
+4			& [1,2,3,4,5,6,7,8,9,10]	&	[1,0,0,0,3,0,5,0,0,0]		&	0.183  \\
+5			& [1,2,3,4,5,6,7,8,9,10]	&	[0,0,0,2,0,0,0,6,5,0]		&	0.083  \\
 6			& [1,2,3,4,5,6,7,8,9,10]	&	[0,0,0,0,7,0,8,0,0,0]		&	0.049  \\
-7			& [1,2,3,4,5,6,7,8,9,10]	&	[0,0,0,0,7,0,0,0,0,1]		&	0.040  \\ 
-8			& [1,2,3,4,5,6,7,8,9,10]	&	[0,0,0,0,0,0,0,8,5,0]		&	0.035  \\ 
+7			& [1,2,3,4,5,6,7,8,9,10]	&	[0,0,0,0,7,0,0,0,0,1]		&	0.040  \\
+8			& [1,2,3,4,5,6,7,8,9,10]	&	[0,0,0,0,0,0,0,8,5,0]		&	0.035  \\
 9			& [1,2,3,4,5,6,7,8,9,10]	&	[1,3,4,5,6,0,0,0,0,0]		&	0.500  \\
-10			& [1,2,3,4,5,6,7,8,9,10]	&	[0,0,0,0,0,1,2,8,5,3]		&	0.178  \\ 
+10			& [1,2,3,4,5,6,7,8,9,10]	&	[0,0,0,0,0,1,2,8,5,3]		&	0.178  \\
 \bottomrule
 \end{tabular}
 \caption{AP\@10 Examples}
@@ -258,9 +258,9 @@ $T_{purchase}$ = 3. Our recommender system then outputs the a ordered list of pr
 \end{table}
 
 
-We then check each user-item touple against our test file, if it is a match we retrieve the event type for the predictions.  Giving us the following $P$ values: $P_{click}$ = 1, $P_{want}$ = 1 and $P_{purchase}$ = 1. Meaning that we retrieved one of each the item types, giving us the following recall score for the different event type: $P_{click}$ = 1/1, $P_{want}$ = 1/2 and $P_{purchase}$ = 1/3. We can then calculate the different $MAP@20$ scores. E.g. for user 11 the first item in his ranked list is a click meaning that his $AP@20_{click}$ score would be higher than if the item would have been the third item in his list. The $MAP@20$ numbers can therefore be used as a measure of where in the top 20 lists the different events can be found. E.g. a high $MAP@20_{purchase}$ score would indicate that the retrieved purchase events
-normally are found high up in the recommendation list and vica versa.
- 
+% We then check each user-item touple against our test file, if it is a match we retrieve the event type for the predictions.  Giving us the following $P$ values: $P_{click}$ = 1, $P_{want}$ = 1 and $P_{purchase}$ = 1. Meaning that we retrieved one of each the item types, giving us the following recall score for the different event type: $P_{click}$ = 1/1, $P_{want}$ = 1/2 and $P_{purchase}$ = 1/3. We can then calculate the different $MAP@20$ scores. E.g. for user 11 the first item in his ranked list is a click meaning that his $AP@20_{click}$ score would be higher than if the item would have been the third item in his list. The $MAP@20$ numbers can therefore be used as a measure of where in the top 20 lists the different events can be found. E.g. a high $MAP@20_{purchase}$ score would indicate that the retrieved purchase events
+% normally are found high up in the recommendation list and vica versa.
+
 
 
 We believe that having the raw counts coupled with the true-postive rate for the different event type and a measure of their ranking quality will be more informative and give us a clearer overview of the systems performance. Given that we have known the relevance of the different event types nDCG could have given us all these numbers summarized in one column, but instead we now have twelve.
@@ -268,7 +268,7 @@ We believe that having the raw counts coupled with the true-postive rate for the
 
 
 %Normalized Discounted Cumulative Gain ($nDCG_{k}$), described in Section \ref{subp:normalized_discounted_cumulative_gain_}
-% 
+%
 %
 %For our application we believe it to be beneficial to use the rating of the item as a
 %relevance score, as we could have multiple items with highly similar ratings (thus the same relevance). When using a low $k$ value for the logarithmic alternative this could mean that the relevance between two almost similarly rated items might end up being disproportionately large. We will also most likely look at the 20 top items, which means that the difference between the lower ranked items will be fairly small, as the logarithmic function converges. A third alternative would be to also use some linear decay function. The following table shows the $nDCG$ score for a set of examples where the function $rel_i = 1/log(i+1)$ is used to assign the relevance score to item $i$ in the sorted list of actual ratings. E.g. item one is assigned a relevance score of $1/(log(2)$ and so on. We hope the following table will give the reader a better idea of how $nDCG$ \emph{works}.
@@ -279,15 +279,15 @@ We believe that having the raw counts coupled with the true-postive rate for the
 %\begin{tabular}{*{4}l}
 %\toprule
 %Example 	& 	Actual					& 	Recommended				&	nDCG 	\\ \midrule
-%1			& 	[1,2,3,4]				&	[1,0,0,0]				&	0.470   \\ 
-%2			& 	[1,2,3,4]				&	[2,0,0,0]				&	0.360   \\ 
-%3			& 	[1,2,3,4]				&	[3,0,0,0]				&	0.330   \\ 
-%4			& 	[1,2,3,4,5,6,7,8,9,10] 	& 	[1,2,3,4,5,6,7,8,9,10] 	&   1.000	\\ 
-%5			& 	[1,2,3,4,5,6,7,8,9,10] 	& 	[10,9,8,7,6,5,4,3,2,1] 	&   0.900	\\ 
-%6			&	[1,2,3,4,5,6,7,8,9,10] 	& 	[1,2,0,0,0,0,0,0,0,0] 	&   0.440	\\ 
-%7			& 	[1,2,3,4,5,6,7,8,9,10] 	& 	[1,0,0,3,0,0,0,0,0,0] 	&   0.390	\\ 
-%8			& 	[1,2,3,4,5,6,7,8,9,10] 	& 	[4,0,0,0,8,0,0,0,0,0] 	&   0.280	\\ 
-%9			& 	[1,2,3,4,5,6,7,8,9,10] 	& 	[0,0,0,0,5,0,0,0,0,10] 	&   0.130	\\ 
+%1			& 	[1,2,3,4]				&	[1,0,0,0]				&	0.470   \\
+%2			& 	[1,2,3,4]				&	[2,0,0,0]				&	0.360   \\
+%3			& 	[1,2,3,4]				&	[3,0,0,0]				&	0.330   \\
+%4			& 	[1,2,3,4,5,6,7,8,9,10] 	& 	[1,2,3,4,5,6,7,8,9,10] 	&   1.000	\\
+%5			& 	[1,2,3,4,5,6,7,8,9,10] 	& 	[10,9,8,7,6,5,4,3,2,1] 	&   0.900	\\
+%6			&	[1,2,3,4,5,6,7,8,9,10] 	& 	[1,2,0,0,0,0,0,0,0,0] 	&   0.440	\\
+%7			& 	[1,2,3,4,5,6,7,8,9,10] 	& 	[1,0,0,3,0,0,0,0,0,0] 	&   0.390	\\
+%8			& 	[1,2,3,4,5,6,7,8,9,10] 	& 	[4,0,0,0,8,0,0,0,0,0] 	&   0.280	\\
+%9			& 	[1,2,3,4,5,6,7,8,9,10] 	& 	[0,0,0,0,5,0,0,0,0,10] 	&   0.130	\\
 %10			& 	[1,2,3,4,5,6,7,8,9,10] 	& 	[0,0,0,0,0,0,0,0,9,10]	&   0.110	\\
 %\bottomrule
 %\end{tabular}
@@ -312,9 +312,9 @@ We believe that having the raw counts coupled with the true-postive rate for the
 %\begin{tabular}{*{5}l}
 %\toprule
 %\#Ex & 	Actual																		& 	Recommended				&	$nDCG^1$  	   & $nDCG^2$	\\ \midrule
-%1 		& 	[$1_{5}, 2_{3.8}, 3_{3.55}, 4_{2.78},5_{1.3}$]								&	[5,0,0,0,0]				&	0.113 		   & 0.026  \\ 
-%2 		& 	[$1_{5}, 2_{3.8}, 3_{3.55}, 4_{2.78},5_{1.3}$]								&	[0,0,1,0,0]				&	0.217 		   & 0.275   \\ 
-%3   	& 	[$1_{5},2_{4.8}, 3_{3.55}, 4_{2.78}, 5_{2.2}, 6_{2.0},7_{1.77},8_{1.3}$]	&	[2,3,4,5,6,7,8,0]		&	0.827		   & 0.682   \\ 
+%1 		& 	[$1_{5}, 2_{3.8}, 3_{3.55}, 4_{2.78},5_{1.3}$]								&	[5,0,0,0,0]				&	0.113 		   & 0.026  \\
+%2 		& 	[$1_{5}, 2_{3.8}, 3_{3.55}, 4_{2.78},5_{1.3}$]								&	[0,0,1,0,0]				&	0.217 		   & 0.275   \\
+%3   	& 	[$1_{5},2_{4.8}, 3_{3.55}, 4_{2.78}, 5_{2.2}, 6_{2.0},7_{1.77},8_{1.3}$]	&	[2,3,4,5,6,7,8,0]		&	0.827		   & 0.682   \\
 %4  	& 	[$1_{5},2_{4.8}, 3_{3.55}, 4_{2.78}, 5_{2.2}, 6_{2.0},7_{1.77},8_{1.3}$]	&	[1,2,0,0,0,0,0,0]		&	0.592 		   & 0.805   \\
 %5 		& 	[$1_{5},2_{4.93},3_{2.88}, 4_{1.85},5_{1.8},6_{1.77}, 7_{1.63},8_{1.52}$]	&	[1,0,0,0,0,0,0,0]		&	0.394 		   & 0.544   \\
 %6 		& 	[$1_{5},2_{4.93},3_{2.88}, 4_{1.85},5_{1.8},6_{1.77}, 7_{1.63},8_{1.52}$]	&	[3,4,5,6,7,8,0,0]		&	0.542 		   & 0.206   \\
@@ -323,7 +323,7 @@ We believe that having the raw counts coupled with the true-postive rate for the
 %\caption{Comparison of nDCG scores for different methods of computing DCG. Each item in the Actual list is on the form $ItemId_{Rating}$, the first item in the actual list of example one therefore has en ItemId of 1 and a Rating of 5. All non relevant items are given the ItemId 0 in the Recommended list.}
 %\end{table}
 %
-%As you can see Method 1 is a bit more \emph{balanced} than Method 2, as it does not give as much weight to highly rated items. Especially example 5 and 6 highlights this as Method 2 prefers retrieving one highly rated item over retrieving multiple less relevant ones. Method 2 is ultimately closer to what we want in addition to being commonly used by web search companies and on the data science competition platform Kaggle \cite{kaggle}. We have also chosen to truncate the recommendation list and only calculate the nDCG of the $k$ top items. Because nDCG has a relatively low positional discount, it allows us to set $k$ fairly high, but this only makes sense if we believe that the user will read large portions of the recommendation list. 
+%As you can see Method 1 is a bit more \emph{balanced} than Method 2, as it does not give as much weight to highly rated items. Especially example 5 and 6 highlights this as Method 2 prefers retrieving one highly rated item over retrieving multiple less relevant ones. Method 2 is ultimately closer to what we want in addition to being commonly used by web search companies and on the data science competition platform Kaggle \cite{kaggle}. We have also chosen to truncate the recommendation list and only calculate the nDCG of the $k$ top items. Because nDCG has a relatively low positional discount, it allows us to set $k$ fairly high, but this only makes sense if we believe that the user will read large portions of the recommendation list.
 %
 %\marginpar{TODO: Spend any more time looking at partial order ranking measures?...}
 %
