@@ -182,7 +182,7 @@ such as Facebook, their liked Pages exposing which interests the user may have.
 % Why are this relevant for us?
 
 \subsection{E-commerce and the fashion industry}
-\label{subsubs:fashionInEcom}
+\label{sec:fashionInEcom}
 
 The term \textit{e-commerce} is used when referencing businesses trading
 services and products via the internet. There are many different types of both
@@ -295,225 +295,255 @@ companies by social media, it is a more important segment in this industry
 compared to e-commerce in general.
 
 \subsection{Competitors to SoBazaar}
-  \label{subsec:competitors}
+\label{subsec:competitors}
 
-	\marginpar{TODO: Extend with Asos}
-	\marginpar{TODO: Extend with Kwoller}
-	\marginpar{TODO: Extend with Mallzee}
-	\marginpar{TODO: Mention that many new apps have popped up recently, attempting to do the same as SoBazaar}
+\marginpar{TODO: Extend with Asos}
+\marginpar{TODO: Extend with Kwoller}
+\marginpar{TODO: Extend with Mallzee}
+\marginpar{TODO: Mention that many new apps have popped up recently, attempting to do the same as SoBazaar}
 
-    As seen from~\ref{subsubs:fashionInEcom} SoBazaar is not the only e-commerce application for fashion, and has therefore some competitors.
-    SoBazaar is built up of a collection of e-commerce store front applications and social interactions, but SoBazaar is not the first of its kind.
-    There is a set of other similar applications providing the user with similar possibilities as SoBazaar.
-    This section will be used to explore some of these systems, and look into their strengths and weaknesses regarding item recommendation for the user.
+As seen from Section~\ref{sec:fashionInEcom}, SoBazaar is not the only
+e-commerce application in the fashion domain, with multiple competitors nor is
+it the first of its kind. In this section some of these systems will be
+explored, looking into their strengths, weaknesses and features in regards to
+providing recommendations for the user. This is both to better understand the
+fashion domain (\textbf{Goal G1}) and to study existing technologies and how
+they are applied (\textbf{Goal G3}). Using this data we can analyze the
+potential of SoBazaar in e-commerce market, in addition we can understand both
+how users are used to interact with similar applications and where we should
+focus in order to enhance the uniqueness of the solution, creating a
+competitive advantage.
 
-\subsubsection{Myntra} % (fold)
+\subsubsection{Myntra}
 \label{par:myntra}
-    "Myntra.com is a one stop shop for all your fashion and lifestyle needs" - about Myntra~\cite{myntra}.
 
-    Myntra is one of India's largest e-commerce stores for fashion and aims to  provide a hassle free shopping experience for the user.
-    They aim to bring the newest and most in-season fashion products available to the user trough the web store front.
-    The brand base of Myntra consists of 500 leading brands from both inside and outside India.
+"Myntra.com is a one stop shop for all your fashion and lifestyle needs" -
+about Myntra~\cite{myntra}.
 
-    The web page uses a set of recommendation approaches to inform the user of what they might like, and to increase the user's awareness of different kinds of items. Such as, similar item and most popular.
+Myntra is one of India's largest e-commerce stores for fashion and aims to
+provide a hassle free shopping experience for the user.  They aim to bring the
+newest and most in-season fashion products available to the user trough the web
+store front.  The brand base of Myntra consists of 500 leading brands from both
+inside and outside India.
 
-    \begin{figure}[H]
-        \centering
-        \includegraphics[width=5in]{image/myntiaSimilarExample.png}
-        \caption[Example of Myntra's "similar item" approach]{In this figure we can see in red how Myntra is suggesting items which are similar to the item the user is currently looking at}
-        \label{figure:myntiaSimilarEx}
-    \end{figure}
+The web page uses a set of recommendation approaches to inform the user of what
+they might like, and to increase the user's awareness of different kinds of
+items. Such as, similar item and most popular. In this figure we can see in red
+how Myntra is suggesting items which are similar to the item the user is
+currently looking at
 
-    \begin{table}[H]
-        \centering
-        \begin{tabularx}{\linewidth}{>{\parskip1ex}X@{\kern4\tabcolsep}>{\parskip1ex}X}
-            \toprule
-            \hfil\bfseries Strengths
-            &
-            \hfil\bfseries Weaknesses
-            \\\cmidrule(r{3\tabcolsep}){1-1}\cmidrule(l{-\tabcolsep}){2-2}
-            %Strengths
-	        Suggest similar items connected to the currently viewed \par
-            Popular list for the different brands and stores \par
-            Ability to add item to a "want list"\par
-            &
-            %Weaknesses
-            No personalized recommendations \par
-            \\\bottomrule
-        \end{tabularx}
-        \caption[Recommendation related strengths and weaknesses of Myntra~\cite{myntra}]{This table is the list of the recommendation related strengths and weaknesses of the e-commerce fashion web site Myntra~\cite{myntra}}
-        \label{table:ecommerceMyntra}
-    \end{table}
-% paragraph myntra (end)
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.6]{image/myntiaSimilarExample.png}
+    \caption[Example of Myntra's "similar item" approach]{Example of Myntra's
+    "similar item" approach}
+    \label{figure:myntiaSimilarEx}
+\end{figure}
+
+This table is the list of the recommendation related strengths and weaknesses
+of the e-commerce fashion web site Myntra~\cite{myntra}
+
+\begin{table}[H]
+    \centering
+    \begin{tabularx}{\linewidth}{>{\parskip1ex}X@{\kern4\tabcolsep}>{\parskip1ex}X}
+        \toprule
+        \hfil\bfseries Strengths
+        &
+        \hfil\bfseries Weaknesses
+        \\\cmidrule(r{3\tabcolsep}){1-1}\cmidrule(l{-\tabcolsep}){2-2}
+        %Strengths
+      Suggest similar items connected to the currently viewed \par
+        Popular list for the different brands and stores \par
+        Ability to add item to a "want list"\par
+        &
+        %Weaknesses
+        No personalized recommendations \par
+        \\\bottomrule
+    \end{tabularx}
+    \caption{Myntra: Strengths and weaknesses}
+    \label{table:ecommerceMyntra}
+\end{table}
 
 \subsubsection{Lyst} % (fold)
 \label{par:lyst}
-    "Lyst.com is a fashion shopping site that gives you your own shopping experience, so you can discover more of the fashion you love" - About Lyst~\cite{lyst}.
 
-    Lyst offers items from thousands of the leading brands and stores of the world.
+"Lyst.com is a fashion shopping site that gives you your own shopping
+experience, so you can discover more of the fashion you love" - About
+Lyst~\cite{lyst}.
 
-    The site allows the user to follow different stores or brands to receive the latest items they have to offer.
-    The user is given a personalized "stylefeed", which displays items from the different brands or stores the user is following.
-    It is also possible for the user to add items to the their profile.
+Lyst offers items from thousands of the leading brands and stores of the world.
 
-    On first login the user is presented with a set of brands and store the user can like or dislike, to get the "stylefeed" started.
-    On access of an item, the user is presented with related items, and the ability to add the item to a collection.
-    When the user wants to buy an item, the site will redirect the user to the store selling the item.
+The site allows the user to follow different stores or brands to receive the
+latest items they have to offer.  The user is given a personalized "stylefeed",
+which displays items from the different brands or stores the user is following.
+It is also possible for the user to add items to the their profile.
 
-    \begin{table}[H]
-    	\centering
-        \begin{tabularx}{\linewidth}{>{\parskip1ex}X@{\kern4\tabcolsep}>{\parskip1ex}X}
-        \toprule
-        	\hfil\bfseries Strengths
-            &
-            \hfil\bfseries Weaknesses
-            \\\cmidrule(r{3\tabcolsep}){1-1}\cmidrule(l{-\tabcolsep}){2-2}
-                    Can follow brands and stores \par
-                    Connected with facebook \par
-                    Ability to add item to a "want list" \par
-                    "Stylfeed" based the user's follow list \par
-                    Show related items \par
-                    &
-                    Limited personalized recommendations \par
-                    \\\bottomrule
-                \end{tabularx}
-        \caption[Recommendation related strengths and weaknesses of Lyst~\cite{lyst}]{This table is the list of the recommendation related strengths and weaknesses of e-commerce fashion web site Lyst~\cite{lyst}}
-        \label{table:ecommenreceLyst}
-    \end{table}
-% paragraph lyst (end)
+On first login the user is presented with a set of brands and store the user
+can like or dislike, to get the "stylefeed" started.  On access of an item, the
+user is presented with related items, and the ability to add the item to a
+collection.  When the user wants to buy an item, the site will redirect the
+user to the store selling the item.
+
+\begin{table}[H]
+  \centering
+    \begin{tabularx}{\linewidth}{>{\parskip1ex}X@{\kern4\tabcolsep}>{\parskip1ex}X}
+    \toprule
+      \hfil\bfseries Strengths
+        &
+        \hfil\bfseries Weaknesses
+        \\\cmidrule(r{3\tabcolsep}){1-1}\cmidrule(l{-\tabcolsep}){2-2}
+                Can follow brands and stores \par
+                Connected with facebook \par
+                Ability to add item to a "want list" \par
+                "Stylfeed" based the user's follow list \par
+                Show related items \par
+                &
+                Limited personalized recommendations \par
+                \\\bottomrule
+            \end{tabularx}
+    \caption[Recommendation related strengths and weaknesses of Lyst~\cite{lyst}]{This table is the list of the recommendation related strengths and weaknesses of e-commerce fashion web site Lyst~\cite{lyst}}
+    \label{table:ecommenreceLyst}
+\end{table}
 
 \subsubsection{Farfetch} % (fold)
 \label{par:farfetch}
-    "farfetch.com forms the hub of a global fashion community that unites independent boutiques around the world with fashion lovers" - About Farfetch~\cite{Farfetch}
 
-    Farfetch is a collection of over 1000 boutiques from all over the world gathered on one web page.
-    The user can shop directly on the page, and get the item delivered to the doorstep with only one checkout process.
+"farfetch.com forms the hub of a global fashion community that unites
+independent boutiques around the world with fashion lovers" - About
+Farfetch~\cite{Farfetch}
 
-    When browsing an item the user is presented with a set of recommendations related to the current item, and previous browsing history.
-    The item can be added to a "want list" or to the shopping chart.
-    \begin{figure}[H]
-        \centering
-        \includegraphics[width=5in]{image/farfetchedRecommendationExample.png}
-        \caption[Example of Farfetch's recommendations]{In this figure we can see in red how Farfetch is recommending items which might be of interest to the user. As we can see the first item is a shoe, which was the last item accessed by the user, the next four items are related to the currently viewed item}
-        \label{figure:farfetchedRecommendationExample}
-    \end{figure}
-    \begin{table}[H]
-        \centering
-        \begin{tabularx}{\linewidth}{>{\parskip1ex}X@{\kern4\tabcolsep}>{\parskip1ex}X}
-        	\toprule
-        	\hfil\bfseries Strengths
-        	&
-        	\hfil\bfseries Weaknesses
-        		\\\cmidrule(r{3\tabcolsep}){1-1}\cmidrule(l{-\tabcolsep}){2-2}
-        		%Strengths
-                Ability to add item to a "want list" \par
-                A feed with the most popular items \par
-                A feed with new items \par
-                A list of recommendations for the user \par
-            	&
-            	%Weaknesses
-                No option to follow other users \par
-             \\\bottomrule
-        \end{tabularx}
-        \caption[Recommendation related strengths and weaknesses of Farfetch~\cite{Farfetch}]{This table is the list of the recommendation related strengths and weaknesses of e-commerce fashion web site Farfetch~\cite{Farfetch}}
-        \label{table:ecommenreceFarfetch}
-    \end{table}
-% paragraph farfetch (end)
+Farfetch is a collection of over 1000 boutiques from all over the world
+gathered on one web page.  The user can shop directly on the page, and get the
+item delivered to the doorstep with only one checkout process.
 
-\subsubsection{MyHabit} % (fold)
+When browsing an item the user is presented with a set of recommendations
+related to the current item, and previous browsing history.  The item can be
+added to a "want list" or to the shopping chart.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=5in]{image/farfetchedRecommendationExample.png}
+    \caption[Example of Farfetch's recommendations]{In this figure we can see in red how Farfetch is recommending items which might be of interest to the user. As we can see the first item is a shoe, which was the last item accessed by the user, the next four items are related to the currently viewed item}
+    \label{figure:farfetchedRecommendationExample}
+\end{figure}
+\begin{table}[H]
+    \centering
+    \begin{tabularx}{\linewidth}{>{\parskip1ex}X@{\kern4\tabcolsep}>{\parskip1ex}X}
+      \toprule
+      \hfil\bfseries Strengths
+      &
+      \hfil\bfseries Weaknesses
+        \\\cmidrule(r{3\tabcolsep}){1-1}\cmidrule(l{-\tabcolsep}){2-2}
+        %Strengths
+            Ability to add item to a "want list" \par
+            A feed with the most popular items \par
+            A feed with new items \par
+            A list of recommendations for the user \par
+          &
+          %Weaknesses
+            No option to follow other users \par
+         \\\bottomrule
+    \end{tabularx}
+    \caption[Recommendation related strengths and weaknesses of Farfetch~\cite{Farfetch}]{This table is the list of the recommendation related strengths and weaknesses of e-commerce fashion web site Farfetch~\cite{Farfetch}}
+    \label{table:ecommenreceFarfetch}
+\end{table}
+
+\subsubsection{MyHabit}
 \label{par:myhabit}
-    "MyHabit is a private fashion sale site offering up to 60% off hand-picked selections from designer and boutique brands." - About MyHabit~\cite{MyHabit}
 
-    MyHabit was founded by Amazon in response to the desire from the users of Amazon to shop fashion in an easy manner.
+"MyHabit is a private fashion sale site offering up to 60\% off hand-picked
+selections from designer and boutique brands." - About MyHabit~\cite{MyHabit}
 
-    The site displays a feed.
-    This feed is fed by a team from MyHabit, and is constantly updating with new sales and new products.
-    The items put into the feed are handpicked.
+MyHabit was founded by Amazon in response to the desire from the users of
+Amazon to shop fashion in an easy manner.
 
-    When browsing items on MyHabit, other similar items are suggested to the user.
-    \begin{table}[H]
-                    \centering
-                    \begin{tabularx}{\linewidth}{>{\parskip1ex}X@{\kern4\tabcolsep}>{\parskip1ex}X}
-                    \toprule
-                    \hfil\bfseries Strengths
-                    &
-                    \hfil\bfseries Weaknesses
-                    \\\cmidrule(r{3\tabcolsep}){1-1}\cmidrule(l{-\tabcolsep}){2-2}
-                Shop on site \par
-                Similar items \par
-             &
-                No personalized recommendations \par
-            \\ \bottomrule
-        \end{tabularx}
-        \caption[Recommendation related strengths and weaknesses of MyHabit~\cite{MyHabit}]{This table is the list of the recommendation related strengths and weaknesses of e-commerce fashion web site MyHabit~\cite{MyHabit}}
-        \label{table:ecommenreceMyHabit}
-    \end{table}
-% paragraph myhabit (end)
+The site displays a feed.  This feed is fed by a team from MyHabit, and is
+constantly updating with new sales and new products.  The items put into the
+feed are handpicked.
 
-\subsubsection{Competitors Recommendation Overview} % (fold)
+When browsing items on MyHabit, other similar items are suggested to the user.
+
+\begin{table}[H]
+  \centering
+  \begin{tabularx}{\linewidth}{>{\parskip1ex}X@{\kern4\tabcolsep}>{\parskip1ex}X}
+    \toprule
+    \hfil\bfseries Strengths & \hfil\bfseries Weaknesses \\
+    \cmidrule(r{3\tabcolsep}){1-1}\cmidrule(l{-\tabcolsep}){2-2}
+    Shop on site \par
+    Similar items \par
+    &
+    No personalized recommendations \par \\
+    \bottomrule
+  \end{tabularx}
+  \caption[Recommendation related strengths and weaknesses of MyHabit~\cite{MyHabit}]{This table is the list of the recommendation related strengths and weaknesses of e-commerce fashion web site MyHabit~\cite{MyHabit}}
+  \label{table:ecommenreceMyHabit}
+\end{table}
+
+\subsubsection{Competitors Recommendation Overview}
 \label{par:competitors_recommendation_overview}
-    In table~\ref{table:ecommerceCommpetiros} we see that there is a very low count of fashion related e-commerce applications, which actually produces personalized recommendations for their users.
 
-    Most of applications are taking a simpler approach when making recommendations for the user, like most popular or similar items.
-    There is no obvious relation between recommendations and that the site has a form of "want list", but the system which allows the users to follow each other are usually not in-application-purchase-applications.
+In table~\ref{table:ecommerceCommpetiros} we see that there is a very low count
+of fashion related e-commerce applications, which actually produces
+personalized recommendations for their users.
 
-    There where no indications of the "want list" being used directly to some personalized recommendations and neither was it any indication that the "follow list" of other users helped produce any personalized recommendations, other than recommending items from the followed user's feed.
-    The "follow list" was also in some cases used to suggest other users to follow.
-    The "want list" was primarily there so that the user could go back to a liked item, and maybe interact with it later.
-    \begin{table}[H]
-        \centering
-        \begin{tabular}{l l l l l l l}
-            \toprule
-            Competitor &
-            \multicolumn{1}{l}{\parbox{1.3cm}{ In App \\ Purchase}} &
-            \multicolumn{1}{l}{\parbox{1.0cm}{ Most \\ Popular}} &
-            \multicolumn{1}{l}{\parbox{1.0cm}{ Similar \\ Items}} &
-            \multicolumn{1}{l}{\parbox{1.0cm}{ Want \\ List}} &
-            \multicolumn{1}{l}{\parbox{1.9cm}{ Follow \\ Other Users}} &
-            \multicolumn{1}{l}{\parbox{2.6cm}{ Personalized \\ Recommendations}} \\ \midrule
+Most of applications are taking a simpler approach when making recommendations
+for the user, like most popular or similar items.  There is no obvious relation
+between recommendations and that the site has a form of "want list", but the
+system which allows the users to follow each other are usually not
+in-application-purchase-applications.
 
-            Myntra  & \cmark & \cmark & \cmark & \cmark & \xmark & \xmark \\
-            Flink   & \xmark & \cmark & ?? & \cmark & \cmark & \xmark \\
-            Lyst    & \xmark & \cmark & \cmark & \cmark & \cmark & \xmark \\
-            Motilo  & \xmark & \cmark & \xmark & \cmark & \cmark & \xmark \\
-            Farfetch & \cmark & \cmark & \cmark & \cmark & \xmark & \xmark/\cmark~\tablefootnote{How the recommendations are produced is not mentioned} \\
-            ModCloth  & \cmark & \cmark & \cmark & \cmark & \xmark & \xmark \\
-            UsTrendy  & \cmark & \cmark & \cmark & \cmark & \xmark & \xmark \\
-            Polyvore  & \xmark & \cmark & \cmark & \cmark & \cmark & \xmark \\
-            Clothia  & \xmark & \cmark & \cmark & \cmark & \cmark & \xmark \\
-            Trendabl  & \cmark & \cmark & \cmark & \cmark & \cmark & \xmark \\
-            Zalando  & \cmark & \cmark & \cmark & \cmark & \xmark & \xmark \\
-            Ellos  & \cmark & \cmark & \cmark & \cmark & \xmark & \xmark \\
-            LookBook  & \xmark & \cmark & \cmark & \cmark & \cmark & \xmark \\
-            Fahsiolista  & \xmark & \cmark & \xmark & \cmark & \cmark & \xmark \\
-            ShopStyle  & \xmark & \xmark & \cmark & \cmark & \xmark & \xmark \\
-            MyHabit  & \cmark & \xmark & \cmark & \xmark & \xmark & \xmark \\
-            \bottomrule
-        \end{tabular}
-        \caption{Properties of different e-commerce application}
-        \label{table:ecommerceCommpetiros}
-    \end{table}
-    Show in the table~\ref{table:ecommerceCommpetiros} above is the list of the different properties of some of the different competitors to SoBazaar. The properties are in regards of their recommendation ability, and how they let their user expand their item set
-    A more complete list can be found in the appendix~\ref{app:sec:soCompetitors}.
+There where no indications of the "want list" being used directly to some
+personalized recommendations and neither was it any indication that the "follow
+list" of other users helped produce any personalized recommendations, other
+than recommending items from the followed user's feed.  The "follow list" was
+also in some cases used to suggest other users to follow.  The "want list" was
+primarily there so that the user could go back to a liked item, and maybe
+interact with it later.
 
-% paragraph competitors_recommendation_overview (end)
+\begin{table}[H]
+    \centering
+    \begin{tabular}{l l l l l l l}
+        \toprule
+        Competitor &
+        \multicolumn{1}{l}{\parbox{1.3cm}{ In App \\ Purchase}} &
+        \multicolumn{1}{l}{\parbox{1.0cm}{ Most \\ Popular}} &
+        \multicolumn{1}{l}{\parbox{1.0cm}{ Similar \\ Items}} &
+        \multicolumn{1}{l}{\parbox{1.0cm}{ Want \\ List}} &
+        \multicolumn{1}{l}{\parbox{1.9cm}{ Follow \\ Other Users}} &
+        \multicolumn{1}{l}{\parbox{2.6cm}{ Personalized \\ Recommendations}} \\ \midrule
 
-% mtodo
-% Diskusjon
-%   behold 3 resten til appendix
-      % utdyp om SoBazaar, hvordan passer de inn
-      % Bruk data til å beskrive at det vi driver med er viktig.
-%   Hvborfor har vi dette?
-%   Dert er få anbefalinger
-%   Dollars er et lukurativt market
+        Myntra  & \cmark & \cmark & \cmark & \cmark & \xmark & \xmark \\
+        Flink   & \xmark & \cmark & ?? & \cmark & \cmark & \xmark \\
+        Lyst    & \xmark & \cmark & \cmark & \cmark & \cmark & \xmark \\
+        Motilo  & \xmark & \cmark & \xmark & \cmark & \cmark & \xmark \\
+        Farfetch & \cmark & \cmark & \cmark & \cmark & \xmark & \xmark/\cmark~\tablefootnote{How the recommendations are produced is not mentioned} \\
+        ModCloth  & \cmark & \cmark & \cmark & \cmark & \xmark & \xmark \\
+        UsTrendy  & \cmark & \cmark & \cmark & \cmark & \xmark & \xmark \\
+        Polyvore  & \xmark & \cmark & \cmark & \cmark & \cmark & \xmark \\
+        Clothia  & \xmark & \cmark & \cmark & \cmark & \cmark & \xmark \\
+        Trendabl  & \cmark & \cmark & \cmark & \cmark & \cmark & \xmark \\
+        Zalando  & \cmark & \cmark & \cmark & \cmark & \xmark & \xmark \\
+        Ellos  & \cmark & \cmark & \cmark & \cmark & \xmark & \xmark \\
+        LookBook  & \xmark & \cmark & \cmark & \cmark & \cmark & \xmark \\
+        Fahsiolista  & \xmark & \cmark & \xmark & \cmark & \cmark & \xmark \\
+        ShopStyle  & \xmark & \xmark & \cmark & \cmark & \xmark & \xmark \\
+        MyHabit  & \cmark & \xmark & \cmark & \xmark & \xmark & \xmark \\
+        \bottomrule
+    \end{tabular}
+    \caption{Properties of different e-commerce application}
+    \label{table:ecommerceCommpetiros}
+\end{table}
 
-  % Heri satte utropstegn ved:
-  %   Flink
-  %   Lyst og
-  %   Motilo
+Show in the table~\ref{table:ecommerceCommpetiros} above is the list of the
+different properties of some of the different competitors to SoBazaar. The
+properties are in regards of their recommendation ability, and how they let
+their user expand their item set A more complete list can be found in the
+appendix~\ref{app:sec:soCompetitors}.
 
 \subsection{Fashion Recommender Systems}
-    This subsection will look at different methods other fashion related systems have used to recommend fashion related products to the user.
+
+This subsection will look at different methods other fashion related
+systems have used to recommend fashion related products to the user.
 
 \subsubsection{Photograph based approach}
     Fashion and the products it regards are highly dependent on visuals.  A fashion
