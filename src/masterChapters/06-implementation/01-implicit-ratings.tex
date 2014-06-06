@@ -490,21 +490,42 @@ popularity was equal or higher.
 \begin{equation}
   p(x, u) = 
     \begin{cases}
-      \frac{c}{a_e}x + c                      & \text{if } x < a_e \\[1.5ex]
+      -\frac{c}{a_e}x + c                     & \text{if } x < a_e \\[1.5ex]
       \frac{1}{1-a_e}x - \frac{1}{1-a_e} + 1  & \text{if } x \geq 0
     \end{cases}
 \end{equation}
 
 where $c$ is the value chosen as penalization to the most popular item. As
-mentioned this was in our experiments set to $0.5$. By using the same
-methodology as in earlier features, we apply the found penalization and
-normalize the obtained score to ratings - yielding the following distribution:
+mentioned this was in our experiments set to $0.5$. Using the SoBazaar $a_e$ we
+obtained the following distribution and penalization function after
+normalization:
 
 \begin{figure}[H]
-  \centering
-  \includegraphics[scale=0.5]{image/dist-popularity}
-  \caption{Distribution considering item popularity and the users conformity to
-  popular items}
+  \begin{subfigure}[b]{0.56\textwidth}
+    \centering
+    \resizebox{\linewidth}{!}{
+      \includegraphics{image/dist-popularity}
+    }
+  \end{subfigure}
+  \begin{subfigure}[b]{0.5\textwidth}
+    \centering
+    \resizebox{\linewidth}{!}{
+      \begin{tikzpicture}
+        \begin{axis}[
+          ymin=0,ymax=1,
+          xmin=0,xmax=1,
+          grid=both,
+          xlabel=$x$,
+          ylabel={$p(x,u)$}
+        ]
+          \addplot[black] {-0.5/0.75*x + 0.5};
+          \addplot[black] {1/(1-0.75)*x - 1/(1-0.75) + 1};
+        \end{axis}
+      \end{tikzpicture}
+    }
+  \end{subfigure}
+  \caption{Distribution and penalization function, considering item popularity
+  and the users conformity to popular items}
   \label{fig:dist-popularity}
 \end{figure}
 
@@ -560,7 +581,7 @@ Blending \cite{jahrer2010combining} \cite{toscher2009bigchaos} which are based
 on the same principles.
 
 However, as discussed in Section~\ref{}, when creating ratings from implicit
-feedback we lack a ground truth --- that is we make several assumptions on which
+feedback we lack a ground truth – that is we make several assumptions on which
 implicit features contribute towards higher preference and thus higher ratings,
 but with no real means of confirming the assumptions. A user buying an item as
 a gift for a friend may not actually like the item and would not give a high
