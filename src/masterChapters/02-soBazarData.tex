@@ -573,9 +573,12 @@
             \caption{View times before purchasing an item}
     \label{figure:viewBuy}
         \end{subfigure}
-        %
+        \caption{Average view times of products before want or purchase}
     \end{figure}
+        The graphs above shows the average time of the users of the SoBazaar application before pressing either \emph{want} or \emph{purchase}.
 
+        The average times between the two are quite similar, but we can see that the user is on average somewhat faster to to press \emph{purchase}.
+        The data set on \emph{product\_purchase\_intended} is considerably smaller than \emph{product\_wanted}, so the trends seen here are inconclusive at best.
 
     % mtodo - hva betyr dette for oss? ha det i seconds, lol
     \begin{figure}[H]
@@ -584,18 +587,12 @@
         \caption{View times before leaving an item (Bounce Rate)}
     \label{figure:bounceRate}
     \end{figure}
+        This figure shows the time the users use before not taking any more action towards the item (\emph{purchase} or \emph{want}).
+        The majority of the users have a view time of less than 6 seconds before they moves on to another item.
 
-        This figure shows the time the users use before not taking any more action towards the item (purchase it or want it).
-        The time is in milliseconds.
-        The majority of the users have a view time of less than 6 000 milliseconds before they moves on to another item.
-
-        Figure~\ref{figure:viewWant} shows the time the users use before wanting the currently viewed item.
-        The time is in milliseconds.
-        The majority of the users have a view time of less than 30 000 milliseconds before they want the currently viewed item.
-
-        This figure~\ref{figure:viewBuy} shows the time the users use before purchasing the currently viewed item.
-        The time is in milliseconds.
-        The majority of the users have a view time of less than 32 000 milliseconds before they decide to buy the currently viewed item.
+        When comparing this figure with figure~\ref{figure:viewWant} and figure~\ref{figure:viewBuy} we see a more definite difference.
+        The users are much faster to look at a new item when not pressing \emph{want} or \emph{purchase}.
+        This could indicate a disinterest towards the item.
 
     \begin{figure}[H]
         \includegraphics[width=5in]{image/eventsPerDay.png}
@@ -605,29 +602,28 @@
     \end{figure}
         This figure shows the event distribution per day over the time period the events were stored.
         The spikes we see happens on a weekly basis, and is centered around the weekends.
-        The larger spike from the start of January to the start of March might be due to increase in publicity or other outside factors.
+        The larger spike from the start of January to the start of March and end of April to the end of May might be due to increase in publicity or other outside factors.
 
         % mtodo add event splits
 
     \begin{figure}[H]
         \includegraphics[width=5in]{image/hrdistribution.png}
         \centering
-        \caption{mtodo}
+        \caption{Events at time of day}
     \label{figure:timeOfDayDistr}
     \end{figure}
+        The figure above presents the amount of events during the given hours.
+
+        One interesting discovery from this figure is the shape. One might have expected the application usage to have a sinus wave shape, but it has instead an increase in usage around 22 o'clock, which might indicate that the users look at the application right before they go to sleep. In other words the application is used as a late night entertainment portal, substituting other entertainment portals?... \marginpar{something?}
 
 
-\subsection{About the view time before tanking an action}
-    As seen from the figures~\ref{figure:bounceRate}, ~\ref{figure:viewWant} and~\ref{figure:viewBuy}, the bounce rate is quite small compared to the time it takes for a user to decide to want or buy an item.
-    This could be used as an indication of negative feedback, but since there is no explicit feedback to to test this, it might lead to rating an item negatively when the user in fact would like to rate it positively.
-
-
+\subsection{Discussion}
     %mtodo - masse fin info, men diskuter!
         % hva betyr det for oss?
         % hvordan kan data-pakket brukes av systemet?
-        % dette er hands-on!
         % mange fine figurer uten konkrete beskrivelser og refereanser i teksten
         % prøv heller å lage gode forklaringer til fiugurene i teksten så referer deretter
+
 
 
 \clearpage
@@ -760,8 +756,6 @@ clicked it once. This is also true when the user has clicked an item three
 times, but we can not defend it statistically for any higher value of clicks.
 
 \section{Session Findings}
-    \marginpar{Something about session findings perhaps}
-
     % mtodo - fix caption and section :P
 	\marginpar{TODO: Remove all arrows with less than e.g. 50 events}
     \begin{figure}[H]
