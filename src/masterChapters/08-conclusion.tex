@@ -4,74 +4,106 @@
 \label{chap:conclusion}
 \minitoc
 
-In this thesis we have first presented our analysis of the Sobazaar dataset, a highly sparse dataset comprising
-multiple event types which could be considered as implicit feedback. Our main findings (what?) from the data analysis
-lead us to do a state-of-the art review of cold-start solutions, the fashion domain and methods for converting
-implicit feedback into implicit ratings.
-
-Our state-of-the-art and related work section focused in particular on the cold-start problem where we evaluated the
-different solution types with respect to initial quality of service or cold-start performance and user-effort required before the system can provide high quality recommendations.
-As a part of the literature review, the solution types were also evaluated in the context of a recommender
-system applied to the fashion domain.
-
-%We found that an interview process in the form of a simple hot or not interface
-%could be a great solution to the cold-start problem by making it \emph{fun} for users to provide both positive
-%and negative feedback, increasing both the quality and amount of user feedback available.
-
-
-
-The key findings from the review of the fashion domain ... are important factors to consider when designing a
-recommender system for the fashion domain.
-
-
-and how implicit feedback could be mapped into \emph{implicit ratings}.
-
-The key findings from the literature review and data analysis were then utilized when we presented our
-design for different implicit rating mapping functions and how these could be combined.
-
-
-The proposed implicit rating functions was implemented and tested against recommender systems utilizing binary
-preferences only. Our findings indicate that...
-
-
-
-
-
-
+% TODO: Should we write a summary statement about our goals for this chapter? I
+% don't think so... ?
 
 \clearpage
+\section{Main results of this work}
 
+% Our proposed system and its components
+In this thesis we have proposed a new system for making recommendations using
+an extremely sparse dataset with implicit feedback. The proposed system
+consists of four core functions:
 
+\begin{itemize}
+	\item Generating implicit ratings from event logs (implicit feedback).
+	\item Boosting rating quality by simulating user probabilties with filterbots.
+	\item Making recommendations - in light of sparsity, implicit feedback and
+	fashion domain.
+	\item Evaluation and precision metrics.
+\end{itemize}
 
+% We have also studied the fashion domain.
+In addition, in accordance to set research goals, we have conducted a careful
+study of the fashion domain, considering both common user behaviours and the
+state of recommender systems. We showed that whilst there exists multiple
+competitors, very few provide \textit{personalized recommendations} to its
+users, hence this segment was identified as having the largest future potential
+for SoBazaar. We identified several unique user properties, consequently making
+recommendations more challenging compared to other domains, such as the
+importance of subcultures, conformity and recentness of items. 
 
+% Summarize our results from the State of the Art.	
+Furthermore an in-depth \textit{state of the art} analysis were carried out,
+focusing in particular on existing or similar implementations of our proposed
+components. In addition we present a set of essential methods and techniques
+used in modern recommender systems, and which lay the foundation of our thesis.
+Great care is taken to discuss and consider all presented methods for both
+recommending and evaluating recommendations, with regards to having an
+extremely small dataset and designing a solution for the fashion domain.
+
+% First component: generating implicit ratings.
+Our first component consists of creating implicit ratings based on a extremely
+sparse dataset with \textit{implicit} feedback such as user clicks and item
+interactions. First we consider the probability of each item-related event type
+to contruct a scoring scheme. Then, for every event exhibited by a user on an
+item we then calculate the maximum score possible based on the event type and
+various features such as recentness, price and popularity. Every feature is
+given a carefully selected penalization function controlling the score,
+designed to account for observed behaviours in the domain.
+
+% Second component: filterbots.
+% TODO: Thomas, write a short paragraph as the one above?
+
+% Third component: recommendation.
+% TODO: Thomas/Martin, see above :)
+
+% Fourth component: evaluation.
+% TODO: Thomas/Martin, see above :)
+
+% Our evaluation metrics
+Simply using RMSE was not enough, since precision was important.
+Determined that AOC was a good measure due to...
+
+% How the proposed system performs
+The proposed sysem performed ...
+
+% Concluding thoughts
+Better results with larger dataset
+Lack of negative feedback
+Implicit feedback tells us a lot about user behaviour (which is a good thing)
+Our proposed system performs better than only looking at purchases, which
+proves this.
+By testing in a online scenario and performing user-studies the real
+performance may be evaluated.
+
+\clearpage
 \section{Future Work}
 
-
-
-
-As previously mentioned in \ref{sec:experimental-plan} sec the main reasons for implementing a recommender
-system is the desire to improve user satisfaction and to increase the economic success of a platform.
-We believe it would be interesting to look into how one could implement a reward attribute for the
+As previously mentioned in \ref{sec:experimental-plan} sec the main reasons for
+implementing a recommender system is the desire to improve user satisfaction
+and to increase the economic success of a platform.  We believe it would be
+interesting to look into how one could implement a reward attribute for the
 items, that factors in how much the retailer will profit from its sale.
 
 \begin{equation}
 ExpectedReturn_i = P(Sale_i) * Reward(i)
 \end{equation}
 
-The question then, is how this information can e.g. be used/incorporated into the recommender to
-increase profits without sacrificing (too much or any) user satisfaction by recommending
-more \emph{expensive} items to the user.
+The question then, is how this information can e.g. be used/incorporated into
+the recommender to increase profits without sacrificing (too much or any) user
+satisfaction by recommending more \emph{expensive} items to the user.
 
 
 %Discussion on product database features to improve content-based recommendations
 %Missing color, category, age-group and others
-However, the content-based filtering methods require rich descriptions of items and well built
-and well informed user profiles. These ideal cases are rare in real applications. This dependence
-on the quality and structure of data is the main weakness of methods based on content.
+However, the content-based filtering methods require rich descriptions of items
+and well built and well informed user profiles. These ideal cases are rare in
+real applications. This dependence on the quality and structure of data is the
+main weakness of methods based on content.
 
-
-With regards to recommendation quality we believe the main focus should be on getting more
-and higher quality data.
+With regards to recommendation quality we believe the main focus should be on
+getting more and higher quality data.
 
 \begin{itemize}
 \item More extensive crawling the webstores collecting likes or popularity information, better content descriptions,
