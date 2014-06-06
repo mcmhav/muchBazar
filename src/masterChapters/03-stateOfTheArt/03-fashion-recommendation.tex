@@ -89,6 +89,7 @@ focus on brands. However, when recommending novelty is a key figure – that is
 we want to introduce users to \textit{new} products as well as brands.
 
 \subsection{Recommendation challenges}
+\label{subsec:rec-challenges}
 
 There are many challenges when making recommendations in the fashion domain,
 especially compared to other domains. In this subsection we will take a look at
@@ -109,41 +110,76 @@ and making recommendations. There are many types of recentness to consider:
 \item Users tastes may change, due to a range of external factors.
 \end{itemize}
 
-\paragraph{Implicit data}
-The feedback from the user will mainly be implicit~\ref{sec:implicit}.  As seen
-earlier in this section, it can be assumed that an increased interest in an
-item has some correlation with increased interaction with the item.  To what
-degree this increased interest can be mapped to a more tangible feedback
-varies from customer to customer.
-How the item interaction feedback retrieved will be used is explored in section~\ref{sec:implicit}
+In a recommender system we need to account for these factors by finding some
+way of penalizing old items combined with low popularity. Further, different
+from other domains, we need to expire feedback given from the user after a
+fixed time interval as we assume the tastes changes over time.
 
-  %   - What do we look at? What information is the most useful
-  %       - Item category, item keywords, brand... ?
-  %   - Changing interest of users
+\paragraph{Implicit data} 
+The feedback from the user will mainly be implicit~\ref{sec:implicit}, and if
+the users had the possibility of rating an item there is no way of knowing
+\textit{which} features contributed to a positive rating – without much data.
+Instead we assume that an increased interest in an item is correlated with
+increased interaction with the item, an hyptohesis that per~\ref{sec:conv-rate}
+and Table~\ref{tab:prob-purchase} holds true, as we see more visits on an item
+increase the probability of purchases. As seen per definition users are also
+highly price and brand-aware and hence we should utilize this information in a
+future recommender system, trying to classify users by their preferences in
+terms of product features.
 
 \paragraph{Product semantics}
-The product database consist of items from multiple stores with multiple
-languages and multiple ways of labeling, describing and categorizing their
-products.  This poses an issue for recommending items based on their content.
-
-  % Building Recommender Systems using a Knowledge Base of product semantics
-  % http://images.accenture.ca/SiteCollectionDocuments/PDF/recommenderws02.pdf
-  %   - Would probably require some more product semantics...
-  %   - Unstructured content/multiple content providers
-      % - How to select features for a content-based approach
-          % E.g. keywords, when descriptions are in multiple languages
-      % - Can rating infromation from similar items be used to decrease sparsity? (Content infromation - Hybrid approaches)
+In SoBazaar we aggregate products from a variety of different webstores into a
+single product database. From each store we extract products that all contains
+features such as color, type, target group, style and others - however the
+quality of this input is diverse and in some scenarios much of the data is
+lacking. This is a common issue in content based recommending, where we need to
+convert our product descriptions and semantics into \textit{structured} data.
+This can be done by various natural language processing techniques, where
+challenges are both ambiguity, sparsity and language detection. An example is
+trying to define, based on product semantics, whether a blouse is conservative
+or flashy? How trendy is it? Is it casual or formal? And so
+forth.~\cite{ghani2002building}
 
 \paragraph{Novelty and coverage}
+Some recommender systems produce highly accurate recommendations, with
+reasonable coverage, but which are ineffective for practical purposes. For
+instance, we may recommend an highly popular item to all users that everyone
+has a pre-existing knowledge of, but given this knowledge still chose to not
+interact with the product. Instead we should aim for recommending items that
+both scores well, but that the user has never seen before. This property is
+called increasing the \textit{novelty} of recommendations and are important in
+the fashion domain, and as we can see closely related to recentness, as we wish
+to introduce users to \textit{new} items and give them inspiration for new
+styles. The \textit{sependipity} is increased when we in addition recommend
+items that positivly surprises the user, and which the user would not have
+found given usual shopping patterns. Hence we would like to not only recommend
+based on brands and clothes the users most often frequent, but enchance the
+experience by including untraditional choices.
 
 \paragraph{Fluxuating prices}
+As seen in the previous section, price is an important factor when considering
+both fashion marketing and user behaviour. Users are browsing through multiple
+sites in order to find the best offer, and research is an important part of the
+shopping experience. Price should also be presented to the user when they have
+the possibility to interact with it, so that we can assure ourselves that all
+actions (e.g. wanting a product) are done knowing the retail price. Prices in
+the fashion domain are also highly fluxuating and this can be taken advantage
+of in a recommender system by presenting good deals to the user and informing
+about upcoming sales on items which they might find interesting. It can also
+help retailers target their sales campaigns towards items with high activity,
+but low conversion.
 
 \paragraph{Demographics, subcultures and social-classes}
+Demographics and the social aspect in fashion is very important and can be
+utilized in a recommender system by looking at user properties such as
+location, friends, occupation, sex, age and, in the case of a social network
+such as Facebook, their liked Pages exposing which interests the user may have.
 
 % Perhaps change to subsubsection ?
-\paragraph{Discussion}
-Some concluding toughts.
-Why are this relevant for us?
+% TODO: Include discussion on these?
+% \paragraph{Discussion}
+% Some concluding toughts.
+% Why are this relevant for us?
 
 \subsection{E-commerce and the fashion industry}
 \label{subsubs:fashionInEcom}
