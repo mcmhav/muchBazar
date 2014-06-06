@@ -107,8 +107,8 @@
             session           & Which session number the event belongs to~\tablefootnote{This is the value added in the preprocessing phase~\ref{sec:preprocessing}. For two events to end up in the same session, the event has to be triggered within a certain period of time, and both be after the same application started-flag} \\
             \bottomrule
         \end{tabular}
-        \label{table:eventData}
         \caption[Event Metadata]{Metadata collected from an event. The complete list can be found in table~\ref{table:completeEventData}}
+        \label{table:eventData}
     \end{table}
 
     \begin{table}[H]
@@ -146,8 +146,6 @@
     As seen from table~\ref{table:datasetSummary} the average amount of \emph{purchases} per user are below one. Using purchase information alone to make recommendations will therefore in most cases render the recommendations incomplete. If one or more users have more than one purchases, then some users will of course have none purchases. Making personalized recommendations for these users will then be unattainable.
 
     \emph{Clicks} and \emph{wants} on the other hand have a much higher occurrence. These two events together with \emph{purchases} tops a count of 20 on average per user, and opens for the possibility of more dense personalized recommendations, but the data is still rather sparse.
-
-
 
 \section{Graphs}
     % Price range of items in stores
@@ -296,13 +294,13 @@
             \includegraphics[width=\dualGraphWidth]{image/priceDistributiondistribution.png}
             \centering
             \caption{Price distribution of products}
-    \label{figure:ratingsPerUser}
+    \label{figure:pricePerProduct}
         \end{subfigure}%
         \begin{subfigure}{.5\textwidth}
             \includegraphics[width=\dualGraphWidth]{image/cumpriceDistributiondistribution.png}
             \centering
             \caption{Cumulative price distribution of products}
-    \label{figure:ratingsPerUserCum}
+    \label{figure:pricePerProductCum}
         \end{subfigure}
         \caption{Figures presenting the distribution of price for the items i SoBazaar}
     \end{figure}
@@ -320,29 +318,29 @@
             \includegraphics[width=\dualGraphWidth]{image/product_iddistribution.png}
             \centering
             \caption{Count of events on products}
-    \label{figure:ratingsPerUser}
+    \label{figure:eventsPerproduct}
         \end{subfigure}%
         \begin{subfigure}{.5\textwidth}
             \includegraphics[width=\dualGraphWidth]{image/product_idcumdistribution.png}
             \centering
             \caption{Cumulative count of events on products}
-    \label{figure:ratingsPerUserCum}
+    \label{figure:eventsPerproductCum}
         \end{subfigure}
         \caption{Figures presenting the distribution of events for the products i SoBazaar}
     \end{figure}
         80\% of the products have only a interaction count of 10 or less.
         Interaction count is \emph{product\_detail\_clicked}, \emph{product\_wanted} and \emph{product\_purchase\_intended}.
-        This means that there will not be more than 10 events for the majority of the items, which might lead to an issue when doing collaborative filtering on the data.
-        When the majority of the events only has 10 events and there are over 4 000 items and 1 200 users, the probability that multiple users have interacted with similar items will be low.
+        This means that there will not be more than 10 events for the majority of the items, which leads to an issue when doing collaborative filtering on the data.
+        When the majority of the events only has 10 events and there are over 4 000 items and 1 200 users, the probability that multiple users have interacted with similar items will be marginal.
 
-\subsubsection{Long tail and the Pareto principle on sales}
+\subsubsection{The Pareto principle and Long tail on sales}
+    In e-commerce the distribution of sales or product interactions can be described by the Pareto principle and the phenomenon of long tail.
+    Pareto's principle is used to tell how the distribution is in the \emph{head}~\footnote{Take for example figure~\ref{figure:eventsPerproduct}, the \emph{head} is the left most part where the curve is steep} of the graph, and the long tail phenomenon is used to tell tell how the distribution is in the \emph{tail}~\footnote{Take for example figure~\ref{figure:eventsPerproduct}, the \emph{tail} is the right most part where the curve flattens out} of the graph.
 
-    For a given distribution such as sales of a catalog of items, when the Pareto principle applies, the first 20\% of the item hits account for 80\% of sales.
+    \marginpar{maybe add a figure showing head and tail of a graph instead of a footnote explaining}
 
-    or
-
-    Long tail: the most frequent-occurring items represent less than 50\% of the occurrences in the logs. ~\cite{DBLP:journals/corr/abs-1203-4487}
-
+\paragraph{Pareto's Principle}
+    Pareto's principle applies when the 20\% most frequent products account for more than 80\% of the ratings, sales or interactions in the dataset~\cite{newman05power}.
 
     \begin{figure}[H]
         \centering
@@ -469,30 +467,38 @@
         \centering
         \begin{tabular}{lll}
         \toprule
-        Threshold &   Cut at~\tablefootnote{Cut top down} &      Percentage of ratings \\
+        Threshold &   Products in threshold~\tablefootnote{The amount of products residing within the percentage threshold} &      Percentage of interactions \\
         \midrule
-        20.0    &    1206   &    59.1701 \\
-        40.0    &    2411   &    79.5309 \\
-        50.0    &    3014   &    86.0226 \\
+        20\%    &    1206   &    59.1701\% \\
+        41\%    &    2472   &    80.2984\% \\
         \bottomrule
         \end{tabular}
         \caption{Pareto's principle values}
     \label{table:paretosPrinciple}
     \end{table}
 
+    Figure~\ref{figure:paretosPrinciple} show the percentages of interactions within the given thresholds.
+    As we can see from table~\ref{table:paretosPrinciple}, the 20\% most frequently interacted with items represents 59.1701\% of the ratings.
+    We have to move up to 41\% to reach 80\% of the interactions, and the Pareto's principle does therefore not apply to the SoBazaar.
+
+\paragraph{Long Tail}
+    The definition of long tail is that the most frequently-occuring items represent less than 50\% of occurrences in logs~\cite{DBLP:journals/corr/abs-1203-4487}.
+
     \begin{table}[H]
         \centering
         \begin{tabular}{llll}
         \toprule
-        Average rating count   & Cut at~\tablefootnote{Cut from bottom and up}  & Coverage & Percentage of ratings \\
+        Average product interaction   & Products in threshold~\tablefootnote{The amount of product residing within the percentage threshold} & Coverage & Percentage of interactions \\
         \midrule
-        6.5941   &    1833   & 69.5868 &   28.5408 \\
+        6.6928   &    4194   & 68.8443\% &   28.5408\% \\
         \bottomrule
         \end{tabular}
         \caption{Long tail values}
     \label{table:longtail}
     \end{table}
 
+    As the table above shows the SoBazaar data does not posses a clear long tail behavior.
+    The average interaction count of the products is 6.6928 and there is 4194 products with less than this number of interactions, but these items does only cover 28.5408\% of the total interactions.
 
     % mtodo - price for store dist
     \begin{figure}[H]
@@ -501,20 +507,13 @@
         \caption{Distribution of events on storefronts}
     \label{figure:eventOnStoreFrontDist}
     \end{figure}
+        \marginpar{sort it}
         The events triggered in context with the different storefronts.
         The events are segmented to show the different event counts on the different storefronts, and stacked to show the complete count, to be able to clearly see how the events are distributed over the different stores.
-        We can see that \emph{Bik Bok} is the most popular store on all fields.
+        We can see that \emph{H\&M} is the most popular store in total, but \emph{BIK BOK} has the most \emph{product\_purchase\_intended}-events.
         One interesting find to take from this graph is the \emph{storefront\_clicked} to the item interaction related events (\emph{product\_detail\_clicked}, \emph{product\_wanted} and \emph{product\_purchase\_intended}) ratio.
         For instance \emph{Bik Bok} has a much higher item interaction count than storefront access count, whereas stores such as \emph{Reiss} and \emph{Inwear} are mostly accessed and the items not interacted with.
         Different aspects affecting this might be price, style and item presentation.
-
-    \begin{figure}[H]
-        \includegraphics[width=5in]{image/retailer_branddistribution.png}
-        \centering
-        \caption{mtodo}
-    \label{figure:retailerBDist}
-    \end{figure}
-
 
 \subsection{Time properties}
 
@@ -752,7 +751,7 @@ clicked it once. This is also true when the user has clicked an item three
 times, but we can not defend it statistically for any higher value of clicks.
 
 \section{Session Findings}
-\marginpar{Something about session findings perhaps}
+    \marginpar{Something about session findings perhaps}
 
     % mtodo - fix caption and section :P
 	\marginpar{TODO: Remove all arrows with less than e.g. 50 events}
