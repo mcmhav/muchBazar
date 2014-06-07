@@ -205,7 +205,7 @@
         78\% of the users have 50 or less events, with the most common amount being at 5 events.
         The figures are showing the values from 0 to 250 since 96\% of the users resides in this subset of the data.
 
-        As seen from figure~\ref{figure:eventIDDistribution} most of the events are not directly related to products, from table~\ref{table:datasetSummary} we can see that there are over 6000 products, and as mentioned above, 78\% of the users have less than 50 events. Based on these three facts, we can assume that the data is extremely sparse.
+        As seen from figure~\ref{figure:eventIDDistribution} most of the events are not directly related to products, from table~\ref{table:datasetSummary} we can see that there are over 6000 products, and as mentioned above, 78\% of the users have less than 50 events. Based on these three facts, we can assume that the data is extremely sparse and measures to deal with this must be implemented.
 
     \begin{figure}[H]
         \includegraphics[width=5in]{image/userTimespansdistribution.png}
@@ -213,8 +213,9 @@
         \caption{Distribution of user account lifetime}
     \label{figure:userTimespandist}
     \end{figure}
+        The figure above displays the lifetime of the user accounts in the application in weeks, where the lifetime is measured from the first occurrence of the unique user id till the last event triggered by that user.
 
-    %mtodo
+        From this figure it is apparent that over half of the user accounts have a lifespan of less than a week.
 
     \begin{figure}[H]
         \includegraphics[width=5in]{image/avglifetimeoncountuser.png}
@@ -222,8 +223,12 @@
         \caption{Average lifetime of user accounts sorted on event count}
     \label{figure:avglifetimeoncountuser}
     \end{figure}
+        The figure above shows the lifetime of the user accounts together with their application interaction count.
+        Users more to the right have a higher event count.
+        Some users have been removed to give focus to the majority of the users. As mentioned earlier, 78\% of the users have triggered 50 or less events.
 
-    %mtodo
+        The red line is the regression line of the user account lifetimes, and is there to show how the account life span increases with the amount of events.
+
 
     \begin{figure}[H]
         \centering
