@@ -18,7 +18,7 @@ the following assumptions:
 \item You are influenced by experts and the opinions of others.
 \end{itemize}
 
-Once we have estimated these ratings we can recommend the items with the
+Once these ratings have been estimated we can recommend the items with the
 highest rating to the user. These recommendations relate to various
 decision-making processes, such as what items to buy, what music to listen to,
 or what online news to read. Recommender systems are usually classified into
@@ -34,7 +34,7 @@ the following categories, based on how the recommendations are made
 \subsection{Content Based Filtering}
 
 In a content-based system, we must construct a user \emph{profile}
-$ContentBasedProfile(c)$ or each user $c$, which is a record or collection of
+$ContentBasedProfile(c)$ for each user $c$, which is a record or collection of
 the attributes which characterizes each item $Content(s)$ of all the items
 $s_{i} \epsilon S$ previously rated by user $c$. For example in a fashion
 recommender system the content-based recommender system tries to understand the
@@ -44,8 +44,7 @@ similarity to these items. $ContentBasedProfile(c)$ can be designed as a vector
 of weights $(w_{c1} ... w_{ck})$, where each weight $w_{ci}$ denotes the
 importance of the keyword $k_{i}$ to user $c$.
 
-Items that can be recommended to the user can often be stored in a database
-table. Figure \ref{figure:contentbaseddb} shows a simple database with rows
+Figure \ref{figure:contentbaseddb} shows a simple database with rows
 describing 5 items that have been rated by 3 users. The column names starting
 with $X_{n}$ are the properties of the items, often referred to as
 "attributes".
@@ -69,18 +68,18 @@ it would look something like this.
 \end{figure}
 
 The recommendation process consists of matching up the attributes of the user
-profile against the attributes of an item. The result is a relevance judgment
-that represents the user's level of interest in that object. The utility $u(c,
-s)$ of item $s$ for user $c$ is estimated based on the utilities $u(c, s_{i})$
-assigned by user c to items $s_{i} \epsilon S$ that exhibit a similarity to
-item $s$. E.g. for the user Arya items with the attributes low price and low
-formality could safely be recommended as they fit her user profile, and have
-similar characteristics to the items which she previously have rated highly.
-The utility function $r(u, i)$ is usually defined as:
+profile against the attributes of an item. The utility function $r(u, i)$ is usually defined as:
 
 \begin{equation}
 r(u,i) = score(ContentBasedProfile(u), Content(i)).
 \end{equation}
+
+The result is a relevance judgment that represents the user's level of interest
+in that object. The utility $u(c,s)$ of item $s$ for user $c$ is estimated based on the utilities $u(c, s_{i})$
+assigned by user c to items $s_{i} \epsilon S$ that exhibit a similarity to
+item $s$. E.g. for the user Arya items with the attributes low price and low
+formality could safely be recommended as they fit her user profile, and have
+similar characteristics to the items which she previously have rated highly.
 
 \subsection{Collaborative Filtering}
 \label{subsec:cf}
@@ -112,6 +111,8 @@ Researchers have devised a number of collaborative filtering algorithms that
 can be divided into two main categories: Memory-based and Model-based
 algorithms \cite{Su2009}.\linebreak[4]
 
+\marginpar{fix figure, make it smaller}
+
 \begin{figure}[H]
     \includegraphics[width=5in]{image/cftaxonomy.png}
     \centering
@@ -140,7 +141,7 @@ u(c,s) = k * \sum_{c' \epsilon C} sim(c, c') * u(c',s)
 where k serves as a normalization factor, usually being $1/|C|$. Various
 approaches have been used to compute the similarity $sim(c, c')$ between the
 users. Generally these approaches are based on the rating similarities for
-items both users have rated. The most popular similarity measure is The Pearson
+items both users have rated. The one of the most popular similarity measure is The Pearson
 Correlation Coefficient. Equation \ref{equation:pearson} shows how to calculate
 the Pearson Correlation Coefficient between two users $c$ and $c'$, Here
 $S_{cc'}$ is the set of items both users have in \emph{common}.
@@ -150,9 +151,9 @@ sim(c, c') = \frac{\sum_{s \epsilon S_{cc'}} (u(c, s)-\bar{u_{c}})(u(c',s)-\bar{
 \label{equation:pearson}
 \end{equation}
 
-Where $u_{c}$ is the mean utility of user $c$. The Pearson Correlation
+where $u_{c}$ is the mean utility of user $c$. The Pearson Correlation
 Coefficient and other similarity measures such as cosine based approaches are
-more commonly known user-based collaborative filtering. This is often harder to scale because of the dynamic nature of users. \newline
+more commonly known user-based collaborative filtering. 
 
 Item-based Top-N Recommendation methods calculates the similarity between items
 instead of users. In these approaches, the historical information is analyzed
@@ -182,10 +183,10 @@ the process of finding the item-similarities.
     \label{figure:itemsim}
 \end{figure}
 
-There are a number of ways of computing the similarity between items. E.g. by
+There are a number of ways of computing the similarity between items, e.g. by
 means of cosine-based similarity. In this case, two items are though of as two
 vectors in an $C$ dimensional user space. The similarity between the items is
-found by computing the cosine of the angle between the two vectors.
+found by computing the cosine of the angle between the two vectors:
 
 \begin{equation}
 sim(s',s) = cos(\vec{s'},\vec{s}) = \frac{\vec{s'} \cdot \vec{s}}{\|\vec{s'}\|^{2} * \|\vec{s}\|^{2}}
@@ -194,7 +195,7 @@ sim(s',s) = cos(\vec{s'},\vec{s}) = \frac{\vec{s'} \cdot \vec{s}}{\|\vec{s'}\|^{
 The item similarities can then used to find the Top-N recommendations. Each
 user has a set of items $S_{c}$ previously rated by the user which we want to
 compute top-N recommendations for. First, we identify the set $C$ of candidate
-items recommended items by taking the union of the $k$ most similar items and
+items recommendable by taking the union of the $k$ most similar items and
 removing each of the items in the set $S_{c}$ the user already has rated; then
 calculate the similarities between each item of the set $C$ and the set
 $S_{c}$, using only the $k$ most similar items for each item in $S_{c}$. The
