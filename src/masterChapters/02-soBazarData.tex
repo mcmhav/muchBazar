@@ -97,15 +97,15 @@
             \toprule
             Variable     & Explanation   \\
             \midrule
-            product\_id       & The id of the item which triggered the event \\
-            user\_id          & The unique id of the user who triggered the event \\
-            event\_id         & What kind of event was triggered~\tablefootnote{Complete list of the different types of events can be found in table~\ref{table:events}} \\
-            price             & The price of the item which triggered the event \\
-            retailer\_brand   & The id of the retailer brands. A retailer is a distributer of products, such as H\&M, Cubus or Moods Of Norway \\
-            storefront\_id    & The storefront id of the storefront entered. The \emph{retailer\_brand}s can have multiple \emph{store\_front}s. In addition to the main \emph{store\_front} most \emph{retailer\_brands} have, they can also add one or more when there is a special occasion such as a sale or a new release \\
-            event\_location   & The location of the user when the event was triggered \\
-            ts                & Unix timestamp in milliseconds of when the event was triggered \\
-            session           & Which session number the event belongs to~\tablefootnote{This is the value added in the preprocessing phase~\ref{sec:preprocessing}. For two events to end up in the same session, the event has to be triggered within a certain period of time, and both be after the same application started-flag} \\
+            \emph{product\_id}      & The id of the item which triggered the event \\
+            \emph{user\_id}      & The unique id of the user who triggered the event \\
+            \emph{event\_id}         & What kind of event was triggered~\tablefootnote{Complete list of the different types of events can be found in table~\ref{table:events}} \\
+            \emph{price}             & The price of the item which triggered the event \\
+            \emph{retailer\_brand}   & The id of the retailer brands. A retailer is a distributer of products, such as H\&M, Cubus or Moods Of Norway \\
+            \emph{storefront\_id}    & The storefront id of the storefront entered. The \emph{retailer\_brand}s can have multiple \emph{store\_front}s. In addition to the main \emph{store\_front} most \emph{retailer\_brands} have, they can also add one or more when there is a special occasion such as a sale or a new release \\
+            \emph{event\_location}   & The location of the user when the event was triggered \\
+            \emph{ts}                & Unix timestamp in milliseconds of when the event was triggered \\
+            \emph{session}           & Which session number the event belongs to~\tablefootnote{This is the value added in the preprocessing phase~\ref{sec:preprocessing}. For two events to end up in the same session, the event has to be triggered within a certain period of time, and both be after the same application started-flag} \\
             \bottomrule
         \end{tabular}
         \caption[Event Metadata]{Metadata collected from an event. The complete list can be found in table~\ref{table:completeEventData}}
@@ -149,6 +149,7 @@
     \emph{Clicks} and \emph{wants} on the other hand have a much higher occurrence. These two events together with \emph{purchases} tops a count of 20 on average per user, and opens for the possibility of more dense personalized recommendations, but the data is still rather sparse.
 
 \section{Graphs}
+    % New graphs when/if:
     % Price range of items in stores
     % unique Stores count for users
     %     price span for user
@@ -164,7 +165,6 @@
     %         avg viewtime for an item (i know)
     %         Similarity of user favorite store, items viewed and items wanted?
     %         time of session over lifetime of app for all users (slope-style)
-    % user lifetimes
     This section will look at the SoBazaar data through graphing and plotting.
     It will start with the properties of the users seen in the data, then move over to the products and finally the time properties of the data.
 
@@ -175,13 +175,15 @@
         \caption{Count for different events}
     \label{figure:eventIDDistribution}
     \end{figure}
-        In the figure above (figure~\ref{figure:eventIDDistribution}) we see the count for each of the different events which can be triggered in the SoBazaar application.
+        In the figure above (figure~\ref{figure:eventIDDistribution}) we see the count for each of the different events which can be triggered in the SoBazaar application\footnote{With the exception of the event types with a trigger count lower than 200, which are merged into on bar and labeled \emph{other}}.
         As seen from the graph the \emph{product\_detail\_clicked}-event and the \emph{storefront\_clicked}-event are the two most common events to be triggered.
         As mentioned earlier in~\ref{table:eventData}, the \emph{storefront} is the main access point to a set of products, and the high values for this \emph{event\_id} is as expected.
         The fact that accessing the \emph{storefront} is the most occurring event, over clicking an item, indicates that many users browse the items through looking at the thumbnails rather than accessing the actual item.
 
-        The \emph{product\_wanted}-event is the fourth most occurring event, and is about half the size of the \emph{product\_detail\_clicked}-event, this does not mean that half of the accessed items are added to a want list, since it is possible to want an item without accessing the item.
+        The \emph{product\_wanted}-event is the fourth most occurring event, and is about half the size of the \emph{product\_detail\_clicked}-event, this does not imply that half of the users accessing an item also adds the accessed item to their want list, since it is possible to want an item without accessing the item.
         \emph{product\_purchase\_intended} on the other hand has to come after a \emph{product\_detail\_clicked}, so it is therefore safe to assume that about 8\% of item accesses progressed into an intended purchase.
+
+        Some of the evens shown above are newly added events, and the data has to mature more for more certain conclusion to be drawn.
 
     \begin{figure}[H]
         \centering
@@ -201,10 +203,9 @@
     \end{figure}
         Figure~\ref{figure:userEventDist} is showing the actual amount of users with the different counts of events.
         78\% of the users have 50 or less events, with the most common amount being at 5 events.
-        The figures are showing the values from 0 to 250 since 96\% of the users reside in this subset.
-        Max count of events for one user is 6055.
+        The figures are showing the values from 0 to 250 since 96\% of the users resides in this subset of the data.
 
-        As seen from figure~\ref{figure:eventIDDistribution} most of the events are not directly related to products, from table~\ref{table:datasetSummary} we can see that there are over 6000 products, and as mentioned above, 78\% of the users have less than 50 events. Based on these three facts, we can assume that the data is sparse.
+        As seen from figure~\ref{figure:eventIDDistribution} most of the events are not directly related to products, from table~\ref{table:datasetSummary} we can see that there are over 6000 products, and as mentioned above, 78\% of the users have less than 50 events. Based on these three facts, we can assume that the data is extremely sparse.
 
     \begin{figure}[H]
         \includegraphics[width=5in]{image/userTimespansdistribution.png}
@@ -774,7 +775,7 @@ times, but we can not defend it statistically for any higher value of clicks.
         As we can see from the figure, in 12 477 cases the users enters a store after already having entered a store, which means that the user did not access any of the items in the first entered store, and we see that this is a common way of browsing the products in the application. Since this leaves little indication about the user preferences, other ways of gathering this must be utilized.
         While this thesis was being written additional events was added, one of these was \emph{content:interact:item\_scroll}, which has proven to be of good help to derive user preferences~\cite{Claypool01inferringuser}.
 
-        If we focus on the states \emph{product\_wanted} and \emph{product\_purchase\_intended} we see that 160 occurrences of being in the \emph{product\_wanted}-state progressed into the \emph{product\_purchase\_intended}-state.
+        If we focus on the states \emph{product\_wanted} and \emph{product\_purchase\_intended}, we see that 160 occurrences of being in the \emph{product\_wanted}-state progressed into the \emph{product\_purchase\_intended}-state.
 
 %     Init Hypothesis:
 
