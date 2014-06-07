@@ -216,10 +216,11 @@ should not be used.
 \subsubsection{Comparing Implicit Rating Methods}
 
 %What we want to do
-We want to figure out how to evaluate and compare the different implicit rating methods. 
-The most obvious solution here would be to analyze the amount of purchases, wants and clicks
-in the recommendation lists individually. This is mainly a evaluation metric problem. Which
-will be discussed at length in the next Section.
+We want to figure out how to evaluate and compare the different implicit rating
+methods.  The most obvious solution here would be to analyze the amount of
+purchases, wants and clicks in the recommendation lists individually. This is
+mainly a evaluation metric problem. Which will be discussed at length in the
+next Section.
 
 %Challanges/Problems of actually doing it
 %How can we determine if one set of recommendations is better than another?
@@ -235,27 +236,28 @@ will be discussed at length in the next Section.
 %How do we plan to solve them
 	%Assumptions & Weaknesses
 
-
 \subsection{Combining Implicit Ratings With Existing Cold-Start Solutions}
 
 %Only use cold-start splits for this sections tables.
 
-After the best method have been chosen we wish to further improve our results by adding
-a cold-start solution to our system. In the second stage of our experiment we wish
-to see if we can apply a cold-start solution to increase the systems cold-start performance.
-Here we also wish to factor in factors such as recency to see whether or not connecting
-new users with the most popular items for the $k$ last weeks, instead of the entire
-period further can improve the cold-start performance of the system. Similarly
-for our criticBot where we can select the most active users for the $n$ last weeks.
+After the best method have been chosen we wish to further improve our results
+by adding a cold-start solution to our system. In the second stage of our
+experiment we wish to see if we can apply a cold-start solution to increase the
+systems cold-start performance.  Here we also wish to factor in factors such as
+recency to see whether or not connecting new users with the most popular items
+for the $k$ last weeks, instead of the entire period further can improve the
+cold-start performance of the system. Similarly for our criticBot where we
+can select the most active users for the $n$ last weeks.
 
 \subsubsection{Simulating the Cold-Start Problem}
 
 To simulate the cold-start problem and evaluate how well our the different
 methods tackle the different cold-start situations we use the following
-evaluation methodology. As mentioned in Section \ref{sec:cold-start-eval} there is
-no common framework for assessing the cold-start performance of recommender systems.
-Our goal is to come up with \emph{comprehensive} framework to assess the cold-start
-performance of our recommender systems. The following inputs changes the dataset over time:
+evaluation methodology. As mentioned in Section \ref{sec:cold-start-eval} there
+is no common framework for assessing the cold-start performance of recommender
+systems.  Our goal is to come up with \emph{comprehensive} framework to assess
+the cold-start performance of our recommender systems. The following inputs
+changes the dataset over time:
 
 \begin{itemize}
 	\item 	Existing users watch new items in the catalogue
@@ -263,56 +265,58 @@ performance of our recommender systems. The following inputs changes the dataset
 	\item	New items are added to the catalogue
 \end{itemize}
 
-The first input source has the effect of increasing the dataset density, the average user
-profile length, and the average number of views per item. The second input factor has
-the effect of decreasing both the dataset density and the average user profile length,
-as the new users that join the system have interacted with only a few items. Similarly,
-the third input factor has the effect of decreasing both the dataset density and the average
-number of views per item.
+The first input source has the effect of increasing the dataset density, the
+average user profile length, and the average number of views per item. The
+second input factor has the effect of decreasing both the dataset density and
+the average user profile length, as the new users that join the system have
+interacted with only a few items. Similarly, the third input factor has the
+effect of decreasing both the dataset density and the average number of views
+per item.
 
-To simulate the cold-start user problem we propose splitting the users into two disjoint
-sets, similarly as in \cite{Stern2009, Lam2008}, using 90\% of the users for training and
-setting aside the remaining 10\% for evaluation. We then train the model with e.g. 5, 15,
-25 and 35 of the test users ratings and give predictions for all models. Alternatively one could train the model
-using e.g. 25\% and 75\% of each test users ratings. Similarly, to simulate the cold-start
-item problem we again split the items into two disjoint sets, using 90\% of the items
-for training and the remaining 10\% for evaluation.  We then train the model with
-e.g. 20, 40, 60 and 80 ratings and predict the remaining values. The selection criteria
-for test items and users can differ from dataset to dataset. E.g. in \cite{Rashid2002, Rashid2008}
-the authors selected a subset of the users with more than 200 ratings, but you can not
-expect 10\% all the users for all datasets to have provided 200 ratings, so this number
-might be lowered if necessary. The implications of removing the top 10\% of the
-raters from the Sobazar dataset is fairly large as they stand for a large portion
-of the few ratings we have.
+To simulate the cold-start user problem we propose splitting the users into two
+disjoint sets, similarly as in \cite{Stern2009, Lam2008}, using 90\% of the
+users for training and setting aside the remaining 10\% for evaluation. We then
+train the model with e.g. 5, 15, 25 and 35 of the test users ratings and give
+predictions for all models. Alternatively one could train the model using e.g.
+25\% and 75\% of each test users ratings. Similarly, to simulate the cold-start
+item problem we again split the items into two disjoint sets, using 90\% of the
+items for training and the remaining 10\% for evaluation.  We then train the
+model with e.g. 20, 40, 60 and 80 ratings and predict the remaining values. The
+selection criteria for test items and users can differ from dataset to dataset.
+E.g. in \cite{Rashid2002, Rashid2008} the authors selected a subset of the
+users with more than 200 ratings, but you can not expect 10\% all the users for
+all datasets to have provided 200 ratings, so this number might be lowered if
+necessary. The implications of removing the top 10\% of the raters from the
+Sobazar dataset is fairly large as they stand for a large portion of the few
+ratings we have.
 
-To evaluate the cold-start system performance we use the same method as described
-in ~\cite{Agarwal2009} where the authors propose using a 75:25 training/test split,
-where we at random draw e.g. 35\%, 50\% and then finally use all (75\%) of the
-ratings in the training set and predict the remaining 25\%.
+To evaluate the cold-start system performance we use the same method as
+described in ~\cite{Agarwal2009} where the authors propose using a 75:25
+training/test split, where we at random draw e.g. 35\%, 50\% and then finally
+use all (75\%) of the ratings in the training set and predict the remaining
+25\%.
 
 %How is this implemented on the sobazar data?
 
-For the Sobazar dataset we select 10\% of the users as test users, for a user to be
-selected as a test user, the user must have provided at least 20 ratings. The test user are drawn
-at random from the eligible candidates. We then train
-the model using 10\%, 40\% and 75\% of their ratings and try to predict their remaining ratings.
-The reason for choosing percentages over hard limits is due to the fact that the ratings are
-distributed unevenly among the users. As we have a very low number of ratings and a large item collection we had to use
-only 5\% of the items as test items, where each test item have been rated by atleast 15 users.
-We train the model using 10\%, 40\% and 75\% of their ratings and try to predict their remaining
-ratings. As we have access time timestamps, we split the users and items based on timestamp.
-E.g. for the 10\% user split we train the model with their initial ratings and try to predict
-their following ratings. To evaluate the cold-start system performance we split the dataset in a test
-and training set using 20\% of the ratings for testing and then train the model
-using 40\%, 60\% and 80\% of the ratings for training. It is important to note that
-this process should be repeated multiple times, as the chance of getting an
-\emph{unfortunate} split is highly probable due to the dataset size. For the cold-start
-system task we also split the dataset based on timestamps, meaning that the test set consists
-of the most recent ratings.
-
-
-
-
+For the Sobazar dataset we select 10\% of the users as test users, for a user
+to be selected as a test user, the user must have provided at least 20 ratings.
+The test user are drawn at random from the eligible candidates. We then train
+the model using 10\%, 40\% and 75\% of their ratings and try to predict their
+remaining ratings.  The reason for choosing percentages over hard limits is due
+to the fact that the ratings are distributed unevenly among the users. As we
+have a very low number of ratings and a large item collection we had to use
+only 5\% of the items as test items, where each test item have been rated by
+atleast 15 users.  We train the model using 10\%, 40\% and 75\% of their
+ratings and try to predict their remaining ratings. As we have access time
+timestamps, we split the users and items based on timestamp.  E.g. for the 10\%
+user split we train the model with their initial ratings and try to predict
+their following ratings. To evaluate the cold-start system performance we split
+the dataset in a test and training set using 20\% of the ratings for testing
+and then train the model using 40\%, 60\% and 80\% of the ratings for training.
+It is important to note that this process should be repeated multiple times, as
+the chance of getting an \emph{unfortunate} split is highly probable due to the
+dataset size. For the cold-start system task we also split the dataset based on
+timestamps, meaning that the test set consists of the most recent ratings.
 
 \begin{center}
     \begin{tikzpicture}
@@ -320,57 +324,63 @@ of the most recent ratings.
 		% STYLES
 		every node/.style={node distance=1.5cm},
 		% The comment style is used to describe the characteristics of each process
-		comment/.style={rectangle, inner sep= 5pt, text width=3cm, node distance=0.25cm, font=\scriptsize\sffamily},
+		comment/.style={rectangle, 
+										inner sep= 5pt,
+										text width=3cm,
+										node distance=0.25cm,
+										font=\scriptsize\sffamily},
 		% small comment lol
-		comment-small/.style={rectangle, inner sep= 5pt, text width=1cm, node distance=0.25cm, font=\scriptsize\sffamily},
+		comment-small/.style={rectangle,
+													inner sep= 5pt,
+													text width=1cm,
+													node distance=0.25cm,
+													font=\scriptsize\sffamily},
 		% The nonProcess style
-		nonProcess/.style={rectangle, draw, inner sep=5pt, text width=3cm, text badly centered, minimum height=1.2cm, font=\footnotesize\sffamily},
+		nonProcess/.style={rectangle,
+											 draw,
+											 inner sep=5pt,
+											 text width=3cm,
+											 text badly centered,
+											 minimum height=1.2cm,
+											 font=\footnotesize\sffamily},
 		% The process style is used to draw the processs' name
-		process/.style={rectangle, draw, fill=black!10, inner sep=5pt, text width=3cm, text badly centered, minimum height=1.2cm, font=\bfseries\footnotesize\sffamily},
+		process/.style={rectangle,
+										draw,
+										fill=black!10,
+										inner sep=5pt,
+										text width=3cm,
+										text badly centered,
+										minimum height=1.2cm,
+										font=\bfseries\footnotesize\sffamily},
 		% ratingsGenerator style
-		ratingsGenerators/.style={rectangle, draw, fill=blue!50, inner sep=5pt, text width=3cm, text badly centered, minimum height=1.2cm, font=\bfseries\footnotesize\sffamily},
+		ratingsGenerators/.style={rectangle,
+															draw,
+															fill=blue!50,
+															inner sep=5pt,
+															text width=3cm,
+															text badly centered,
+															minimum height=1.2cm,
+															font=\bfseries\footnotesize\sffamily},
 		% racommendation algorithms
 		recAlgs/.style={rectangle, draw, fill=red!40, inner sep=5pt, text width=3cm, text badly centered, minimum height=1.2cm, font=\bfseries\footnotesize\sffamily}]
 
 		% Draw processs
-		\node [ratingsGenerators] (rg1) {sigmoid\_fixed};
-		\node [ratingsGenerators, right=0.25 of rg1] (rg2) {sigmoid\_constant};
+		\node [ratingsGenerators] (rg1) {popularity};
+		\node [ratingsGenerators, right=0.25 of rg1] (rg2) {price};
 		\node [comment-small, right=0.01 of rg2] (dotdotdot) {..............};
-		\node [ratingsGenerators, right=0.01 of dotdotdot] (rg3) {norm\_dist};
-
+		\node [ratingsGenerators, right=0.01 of dotdotdot] (rg3) {recentness};
 		\node [process, below of=rg2] (gt) {"Ground Truth"};
-
 		\node [recAlgs, below of=gt] (ra2) {ALS};
 		\node [recAlgs, left=0.25 of ra2] (ra1) {KNN};
 		\node [comment-small, right=0.01 of ra2] (dotdotdot2) {..............};
 		\node [recAlgs, right=0.01 of dotdotdot2] (ra3) {wALS};
-
 		\node [process, below of=ra2] (eval) {Evaluation Score};
-
-		% \node [nonProcess, below of=implicitConverter] (ratings) {Ratings for the items};
-		% \node [process, below of=ratings] (recommendations) {Make recommendations};
-		% \node [process, below of=recommendations] (evaluations) {Evaluate recommendations};
-		% \node [nonProcess, below of=evaluations] (evaluationValue) {Recommendation score};
-
-		%%%%%%%%%%%%%%%
-		% Comments
 		\node [comment, right=0.25 of rg3] (comment-rg3) {
 			Implicit ratings
 		};
 		\node [comment, right=0.25 of ra3] (comment-ra3) {
 			Recommendations algorithm
 		};
-		% \node [comment, right=0.25 of ratings] (comment-ratings) {
-		% The output of the conversion is a set of ratings on the different items from the soBazar dataset
-		% };
-		% \node [comment, right=0.25 of recommendations] (comment-recommendations) {
-		% Makes recommendations based on the inputed ratings. Different approaches to make the recommendations can be take, such as matrix factorization or neighborhood based approaches
-		% };
-		% \node [comment, right=0.25 of evaluations] (comment-evaluations) {
-		% Evaluate the recommender system(s). Different evaluation metrics will be usea, such as e.g. AUC and nDCG
-		% };
-
-		%%%%%%%%%%%%%%%%
 		% Draw the links between processs
 		\path[->,thick]
 			(rg1) edge (gt)
@@ -385,20 +395,15 @@ of the most recent ratings.
 			(ra2) edge (eval)
 			(dotdotdot2) edge (eval)
 			(ra3) edge (eval);
-		% \path[>=latex,->] (gt) edge (eval);
-		% \draw[rectangle connector=-3cm] (gt) to (eval);
 		\draw[>=latex,->] (gt) -- +(-6,0) |- (eval);
     \end{tikzpicture}
     \captionof{figure}[Implicit Rating Evaluation]{Overview of how the generated ratings from the implicit feedback can be evaluated.}
   	\label{figure:implicitRatingEvaluation}
   \end{center}
 
-The blue boxes in figure~\ref{figure:implicitRatingEvaluation} are functions used to produce the implicit ratings based on the implicit feedback. Based on this, the system gets an estimated \emph{ground truth}, which can be used to evaluate the different recommendation algorithms show in the red boxes. Based on the evaluation score something can be said about the implicit feedback conversion to implicit ratings and the recommendation algorithms used.
-
-
-
-
-
-
-
-
+The blue boxes in figure~\ref{figure:implicitRatingEvaluation} are functions
+used to produce the implicit ratings based on the implicit feedback. Based on
+this, the system gets an estimated \emph{ground truth}, which can be used to
+evaluate the different recommendation algorithms show in the red boxes. Based
+on the evaluation score something can be said about the implicit feedback
+conversion to implicit ratings and the recommendation algorithms used.
