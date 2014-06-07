@@ -16,6 +16,7 @@
 *.blg
 *.fdb_latexmk
 src/pdf
+presentation/pdf
 *.swp
 *-gvfile
 *.gv
