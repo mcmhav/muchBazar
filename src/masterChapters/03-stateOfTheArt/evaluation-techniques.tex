@@ -163,14 +163,14 @@ absent or cannot be directly applied to the technique being used, the optimal
 parameters have to be found by \emph{blind} search, by e.g. using genetic
 algorithms or some kind of exhaustive grid-search procedure.
 
-The \emph{de facto} standard way of performing model selection optimization is
-grid search, which is simply an exhaustive searching through a manually
-specified subset of the hyperparameter space of a learning algorithm. To
-\emph{guide} the grid-search one typically uses a performance metric, typically
-measured by cross-validation on the training set. After evaluating the
-performance all the pre-specified combinations of parameter settings, the grid
-search algorithm outputs the setting that achieved the highest score in the
-validation procedure.
+The \emph{de facto} way of performing model selection optimization is grid
+search, which is simply an exhaustive searching through a manually specified
+subset of the hyperparameter space of a learning algorithm. To \emph{guide} the
+grid-search one typically uses a performance metric, typically measured by
+cross-validation on the training set. After evaluating the performance all the
+pre-specified combinations of parameter settings, the grid search algorithm
+outputs the setting that achieved the highest score in the validation
+procedure.
 
 \subsubsection{Offline Evaluation Metrics}
 
@@ -181,10 +181,11 @@ agreed that accurate predictions are crucial but insufficient to deploy a good
 recommendation engine~\cite{Shani2011, McNee2006}. Some of the properties can
 be traded-off, one such example is the trade-off between accuracy and
 diversity. It is important to understand and evaluate these trade-offs and
-their effect on the overall performance. This subsection will cover the most
-popular metrics used for offline evaluation, a discussion of evaluation
-measures for implicit feedback, and a summary of the cold-start evaluation
-methodologies found in the literature.
+their effect on the overall performance.
+% This subsection will cover the most
+% popular metrics used for offline evaluation, a discussion of evaluation
+% measures for implicit feedback, and a summary of the cold-start evaluation
+% methodologies found in the literature.
 
 \paragraph{Predictive Accuracy Metrics}
 
@@ -221,9 +222,14 @@ Often used to measure difference between a set of predicted values with a set of
     \label{equation:rmse}
 \end{equation}
 
-In $MSE$~\ref{equation:mse} $\hat{r(c,i)}$ is the predicted value and $r(c,i)$ is the actual value.
-Both $MAE$ and $MSE$ are used to measure how correct the predictions are compared to the actual values.
-$RMSE$ is the square root of $MSE$ and is one of the most used metrics to compare recommender algorithms in collaborative filtering, and was the main metric used in the Netflix price competition to evaluate the performance of the competitors recommender systems. $RMSE$ is always bigger or equal to $MAE$, $RMSE$ penalize an error more than $MAE$.
+In $MSE$~\ref{equation:mse} $\hat{r(c,i)}$ is the predicted value and $r(c,i)$
+is the actual value.  Both $MAE$ and $MSE$ are used to measure how correct the
+predictions are compared to the actual values.  $RMSE$ is the square root of
+$MSE$ and is one of the most used metrics to compare recommender algorithms in
+collaborative filtering, and was the main metric used in the Netflix price
+competition to evaluate the performance of the competitors recommender systems.
+$RMSE$ is always bigger or equal to $MAE$, $RMSE$ penalize an error more than
+$MAE$.
 
 % \todo{maybe some sweet table of the different algorithms with their eqations and their contributions}
 % \begin{table}[H]
@@ -237,8 +243,6 @@ $RMSE$ is the square root of $MSE$ and is one of the most used metrics to compar
 %     \label{table:predictiveAccuracyMetrics}
 %     \caption [Predictive Accuracy Metrics]{adsf}
 % \end{table}
-
-
 
 \paragraph{Measuring Usage Prediction}
 \label{para:measuring_usage}
@@ -344,10 +348,15 @@ The ROC curve is $TPR$ plotted together with $FPR$ at various $T$.
     AUROC = \int_\infty^{-\infty} TPR(T)P_0(T)dTdT
     \label{equation:auroc}
 \end{equation}
-Equation~\ref{equation:auroc} can be used to calculate the area under the curve.
-$AUROC$ is the probability that the recommender system will rank positive examples higher than negative examples.
-The Area Under is a commonly used evaluation method for binary choice problems. If somebody makes random guesses,
-the ROC curve should be a diagonal line stretching from (0,0) to (1,1), as shown by the blue line in Figure \ref{fig:aucroc}, scoring an AUC of 0.5. A perfect model will score an AUC of 1.0. In practice, almost all models will fit somewhere in between e.g. somewhat like the red or green line.
+
+Equation~\ref{equation:auroc} can be used to calculate the area under the
+curve.  $AUROC$ is the probability that the recommender system will rank
+positive examples higher than negative examples.  The Area Under is a commonly
+used evaluation method for binary choice problems. If somebody makes random
+guesses, the ROC curve should be a diagonal line stretching from (0,0) to
+(1,1), as shown by the blue line in Figure \ref{fig:aucroc}, scoring an AUC of
+0.5. A perfect model will score an AUC of 1.0. In practice, almost all models
+will fit somewhere in between e.g. somewhat like the red or green line.
 
 \begin{figure}[H]
 \label{fig:aucroc}
