@@ -2,12 +2,11 @@
 
 \clearpage
 
-\label{implicit-feedback}
 \section{Implicit feedback to implicit ratings}
 \label{sec:implicit}
 
 In this section several \textit{existing} methods will be presented, all
-solving the following problem:
+solving the following formalized problem:
 
 \vspace{5 mm}
 
@@ -220,7 +219,7 @@ have the following events to choose from:
 \end{table}
 
 Then, our heuristic would count the frequency of each event for an item $i$ on
-user $u$. However, just counting is not a bounded function --- so if one give
+user $u$. However, just counting is not a bounded function – so if one give
 \textit{Item browsed} the weight of $1$ and the \textit{Item purchased} event
 a weight of $100$, then a user browsing an item more than 100 times would get a
 higher implicit rating than a user buying it.
@@ -277,7 +276,7 @@ Improvements to this model are presented in Section~\ref{implementation}
 
 \subsection{Regression analysis}
 
-\paragraph{Introduction}
+\paragraph{Introduction to linear regression}
 A different method for converting events to ratings is finding a mathematical
 model which fits our observed data. Using this model we can predict new ratings
 by extrapolation or intrapolaton. Our observed data can be in N-dimensions, but
@@ -377,7 +376,6 @@ solve the equation $y = 0.1149 \cdot 15 + 1.4379$ which yields the $y$-value or
 rating $3.1614$.
 
 \paragraph{Using regression analysis on implicit feedback}
-
 The process of using regression analysis in order to predict ratings based on
 implicit feedback has already been done, in a different domain, by Parra et.\
 al.~\cite{parra2011walk}. Where they first did a quantitiative user study
@@ -447,8 +445,53 @@ The fact that the features have to be transitive implies that one can not use
 e.g. \textit{item category} as training feature, unless the brands (or rather
 the brand ids) themselves are sorted by price or equality, then renumbered.
 
-\subsection{Relative preferences using buying frequency}
+\paragraph{Multivariate ordinal regression}
+In~\cite{parra2011implicit} Parra et. al. extend the model presented
+in~\cite{parra2011walk} by considering that the dependent variable (rating) is
+on an ordinal scale, that ranges from 1 to 5. A ordinal variable implies that
+the numeric value has no significance beyond its ability to establish a ranking
+over a set of data points. When solving regression problems on an ordinal scale
+a logistic function is commonly used. Further since there exists more than two
+outcomes (1 to 5) they use a multinomial regression type.
 
+In \textit{multinomial logistic regression} problems such as this, the link
+function (logistic function, also called \textit{logit}) is trained based on
+features found in the data. In the refered study they examine the music domain
+and hence they include listen count, recentness and the global popularity as
+features to the link function.
+
+When trained they have a probability function for all discrete outcomes and can
+thus based on model input obtain a value between 0 and 1, indicating the
+probability of the enquired outcome. The final rating is then calculated as:
+
+\begin{equation}
+  E[r_{ui}] = \sum_{k=1}^{5} k \cdot P(r_{ui} = k)
+\end{equation}
+
+where $u$ and $i$ is the user and item in question, respectivly. $k$ is the
+ordinal variable between 1 and 5, and $P(r_{ui})$ yields the probability of $k$
+being the rating for item $i$ on user $u$.
+
+This model yields an improvement in performence both measured in MAP and
+nDCG-scores (see Section~\ref{}), compared to their previous model. However,
+when they discuss the accuracy of their evaluation metrics a conclusion is made
+which is similar to what is laid out in this thesis as well:
+
+\begin{quotation}
+  [\dots], we do agree that there is no appropriate evaluation approaches for
+  implicit feedback.
+\end{quotation}
+
+Their proposed method for evaluation is to compare the generated implicit
+ratings to ones given in a parallel explicit scenario. However, in many
+situations where the two techniques are not combined, we use implicit ratings
+due to the lack of explicit ones. Consequently, without any ground truth (that
+is, explicit ratings) both \textit{training a regression model} and
+\textit{evaluating} the generated implicit ratings becomes difficult. If one
+wants to reliably use these two methods a user study should be conducted, which
+was not performed in the case of SoBazaar due to time and user constraints.
+
+\subsection{Relative preferences using buying frequency}
 A hybrid approach using sequential pattern analysis and collaborative filtering
 techniques is presented by Choi et al.~\cite{choi2012hybrid}. In their
 method, coined HOPE, they calculate an implicit rating by finding the
