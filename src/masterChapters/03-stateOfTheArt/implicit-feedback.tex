@@ -5,8 +5,9 @@
 \section{Implicit feedback to implicit ratings}
 \label{sec:implicit}
 
-In this section several \textit{existing} methods will be presented, all
-solving the following formalized problem:
+In this section, in accordance to our research goals (\textbf{Goal G6 and G7}),
+we will explore several \textit{existing} methods for solving the following
+formalized problem:
 
 \vspace{5 mm}
 
@@ -109,15 +110,7 @@ of other reasons. Whilst in the scenerio of rating, the user has already
 consumed it and is explicitly answering the question \textit{«To which degree
 did you like it?»}.
 
-\marginpar{heri-notes: merpresis formulering}
-% referer til seksjonene som kommer til å se nærmere på det kanskje?
-We will look into more of these charecteristics in our thesis, carefully
-examining the state of the art with regards to both weaknesses and advantages
-and finally introduce some novel techniques facilitating the creation of
-implicit ratings.
-
 \clearpage
-
 \subsection{Binary implicit ratings}
 
 One of the most common techniques of quantifying implicit feedback to implicit
@@ -275,6 +268,7 @@ the number of events for the user in question.
 Improvements to this model are presented in Section~\ref{implementation}
 
 \subsection{Regression analysis}
+\label{sec:regression-sota}
 
 \paragraph{Introduction to linear regression}
 A different method for converting events to ratings is finding a mathematical
@@ -570,71 +564,88 @@ In order to normalize $ImplicitRating(u,i)$ we set $x_{min} = 0$ and $x_{max} =
 \subsection{Challenges and weaknesses}
 \label{implicit-weaknesses}
 
-Almost all of the research on implicit feedback has considered how behaviors
-can be used as positive, rather than negative evidence. This is not to
-say that we can't use user behaviors to get negative feedback, examples may
-be analyzing bounce rates (e.g.\ reading an article for less than 5 seconds) or
-deleting/hiding something from a feed of items. There are however much fewer of
-these types of events.
+At this point we have looked at multiple existing methods for creating implicit
+ratings based on implicit feedback, proving both their extensibility and
+numerious variations. However, there are some challanges and weaknesses that
+holds true for all methods. We will take great care to explain these, but in
+addition describe the multiple ways of counteracting or minimizing their
+impact as well. The two largest challenges in regards to generating implicit
+ratings are:
 
-Another challenge facing implicit feedback research is the notion of degree of
-personalization offered by the system. In particular, individual differences
-can greatly impact the effectiveness of using behavior as implicit relevance
-feedback. People behave differently and have varying approaches to
-information-seeking; thus, it is difficult to generate, and dangerous to apply,
-all-purpose rules for describing how behavior can be used as implicit relevance
-feedback.
+% Goal G9: Find metrics in order to evaluate the implicit ratings.
 
-In a classic recommender system we need three parts: ratings, a recommender
-model and evaluation. Each of these parts needs to compliment each others
-advantages and disadvantages. If we start top-down then we say that the
-evaluation metrics used need to consider the fact that we are basing our model
-on implicit ratings, and thus a preference based metric is perhaps not the best
-metric (See Section~\ref{evaluation}). Further given that we choose a
-precision/recall scheme then we need to choose good parameters showing both the
-strengths and weaknesses found in the data and recommender model. How many
-recommendations should we provide the user in order to calculate precision and
-recall? And which metrics should we focus on; F1; MPR or others?
-\marginpar{Are MPR and F1 introduced?}
-When considering the recommender model there are as many countless
-possibibilites - ranging from traditional approcahes such as
-Pearson-correlation and K-nearest neighbours to more advanced and perhaps more
-specialized approaches such as SVD++. A common theme when using more advanced
-models are the number of parameters available for adjustments increases almost
-linearily. In a simple KNN-approach we can get various results by varying K -
-whilst in SVD++ we can vary the learning rate, alpha, number of features and
-many others~\ref{svdplusplus}. The approach we use in order to create our
-recommender model should consider the \textit{type} of ratings (explicit or
-implicit), the sparsity, the domain, number of items vs. number of users and
-many others. And lastly when we are creating ratings we should, as this section
-has mentioned several times, choose an approach matching the domain - as there
-can be large differences between e.g.\ an online TV-streaming service and an
-E-commerce store selling fashion.
+\begin{itemize}
+  \item A lack of ground truth.
+  \item No negative feedback.
+\end{itemize}
 
-%TODO: Helge sier:
-% I mitt hode skal det optimeres ut fra datatilgang (om det er statisk) eller
-% beslutingsproblem. Ikke god forskning å velge evaluering ut fra metodevalg.
+% First challenge, the lack of ground truth.
+As mentioned in Section~\ref{regression-sota}, when discussing regression
+analysis, without a ground truth both modelling and evaluating becomes a
+inaccurate science based on assumptions. Some assumptions may very well hold
+true, as proved by in~\cite{parra-2011walk}, however without conducting user
+studies or evaluating the implicit ratings in an online environment using
+conversion metrics such as an increase in purchases, we can not reliably
+evaluate our results. We can thus calculate and compare the performance of one
+set of implicit ratings compared to another set of implicit ratings, but only
+based on how well they \textit{match our assumptions} and selected features,
+not their real world performance. This in many answers, but also make it
+irrealizable given our data, to fulfill our research goal concering finding
+good metrics for evaluating the implicit ratings (\textbf{Goal G9}) as we
+neither have a ground truth, nor a set of explicit ratings from the
+application.
 
-This large choice of different models and their parameters in all stages from
-generation of ratings to evaluation, makes the pipeline quite vulnerable to
-fluxuations in results by small adjustments early in the pipeline. That is, by
-adjusting parameters in our first stage (generation of implicit ratings) it can
-have great effects on both our mathematical model and evaluation metrics. The
-number of different approaches makes it difficult to effectivly show all
-possibilites to the user and for some domains, even those focused on in this
-paper, it would not make sense to test some models or metrics.
+% Second challenge, no negative feedback.
+The second challenge is a result of almost all research on implicit feedback
+focusing on how implicit behaviours can be used as positive evidence in a
+recommender system. Without any negative feedback direct comparisons to
+explicit ratings become troublesome, as an implicit rating of 2 does not mean
+\textit{dissatisfaction}, but instead only \textit{less} satisfaction than 3.
+By adding negative events to implicit rating generation such as \textit{bounce
+rates} or \textit{deleting/hiding} elements from a news feed, may improve both
+the accuracy of the ratings, but also make them more robust when comparing and
+combined with explicit ratings. Still, dependent on the domain, these negative
+implicit feedbacks are often fewer in number and demand a larger effort to
+extract.
 
-% \todo{Mention fashion-specific challenges, e.g.\ clicks does not equal high
-% rating}
-When considering the domain of e-commerce websites a common approach is to both
-count transactions and clicks~\cite{something}, but ...
+% Other challenges; making too many generalizations on user behaviours.
+There are many other smaller challanges when generating implicit ratings, one
+of them concerning making too many generalization rules for user behaviour. In
+particular, users bahave differently and have varying approaches to information
+seeking, thus it becomes difficult to generate and dangerous to apply
+all-purpose rules for describing their behaviour. This way, induvidual
+differences can greatly impact the effectiveness of analyzing user behaviours,
+which is at the core of our assumptions.
 
-% \todo{Add weaknesses of explicit ratings}
+% Weaknesses propagate, and recommender+evaluation is based on impl. feedb.
+When we create implicit ratings, these become the recommender system equivalent
+of a ground truth. This data is further used, as we have seen in
+Section~\ref{subsec:cf} as input to our recommender algorithm makes which makes
+creates a model and later gives predictions on how well new data fits this
+model. In the end we use the output from this model (the predictions) for
+evaluation, determining the quality of how well the predictions were. However,
+notice that if all input to creting the \textit{recommender model} were
+unaccurate or wrong, then this would affect all later stages in the
+\textit{recommender pipeline}. This is generally not a concern in explicit
+ratings, after all the ground truth is the \textit{truth}, but when considering
+implicit ratings it can instead be called the \textit{ground assumptions} and
+if wrong, all later stages become unsound as well. Furthermore, as briefly
+touched upon earlier, without much negative feedback our later stages in the
+pipeline need to take height for this, not penalizing a low ranking as much as
+in traditional settings – as having some feedback is better than none. In
+essence, we need to ensure that two factors are emperically chosen: first, all
+assumptions should be grounded in statistical evidence and second, recommender
+algorithms and evaluation schemes should take height for weak evidence of
+negative feedback.
 
-% \subsection{Evaluating conversion to implicit ratings}
-
-% Map against user study.
-
-% Refer to evaluation section, written by Martin.
-
-\marginpar{heri-notes: dere presenterer mange fine teorier her. det er dog ikke klart for meg hva som er deres egne og hva dere har lånt fra andre}
+% We need in-depth understanding of the domain.
+A consequence of using implicit ratings is therefore to statistically select
+features that yields a good classification of user behaviours. In addition,
+we need to consider the sparsity of the dataset and dependent on the domain
+filter out implicit feedback based on criterias such as time sensitivity or
+others. This is seen in the fashion domain, where we after some time want to
+expire the implicitly provided feedback, as a users taste and preferences
+constantly changes, as well as the current fashion trends. In other words an
+\textit{in depth understanding of the domain} is required, and should be
+ensured by answer a set of research goals before designing and implementing a
+implicit rating system (See research goals \textbf{G1, G2 and G3}).
