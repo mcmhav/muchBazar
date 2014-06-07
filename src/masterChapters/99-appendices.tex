@@ -101,7 +101,7 @@
         \label{figure:statesInteractions}
     \end{figure}
 
-\chapter{State Of the Art}
+\chapter{Extended State Of the Art}
 \label{app:sota}
 
 \section{Fashion domain}
@@ -510,21 +510,6 @@
     \end{table}
 % paragraph shopstyle (end)
 
-
-
-\chapter{Implementation}\label{app:impl}
-\section{Implemented Functional Requirements}
-\begin{enumerate}[label=\bfseries FR \arabic*:]
-  \item {\color{ForestGreen}Blablaba}
-  \item {\color{RedOrange}\st{Blablaba}}
-\end{enumerate}
-
-\section{Implemented Non Functional Requirements}
-\begin{enumerate}[label=\bfseries NFR \arabic*:]
-  \item {\color{ForestGreen}Blablaba}
-  \item {\color{RedOrange}\st{Blablaba}}
-\end{enumerate}
-
 \section{State of the Art: Evaluation}
 \label{appendix:evaluation-metrics}
 
@@ -536,6 +521,43 @@ They are included here as they may provide clarity on \textit{why} they are not
 suited, as well the fact that non-suitednes is a result in itself. Finally we
 identify some resources of which the avid reader may do further research into
 the field of evaluation recommender systems.
+
+% Boostrapping in Appendix, as we do not use it and Helge proposed it.
+\subsubsection{Using bootstrapping for validating offline experiments}
+Bootstrapping~\cite{efron1994introduction} is used to estimate properties of an
+estimate, such as bias, variance, confidence, intervals and prediction error.
+This is done trough measuring these properties when sampling from an
+approximated distribution, creating an empirical distribution of the observed
+data.  Since the entire population is unknown it will not be possible to
+calculate the true error from the sample data.  The idea then is that with this
+information from sample data it is possible to say something about the
+population.  Since it will not be possible to perform inference on:
+
+\emph{sample data} $\rightarrow$ \emph{population} this is modeled as:
+\emph{re-sample data} $\rightarrow$ \emph{sample data}.
+The \emph{re-sample data} is a re-sampling of the sample data.
+
+In practice an example to bootstrapping is when we want to calculate the
+average height of the population worldwide.  The issue here is that it is not
+as doable to measure everyone, so a subset of the population is used.  Since
+the average on this number only will be an estimate of the actual world wide
+average a sense of error margin must be introduced.  Bootstrapping is then used
+to reduce the error of margin through re-sampling the sample data a large
+number of times~\footnote{Numbers vary on sample size, but is often 1 000 to 10
+000}, and new averages are calculated.  With these averages a histogram can be
+produced, which provides an estimate of the distribution of this average.
+
+\begin{figure}[H]
+    \includegraphics[scale=0.6]{image/bootstrap.png}
+    \centering
+    \caption[Bootstrapping principles]{A figure of the principles bootstrapping. Taken from~\cite{Eichler2003}}
+    \label{figure:bootstrapping}
+\end{figure}
+
+One prominent issue with bootstrapping is that important properties of the
+actual data might not be caught when undertaking the bootstrapping analysis
+~\footnote{"Bootstrapping" comes from the phrase, "to pull oneself up by one's
+bootstraps"~\cite{bootstrapSaying1843}}.
 
 % Sub-section on resources available for avid readers who want further research
 % into the field of evaluating recommender systems.
@@ -584,6 +606,21 @@ popular datasets containing additional information:
 \item \textbf{The Book-Crossing Dataset}: The bookcrossing dataset consists of both implicit and explicit feedback,
 	demographic information about users and some content based information about the books.
 \end{itemize}
+
+\chapter{Extended Implementation}
+\label{app:impl}
+
+\section{Implemented Functional Requirements}
+\begin{enumerate}[label=\bfseries FR \arabic*:]
+  \item {\color{ForestGreen}Blablaba}
+  \item {\color{RedOrange}\st{Blablaba}}
+\end{enumerate}
+
+\section{Implemented Non Functional Requirements}
+\begin{enumerate}[label=\bfseries NFR \arabic*:]
+  \item {\color{ForestGreen}Blablaba}
+  \item {\color{RedOrange}\st{Blablaba}}
+\end{enumerate}
 
 \section{Experimental Results}
 \label{app:results}
