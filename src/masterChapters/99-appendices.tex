@@ -538,8 +538,65 @@
   \item {\color{RedOrange}\st{Blablaba}}
 \end{enumerate}
 
+\section{State of the Art: Evaluation}
+\label{appendix:evaluation-metrics}
 
-\chapter{Experimental Results}\label{app:results}
+% Describe why this is in the Appendix.
+In this section we will cover an in-depth study of evaluation metrics and
+methods, which were not included in~\ref{sec:evaluation} as they are not
+directly suited for either the domain or setting in the proposed system.
+They are included here as they may provide clarity on \textit{why} they are not
+suited, as well the fact that non-suitednes is a result in itself. Finally we
+identify some resources of which the avid reader may do further research into
+the field of evaluation recommender systems.
 
+% Sub-section on resources available for avid readers who want further research
+% into the field of evaluating recommender systems.
+\subsubsection{Datasets for Offline Evaluation}
+The main aim of a recommender system is to identify the set of items in a
+dataset that might be interesting to a user based on their expressed
+preferences. For a fashion recommender this would mean estimating how much a
+user might like an item, by e.g.\\ predicting what rating a user might give an
+item. In recent years, various test collections for different domains such as
+books, music, movies have been made available to the public. These datasets
+usually consist of user ratings similar to the ones used in this thesis (see
+Section~\ref{}):
 
+\begin{table}[H]
+\centering
+	\begin{tabular}{*{4}l}
+	\toprule
+		User ID & Item ID & Rating & Timestamp \\ \midrule
+		1		  &	11	  &	5	    &  2014-12-15 10:14:51  \\
+		2		  &	19	  &	2	    &  2014-12-12 11:44:31  \\
+		\dots &	\dots &	\dots &  \dots                \\
+	\bottomrule
+	\end{tabular}
+\caption{Classical recommender system dataset}
+\end{table}
 
+In recent years more or more datasets have been made available which contains
+additional information such as demographic information about the users,
+trust-networks, user-assigned tags and etc. Below we have listed a few selected
+popular datasets containing additional information:
+
+\begin{itemize}
+
+\item \textbf{MovieLens 100k dataset}~\cite{Movielens}: The movielens dataset
+	incorporates demographic information about the user in addition the
+	traditional rating matrix
+
+\item \textbf{Epinions dataset}~\cite{Epinions}: The Epinions dataset includes a
+	trust-network, which specifices who-trust-whom in a social network based on
+	customer reviews for the website Epinions.com
+
+\item \textbf{The Million Song Dataset}~\cite{Bertin-Mahieux2011}: The million song
+	dataset is a implicit feedback dataset. This data also includes information on the users,
+	and audio features and song meta-data.
+
+\item \textbf{The Book-Crossing Dataset}: The bookcrossing dataset consists of both implicit and explicit feedback,
+	demographic information about users and some content based information about the books.
+\end{itemize}
+
+\section{Experimental Results}
+\label{app:results}

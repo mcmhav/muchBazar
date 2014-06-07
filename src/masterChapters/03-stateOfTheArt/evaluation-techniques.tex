@@ -1,152 +1,106 @@
 % !TEX root = ../../report.tex
-\section{Evaluation}
-\label{evaluation}
+\section{Evaluating recommender systems}
+\label{sec:evaluation}
 
-	% What evaluation methodologies exist?
-		% Offline Evaluation
-		% 	Recommender System Datasets
-		%		Explicit vs. Implicit
-		% 	Offline Evaluation Measures
-		%		Traditional evaluation measures
-		%		Cold-start system evaluation
-		%		Implicit feedback evaluation measures
-		% Online Evaluation
+% Refering to research goals and defending why we need this section.
+Our research \textbf{goals G5 and G8} requires us to identify existing metrics
+for evaluating recommender systems in a sparse dataset with implicit feedback.
+Set forth by our problem statement we need to propose one recommender system,
+selected from a range of candidate approaches and techniques. We recall our
+system overview in Figure~\ref{fig:system-overview} where in the last step of
+the pipeline we \textit{evaluate} our recommendations. There are a range of
+different metrics for ranking the performance of recommender systems, and they
+are all highly dependent on which properties the system designer prioritizes as
+important for both the domain and application.
 
+% Explaining basic difference between offline/online eval.
+There are mainly two settings for doing evaluation experiments. First is doing
+them \textit{offline} where the system is evaluated without user interactions.
+Second is, not surprisingly, \textit{online} evaluation, where real users
+interact with the system. In this thesis we did not have the possibility to
+perform any online evaluations, and hence a larger focus will be given to the
+offline setting.
 
-%Some key questions in evaluating recommender systems on testbed data are: what
-%to predict, how to grade performance and what baseline to compare with.
+% Refer to Appendix for more evaluation metrics, only focusing on suitable here.
+There exists too many evaluation metrics to describe them all in this thesis,
+consequently in this section we focus on the ones suited for our needs – that
+is, extremely sparse implicit ratings in the fashion domain. A comprehensive
+study of non-suitable solutions were performed as well, and can be found in
+Appendix~\ref{appendix:evaluation-metrics}.
 
-In most cases a system designer that wish to employ a recommender system must
-choose between a set of candidate approaches. A first step towards selecting an
-appropriate algorithm is to decide which properties are the most important for
-the application. Recommender systems have a variety of properties such as
-accuracy, robustness, scalability, etc. The following section will discuss how
-to compare recommender systems based on the set of properties  relevant for the
-application and how to evaluate the performance of the system. We have several
-different experimental settings which can be used to evaluate recommender systems.
-We will focus on two types of experiments:
-Offline experiments where the system is evaluated without user interactions and
-Online experiments where real users interact with the system. This section will
-also cover some of the most frequently used evaluation metrics, a discussion on
-the suitedness of different evaluation measures for implicit feedback, and
-summary of the methodologies and evaluation measures used to evaluate the
-cold-start performance of recommender systems.
+% TODO: We don't refer to these steps, so perhaps just skip them?
+% Shani et al.\ \cite{Shani2011} lists the following guidelines for general
+% experimental studies:
+%
+% \begin{itemize}
+% 	\item Hypothesis: before running an experiment one must form an hypothesis. For
+% 		example, an hypothesis can be that algorithm $A$ better predicts user ratings
+% 		than algorithm $B$. In that case the experiment should test the prediction
+% 		accuracy, and not look at other factors.
+%
+% 	\item Controlling variables: when comparing a few candidate algorithms on a
+% 		certain hypothesis, it is important that all variables that are not tested
+% 		are fixed.
+%
+% 	\item Generalization power: when drawing conclusions from experiments, we may
+% 		wish that our conclusions generalize beyond the immediate context of the
+% 		experiments. When choosing an algorithm for a real application, we may want
+% 		our conclusion to hold on the deployed system, and generalize beyond the
+% 		experimental data set. To increase the probability of generalization of the
+% 		recommender results one must typically experiment with several data sets or
+% 		applications.
+% \end{itemize}
 
-Shani et al.\ \cite{Shani2011} lists the following guidelines for general
-experimental studies:
+\subsection{Offline evaluation}
 
-\begin{itemize}
-	\item Hypothesis: before running an experiment one must form an hypothesis. For
-		example, an hypothesis can be that algorithm $A$ better predicts user ratings
-		than algorithm $B$. In that case the experiment should test the prediction
-		accuracy, and not look at other factors.
-
-	\item Controlling variables: when comparing a few candidate algorithms on a
-		certain hypothesis, it is important that all variables that are not tested
-		are fixed.
-
-	\item Generalization power: when drawing conclusions from experiments, we may
-		wish that our conclusions generalize beyond the immediate context of the
-		experiments. When choosing an algorithm for a real application, we may want
-		our conclusion to hold on the deployed system, and generalize beyond the
-		experimental data set. To increase the probability of generalization of the
-		recommender results one must typically experiment with several data sets or
-		applications.
-\end{itemize}
-
-\subsection{Offline Evaluation}
-Offline experiments are performed using pre-collected dataset\(s\) and a protocol
+Offline experiments are performed using pre-collected datasets and a protocol
 that models the user behavior to estimate recommender performance through
 different evaluation measures. The following figure shows a \emph{traditional}
 offline evaluation pipeline:
 
 \begin{figure}[H]
 		\centering
-	  	\includegraphics[height=0.65\linewidth]{image/evaluationpipeline.png}
+	  	\includegraphics[scale=0.6]{image/evaluationpipeline.png}
 		\caption[A Traditional Evaluation Pipeline]{A traditional evaluation pipeline for evaluating recommender systems}
 		\label{figure:evaluationpipeline}
 \end{figure}
 
 
-Offline experiments are attractive because they
-require no interactions with real users, and thus allows multiple  researchers to compare
-a wide range of algorithms, using the same data, at a low cost. The downside of offline experiments
-is that they can answer a very narrow set of questions, typically questions
-about the predictive power of the algorithm, and does not measure other user
-factors.
+Offline experiments are attractive because they require no interactions with
+real users, and thus allows multiple  researchers to compare a wide range of
+algorithms, using the same data, at a low cost. The downside of offline
+experiments is that they can answer a very narrow set of questions, typically
+questions about the predictive power of the algorithm, and does not measure
+other user factors.
 
-\subsubsection{Datasets for Offline Evaluation}
-
-The main aim of a recommender system is to identify the set of items in a
-dataset that might be interesting to a user based on their expressed
-preferences. For a fashion recommender this would mean estimating how much a
-user might like an item, by e.g.\\ predicting what rating a user might give an
-item. In recent years, various test collections for different domains such as
-books, music, movies have been made available to the public. These datasets
-usually consist of user ratings in the following form:
-
-\begin{table}[H]
-\centering
-	\begin{tabular}{*{4}l}
-	\toprule
-		User ID & Item ID & Rating & Timestamp \\ \midrule
-		1		&	11	  &	5	  &  2014-12-15 10:14:51 \\
-		1		&	19	  &	2	  &  2014-12-12 11:44:31 \\
-		3		&	112	  &	4	  &  2014-12-10 06:19:27 \\
-		...		&	...	  &	...	  &  ... \\
-	\bottomrule
-	\end{tabular}
-\caption{Classical recommender system dataset}
-\end{table}
-
-In recent years more or more datasets have been made available which contains
-additional information such as demographic information about the users,
-trust-networks, user-assigned tags and etc. Under we have listed a few selected
-popular datasets containing additional information:
-
-\begin{itemize}
-
-\item MovieLens 100k dataset~\cite{Movielens}: The movielens dataset
-	incorporates demographic information about the user in addition the
-	traditional rating matrix
-
-\item Epinions dataset~\cite{Epinions}: The Epinions dataset includes a
-	trust-network, which specifices who-trust-whom in a social network based on
-	customer reviews for the website Epinions.com
-
-\item The Million Song Dataset~\cite{Bertin-Mahieux2011}: The million song
-	dataset is a implicit feedback dataset. This data also includes information on the users,
-	and audio features and song meta-data.
-
-\item The Book-Crossing Dataset: The bookcrossing dataset consists of both implicit and explicit feedback,
-	demographic information about users and some content based information about the books.
-\end{itemize}
-
-\paragraph{Explicit-feedback}
-The definition of explicit is defined as `stated clearly and in detail, leaving
-no room for confusion or doubt'. Explicit feedback are more precise than
-implicit feedback, but more difficult to collect since it requires active user
-involvement. One serious implication of this is that the amount of feedback
-often is scarce since many users opt not to provide any feedback. Explicit
-feedback mechanisms allow the users to unequivocally express their ratings on a
-scale (usually in the form of a Likert scale (strongly disagree --- strongly
-agree). Thus explicit feedback is able to capture both negative and positive
-feedback, while implicit feedback \emph{only} can be positive. It is worth
-noting that explicit feedback tend to concentrate on either side of the rating
-scale, as users are more likely to express their preference if they feel
-strongly for or against an item~\cite{Jawaheer2010}.
-
-\paragraph{Implicit-feedback}
-Unlike explicit feedback, we do not have any direct input from the user
-regarding their personal preferences. In particular we do not have any
-substantial evidence of which items the user dislikes, such as low ratings.
-What we do have is indications of whether a user likes an item trough clicks, wants and purchases. Where wants and purchases can be viewed as a form of explicit rating only counting positively.
-Implicit-feedback is more easily collected than explicit-feedback, and usually more abundant.
-Types of implicit feedback include purchase history, browsing history,
-search patters, or even mouse movements. For example, a user who purchases
-many clothes from the same brand probably likes that brand. For a larger
-discussion surrounding the differences between implicit and explicit
-feedback, see Section~\ref{implicit-feedback}
+% TODO: Already defined in preceding section. Delete?
+% \paragraph{Explicit-feedback}
+% The definition of explicit is defined as `stated clearly and in detail, leaving
+% no room for confusion or doubt'. Explicit feedback are more precise than
+% implicit feedback, but more difficult to collect since it requires active user
+% involvement. One serious implication of this is that the amount of feedback
+% often is scarce since many users opt not to provide any feedback. Explicit
+% feedback mechanisms allow the users to unequivocally express their ratings on a
+% scale (usually in the form of a Likert scale (strongly disagree --- strongly
+% agree). Thus explicit feedback is able to capture both negative and positive
+% feedback, while implicit feedback \emph{only} can be positive. It is worth
+% noting that explicit feedback tend to concentrate on either side of the rating
+% scale, as users are more likely to express their preference if they feel
+% strongly for or against an item~\cite{Jawaheer2010}.
+%
+% \paragraph{Implicit-feedback}
+% Unlike explicit feedback, we do not have any direct input from the user
+% regarding their personal preferences. In particular we do not have any
+% substantial evidence of which items the user dislikes, such as low ratings.
+% What we do have is indications of whether a user likes an item trough clicks,
+% wants and purchases. Where wants and purchases can be viewed as a form of
+% explicit rating only counting positively.
+% Implicit-feedback is more easily collected than explicit-feedback, and
+% usually more abundant.  Types of implicit feedback include purchase history,
+% browsing history, search patters, or even mouse movements. For example, a
+% user who purchases many clothes from the same brand probably likes that
+% brand. For a larger discussion surrounding the differences between implicit
+% and explicit feedback, see Section~\ref{implicit-feedback}
 
 \subsubsection{Validation Methods}
 Validation techniques are motivated by two fundamental problems; model
