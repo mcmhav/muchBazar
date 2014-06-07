@@ -626,7 +626,6 @@
         % prøv heller å lage gode forklaringer til fiugurene i teksten så referer deretter
 
 
-
 \clearpage
 \section{Conversion rate properties}
 \label{sec:conv-rate}
@@ -775,27 +774,9 @@ times, but we can not defend it statistically for any higher value of clicks.
         As we can see from the figure, in 12 477 cases the users enters a store after already having entered a store, which means that the user did not access any of the items in the first entered store, and we see that this is a common way of browsing the products in the application. Since this leaves little indication about the user preferences, other ways of gathering this must be utilized.
         While this thesis was being written additional events was added, one of these was \emph{content:interact:item\_scroll}, which has proven to be of good help to derive user preferences~\cite{Claypool01inferringuser}.
 
-        If we focus on the states \emph{product\_wanted} and \emph{product\_purchase\_intended} we see that 160 occurrences \emph{product\_wanted}-states progressed into the \emph{product\_purchase\_intended}-events
+        If we focus on the states \emph{product\_wanted} and \emph{product\_purchase\_intended} we see that 160 occurrences of being in the \emph{product\_wanted}-state progressed into the \emph{product\_purchase\_intended}-state.
 
-    % mtodo - fix lol
 %     Init Hypothesis:
-%     Two users with similar session habits and similar product accessing pattern
-%     have a stronger correlation to one-another than two users with just similar
-%     product interests.
-
-
-%     'product\_purchase\_intended' (user pushed to the product web store) shows a
-%     wider specter of information about the product, including additional colors,
-%     images and colors.  For some it might be natural to explore the item there
-%     before "wanting" it. Making both
-
-%     "product\_purchase\_intended" $\Rightarrow$ "product\_wanted"
-
-%     and
-
-%     "product\_purchase\_intended" $\notimplies$ "product\_wanted"
-
-%     produce valuable information.
 
 %     Must make different rules for the different stores:
 %     "Bik Bok", "Cubus", "Gina Trik", "H\&M", "Bianco" has a broad specter of extra
@@ -819,17 +800,6 @@ times, but we can not defend it statistically for any higher value of clicks.
 
 %     Find a "most popular session"-pattern
 %     Find a "most likely to come after"-pattern
-
-%     Session issues:
-%     Once in a blue moon a user will do a "product action" (purchase,want,details)
-%     without having a previous frontstore-access event. Which leads to unknown
-%     store-id of the item.
-
-%     Issue is most probably from missing user-id in collection\_viewed, and a user
-%     checks out an item from there. It is not possible to be 100\% sure which user
-%     access the item from the collection\_viewed event, so this event is therefor
-%     not integrated into the session-stack.
-
 
 \section{Conclusion}
 \label{sec:dataset-conclusion}
