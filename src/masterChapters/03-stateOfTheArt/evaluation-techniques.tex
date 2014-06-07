@@ -65,9 +65,8 @@ offline evaluation pipeline:
 		\label{figure:evaluationpipeline}
 \end{figure}
 
-
 Offline experiments are attractive because they require no interactions with
-real users, and thus allows multiple  researchers to compare a wide range of
+real users, and thus allows multiple researchers to compare a wide range of
 algorithms, using the same data, at a low cost. The downside of offline
 experiments is that they can answer a very narrow set of questions, typically
 questions about the predictive power of the algorithm, and does not measure
@@ -103,10 +102,10 @@ other user factors.
 % and explicit feedback, see Section~\ref{implicit-feedback}
 
 \subsubsection{Validation Methods}
-Validation techniques are motivated by two fundamental problems; model
+Validation techniques are motivated by two fundamental problems: model
 selection and performance estimation. Almost all pattern recognition techniques
 have one or more free parameters, and we want a way to select the
-\emph{optimal} parameter\(s\) or model for a given problem. Once we have chosen a
+\emph{optimal} parameters or models for a given problem. Once we have chosen a
 model, we wish to estimate how well it is doing.
 
 \paragraph{The Holdout Method}
@@ -142,55 +141,36 @@ large datasets, even 3-Fold Cross Validation will be quite accurate, which for
 sparse datasets, one may wish to train as many examples as possible. A common
 choice is $K$ value between 5 and 10.
 
-\subparagraph{Advantages}
-One positive aspect with k-fold cross-validation is that the result is averaged over the $K$ experiments. The strongest argument for using cross-validation is the potential of using the entire training set for testing (albeit not at once), creating the largest possible test set for a fixed training data set.
+The advantages of this methods are amongst many that the results are averaged
+over the $K$ experiments. The strongest argument for using cross-validation is
+the potential of using the entire training set iterativly for testing, creating
+the largest possible test set for a fixed training data set.
 
-\subparagraph{Disadvantages}
-The main disadvantage with K-fold Cross-Validation is the training algorithm has
-to be run $K$ times, and thereby increasing the runtime for producing an
-evaluation of the system. If the dataset is large, an increase of $K$ runs could
-prove to be disadvantageous.
-%TODO - more?
+The main disadvantage with K-fold Cross-Validation is the training algorithm
+has to be run $K$ times, and thereby increasing the runtime for producing an
+evaluation of the system. If the dataset is large, an increase of $K$ runs
+could prove to be disadvantageous.
 
-\paragraph{Bootstrapping~\cite{efron1994introduction}}
+\paragraph{Finding optimal model-parameter settings}
+Finding the optimal parameters for a model is usually a crucial task in
+engineering approaches to classification and modeling tasks. An automated
+approach is particularly desirable when the number of parameters is high. In
+order to work well many algorithms and modeling techniques in computer science
+rely on a careful choice of their parameters. The usual approach is to select
+parameters based on some prior experience on the problem at hand with a limited
+heuristic search of possibly optimal parameters. When such prior knowledge is
+absent or cannot be directly applied to the technique being used, the optimal
+parameters have to be found by \emph{blind} search, by e.g. using genetic
+algorithms or some kind of exhaustive grid-search procedure.
 
-\marginpar{Helge: Føler at bootstrapping er på et annet nivå enn holdout og cross-validation. Passer det, og passer det her?}
-\marginpar{Fix}
-Bootstrapping is used to estimate properties of an estimate, such as bias, variance, confidence, intervals and prediction error. This is done trough measuring these properties when sampling from an approximated distribution,
-creating an empirical distribution of the observed data.
-Since the entire population is unknown it will not be possible to calculate the true error from the sample data.
-The idea then is that with this information from sample data it is possible to say something about the population.
-Since it will not be possible to perform inference on:
-
-\emph{sample data} $\rightarrow$ \emph{population} this is modeled as:
-\emph{re-sample data} $\rightarrow$ \emph{sample data}.
-The \emph{re-sample data} is a re-sampling of the sample data.
-
-In practice an example to bootstrapping is when we want to calculate the average height of the population worldwide.
-The issue here is that it is not as doable to measure everyone, so a subset of the population is used.
-Since the average on this number only will be an estimate of the actual world wide average a sense of error margin must be introduced.
-Bootstrapping is then used to reduce the error of margin through re-sampling the sample data a large number of times~\footnote{Numbers vary on sample size, but is often 1 000 to 10 000}, and new averages are calculated.
-With these averages a histogram can be produced, which provides an estimate of the distribution of this average.
-
-\begin{figure}[H]
-    \includegraphics[width=5in]{image/bootstrap.png}
-    \centering
-    \caption[Bootstrapping principles]{A figure of the principles bootstrapping. Taken from~\cite{Eichler2003}}
-    \label{figure:bootstrapping}
-\end{figure}
-
-\paragraph{Disadvantages}
-	One prominent issue with bootstrapping is that important properties of the actual data might not be caught when undertaking the bootstrapping analysis
-	~\footnote{"Bootstrapping" comes from the phrase, "to pull oneself up by one's bootstraps"~\cite{bootstrapSaying1843}}.
-
-
-\paragraph{Finding the optimal parameter settings}
-
-Finding the optimal parameters for a model is usually a crucial task in engineering approaches to classification and modeling tasks. An automated approach is particularly desirable when the number of parameters is high. In order to work well many algorithms and modeling techniques in computer science rely on a careful choice of their parameters. The usual approach is to select parameters based on some prior experience on the problem at hand with a limited heuristic search of possibly optimal parameters. When such prior knowledge is absent or cannot be directly applied to the technique being used, the optimal parameters have to be found by \emph{blind} search, by e.g. using genetic algorithms or some kind of exhaustive grid-search procedure.
-
-The \emph{de facto} standard way of performing model selection optimization is grid search, which is simply an exhaustive searching through a manually specified subset of the hyperparameter space of a learning algorithm. To \emph{guide} the grid-search one typically uses a performance metric, typically measured by cross-validation on the training set. After evaluating the performance all the pre-specified combinations of parameter settings, the grid search algorithm outputs the setting that achieved the highest score in the validation procedure.
-
-Many of the most popular Machine Learning libraries now come with methods for performing grid search.
+The \emph{de facto} standard way of performing model selection optimization is
+grid search, which is simply an exhaustive searching through a manually
+specified subset of the hyperparameter space of a learning algorithm. To
+\emph{guide} the grid-search one typically uses a performance metric, typically
+measured by cross-validation on the training set. After evaluating the
+performance all the pre-specified combinations of parameter settings, the grid
+search algorithm outputs the setting that achieved the highest score in the
+validation procedure.
 
 \subsubsection{Offline Evaluation Metrics}
 
