@@ -612,13 +612,20 @@ items unknown to the user.  For trust in the system and novelty respectively.
 % TODO: Introduce next figure.
 
 \begin{figure}[H]
-    \includegraphics[width=5in]{image/longtailNoveltyFig.png}
     \centering
-    \caption[Long tail]{Long tail show with the item similarity between items. Similarity shown though edges between the nodes. The gray columns represents the user profile, the violet represents items which might be of interest to the user, and the height is the relevance. Adapted from~\cite{celma2008}}
+    \includegraphics[scale=0.4]{image/longtailNoveltyFig.png}
+    \caption{Long tail with the item similarity between items. }
     \label{figure:longtailNovelty}
 \end{figure}
-\marginpar{todo - not sure if its ok to use this image (not self made) figure from music recommendation, but long tail applies to fashion}
-\marginpar{todo - if so, something about longtail}
+
+\marginpar{TODO: not sure if its ok to use this image (not self made) figure
+from music recommendation, but long tail applies to fashion, if so extend about
+longtail}
+
+This figure show the similarity between items as a long tail graph. The gray
+columns represents the user profile, the violet represents items which might be
+of interest to the user, and the height is the relevance. Adapted
+from~\cite{celma2008}
 
 \subparagraph{Diversity}
 Diversity is generally defined as the opposite of similarity. In some cases suggesting a set of similar items may not be as useful for the user, because it may take longer to explore the range of products. E.g. when presenting a list of 5 recommendations, the system should not recommend 5 Ralph Lauren shirts with different colors. As diversity may come at the expense of other properties such as accuracy, one should evaluate the decrease in accuracy vs. the increase in diversity.
