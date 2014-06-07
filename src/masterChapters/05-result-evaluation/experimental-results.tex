@@ -29,7 +29,7 @@ are meant as a baseline to show what one could expect when only looking at purch
 To our surprise our Most Popular recommender performed much worse than random guessing. But since the average item
 have been given on average 1.34 ratings one could not expect to much since the ratings are evenly distribution over
 all the items. Both item-based and user-based collaborative filtering performed marginally better than random guessing,
-while BPR-MF performed much worse than random guessing. The $MAP@20$ scores for all recommenders are to small to be shown
+while BPR-MF performed much worse than random guessing. The $MAP@20$ scores for all recommenders are to small to be shown
 using 5 descimals, meaning that close to zero relevant items were retrieved in the top 20 lists.
 
 \section{Binary Multiple Events Dataset}
@@ -72,7 +72,7 @@ BPR-MF default	    	  &	0.624658 &	0.001764 &	1419 &	1280 &	2 &	9  &	6  &	0 &	0.
 \end{table}
 
 As you can see from the table there have only been recorded two purchase related events in the twelve day period, making it a bad period to use for evaluation.
-As we can see from the table Most Popular performed the best having both the highest AUC and $MAP@20$ score.
+As we can see from the table Most Popular performed the best having both the highest AUC and $MAP@20$ score.
 
 The following table shows our experimental results predicting the events between 16. April - 22. May:
 
@@ -140,7 +140,7 @@ ItemKNN=120     & 0.7357796 & 0.0069094 & 1295.8  1231.4  146.8 & 37.6 &  53 & 7
 \end{table}
 
 As you can see from the table, ItemBasedKNN using cosine similarity gives us the best results for our binary dataset. It has the best AUC and retrieved 9.67\% of all wanted items and 9.85\% of all purchases
-in addition to having the best $MAP@20_purchase$ score.
+in addition to having the best $MAP@20_purchase$ score.
 
 
 

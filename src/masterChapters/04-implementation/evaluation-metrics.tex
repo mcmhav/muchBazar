@@ -266,7 +266,7 @@ $T_{purchase}$ = 3.
 We then check each user-item touple in our prediction file against our test file, if it is a match we retrieve the
 event type for the predictions. Giving us the following $P$ values: $P_{click}$ = 1, $P_{want}$ = 1 and $P_{purchase}$ = 1.
 Meaning that we retrieved one of each event type, giving us the following recall score for the different event type:
-$R_{click}$ = 1/1, $R_{want}$ = 1/2 and $R_{purchase}$ = 1/3. We can then calculate the different $MAP@20$ scores. E.g. for user 11
+$R_{click}$ = 1/1, $R_{want}$ = 1/2 and $R_{purchase}$ = 1/3. We can then calculate the different $MAP@20$ scores. E.g. for user 11
 the first item in his ranked list is a click meaning that his $AP@20_{click}$ score would be higher than if the item
 would have been the third item in his list. The $MAP@20$ numbers can therefore be used as a measure of where in the
 top-20 lists the different events can be found. E.g. a high $MAP@20_{purchase}$ score would indicate that the retrieved
