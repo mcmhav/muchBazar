@@ -590,30 +590,42 @@ One  way of having the user to give this feedback is to re-rate the recommended 
 A rating scale from 1 to 5 is often used for both~\cite{Schafer:1999:RSE:336992.337035}.
 
 \subparagraph{Novelty and Serendipity}
-Some recommender systems produce highly accurate recommendations and also have reasonable coverage - and yet that are useless for practical purposes. For instance, a music recommender can recommend Rihanna to every customer who have not yet listened to Rihanna. However, statistically, this is highly accurate as most people have listened to Rihanna or at least knows about her and have consciously chosen not to listen to her. Much more valuable would be a recommendation to a kick-ass indie-rock band that the active user would love, but will never hear about in the news. We therefore need a new dimension for analyzing recommender systems that consider "nonobviousness" of the recommendations. One such dimension is \emph{novelty}. Another related dimension is \emph{serendipity}. A serendipitous recommendation helps a user find a surprisingly interesting item the user might not have discovered otherwise. To clarify the difference between the two, a novel recommendation could be to recommend an unknown album from one of the users favorite artists, that the user likely eventually would have discovered herself. However, a recommendation by an unknown artist is more likely to be serendipitous. Serendipity is therefore a measure of how surprisingly the successful recommendations are.
+As described in Section~\ref{subsec:rec-challenges},  novelty is expected to
+change over time, some times the user would like to receive recommendation on
+new items, and other times recommendations closer to the user's preferences.
+For the system to be able to detect these changes in preferences, and acting
+accordingly would be beneficial in regards of the user's satisfaction.
 
-As novelty is the the degree of new and interesting items recommended for the user, the system must ask the user for feedback to be able to make any assumptions around the novelty.
-The novelty together with perceived quality allows the system to make informed decisions about the ratio of new items to recommend for the user.
-The novelty is expected to change over time, some times the user would like to receive recommendation on new items, and other times recommendations closer to the user's preferences.
-For the system to be able to detect these changes in preferences, and acting accordingly would be beneficial in regards of the user's satisfaction.
 \begin{equation}
     Novelty(u) = \frac{1}{N}\sum_{i=1}^{N}{1 - Knows(u,i)}
     \label{equation:novelty}
 \end{equation}
-In~\ref{equation:novelty} $Knows(u,i)$ represents a binary functions which returns 1 if the user $u$ knows the item $i$, and 0 if not.
-The set of items used for the calculation is the set of recommended items for the user.
 
-The system should be able to produce items both items known to the user, and items unknown to the user.
-For trust in the system and novelty respectively.
+In~\ref{equation:novelty} $Knows(u,i)$ represents a binary functions which
+returns 1 if the user $u$ knows the item $i$, and 0 if not.  The set of items
+used for the calculation is the set of recommended items for the user.
+
+The system should be able to produce items both items known to the user, and
+items unknown to the user.  For trust in the system and novelty respectively.
+
+% TODO: How to measure serpendipity ?! (Definition happens in SotA)
+% TODO: Introduce next figure.
 
 \begin{figure}[H]
-    \includegraphics[width=5in]{image/longtailNoveltyFig.png}
     \centering
-    \caption[Long tail]{Long tail show with the item similarity between items. Similarity shown though edges between the nodes. The gray columns represents the user profile, the violet represents items which might be of interest to the user, and the height is the relevance. Adapted from~\cite{celma2008}}
+    \includegraphics[scale=0.4]{image/longtailNoveltyFig.png}
+    \caption{Long tail with the item similarity between items. }
     \label{figure:longtailNovelty}
 \end{figure}
-\marginpar{todo - not sure if its ok to use this image (not self made) figure from music recommendation, but long tail applies to fashion}
-\marginpar{todo - if so, something about longtail}
+
+\marginpar{TODO: not sure if its ok to use this image (not self made) figure
+from music recommendation, but long tail applies to fashion, if so extend about
+longtail}
+
+This figure show the similarity between items as a long tail graph. The gray
+columns represents the user profile, the violet represents items which might be
+of interest to the user, and the height is the relevance. Adapted
+from~\cite{celma2008}
 
 \subparagraph{Diversity}
 Diversity is generally defined as the opposite of similarity. In some cases suggesting a set of similar items may not be as useful for the user, because it may take longer to explore the range of products. E.g. when presenting a list of 5 recommendations, the system should not recommend 5 Ralph Lauren shirts with different colors. As diversity may come at the expense of other properties such as accuracy, one should evaluate the decrease in accuracy vs. the increase in diversity.

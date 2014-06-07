@@ -50,41 +50,23 @@ to contruct a scoring scheme. Then, for every event exhibited by a user on an
 item we then calculate the maximum score possible based on the event type and
 various features such as recentness, price and popularity. Every feature is
 given a carefully selected penalization function controlling the score,
-designed to account for observed behaviors in the domain.
+designed to account for observed behaviours in the domain.
 
 % Second component: filterbots.
-Our second component consists of creating pseudo users or filterbots in an
-attempt to \textit{mitigate} the cold start problem(s). These pseudo users rate items algorithmically
-according the attributes of the items or by aggregating rating information. We tested
-out different filterbot combinations for all three cold-start scenarios and found ...
-to be the best combination. Our filterbots ... outperformed/did not outperform non
-personalized approaches such as most-popular. With the improvements being the most evident on...
 % TODO: Thomas, write a short paragraph as the one above?
 
 % Third component: recommendation.
-We tested out a wide array of different recommender systems on our dataset including
-simple non-personalized recommenders, collaborative filtering methods and latent factor models.
-
-By evaluating the different recommender systems on the dataset we got a general overview of which
-candidate models ... 
-
 % TODO: Thomas/Martin, see above :)
 
 % Fourth component: evaluation.
 % TODO: Thomas/Martin, see above :)
 
 % Our evaluation metrics
-Evaluating recommender systems using implicit feedback differs from
-traditional recommender system evaluation, simply using RMSE was not enough.
-We determined that a combination of accuracy and rank-accuracy metrics was the
-best way to evaluate the quality of the final system. AUC was used to measure
-the overall quality of the recommender system. AUC was complemented by $MAP@20$
-in addition to our own unique event specific measurements to measure the systems
-ability the rank the events.
-
+Simply using RMSE was not enough, since precision was important.
+Determined that AOC was a good measure due to...
 
 % How the proposed system performs
-The proposed system performed ...
+The proposed sysem performed ...
 
 % Concluding thoughts
 Better results with larger dataset
@@ -94,10 +76,6 @@ Our proposed system performs better than only looking at purchases, which
 proves this.
 By testing in a online scenario and performing user-studies the real
 performance may be evaluated.
-
-
-
-
 
 \clearpage
 \section{Future Work}
@@ -180,6 +158,9 @@ closely to assess if they can add any value to the system:
 \item Content information.
 \item Demographic information.
 \end{itemize}
+
+% TODO: Future work: perform user study to confirm implicit ratings
+% performance.
 
 \marginpar{Short discussion on the above mentioned information sources and how they can help. BE EXPLICIT!}
 %Importance of brand
