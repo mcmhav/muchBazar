@@ -165,6 +165,9 @@
     %         avg viewtime for an item (i know)
     %         Similarity of user favorite store, items viewed and items wanted?
     %         time of session over lifetime of app for all users (slope-style)
+    % check for price distribution based on location.
+    % make price user graph
+    % price for store dist
     This section will look at the SoBazaar data through graphing and plotting.
     It will start with the properties of the users seen in the data, then move over to the products and finally the time properties of the data.
 
@@ -229,29 +232,16 @@
 
         The red line is the regression line of the user account lifetimes, and is there to show how the account life span increases with the amount of events.
 
-
     \begin{figure}[H]
+        \includegraphics[width=5in]{image/sessiondistribution.png}
         \centering
-        \begin{subfigure}{.5\textwidth}
-            \centering
-            \includegraphics[width=\dualGraphWidth]{image/sessionsCountdistribution.png}
-            \caption{Distribution of sessions for users}
+        \caption{Distribution of sessions for users}
     \label{figure:sessCountDist}
-        \end{subfigure}%
-        \begin{subfigure}{.5\textwidth}
-            \centering
-            \includegraphics[width=\dualGraphWidth]{image/sessioncumdistribution.png}
-            \caption{Cumulative distribution of sessions for users}
-    \label{figure:sessCountCumDist}
-        \end{subfigure}
-        \caption{Graphs presenting the number of sessions for the users in the data}
     \end{figure}
-        \marginpar{Something wrong with sessions graphs, will fix}
-        % mtodo
+        The figure above shows the count of sessions for the users of the SoBazaar application, with the users with more than 30 sessions removed.
+
         More than 90\% of the users of SoBazaar have a session count of 20 and less.
         This means that they have not used the applications more than 20 separate times, over the time the data was collected, and strengthens the hypothesis that the data from SoBazaar is sparse.
-
-        The maximum number of sessions for each user is grouped to show the count of how many users has the different amount of sessions.
 
         In figure~\ref{figure:sessCountDist} the 4 first bars sums up to 1000, which is the amount of users who has had 4 or less sessions on the application in total. In other words --- half of the user base used the application less than 4 times.
 
@@ -291,8 +281,6 @@
 
         If the event is triggered from a phone, the event is as precise as the GPS hardware location of the phone, and would be helpful information to understand more about the user.
 
-        % mtodo check for price distribution based on location.
-
 \subsection{Product properties}
 
     \begin{figure}[H]
@@ -311,13 +299,10 @@
         \end{subfigure}
         \caption{Figures presenting the distribution of price for the items i SoBazaar}
     \end{figure}
-
         Here we see how the products are distributed in regards to their price.
-        134 products have a price over 2 500 NOK and have been left out of this graph.
+        134 of the products have a price over 2 500 NOK and have been left out of this graph.
 
-        82\% of the items have a price lower than 1 000 NOK.
-        \marginpar{make avg price for users, is there something there}
-        % mtodo make price user graph
+        The price range of the application varies a lot, but 82\% of the items have a price lower than 1 000 NOK.
 
     \begin{figure}[H]
         \centering
@@ -335,16 +320,13 @@
         \end{subfigure}
         \caption{Figures presenting the distribution of events for the products i SoBazaar}
     \end{figure}
-        80\% of the products have only a interaction count of 10 or less.
-        Interaction count is \emph{product\_detail\_clicked}, \emph{product\_wanted} and \emph{product\_purchase\_intended}.
+        80\% of the products have only an interaction count of 10 or less, wher interaction count is \emph{product\_detail\_clicked}, \emph{product\_wanted} and \emph{product\_purchase\_intended}.
         This means that there will not be more than 10 events for the majority of the items, which leads to an issue when doing collaborative filtering on the data.
-        When the majority of the events only has 10 events and there are over 4 000 items and 1 200 users, the probability that multiple users have interacted with similar items will be marginal.
+        When the majority of the events only has 10 events and there are over 6 000 items and 2 000 users, the probability that multiple users have interacted with similar items will be marginal, but promotes the importance of utilizing all the feedback to bolster the recommender.
 
 \subsubsection{The Pareto principle and Long tail on sales}
     In e-commerce the distribution of sales or product interactions can be described by the Pareto principle and the phenomenon of long tail.
     Pareto's principle is used to tell how the distribution is in the \emph{head}~\footnote{Take for example figure~\ref{figure:eventsPerproduct}, the \emph{head} is the left most part where the curve is steep} of the graph, and the long tail phenomenon is used to tell tell how the distribution is in the \emph{tail}~\footnote{Take for example figure~\ref{figure:eventsPerproduct}, the \emph{tail} is the right most part where the curve flattens out} of the graph.
-
-    \marginpar{maybe add a figure showing head and tail of a graph instead of a footnote explaining}
 
 \paragraph{Pareto's Principle}
     Pareto's principle applies when the 20\% most frequent products account for more than 80\% of the ratings, sales or interactions in the dataset~\cite{newman05power}.
@@ -354,7 +336,7 @@
         \begin{tikzpicture}
             \begin{axis}[
                 xlabel=Treshold,
-                ylabel=Percentage of ratings,
+                ylabel=Percentage of item interaction,
                 grid=major,
             ]
             \addplot+[color=blue,sharp plot] coordinates
@@ -474,7 +456,7 @@
         \centering
         \begin{tabular}{lll}
         \toprule
-        Threshold &   Products in threshold~\tablefootnote{The amount of products residing within the percentage threshold} &      Percentage of interactions \\
+        Threshold &   Products in threshold~\tablefootnote{\label{footnote:pt}The amount of products residing within the percentage threshold} &      Percentage of interactions \\
         \midrule
         20\%    &    1206   &    59.1701\% \\
         41\%    &    2472   &    80.2984\% \\
@@ -485,17 +467,17 @@
     \end{table}
 
     Figure~\ref{figure:paretosPrinciple} show the percentages of interactions within the given thresholds.
-    As we can see from table~\ref{table:paretosPrinciple}, the 20\% most frequently interacted with items represents 59.1701\% of the ratings.
+    As we can see from table~\ref{table:paretosPrinciple}, the 20\% most frequently interacted with items represents 59.1701\% of the item interaction in total.
     We have to move up to 41\% to reach 80\% of the interactions, and the Pareto's principle does therefore not apply to the SoBazaar.
 
 \paragraph{Long Tail}
-    The definition of long tail is that the most frequently-occuring items represent less than 50\% of occurrences in logs~\cite{DBLP:journals/corr/abs-1203-4487}.
+    The definition of long tail is that the most frequently-occurring items represent less than 50\% of occurrences in logs~\cite{DBLP:journals/corr/abs-1203-4487}.
 
     \begin{table}[H]
         \centering
         \begin{tabular}{llll}
         \toprule
-        Average product interaction   & Products in threshold~\tablefootnote{The amount of product residing within the percentage threshold} & Coverage & Percentage of interactions \\
+        Average product interaction   & Products in threshold~\tablefootnote{See footnote~\ref{footnote:pt}} & Coverage & Percentage of interactions \\
         \midrule
         6.6928   &    4194   & 68.8443\% &   28.5408\% \\
         \bottomrule
@@ -507,7 +489,6 @@
     As the table above shows the SoBazaar data does not posses a clear long tail behavior.
     The average interaction count of the products is 6.6928 and there is 4194 products with less than this number of interactions, but these items does only cover 28.5408\% of the total interactions.
 
-    % mtodo - price for store dist
     \begin{figure}[H]
         \includegraphics[width=5in]{image/storefront_nameandEventdistribution.png}
         \centering
