@@ -97,15 +97,15 @@
             \toprule
             Variable     & Explanation   \\
             \midrule
-            product\_id       & The id of the item which triggered the event \\
-            user\_id          & The unique id of the user who triggered the event \\
-            event\_id         & What kind of event was triggered~\tablefootnote{Complete list of the different types of events can be found in table~\ref{table:events}} \\
-            price             & The price of the item which triggered the event \\
-            retailer\_brand   & The id of the retailer brands. A retailer is a distributer of products, such as H\&M, Cubus or Moods Of Norway \\
-            storefront\_id    & The storefront id of the storefront entered. The \emph{retailer\_brand}s can have multiple \emph{store\_front}s. In addition to the main \emph{store\_front} most \emph{retailer\_brands} have, they can also add one or more when there is a special occasion such as a sale or a new release \\
-            event\_location   & The location of the user when the event was triggered \\
-            ts                & Unix timestamp in milliseconds of when the event was triggered \\
-            session           & Which session number the event belongs to~\tablefootnote{This is the value added in the preprocessing phase~\ref{sec:preprocessing}. For two events to end up in the same session, the event has to be triggered within a certain period of time, and both be after the same application started-flag} \\
+            \emph{product\_id}      & The id of the item which triggered the event \\
+            \emph{user\_id}      & The unique id of the user who triggered the event \\
+            \emph{event\_id}         & What kind of event was triggered~\tablefootnote{Complete list of the different types of events can be found in table~\ref{table:events}} \\
+            \emph{price}             & The price of the item which triggered the event \\
+            \emph{retailer\_brand}   & The id of the retailer brands. A retailer is a distributer of products, such as H\&M, Cubus or Moods Of Norway \\
+            \emph{storefront\_id}    & The storefront id of the storefront entered. The \emph{retailer\_brand}s can have multiple \emph{store\_front}s. In addition to the main \emph{store\_front} most \emph{retailer\_brands} have, they can also add one or more when there is a special occasion such as a sale or a new release \\
+            \emph{event\_location}   & The location of the user when the event was triggered \\
+            \emph{ts}                & Unix timestamp in milliseconds of when the event was triggered \\
+            \emph{session}           & Which session number the event belongs to~\tablefootnote{This is the value added in the preprocessing phase~\ref{sec:preprocessing}. For two events to end up in the same session, the event has to be triggered within a certain period of time, and both be after the same application started-flag} \\
             \bottomrule
         \end{tabular}
         \caption[Event Metadata]{Metadata collected from an event. The complete list can be found in table~\ref{table:completeEventData}}
@@ -774,7 +774,7 @@ times, but we can not defend it statistically for any higher value of clicks.
         As we can see from the figure, in 12 477 cases the users enters a store after already having entered a store, which means that the user did not access any of the items in the first entered store, and we see that this is a common way of browsing the products in the application. Since this leaves little indication about the user preferences, other ways of gathering this must be utilized.
         While this thesis was being written additional events was added, one of these was \emph{content:interact:item\_scroll}, which has proven to be of good help to derive user preferences~\cite{Claypool01inferringuser}.
 
-        If we focus on the states \emph{product\_wanted} and \emph{product\_purchase\_intended} we see that 160 occurrences of being in the \emph{product\_wanted}-state progressed into the \emph{product\_purchase\_intended}-state.
+        If we focus on the states \emph{product\_wanted} and \emph{product\_purchase\_intended}, we see that 160 occurrences of being in the \emph{product\_wanted}-state progressed into the \emph{product\_purchase\_intended}-state.
 
 %     Init Hypothesis:
 
