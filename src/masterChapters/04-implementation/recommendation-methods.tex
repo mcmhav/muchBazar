@@ -23,18 +23,8 @@ results valid. Our solution to this is to include those methods that are
 considered state-of-the-art from both classes in an attempt to bridge this
 highly \emph{unfortunate} weakness in our experiment.
 
-\subsection{Common Algorithms}
 
-This subsection will describe the algorithms that will be used on both the
-binary and non-binary.
-
-\subsubsection{Content-boosted Collaborative Filtering}
-
-\marginpar{TODO: Complete motivation. Are we doing content-based filtering og content-boosted collaborative filtering?}
-As previously mentioned content-based recommendation does not suffer as much from the cold-start problem as
-collaborative filtering approaches.
-
-\paragraph{Extracting Content-Features}
+\subsection{Extracting Content-Features}
 
 To build features for content-based recommendations we examined the content in the product database. To find
 the product-type, material, style and color we analyzed the content of the title, description and meta-description
@@ -80,9 +70,9 @@ and color could only be found for a minority of the items. The dataset is in no 
 for content-based recommendation as it highlights on of the main weakness of content-based
 methods, namely that they require rich descriptions of items to build well informed user
 profiles. As mentioned in \cite{meyer2012recommender} this is most often not the case in
-real applications.
-
-\paragraph{Content-based recommender}
+real applications. The content-features will be used to to test our one content-boosted collaborative
+filtering method \cite{Gantner2010} in addition to being used by our filterbots to generate ratings based
+on content-features.
 
 \marginpar{Explain how the content information will be used}
 
@@ -385,7 +375,6 @@ the highest rated items. The following equation shows the rating prediction proc
 u(c,s) = k * \sum_{c' \epsilon C} u(c',s)
 \end{equation}
 
-
 where $k$ is a normalization factor ($1/|C|$). This is very similar to collaborative filtering, except for
 the fact that the user similarity $sim(c, c')$ has been taken out of the equation. This is the same as saying
 that all user similarities are the same. It is also worth mentioning that this method is not suited for binary
@@ -393,42 +382,47 @@ ratings, as it becomes a most popular algorithm.
 
 \subsection{Cold-start Solutions}
 
-Due to limitations, mainly in the form of lacking data the number of cold-start solutions
+Due to limitations, mainly in the form of a lack of additional data sources the cold-start solutions
 we are currently able to experiment with is fairly limited. As we never got access to
 user-data, we have to cross out RBLF and other methods requiring user features. This leaves us with
 Naive Filterbots \cite{Park2006} which easily could be combined with our implicit ratings.
 
 \subsubsection{Filterbots}
+\label{implementation-filterbots}
 
 The main reasons for experimenting with filterbots is simplicity, the fact that it easily could
 be combined with our implicit ratings in addition to the fact that previous experiments \cite{Agarwal2009, Agarwal2010}
 show that its performance is close to the state-of-the-art methods. It is worth to keep in mind that filterbots was
-developed for traditional neighborhood collaborative filtering methods and it will be interesting to see how the filterbots affect
-the performance of ALS-WR. Filterbots can potentially help solve the cold-start user problem by making it possible for
-new users to connect to users that capture the general underlying trends of the entire user group. Filterbots are mainly
-meant to improve performance when data is scarce and not to degrade performance when data is plentiful.
+developed for traditional neighborhood collaborative filtering methods, and will therefore only be applicable given
+that a neighborhood model is chosen as the core recommender. Filterbots can potentially help solve the cold-start user
+problem by making it possible for new users to connect to users that capture the general underlying trends of the entire
+user group. Filterbots are mainly meant to improve performance when data is scarce and not to degrade performance when data is plentiful.
 
-Similarly as in \cite{Park2006} we decided to experiment with global bots. We have currently implemented the
+Similarly as in \cite{Park2006} we decided to experiment with \emph{naive} global bots. The bots are \emph{naive}
+in the sense that they are \emph{dumb} in the way they rate items. We have currently implemented the
 following bots: A \emph{BrandBot} which rates an item based on the brands average rating,
 multiple \emph{SingleBrandBots} which gives all items of a given brand a top rating,
 an \emph{AverageBot} which rates an item based on their average rating given to it, a \emph{CriticBot} which selects $n$ critics
 among the most active users and rate items based on their average rating, a \emph{PopularityBot} which rates
-an item based on its popularity, more ratings equals a higher rating.
+an item based on its popularity. More ratings equals a higher rating. Compared to the work presented by Park et. al. we
+felt that the lack of high quality features was a limiting factor when designing the filterbots, as there is only
+so much information in the rating matrix.
 
 The intuition behind the \emph{SingleBrandBots} is as follows: When a new user \emph{rates} an item it will be connected to
 a \emph{psudo-user} which have rated all items of the same brand highly, thus making it more likely  that a new users will
-be recommended items by that brand. The \emph{SingleBrandBots} and \emph{BrandBot} can therefore be considered feature-bots. The \emph{PopularityBot} will have rated popular items highly meaning that
-users that have co-rated items with the \emph{PopularityBot} user will be recommended the most popular items.
-The \emph{CriticBot} selects $n$ users among the most active users and rate items based on the average rating
-of the critics.
+be recommended items by that brand. The \emph{SingleBrandBots} and \emph{BrandBot} can therefore be considered feature-bots.
+The \emph{PopularityBot} will have rated popular items highly meaning that users that have co-rated items with the \emph{PopularityBot}
+user will be recommended the most popular items. The \emph{CriticBot} selects $n$ users among the most active users and rate items
+based on the average rating of the critics.
 
-A filterbot takes the training set as input and generates a set of ratings which are then added to the training set. Both the \emph{AverageBot} and \emph{BrandBot} can be seen to incorporate the implicit rating factors such as recency into the ratings generated. However, for the \emph{PopularityBot} and \emph{Critic} but we wish to implement additional functionality to ensure
+A filterbot takes the training set as input and generates a set of ratings which are then added to the training set.
+Both the \emph{AverageBot} and \emph{BrandBot} can be seen to incorporate the implicit rating factors such as recency into
+the ratings generated. However, for the \emph{PopularityBot} and \emph{Critic} but we wish to implement additional functionality to ensure
 that the new users are connected with items that are relevant right now and not consider outdated items or users which
 are no longer active. Since we have access to timestamps we could e.g. make the \emph{PopularityBot} rate items based on
 their popularity the last couple of weeks instead of over the entire dataset period. Similarly, critics can be selected
 based on their activity the couple of weeks/months.
 
-\marginpar{How many seconds does it take to generate the additional ratings, and how many ratings are generated?}
 
 \marginpar{TODO: More detailed implementation details?}
 
