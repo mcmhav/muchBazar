@@ -21,6 +21,15 @@ interact with the system. In this thesis we did not have the possibility to
 perform any online evaluations, and hence a larger focus will be given to the
 offline setting.
 
+% Explain that evluations can guide us towards finding correct parameters.
+It is important to note that having good evaluation metrics combined with
+robust automation techniques are a crucial requirement in order to find the
+optimal model-parameters. In most recommender models the number of free
+parmeters are high, and in order to best set them the designer need to first
+select values based on intuition and experience. Later it is crucial to run
+experiments fluctuating the parameter values until the optimal
+\textit{evaluation score} is achieved.
+
 % Refer to Appendix for more evaluation metrics, only focusing on suitable here.
 There exists too many evaluation metrics to describe them all in this thesis,
 consequently in this section we focus on the ones suited for our needs – that
@@ -101,45 +110,45 @@ other user factors.
 % brand. For a larger discussion surrounding the differences between implicit
 % and explicit feedback, see Section~\ref{implicit-feedback}
 
-\subsubsection{Validation Methods}
-Validation techniques are motivated by two fundamental problems: model
-selection and performance estimation. Almost all pattern recognition techniques
-have one or more free parameters, and we want a way to select the
-\emph{optimal} parameters or models for a given problem. Once we have chosen a
-model, we wish to estimate how well it is doing.
+In order to evaluate our metrics we need to establish a framework for testing,
+defining how to interpret our results as well as how we utilize the dataset
+with regards to both training and testing. There are two such methods, more
+prevalent than others and which we use in this thesis, named \textit{the
+holdout method} and \textit{K-fold cross-validation}.
 
-\paragraph{The Holdout Method}
-When using the holdout method you split the dataset into two groups; a training
+Using the the holdout method one split the dataset into two groups; a training
 set used to train the classifier and a test set used to estimate the error rate
-of the trained classifier. The Netflix Prize Competition~\cite{Netflix}
-provided a training set consisting of 100,480,507 ratings given by 480,189
-users to 17,300 movies. The testset consisted of 2,817,131 items where the
-ratings were unknown. The submitted predictions were scored against the true
-ratings in terms of root mean squared error (RMSE), and the goal was to
-minimize this error.
+of the trained classifier. Both sets are equal for each test-run. This is a
+useful technique in order to compare models based on the exact same external
+factors, guaranteeing that the metrics obtained are a result of
+model-parameters and not the training set. In addition this way of
+\textit{holding out} the test set are often used in competitions and research
+environments.
 
-The holdout method has two basic drawbacks; (1) In problems with sparse
-datasets we may not be able to afford the luxury of setting aside a portion of
-the dataset for testing, (2) Since it is a single train-and-test experiment,
-the holdout estimate can be misleading if we happen to get an `unfortunate'
-split.
+This method has two drawbacks: First, with sparse datasets we may not be able
+to afford the luxury of setting aside a portion of the dataset for testing.
+Second, since it is a single train-and-test experiment, the holdout estimate
+can be misleading if we use a split not reflecting tendencies seen in the
+actual training set.
 
-\paragraph{Cross-Validation}
-K-fold Cross-Validation creates a K-fold partition of the dataset. For each of
-the $K$ experiments, use $K-1$ folds for training and the remaining one for
-testing. By setting $K=2$, this is the same as the holdout method. The estimated
-error is found by taking the average error from all the experiments.
+The second method, \textit{K-fold Cross-Validation} builds on the holdout
+methods by creating K partitions of the dataset. Then one runs $K$ experiments,
+using $K-1$ partitions (or \textit{folds}) for training and the remaining one
+for testing. One can easily see that setting $K=2$, makes this method
+equivanlent to the holdout method. The estimated error is found by taking the
+average error from all the experiments.
 
-Leave-one-out is the degenerate case of K-fold Cross-Validation, where $K$ is
-chosen as the total number of examples. For a dataset with $N$ examples we
-perform $N$ experiments. For each experiment we use $N-1$ examples for training
-and the remaining example for testing. Again, the true error is found by taking
-the average error rate from the experiments.
+\textit{Leave-one-out} is the degenerate case of K-fold Cross-Validation, where
+$K$ is chosen as the total number of examples. For a dataset with $N$ examples
+we perform $N$ experiments. For each experiment we use $N-1$ examples for
+training and the remaining example for testing. Again, the true error is found
+by taking the average error rate from the experiments.
 
 In practice the number of folds often depends on the size of the dataset. For
 large datasets, even 3-Fold Cross Validation will be quite accurate, which for
-sparse datasets, one may wish to train as many examples as possible. A common
-choice is $K$ value between 5 and 10.
+sparse datasets, one may wish to train as many examples as possible. In our
+experiments we use $K$-values between $80$ and $200$, depending on model
+selection and parameters. 
 
 The advantages of this methods are amongst many that the results are averaged
 over the $K$ experiments. The strongest argument for using cross-validation is
@@ -149,28 +158,7 @@ the largest possible test set for a fixed training data set.
 The main disadvantage with K-fold Cross-Validation is the training algorithm
 has to be run $K$ times, and thereby increasing the runtime for producing an
 evaluation of the system. If the dataset is large, an increase of $K$ runs
-could prove to be disadvantageous.
-
-\paragraph{Finding optimal model-parameter settings}
-Finding the optimal parameters for a model is usually a crucial task in
-engineering approaches to classification and modeling tasks. An automated
-approach is particularly desirable when the number of parameters is high. In
-order to work well many algorithms and modeling techniques in computer science
-rely on a careful choice of their parameters. The usual approach is to select
-parameters based on some prior experience on the problem at hand with a limited
-heuristic search of possibly optimal parameters. When such prior knowledge is
-absent or cannot be directly applied to the technique being used, the optimal
-parameters have to be found by \emph{blind} search, by e.g. using genetic
-algorithms or some kind of exhaustive grid-search procedure.
-
-The \emph{de facto} way of performing model selection optimization is grid
-search, which is simply an exhaustive searching through a manually specified
-subset of the hyperparameter space of a learning algorithm. To \emph{guide} the
-grid-search one typically uses a performance metric, typically measured by
-cross-validation on the training set. After evaluating the performance all the
-pre-specified combinations of parameter settings, the grid search algorithm
-outputs the setting that achieved the highest score in the validation
-procedure.
+could prove to be disadvantageous in time sensitive environments.
 
 \subsubsection{Offline Evaluation Metrics}
 
@@ -624,7 +612,7 @@ the other abstracts.  Two ways of measuring the system is through ranking and
 usage prediction described earlier.
 %TODO: Extend?
 
-\paragraph{Rank Based} % (fold)
+\paragraph{Rank Based}
 \label{par:Ranking_based}
 
 The ranking approach can be considered more suited to test recommendation
@@ -642,7 +630,7 @@ as~\cite{Yilmaz:2008:NRC:1390334.1390435}.
 
 \marginpar{maybe hard to differentiate between the names}
 
-\paragraph{Accuracy Ranking} % (fold)
+\paragraph{Accuracy Ranking}
 \marginpar{HELGE: Språk!}
 \label{par:usage_prediction}
 
@@ -857,7 +845,7 @@ In the case with the SoBazaar application, on way of doing a A/B testing on the
 system is as follows: 3 groups of users are made, one with the unaltered
 system, one with method $A$ to produce recommendations and one with method $B$.
 
-\subparagraph{Group Split} % (fold)
+\subparagraph{Group Split}
 \label{par:group_split}
 
 The groups of users can either be selected to fit the global distribution of
@@ -865,7 +853,7 @@ users, or be a set of similar minded users.  The latter case might benefit a
 system where the intended goal is to specialize the system for a set of users,
 or actually partition the system into fitting a subsets of its' users.
 
-\subparagraph{Group Size} % (fold)
+\subparagraph{Group Size}
 \label{par:group_size}
 
 The size of the groups depends on the amount of splits and intended stability
@@ -876,7 +864,7 @@ might produce unwanted results.  The two groups with the altered versions of
 the system can be of the same size to make it simpler to measure the
 performance of the two system against one another.
 
-\subparagraph{System Measuring} % (fold)
+\subparagraph{System Measuring}
 \label{par:system_measuring}
 
 After a set period of time, the two altered versions are compared to one
@@ -897,9 +885,9 @@ which might not reflect the actual score of the system when releasing it on the
 full set of user groups.
 
 
-\subsubsection{Multi-armed bandit experiments \cite{googlebandit}}
+\subsubsection{Multi-armed bandit experiments}
 
-A multi-armed bandit is a type of experiment where:
+A multi-armed bandit~\cite{googlebandit} is a type of experiment where:
 
 \begin{itemize}
 	\item The goal is to find the best or most profitable action
@@ -921,22 +909,19 @@ variations that clearly is underperforming gets less. The adjustments are made
 based on a statistical test that considers both the sample size and performance
 metrics together.
 
-\paragraph{Advantages}
+Its main advantage is that it usually performs better than A/B testing when we
+look at average conversion rates, which in turn will decrease the cost of the
+experiment.  Saved testing time is another advantage highlighted in the Google
+article.
 
-The main advantage of using multi-armed bandit experiments is that it usually
-performs better than A/B testing when we look at average conversion rates,
-which in turn will decrease the cost of the experiment.  Saved testing time is
-another advantage highlighted in the Google article.
-
-\paragraph{Disadvantages}
-
-Statistical significance. Instead of sending equal traffic to each of the test
-pages, the page which performs better will start to get more traffic. If you
-are running tests across pages which do not get huge amounts of traffic, one
-variant can run away while the others are left in the dust without getting a
-fair chance. Of course, if your variation is performing badly you will loose
-some sales or conversions in the process of A/B testing, but that is the price
-one have to pay for finding out if a variation really did perform badly.
+However, obtaining statistical significance becomes a challenge. Instead of
+sending equal traffic to each of the test pages, the page which performs better
+will start to get more traffic. If you are running tests across pages which do
+not get huge amounts of traffic, one variant can run away while the others are
+left in the dust without getting a fair chance. Of course, if your variation is
+performing badly you will loose some sales or conversions in the process of A/B
+testing, but that is the price one have to pay for finding out if a variation
+really did perform badly.
 
 \subsection{Discussion}
 
