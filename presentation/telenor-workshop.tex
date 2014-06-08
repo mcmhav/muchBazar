@@ -1,4 +1,6 @@
 \documentclass{beamer}
+\usepackage{tabularx}
+\usepackage{booktabs}
 
 % Frankfurt <3
 \usetheme{Frankfurt}
@@ -38,11 +40,49 @@
   % Some key figures and what they mean.
   \begin{frame}
     \frametitle{SoBazaar Data - Dataset Summary}
+      \begin{table}[H]\centering\resizebox{\columnwidth}{!}{\begin{tabular}{*{19}l}
+        \centering
+        \begin{tabular}{l l}
+            \toprule
+            Attribute       & Count   \\
+            \midrule
+            Total number of events  &    218975 \\
+            Unique users ids    &    2021 \\
+            Unique item ids     &    6092 \\
+            Unique storefronts  &    147 \\
+            Unique retailer brands  &    24 \\
+            \hline
+            First event & Mon, 07 Oct 2013 10:59:57 GMT \\
+            Last event & Mon, 19 May 2014 22:51:19 GMT \\
+            Lifetime of data & 224 days \\
+            \hline
+            Item clicks     &    25491 \\
+            Item wants   &    13262 \\
+            Item purchases   &    2020 \\
+            \hline
+            Average item click count per user   &    12.6130 \\
+            Average item want count per user     &    6.5620 \\
+            Average item purchase count per user     &    0.9995 \\
+            \hline
+            Average item interaction count per user     &    20.1746 \\
+            Average user interaction count per item     &    6.6928 \\
+            \bottomrule
+        % \caption[Dataset summary]{Overview of the key figures in the SoBazaar dataset}
+        % \label{table:datasetSummary}
+        \end{tabular}
+    \end{table}
+\bottomrule\end{tabular}}\caption{time mahout-itembased}\end{table}
   \end{frame}
 
   % Continuation of key figures w/ visualizations.
   \begin{frame}
     \frametitle{SoBazaar Data - Something else}
+    % \begin{figure}[H]
+    %     \includegraphics[width=5in]{../src/image/event_iddistribution.png}
+    %     \centering
+    %     \caption{Event distribution}
+    % \label{figure:eventIDDistribution}
+    % \end{figure}
     \begin{itemize}
       \item
     \end{itemize}
