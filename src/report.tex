@@ -6,14 +6,12 @@
 \usepackage{booktabs} % commands to better structure tables
 \usepackage[english]{babel} % break words when going over a line.
 \usepackage{caption}
-% \usepackage{cite} % we want to cite our bibliography
 \usepackage{enumerate} % we want lists.
 \usepackage{enumitem} % less gap between items
 \usepackage{fancyhdr}
 \usepackage{fancyvrb} % for fancy verbatims and centering them
 \usepackage{float} % for placing figures/tables at the specified place in text with [H]
-%\usepackage[headings]{fullpage} % wider
-\usepackage[top=2in, bottom=1.5in, left=1in, right=1in]{geometry}
+\usepackage[top=2in, bottom=1.5in, left=1in, right=1in]{geometry} % Controls width of page
 \usepackage{graphicx} % in order to insert images
 \usepackage[linkcolor={blue},citecolor={blue},urlcolor={red}]{hyperref}
 \usepackage{listings} % to add code snipes and such
@@ -24,7 +22,6 @@
 \usepackage{pgf-pie}
 \usepackage{tablefootnote} % for handling footnote in tables
 \usepackage{tabularx}
-%\usepackage{todonotes} % todo boxes
 \usepackage{soul}
 \usepackage{subcaption}
 \usepackage{verbatim} % Enable verbatim text for code etc.
@@ -33,17 +30,14 @@
 \usepackage{amssymb}
 \usepackage{pifont}   % Can add check symbol
 \usepackage{tikz}
-% \usepackage[utf8x]{inputenc} % utf-8 for special names
 \usepackage{xcolor,colortbl} % highlight table rows and columns
 \usetikzlibrary{calc,trees,positioning,arrows,chains,fit,shapes.geometric,%
     decorations.pathreplacing,decorations.pathmorphing,shapes,%
     matrix,shapes.symbols}
-% \usepackage[utf8]{inputenc}
-%\usepackage[dvipsnames]{xcolor}
 \pgfplotsset{compat=1.9} % latex suggest for compatibility
 
 \pagestyle{headings} % Footer is blank, header displays information according
-% to document class (e.g., section name) and page number top right.
+                     % to document class (e.g., section name) and page number top right.
 \DeclareMathOperator*{\argmin}{arg\,min}
 
 \newcommand{\dualGraphWidth}{3.1in} % to make dualgraph look similar
@@ -51,6 +45,7 @@
 \newcommand{\graphWidth}{5in} % to make dualgraph look similar
 \newcommand{\cmark}{\color{ForestGreen}\ding{52}} % Awesome green check mark
 \newcommand{\xmark}{\color{RedOrange}\ding{55}}   % Awesome red cross mark
+
 % Package configutations
 \newcommand{\notimplies}{\mathrel{{\ooalign{\hidewidth$\not\phantom{=}$\hidewidth\cr$\implies$}}}}
 \newcommand{\HRule}{\rule{\linewidth}{0.5mm}} % Header
@@ -85,8 +80,6 @@
 \def \groupname{Artificial Intelligence Group}
 \def \deptname{IDI}
 
-% \newcommand*{masterChapters}{chapters}
-
 % PDF-metadata
 \hypersetup{pdftitle={\thesistitle}}
 \hypersetup{pdfauthor=\authorname}
@@ -115,31 +108,6 @@ Norwegian University of Science and Technology
 \noindent Principal supervisor: \suphelge \\
 \noindent Secondary supervisor: \supheri
 
-  %{\Huge Twilm} \\
-  %\medskip
-  %  \vspace{\stretch{0.2}}
-%
- %   { \Large \bfseries PROJECT}
-  %  \HRule \\[0.5cm]
-  %{ \huge \bfseries ONELINER ABOUT \\[0.4cm]}
-
-   % \HRule \\[0.5cm]
-
-   % \begin{minipage}{0.4\textwidth}
-   %     \begin{flushleft} \large
-   %         \emph{Authors}\\
-   %         Martin Christian \textsc{Havig} \\
-   %     \end{flushleft}
-   % \end{minipage}
-   % \begin{minipage}{0.4\textwidth}
-   %     \begin{flushright} \large
-   %         \emph{Supervisor:} \\
-   %         Some  \textsc{One}
-   %     \end{flushright}
-   % \end{minipage}
-
-    %\vfill
-   % \today \\\ \\\
 \end{center}
 \end{titlepage}
 
@@ -190,8 +158,8 @@ support and contributions. Again, thank you.
 \begin{abstract}
 
 In recommender systems we seek to predict the rating or preference that a user
-would give to an item. With the advent of modern application such as movie and
-music streaming, E-commerce, social networks and many other platforms ---
+would give to an item. With the advent of modern applications such as movie and
+music streaming, E-commerce, social networks and many other platforms –
 recommender systems have gained an important role in both a commercial and
 academic setting. When analyzing various approaches to \textit{how} an
 application generates recommendations, the prevalent technique is explicitly
@@ -203,7 +171,7 @@ these ratings can be inferred from looking at session data and the transaction
 history for every user.
 
 We analyze which recommender models are suitable for such an untraditional data
-source, whilst accounting for a sparse dataset with few events --- often called a
+source, whilst accounting for a sparse dataset with few events – often called a
 cold start environment. Multiple ways of generating ratings are presented
 taking into account recentness in the data as an important factor. This,
 combined with traditional recommender system approaches makes for a new and
@@ -218,7 +186,6 @@ Finally, a discussion is made on the various evaluation metrics for both
 implicit ratings and our recommender models, as here as well the untraditional
 approach of choosing implicit ratings as input to our models makes many of the
 conventional metrics inefficacious.
-
 \marginpar{heri-notes: Hovekonklusjon og hovedfunnene skal med her}
 
 \end{abstract}
