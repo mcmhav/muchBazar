@@ -114,13 +114,13 @@ In order to evaluate our metrics we need to establish a framework for testing,
 defining how to interpret our results as well as how we utilize the dataset
 with regards to both training and testing. There are two such methods, more
 prevalent than others and which we use in this thesis, named \textit{the
-holdout method} and \textit{K-fold cross-validation}.
+holdout method} and \textit{K-fold cross-validation}.
 
-Using the the holdout method one split the dataset into two groups; a training
-set used to train the classifier and a test set used to estimate the error rate
-of the trained classifier. Both sets are equal for each test-run. This is a
-useful technique in order to compare models based on the exact same external
-factors, guaranteeing that the metrics obtained are a result of
+Using the \textit{the holdout} method one split the dataset into two groups; a
+training set used to train the classifier and a test set used to estimate the
+error rate of the trained classifier. Both sets are equal for each test-run.
+This is a useful technique in order to compare models based on the exact same
+external factors, guaranteeing that the metrics obtained are a result of
 model-parameters and not the training set. In addition this way of
 \textit{holding out} the test set are often used in competitions and research
 environments.
