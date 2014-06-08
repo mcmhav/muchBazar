@@ -53,17 +53,35 @@ given a carefully selected penalization function controlling the score,
 designed to account for observed behaviours in the domain.
 
 % Second component: filterbots.
-% TODO: Thomas, write a short paragraph as the one above?
+% TODO: Thomas, finish this.
+Our second component consists of creating pseudo users or filterbots in an
+attempt to \textit{mitigate} the cold start problem(s). These pseudo users rate
+items algorithmically according the attributes of the items or by aggregating
+rating information. We tested out different filterbot combinations for all
+three cold-start scenarios and found ...  to be the best combination. Our
+filterbots ... outperformed/did not outperform non personalized approaches such
+as most-popular. With the improvements being the most evident on...
 
 % Third component: recommendation.
-% TODO: Thomas/Martin, see above :)
+% TODO: Thomas, finish this.
+We tested out a wide array of different recommender systems on our dataset
+including simple non-personalized recommenders, collaborative filtering methods
+and latent factor models.
+
+By evaluating the different recommender systems on the dataset we got a general
+overview of which candidate models ... 
 
 % Fourth component: evaluation.
 % TODO: Thomas/Martin, see above :)
 
 % Our evaluation metrics
-Simply using RMSE was not enough, since precision was important.
-Determined that AOC was a good measure due to...
+Evaluating recommender systems using implicit feedback differs from traditional
+recommender system evaluation, simply using RMSE was not enough.  We determined
+that a combination of accuracy and rank-accuracy metrics was the best way to
+evaluate the quality of the final system. AUC was used to measure the overall
+quality of the recommender system. AUC was complemented by $MAP@20$ in addition
+to our own unique event specific measurements to measure the systems ability
+the rank the events.
 
 % How the proposed system performs
 The proposed sysem performed ...
@@ -106,55 +124,64 @@ With regards to recommendation quality we believe the main focus should be on
 getting more and higher quality data.
 
 \begin{itemize}
-\item More extensive crawling the webstores collecting likes or popularity information, better content descriptions,
-	  and so on.
-\item Provide the user with \emph{cool} and \emph{fun} ways of expressing their preferences. A tinder-like \emph{hot or not}
-	  interface, the ability to follow brand or friends are a few such examples.
+
+\item More extensive crawling the webstores collecting likes or popularity
+information, better content descriptions, and so on.
+
+\item Provide the user with \emph{cool} and \emph{fun} ways of expressing their
+preferences. A tinder-like \emph{hot or not} interface, the ability to follow
+brand or friends are a few such examples.
+
 \item Negative feedback in the form of a dislike button or similar.
 \end{itemize}
 
-Adding data entry amounts by adding a step to your funnel could hurt sales more than it helps. One should
-therefore carefully consider adding features the require user effort. If a \emph{hot or not} interface is to be implemented
-one should preferably conduct a study to find the best strategy of selecting items to display to the users.
+Adding data entry amounts by adding a step to your funnel could hurt sales more
+than it helps. One should therefore carefully consider adding features the
+require user effort. If a \emph{hot or not} interface is to be implemented one
+should preferably conduct a study to find the best strategy of selecting items
+to display to the users.
 
-Especially better quality and structure of the data. Table \ref{table:extracted-content-features} shows an overview of
-the percentage of items we managed to extract the different attributes for. Attributes such as category, color, brand-name ...
-are particulary useful and should be easily extracted from the product database for most products.
+Especially better quality and structure of the data. Table
+\ref{table:extracted-content-features} shows an overview of the percentage of
+items we managed to extract the different attributes for. Attributes such as
+category, color, brand-name ...  are particulary useful and should be easily
+extracted from the product database for most products.
 
 %Recommender systems for anonymous users - Context
-	%Recommend other items with a high similarity to the item currently being viewed
+%Recommend other items with a high similarity to the item currently being viewed
 
-Contextual item-to-item recommendations should be considered implemented to display related
-items to anonymous users in the context of viewing an item instead of the current system which
-recommends "People how love this also love".
+Contextual item-to-item recommendations should be considered implemented to
+display related items to anonymous users in the context of viewing an item
+instead of the current system which recommends "People how love this also
+love".
 
-
-
-
-Finding and incorporating more implicit factors should also be considered as a possible future direction.
+Finding and incorporating more implicit factors should also be considered as a
+possible future direction.
 
 Do trends repeat year after year?
 
-Personalization of the impact of different implicit factors could be interesting to look at.
-Implicit factors such as brand preference, importance of global popularity, weight given
-to the different event types and so on could all be personalized for each user.
-However, we feel it is important to mention the connection to matrix factorization methods
-aka SVD which \emph{basicly} does the same thing automatically. It reduced the rating matrix
-to a set of item and users factors for each individual item and user and a set of utility values
-for these factors.
+Personalization of the impact of different implicit factors could be
+interesting to look at.  Implicit factors such as brand preference, importance
+of global popularity, weight given to the different event types and so on could
+all be personalized for each user.  However, we feel it is important to mention
+the connection to matrix factorization methods aka SVD which \emph{basicly}
+does the same thing automatically. It reduced the rating matrix to a set of
+item and users factors for each individual item and user and a set of utility
+values for these factors.
 
 
-Other implicit factors such as brand preference, ... could all be implemented to
+Other implicit factors such as brand preference, ... could all be implemented
+to
 
-
-
-As shown in \cite{FranceTelecom} most successful commercial recommender incorporate multiple
-sources of information. The following information sources should therefore be examined more
-closely to assess if they can add any value to the system:
+As shown in \cite{FranceTelecom} most successful commercial recommender
+incorporate multiple sources of information. The following information sources
+should therefore be examined more closely to assess if they can add any value
+to the system:
 
 \begin{itemize}
-\item Social information. Trust could be inferred from functionality such as \emph{follow user}, which
-	  could be used to improve recommendation quality and improve cold-start performance.
+\item Social information. Trust could be inferred from functionality such as
+\emph{follow user}, which could be used to improve recommendation quality and
+improve cold-start performance.
 \item Content information.
 \item Demographic information.
 \end{itemize}
@@ -162,11 +189,12 @@ closely to assess if they can add any value to the system:
 % TODO: Future work: perform user study to confirm implicit ratings
 % performance.
 
-\marginpar{Short discussion on the above mentioned information sources and how they can help. BE EXPLICIT!}
+\marginpar{Short discussion on the above mentioned information sources and how
+they can help. BE EXPLICIT!}
 %Importance of brand
 %Importance of social groups - fashion
 %Demographic filtering as a solution to the cold-start user problem?
 
 
-This thesis have only on a small part of the possibilities. There is much work to be done. %%% THE END %%%
-
+This thesis have only on a small part of the possibilities. There is much work
+to be done. %%% THE END %%%
