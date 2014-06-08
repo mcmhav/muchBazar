@@ -79,21 +79,23 @@
 
 \section{Preprocessing}
     \label{sec:preprocessing}
-    In data mining preprocessing is an important part, which creates the foundation to the data analysation and further down the pipeline.
+    In data mining, preprocessing is an important part, which creates the foundation for the data analysation and for further down the pipeline.
+    The saying \emph{garbage in, garbage out}~\cite{GIGO} especially applies here, where the input data can make or break the results since all the raw values are seldom complete in regards to information and sense, and some will not make sense to consider. %, such as: \emph{gender:male}, \emph{pregnant:true}.
 
     The data from SoBazaar has been been anonymised for privacy reasons.
     In addition to anonymization the data was cleaned by removing events containing test environment flags and applications run from simulator.
     What was left after the cleaning data was mainly events triggered by the users in production environment, and not created during applications testing.
 
     As part of the preprocessing, an extra field was added to the data, a session field.
-    This field was added to help understand how users use the application, and to be able to see use patterns.
+    This field was added to help understand how users use the application, and to be able to see usage patterns.
 
 \section{Dataset Overview}
-    The data from SoBazaar is gathered based on the actions of the users using the application.
-    Actions done by the users are called events, such as accessing a store, scrolling a page or purchasing a product.
+    The data from SoBazaar is based on the actions of the users, stored in logs, which are saved whenever a user executes an action the system has the ability to log.
+    Actions done by the users are called events, such as accessing a store, scrolling a page or purchasing a product, all these events put together is the dataset used in this thesis.
 
     When an event is triggered a set of information is stored regarding the event.
-    This data is used to make recommendations for the users though converting the implicit feedback to implicit ratings as we will see in later chapters.
+    This data is used to make recommendations for the users trough converting the implicit feedback to implicit ratings as we will see in later chapters.
+    Some of the most relevant metadata to making recommendations are presented in the table below.
 
     \begin{table}[H]
         \centering
@@ -115,6 +117,12 @@
         \caption[Event Metadata]{Metadata collected from an event. The complete list can be found in table~\ref{table:completeEventData}}
         \label{table:eventData}
     \end{table}
+
+    In the table above we see some of the more relevant attributes to an event triggered.
+    These can be used to derive information regarding the users of the application and the items, and put together, be used to predict preferences for the users.
+
+    After gathering the data and preprocessing it, on single set of data was left.
+    The statistics of this data is shown in the table below, and is there to present a birds view of the data used in this thesis.
 
     \begin{table}[H]
         \centering
@@ -172,14 +180,17 @@
     % check for price distribution based on location.
     % make price user graph
     % price for store dist
-    This section will look at the SoBazaar data through graphing and plotting.
+    This section will look at the SoBazaar data through visualizing the data and clearly communicating the information trough graphical means.
     It will start with the properties of the users seen in the data, then move over to the products and finally the time properties of the data.
 
 \subsection{User properties}
+    The properties of the users of the SoBazaar application can help understand how the application is used, and to get a better understanding of how to make predictions for them.
+
+    The first figure visualizing the user behavior is a figure of the event distribution, and shows the events the users are triggering, and to what extend they do so.
     \begin{figure}[H]
         \includegraphics[width=5in]{image/event_iddistribution.png}
         \centering
-        \caption{Count for different events}
+        \caption{Event distribution}
     \label{figure:eventIDDistribution}
     \end{figure}
         In the figure above (figure~\ref{figure:eventIDDistribution}) we see the count for each of the different events which can be triggered in the SoBazaar application\footnote{With the exception of the event types with a trigger count lower than 200, which are merged into on bar and labeled \emph{other}}.
@@ -191,6 +202,8 @@
         \emph{product\_purchase\_intended} on the other hand has to come after a \emph{product\_detail\_clicked}, so it is therefore safe to assume that about 8\% of item accesses progressed into an intended purchase.
 
         Some of the evens shown above are newly added events, and the data has to mature more for more certain conclusion to be drawn.
+
+        The distribution of events for the users are show in the next figure, and is intended to give a better overview of to what extent the users interact with the applications, and how the usage is distributed amongst the users.
 
     \begin{figure}[H]
         \centering
@@ -209,46 +222,13 @@
         \caption{Graphs presenting the distribution of events per user}
     \end{figure}
         Figure~\ref{figure:userEventDist} is showing the actual amount of users with the different counts of events.
-        78\% of the users have 50 or less events, with the most common amount being at 5 events.
+        78\% of the users have 50 or less events, with the mean being at 5 events.
         The figures are showing the values from 0 to 250 since 96\% of the users resides in this subset of the data.
 
         As seen from figure~\ref{figure:eventIDDistribution} most of the events are not directly related to products, from table~\ref{table:datasetSummary} we can see that there are over 6000 products, and as mentioned above, 78\% of the users have less than 50 events. Based on these three facts, we can assume that the data is extremely sparse and measures to deal with this must be implemented.
 
-    \begin{figure}[H]
-        \includegraphics[width=5in]{image/userTimespansdistribution.png}
-        \centering
-        \caption{Distribution of user account lifetime}
-    \label{figure:userTimespandist}
-    \end{figure}
-        The figure above displays the lifetime of the user accounts in the application in weeks, where the lifetime is measured from the first occurrence of the unique user id till the last event triggered by that user.
-
-        From this figure it is apparent that over half of the user accounts have a lifespan of less than a week.
-
-    \begin{figure}[H]
-        \includegraphics[width=5in]{image/avglifetimeoncountuser.png}
-        \centering
-        \caption{Average lifetime of user accounts sorted on event count}
-    \label{figure:avglifetimeoncountuser}
-    \end{figure}
-        The figure above shows the lifetime of the user accounts together with their application interaction count.
-        Users more to the right have a higher event count.
-        Some users have been removed to give focus to the majority of the users. As mentioned earlier, 78\% of the users have triggered 50 or less events.
-
-        The red line is the regression line of the user account lifetimes, and is there to show how the account life span increases with the amount of events.
-
-    \begin{figure}[H]
-        \includegraphics[width=5in]{image/sessiondistribution.png}
-        \centering
-        \caption{Distribution of sessions for users}
-    \label{figure:sessCountDist}
-    \end{figure}
-        The figure above shows the count of sessions for the users of the SoBazaar application, with the users with more than 30 sessions removed.
-
-        More than 90\% of the users of SoBazaar have a session count of 20 and less.
-        This means that they have not used the applications more than 20 separate times, over the time the data was collected, and strengthens the hypothesis that the data from SoBazaar is sparse.
-
-        In figure~\ref{figure:sessCountDist} the 4 first bars sums up to 1000, which is the amount of users who has had 4 or less sessions on the application in total. In other words --- half of the user base used the application less than 4 times.
-
+        The distribution of events on the users tells us how the users interact with the applications, and how the events are distributed, but events are all actions taken by the users, and some of these might not be interesting when making recommendations for the users.
+        A reduced view of the one seen in the figures above are shown in the figures below, where the only events considered are item interaction events.
 
     \begin{figure}[H]
         \centering
@@ -271,7 +251,52 @@
 
         As seen from figure~\ref{figure:ratingsPerUserCum}, over 20\% of the users have never interacted with an item, and about 10\% of the users have more than 50 item interactions.
 
+        % todo
+            % meant to introduce the reader to the idea that recommendations might be plausible
         Even though the data is sparse, as seen from the previous figures, the fact that the majority of the users have in some way interacted with items, opens for the possibility of drawing conclusions based on other users' item interactions.
+
+        Now that we have looked at the distribution of events both as a whole, and as a reduced view, we might benefit from looking at how often the users use the application. The figure below shows the number of sessions for the users.
+
+    \begin{figure}[H]
+        \includegraphics[width=5in]{image/sessiondistribution.png}
+        \centering
+        \caption{Distribution of sessions for users}
+    \label{figure:sessCountDist}
+    \end{figure}
+        The figure above shows the count of sessions for the users of the SoBazaar application, with the users with more than 30 sessions removed.
+
+        More than 90\% of the users of SoBazaar have a session count of 20 and less.
+        This means that they have not logged on to the applications more than 20 separate times, over the time the data was collected, and strengthens the hypothesis that the data from SoBazaar is sparse.
+
+        In figure~\ref{figure:sessCountDist} the 4 first bars sums up to 1000, which is the amount of users who has had 4 or less sessions on the application in total. In other words --- half of the users used the application less than 4 times.
+
+        After having looked at the usage distribution of the users , we move over to the user account lifetime, to see actually how long a user is active on the application in terms of time from first to last recorded event for the user.
+
+    \begin{figure}[H]
+        \includegraphics[width=5in]{image/userTimespansdistribution.png}
+        \centering
+        \caption{Distribution of user account lifetime}
+    \label{figure:userTimespandist}
+    \end{figure}
+        The figure above displays the lifetime of the user accounts in the application in weeks, where the lifetime is measured from the first occurrence of the unique user id till the last event triggered by that user.
+
+        From this figure it is apparent that over half of the user accounts have a lifespan of less than a week.
+
+        Lifetime of the accounts mapped together with their usage might tell us more than just the account life time alone, so the next figure displays just that.
+
+    \begin{figure}[H]
+        \includegraphics[width=5in]{image/avglifetimeoncountuser.png}
+        \centering
+        \caption{Average lifetime of user accounts sorted on event count}
+    \label{figure:avglifetimeoncountuser}
+    \end{figure}
+        The figure above shows the lifetime of the user accounts together with their application interaction count.
+        Users more to the right have a higher event count.
+        Some outliers have been removed to give focus to the majority of the users. As mentioned earlier, 78\% of the users have triggered 50 or less events.
+
+        The red line is the regression line of the user account lifetimes, and is there to show how the account life span increases with the amount of events.
+
+        As seen in the data set overview table~\ref{table:eventData}, the location of the user at event trigger is stored in the data. The locations of the users are shown in the figure below.
 
     \begin{figure}[H]
         \includegraphics[width=5in]{image/simpleGeoPlotNorway.png}
@@ -286,6 +311,9 @@
         If the event is triggered from a phone, the event is as precise as the GPS hardware location of the phone, and would be helpful information to understand more about the user.
 
 \subsection{Product properties}
+    The properties of the products can tell help to tell how the products are being interacted with, and the distribution of events on them.
+
+    The next two figures presents the distribution of price of the products in the database.
 
     \begin{figure}[H]
         \centering
@@ -308,6 +336,8 @@
 
         The price range of the application varies a lot, but 82\% of the items have a price lower than 1 000 NOK.
 
+        Next figures up are two ways of presenting the distribution of events on the items in the dataset.
+
     \begin{figure}[H]
         \centering
         \begin{subfigure}{.5\textwidth}
@@ -324,13 +354,24 @@
         \end{subfigure}
         \caption{Figures presenting the distribution of events for the products i SoBazaar}
     \end{figure}
-        80\% of the products have only an interaction count of 10 or less, wher interaction count is \emph{product\_detail\_clicked}, \emph{product\_wanted} and \emph{product\_purchase\_intended}.
-        This means that there will not be more than 10 events for the majority of the items, which leads to an issue when doing collaborative filtering on the data.
+        80\% of the products only have an interaction count of 10 or less, where interaction count is \emph{product\_detail\_clicked}, \emph{product\_wanted} and \emph{product\_purchase\_intended}.
+        This means that there will not be more than 10 events for the majority of the items, with no more than 10 datapoints to connect with other items for the majority of the items,
+        Making recommendations through itembased recommendations might prove problematic.
+
+        6000 items
+            10 < evs on 80\% of items
+            one item 10 or less possible connection points for 80\% of the items
+
+
+        which might lead to an issue when doing collaborative filtering on the data.
+
+        prove problematic -> itembased paer per germener explain
+
         When the majority of the events only has 10 events and there are over 6 000 items and 2 000 users, the probability that multiple users have interacted with similar items will be marginal, but promotes the importance of utilizing all the feedback to bolster the recommender.
 
 \subsubsection{The Pareto principle and Long tail on sales}
-    In e-commerce the distribution of sales or product interactions can be described by the Pareto principle and the phenomenon of long tail.
-    Pareto's principle is used to tell how the distribution is in the \emph{head}~\footnote{Take for example figure~\ref{figure:eventsPerproduct}, the \emph{head} is the left most part where the curve is steep} of the graph, and the long tail phenomenon is used to tell tell how the distribution is in the \emph{tail}~\footnote{Take for example figure~\ref{figure:eventsPerproduct}, the \emph{tail} is the right most part where the curve flattens out} of the graph.
+    In e-commerce the distribution of sales or product interactions can often be described by the Pareto principle and the phenomenon of long tail.
+    Pareto's principle is used to tell how the distribution is in the \emph{head}~\footnote{Take for example figure~\ref{figure:eventsPerproduct}, the \emph{head} is the left most part where the curve is steep} of the graph, and the long tail phenomenon is used to tell how the distribution is in the \emph{tail}~\footnote{Take for example figure~\ref{figure:eventsPerproduct}, the \emph{tail} is the right most part where the curve flattens out} of the graph.
 
 \paragraph{Pareto's Principle}
     Pareto's principle applies when the 20\% most frequent products account for more than 80\% of the ratings, sales or interactions in the dataset~\cite{newman05power}.
@@ -339,7 +380,7 @@
         \centering
         \begin{tikzpicture}
             \begin{axis}[
-                xlabel=Treshold,
+                xlabel=Threshold,
                 ylabel=Percentage of item interaction,
                 grid=major,
             ]
@@ -472,7 +513,7 @@
 
     Figure~\ref{figure:paretosPrinciple} show the percentages of interactions within the given thresholds.
     As we can see from table~\ref{table:paretosPrinciple}, the 20\% most frequently interacted with items represents 59.1701\% of the item interaction in total.
-    We have to move up to 41\% to reach 80\% of the interactions, and the Pareto's principle does therefore not apply to the SoBazaar.
+    We have to move up to 41\% to reach 80\% of the interactions, and the Pareto's principle does therefore not apply to the SoBazaar dataset.
 
 \paragraph{Long Tail}
     The definition of long tail is that the most frequently-occurring items represent less than 50\% of occurrences in logs~\cite{DBLP:journals/corr/abs-1203-4487}.
@@ -569,7 +610,7 @@
     \end{figure}
         The graphs above shows the average time of the users of the SoBazaar application before pressing either \emph{want} or \emph{purchase}.
 
-        The average times between the two are quite similar, but we can see that the user is on average somewhat faster to to press \emph{purchase}.
+        The average times between the two are quite similar, but we can see that the user is on average somewhat faster to press \emph{purchase}.
         The data set on \emph{product\_purchase\_intended} is considerably smaller than \emph{product\_wanted}, so the trends seen here are inconclusive at best.
 
     \begin{figure}[H]
@@ -638,7 +679,7 @@ buying it once seen in detail.
 In order to validate the hypothesis we iterate through all users and look at
 their respective events, summarizing the number of times the user has clicked
 an item $n$ times and of these how many times the user also bought it. We do
-this for all values of $n$, where $n \in [1,6[$ and obtain the following table
+this for all values of $n$, where $n \in [1,6]$ and obtain the following table
 of conversion rates and standard errors.
 
 \begin{table}[H]
@@ -660,7 +701,7 @@ of conversion rates and standard errors.
 \end{table}
 
 The standard error gives a useful indication on how certain we can be that the
-results are statisically significant, and is calculated based on the sample
+results are statistically significant, and is calculated based on the sample
 size (number of clicks) and the amount of conversions. Given the rate as $r$
 and sample size as $S$ we calculate the standard error $e$ as:
 
@@ -674,7 +715,7 @@ words we want to be 95\% sure that the patterns found in the data are not just
 random. Our two hypothesis which we want to test are thus:
 
 $\mathbf{H_0:}$ The differences in conversion rates between our first
-(baseline) and second scenerio is random.
+(baseline) and second scenario is random.
 
 $\mathbf{H_1:}$ The difference is significant, such that one scenario have a
 higher probability of conversion.
@@ -682,13 +723,13 @@ higher probability of conversion.
 and we want to do multiple tests when $n \in [2,6[$, using $n-1$ as baseline
 and $n$ as the second scenario. For each test we calculate the
 \textit{P-value}, which is the probability of obtaining a result at least as
-extreme as the one that was actually observed. When the p-value becomes less
+extreme as the one that was actually observed. When the P-value becomes less
 that our predetermined significance level ($0.05$ when we do a 95\%
 significance test) we can reject our null-hypothesis, which is what we want to
 do. In order to find this P-value we use the Standard Score, also called the
-\textit{z-score}, which is the number of standard deviations an observation is
+\textit{Z-score}, which is the number of standard deviations an observation is
 above the mean. As we have two samples we can calculate the difference in
-conversion rates and use the cummulated standard error in order to find the
+conversion rates and use the cumulated standard error in order to find the
 Z-score:
 
 \begin{equation}
@@ -717,8 +758,8 @@ level ($0.05$) and thus we can reject the null-hypothesis and state with
 statistical accuracy and correctness that there is a higher probability of
 buying the item given that the user has clicked on the item twice, rather than
 having clicked on the item only once. In our first scenarios we have sufficient
-data to come to this conclusion, however, when comparing later scenerios we see
-that our numbers stop being significant as a reult of the dataset being too
+data to come to this conclusion, however, when comparing later scenarios we see
+that our numbers stop being significant as a result of the dataset being too
 small.
 
 \begin{table}[H]

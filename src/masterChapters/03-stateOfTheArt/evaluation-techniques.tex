@@ -32,33 +32,74 @@ experiments fluctuating the parameter values until the optimal
 
 % Refer to Appendix for more evaluation metrics, only focusing on suitable here.
 There exists too many evaluation metrics to describe them all in this thesis,
-consequently in this section we focus on the ones suited for our needs – that
-is, extremely sparse implicit ratings in the fashion domain. A comprehensive
-study of non-suitable solutions were performed as well, and can be found in
-Appendix~\ref{appendix:evaluation-metrics}.
+consequently in this section will primarily focus on the ones suited for our
+needs – that is, extremely sparse implicit ratings in the fashion domain. A
+comprehensive study of non-suitable solutions were performed as well, and can
+be found in Appendix~\ref{appendix:evaluation-metrics}.
 
-% TODO: We don't refer to these steps, so perhaps just skip them?
-% Shani et al.\ \cite{Shani2011} lists the following guidelines for general
-% experimental studies:
-%
-% \begin{itemize}
-% 	\item Hypothesis: before running an experiment one must form an hypothesis. For
-% 		example, an hypothesis can be that algorithm $A$ better predicts user ratings
-% 		than algorithm $B$. In that case the experiment should test the prediction
-% 		accuracy, and not look at other factors.
-%
-% 	\item Controlling variables: when comparing a few candidate algorithms on a
-% 		certain hypothesis, it is important that all variables that are not tested
-% 		are fixed.
-%
-% 	\item Generalization power: when drawing conclusions from experiments, we may
-% 		wish that our conclusions generalize beyond the immediate context of the
-% 		experiments. When choosing an algorithm for a real application, we may want
-% 		our conclusion to hold on the deployed system, and generalize beyond the
-% 		experimental data set. To increase the probability of generalization of the
-% 		recommender results one must typically experiment with several data sets or
-% 		applications.
-% \end{itemize}
+% Figure showing the various methods in evaluation.
+\begin{figure}[H]
+	\centering
+	\begin{tikzpicture}[
+		solid node/.style={
+			draw,
+			circle,
+			inner sep=1.2,
+			black
+		},
+		rec/.style={
+			rectangle,
+			draw,
+			text width=2cm,
+			text centered
+		},
+		edge from parent fork down,
+		level 1/.style={level distance=25mm,sibling distance=45mm},
+		level 2/.style={level distance=20mm,sibling distance=25mm}
+	]
+		\node [solid node] {}
+			child{
+				node [rec, align=center, sibling distance=10mm] {Implicit\\binary data}
+				child { node[align=center] {Precision/\\Recall} }
+				child { node[left=5mm] {MAP} }
+				child { node[left=15mm] {AUC} }
+				child { node[left=25mm] {Fallout} }
+			}
+			child{
+				node [rec] {Explicit ground truth}
+				child {
+					node [rec] {Accuracy}
+					child { node[left=15mm] {MAE}}
+					child { node[left=15mm] {MSE}}
+					child { node[left=18.5mm] {RMSE}}
+				}
+				child {
+					node [rec] {Ranked}
+					child { node[right=12mm] {AP Correlation}}
+					child { node[right=15mm] {MPR}}
+					child { node[right=15mm] {nDCG}}
+				}
+			}
+			child{
+				node [rec] {Live users}
+				child { node[align=center, right=-5mm] {Multi-Armed\\Bandits} }
+				child { node {A/B} }
+			}
+		;
+	\end{tikzpicture}
+	\caption{Overview of evaluation metrics based on input to recommender system}
+\end{figure}
+
+% Explain the figure and that we will refer to it. Mention that rightmost is
+% online eval.
+This figure shows an overview of the methods which \textit{will} be covered in
+the following section, as well as functioning as a structure for the upcoming
+discussion. As one can see the types of metrics used is highly dependent on
+which type of data available. As one can see, the rightmost tree has live users
+and is thus an online evaluation, whilst the remaining metrics are considered
+in an offline environment. Various names and abbrivations will be explained as
+we first analyze offline evaluation and look at the different methods in light
+of the feedback from users being either explicit or implicit.
 
 \subsection{Offline evaluation}
 
@@ -148,7 +189,7 @@ In practice the number of folds often depends on the size of the dataset. For
 large datasets, even 3-Fold Cross Validation will be quite accurate, which for
 sparse datasets, one may wish to train as many examples as possible. In our
 experiments we use $K$-values between $80$ and $200$, depending on model
-selection and parameters. 
+selection and parameters.
 
 The advantages of this methods are amongst many that the results are averaged
 over the $K$ experiments. The strongest argument for using cross-validation is
@@ -164,7 +205,7 @@ could prove to be disadvantageous in time sensitive environments.
 When evaluating a recommender system, you wish to estimate a user's
 satisfaction for a given recommendation. Traditionally recommender systems have
 been evaluated by means of predictive accuracy. However, there is now a widely
-agreed that accurate predictions are crucial but insufficient to deploy a good
+agreed opinion that accurate predictions are crucial but insufficient to deploy a good
 recommendation engine~\cite{Shani2011, McNee2006} as one also need to consider
 the items \textit{relevance} and look at the set of recommendations as a whole.
 In addition, using implicit feedback, when we have no negative feedback and our

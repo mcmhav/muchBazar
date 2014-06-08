@@ -23,7 +23,7 @@ the wanted properties and use these generalizations in order to generate
 ratings for different users inhabiting unique patterns and product
 interactions.
 
-Then, upon evaluation of conversion features we can do an intitial analysis
+Then, upon evaluation of conversion features we can do an initial analysis
 without any metrics by attempting to answer the question \textit{does this
 generalization capture the domain and data properties?}
 One such generalization, often done, is counting the number of a specified
@@ -120,7 +120,7 @@ feedback, as discussed in Section~\ref{implicit-feedback} as modern recommender
 engines work better when we are assuming ratings are based on both positive and
 negative feedback.
 
-Given $p(x, u)$ we formulize an equation for finding $S_e(x, u)$, the score
+Given $p(x, u)$ we formalize an equation for finding $S_e(x, u)$, the score
 given to event $e$ after penalization, given a max $M_u$ and min $m_u$ value.
 
 \begin{equation}
@@ -129,7 +129,7 @@ given to event $e$ after penalization, given a max $M_u$ and min $m_u$ value.
 
 The last component needed is normalizing the ratings. Which is described in
 Equation~\ref{eq-normalization}. And now we have all components ready in order
-to do a rating generation. 
+to do a rating generation.
 
 \subsection{Considering recentness}
 
@@ -161,7 +161,7 @@ happening two weeks ago.
 
 When finally selecting a rating for the user/product pair, we choose the
 one yielding the highest value for the given product. Hence for the three items
-with IDs 1, 2 and 3 above we obtain the ratings 5.00, 4.96 and 2.24, respectivly.
+with IDs 1, 2 and 3 above we obtain the ratings 5.00, 4.96 and 2.24, respectively.
 
 Using the same method on the SoBazaar dataset yields the following distribution
 of ratings, where we group ratings together into 150 different bins - thus
@@ -198,7 +198,7 @@ returns. In this scenario all the items the user has previously looked at,
 wanted or bought will all suffer from large penalization values - and hence low
 ratings, since the x for all items is very high. In addition the method does
 not scale well, unless one limit the $M_u$ value, so that the difference
-between two adjecent x values are significant. As SoBazaar is a relativly new
+between two adjacent x values are significant. As SoBazaar is a relatively new
 application this proved not to be a problem with our experiments, but given a
 larger dataset with older events we would recommend testing $M_u = \min(O_e,
 L)$ where $O_e$ is the number of days since the oldest event and $L$ is the
@@ -438,7 +438,7 @@ Before applying the penalization function we make the assumption that an item
 having the price difference $x = -d$ (cheaper) should be penalized less than an
 item with the price difference $x = d$ (more expensive). Further we want to
 make the value $x$ absolute, before calculating the penalization since $0 \leq
-p(x,u) \leq 1$. In conclusion we apply $x = |\frac{x}{2}| \text{if} x < 0$
+p(x,u) \leq 1$. In conclusion we apply $x = |\frac{x}{2}|$ $\text{if}$ $ x < 0$
 making cheaper items half as sensitive to penalization, compared to more
 expensive items.
 
@@ -488,7 +488,7 @@ $i$ was below the average popularity ($p_i < a_e$) and the second for when the
 popularity was equal or higher.
 
 \begin{equation}
-  p(x, u) = 
+  p(x, u) =
     \begin{cases}
       -\frac{c}{a_e}x + c                     & \text{if } x < a_e \\[1.5ex]
       \frac{1}{1-a_e}x - \frac{1}{1-a_e} + 1  & \text{if } x \geq 0
@@ -537,26 +537,26 @@ given to the items close to the \textit{average} popularity.
 \subsection{Linearly combining implicit ratings}
 
 At this point we have found multiple ways of calculating the implicit ratings,
-based on our implicit feedback. However, each method has its weknesses,
+based on our implicit feedback. However, each method has its weaknesses,
 strengths and captures different feature-sets in our data. Thus the
 distributions reflect a large difference in ratings. Selecting a feature such
 as number of days since the event in question captures our implicit knowledge
 about seasons and items having a short life-span. However, as pointed out
 earlier given many events on the same day there are no way of differentiating
 them - unless we consider the ordering of items, saying the most recent item
-shall be higher rated than older events. However, exclusivly changing the
+shall be higher rated than older events. However, exclusively changing the
 feature like this forces us to loose some of our implicit data about items
 having a fixed lifespan. What we want to do is \textit{combine the two
 features} in a procedure that often in recommender systems are coined
-\textit{blending} or \textit{ensamble methods}. Combining them enables us to
+\textit{blending} or \textit{ensemble methods}. Combining them enables us to
 create more robust ratings where weaknesses such as outliers or inconsistencies
 in one method can be averaged out by the strengths of others. If two features
 independently finds the same properties and ratings for some items and users,
-then the result and our belief is strenghtened.
+then the result and our belief is strengthened.
 
 When linearly combining $M$ models $m_1 \dots m_M$, we choose $M$ factors $f_i$
 all adding up to 1.0, representing the weight of model $m_{i}$ in the final
-\textit{blend}. Eeach model then have $k$ ratings on the triplet form
+\textit{blend}. Each model then have $k$ ratings on the triplet form
 \textit{(user, product, rating)} and noted noted as $r_{ij}$ - the rating of
 item $j$ in model $i$.
 
@@ -581,7 +581,7 @@ Blending \cite{jahrer2010combining} \cite{toscher2009bigchaos} which are based
 on the same principles.
 
 However, as discussed in Section~\ref{}, when creating ratings from implicit
-feedback we lack a ground truth – that is we make several assumptions on which
+feedback we lack a ground truth --- that is we make several assumptions on which
 implicit features contribute towards higher preference and thus higher ratings,
 but with no real means of confirming the assumptions. A user buying an item as
 a gift for a friend may not actually like the item and would not give a high
@@ -599,7 +599,7 @@ important to evaluating ratings: it needs to be evenly distributed, it should
 have an average confirming our hypthesis and the features selected should
 capture properties found in the domain both intutivly and quantitativly.  Then
 for $M$ different models we assume they all contribute an equal amount to the
-final results thus having the weights $f_i = 1/M$. 
+final results thus having the weights $f_i = 1/M$.
 
 \subsubsection{Combining recentness features}
 
