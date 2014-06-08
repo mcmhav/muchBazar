@@ -1,3 +1,4 @@
+\PassOptionsToPackage{dvipsnames}{xcolor}
 \documentclass{beamer}
 
 % Frankfurt <3
@@ -6,14 +7,22 @@
 % Some packages
 \usepackage{etex}
 \usepackage{tikz}
-\usepackage{pgfplots}
 \usepackage{tabularx}
-\usepackage{booktabs}
+\usepackage{pgfplots} % for tikz
+\usepackage{amssymb} % math symbols
+\usepackage{pifont} % to get xmark/cmark
+\usepackage{booktabs} % commands to better structure tables
+\usepackage{xcolor,colortbl} % highlight table rows and columns
+\usepackage{graphics} % for resizing
 
 % Tikz options
 \usetikzlibrary{calc,trees,positioning,arrows,chains,fit,shapes.geometric,%
     decorations.pathreplacing,decorations.pathmorphing,shapes,%
     matrix,shapes.symbols}
+
+% Other configs and variables
+\newcommand{\cmark}{\color{ForestGreen}\ding{52}} % Awesome green check mark
+\newcommand{\xmark}{\color{RedOrange}\ding{55}}   % Awesome red cross mark
 
 % Some basic stuff for the first slide
 \title{Making recommendations using extremely sparse
@@ -87,6 +96,40 @@
 
   \begin{frame}
     \frametitle{Competitor Overview}
+      \begin{table}[H]
+          \centering
+          \resizebox*{!}{0.6\textheight}{
+            \begin{tabular}{lllllll}
+                \toprule
+                Competitor &
+                \multicolumn{1}{l}{\parbox{1.3cm}{ In App \\ Purchase}} &
+                \multicolumn{1}{l}{\parbox{1.0cm}{ Most \\ Popular}} &
+                \multicolumn{1}{l}{\parbox{1.0cm}{ Similar \\ Items}} &
+                \multicolumn{1}{l}{\parbox{1.0cm}{ Want \\ List}} &
+                \multicolumn{1}{l}{\parbox{1.9cm}{ Follow \\ Other Users}} &
+                \multicolumn{1}{l}{\parbox{2.6cm}{ Personalized \\ Recommendations}} \\ \midrule
+
+                Myntra  & \cmark & \cmark & \cmark & \cmark & \xmark & \xmark \\
+                Flink   & \xmark & \cmark & ?? & \cmark & \cmark & \xmark \\
+                Lyst    & \xmark & \cmark & \cmark & \cmark & \cmark & \xmark \\
+                Motilo  & \xmark & \cmark & \xmark & \cmark & \cmark & \xmark \\
+                Farfetch & \cmark & \cmark & \cmark & \cmark & \xmark & \xmark/\cmark \\
+                ModCloth  & \cmark & \cmark & \cmark & \cmark & \xmark & \xmark \\
+                UsTrendy  & \cmark & \cmark & \cmark & \cmark & \xmark & \xmark \\
+                Polyvore  & \xmark & \cmark & \cmark & \cmark & \cmark & \xmark \\
+                Clothia  & \xmark & \cmark & \cmark & \cmark & \cmark & \xmark \\
+                Trendabl  & \cmark & \cmark & \cmark & \cmark & \cmark & \xmark \\
+                Zalando  & \cmark & \cmark & \cmark & \cmark & \xmark & \xmark \\
+                Ellos  & \cmark & \cmark & \cmark & \cmark & \xmark & \xmark \\
+                LookBook  & \xmark & \cmark & \cmark & \cmark & \cmark & \xmark \\
+                Fahsiolista  & \xmark & \cmark & \xmark & \cmark & \cmark & \xmark \\
+                ShopStyle  & \xmark & \xmark & \cmark & \cmark & \xmark & \xmark \\
+                MyHabit  & \cmark & \xmark & \cmark & \xmark & \xmark & \xmark \\
+                \bottomrule
+            \end{tabular}
+          }
+          \caption{Properties of competitors' recommender systems}
+      \end{table}
   \end{frame}
 
   % The table of contents, showing sections and subsections.
@@ -101,7 +144,7 @@
   % Some key figures and what they mean.
   \begin{frame}
     \frametitle{SoBazaar Data - Dataset Summary}
-      \begin{table}[H]\centering\resizebox{\columnwidth}{!}{\begin{tabular}{l l}\toprule
+      \begin{table}[H]\centering\resizebox*{!}{0.7\textheight}{\begin{tabular}{l l}\toprule
             Attribute       & Count   \\
             \midrule
             Total number of events  &    218975 \\
@@ -124,16 +167,14 @@
             \hline
             Average item interaction count per user     &    20.1746 \\
             Average user interaction count per item     &    6.6928 \\
-        % \caption[Dataset summary]{Overview of the key figures in the SoBazaar dataset}
-        % \label{table:datasetSummary}
-    \bottomrule\end{tabular}}\caption{time mahout-itembased}\end{table}
+    \bottomrule\end{tabular}}\caption{Overview of the key figures in the SoBazaar dataset}\end{table}
   \end{frame}
 
   % Continuation of key figures w/ visualizations.
   \begin{frame}
     \frametitle{SoBazaar Data - Something else}
     \begin{figure}[H]
-        \includegraphics[width=5in]{../src/image/event_iddistribution.png}
+        \includegraphics[scale=0.3]{../src/image/event_iddistribution.png}
         \centering
         \caption{Event distribution}
     \label{figure:eventIDDistribution}
@@ -143,7 +184,7 @@
   \begin{frame}
     \frametitle{SoBazaar Data - Something else}
     \begin{figure}[H]
-        \includegraphics[width=5in]{../src/image/user_iddistribution.png}
+        \includegraphics[scale=0.3]{../src/image/user_iddistribution.png}
         \centering
         \caption{Event distribution}
     \label{figure:eventIDDistribution}
@@ -154,7 +195,7 @@
   \begin{frame}
     \frametitle{SoBazaar Data - Something else}
     \begin{figure}[H]
-        \includegraphics[width=5in]{../src/image/itemTimespansdistribution.png}
+        \includegraphics[scale=0.3]{../src/image/itemTimespansdistribution.png}
         \centering
         \caption{Event distribution}
     \label{figure:eventIDDistribution}
@@ -163,78 +204,78 @@
 
   \begin{frame}
     \frametitle{SoBazaar Data - Something else}
-\begin{figure}[H]
-  \centering
-  \begin{tikzpicture}[
-    % Manually overriden in most of the nodes :-)
-    node distance=2.3cm,
-    block/.style={
-      rectangle,
-      draw,
-      thick,
-      inner sep=5pt,
-      align=center,
-      rounded corners,
-      minimum width=2cm,
-    },
-    % Special style for the social networks
-    social/.style={
-      draw=red,
-      densely dotted,
-    },
-    % Box surrounding the data sources.
-    dsbox/.style={
-      draw,
-      dotted,
-      minimum height=1.2cm,
-    }
-  ]
+    \begin{figure}[H]
+      \centering
+      \resizebox*{!}{0.65\textheight}{
+      \begin{tikzpicture}[
+        % Manually overriden in most of the nodes :-)
+        node distance=2.3cm,
+        block/.style={
+          rectangle,
+          draw,
+          thick,
+          inner sep=5pt,
+          align=center,
+          rounded corners,
+          minimum width=2cm,
+        },
+        % Special style for the social networks
+        social/.style={
+          draw=red,
+          densely dotted,
+        },
+        % Box surrounding the data sources.
+        dsbox/.style={
+          draw,
+          dotted,
+          minimum height=1.2cm,
+        }
+      ]
 
-  % Create nodes - first, data sources.
-  \node(db)     [block] {Product DB};
-  \node(social) [block,social, right of=db] {Social data};
-  \node(log)    [block,right of=social] {Event log};
+      % Create nodes - first, data sources.
+      \node(db)     [block] {Product DB};
+      \node(social) [block,social, right of=db] {Social data};
+      \node(log)    [block,right of=social] {Event log};
 
-  % Our various 'systems'
-  \node(coldstart) [block, below = 3.5cm of db] { Cold-start\\booster };
-  \node(converter) [block, below = 3.5cm of log] { Implicit\\Converter };
-  \node(recommender) [block, below = 2cm of coldstart] { Recommender };
-  \node(evaluation) [block, right = 3.5cm of recommender] { Evaluation };
+      % Our various 'systems'
+      \node(coldstart) [block, below = 3.5cm of db] { Cold-start\\booster };
+      \node(converter) [block, below = 3.5cm of log] { Implicit\\Converter };
+      \node(recommender) [block, below = 2cm of coldstart] { Recommender };
+      \node(evaluation) [block, right = 3.5cm of recommender] { Evaluation };
 
-  % Box around data sources.
-  \node (datasources) [dsbox, fit=(db) (social) (log)] {};
-  \node at (datasources.north) [above, inner sep=2mm] {Data sources};
+      % Box around data sources.
+      \node (datasources) [dsbox, fit=(db) (social) (log)] {};
+      \node at (datasources.north) [above, inner sep=2mm] {Data sources};
 
-  % Draw the links between systems and data sources.
-  \path[->,thick]
-     (log) edge [] node [sloped, above] {Implicit feedback} (converter)
-     (db) edge [] node [sloped, above, text width=3cm, align=center] {Structured\\product data} (coldstart)
-     (converter) edge [] node [sloped, above] {Ratings} (coldstart)
-     (coldstart) edge [] node [sloped, above] {Ratings} (recommender)
-     (recommender) edge [] node [sloped, above] {Recommendations} (evaluation);
+      % Draw the links between systems and data sources.
+      \path[->,thick]
+         (log) edge [] node [sloped, above] {Implicit feedback} (converter)
+         (db) edge [] node [sloped, above, text width=3cm, align=center] {Structured\\product data} (coldstart)
+         (converter) edge [] node [sloped, above] {Ratings} (coldstart)
+         (coldstart) edge [] node [sloped, above] {Ratings} (recommender)
+         (recommender) edge [] node [sloped, above] {Recommendations} (evaluation);
 
-  \end{tikzpicture}
-  \caption{Application overview, showing input and output from different
-  components in the proposed system}
-\end{figure}
+      \end{tikzpicture}
+      }
+      \caption{Application overview, showing input and output from different
+      components in the proposed system}
+    \end{figure}
   \end{frame}
 
 
   \begin{frame}
     \frametitle{SoBazaar Data - Something else}
     \begin{figure}[H]
-        \includegraphics[width=5in]{../src/image/dist-blend}
+        \includegraphics[scale=0.4]{../src/image/dist-blend}
         \centering
-    \caption{Distribution using blend of ordering and number of days since event,
-  with logistic and linear penalization functions, overlayed with density
-  function}
+    \caption{Distribution using blend of ordering and number of days since event, with logistic and linear penalization functions, overlayed with density function}
     \end{figure}
   \end{frame}
 
   \begin{frame}
     \frametitle{SoBazaar Data - Something else}
     \begin{figure}[H]
-        \includegraphics[width=5in]{../src/image/ratinggeneval.png}
+        \includegraphics[scale=0.4]{../src/image/ratinggeneval.png}
         \centering
         \caption[Comparing Ratings]{The Figure shows the process of comparing ratings}
     \label{figure:eventIDDistribution}
@@ -243,88 +284,91 @@
 
   \begin{frame}
     \frametitle{SoBazaar Data - Something else}
-\begin{center}
-    \begin{tikzpicture}
-    [node distance = 1cm, auto,font=\footnotesize,
-    % STYLES
-    every node/.style={node distance=1.5cm},
-    % The comment style is used to describe the characteristics of each process
-    comment/.style={rectangle,
-                    inner sep= 5pt,
-                    text width=3cm,
-                    node distance=0.25cm,
-                    font=\scriptsize\sffamily},
-    % small comment lol
-    comment-small/.style={rectangle,
+      \begin{figure}
+      \centering
+      \resizebox*{!}{0.5\textheight}{
+
+          \begin{tikzpicture}
+          [node distance = 1cm, auto,font=\footnotesize,
+          % STYLES
+          every node/.style={node distance=1.5cm},
+          % The comment style is used to describe the characteristics of each process
+          comment/.style={rectangle,
                           inner sep= 5pt,
-                          text width=1cm,
+                          text width=3cm,
                           node distance=0.25cm,
                           font=\scriptsize\sffamily},
-    % The nonProcess style
-    nonProcess/.style={rectangle,
-                       draw,
-                       inner sep=5pt,
-                       text width=3cm,
-                       text badly centered,
-                       minimum height=1.2cm,
-                       font=\footnotesize\sffamily},
-    % The process style is used to draw the processs' name
-    process/.style={rectangle,
-                    draw,
-                    fill=black!10,
-                    inner sep=5pt,
-                    text width=3cm,
-                    text badly centered,
-                    minimum height=1.2cm,
-                    font=\bfseries\footnotesize\sffamily},
-    % ratingsGenerator style
-    ratingsGenerators/.style={rectangle,
-                              draw,
-                              fill=blue!50,
-                              inner sep=5pt,
-                              text width=3cm,
-                              text badly centered,
-                              minimum height=1.2cm,
-                              font=\bfseries\footnotesize\sffamily},
-    % racommendation algorithms
-    recAlgs/.style={rectangle, draw, fill=red!40, inner sep=5pt, text width=3cm, text badly centered, minimum height=1.2cm, font=\bfseries\footnotesize\sffamily}]
+          % small comment lol
+          comment-small/.style={rectangle,
+                                inner sep= 5pt,
+                                text width=1cm,
+                                node distance=0.25cm,
+                                font=\scriptsize\sffamily},
+          % The nonProcess style
+          nonProcess/.style={rectangle,
+                             draw,
+                             inner sep=5pt,
+                             text width=3cm,
+                             text badly centered,
+                             minimum height=1.2cm,
+                             font=\footnotesize\sffamily},
+          % The process style is used to draw the processs' name
+          process/.style={rectangle,
+                          draw,
+                          fill=black!10,
+                          inner sep=5pt,
+                          text width=3cm,
+                          text badly centered,
+                          minimum height=1.2cm,
+                          font=\bfseries\footnotesize\sffamily},
+          % ratingsGenerator style
+          ratingsGenerators/.style={rectangle,
+                                    draw,
+                                    fill=blue!50,
+                                    inner sep=5pt,
+                                    text width=3cm,
+                                    text badly centered,
+                                    minimum height=1.2cm,
+                                    font=\bfseries\footnotesize\sffamily},
+          % racommendation algorithms
+          recAlgs/.style={rectangle, draw, fill=red!40, inner sep=5pt, text width=3cm, text badly centered, minimum height=1.2cm, font=\bfseries\footnotesize\sffamily}]
 
-    % Draw processs
-    \node [ratingsGenerators] (rg1) {popularity};
-    \node [ratingsGenerators, right=0.25 of rg1] (rg2) {price};
-    \node [comment-small, right=0.01 of rg2] (dotdotdot) {..............};
-    \node [ratingsGenerators, right=0.01 of dotdotdot] (rg3) {recentness};
-    \node [process, below of=rg2] (gt) {"Ground Truth"};
-    \node [recAlgs, below of=gt] (ra2) {ALS};
-    \node [recAlgs, left=0.25 of ra2] (ra1) {KNN};
-    \node [comment-small, right=0.01 of ra2] (dotdotdot2) {..............};
-    \node [recAlgs, right=0.01 of dotdotdot2] (ra3) {wALS};
-    \node [process, below of=ra2] (eval) {Evaluation Score};
-    \node [comment, right=0.25 of rg3] (comment-rg3) {
-      Implicit ratings
-    };
-    \node [comment, right=0.25 of ra3] (comment-ra3) {
-      Recommendations algorithm
-    };
-    % Draw the links between processs
-    \path[->,thick]
-      (rg1) edge (gt)
-      (rg2) edge (gt)
-      (dotdotdot) edge (gt)
-      (rg3) edge (gt)
-      (gt) edge (ra1)
-      (gt) edge (ra2)
-      (gt) edge (dotdotdot2)
-      (gt) edge (ra3)
-      (ra1) edge (eval)
-      (ra2) edge (eval)
-      (dotdotdot2) edge (eval)
-      (ra3) edge (eval);
-    \draw[>=latex,->] (gt) -- +(-6,0) |- (eval);
-    \end{tikzpicture}
-    \captionof{figure}[Implicit Rating Evaluation]{Overview of how the generated ratings from the implicit feedback can be evaluated.}
-    \label{figure:implicitRatingEvaluation}
-  \end{center}
+          % Draw processs
+          \node [ratingsGenerators] (rg1) {popularity};
+          \node [ratingsGenerators, right=0.25 of rg1] (rg2) {price};
+          \node [comment-small, right=0.01 of rg2] (dotdotdot) {..............};
+          \node [ratingsGenerators, right=0.01 of dotdotdot] (rg3) {recentness};
+          \node [process, below of=rg2] (gt) {"Ground Truth"};
+          \node [recAlgs, below of=gt] (ra2) {ALS};
+          \node [recAlgs, left=0.25 of ra2] (ra1) {KNN};
+          \node [comment-small, right=0.01 of ra2] (dotdotdot2) {..............};
+          \node [recAlgs, right=0.01 of dotdotdot2] (ra3) {wALS};
+          \node [process, below of=ra2] (eval) {Evaluation Score};
+          \node [comment, right=0.25 of rg3] (comment-rg3) {
+            Implicit ratings
+          };
+          \node [comment, right=0.25 of ra3] (comment-ra3) {
+            Recommendations algorithm
+          };
+          % Draw the links between processs
+          \path[->,thick]
+            (rg1) edge (gt)
+            (rg2) edge (gt)
+            (dotdotdot) edge (gt)
+            (rg3) edge (gt)
+            (gt) edge (ra1)
+            (gt) edge (ra2)
+            (gt) edge (dotdotdot2)
+            (gt) edge (ra3)
+            (ra1) edge (eval)
+            (ra2) edge (eval)
+            (dotdotdot2) edge (eval)
+            (ra3) edge (eval);
+          \draw[>=latex,->] (gt) -- +(-6,0) |- (eval);
+          \end{tikzpicture}
+          }
+          \caption[Implicit Rating Evaluation]{Overview of how the generated ratings from the implicit feedback can be evaluated.}
+        \end{figure}
   \end{frame}
 
   % What does it mean that feedback is implicit?
