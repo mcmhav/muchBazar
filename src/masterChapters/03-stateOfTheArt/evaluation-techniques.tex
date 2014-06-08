@@ -387,9 +387,13 @@ will fit somewhere in between e.g. somewhat like the red or green line.
 
 \subparagraph{Limitations}
 \label{subp:limitations}
-As mentioned by Powers et al.~\cite{powers2007}, recall, precision, F-measure have a bias.
-Recall, precision and F-measure ignore performance in correctly handling negative examples, they propagate the marginal Prevalences and biases, and they fail to take account the chance level performance.
-Another drawback or limitation with the measuring of user predictions is that it does not take into account the ranking of the items. To handle this, rank based metrics can be used.
+As mentioned by Powers et al.~\cite{powers2007}, recall, precision, F-measure
+have a bias.  Recall, precision and F-measure ignore performance in correctly
+handling negative examples, they propagate the marginal Prevalences and biases,
+and they fail to take account the chance level performance.  Another drawback
+or limitation with the measuring of user predictions is that it does not take
+into account the ranking of the items. To handle this, rank based metrics can
+be used.
 
 \paragraph{Rank Based Metrics}
 \label{para:rank_based}
@@ -411,41 +415,48 @@ values.
 
 \subparagraph{AP correlation}
 \label{subp:ap_correlation}
-$AP correlation$~\cite{Yilmaz:2008:NRC:1390334.1390435} measures the overall precision and is a variant of $Kendall's$ $tau$.
-It counts the amount of items correctly placed in a ordered predicted rank list $list1$ and a list of the actual rank ordering of the preferences of the user $list2$.
+\textit{AP correlation}~\cite{Yilmaz:2008:NRC:1390334.1390435} measures the
+overall precision and is a variant of \textit{Kendall's tau}.  It counts the
+amount of items correctly placed in a ordered predicted rank list
+\textit{list1} and a list of the actual rank ordering of the preferences of the
+user \textit{list2}.
+
 \begin{equation}
 	AP = \frac{2}{N - 1} * \sum_{i=2}^{N}{(\frac{C(i)}{i - 1})} - 1
 	\label{equation:ap}
 \end{equation}
-How to calculate the $AP correlation$ value is shown in ~\ref{equation:ap}.
+
+How to calculate the \textit{AP correlation} value is shown in~\ref{equation:ap}.
 $C(i)$ is the number of items ranked correctly above rank $i$.
-The value of AP is between -1 and 1, where a score of 0 means that $list1$ can be considered a randomly generated list and 1 is a perfect match with the actual list $list2$.
-% \paragraph{Limitations}
-% todo maybe
+The value of AP is between -1 and 1, where a score of 0 means that
+\textit{list1} can be considered a randomly generated list and 1 is a perfect
+match with the actual list \textit{list2}.
 
 \label{par:accuracy_ranking}
-
 \marginpar{if this is the setup, write a little intro}
 
 \subparagraph{Mean Percentage Ranking (MPR)}
 \label{subp:mean_percentage_ranking_}
-This measure is a recall-oriented metric.
-A known issue with implicit feedback is that it often lack the actual user's preference.
-This approach is used to measure the user satisfaction of items in an recommended ordered list.
+This measure is a recall-oriented metric.  A known issue with implicit feedback
+is that it often lack the actual user's preference.  This approach is used to
+measure the user satisfaction of items in an recommended ordered list.
+
 \begin{equation}
 	MPR = \frac{\sum_{u,i}{r_{ui} * rank_{ui}}}{\sum_{u,i}{r_{ui}}}
 	\label{equation:mpr}
 \end{equation}
-How to calculate $MPR$ is shown in~\ref{equation:mpr}.
-A list of all the items for user $u$ is ordered based on the rank $rank_{ui}$ of the $u$.
-Where $rank_{ui}$ is the percentile rank of item $i$ in this list for $u$.
-$rank_{ui} = 0$ means that $i$ is the most preferred item for $u$.
-$r_{ui}$ indicates whether $u$ has consumed $i$ or not.
-This makes a $MPR$ value of 0\% to be the most preferred value, and a value of 50\% meaning a near randomly produced list.
+
+How to calculate $MPR$ is shown in~\ref{equation:mpr}.  A list of all the items
+for user $u$ is ordered based on the rank $rank_{ui}$ of the $u$.  Where
+$rank_{ui}$ is the percentile rank of item $i$ in this list for $u$.
+$rank_{ui} = 0$ means that $i$ is the most preferred item for $u$.  $r_{ui}$
+indicates whether $u$ has consumed $i$ or not.  This makes a $MPR$ value of
+0\% to be the most preferred value, and a value of 50\% meaning a near
+randomly produced list.
 
 \subparagraph{Mean Average Precision (MAP)}
-
 \label{subp:mean_average_precision_map_}
+
 MAP~\cite{Manning:2008:IIR:1394399} measures quality across recall levels.
 
 \begin{equation}
@@ -458,15 +469,19 @@ MAP~\cite{Manning:2008:IIR:1394399} measures quality across recall levels.
 \end{equation}
 
 How to calculate the $MAP$ value is shown in~\ref{equation:map}.
-\ref{equation:apn} calculates the average precision at $n$ for a user.
-From \ref{equation:apn}, $P(K)$ is the precision at $k$ in the item list, $n$ is the maximum number of predicted items and $m$ is the actual length of the predicted items list.
-\ref{equation:map} calculates the mean of all the values from \ref{equation:apn}.
+\ref{equation:apn} calculates the average precision at $n$ for a user.  From
+\ref{equation:apn}, $P(K)$ is the precision at $k$ in the item list, $n$ is the
+maximum number of predicted items and $m$ is the actual length of the predicted
+items list.  \ref{equation:map} calculates the mean of all the values from
+\ref{equation:apn}.
 
 \subparagraph{Normalized Discounted Cumulative Gain (nDCG)}
 \label{subp:normalized_discounted_cumulative_gain_}
 
-$nDCG$ measures the graded relevance of the recommended item, the ranking quality or the usefulness of the recommended item based on its rank position.
-It is often used to measure the performance of web search recommendation systems.
+$nDCG$ measures the graded relevance of the recommended item, the ranking
+quality or the usefulness of the recommended item based on its rank position.
+It is often used to measure the performance of web search recommendation
+systems.
 
 \begin{equation}
     DCG_k = \sum_{i=1}^{k}{\frac{2^{rel_i}-1}{log_2(i+1)}}
@@ -478,23 +493,24 @@ It is often used to measure the performance of web search recommendation systems
     \label{equation:ndcg}
 \end{equation}
 
-How to calculate the $nDCG$ value is shown in~\ref{equation:ndcg}.
-Where $k$ is the maximum amount of suggested items, and $rel_i$ is the graded relevance of the result at position $i$.
-$IDCG_k$, from~\ref{equation:ndcg}, is the ideal $DCG_k$ value.
-This is the result list sorted on relevance.
+How to calculate the $nDCG$ value is shown in~\ref{equation:ndcg}.  Where $k$
+is the maximum amount of suggested items, and $rel_i$ is the graded relevance
+of the result at position $i$.  $IDCG_k$, from~\ref{equation:ndcg}, is the
+ideal $DCG_k$ value.  This is the result list sorted on relevance.
 
 \subparagraph{Half-life utility~\cite{Breese:1998:EAP:2074094.2074100}}
 
-Assume that the further down an item is in the list the less chance there is for that item to be viewed by the user.
-The rate of the decaying probability is exponential.
+Assume that the further down an item is in the list the less chance there is
+for that item to be viewed by the user.  The rate of the decaying probability
+is exponential.
 
 \begin{equation}
 	HL_u = \sum_{i}{\frac{\delta(i)}{2^{\frac{i-1}{\alpha-1}}}}
 \end{equation}
 
-$\delta(i)$ is 1 if the user is interested in the item at position $i$ and 0 if not.
-$\alpha$ is the viewing half-life, or half-life parameter.
-The half-life utility of all the users are shown in~\ref{equation:HL}
+$\delta(i)$ is 1 if the user is interested in the item at position $i$ and 0 if
+not.  $\alpha$ is the viewing half-life, or half-life parameter.  The half-life
+utility of all the users are shown in~\ref{equation:HL}
 
 \begin{equation}
 	HL = 100 * \frac{\sum_u{HL_u}}{\sum_u{HL_u^{max}}}
@@ -502,16 +518,16 @@ The half-life utility of all the users are shown in~\ref{equation:HL}
 \end{equation}
 
 $HL_u^{max}$ is the maximum possible value of the half-life utility value.
-% \paragraph{Limitations}
-% todo maybe
-\marginpar{some overlapping of the algorithms (not really comparing two ranked list, but still evaluating a recommender system producing ranked lists)}
 
-\marginpar{something like this perhaps}
-% paragraph accuracy_ranking (end)
-
+\marginpar{some overlapping of the algorithms (not really comparing two ranked
+list, but still evaluating a recommender system producing ranked lists)}
 
 \paragraph{Beyond Accuracy}
-There is an emerging understanding that good recommendations accuracy alone does not give the users of the recommender system an effective and satisfying experience \cite{Herlocker2004}. The following \emph{measures} attempts to assess a recommender systems usefulness beyond being able to provide accurate recommendations to the users.
+There is an emerging understanding that good recommendations accuracy alone
+does not give the users of the recommender system an effective and satisfying
+experience \cite{Herlocker2004}. The following \emph{measures} attempts to
+assess a recommender systems usefulness beyond being able to provide accurate
+recommendations to the users.
 
 \subparagraph{Coverage}
 The term coverage can refer to several distinct properties of the system. Most
@@ -523,14 +539,20 @@ interactions for which the system can recommend items, known as
 \emph{user-space coverage}. In many applications the recommender system may not
 provide recommendations for some users due to e.g.\\ low confidence in the
 accuracy of predictions for that user. In such cases one may prefer a
-recommender that can provide recommendations to a wider range of users. However, an increase in coverage is only beneficial if the accuracy does not drop significantly.
+recommender that can provide recommendations to a wider range of users.
+However, an increase in coverage is only beneficial if the accuracy does not
+drop significantly.
 
 \subparagraph{Perceived quality}
-To gather the perceived quality the system must ask the user to examine the recommended item, and give feedback regarding the their actual interest in the recommended item.
-For the feedback from the user to be as complete as possible, the system must supply the user with the reason to why the item was suggested, and the metadata of the item.
-When the user has this overview of the item, the user's feedback regarding the item can produce some quality measure.
-One  way of having the user to give this feedback is to re-rate the recommended item on a similar scale as the item was rated.
-A rating scale from 1 to 5 is often used for both~\cite{Schafer:1999:RSE:336992.337035}.
+To gather the perceived quality the system must ask the user to examine the
+recommended item, and give feedback regarding the their actual interest in the
+recommended item.  For the feedback from the user to be as complete as
+possible, the system must supply the user with the reason to why the item was
+suggested, and the metadata of the item.  When the user has this overview of
+the item, the user's feedback regarding the item can produce some quality
+measure.  One  way of having the user to give this feedback is to re-rate the
+recommended item on a similar scale as the item was rated.  A rating scale from
+1 to 5 is often used for both~\cite{Schafer:1999:RSE:336992.337035}.
 
 \subparagraph{Novelty and Serendipity}
 As described in Section~\ref{subsec:rec-challenges},  novelty is expected to
@@ -571,88 +593,121 @@ of interest to the user, and the height is the relevance. Adapted
 from~\cite{celma2008}
 
 \subparagraph{Diversity}
-Diversity is generally defined as the opposite of similarity. In some cases suggesting a set of similar items may not be as useful for the user, because it may take longer to explore the range of products. E.g. when presenting a list of 5 recommendations, the system should not recommend 5 Ralph Lauren shirts with different colors. As diversity may come at the expense of other properties such as accuracy, one should evaluate the decrease in accuracy vs. the increase in diversity.
+Diversity is generally defined as the opposite of similarity. In some cases
+suggesting a set of similar items may not be as useful for the user, because it
+may take longer to explore the range of products. E.g. when presenting a list
+of 5 recommendations, the system should not recommend 5 Ralph Lauren shirts
+with different colors. As diversity may come at the expense of other properties
+such as accuracy, one should evaluate the decrease in accuracy vs. the increase
+in diversity.
 
-Other evaluation methods worth knowing about includes confidence, trust, utility, robustness, adaptivity, scalability mentioned in \cite{Herlocker2004, Shani2011}.
+Other evaluation methods worth knowing about includes confidence, trust,
+utility, robustness, adaptivity, scalability mentioned in \cite{Herlocker2004,
+Shani2011}.
 
-\subparagraph{User-Centric Evaluation}
-User-centric evaluation focuses on the perceived quality of the recommendation system~\cite{Pu:2011:UEF:2043932.2043962,Knijnenburg:2011:PPS:2043932.2043993}.
-To gather this kind of information, user feedback is required.
-User-centric evaluation is meant to handle the short comings of the offline evaluation metrics, such as predictive accuracy metrics.
-User-centric evaluation can make evaluations on items which the user has not yet show interest in.
-This allows user-centric evaluation to make evaluations on information about the system, such as the perceived quality and novelty of the recommendation system.
-When the user feedback has been gathered the data must be analyzed.
+\subparagraph{User-Centric Evaluation} User-centric evaluation focuses on the
+perceived quality of the recommendation system~\cite{Pu2011}.  To gather this
+kind of information, user feedback is required.  User-centric evaluation is
+meant to handle the short comings of the offline evaluation metrics, such as
+predictive accuracy metrics.  User-centric evaluation can make evaluations on
+items which the user has not yet show interest in.  This allows user-centric
+evaluation to make evaluations on information about the system, such as the
+perceived quality and novelty of the recommendation system.  When the user
+feedback has been gathered the data must be analyzed.
 
 \marginpar{move offline beyond accuracy to here maybe? }
 
-
 \subsubsection{Evaluation using Implicit Feedback}
-Accuracy metrics such as RMSE and MAE are not especially well suited for implicit feedback datasets, as they require knowing which items are undesired by a user~\cite{Hu2008}.
-One way to handle the issue with missing negative feedback is through conversion of the implicit feedback to explicit feedback, and thereby producing a sense of negative feedback.
-One issue with this is what is considered as negative feedback in the sense of implicit feedback.
-The reason for a user not to access an item is not necessarily grounded in dislike, but could simply be an overlook.
-On the other hand, if the user accessed the item for a short time without buying it, the user might not like it.
-These questions raises the need for a different approach when wanting to measure a recommender system using implicit feedback.
 
-Joachims et al.~\cite{Joachims07evaluatingthe} shows that clicks can be biased, and has to be interpreted relative to the order of presentation and relative to the other abstracts.
+Accuracy metrics such as RMSE and MAE are not especially well suited for
+implicit feedback datasets, as they require knowing which items are undesired
+by a user~\cite{Hu2008}.  One way to handle the issue with missing negative
+feedback is through conversion of the implicit feedback to explicit feedback,
+and thereby producing a sense of negative feedback.  One issue with this is
+what is considered as negative feedback in the sense of implicit feedback.  The
+reason for a user not to access an item is not necessarily grounded in dislike,
+but could simply be an overlook.  On the other hand, if the user accessed the
+item for a short time without buying it, the user might not like it.  These
+questions raises the need for a different approach when wanting to measure a
+recommender system using implicit feedback.
 
-\marginpar{extend}
-
-Two ways of measuring the system is through ranking and usage prediction described earlier.
+Joachims et al.~\cite{Joachims07evaluatingthe} shows that clicks can be biased,
+and has to be interpreted relative to the order of presentation and relative to
+the other abstracts.  Two ways of measuring the system is through ranking and
+usage prediction described earlier.
+%TODO: Extend?
 
 \paragraph{Rank Based} % (fold)
-	\label{par:Ranking_based}
-	The ranking approach can be considered more suited to test recommendation systems using implicit feedback since a subset of the items are meant to be recommended to the user.
-	This subset is usually a ranked top K list of items where the items in this list is the items the system predicts will be most liked by the user.
+\label{par:Ranking_based}
 
-	One issue with this approach is that the items in the predicted top K list has to be ranked in some way, the same goes for the list this list is to be compared to.
-	Thereby producing the requirement for a ranked list of preferred items from the user.
-	If there is such a ranked list, ranking accuracy will help to tell how well the system is suggesting items for the user, such as~\cite{Yilmaz:2008:NRC:1390334.1390435}.
-% paragraph paragraph_name (end)
+The ranking approach can be considered more suited to test recommendation
+systems using implicit feedback since a subset of the items are meant to be
+recommended to the user.  This subset is usually a ranked top K list of items
+where the items in this list is the items the system predicts will be most
+liked by the user.
+
+One issue with this approach is that the items in the predicted top K list has
+to be ranked in some way, the same goes for the list this list is to be
+compared to.  Thereby producing the requirement for a ranked list of preferred
+items from the user.  If there is such a ranked list, ranking accuracy will
+help to tell how well the system is suggesting items for the user, such
+as~\cite{Yilmaz:2008:NRC:1390334.1390435}.
 
 \marginpar{maybe hard to differentiate between the names}
 
 \paragraph{Accuracy Ranking} % (fold)
-	\marginpar{HELGE: Språk!}
-	\label{par:usage_prediction}
-	When there is lack of explicit user feedback and a ranked list of the items cannot be produced, ranking the predicted list and scoring this list based on the actual user preferences can be used to evaluate the system.
-	The actual user preferences are a list of binary preferences for the items.
-	This list is often possible to construct from implicit feedback, but will seldom be a complete list, and most often be a list with only positives (not possible to produce not interesting).
-	Some of the different approaches when dealing with implicit feedback are:
-	Li et al.~\cite{deLace2010} who used $MPR$ and $MAP$ to calculate their performance.
-	Pan et al.~\cite{Pan:2013:GGP:2540128.2540516} who used a set of top-k evaluation metrics: precision, recall, F1, nDCG, ROC and 1-call.
-	Sindhwani et al.~\cite{Sindhwani:2010:OMC:1933307.1934641} who used roc curve and precision-recall curve to evaluate their experiments.
-	Pan et al.~\cite{pan2008} who used $MAP$ and Half-life Utility.
+\marginpar{HELGE: Språk!}
+\label{par:usage_prediction}
 
-	$nDCG$, $MAP$ and Half-life utility has a similar setup.
-	They all have a decaying factor, and rewards the system in different ways for how high in the list a relevant recommended item is.
+When there is lack of explicit user feedback and a ranked list of the items
+cannot be produced, ranking the predicted list and scoring this list based on
+the actual user preferences can be used to evaluate the system.  The actual
+user preferences are a list of binary preferences for the items.  This list is
+often possible to construct from implicit feedback, but will seldom be a
+complete list, and most often be a list with only positives (not possible to
+produce not interesting).  Some of the different approaches when dealing with
+implicit feedback are: Li et al.~\cite{deLace2010} who used $MPR$ and $MAP$ to
+calculate their performance.  Pan et al.~\cite{Pan:2013:GGP:2540128.2540516}
+who used a set of top-k evaluation metrics: precision, recall, F1, nDCG, ROC
+and 1-call.  Sindhwani et al.~\cite{Sindhwani:2010:OMC:1933307.1934641} who
+used roc curve and precision-recall curve to evaluate their experiments.  Pan
+et al.~\cite{pan2008} who used $MAP$ and Half-life Utility.
 
-	On the other hand metrics as Precision alone has no decaying factor, and will not penalize a system with uninteresting items suggested higher in a ranked list.
+$nDCG$, $MAP$ and Half-life utility has a similar setup.  They all have a
+decaying factor, and rewards the system in different ways for how high in the
+list a relevant recommended item is.
 
-	% \cite{Nati03weightedlow-rank} average squared difference
+On the other hand metrics as Precision alone has no decaying factor, and will
+not penalize a system with uninteresting items suggested higher in a ranked
+list.
+
+% \cite{Nati03weightedlow-rank} average squared difference
 % paragraph usage_prediction (end)
 
-	%TODO - What evaluation measures are suited for implicit feedback, and why are traditional evaluation measures such as RMSE, ... not as suitable when working with implicit feedback?
+%TODO - What evaluation measures are suited for implicit feedback, and why are
+%traditional evaluation measures such as RMSE, ... not as suitable when working
+%with implicit feedback?
 
 \subsubsection{Evaluation of Cold-start Recommendations}
 \label{sec:cold-start-eval}
 \marginpar{Helge: Pros og Cons plz}
 \marginpar{Fix pros pg cons, for mye "synsing}
 
-The cold-start problem can be considered a sub problem of coverage. The cold-start
-problem occurs when the recommender system cannot draw any inferences for user or items
-which it has not yet gathered sufficient information. When
-evaluating the cold-start system performance one is interested in measuring the
-system accuracy for these users and items.
+The cold-start problem can be considered a sub problem of coverage. The
+cold-start problem occurs when the recommender system cannot draw any
+inferences for user or items which it has not yet gathered sufficient
+information. When evaluating the cold-start system performance one is
+interested in measuring the system accuracy for these users and items.
 
-The evaluation metric used depends on the type of feedback available.
-Most experiments carried out have used \emph{traditional} explicit feedback datasets such as
-MovieLens, EachMovie, Netflix etc. Accuracy metrics such as MAE~\cite{Rashid2002, Rashid2008, Massa2004,
-Massa2007, Stern2009} and RMSE~\cite{Agarwal2009, Agarwal2010} are therefore
-the most used ones. In the experiments where binary rating data have been used
-Precision@N~\cite{Liu2011, Gantner2010}, ROC curves~\cite{Agarwal2009,
-Gantner2010, Schein2002} and Area Under Curve (AUC) \cite{Liu2011, Gantner2010} seems to be the
-preferred evaluation metrics.
+The evaluation metric used depends on the type of feedback available.  Most
+experiments carried out have used \emph{traditional} explicit feedback datasets
+such as MovieLens, EachMovie, Netflix etc. Accuracy metrics such as
+MAE~\cite{Rashid2002, Rashid2008, Massa2004, Massa2007, Stern2009} and
+RMSE~\cite{Agarwal2009, Agarwal2010} are therefore the most used ones. In the
+experiments where binary rating data have been used Precision@N~\cite{Liu2011,
+Gantner2010}, ROC curves~\cite{Agarwal2009, Gantner2010, Schein2002} and Area
+Under Curve (AUC) \cite{Liu2011, Gantner2010} seems to be the preferred
+evaluation metrics.
 
 Another way to discriminate between different recommender techniques is
 coverage. The recommender system may not be able to make predictions for every
@@ -687,14 +742,19 @@ cold-start user scenario one selects a subset of the users with e.g.\ more than
 200 ratings. One then trains the model with a subset of the ratings. In the
 case of~\cite{Rashid2002} 30, 45, 60 and 90 ratings was used. After training
 the model one computes the error on the hidden ratings for the same user.
-Stern et. al. \cite{Stern1998} also used a similar method which they called Given $n$, in which
-they trained their model using 2, 5 and 10 ratings for each test user and predict
-the remaining values.
+Stern et. al. \cite{Stern1998} also used a similar method which they called
+Given $n$, in which they trained their model using 2, 5 and 10 ratings for each
+test user and predict the remaining values.
 
 %Pros & Cons
-The advantage of the latter approach is that they use a selection criteria for the test users
-to avoid users with really few ratings which might be crucial on a cold-start dataset.
-The obvious problem with this approach is that for cold-start datasets these users might stand for a large portion of the ratings. There are both pros and cons of using a fixed subset of ratings rather than using the percentage of ratings, the best choice will most likely depend on the dataset. Using a fixed subset of ratings would be preferable e.g. if the number number of ratings given by the users are fairly uniform.
+The advantage of the latter approach is that they use a selection criteria for
+the test users to avoid users with really few ratings which might be crucial on
+a cold-start dataset.  The obvious problem with this approach is that for
+cold-start datasets these users might stand for a large portion of the ratings.
+There are both pros and cons of using a fixed subset of ratings rather than
+using the percentage of ratings, the best choice will most likely depend on the
+dataset. Using a fixed subset of ratings would be preferable e.g. if the number
+number of ratings given by the users are fairly uniform.
 
 Another \emph{simpler} approach employed by~\cite{Massa2007, Jamali2009} is to
 determine a cutoff point for what is considered a cold-start user. E.g.\ that
@@ -702,9 +762,10 @@ every user with less than 5 ratings is considered a cold-start user. Then
 separately measure the error on predictions made to these users.
 
 %Pros & Cons
-The problem with this approach is that it does not measure how well the recommendation quality improves as
-users provide an increasing amount of ratings, giving a less detailed view of the systems performance.
-The number of ratings predicted is also likely to be fairly small given a cold-start dataset.
+The problem with this approach is that it does not measure how well the
+recommendation quality improves as users provide an increasing amount of
+ratings, giving a less detailed view of the systems performance.  The number of
+ratings predicted is also likely to be fairly small given a cold-start dataset.
 
 To simulate a cold-start system scenario Agarwal et al.~\cite{Agarwal2009}
 split the dataset in two using 75\% of the dataset for training and 25\% for
@@ -714,9 +775,8 @@ compare their performance on the testset.
 %Pros & Cons
 Good and simple model as it is likely to generate three different training sets
 with different sparsity levels, which is exactly what we want to test. However,
-if the training examples are drawn at random the experiment should be repeated multiple
-times to avoid getting \emph{unfortunate} splits.
-
+if the training examples are drawn at random the experiment should be repeated
+multiple times to avoid getting \emph{unfortunate} splits.
 
 %Summary of articles read
 
@@ -794,81 +854,112 @@ CTR = \frac{Clicks}{Recommendations}
 \end{equation}
 
 \subsubsection{A/B Testing}
-	A/B testing or bucket testing is used to test a system on live audience.
-	In its' simplest form the audience is split into two groups, but it is also possible to make multiple groups of users.
-	The different groups are presented with different altered versions of the system and is asked to use the system as they normally would.
-	The goal is to figure out which version is producing the best results, whether it is user satisfaction or revenue.
-	How the altered versions are scored is usually done trough a measure of the applications main goal, for instance with an e-commerce application where the main goal is to sell items, the score could be revenue produced by that version.
+
+A/B testing or bucket testing is used to test a system on live audience.  In
+its' simplest form the audience is split into two groups, but it is also
+possible to make multiple groups of users.  The different groups are presented
+with different altered versions of the system and is asked to use the system as
+they normally would.  The goal is to figure out which version is producing the
+best results, whether it is user satisfaction or revenue.  How the altered
+versions are scored is usually done trough a measure of the applications main
+goal, for instance with an e-commerce application where the main goal is to
+sell items, the score could be revenue produced by that version.
 
 \paragraph{Example}
-	In the case with the SoBazaar application, on way of doing a A/B testing on the system is as follows:
-	3 groups of users are made, one with the unaltered system, one with method $A$ to produce recommendations and one with method $B$.
+In the case with the SoBazaar application, on way of doing a A/B testing on the
+system is as follows: 3 groups of users are made, one with the unaltered
+system, one with method $A$ to produce recommendations and one with method $B$.
 
 \subparagraph{Group Split} % (fold)
 \label{par:group_split}
-	The groups of users can either be selected to fit the global distribution of users, or be a set of similar minded users.
-	The latter case might benefit a system where the intended goal is to specialize the system for a set of users, or actually partition the system into fitting a subsets of its' users.
+
+The groups of users can either be selected to fit the global distribution of
+users, or be a set of similar minded users.  The latter case might benefit a
+system where the intended goal is to specialize the system for a set of users,
+or actually partition the system into fitting a subsets of its' users.
 
 \subparagraph{Group Size} % (fold)
-  \label{par:group_size}
-	The size of the groups depends on the amount of splits and intended stability of the system.
-	The group with the original system will be the biggest group to maintain the established image of the application.
-	For a system with a well established image, and a large set of faithful users, changes in the system might produce unwanted results.
-	The two groups with the altered versions of the system can be of the same size to make it simpler to measure the performance of the two system against one another.
+\label{par:group_size}
+
+The size of the groups depends on the amount of splits and intended stability
+of the system.  The group with the original system will be the biggest group to
+maintain the established image of the application.  For a system with a well
+established image, and a large set of faithful users, changes in the system
+might produce unwanted results.  The two groups with the altered versions of
+the system can be of the same size to make it simpler to measure the
+performance of the two system against one another.
 
 \subparagraph{System Measuring} % (fold)
 \label{par:system_measuring}
-	After a set period of time, the two altered versions are compared to one another and the original system.
-	This is done trough measuring either the revenue produced or clicks.
-	For a recommender system it is not just interesting to look at the final income number, but also if the user actually showed any interest in the products recommended for the users.
-	If a larger portions of the users from version $A$ showed an increased interest in the recommended items compared to the users from version $B$, that might indicate that version $A$ is a stronger system than system $B$
+
+After a set period of time, the two altered versions are compared to one
+another and the original system.  This is done trough measuring either the
+revenue produced or clicks.  For a recommender system it is not just
+interesting to look at the final income number, but also if the user actually
+showed any interest in the products recommended for the users.  If a larger
+portions of the users from version $A$ showed an increased interest in the
+recommended items compared to the users from version $B$, that might indicate
+that version $A$ is a stronger system than system $B$
 
 \paragraph{Disadvantages}
-	An issue with A/B testing is that when splitting the users into subgroups of users, these subgroups might not possess the same user properties as the complete set of groups had.
-	This might lead to a biased score for the group, which might not reflect the actual score of the system when releasing it on the full set of user groups.
+
+An issue with A/B testing is that when splitting the users into subgroups of
+users, these subgroups might not possess the same user properties as the
+complete set of groups had.  This might lead to a biased score for the group,
+which might not reflect the actual score of the system when releasing it on the
+full set of user groups.
 
 
 \subsubsection{Multi-armed bandit experiments \cite{googlebandit}}
 
-	A multi-armed bandit is a type of experiment where:
+A multi-armed bandit is a type of experiment where:
 
-	\begin{itemize}
+\begin{itemize}
 	\item The goal is to find the best or most profitable action
 	\item The randomization distribution can be updated as the experiment progresses
-	\end{itemize}
+\end{itemize}
 
-	The "multi-armed bandit" described a hypothetical example where you face several slot machines ("one-armed bandits")
-	with potentially different payouts. You wish to find the slot machine with the best payout rate, but you also want to
-	maximize your winnings. The fundamental tension is between "exploiting" arms that have performed well in the past
-	and "exploring" new or seemingly inferior arms in case they might perform better.
+The "multi-armed bandit" described a hypothetical example where you face
+several slot machines ("one-armed bandits") with potentially different payouts.
+You wish to find the slot machine with the best payout rate, but you also want
+to maximize your winnings. The fundamental tension is between "exploiting" arms
+that have performed well in the past and "exploring" new or seemingly inferior
+arms in case they might perform better.
 
-	In normal A/B testing, you will split the traffic equally between both systems, meaning that both get 50\% of the
-	traffic each, all the time. When using bandits you can continuously adjust the traffic each variation receives based on its
-	performance. Variations that appear to do well gets more traffic, and variations that clearly is underperforming
-	gets less. The adjustments are made based on a statistical test that considers both the sample size and performance
-	metrics together.
+In normal A/B testing, you will split the traffic equally between both systems,
+meaning that both get 50\% of the traffic each, all the time. When using
+bandits you can continuously adjust the traffic each variation receives based
+on its performance. Variations that appear to do well gets more traffic, and
+variations that clearly is underperforming gets less. The adjustments are made
+based on a statistical test that considers both the sample size and performance
+metrics together.
 
-	\paragraph{Advantages}
+\paragraph{Advantages}
 
-	The main advantage of using multi-armed bandit experiments is that it usually performs better than A/B testing
-	when we look at average conversion rates, which in turn will decrease the cost of the experiment.
-	Saved testing time is another advantage highlighted in the Google article.
+The main advantage of using multi-armed bandit experiments is that it usually
+performs better than A/B testing when we look at average conversion rates,
+which in turn will decrease the cost of the experiment.  Saved testing time is
+another advantage highlighted in the Google article.
 
-	\paragraph{Disadvantages}
+\paragraph{Disadvantages}
 
-	Statistical significance. Instead of sending equal traffic to each of the test pages, the page which performs
-	better will start to get more traffic. If you are running tests across pages which do not get huge amounts of
-	traffic, one variant can run away while the others are left in the dust without getting a fair chance. Of course,
-	if your variation is performing badly you will loose some sales or conversions in the process of A/B testing,
-	but that is the price one have to pay for finding out if a variation really did perform badly.
+Statistical significance. Instead of sending equal traffic to each of the test
+pages, the page which performs better will start to get more traffic. If you
+are running tests across pages which do not get huge amounts of traffic, one
+variant can run away while the others are left in the dust without getting a
+fair chance. Of course, if your variation is performing badly you will loose
+some sales or conversions in the process of A/B testing, but that is the price
+one have to pay for finding out if a variation really did perform badly.
 
 \subsection{Discussion}
-The main idea behind a recommendation system is to produce a set of items which are of interest to the user.
-For the system to be successful, this sets of items needs quality.
-But what needs to be considered when determining the quality of the recommendations?
-According to a user study~\cite{Pu:2011:UEF:2043932.2043962} the most central aspects to this quality is:
 
-% \todo{as list or in table, or not}
+The main idea behind a recommendation system is to produce a set of items which
+are of interest to the user.  For the system to be successful, this sets of
+items needs quality.  But what needs to be considered when determining the
+quality of the recommendations?  According to a user
+study~\cite{Pu:2011:UEF:2043932.2043962} the most central aspects to this
+quality is:
+% TODO: as list or in table, or not
 
 \subsubsection{Perceived accuracy}
 The degree of how well the user perceives the recommended items match the actual want of the user.

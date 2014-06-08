@@ -16,7 +16,11 @@
 *.blg
 *.fdb_latexmk
 src/pdf
+presentation/pdf
 *.swp
 *-gvfile
 *.gv
 report.pdf
+*.snm
+*.nav
+telenor-workshop.pdf
