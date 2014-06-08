@@ -1,3 +1,4 @@
+\PassOptionsToPackage{dvipsnames}{xcolor}
 \documentclass{beamer}
 
 % Frankfurt <3
@@ -5,12 +6,21 @@
 
 % Some packages
 \usepackage{tikz}
-\usepackage{pgfplots}
+\usepackage{pgfplots} % for tikz
+\usepackage{amssymb} % math symbols
+\usepackage{pifont} % to get xmark/cmark
+\usepackage{booktabs} % commands to better structure tables
+\usepackage{xcolor,colortbl} % highlight table rows and columns
+\usepackage{graphics} % for resizing
 
 % Tikz options
 \usetikzlibrary{calc,trees,positioning,arrows,chains,fit,shapes.geometric,%
     decorations.pathreplacing,decorations.pathmorphing,shapes,%
     matrix,shapes.symbols}
+
+% Other configs and variables
+\newcommand{\cmark}{\color{ForestGreen}\ding{52}} % Awesome green check mark
+\newcommand{\xmark}{\color{RedOrange}\ding{55}}   % Awesome red cross mark
 
 % Some basic stuff for the first slide
 \title{Making recommendations using extremely sparse
@@ -84,6 +94,40 @@
 
   \begin{frame}
     \frametitle{Competitor Overview}
+      \begin{table}[H]
+          \centering
+          \resizebox*{!}{0.6\textheight}{
+            \begin{tabular}{lllllll}
+                \toprule
+                Competitor &
+                \multicolumn{1}{l}{\parbox{1.3cm}{ In App \\ Purchase}} &
+                \multicolumn{1}{l}{\parbox{1.0cm}{ Most \\ Popular}} &
+                \multicolumn{1}{l}{\parbox{1.0cm}{ Similar \\ Items}} &
+                \multicolumn{1}{l}{\parbox{1.0cm}{ Want \\ List}} &
+                \multicolumn{1}{l}{\parbox{1.9cm}{ Follow \\ Other Users}} &
+                \multicolumn{1}{l}{\parbox{2.6cm}{ Personalized \\ Recommendations}} \\ \midrule
+
+                Myntra  & \cmark & \cmark & \cmark & \cmark & \xmark & \xmark \\
+                Flink   & \xmark & \cmark & ?? & \cmark & \cmark & \xmark \\
+                Lyst    & \xmark & \cmark & \cmark & \cmark & \cmark & \xmark \\
+                Motilo  & \xmark & \cmark & \xmark & \cmark & \cmark & \xmark \\
+                Farfetch & \cmark & \cmark & \cmark & \cmark & \xmark & \xmark/\cmark \\
+                ModCloth  & \cmark & \cmark & \cmark & \cmark & \xmark & \xmark \\
+                UsTrendy  & \cmark & \cmark & \cmark & \cmark & \xmark & \xmark \\
+                Polyvore  & \xmark & \cmark & \cmark & \cmark & \cmark & \xmark \\
+                Clothia  & \xmark & \cmark & \cmark & \cmark & \cmark & \xmark \\
+                Trendabl  & \cmark & \cmark & \cmark & \cmark & \cmark & \xmark \\
+                Zalando  & \cmark & \cmark & \cmark & \cmark & \xmark & \xmark \\
+                Ellos  & \cmark & \cmark & \cmark & \cmark & \xmark & \xmark \\
+                LookBook  & \xmark & \cmark & \cmark & \cmark & \cmark & \xmark \\
+                Fahsiolista  & \xmark & \cmark & \xmark & \cmark & \cmark & \xmark \\
+                ShopStyle  & \xmark & \xmark & \cmark & \cmark & \xmark & \xmark \\
+                MyHabit  & \cmark & \xmark & \cmark & \xmark & \xmark & \xmark \\
+                \bottomrule
+            \end{tabular}
+          }
+          \caption{Properties of competitors' recommender systems}
+      \end{table}
   \end{frame}
 
   % The table of contents, showing sections and subsections.
