@@ -172,35 +172,45 @@
 
   % Continuation of key figures w/ visualizations.
   \begin{frame}
-    \frametitle{SoBazaar Data - Something else}
+    \frametitle{SoBazaar Data}
+    \framesubtitle{Event Distribution}
     \begin{figure}[H]
         \includegraphics[scale=0.3]{../src/image/event_iddistribution.png}
         \centering
-        \caption{Event distribution}
     \end{figure}
   \end{frame}
 
   \begin{frame}
-    \frametitle{SoBazaar Data - Something else}
+    \frametitle{SoBazaar Data - Event Distribution Per User}
+    \framesubtitle{Event Distribution Per User}
     \begin{figure}[H]
         \includegraphics[scale=0.3]{../src/image/user_iddistribution.png}
         \centering
-        \caption{Distribution of events on users}
     \end{figure}
   \end{frame}
 
-
   \begin{frame}
-    \frametitle{SoBazaar Data - Something else}
+    \frametitle{SoBazaar Data - Item Lifespan}
+    \framesubtitle{Distribution of item account lifetime}
     \begin{figure}[H]
         \includegraphics[scale=0.3]{../src/image/itemTimespansdistribution.png}
         \centering
-        \caption{Distribution of user account lifetime}
     \end{figure}
   \end{frame}
 
+  % What does it mean that feedback is implicit?
   \begin{frame}
-    \frametitle{SoBazaar Data - Something else}
+    \frametitle{Implicit Feedback}
+    \begin{itemize}
+      \item
+    \end{itemize}
+  \end{frame}
+
+  % How we propose to recommend items for SoBazaar
+  \begin{frame}
+    \frametitle{Application Overview}
+    \framesubtitle{Application overview, showing input and output from different
+      components in the proposed system}
     \begin{figure}[H]
       \centering
       \resizebox*{!}{0.65\textheight}{
@@ -254,33 +264,65 @@
 
       \end{tikzpicture}
       }
-      \caption{Application overview, showing input and output from different
-      components in the proposed system}
     \end{figure}
   \end{frame}
 
+  % Second section, going through each of these components.
+  \section{Proposed system components}
+
+  % Component one: creating implicit ratings.
+  \begin{frame}
+    \frametitle{Converting Implicit Feedback}
+    \begin{itemize}
+      \item
+    \end{itemize}
+  \end{frame}
 
   \begin{frame}
-    \frametitle{SoBazaar Data - Something else}
+    \frametitle{Converted Implicit Feedback}
+    \framesubtitle{Distribution using blend of ordering and number of days since event, with logistic and linear penalization functions, overlayed with density function}
     \begin{figure}[H]
         \includegraphics[scale=0.4]{../src/image/dist-blend}
         \centering
-    \caption{Distribution using blend of ordering and number of days since event, with logistic and linear penalization functions, overlayed with density function}
     \end{figure}
   \end{frame}
 
+  % Component two: filterbots and cold-start stuff.
   \begin{frame}
-    \frametitle{SoBazaar Data - Something else}
+    \frametitle{Cold start boosting}
+    \begin{itemize}
+      \item
+    \end{itemize}
+  \end{frame}
+
+  % Component three: actually making recommendations.
+  \begin{frame}
+    \frametitle{Making recommendations}
+    \begin{itemize}
+      \item
+    \end{itemize}
+  \end{frame}
+
+  % Component four: how to evaluate the results.
+  \begin{frame}
+    \frametitle{Evaluation - About}
+    \begin{itemize}
+      \item
+    \end{itemize}
+  \end{frame}
+
+  \begin{frame}
+    \frametitle{Evaluation How}
+    \framesubtitle{Comparing Ratings}
     \begin{figure}[H]
         \includegraphics[scale=0.4]{../src/image/ratinggeneval.png}
         \centering
-        \caption[Comparing Ratings]{The Figure shows the process of comparing ratings}
-    \label{figure:eventIDDistribution}
     \end{figure}
   \end{frame}
 
   \begin{frame}
-    \frametitle{SoBazaar Data - Something else}
+    \frametitle{Evaluation How}
+    \framesubtitle{Overview of how the generated ratings from the implicit feedback can be evaluated}
       \begin{figure}
       \centering
       \resizebox*{!}{0.5\textheight}{
@@ -364,56 +406,7 @@
           \draw[>=latex,->] (gt) -- +(-6,0) |- (eval);
           \end{tikzpicture}
           }
-          \caption[Implicit Rating Evaluation]{Overview of how the generated ratings from the implicit feedback can be evaluated.}
         \end{figure}
-  \end{frame}
-
-  % What does it mean that feedback is implicit?
-  \begin{frame}
-    \frametitle{Implicit feedback}
-    \begin{itemize}
-      \item
-    \end{itemize}
-  \end{frame}
-
-  % How we propose to recommend items for SoBazaar
-  \begin{frame}
-    \frametitle{Application Overview}
-  \end{frame}
-
-  % Second section, going through each of these components.
-  \section{Proposed system components}
-
-  % Component one: creating implicit ratings.
-  \begin{frame}
-    \frametitle{Converting Implicit Feedback}
-    \begin{itemize}
-      \item
-    \end{itemize}
-  \end{frame}
-
-  % Component two: filterbots and cold-start stuff.
-  \begin{frame}
-    \frametitle{Cold start boosting}
-    \begin{itemize}
-      \item
-    \end{itemize}
-  \end{frame}
-
-  % Component three: actually making recommendations.
-  \begin{frame}
-    \frametitle{Making recommendations}
-    \begin{itemize}
-      \item
-    \end{itemize}
-  \end{frame}
-
-  % Component four: how to evaluate the results.
-  \begin{frame}
-    \frametitle{Evaluation}
-    \begin{itemize}
-      \item
-    \end{itemize}
   \end{frame}
 
   % Section three: a summary and conclusions from our work.
