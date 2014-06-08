@@ -130,19 +130,19 @@
             \toprule
             Attribute       & Count   \\
             \midrule
-            Total number of events  &    218975 \\
+            Total number of product events &    40773 \\
             Unique users ids    &    2021 \\
             Unique item ids     &    6092 \\
             Unique storefronts  &    147~\tablefootnote{A storefront is a access point, with different clusterings of items. Stores can have multiple storefronts} \\
             Unique retailer brands  &    24 \\
             \hline
-            First event & Mon, 07 Oct 2013 10:59:57 GMT \\
-            Last event & Mon, 19 May 2014 22:51:19 GMT \\
-            Lifetime of data & 224 days \\
-            \hline
             Item clicks     &    25491 \\
             Item wants   &    13262 \\
             Item purchases   &    2020 \\
+            \hline
+            First event & Mon, 07 Oct 2013 10:59:57 GMT \\
+            Last event & Mon, 19 May 2014 22:51:19 GMT \\
+            Lifetime of data & 224 days \\
             \hline
             Average item click count per user   &    12.6130 \\
             Average item want count per user     &    6.5620 \\
@@ -251,9 +251,7 @@
 
         As seen from figure~\ref{figure:ratingsPerUserCum}, over 20\% of the users have never interacted with an item, and about 10\% of the users have more than 50 item interactions.
 
-        % todo
-            % meant to introduce the reader to the idea that recommendations might be plausible
-        Even though the data is sparse, as seen from the previous figures, the fact that the majority of the users have in some way interacted with items, opens for the possibility of drawing conclusions based on other users' item interactions.
+        Even though the data is sparse, as seen from the previous figures, the fact that the majority of the users have in some way interacted with at least one item, opens for the possibility of connecting users based on their item interactions.
 
         Now that we have looked at the distribution of events both as a whole, and as a reduced view, we might benefit from looking at how often the users use the application. The figure below shows the number of sessions for the users.
 
@@ -571,8 +569,7 @@
         The red line is the regression line of the average life spans at the different interactions counts.
         The gap between 117 to 160 is because no items have an interaction count of that amount.
 
-        As we can see from the regression line, the average life span of an item increases with the count of item interactions, which is somewhat expected since they are in many ways intertwined, but we can also see that the regression line is not as steep as the
-
+        As we can see from the regression line, the average life span of an item increases with the count of item interactions, which is somewhat expected since they are in many ways intertwined, but there are indications of a reduction of interest with time, which advocates the idea that recentness is important.
 
         The figure above averaged the lifespan of the items and presented them with together with their respective count, the next figure keeps them separate, to not lose the lifespan distribution.
 

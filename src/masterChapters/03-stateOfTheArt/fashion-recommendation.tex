@@ -9,11 +9,11 @@ Our first goal (\textbf{Goal G1}) is to better understand the fashion domain.
 To achieve this a detailed study is needed, both to better understand
 \textit{how} we want to predict user preferences, but also to explain various
 effects seen in the dataset. We first study the broad definition of
-\textit{fashion} and what its implications are on consumer behaviour. Next we
+\textit{fashion} and what its implications are on consumer behavior. Next we
 study how the fashion industry is experiencing tremendous growth in the
 e-commerce sector, before finally looking at the SoBazaar application ---
-performing a comprehensive comptetitor analysis where we try to identify the
-largest segements of both growth potential and recommendation system
+performing a comprehensive competitor analysis where we try to identify the
+largest segments of both growth potential and recommendation system
 uniqueness.
 
 \subsubsection{Definition}
@@ -42,13 +42,13 @@ common theme.
 
 The recurring themes can be classified as being related to clothes, popularity,
 time and cultural grouping. One of the main drives of fashion is the need and
-want for belonging, and for induviduals to become a part of something bigger
+want for belonging, and for individuals to become a part of something bigger
 --- sharing a common thought or opinion. A common term to use is \textit{making a
-fashion statement}, where a group or induvidual makes their opinion or
+fashion statement}, where a group or individual makes their opinion or
 statement heard without words, but through clothing and fashion. When making
 recommendations this is important, as social connections between users become
 important and can potentially be used to enhance predictions and understand
-subcultures within communties. In addition we notice that \textit{per
+subcultures within communities. In addition we notice that \textit{per
 definition} recentness and popularity are two important factors to fashion,
 hence this should be reflected in both understanding implicit feedback and
 making recommendations.
@@ -120,7 +120,7 @@ The feedback from the user will mainly be implicit~\ref{sec:implicit}, and if
 the users had the possibility of rating an item there is no way of knowing
 \textit{which} features contributed to a positive rating --- without much data.
 Instead we assume that an increased interest in an item is correlated with
-increased interaction with the item, an hyptohesis that per~\ref{sec:conv-rate}
+increased interaction with the item, an hypothesis that per~\ref{sec:conv-rate}
 and Table~\ref{tab:prob-purchase} holds true, as we see more visits on an item
 increase the probability of purchases. As seen per definition users are also
 highly price and brand-aware and hence we should utilize this information in a
@@ -150,20 +150,20 @@ both scores well, but that the user has never seen before. This property is
 called increasing the \textit{novelty} of recommendations and are important in
 the fashion domain, and as we can see closely related to recentness, as we wish
 to introduce users to \textit{new} items and give them inspiration for new
-styles. The \textit{sependipity} is increased when we in addition recommend
-items that positivly surprises the user, and which the user would not have
+styles. The \textit{serendipity} is increased when we in addition recommend
+items that positively surprises the user, and which the user would not have
 found given usual shopping patterns. Hence we would like to not only recommend
-based on brands and clothes the users most often frequent, but enchance the
+based on brands and clothes the users most often frequent, but enhance the
 experience by including untraditional choices.
 
-\paragraph{Fluxuating prices}
+\paragraph{Fluctuating prices}
 As seen in the previous section, price is an important factor when considering
-both fashion marketing and user behaviour. Users are browsing through multiple
+both fashion marketing and user behavior. Users are browsing through multiple
 sites in order to find the best offer, and research is an important part of the
 shopping experience. Price should also be presented to the user when they have
 the possibility to interact with it, so that we can assure ourselves that all
 actions (e.g. wanting a product) are done knowing the retail price. Prices in
-the fashion domain are also highly fluxuating and this can be taken advantage
+the fashion domain are also highly fluctuating and this can be taken advantage
 of in a recommender system by presenting good deals to the user and informing
 about upcoming sales on items which they might find interesting. It can also
 help retailers target their sales campaigns towards items with high activity,
@@ -230,11 +230,11 @@ various segments in the fashion domain. The conversion rate is the portion of
 users who visits a website, and reaches the target (makes a conversion) set
 by the site. For most e-commerce application, SoBazaar included, a conversion
 is counted when a purchase is made. The conversion rate $r$ can easily be
-calulcated by $r = \frac{|Conversions|}{|Total visits|}$~\cite{nielsen2013}.
+calculated by $r = \frac{|Conversions|}{|Total visits|}$~\cite{nielsen2013}.
 We can see that womens has the lowest conversion rate among the different
 segments, indicating that there is a strong preference based shopping
 tendency and that many users are \textit{browsing} and searching for the
-right product. This hypthesis is strengthed by looking at the general
+right product. This hypothesis is strengthen by looking at the general
 conversion rate in the e-commerce industry, which lies at 3\%. The potential
 of a personalized recommender could in other words make browsing easier and
 hence increase the conversion rate.
@@ -277,13 +277,13 @@ with 70 participating fashion companies with the goal of doing a complete
 benchmark of the industry. In the leftmost figure we see how the different
 e-commerce fashion retailers focuses their products. We observe that a large
 majority of e-commerce fashion companies are targeting women - as is
-SoBazaar.  Underlining the comptetative market and the need to stand out to
+SoBazaar.  Underlining the compensative market and the need to stand out to
 the customer, by e.g. having personalized recommendations.
 
 In the rightmost figure it is shown from where the customers originate in
 online retails stores. The \textit{Paid} and \textit{Organic} are synonymous
 with a user entering the site via. research or ads in the search engine, and
-stands for 53\% of the traffic in e-commerce fashion - highlihting the
+stands for 53\% of the traffic in e-commerce fashion - highlighting the
 importance of a good reputation and digital profile. Direct traffic is as low
 as 15\%, compared to the e-commerce industry in general where the same number
 is 22.3\% \cite{Jorij2012}. This is explained by non-fashion products often
@@ -324,6 +324,54 @@ provide a hassle free shopping experience for the user.  They aim to bring the
 newest and most in-season fashion products available to the user trough the web
 store front.  The brand base of Myntra consists of 500 leading brands from both
 inside and outside India.
+
+The web page uses a set of recommendation approaches to inform the user of what
+they might like, and to increase the user's awareness of different kinds of
+items. Such as, similar item and most popular. In this figure we can see in red
+how Myntra is suggesting items which are similar to the item the user is
+currently looking at
+
+\begin{figure}[H]
+    \centering
+    \fbox{
+      \includegraphics[scale=0.4]{image/myntiaSimilarExample.png}
+    }
+    \caption[Example of Myntra's "similar item" approach]{Example of Myntra's
+    "similar item" approach}
+    \label{figure:myntiaSimilarEx}
+\end{figure}
+
+This table is the list of the recommendation related strengths and weaknesses
+of the e-commerce fashion web site Myntra~\cite{myntra}
+
+\begin{table}[H]
+    \centering
+    \begin{tabularx}{\linewidth}{>{\parskip1ex}X@{\kern4\tabcolsep}>{\parskip1ex}X}
+        \toprule
+        \hfil\bfseries Strengths
+        &
+        \hfil\bfseries Weaknesses
+        \\\cmidrule(r{3\tabcolsep}){1-1}\cmidrule(l{-\tabcolsep}){2-2}
+        %Strengths
+      Suggest similar items connected to the currently viewed \par
+        Popular list for the different brands and stores \par
+        Ability to add item to a "want list"\par
+        &
+        %Weaknesses
+        No personalized recommendations \par
+        \\\bottomrule
+    \end{tabularx}
+    \caption{Myntra: Strengths and weaknesses}
+    \label{table:ecommerceMyntra}
+\end{table}
+
+\subsubsection{asos}
+\label{par:myntra}
+
+"ASOS is a global online fashion and beauty retailer selling over 65,000 branded and own-label products" -
+about Asos~\cite{asos}.
+
+Asos have more than 29 million unique visitors per month and ship to more than 234 countries.
 
 The web page uses a set of recommendation approaches to inform the user of what
 they might like, and to increase the user's awareness of different kinds of
