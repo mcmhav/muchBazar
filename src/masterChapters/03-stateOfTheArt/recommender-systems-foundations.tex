@@ -1,6 +1,6 @@
 % !TEX root = ../../report.tex
 
-\section{Recommender Systems foundations}
+\section{Recommender Systems Foundations}
 \label{sec:recsys}
 Recommender systems have become an important research topic since the
 introduction of Tapestry \cite{Goldberg1992}, the first collaborative filtering
@@ -153,7 +153,7 @@ sim(c, c') = \frac{\sum_{s \epsilon S_{cc'}} (u(c, s)-\bar{u_{c}})(u(c',s)-\bar{
 
 where $u_{c}$ is the mean utility of user $c$. The Pearson Correlation
 Coefficient and other similarity measures such as cosine based approaches are
-more commonly known user-based collaborative filtering. 
+more commonly known user-based collaborative filtering.
 
 Item-based Top-N Recommendation methods calculates the similarity between items
 instead of users. In these approaches, the historical information is analyzed
@@ -202,13 +202,13 @@ $S_{c}$, using only the $k$ most similar items for each item in $S_{c}$. The
 resulting set of items in $C$ are sorted in descending order of similarity and
 will be the recommended as the item-based Top-N list \cite{Karypis2001}.
 Items usually do not change as much as users, so this can often be computed offline.
-Linden et al \cite{Linden2003} showed that item-based neighborhood methods also provide 
+Linden et al \cite{Linden2003} showed that item-based neighborhood methods also provide
 another advantage over other methods, such as e.g. user-based neighborhood models:
-in many industrial systems, most of the recommendation is made by the contextual 
-recommendation to anonymous users, as on the Amazon's website \marginpar{Add footnote}. This 
-recommendation is called item-to-item recommendation, and generally includes the archetype 
-associated message "people who have seen / bought this item also viewed / purchased these items. 
-This recommendation is directly based on an item-item similarity matrix on click or 
+in many industrial systems, most of the recommendation is made by the contextual
+recommendation to anonymous users, as on the Amazon's website \marginpar{Add footnote}. This
+recommendation is called item-to-item recommendation, and generally includes the archetype
+associated message "people who have seen / bought this item also viewed / purchased these items.
+This recommendation is directly based on an item-item similarity matrix on click or
 purchase logs.
 
 \subsubsection{Model-based Methods}

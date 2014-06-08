@@ -355,17 +355,7 @@
         \caption{Figures presenting the distribution of events for the products i SoBazaar}
     \end{figure}
         80\% of the products only have an interaction count of 10 or less, where interaction count is \emph{product\_detail\_clicked}, \emph{product\_wanted} and \emph{product\_purchase\_intended}.
-        This means that there will not be more than 10 events for the majority of the items, with no more than 10 datapoints to connect with other items for the majority of the items,
-        Making recommendations through itembased recommendations might prove problematic.
-
-        6000 items
-            10 < evs on 80\% of items
-            one item 10 or less possible connection points for 80\% of the items
-
-
-        which might lead to an issue when doing collaborative filtering on the data.
-
-        prove problematic -> itembased paer per germener explain
+        This means that there will not be more than 10 events for the majority of the items, with no more than 10 datapoints to connect with other items for the majority of the items, recommendations done through connecting items to other items through item interaction, might prove problematic.
 
         When the majority of the events only has 10 events and there are over 6 000 items and 2 000 users, the probability that multiple users have interacted with similar items will be marginal, but promotes the importance of utilizing all the feedback to bolster the recommender.
 
@@ -515,6 +505,8 @@
     As we can see from table~\ref{table:paretosPrinciple}, the 20\% most frequently interacted with items represents 59.1701\% of the item interaction in total.
     We have to move up to 41\% to reach 80\% of the interactions, and the Pareto's principle does therefore not apply to the SoBazaar dataset.
 
+    Even though Pareto's Principle does not apply to this data, the information regarding where the majority (the 80\%)  of the item interaction resides important.
+
 \paragraph{Long Tail}
     The definition of long tail is that the most frequently-occurring items represent less than 50\% of occurrences in logs~\cite{DBLP:journals/corr/abs-1203-4487}.
 
@@ -654,7 +646,7 @@
     The time an item lives varies greatly, but over one third of the items are active for no more than 1 week, which makes it important to consider how new an item is when making predictions.
 
 
-\section{Conversion rate properties}
+\section{Conversion Rate Properties}
 \label{sec:conv-rate}
 
 In many domains the number of activities on an item given a specific user

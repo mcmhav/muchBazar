@@ -1,6 +1,6 @@
 % !TEX root = ../../report.tex
 
-\section{Recommendation methods}
+\section{Recommendation Methods}
 
 The section will describe the different recommendation methods included in our experiments in closer detail.
 Our experiment requires us to test multiple recommender systems to get a better overview of added value of including implicit
@@ -401,7 +401,7 @@ new users to connect to users that capture the general underlying trends of the 
 meant to improve performance when data is scarce and not to degrade performance when data is plentiful.
 
 Similarly as in \cite{Park2006} we decided to experiment with global bots. We have currently implemented the
-following bots: A \emph{BrandBot} which rates an item based on the brands average rating, 
+following bots: A \emph{BrandBot} which rates an item based on the brands average rating,
 multiple \emph{SingleBrandBots} which gives all items of a given brand a top rating,
 an \emph{AverageBot} which rates an item based on their average rating given to it, a \emph{CriticBot} which selects $n$ critics
 among the most active users and rate items based on their average rating, a \emph{PopularityBot} which rates
@@ -409,7 +409,7 @@ an item based on its popularity, more ratings equals a higher rating.
 
 The intuition behind the \emph{SingleBrandBots} is as follows: When a new user \emph{rates} an item it will be connected to
 a \emph{psudo-user} which have rated all items of the same brand highly, thus making it more likely  that a new users will
-be recommended items by that brand. The \emph{SingleBrandBots} and \emph{BrandBot} can therefore be considered feature-bots. The \emph{PopularityBot} will have rated popular items highly meaning that 
+be recommended items by that brand. The \emph{SingleBrandBots} and \emph{BrandBot} can therefore be considered feature-bots. The \emph{PopularityBot} will have rated popular items highly meaning that
 users that have co-rated items with the \emph{PopularityBot} user will be recommended the most popular items.
 The \emph{CriticBot} selects $n$ users among the most active users and rate items based on the average rating
 of the critics.
