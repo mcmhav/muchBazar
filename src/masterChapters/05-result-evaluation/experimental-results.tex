@@ -46,12 +46,14 @@ our results using both time-based and random splits testing different implicit r
 
 \subsection{Time-based splits}
 
-As we have access to timestamps we decided to split the dataset on time, making the evaluation more \textit{realistic}. However,
-there seem to have been particularly few purchase activity over the last two months. We first attempted to evaluate the recommenders
+As we have access to timestamps we decided to split the dataset on time, making the evaluation more \textit{realistic}, but also to measure the
+affect of factoring in recentness. However, there seem to have been particularly few purchase activity over the last two months. We first attempted to evaluate the recommenders
 using a 90:10 timesplit, making predictions for the events between 7. may - 19. may. However, there have only been recorded two purchase or 0.07\% of
 all events in the last twelve day period, making it a bad period to use for evaluation. We did therefor not run multiple runs on this
 data, as we thought it more beneficial to get a better split to evaluate on. The results we did get can be found in the appendix \ref{90:10-timesplits}
-We instead opted to use a 80:20 timesplit, predicting the events between 16. April - 22. May. Our results are shown in following table:
+We instead opted to use a 80:20 timesplit, predicting the events between 16. April - 22. May. Our baselines, or binary methods are colored gray to
+make the separation between them clearer. For our implicit ratings we wish to test all implicit rating functions individually and by making two different blends.
+Blend 1 factors in Count, Popularity, Recentness and Price, Blend 2 only factors in Price and Popularity.
 
 \begin{table}[H]
 \centering
@@ -71,45 +73,28 @@ UserBasedKNN k=200  		&	0.585442 &	0.004358 &	3038 &	2328 &	36 &	17 &	14 &	3 &	0
 BPR-MF	 					&	0.601683 &	0.004902 &	3038 &	2328 &	36 &	21.8 &	9 &	  0.8 &	0.007176 &	0.003866 &	0.022222 &	0.004574 &	0.002854 &	0.004762 &	\\
 \rowcolor{Gray}
 BPR-Linear					&	0.559033 &	0.000443 &	3038 &	2328 &	36 &	2 	&	2 &		0 &	0.000658 &	0.000859 &	0 		 &	0.000136 &	0.000709 &	0 		 &	\\
-ALS-WR Count Linear         &   0.628547 &  0.006958 &  3037 &  2328 &  36 & 19.25 & 22.25 & 	3 & 0.006338 &  0.009558 &  0.083333 &  0.005049 &  0.009524 &  0.062978 &   \\
-ALS-WR Popularity Linear    &   0.625682 &  0.001705 &  3037 &  2328 &  36 & 13.5  & 12.75 & 	3 & 0.004445 &  0.005477 &  0.083333 &  0.000739 &  0.003915 &  0.014694 &   \\
-ALS-WR Recentness Linear    &   0.631948 &  0.006444 &  3037 &  2328 &  36 & 19    & 17.5  & 	3 & 0.006256 &  0.007517 &  0.083333 &  0.004529 &  0.010394 &  0.073505 &   \\
-ALS-WR Price Linear         &   0.611358 &  0.003687 &  3037 &  2328 &  36 & 18.75 & 13    &    4 & 0.006174 &  0.005584 &  0.111111 &  0.002123 &  0.007305 &  0.038556 &   \\
-ALS-WR Blend 1              &   0.623146 &  0.005666 &  3037 &  2328 &  36 & 19.25 & 14.5  &  	3 & 0.006338 &  0.006229 &  0.083333 &  0.004144 &  0.007086 &  0.059737 &   \\
+ALS-WR Count 		        &   0.628547 &  0.006958 &  3037 &  2328 &  36 & 	19.25 & 22.25 & 	3 & 0.006338 &  0.009558 &  0.083333 &  0.005049 &  0.009524 &  0.062978 &   \\
+ALS-WR Popularity   	    &   0.625682 &  0.001705 &  3037 &  2328 &  36 & 	13.5  & 12.75 & 	3 & 0.004445 &  0.005477 &  0.083333 &  0.000739 &  0.003915 &  0.014694 &   \\
+ALS-WR Recentness     		&   0.631948 &  0.006444 &  3037 &  2328 &  36 & 	19    & 17.5  & 	3 & 0.006256 &  0.007517 &  0.083333 &  0.004529 &  0.010394 &  0.073505 &   \\
+ALS-WR Price          		&   0.611358 &  0.003687 &  3037 &  2328 &  36 & 	18.75 & 13    &    4 & 0.006174 &  0.005584 &  0.111111 &  0.002123 &  0.007305 &  0.038556 &   \\
+ALS-WR Blend 1              &   0.623146 &  0.005666 &  3037 &  2328 &  36 & 	19.25 & 14.5  &  	3 & 0.006338 &  0.006229 &  0.083333 &  0.004144 &  0.007086 &  0.059737 &   \\
+ALS-WR Blend 2				&   0.617061 &  0.006219 &  3037 &  2328 &  36 &    17.75 & 12.75 & 3 & 0.005845 &  0.005477 &  0.083333 &  0.004658 &  0.008841 &  0.039871 &   \\
 \bottomrule
 \end{tabular}
 }
-\caption{Experimental results time-based splits 80:20 (16. April - 19. May)}
+\caption{Time-based split results (16. April - 19. May). All scores are averaged over 10 runs}
 \end{table}
 
-%TODO - Generate Averages!!! (BPR-MF, BPRLinear, UserBased '50, 80', ItemBased 50, 80)
-%TODO - Test ItemBased with Cosine Similarity '50, 80, 100' and ItemBased with log likelihood
-
 Again we see that the event distribution if far from optimal as it contains only 0.6\% purchases. However, further increasing the size of the split did not improve this ratio noticeably.
-Again we can see that we were not able to beat the most-popular recommender significantly using any recommendation methods or parameter settings. The only area where the most-popular recommender
-was beaten was on recommending liked and purchases items.
-
-%TODO - Average Results! (Atleast 3 runs of each)
-%TODO - Test more ALS-WR parameters (Atleast 100, 100, 15, true, 10), can we beat binary?...
-%TODO - Test userbased 150 neighbors
-%TODO - Compare with binary results and other blends (Only when doing this you do not have to run all implicit rating files, ONLY THE BLEND!)
-%Blend 1 - Count linear + Price linear + Popularity linear + Recentness linear
-%Blend 2 - Remove recentness linear
-%Blend 3 - Recentness linear + Recentness sigmoid
-
-As you can see from the table, our Item-Average results are varying strongly. The blend gives the best recommendations retrieving the most items.
-There is no dithering implemented in the mahout recommender, giving us non decimal numbers. ALS-WR is superior to all the other methods over all metrics.
-It is was a pleasant surprise to see that both our implicit rating functions based on recency have the best performance, since this is a time-split.
-
-Compared to the binary only ratings the results can be considered marginally better. Both in terms of AUC, MAP\@20 and the overall recall scores.
-
+To our surprise none of the methods significantly outperformed the non-personalized most-popular recommender.
+There is no dithering implemented in the collaborative filtering algorithms used, combined with the fact that the dataset is the same each time, giving us the same list of
+recommendations each time. However, we can see that ALS-WR trained with our implicit ratings marginally outperformed all binary methods for most metrics, in particular the implicit ratings that factored in recency only seems
+to give the best performance. Which was a pleasant surprise, since this is a time-split.
 
 \subsection{Random splits}
 
 Since we were not completely satisfied with the event distribution on our time-splits we decided to also evaluate the recommenders on random dataset splits.
-
-The following results are generated using a random dataset splitter. This was performed due to the low amounts of purchase activity the last couple of months to get an even better
-overview of the systems performance.
+As it is a random split, we chose to only factor in popularity and price, in addition to blending them.
 
 \begin{table}[H]
 \centering
@@ -136,6 +121,8 @@ BPRLinear       			&  0.7097516    & 0.0070648 &   1344.3  &   1241.9  &   141.3
 IBCF Price linear			&	0.680758 &	0.004616 &	1332.8 &	1245.7 &	137.15  &	21.1   		&	17.6    &	5.63   &	0.015859 &	0.014138 &	0.041189 &	0.003722 &	0.005    &	0.008681 &	 \\
 IBCF Popularity Linear		&	0.554495 &	0.001209 &	1335.7 &	1230.1 &	149.9 	&	0.3    		&	6 	    &	5.95   &	0.000198 &	0.004871 &	0.038575 &	0.000028 &	0.002344 &	0.006537 &	 \\
 IBCF Blend				    &	0.681773 &	0.006226 &	1328.5 &	1245   &	147.5   &	20.5        &	18.5    &	4.5    &	0.015464 &	0.014836 &	0.030416 &	0.004825 &	0.006603 &	0.009863 &	 \\
+
+ICCF martin					Blend & 0.727068 &  0.003599 &  1307 &  1290.5 &    139.75 &    16 &    15.25 & 1.75 &  0.012233 &  0.011844 &  0.012607 &  0.003884 &  0.0022 &    nan &    \\
 %ALS-WR 100 100 15 true 10
 ALS-WR Price linear			&	0.797892 &  0.034154  &	1340.5	&	1250.8	&	138.0	&	108.3		&	121.4	&	15.0   &	0.080842 &	0.09701	 &	0.108833 &	0.028443 &	0.035474 &	0.033493 & 	\\
 ALS-WR Popularity Linear 	&	0.816561 &	0.023916 &	1340.5	&	1246.25 &	139   	&	86.5		&	98.25   &	8.5    &	0.064534 &	0.078812 &	0.060836 &	0.018396 &	0.031169 &	0.01758 &	\\
@@ -154,8 +141,7 @@ ALS-WR Blend				&	0.808125 &	0.035802 &	1305.5 &	1221.5 &	150.5   &	98.5 		&	123
 %TODO - Compare with binary results, do we see any improvements?
 
 
-It was interesting to see that the performance of ItemBasedKNN actually started to decrease when looking at more than 50 neighbors, while UserBasedKNN's performance kept going up or stayed mostly the same when adding 
-neighbors. UserBasedKNN with between 50-200 neighbors seem to give the best recommendation quality of all the methods tested, and they different is fairly significant.
+
 
 
 As you can see the random splits significantly improved our event distribution giving us approximately 5\% purchase events for each run.
@@ -725,26 +711,8 @@ system-80 & 0.677093 &  0.009682 &  2613.5 &    2494 &  284.5 & 61.5 &  77.5 &  
 user-40 &   0.808431 &  0.043284 &  2472.5 &    3111 &  215 &   113 &   199 &   11.5 &  0.04532 &   0.063955 &  0.052234 &  0.018144 &  0.037683 &  0.013304 &   \\
 user-75 &   0.833505 &  0.014064 &  1034.5 &    1307 &  104.5 & 31.5 &  62 &    5 & 0.029431 &  0.047435 &  0.047472 &  0.008494 &  0.017224 &  0.008656 &   \\
 item-75 &   0.789062 &  0.045703 &  930 &   784 &   68.5 &  113 &   100.5 & 9 & 0.121531 &  0.128217 &  0.138092 &  0.037182 &  0.054105 &  0.041008 &   \\
-system-60 & 0.6974 &    0.010945 &  2613.5 &    2494 &  284.5 & 71.5 &  80.5 &  9.5 &   0.027375 &  0.032255 &  0.033384 &  0.008655 &  0.013835 &  0.015957 &   \\ item-40 &   0.817333 &  0.022964 &  2198.5 &    1769 &  170.5 & 155 &   150 &   11.5 &  0.070489 &  0.08479 &   0.06747 &   0.017619 &  0.031348 &  0.022649 &   \\
+system-60 & 0.6974 &    0.010945 &  2613.5 &    2494 &  284.5 & 71.5 &  80.5 &  9.5 &   0.027375 &  0.032255 &  0.033384 &  0.008655 &  0.013835 &  0.015957 &   \\
+item-40 &   0.817333 &  0.022964 &  2198.5 &    1769 &  170.5 & 155 &   150 &   11.5 &  0.070489 &  0.08479 &   0.06747 &   0.017619 &  0.031348 &  0.022649 &   \\
 user-10 &   0.728219 &  0.04259 &   3707 &  4633 &  331.5 & 134 &   180 &   13.5 &  0.036112 &  0.038847 &  0.041103 &  0.019312 &  0.029633 &  0.0155 &     \\
 avgs     &  0.747423 &  0.022767 &  2386.277778 &   2416.666667 &   220.944444 &    86.388889 & 108.5 & 9.833333 &  0.043457 &  0.053043 &  0.05335 &   0.01422 &   0.023805 &  0.015857 &  \\
 \bottomrule\end{tabular}}\caption{cold mahout-svd}\end{table}
-
-
-% ./testikus.sh -i mongo -m "itembased" -s random -c X 21
-\begin{table}\centering\resizebox{\columnwidth}{!}{\begin{tabular}{*{19}l}\toprule
- & AUC &    MAP@20 &    T\_c &  T\_w &  T\_p &  P\_c &  P\_w &  P\_p &  R\_c &  R\_w &  R\_p &  MAP@20-click &  MAP@20-want &   MAP@20-purchase &    \\
-\midrule
-Blend & 0.727068 &  0.003599 &  1307 &  1290.5 &    139.75 &    16 &    15.25 & 1.75 &  0.012233 &  0.011844 &  0.012607 &  0.003884 &  0.0022 &    nan &    \\
-Price Linear &  0.675855 &  0.003192 &  1345.328125 &   1246.71875 &    145.28125 & 11.921875 & 11.25 & 3.125 & 0.008846 &  0.009017 &  0.021431 &  0.002592 &  nan &   nan &    \\
-Popularity Linear & 0.593245 &  0.000442 &  1360.4375 & 1254.1875 & 125.1875 &  0.5625 &    2.125 & 2.375 & 0.000413 &  0.001683 &  0.019527 &  0.000324 &  nan &   nan &    \\
-avgs     &  0.665389 &  0.002411 &  1337.588542 &   1263.802083 &   136.739583 &    9.494792 &  9.541667 &  2.416667 &  0.007164 &  0.007515 &  0.017855 &  0.002266 &  nan &   nan &   \\
-\bottomrule\end{tabular}}\caption{random mahout-itembased}\end{table}
-
-%  for i in {1..3}; do ./testikus.sh -i mongo -m "svd" -s time -c; echo "$i"; done
-\begin{table}\centering\resizebox{\columnwidth}{!}{\begin{tabular}{*{19}l}\toprule
- & AUC &    MAP@20 &    T\_c &  T\_w &  T\_p &  P\_c &  P\_w &  P\_p &  R\_c &  R\_w &  R\_p &  MAP@20-click &  MAP@20-want &   MAP@20-purchase &    \\
-\midrule
-Blend Timetrain &   0.617061 &  0.006219 &  3037 &  2328 &  36 &    17.75 & 12.75 & 3 & 0.005845 &  0.005477 &  0.083333 &  0.004658 &  0.008841 &  0.039871 &   \\
-avgs     &  0.617061 &  0.006219 &  3037 &  2328 &  36 &    17.75 & 12.75 & 3 & 0.005845 &  0.005477 &  0.083333 &  0.004658 &  0.008841 &  0.039871 &  \\
-\bottomrule\end{tabular}}\caption{time mahout-svd}\end{table}

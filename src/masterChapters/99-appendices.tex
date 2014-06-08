@@ -806,6 +806,9 @@ BPRLinear       	&  0.7097516    & 0.0070648 &   1344.3  &   1241.9  &   141.3  
 \caption{Experimental results random splits 90:10 - The Results are averaged over 5-10 runs}
 \end{table}
 
+It was interesting to see that the performance of ItemBasedKNN actually started to decrease when looking at more than 50 neighbors, while UserBasedKNN's performance kept going up or stayed mostly the same when adding 
+neighbors. UserBasedKNN with between 50-200 neighbors seem to give the best recommendation quality of all the methods tested, and they different is fairly significant.
+
 \begin{table}
 \centering\resizebox
 {\columnwidth}{!}{
