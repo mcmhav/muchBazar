@@ -558,6 +558,8 @@
 
         Almost 2 500 products have a life span of less than a week, which shows how important it is to handle the recentness of the products to be able to follow the ever-changing trends.
 
+        Including the amount of item interactions mapped together with the lifespan of the items is the next figure up, to better see how the lifespan of the items change with the amount of item interactions on them.
+
     \begin{figure}[H]
         \includegraphics[width=5in]{image/avglifetimeoncount.png}
         \centering
@@ -570,6 +572,8 @@
         The gap between 117 to 160 is because no items have an interaction count of that amount.
 
         As we can see from the regression line, the average life span of an item increases with the count of item interactions.
+
+        The figure above averaged the lifespan of the items and presented them with together with their respective count, the next figure keeps them separate, to not lose the lifespan distribution.
 
     \begin{figure}[H]
         \includegraphics[width=5in]{image/itemTimeSpansortedoneventcount.png}
@@ -585,10 +589,8 @@
         Even though an item has a long time span does not mean that the item has been of measurable interest to the users in the SoBazaar application, but we see that the more interaction on the item, the longer the average life time, but the recentness of an item is important.
         Even though some item has a lot of interaction, they item can have a quite low lifespan, which promotes the importance of looking into recentness.
 
-    % hvorfor? er det pga:
-        % a) pga veldig få events
-        % b) pga kort levetid for item i datasettet
-        % c) fordi det bare hadde 10 dagers "nyhetsverdi"?
+        Next figures presents how long in average the user use before taking an action such as \emph{purchase} or \emph{want}.
+
     \begin{figure}[H]
         \centering
         \begin{subfigure}{.5\textwidth}
@@ -605,11 +607,12 @@
         \end{subfigure}
         \caption{Average view times of products before want or purchase}
     \end{figure}
-        The graphs above shows the average time of the users of the SoBazaar application before pressing either \emph{want} or \emph{purchase}.
+        The figures above shows the average time of the users of the SoBazaar application before pressing either \emph{want} or \emph{purchase}.
 
         The average times between the two are quite similar, but we can see that the user is on average somewhat faster to press \emph{purchase}.
         The data set on \emph{product\_purchase\_intended} is considerably smaller than \emph{product\_wanted}, so the trends seen here are inconclusive at best.
 
+        The figures above presented the actions \emph{purchase} and \emph{want}, the next figure presents the \emph{bounce rate}, or how fast the user on average went sdf
     \begin{figure}[H]
         \includegraphics[width=5in]{image/product_detail_clickeddistribution.png}
         \centering

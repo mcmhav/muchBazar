@@ -236,7 +236,7 @@ This recommendation is directly based on an item-item similarity matrix on click
 purchase logs.
 
 \subsubsection{Model-based Methods}
-\label{model-based-methods}
+\label{sec:model-based-methods}
 
 As the name implies, Model-based approaches provide recommendations by first
 developing a model of the user ratings, which is then used to make predictions~\cite{Su:2009:SCF:1592474.1722966}.
@@ -427,25 +427,26 @@ content-based and collaborative characteristics
 Below we briefly mention some of the main challenges one faces when working
 with recommender systems.
 
-\subsubsection{Scalability}
-
-As the number of existing users and items blow up, traditional CF algorithms
-suffer serious scalability problems. The model building phase of \emph{Traditional}
-collaborative filtering methods have a complexity of O(MN) where $M$ is the number
-of users and $N$ is the number of items. For systems with millions of users and items,
-even a complexity of $n$ is too large. Another fundamental issue is how to embed the
-core recommendation techniques in real operational systems and how to deal with massive
-and dynamic sets of data produced by the interactions of users with items. Recommender
-systems are expected in many cases to provide rapid recommendations online, it is
-therefore also important to consider how fast the system provides recommendations.
-
-Better scalability and improved accuracy make the item-item collaborative filtering
-approaches more favourable in many cases. The computational complexity of item-to-item
-based algorithms are up to two orders of magnitude faster than traditional user-based
-algorithms \cite{Deshpande2004}. Dimensionality reduction techniques such as
-SVD can deal with the scalability by providing more compact representations and
-quickly produce good recommendations. However, most dimensionality reduction
-techniques must undergo expensive matrix factorization steps.
+% TODO: Remove or move to Appendix
+% \subsubsection{Scalability}
+%
+% As the number of existing users and items blow up, traditional CF algorithms
+% suffer serious scalability problems. The model building phase of \emph{Traditional}
+% collaborative filtering methods have a complexity of O(MN) where $M$ is the number
+% of users and $N$ is the number of items. For systems with millions of users and items,
+% even a complexity of $n$ is too large. Another fundamental issue is how to embed the
+% core recommendation techniques in real operational systems and how to deal with massive
+% and dynamic sets of data produced by the interactions of users with items. Recommender
+% systems are expected in many cases to provide rapid recommendations online, it is
+% therefore also important to consider how fast the system provides recommendations.
+%
+% Better scalability and improved accuracy make the item-item collaborative filtering
+% approaches more favourable in many cases. The computational complexity of item-to-item
+% based algorithms are up to two orders of magnitude faster than traditional user-based
+% algorithms \cite{Deshpande2004}. Dimensionality reduction techniques such as
+% SVD can deal with the scalability by providing more compact representations and
+% quickly produce good recommendations. However, most dimensionality reduction
+% techniques must undergo expensive matrix factorization steps.
 
 \subsubsection{Sparsity}
 
@@ -478,32 +479,3 @@ In recommender systems where everyone can give ratings, people may give lots of
 positive ratings to their own items and negative ratings to their competitors.
 It is often necessary for collaborative filtering systems to introduce
 precautions to discourage such kind of manipulation.
-
-\subsection{Terminology}
-
-\marginpar{TODO: Fjerne?}
-
-%TODO - Any more RS related terminology that needs explaining?
-
-\subsubsection{Explanations / Transparency}
-
-\marginpar{heri-notes: Hvorfor har dere med dette?}
-
-Tintarev et al. \cite{Tintarev2007} lists seven roles a that can be played by explanations in recommender systems:
-
-\begin{itemize}
-\item Transparency: Explaining how the system works
-\item Scrutability: Allowing the users to tell the system it is wrong
-\item Trust: Increasing user confidence in the system
-\item Effectiveness: Help users make good decisions
-\item Persuasiveness: Convince users to try or buy
-\item Efficiency: Helping users to make decisions faster
-\item Satisfaction: Increasing the ease of use or enjoyment
-\end{itemize}
-
-In collaborative filtering systems the explanations is of the form "Other users
-similar to you liked this item", while in content-based style explanations, the
-item's attributes which most affected the item to be recommended to the user
-are illustrated. For example, in a fashion recommender, an explanation may be
-of the form "This shirt was recommended because it's a Ralph Lauren who you
-seem to like".
