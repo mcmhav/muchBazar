@@ -567,11 +567,12 @@
     \label{figure:averageLifetimBasedoncount}
     \end{figure}
         This figure shows the life span of the products grouped and sorted on the number of interactions on the items.
-        The life span of an item is the time since the first event on the item till the last event on the item.
-        The red line is the regression line of the top of the average life spans at the different interactions counts.
+        The life span of an item is the time from the first event on the item till the last event on the item.
+        The red line is the regression line of the average life spans at the different interactions counts.
         The gap between 117 to 160 is because no items have an interaction count of that amount.
 
-        As we can see from the regression line, the average life span of an item increases with the count of item interactions.
+        As we can see from the regression line, the average life span of an item increases with the count of item interactions, which is somewhat expected since they are in many ways intertwined, but we can also see that the regression line is not as steep as the
+
 
         The figure above averaged the lifespan of the items and presented them with together with their respective count, the next figure keeps them separate, to not lose the lifespan distribution.
 
@@ -612,7 +613,7 @@
         The average times between the two are quite similar, but we can see that the user is on average somewhat faster to press \emph{purchase}.
         The data set on \emph{product\_purchase\_intended} is considerably smaller than \emph{product\_wanted}, so the trends seen here are inconclusive at best.
 
-        The figures above presented the actions \emph{purchase} and \emph{want}, the next figure presents the \emph{bounce rate}, or how fast the user on average went sdf
+        The figures above presented the actions \emph{purchase} and \emph{want}, the next figure presents the \emph{bounce rate}, or in other words, how fast the user on average triggered a non related event to the item currently being watched.
     \begin{figure}[H]
         \includegraphics[width=5in]{image/product_detail_clickeddistribution.png}
         \centering
