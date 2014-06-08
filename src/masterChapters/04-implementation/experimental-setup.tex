@@ -15,10 +15,11 @@ In k-NN item-item models, the number of neighbors
 generally increases system performance (Bell et al., 2007a, 2007b). However, the quadratic 
 complexity of the search for k-NN, whether in time or space, is quadratic. So there's always a 
 tradeoff for an industrial system \cite{Deshpande2004, Cremonesi2010} to select a 
-reasonable value for K. Moreover, many recent studies are limited to a few tens of items for their 
-neighborhood model (Bell et al, 2007c) (Takacs et al., 2007). So we use a number of nearest 
-neighbors of K=200 for all tests, to have good security effectiveness. 
+reasonable value for K. We experimented with different values of neighbors and found that a K
+value between 80-200 generally produced the best results.
 
-
-
-Say something about that we wished we had more time...
+For ALS-WR we found the following parameters to give us the best results after performing cross-validation.
+latent features = $100$, $\lambda$ = $100\-150$, number of iterations = $10\-15$, implicit feedback = true, alpha = $10$.
+However, there are probably still room for improvements as we did not perform an \emph{exhaustive} grid-search.
+All experiments was run with the following settings: latent features = $100$, $\lambda$ = $100$, number of iterations = $15$,
+implicit feedback = true and alpha = $10$.
