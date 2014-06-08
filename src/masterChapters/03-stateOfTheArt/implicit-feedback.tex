@@ -24,10 +24,10 @@ ratings}.
 \vspace{5 mm}
 
 This problem definition is further used in
-Section~\ref{implementation-implicit} where multiple novel ways of
-quantification are presented based on ideas found in this section. First
-however, a deeper understanding on the relationship between implicit and
-explicit feedback is needed.
+Section~\ref{sec:implementation-implicit} where multiple ways of quantification
+of the SoBazaar dataset are presented based on ideas found in this section.
+First however, before delving into specific methods, a deeper understanding on
+the relationship between implicit and explicit feedback is needed.
 
 Explicit feedback is present in many of the largest recommender systems today
 and hence, is extensively researched \cite{Adomavicius2005}. The user is
@@ -54,14 +54,18 @@ require the user to first buy it, consume it and finally rate it.
 
 Implicit feedback on the other hand utilizes, often already collected,
 analytics data and hence does not require any extra effort neither for the user
-nor the frontend-developers. This creates a more pleasant experience for the
-user, but can also yield better recommender results since often the event log
-is less sparse than rating datasets.
+nor the frontend-developers. This creates a more frictionless experience for
+the user, but can also yield better recommender results since often the event
+log is less sparse than rating datasets and contains implicit knowledge which,
+by only using explicit information, would never be exposed in a traditional
+system.
 
 It is important to understand that there are several fundemental differences
 between implicit and explicit ratings, in everything from \textit{meaning} to
 \textit{evaluation techniques}. Partly inspired by Hu et al.~\cite{Hu2008}, we
 can identify the following key charecterstics and differences between them:
+
+\vspace{3 mm}
 
 \textbf{Explicit ratings:}
 \begin{itemize}
@@ -78,7 +82,7 @@ we consider how well we match a test-set.
 \item Both evaluation schemes and recommendation techniques using explicit
 feedback is heavily researched and used. Many of these are easy to implement,
 and multiple open-source tools and projects are at researchers and developers
-disposal~\cite{something}.
+disposal~\cite{mahout}~\cite{Gantner2011MyMediaLite}.
 \end{itemize}
 
 \textbf{Implicit ratings:}
@@ -117,7 +121,7 @@ One of the most common techniques of quantifying implicit feedback to implicit
 ratings is to use binary ratings - that is if a user has shown any interest in
 an item we give that item a weight of 1, similarily all items the user has not
 shown interest in (e.g. not clicked on) we give a rating of 0. This method was
-introduced and used by Hu et.\ al.~\cite{Hu2008} where they formalized the
+introduced and used by Hu et al.~\cite{Hu2008} where they formalized the
 notion of confidence which the $r_{ui}$ variables measure, e.g. if a user $u$
 had clicked on an item $i$ 2 times it would translate to the score $r_{ui} =
 2.0$. This was further converted to a $p_{ui}$ value derived by binarizing the
@@ -151,8 +155,8 @@ experiments as this produced good results. They now use these two scores
 their model. In short they find both a user and item vector ($x_u$ and $y_i$,
 respectively) where the preference is assumed to be their inner product: $p_{ui}
 = x_{u}^{T} y_{i}$. Notice as well how this method stand out from similar
-matrix factorization methods (see Section~\ref{}) by accounting for varying
-confidence levels:
+matrix factorization methods (see Section~\ref{sec:model-based-methods}) by
+accounting for varying confidence levels:
 
 \begin{equation}
   min_{x,y} \sum _{u,i} c_{ui} (p_{ui} - x_{u}^{T} y_i)^2 + \lambda (\sum _{u}
@@ -172,7 +176,7 @@ here. But is shows an important aspect which we will return to in subsequent
 sections, namely the confidence in repetitive events and our continuous
 challenge to obtain higher confidence in our implicit ratings. For further
 information on matrix factorization and latent factors refer to
-Section~\ref{model-based-methods} or to Hu et.\ al.\ original
+Section~\ref{sec:model-based-methods} or to Hu et al.\ original
 research~\cite{Hu2008}.
 
 \subsection{Implicit ratings for binary domains}
@@ -265,7 +269,8 @@ activity. We would like a scheme where we use the whole scale of scores and
 where there were no global ceiling, but rather let the scoring be normalized to
 the number of events for the user in question.
 
-Improvements to this model are presented in Section~\ref{implementation}
+Improvements to this model are presented in
+Section~\ref{sec:implementation-implicit}
 
 \subsection{Regression analysis}
 \label{sec:regression-sota}
@@ -371,7 +376,7 @@ rating $3.1614$.
 
 \paragraph{Using regression analysis on implicit feedback}
 The process of using regression analysis in order to predict ratings based on
-implicit feedback has already been done, in a different domain, by Parra et.\
+implicit feedback has already been done, in a different domain, by Parra et
 al.~\cite{parra2011walk}. Where they first did a quantitiative user study
 asking 114 active users of the music service Last.fm to rate items which was
 found in their activity history. These ratings were used as dependent variables
@@ -440,7 +445,7 @@ e.g. \textit{item category} as training feature, unless the brands (or rather
 the brand ids) themselves are sorted by price or equality, then renumbered.
 
 \paragraph{Multivariate ordinal regression}
-In~\cite{parra2011implicit} Parra et. al. extend the model presented
+In~\cite{parra2011implicit} Parra et al. extend the model presented
 in~\cite{parra2011walk} by considering that the dependent variable (rating) is
 on an ordinal scale, that ranges from 1 to 5. A ordinal variable implies that
 the numeric value has no significance beyond its ability to establish a ranking

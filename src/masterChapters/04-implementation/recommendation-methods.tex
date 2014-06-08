@@ -2,23 +2,31 @@
 
 \section{Recommendation Methods}
 
-The section will describe the different recommendation methods included in our experiments in closer detail.
-Our experiment requires us to test multiple recommender systems to get a better overview of added value of including implicit
-factors and finally our implicit ratings. We have also chosen to include some simpler non-personalized
-methods to be used as baseline models to assess whether the current system is ready for a personalized recommendation
-system. Similarly to assess the improvement, if any, over the simple non-personalized methods for cold-start recommendations.
-E.g. one could imagine to final system to leverage multiple recommendation techniques. When users are new to the system they
-are recommended the most popular items, until enough data is collected to start providing personalized recommendations.
-This system could be complemented by pre-computed item similarities for recommendations in the context of the user
-\emph{examining} an item. If the cold-start performance of these simpler models outperform the more sophisticated ones
-include in our experiments, why not just use them? However, our greatest problem was to find methods which in some ways
-could bridge the broken divide between binary and non-binary recommendation systems to make our results valid. Our
-solution to this is to include the methods that are considered the state-of-the-art methods from both classes in
-an attempt to bridge this highly \emph{unfortunate} weakness in our experiment.
+The section will describe the different recommendation methods included in our
+experiments in closer detail.  Our experiment requires us to test multiple
+recommender systems to get a better overview of added value of including
+implicit factors and finally our implicit ratings. We have also chosen to
+include some simpler non-personalized methods to be used as baseline models to
+assess whether the current system is ready for a personalized recommendation
+system. Similarly to assess the improvement, if any, over the simple
+non-personalized methods for cold-start recommendations.  E.g. one could
+imagine to final system to leverage multiple recommendation techniques. When
+users are new to the system they are recommended the most popular items, until
+enough data is collected to start providing personalized recommendations.  This
+system could be complemented by pre-computed item similarities for
+recommendations in the context of the user \emph{examining} an item. If the
+cold-start performance of these simpler models outperform the more
+sophisticated ones included in our experiments, why not just use them? However,
+our greatest problem was to find methods which in some ways could bridge the
+broken divide between binary and non-binary recommendation systems to make our
+results valid. Our solution to this is to include those methods that are
+considered state-of-the-art from both classes in an attempt to bridge this
+highly \emph{unfortunate} weakness in our experiment.
 
 \subsection{Common Algorithms}
 
-This subsection will describe the algorithms that will be used on both the binary and non-binary.
+This subsection will describe the algorithms that will be used on both the
+binary and non-binary.
 
 \subsubsection{Content-boosted Collaborative Filtering}
 

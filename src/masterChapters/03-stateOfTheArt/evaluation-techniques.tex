@@ -382,9 +382,9 @@ curve.  $AUROC$ is the probability that the recommender system will rank
 positive examples higher than negative examples.  The Area Under is a commonly
 used evaluation method for binary choice problems. If somebody makes random
 guesses, the ROC curve should be a diagonal line stretching from (0,0) to
-(1,1), as shown by the blue line in Figure \ref{fig:aucroc}, scoring an AUC of
-0.5. A perfect model will score an AUC of 1.0. In practice, almost all models
-will fit somewhere in between e.g. somewhat like the red or green line.
+(1,1), as shown by the blue line in the figure below, scoring an AUC of 0.5. A
+perfect model will score an AUC of 1.0. In practice, almost all models will fit
+somewhere in between e.g. somewhat like the red or green line.
 
 \begin{figure}[H]
 \label{fig:aucroc}
@@ -418,7 +418,7 @@ will fit somewhere in between e.g. somewhat like the red or green line.
 
 As mentioned by Powers et al.~\cite{powers2007}, recall, precision, F-measure
 have a bias.  Recall, precision and F-measure ignore performance in correctly
-handling negative examples, they propagate the marginal Prevalences and biases,
+handling negative examples, they propagate the marginal prevalences and biases,
 and they fail to take account the chance level performance.  Another drawback
 or limitation with the measuring of user predictions is that it does not take
 into account the ranking of the items. To handle this, rank based metrics can
@@ -971,66 +971,3 @@ left in the dust without getting a fair chance. Of course, if your variation is
 performing badly you will loose some sales or conversions in the process of A/B
 testing, but that is the price one have to pay for finding out if a variation
 really did perform badly.
-
-\subsection{Discussion}
-
-The main idea behind a recommendation system is to produce a set of items which
-are of interest to the user.  For the system to be successful, this sets of
-items needs quality.  But what needs to be considered when determining the
-quality of the recommendations?  According to a user
-study~\cite{Pu:2011:UEF:2043932.2043962} the most central aspects to this
-quality is:
-% TODO: as list or in table, or not
-
-\subsubsection{Perceived accuracy}
-The degree of how well the user perceives the recommended items match the actual want of the user.
-
-\subsubsection{Novelty}
-The degree of new and interesting items recommended for the user.
-
-\subsubsection{Attractiveness}
-How well the recommended items are able to evoke interest or desire in the user.
-
-\subsubsection{Diversity}
-How different the recommended items are.
-
-\subsubsection{Context compatibility}
-How the system uses contextual factors to supply the recommendations with more personalized recommendations.
-
-
-\subsection{The Good}
-Since the data at hand is mainly implicit feedback and this data is sparse, some natural ways of approaching the evaluations task would be:
-
-\subsubsection{MPR}
-\begin{itemize}
-	\item good
-	\item Possible to produce a score for a recommender system which relies on implicit feedback
-	\item Usable even though there are no feedback indicating undesired items
-	\item Does not need a ranked list of the actual preferences of the user
-	\item bad
-	\item Needs distinct ranking of the different items
-\end{itemize}
-
-\subsubsection{MAP}
-\begin{itemize}
-	\item good
-	\item Possible to produce a score for a recommender system which relies on implicit feedback
-	\item Usable even though there are no feedback indicating undesired items
-	\item Does not need a ranked list of the actual preferences of the user
-	\item Differentiates between predicted more desired items and those that are not
-	\item bad
-	\item Needs distinct ranking of the different items
-\end{itemize}
-
-
-\subsection{The Bad}
-\subsubsection{RMSE}
-\begin{itemize}
-	\item good
-	\item Well known, so it produces a clear score of the system
-	\item bad
-	\item Needs the actual rating of the items
-	\item Needs a predicted rating for the items
-	\item Not easy to gather reliable information about undesired items trough implicit feedback
-\end{itemize}
-
