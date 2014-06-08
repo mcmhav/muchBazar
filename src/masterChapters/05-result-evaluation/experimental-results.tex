@@ -32,43 +32,26 @@ all the items. Both item-based and user-based collaborative filtering performed 
 while BPR-MF performed much worse than random guessing. The $MAP@20$ scores for all recommenders are to small to be shown
 using 5 descimals, meaning that close to zero relevant items were retrieved in the top 20 lists.
 
-\section{Binary Multiple Events Dataset}
+\section{Multiple Events Datasets}
 
 When incorporating both clicks and likes in addition to purchases we ended up with a total of 1,511 users, 5,855 items
-and an average of 4.76 ratings per item. Here each event type is seen as equally important and is not weighted differently.
+and an average of 4.76 ratings per item.
+
+Here each event type is seen as equally important and is not weighted differently.
 These numbers are meant as a baseline to show what is possible using binary positive feedback only recommendation methods.
 Our goal is therefore to prove that these results can be beaten using our implicit ratings.
 
+This subsection will present the experimental results for the SoBazaar dataset using implicit ratings. First we present
+our results using both time-based and random splits testing different implicit rating mapping functions on different recommendation methods.
+
 \subsection{Time-based splits}
 
-As we have access to timestamps we decided to split the dataset on time, making the evaluation more realistic. However,
-there seem to have been particularly little purchase activity over the last two months. The following table shows our
-experimental results performing a 90:10 split based on timestamps, making predictions for the events between 7. may -
-19. may.
-
-\begin{table}[H]
-\centering
-\resizebox{
-\columnwidth}{!}{
-\begin{tabular}{*{19}l}
-\toprule
-Model & AUC &	$MAP@20$ &	$T_{click}$ &	$T_{want}$ &	$T_{purchase}$ &	$P_{click}$&	$P_{want}$ &	$P_{purchase}$ &	$R_{click}$ &	$R_{want}$ &	$R_{purchase}$ &	$MAP@20_{click}$ &	$MAP@20_{want}$	& $MAP@20_{purchase}$ &	 \\
-\midrule
-\rowcolor{Gray}
-Most Popular 			  &	0.627207 &	0.002821 &	1419 &	1280 &	2 &	20 &	10 &	0 &	0.014094 &	0.007812 &	0 &	0.002501 &	0.003635 &	0 &	 \\
-ItemBasedKNN k=50     	  &	0.417509 &	0.000404 &	1419 &	1280 &	2 &	4  &	0  &	0 &	0.002819 &	0 		 &	0 &	0.000505 &	0 		 &	0 &	 \\
-ItemBasedKNN k=80      	  &	0.490309 &	0.001417 &	1419 &	1280 &	2 &	7  &	8  &	0 &	0.004933 &	0.00625 &	0 &	0.000836 &	0.002755 &	0 &	 \\
-UserBasedKNN k=50 	      &	0.496582 &	0.007029 &	1419 &	1280 &	2 &	18 &	11 &	0 &	0.012685 &	0.008594 &	0 &	0.00247 &	0.025629 &	0 &	 \\
-ItemBasedKNN k=100  	  & 0.446664 &	0.000376 &	1419 &	1280 &	2 &	4  &	0  &	0 &	0.002819 &	0  		 &	0 &	0.000466 &	0 		 &	0 &	 \\
-BPR-MF 			    	  &	0.624658 &	0.001764 &	1419 &	1280 &	2 &	9  &	6  &	0 &	0.006342 &	0.004687 &	0 &	0.001049 &	0.002891 &	0 &	 \\
-\bottomrule
-\end{tabular}
-}
-\caption{Experimental results time-based splits 90:10 (7. May - 19. May)}
-\end{table}
-
-As you can see from the table there have only been recorded two purchase or 0.07\% of all events in the last twelve day period, making it a bad period to use for evaluation. We did therefor not run multiple runs on this
-data, as we thought it more beneficial to get a better split to evaluate on. As we can see from the table Most Popular performed the best having both the highest AUC and $MAP@20$ score and retrieved to most items, closely followed by BPR-MF. The following table shows our experimental results predicting the events between 16. April - 22. May:
+As we have access to timestamps we decided to split the dataset on time, making the evaluation more \textit{realistic}. However,
+there seem to have been particularly few purchase activity over the last two months. We first attempted to evaluate the recommenders
+using a 90:10 timesplit, making predictions for the events between 7. may - 19. may. However, there have only been recorded two purchase or 0.07\% of
+all events in the last twelve day period, making it a bad period to use for evaluation. We did therefor not run multiple runs on this
+data, as we thought it more beneficial to get a better split to evaluate on. The results we did get can be found in the appendix \ref{90:10-timesplits}
+We instead opted to use a 80:20 timesplit, predicting the events between 16. April - 22. May. Our results are shown in following table:
 
 \begin{table}[H]
 \centering
@@ -80,15 +63,16 @@ Model & AUC &	$MAP@20$ &	$T_{click}$ &	$T_{want}$ &	$T_{purchase}$ &	$P_{click}$
 \midrule
 \rowcolor{Gray}
 Most Popular 		 		&	0.613218 &	0.004856 &	3038 &	2328 &	36 &	28 &	10 &	0 &	0.009217 &	0.004296 &	0 		 &	0.004622 &	0.003046 &	0 		 &	 \\
-ItemBasedKNN k=10 cos		& 	0.362571 &	0.002441 &	3038 &	2328 &	36 &	14 &	13 &	3 &	0.004608 &	0.005584 &	0.083333 &	0.001399 &	0.00248  &	0.051515 &	 \\
-ItemBasedKNN jaccard k=50   &	0.418569 &	0.004367 &	3038 &	2328 &	36 &	12 &	9  &	2 &	0.00395  &	0.003866 &	0.055556 &	0.003914 &	0.002017 &	0.014286 &	 \\
-ItemBasedKNN jaccard k=100	& 	0.464325 &	0.002638 &	3038 &	2328 &	36 &	14 &	7  &	1 &	0.004608 &	0.003007 &	0.027778 &	0.002576 &	0.000623 &	0.002778 &	 \\
-UserBasedKNN k=10			&	0.392918 &	0.002205 &	3038 &	2328 &	36 &	11 &	8  &	3 &	0.003621 &	0.003436 &	0.083333 &	0.000984 &	0.002686 &	0.063582 &	 \\
-UserBasedKNN k=50			& 	0.512886 &	0.003248 &	3038 &	2328 &	36 &	14 &	13 &	3 &	0.004608 &	0.005584 &	0.083333 &	0.001766 &	0.005781 &	0.063005 &	 \\
-UserBasedKNN k=100			& 	0.558578 &	0.004608 &	3038 &	2328 &	36 &	15 &	15 &	3 &	0.004937 &	0.006443 &	0.083333 &	0.002867 &	0.009185 &	0.069444 &	 \\
+ItemBasedKNN k=100			& 	0.464325 &	0.002638 &	3038 &	2328 &	36 &	14 &	7  &	1 &	0.004608 &	0.003007 &	0.027778 &	0.002576 &	0.000623 &	0.002778 &	 \\
 UserBasedKNN k=200  		&	0.585442 &	0.004358 &	3038 &	2328 &	36 &	17 &	14 &	3 &	0.005596 &	0.006014 &	0.083333 &	0.002927 &	0.007883 &	0.053241 &	 \\
 BPR-MF	 					&	0.601683 &	0.004902 &	3038 &	2328 &	36 &	21.8 &	9 &	  0.8 &	0.007176 &	0.003866 &	0.022222 &	0.004574 &	0.002854 &	0.004762 &	\\
-BPRLinear					&	0.559033 &	0.000443 &	3038 &	2328 &	36 &	2 	&	2 &		0 &	0.000658 &	0.000859 &	0 		 &	0.000136 &	0.000709 &	0 &	\\
+BPR-Linear					&	0.559033 &	0.000443 &	3038 &	2328 &	36 &	2 	&	2 &		0 &	0.000658 &	0.000859 &	0 		 &	0.000136 &	0.000709 &	0 		 &	\\
+%Implicit Ratings
+ALS-WR Count Linear         &   0.628547 &  0.006958 &  3037 &  2328 &  36 & 19.25 & 22.25 & 	3 & 0.006338 &  0.009558 &  0.083333 &  0.005049 &  0.009524 &  0.062978 &   \\
+ALS-WR Popularity Linear    &   0.625682 &  0.001705 &  3037 &  2328 &  36 & 13.5  & 12.75 & 	3 & 0.004445 &  0.005477 &  0.083333 &  0.000739 &  0.003915 &  0.014694 &   \\
+ALS-WR Recentness Linear    &   0.631948 &  0.006444 &  3037 &  2328 &  36 & 19    & 17.5  & 	3 & 0.006256 &  0.007517 &  0.083333 &  0.004529 &  0.010394 &  0.073505 &   \\
+ALS-WR Price Linear         &   0.611358 &  0.003687 &  3037 &  2328 &  36 & 18.75 & 13    &    4 & 0.006174 &  0.005584 &  0.111111 &  0.002123 &  0.007305 &  0.038556 &   \\
+ALS-WR Blend 1              &   0.623146 &  0.005666 &  3037 &  2328 &  36 & 19.25 & 14.5  &  	3 & 0.006338 &  0.006229 &  0.083333 &  0.004144 &  0.007086 &  0.059737 &   \\
 \bottomrule
 \end{tabular}
 }
@@ -101,114 +85,6 @@ BPRLinear					&	0.559033 &	0.000443 &	3038 &	2328 &	36 &	2 	&	2 &		0 &	0.000658 
 Again we see that the event distribution if far from optimal as it contains only 0.6\% purchases. However, further increasing the size of the split did not improve this ratio noticeably.
 Again we can see that we were not able to beat the most-popular recommender significantly using any recommendation methods or parameter settings. The only area where the most-popular recommender
 was beaten was on recommending liked and purchases items.
-
-\subsection{Random splits}
-
-The following results are generated using a random dataset splitter. This was performed due to the low amounts of purchase activity the last couple of months to get an even better
-overview of the systems performance.
-
-\begin{table}[H]
-\centering
-\resizebox{
-\columnwidth}{!}{
-\begin{tabular}{*{19}l}
-\toprule
-Model & AUC &	$MAP@20$ &	$T_{click}$ &	$T_{want}$ &	$T_{purchase}$ &	$P_{click}$&	$P_{want}$ & $P_{purchase}$ &	$R_{click}$ &	$R_{want}$ &	$R_{purchase}$ &	$MAP@20_{click}$ &	$MAP@20_{want}$	& $MAP@20_{purchase}$ &	 \\
-\midrule
-\rowcolor{Gray}
-Most-Popular    	&  0.751516     & 0.013236  &   1323    &   1235    &   135     &   63      &   40.75   & 3.5     &   0.0476135   &   0.03300275  &   0.0270445   &   0.0147725   & 0.0111475 &   0.0098995 & \\
-ItemBasedLog	   	&  0.690723     & 0.002094  &   1353.9  &   1250.5  &   138     &   8.8     &   4.6     & 1.47    &   0.006488    &   0.003672    &   0.007252    &   0.001470    & 0.002043  &   0.000618  & \\
-ItemBasedKNN k=10	&  0.704103     & 0.0199615 &   1332.8  &   1233.8  &   135.4   &   68.9    &   92.4    & 8.4     &   0.0516662   &   0.0748659   &   0.0624243   &   0.0141642   & 0.0287664 &   0.0191711 & \\
-ItemBasedKNN k=50	&  0.727482     & 0.0133356 &   1366    &   1264.8  &   141     &   59      &   82.6    & 9.6     &   0.0431518   &   0.0653024   &   0.0675468   &   0.008712    & 0.0184392 &   0.0159292 & \\
-ItemBasedKNN k=80   &  0.6923396	& 0.0023332	&	1292.8  & 	1188.6& 	136.6	&	10.2	&	19		& 2.6	  &	0.0078848	&	0.0159932	&	0.094176	&	0.005756	&	0.018417	&	0.0019042	& \\
-ItemBasedKNN k=120  &  0.7357796    & 0.0069094 &   1295.8  &   1231.4  &   146.8   & 	37.6    &   53      & 7.2     &   0.0290256   &  0.0431066    &  0.0487262    &  0.0044356    &  0.0097038&   0.0060544 & \\
-ItemBasedKnn k=200  &  0.7032954	& 0.0017026	&	1318.4	&   1248.4	&   142.4	&	8.4		&	10.4	& 1.2	  &	  0.0063506	  &	0.0083276	&	0.044265	&	0.008208	&	0.009611	&	0.000862	&	\\
-UserKNN K = 10 cos  &  0.6962484	& 0.019008	&	1324.6	&   1227.4 & 	137		&	55.2	&	76		& 9	  	  &	  0.0416912	  &	0.0619346	&	0.327716	&	0.070403	&	0.124173	&	0.0217902	&	\\
-UserKNN K = 50 cos  &  0.7596092	& 0.0340278	&	1316.2	&   1233.8 &	142		&	102.4	&	111.2	& 13	  &	  0.077734	  &	0.0901368	&	0.457994	&	0.137837	&	0.202344	&	0.0299614	&	\\
-UserKNN K = 80 cos  &  0.781408		& 0.0330702	&	1347.6	&   1199.8 &	140.6	&	101.2	&	115.2	& 12.6    &	  0.0750486	  &	0.0960048	&	0.448823	&	0.128239	&	0.208182	&	0.0248482	&	\\
-UserKNN K = 120 cos &  0.7914806	& 0.0325814	&	1287.2	&   1256.4 &	137.4	&	92.6	&	113.4	& 13.2    &	  0.0719976	  &	0.090211	&	0.478547	&	0.128197	&	0.205397	&	0.0289208	&	\\
-UserKNN K = 200 cos &  0.7926842	& 0.0317002	&	1282.2	&   1186.2 &	136.4	&	102.2	&	101.4	& 12.6    &	  0.0797042	  &	0.0854958	&	0.471684	&	0.128002	&	0.182436	&	0.0349802	&	\\
-BPR-MF          	&  0.7286434    & 0.0099586 &   1332.8  &   1233.8  &   135.4   &   51.4    &   31      & 5.2     &   0.0385224   &   0.025142    &   0.0385042   &   0.0120152   & 0.0058942 &   0.0133786 && \\
-BPRLinear       	&  0.7097516    & 0.0070648 &   1344.3  &   1241.9  &   141.3   &   27.4    &   25.1    & 2.5     &   0.0203941   &   0.0202133   &   0.017821    &   0.006298    & 0.0075964 &   0.0022692 & \\
-\bottomrule
-\end{tabular}
-}
-\caption{Experimental results random splits 90:10 - The Results are averaged over 5-10 runs}
-\end{table}
-
-%TODO - If time, play with BPR-MF Parameters
-
-It was interesting to see that the performance of ItemBasedKNN actually started to decrease when looking at more than 50 neighbors, while UserBasedKNN's performance kept going up or stayed mostly the same when adding 
-neighbors. UserBasedKNN with between 50-200 neighbors seem to give the best recommendation quality of all the methods tested, and they different is fairly significant.
-
-
-As you can see the random splits significantly improved our event distribution giving us approximately 5\% purchase events for each run.
-As you can see from the table, ItemBasedKNN using cosine similarity gives us the best results for our binary dataset. It has
-the best AUC and retrieved 9.67\% of all wanted items and 9.85\% of all purchases in addition to having the best $MAP@20_{purchase}$ score.
-
-
-
-
-
-\subsection{Implicit Ratings}
-
-This subsection will present the experimental results for the SoBazaar dataset using implicit ratings. First we present
-our results using both time-based and random splits testing different implicit rating mapping functions on different recommendation methods.
-
-
-\subsubsection{Time-based Splits}
-
-Learning from our previous mistakes we this time only performed a 80:20 split based on time, predicting the events between 16. April - 19. May.
-
-\begin{table}[H]
-\centering
-\resizebox{
-\columnwidth}{!}{
-\begin{tabular}{*{19}l}
-\toprule
-Model & AUC &	$MAP@20$ &	$T_{click}$ &	$T_{want}$ &	$T_{purchase}$ &	$P_{click}$&	$T_{want}$ &	$T_{purchase}$ &	$R_{click}$ &	$R_{want}$ &	$R_{purchase}$ &	$MAP@20_{click}$ &	$MAP@20_{want}$	& $MAP@20_{purchase}$ &	 \\
-\midrule
-
-%ItemAverage
-Count linear		&	0.504619 &	0.000092 &	3038 &	2328 &	36 &	1 &		0 &		0 &	0.000329 &	0 		 &	0 		 &	0.00013  &	0 		 &	0 &	 \\
-Price linear		&	0.543423 &	0.000031 &	3038 &	2328 &	36 &	0 &		1 &		0 &	0 		 &	0.00043  &	0 		 &	0 		 &	0.000091 &	0 &	 \\
-Blend 1				&	0.449448 &	0.00469  &	3038 &	2328 &	36 &	14&		17&		0 &	0.004608 &	0.007302 &	0 		 &	0.003783 &	0.003101 &	0 &	 \\
-Popularity Linear	&	0.379832 &	0.000633 &	3038 &	2328 &	36 &	7 &		8 &		1 &	0.002304 &	0.003436 &	0.027778 &	0.000235 &	0.000999 &	0.000505 &	 \\
-Recentness linear	&	0.553508 &	0.000955 &	3038 &	2328 &	36 &	6 &		3 &		0 &	0.001975 &	0.001289 &	0 		 &	0.000861 &	0.00048  &	0 &	 \\
-
-%mahout ItemBased Pearson Correlation
-Count linear		&	0.421494 &	0.002988 &	3038 &	2328 &	36 &	16 &	5 &		0 &	0.005267 &	0.002148 &	0 		 &	0.002921 &	0.000783 &	0 &	 \\
-Price linear		&	0.419343 &	0.003714 &	3038 &	2328 &	36 &	18 &	5 &		1 &	0.005925 &	0.002148 &	0.027778 &	0.003313 &	0.001435 &	0.000379 &	 \\
-Blend 1				&	0.420235 &	0.001436 &	3038 &	2328 &	36 &	10 &	7 &		0 &	0.003292 &	0.003007 &	0		 &	0.001231 &	0.001209 &	0 &	 \\
-Popularity Linear	&	0.326705 &	0		 &	3038 &	2328 &	36 &	0  &	0 &		0 &		0 	 &	0		 &	0 		 &	0 		 &	0 		 &	0		 &	 \\
-Recentness linear	&	0.420134 &	0.002205 &	3038 &	2328 &	36 &	14 &	10&		0 &	0.004608 &	0.004296 &	0 		 &	0.002499 &	0.001059 &	0 &	 \\
-
-%mahout UserBasedKNN k = 50
-Count linear		&	0.402149 &	0.002182 &	3038 &	2328 &	36 &	15 &	7 &		0 &	0.004937 &	0.003007 &	0 		 &	0.001677 &	0.002308 &	0 &	 \\
-Price linear		&	0.395368 &	0.001096 &	3038 &	2328 &	36 &	19 &	5 &		0 &	0.006254 &	0.002148 &	0 		 &	0.000868 &	0.000721 &	0 &	 \\
-Blend 1				&	0.394298 &	0.000941 &	3038 &	2328 &	36 &	6  &	3 &		0 &	0.001975 &	0.001289 &	0 		 &	0.00068  &	0.000784 &	0 &	 \\
-Popularity Linear	&	0.405244 &	0.000644 &	3038 &	2328 &	36 &	8  &	5 &		1 &	0.002633 &	0.002148 &	0.027778 &	0.000367 &	0.000558 &	0.002525 &	 \\
-Recentness linear	&	0.39173  &	0.00109 &	3038 &	2328 &	36 &	8  &	5 &		0 &	0.002633 &	0.002148 &	0 		 &	0.000735 &	0.001022 &	0 &	 \\
-
-%mahout UserBasedKNN k = 100
-Count Sigmoid  		&	0.424043 &	0.001937 &	3038 &	2328 &	36 &	11 &	8  &	0 &	0.003621 &	0.003436 &	0 &	0.001601 &	0.002075 &	0 &	 \\
-Count Linear  		&	0.422888 &	0.001974 &	3038 &	2328 &	36 &	11 &	5  &	0 &	0.003621 &	0.002148 &	0 &	0.001634 &	0.002172 &	0 &	 \\
-Blend  				&	0.424437 &	0.002044 &	3038 &	2328 &	36 &	11 &	10 &	1 &	0.003621 &	0.004296 &	0.027778 &	0.001584 &	0.002733 &	0.000379 &	 \\
-Popularity Linear   &	0.406156 &	0.000916 &	3038 &	2328 &	36 &	7  &	9  &	0 &	0.002304 &	0.003866 &	0 &	0.000468 &	0.001349 &	0 &	 \\
-Recentness Linear   &	0.406574 &	0.000897 &	3038 &	2328 &	36 &	9  &	7  &	0 &	0.002962 &	0.003007 &	0 &	0.000575 &	0.001153 &	0 &	 \\
-
-%ALSWR 100, 100, 15 true, 10
-Count Linear        &   0.628547 &  0.006958 &  3037 &  2328 &  36 & 19.25 & 22.25 & 	3 & 0.006338 &  0.009558 &  0.083333 &  0.005049 &  0.009524 &  0.062978 &   \\
-Popularity Linear   &   0.625682 &  0.001705 &  3037 &  2328 &  36 & 13.5  & 12.75 & 	3 & 0.004445 &  0.005477 &  0.083333 &  0.000739 &  0.003915 &  0.014694 &   \\
-Blend               &   0.623146 &  0.005666 &  3037 &  2328 &  36 & 19.25 & 14.5  &  	3 & 0.006338 &  0.006229 &  0.083333 &  0.004144 &  0.007086 &  0.059737 &   \\
-Recentness Linear   &   0.631948 &  0.006444 &  3037 &  2328 &  36 & 19    & 17.5  & 	3 & 0.006256 &  0.007517 &  0.083333 &  0.004529 &  0.010394 &  0.073505 &   \\
-Price Linear        &   0.611358 &  0.003687 &  3037 &  2328 &  36 & 18.75 & 13    &    4 & 0.006174 &  0.005584 &  0.111111 &  0.002123 &  0.007305 &  0.038556 &   \\
-
-\bottomrule
-\end{tabular}
-}
-\caption{Experimental results time-based splits 80:20 (16. April - 19. May)}
-\end{table}
 
 %TODO - Average Results! (Atleast 3 runs of each)
 %TODO - Test more ALS-WR parameters (Atleast 100, 100, 15, true, 10), can we beat binary?...
@@ -224,8 +100,13 @@ It is was a pleasant surprise to see that both our implicit rating functions bas
 
 Compared to the binary only ratings the results can be considered marginally better. Both in terms of AUC, MAP\@20 and the overall recall scores.
 
-\subsubsection{Random Splits}
 
+\subsection{Random splits}
+
+Since we were not completely satisfied with the event distribution on our time-splits we decided to also evaluate the recommenders on random dataset splits.
+
+The following results are generated using a random dataset splitter. This was performed due to the low amounts of purchase activity the last couple of months to get an even better
+overview of the systems performance.
 
 \begin{table}[H]
 \centering
@@ -233,46 +114,57 @@ Compared to the binary only ratings the results can be considered marginally bet
 \columnwidth}{!}{
 \begin{tabular}{*{19}l}
 \toprule
-Model & AUC &	$MAP@20$ &	$T_{click}$ &	$T_{want}$ &	$T_{purchase}$ &	$P_{click}$&	$T_{want}$ &	$T_{purchase}$ &	$R_{click}$ &	$R_{want}$ &	$R_{purchase}$ &	$MAP@20_{click}$ &	$MAP@20_{want}$	& $MAP@20_{purchase}$ &	 \\
+Model & AUC &	$MAP@20$ &	$T_{click}$ &	$T_{want}$ &	$T_{purchase}$ &	$P_{click}$&	$P_{want}$ & $P_{purchase}$ &	$R_{click}$ &	$R_{want}$ &	$R_{purchase}$ &	$MAP@20_{click}$ &	$MAP@20_{want}$	& $MAP@20_{purchase}$ &	 \\
 \midrule
-%Itembased average pearson
-Count linear		&	0.681723 &	0.002987 &	1342.4 &	1244.3 &	128.3 	&	18.8   &	12.9  &	2.9		 &	0.014021 &	0.010418 &	0.024101 &	0.003002 &	0.002092 &	0.002761 &	 \\
-Price linear		&	0.680758 &	0.004616 &	1332.8 &	1245.7 &	137.15  &	21.1   &	17.6  &	5.63     &	0.015859 &	0.014138 &	0.041189 &	0.003722 &	0.005    &	0.008681 &	 \\
-Blend 1				&	0.684902 &	0.004669 &	1313.5 &	1257.5 &	144 	&	21.7   &	23.2  &	4.25     &	0.016495 &	0.018412 &	0.029243 &	0.004835 &	0.003413 &	0.005781 &	 \\
-Popularity Linear	&	0.554495 &	0.001209 &	1335.7 &	1230.1 &	149.9 	&	0.3    &	6 	  &	5.95     &	0.000198 &	0.004871 &	0.038575 &	0.000028 &	0.002344 &	0.006537 &	 \\
-Recentness linear	&	0.681045 &	0.00349 &	1300.8 &	1262.9 &	140.8   &	19.9   &	16	  &	3.34     &	0.015231 &	0.012658 &	0.02335 &	0.003443 &	0.002389 &	0.006446 &	 \\
+\rowcolor{Gray}
+%Binary Methods
+Most-Popular    			&  0.751516     & 0.013236  &   1323    &   1235    &   135     &   63      &   40.75   & 3.5     &   0.0476135   &   0.03300275  &   0.0270445   &   0.0147725   & 0.0111475 &   0.0098995 & \\
+ItemBased Log	   			&  0.690723     & 0.002094  &   1353.9  &   1250.5  &   138     &   8.8     &   4.6     & 1.47    &   0.006488    &   0.003672    &   0.007252    &   0.001470    & 0.002043  &   0.000618  & \\
+ItemBasedKNN k=120  		&  0.7357796    & 0.0069094 &   1295.8  &   1231.4  &   146.8   & 	37.6    &   53      & 7.2     &   0.0290256   &  0.0431066    &  0.0487262    &  0.0044356    &  0.0097038&   0.0060544 & \\
+UserKNN K = 200 cos 		&  0.7926842	& 0.0317002	&	1282.2	&   1186.2 &	136.4	&	102.2	&	101.4	& 12.6    &	  0.0797042	  &	0.0854958	  &	0.471684	  &	0.128002	  &	0.182436  &	0.0349802	&	\\
+BPR-MF          			&  0.7286434    & 0.0099586 &   1332.8  &   1233.8  &   135.4   &   51.4    &   31      & 5.2     &   0.0385224   &   0.025142    &   0.0385042   &   0.0120152   & 0.0058942 &   0.0133786 & \\
+BPRLinear       			&  0.7097516    & 0.0070648 &   1344.3  &   1241.9  &   141.3   &   27.4    &   25.1    & 2.5     &   0.0203941   &   0.0202133   &   0.017821    &   0.006298    & 0.0075964 &   0.0022692 & \\
 
-%Userbased average K = 50
-Count linear		&	0.6662 	 &	0.003508 &	1334.3 & 	1260.9 &	141.3  &	17.8   &	16.7  &	1.7  &	0.0133   &	0.013211 &	0.012425 &	0.002887 &	0.004206 &	0.002634 &	 \\
-Price linear		&	0.657162 &	0.003731 &	1334.7 & 	1268   &	141    &	16 	   &	23.7  &	0.6  &	0.011943 &	0.018701 &	0.004606 &	0.00304 &	0.005287 &	0.000543 &	 \\
-Blend 1				&	0.657548 &	0.003138 &	1336.5 & 	1255.8 &	144.2  &	11.7   &	12.1  &	2.5  &	0.008752 &	0.009632 &	0.017344 &	0.003187 &	0.001709 &	0.003402 &	 \\
-Popularity Linear	&	0.662589 &	0.00196  &	1329.9 & 	1266.5 &	140.1  &	8.8    &	14    &	1.9  &	0.006632 &	0.010978 &	0.013628 &	0.001192 &	0.002801 &	0.001197 &	 \\
-Recentness linear	&	0.630218 &	0.002542 &	1341.7 & 	1248.9	&	153.1  &	14.7   &	12.9  &	3.8  &	0.01     &	0.010284 &	0.025173 &	0.001919 &	0.003005 &	0.002768 &	 \\
-
-%ALS-WR 100 100 15 true 10
-Count linear		&	0.813701 & 0.032043	&	1340.8	&	1246.6	&	141.9	&	114.4	&	114.5	&	13.2	&	0.085293	&	0.091838	&	0.093449	&	0.027457	&	0.033701	&	0.037635 &	\\
-Price linear		&	0.797892 & 0.034154	&	1340.5	&	1250.8	&	138.0	&	108.3	&	121.4	&	15.0	&	0.080842	&	0.09701		&	0.108833	&	0.028443	&	0.035474	&	0.033493 & 	\\
-Blend 1	        	&   0.807673 & 0.034147	&	1339.7	&	1255.1	&	134.4	&	117.0	&	125.0	&	12.4	&	0.087277	&	0.099575	&	0.092396	&	0.028199	&	0.041825	&	0.029776 &	\\
-Popularity Linear	&	0.80708	 & 0.023619  &	1332.1	&	1251.2	&	145.9	&	83.0	&	93.6	&	9.7		&	0.062324	&	0.074848	&	0.066325	&	0.018547	&	0.029953	&	0.01606	 &	\\
-Recentness linear	&	0.812053 & 0.037945	&	1337.9	&	1254.5	&	136.8	&	120.8	&	130.2	&	13.5	&	0.090251	&	0.103819	&	0.100385	&	0.031089	&	0.041618	&	0.03764	 &  \\
+%ItemBased
+IBCF Price linear			&	0.680758 &	0.004616 &	1332.8 &	1245.7 &	137.15  &	21.1   		&	17.6    &	5.63   &	0.015859 &	0.014138 &	0.041189 &	0.003722 &	0.005    &	0.008681 &	 \\
+IBCF Popularity Linear		&	0.554495 &	0.001209 &	1335.7 &	1230.1 &	149.9 	&	0.3    		&	6 	    &	5.95   &	0.000198 &	0.004871 &	0.038575 &	0.000028 &	0.002344 &	0.006537 &	 \\
+IBCF Blend				    &	0.681773 &	0.006226 &	1328.5 &	1245   &	147.5   &	20.5        &	18.5    &	4.5    &	0.015464 &	0.014836 &	0.030416 &	0.004825 &	0.006603 &	0.009863 &	 \\
 
 %ALS-WR 100 100 15 true 10
-Price Linear 		&	0.795923 &	0.032678 &	1355 	&	1243.25 &	127.5 &	106 		&	120.5 &	11.25 &	0.078259 &	0.09688 &	0.087813 &	0.025437 &	0.0382 &	0.033007 &	 \\
-Blend 				&	0.800422 &	0.034519 &	1344.75 &	1246.5  &	134.5 &	104.5 		&	120.75 &	13.5 &	0.077686 &	0.097038 &	0.100486 &	0.026307 &	0.041865 &	0.025649 &	 \\
-Popularity Linear 	&	0.816561 &	0.023916 &	1340.5	&	1246.25 &	139   &	86.5		 &	98.25 &	8.5 &	0.064534 &	0.078812 &	0.060836 &	0.018396 &	0.031169 &	0.01758 &	 \\
+ALS-WR Price linear			&	0.797892 &  0.034154  &	1340.5	&	1250.8	&	138.0	&	108.3		&	121.4	&	15.0   &	0.080842 &	0.09701	 &	0.108833 &	0.028443 &	0.035474 &	0.033493 & 	\\
+ALS-WR Popularity Linear 	&	0.816561 &	0.023916 &	1340.5	&	1246.25 &	139   	&	86.5		&	98.25   &	8.5    &	0.064534 &	0.078812 &	0.060836 &	0.018396 &	0.031169 &	0.01758 &	\\
+ALS-WR Blend 				&	0.800422 &	0.034519 &	1344.75 &	1246.5  &	134.5 	&	104.5 		&	120.75  &	13.5   &	0.077686 &	0.097038 &	0.100486 &	0.026307 &	0.041865 &	0.025649 &	 \\
+ALS-WR Blend				&	0.808125 &	0.035802 &	1305.5 &	1221.5 &	150.5   &	98.5 		&	123.5   &	16 	   &	0.075447 &	0.101033 &	0.106291 &	0.027193 &	0.042275 &	0.05209 &	 \\
 
 
 \bottomrule
 \end{tabular}
 }
-\caption{Implicit rating experimental results using random 90-10 dataset splits}
+\caption{Experimental results random splits 90:10 - The Results are averaged over 5-10 runs}
 \end{table}
 
-%TODO - atleast Two runs using userbased k = 100
+%TODO - If time, play with BPR-MF Parameters
 %TODO - Makes no sense to look at recentness here, make other blends
 %TODO - If time, more tuning of ALS-WR parameters
 %TODO - Test two or three more blends
 %TODO - Compare with binary results, do we see any improvements?
+
+
+It was interesting to see that the performance of ItemBasedKNN actually started to decrease when looking at more than 50 neighbors, while UserBasedKNN's performance kept going up or stayed mostly the same when adding 
+neighbors. UserBasedKNN with between 50-200 neighbors seem to give the best recommendation quality of all the methods tested, and they different is fairly significant.
+
+
+As you can see the random splits significantly improved our event distribution giving us approximately 5\% purchase events for each run.
+As you can see from the table, ItemBasedKNN using cosine similarity gives us the best results for our binary dataset. It has
+the best AUC and retrieved 9.67\% of all wanted items and 9.85\% of all purchases in addition to having the best $MAP@20_{purchase}$ score.
+
+
+
+
+
+
+
+
 
 
 
@@ -295,38 +187,20 @@ The following results shows the baseline cold-start performance of our models be
 \centering
 \resizebox{\columnwidth}{!}{%
 \begin{tabular}{*{17}{l}}
-\toprule
-	&
-    \multicolumn{3}{c}{AUC} &
-    \multicolumn{3}{c}{$MAP@20$} &
-	\multicolumn{3}{c}{$R_{click}$} &
-    \multicolumn{3}{c}{$R_{want}$} 	&
-    \multicolumn{3}{c}{$R_{purchase}$} 	& \\
-    \cmidrule(lr){2-4}
-    \cmidrule(lr){5-7}
-    \cmidrule(lr){8-10}
-    \cmidrule(lr){11-13}
-    \cmidrule(lr){14-16}
-    Model &
-    \multicolumn{1}{c}{10\%} &
-    \multicolumn{1}{c}{40\%} &
-    \multicolumn{1}{c}{75\%} &
-    \multicolumn{1}{c}{10\%} &
-    \multicolumn{1}{c}{40\%} &
-    \multicolumn{1}{c}{75\%} &
-    \multicolumn{1}{c}{10\%} &
-    \multicolumn{1}{c}{40\%} &
-    \multicolumn{1}{c}{75\%} &
-    \multicolumn{1}{c}{10\%} &
-    \multicolumn{1}{c}{40\%} &
-    \multicolumn{1}{c}{75\%} &
-    \multicolumn{1}{c}{10\%} &
-    \multicolumn{1}{c}{40\%} &
-    \multicolumn{1}{c}{75\%} &
-  	\\ \midrule 
+\toprule &
+\multicolumn{3}{c}{AUC} & \multicolumn{3}{c}{$MAP@20$} & \multicolumn{3}{c}{$R_{click}$} &  \multicolumn{3}{c}{$R_{want}$} 	& \multicolumn{3}{c}{$R_{purchase}$} & \\
+\cmidrule(lr){2-4}    \cmidrule(lr){5-7}    \cmidrule(lr){8-10}    \cmidrule(lr){11-13}    \cmidrule(lr){14-16} Model &
+\multicolumn{1}{c}{10\%} & \multicolumn{1}{c}{40\%} & \multicolumn{1}{c}{75\%} & \multicolumn{1}{c}{10\%} & \multicolumn{1}{c}{40\%} & \multicolumn{1}{c}{75\%} & \multicolumn{1}{c}{10\%} &
+\multicolumn{1}{c}{40\%} & \multicolumn{1}{c}{75\%} & \multicolumn{1}{c}{10\%} & \multicolumn{1}{c}{40\%} & \multicolumn{1}{c}{75\%} & \multicolumn{1}{c}{10\%} & \multicolumn{1}{c}{40\%} &
+\multicolumn{1}{c}{75\%} & 	\\ \midrule 
+
+
+%PRE FILTERBOTS
 Most-Popular		& 0.3096225 & 0.90448 & 0.8469825 & 0 & 0.0267585 & 0.0234215 & 0 & 0.1207895 & 0.0943945 & 0 & 0.093357 & 0.07894715 & 0 & 0.08314335 & 	0.07447935 & \\
 IBCF				& 0.585499 & 0.660409 & 0.7477435 & 0.000022 & 0.00571 & 0.005563 & 0.000308 & 0.019538 & 0.013896 & 0.000188 & 0.022364 & 0.0170475 & 0 & 0.034109 & 0.0284045 & \\ 
 ALSWR				& 0.572094 & 0.8063845 &  0.698199 & 0.000124 & 0.024819 & 0.024362 & 0.00069 & 0.0745415 & 0.06881 & 0.000192 & 0.0819305 & 0.088515 & 	0.0025135 & 	0.071247 & 	0.071688 & \\
+
+
 \bottomrule
 \end{tabular}
 }
@@ -337,39 +211,19 @@ ALSWR				& 0.572094 & 0.8063845 &  0.698199 & 0.000124 & 0.024819 & 0.024362 & 0
 \centering
 \resizebox{\columnwidth}{!}{%
 \begin{tabular}{*{17}{l}}
-\toprule
-	&
-	\multicolumn{3}{c}{AUC} &
-    \multicolumn{3}{c}{$MAP@20$} &
-	\multicolumn{3}{c}{$R_{click}$} &
-    \multicolumn{3}{c}{$R_{want}$} 	&
-    \multicolumn{3}{c}{$R_{purchase}$} 	& \\
-    \cmidrule(lr){2-4}
-    \cmidrule(lr){5-7}
-    \cmidrule(lr){8-10}
-    \cmidrule(lr){11-13}
-    \cmidrule(lr){14-16}
-    Model &
-    \multicolumn{1}{c}{10\%} &
-    \multicolumn{1}{c}{40\%} &
-    \multicolumn{1}{c}{75\%} &
-    \multicolumn{1}{c}{10\%} &
-    \multicolumn{1}{c}{40\%} &
-    \multicolumn{1}{c}{75\%} &
-    \multicolumn{1}{c}{10\%} &
-    \multicolumn{1}{c}{40\%} &
-    \multicolumn{1}{c}{75\%} &
-    \multicolumn{1}{c}{10\%} &
-    \multicolumn{1}{c}{40\%} &
-    \multicolumn{1}{c}{75\%} &
-    \multicolumn{1}{c}{10\%} &
-    \multicolumn{1}{c}{40\%} &
-    \multicolumn{1}{c}{75\%} &
-  	\\ \midrule 
+\toprule &
+\multicolumn{3}{c}{AUC} & \multicolumn{3}{c}{$MAP@20$} & \multicolumn{3}{c}{$R_{click}$} &  \multicolumn{3}{c}{$R_{want}$} 	& \multicolumn{3}{c}{$R_{purchase}$} & \\
+\cmidrule(lr){2-4}    \cmidrule(lr){5-7}    \cmidrule(lr){8-10}    \cmidrule(lr){11-13}    \cmidrule(lr){14-16} Model &
+\multicolumn{1}{c}{10\%} & \multicolumn{1}{c}{40\%} & \multicolumn{1}{c}{75\%} & \multicolumn{1}{c}{10\%} & \multicolumn{1}{c}{40\%} & \multicolumn{1}{c}{75\%} & \multicolumn{1}{c}{10\%} &
+\multicolumn{1}{c}{40\%} & \multicolumn{1}{c}{75\%} & \multicolumn{1}{c}{10\%} & \multicolumn{1}{c}{40\%} & \multicolumn{1}{c}{75\%} & \multicolumn{1}{c}{10\%} & \multicolumn{1}{c}{40\%} &
+\multicolumn{1}{c}{75\%} & 	\\ \midrule 
+
+
+%Pre Filterbots
 Most-Popular		& 0.7206055	&	0.7260445&	0.729684&	0.029688&	0.017628	& 0.0062015 &	0.039089 &	0.03653 &	0.021841 &	0.02732585 &	0.02744665 &	0.01734265 &	0.02675 & 0.02343615 &	0.01177485& \\
 IBCF				& 0.538305	&	0.6320575 &	0.705002 &	0.021137 &	0.006926 &	0.0006575 &	0.0163445 &	0.0133165 &	0.0022905 &	0.020079 &	0.012804&	0.0042755 &	0.0310315&	0.033987&	0.012295& \\
 ALSWR				& 0.7571865 &	0.741754&	0.796946&	0.0325415&	0.051159&	0.0305585&	0.0316075&	0.0401135&	0.0409645&	0.047797&	0.054792&	0.057723&	0.0428965&	0.063628& 	0.064841& \\
-lticolumn{3}{c|}{AUC} & \multicolumn{3}{c|}{$MAP@20$} &	 \multicolumn{3}{c|}{$R_{click}$} & \multicolumn{3}{c|}{$R_{want}$} & \multicolumn{3}{c|}{$R_{purchase}$} \\
+
 
 \bottomrule
 \end{tabular}
@@ -381,38 +235,20 @@ lticolumn{3}{c|}{AUC} & \multicolumn{3}{c|}{$MAP@20$} &	 \multicolumn{3}{c|}{$R_
 \centering
 \resizebox{\columnwidth}{!}{%
 \begin{tabular}{*{17}{l}}
-\toprule
- 	 &
-    \multicolumn{3}{c}{AUC} &
-    \multicolumn{3}{c}{$MAP@20$} &
-	\multicolumn{3}{c}{$R_{click}$} &
-    \multicolumn{3}{c}{$R_{want}$} 	&
-    \multicolumn{3}{c}{$R_{purchase}$} 	& \\
-    \cmidrule(lr){2-4}
-    \cmidrule(lr){5-7}
-    \cmidrule(lr){8-10}
-    \cmidrule(lr){11-13}
-    \cmidrule(lr){14-16}
-    Model &
-    \multicolumn{1}{c}{40\%} &
-    \multicolumn{1}{c}{60\%} &
-    \multicolumn{1}{c}{80\%} &
-    \multicolumn{1}{c}{40\%} &
-    \multicolumn{1}{c}{60\%} &
-    \multicolumn{1}{c}{80\%} &
-    \multicolumn{1}{c}{40\%} &
-    \multicolumn{1}{c}{60\%} &
-    \multicolumn{1}{c}{80\%} &
-    \multicolumn{1}{c}{40\%} &
-    \multicolumn{1}{c}{60\%} &
-    \multicolumn{1}{c}{80\%} &
-    \multicolumn{1}{c}{40\%} &
-    \multicolumn{1}{c}{60\%} &
-    \multicolumn{1}{c}{80\%} &
-  	\\ \midrule
+\toprule &
+\multicolumn{3}{c}{AUC} & \multicolumn{3}{c}{$MAP@20$} & \multicolumn{3}{c}{$R_{click}$} &  \multicolumn{3}{c}{$R_{want}$} 	& \multicolumn{3}{c}{$R_{purchase}$} & \\
+\cmidrule(lr){2-4}    \cmidrule(lr){5-7}    \cmidrule(lr){8-10}    \cmidrule(lr){11-13}    \cmidrule(lr){14-16} Model &
+\multicolumn{1}{c}{40\%} & \multicolumn{1}{c}{60\%} & \multicolumn{1}{c}{80\%} & \multicolumn{1}{c}{40\%} & \multicolumn{1}{c}{60\%} & \multicolumn{1}{c}{80\%} & \multicolumn{1}{c}{40\%} &
+\multicolumn{1}{c}{60\%} & \multicolumn{1}{c}{80\%} & \multicolumn{1}{c}{40\%} & \multicolumn{1}{c}{60\%} & \multicolumn{1}{c}{80\%} & \multicolumn{1}{c}{40\%} & \multicolumn{1}{c}{60\%} &
+\multicolumn{1}{c}{80\%} & 	\\ \midrule 
+
+
+%Pre Filterbots
 Most-Popular &	0.708515  &	0.6752165 &	0.663937  &	0.014044 &	0.012578 &	0.0139605 &	0.041488 & 0.0370545  & 0.033597	&	0.03214465 & 0.0297455 & 0.029427	&	0.02887465	 & 0.0243725 & 0.021974 & \\
 IBCF 		 &	0.5730765 &	0.5847735 &	0.613753  &	0.003057 &	0.0034495 & 0.002457 &	0.009752 &	0.0125695 & 0.0086305   & 	0.021379   & 0.0136815 & 0.011022 	&	0.018308	 & 0.037721  & 	0.0271465  & \\
-ALSWR		 &	0.7473595 &	0.646568  &	0.6094695 &	0.030684 &	0.0110905 &	0.0081595 &	0.076963 &	0.02659	& 	0.0199265	&	0.1011035 & 0.03916	& 0.028979	&	0.0823435 & 0.034093 &	0.018231  & \\		
+ALSWR		 &	0.7473595 &	0.646568  &	0.6094695 &	0.030684 &	0.0110905 &	0.0081595 &	0.076963 &	0.02659	& 	0.0199265	&	0.1011035 & 0.03916	& 0.028979	&	0.0823435 & 0.034093 &	0.018231  & \\	
+
+	
 \bottomrule
 \end{tabular}
 }
@@ -420,19 +256,7 @@ ALSWR		 &	0.7473595 &	0.646568  &	0.6094695 &	0.030684 &	0.0110905 &	0.0081595 &
 \end{table}
 
 
-%\begin{table}
-%\centering
-%\resizebox{\columnwidth}{!}{%
-%\begin{tabular}{*{16}l}
-%\toprule
-% & 		\multicolumn{3}{c|}{AUC} & \multicolumn{3}{c|}{$MAP@20$} &	 \multicolumn{3}{c|}{$R_{click$} &	 \multicolumn{3}{c|}{$R_{want}$ & \multicolumn{3}{c|}{$R_{purchase}$ \\
-% Model 	& 10\% 	 & 40\%   & 75\%   & 10\%   & 40\%   & 75\%   & 10\%   & 40\% 	& 75\%	 & 10\%   & 40\%   & 75\%   & 10\% & 40\% & 75\%  			 \\ \midrule
-%
-%\end{tabular}
-%}
-%\caption{SoBazaar Cold-start Item Evaluation Results using Implicit Ratings (count\_sigmoid\_fixed\_sr-3.5.txt)}
-%\end{table}
-
+%TODO - Average Table
 
 
 The reason why most popular does so well on the cold-start item problem is due to the fact that we select the most popular items as test items.
@@ -643,28 +467,28 @@ avgs	 &	0.569021 &	0.003237 &	2601.222222 &	2330 &	140.666667 &	11.277778 &	13.2
 
 
 %SVD - TimeSplits 1 1 1 1 1
-item-10 &	0.502866 &	0.001702 &	3307 &	2614 &	242 &	22 &	14 &	1 &	0.006653 &	0.005356 &	0.004132 &	0.001409 &	0.001518 &	0.000781 &	 \\
-item-40 &	0.528849 &	0.001701 &	2271 &	1690 &	151 &	15 &	9 &	0 &	0.006605 &	0.005325 &	0 &	0.001652 &	0.001446 &	0 &	 \\
-system-40 &	0.42917 &	0.000196 &	3048 &	2308 &	36 &	2 &	2 &	0 &	0.000656 &	0.000867 &	0 &	0.000153 &	0.000124 &	0 &	 \\
-system-80 &	0.40721 &	0.000253 &	3048 &	2308 &	36 &	5 &	2 &	0 &	0.00164 &	0.000867 &	0 &	0.000213 &	0.00012 &	0 &	 \\
-system-60 &	0.415846 &	0.000999 &	3048 &	2308 &	36 &	5 &	1 &	0 &	0.00164 &	0.000433 &	0 &	0.001044 &	0.000219 &	0 &	 \\
-item-75 &	0.515971 &	0.001253 &	1010 &	708 &	53 &	9 &	6 &	1 &	0.008911 &	0.008475 &	0.018868 &	0.00092 &	0.001444 &	0.002976 &	 \\
-user-75 &	0.515962 &	0.001336 &	1062 &	1559 &	70 &	1 &	10 &	1 &	0.000942 &	0.006414 &	0.014286 &	0.000751 &	0.0016 &	0.002232 &	 \\
-user-10 &	0.580926 &	0.005989 &	3844 &	5281 &	430 &	15 &	47 &	11 &	0.003902 &	0.0089 &	0.025581 &	0.001671 &	0.004785 &	0.004144 &	 \\
-user-40 &	0.558447 &	0.002253 &	2536 &	3620 &	230 &	4 &	19 &	1 &	0.001577 &	0.005249 &	0.004348 &	0.000589 &	0.001866 &	0.001064 &	 \\
-avgs	 &	0.495028 &	0.001742 &	2574.888889 &	2488.444444 &	142.666667 &	8.666667 &	12.222222 &	1.666667 &	0.003614 &	0.004654 &	0.007468 &	0.000934 &	0.001458 &	0.001244 &	\\
-
-%ItemBased - Timesplits 1 1 1 1 1
-item-10 &	0.639232 &	0.000477 &	3307 &	2614 &	242 &	6 &	9 &	0 &	0.001814 &	0.003443 &	0 &	0.00041 &	0.000549 &	0 &	 \\
-item-40 &	0.726871 &	0.01346 &	2271 &	1690 &	151 &	96 &	73 &	6 &	0.042272 &	0.043195 &	0.039735 &	0.012657 &	0.019136 &	0.010179 &	 \\
-system-40 &	0.534059 &	0.003978 &	3048 &	2308 &	36 &	13 &	10 &	0 &	0.004265 &	0.004333 &	0 &	0.003523 &	0.001789 &	0 &	 \\
-system-80 &	0.542178 &	0.001593 &	3048 &	2308 &	36 &	12 &	7 &	0 &	0.003937 &	0.003033 &	0 &	0.001467 &	0.001532 &	0 &	 \\
-system-60 &	0.52987 &	0.004118 &	3048 &	2308 &	36 &	16 &	12 &	2 &	0.005249 &	0.005199 &	0.055556 &	0.003343 &	0.002371 &	0.005468 &	 \\
-item-75 &	0.765866 &	0.037104 &	1010 &	708 &	53 &	97 &	74 &	4 &	0.09604 &	0.10452 &	0.075472 &	0.034926 &	0.036877 &	0.010268 &	 \\
-user-75 &	0.718682 &	0.009978 &	1062 &	1559 &	70 &	22 &	63 &	4 &	0.020716 &	0.040411 &	0.057143 &	0.00273 &	0.013868 &	0.011675 &	 \\
-user-10 &	0.658746 &	0.02711 &	3844 &	5281 &	430 &	68 &	129 &	29 &	0.01769 &	0.024427 &	0.067442 &	0.007861 &	0.018109 &	0.038802 &	 \\
-user-40 &	0.689484 &	0.017514 &	2536 &	3620 &	230 &	55 &	97 &	14 &	0.021688 &	0.026796 &	0.06087 &	0.006168 &	0.014466 &	0.017258 &	 \\
-avgs	 &	0.644999 &	0.012815 &	2574.888889 &	2488.444444 &	142.666667 &	42.777778 &	52.666667 &	6.555556 &	0.023741 &	0.028373 &	0.03958 &	0.00812 &	0.012078 &	0.010406 &	\\
+%item-10 &	0.502866 &	0.001702 &	3307 &	2614 &	242 &	22 &	14 &	1 &	0.006653 &	0.005356 &	0.004132 &	0.001409 &	0.001518 &	0.000781 &	 \\
+%item-40 &	0.528849 &	0.001701 &	2271 &	1690 &	151 &	15 &	9 &	0 &	0.006605 &	0.005325 &	0 &	0.001652 &	0.001446 &	0 &	 \\
+%system-40 &	0.42917 &	0.000196 &	3048 &	2308 &	36 &	2 &	2 &	0 &	0.000656 &	0.000867 &	0 &	0.000153 &	0.000124 &	0 &	 \\
+%system-80 &	0.40721 &	0.000253 &	3048 &	2308 &	36 &	5 &	2 &	0 &	0.00164 &	0.000867 &	0 &	0.000213 &	0.00012 &	0 &	 \\
+%system-60 &	0.415846 &	0.000999 &	3048 &	2308 &	36 &	5 &	1 &	0 &	0.00164 &	0.000433 &	0 &	0.001044 &	0.000219 &	0 &	 \\
+%item-75 &	0.515971 &	0.001253 &	1010 &	708 &	53 &	9 &	6 &	1 &	0.008911 &	0.008475 &	0.018868 &	0.00092 &	0.001444 &	0.002976 &	 \\
+%user-75 &	0.515962 &	0.001336 &	1062 &	1559 &	70 &	1 &	10 &	1 &	0.000942 &	0.006414 &	0.014286 &	0.000751 &	0.0016 &	0.002232 &	 \\
+%user-10 &	0.580926 &	0.005989 &	3844 &	5281 &	430 &	15 &	47 &	11 &	0.003902 &	0.0089 &	0.025581 &	0.001671 &	0.004785 &	0.004144 &	 \\
+%user-40 &	0.558447 &	0.002253 &	2536 &	3620 &	230 &	4 &	19 &	1 &	0.001577 &	0.005249 &	0.004348 &	0.000589 &	0.001866 &	0.001064 &	 \\
+%avgs	 &	0.495028 &	0.001742 &	2574.888889 &	2488.444444 &	142.666667 &	8.666667 &	12.222222 &	1.666667 &	0.003614 &	0.004654 &	0.007468 &	0.000934 &	0.001458 &	0.001244 &	\\
+%
+%%ItemBased - Timesplits 1 1 1 1 1
+%item-10 &	0.639232 &	0.000477 &	3307 &	2614 &	242 &	6 &	9 &	0 &	0.001814 &	0.003443 &	0 &	0.00041 &	0.000549 &	0 &	 \\
+%item-40 &	0.726871 &	0.01346 &	2271 &	1690 &	151 &	96 &	73 &	6 &	0.042272 &	0.043195 &	0.039735 &	0.012657 &	0.019136 &	0.010179 &	 \\
+%system-40 &	0.534059 &	0.003978 &	3048 &	2308 &	36 &	13 &	10 &	0 &	0.004265 &	0.004333 &	0 &	0.003523 &	0.001789 &	0 &	 \\
+%system-80 &	0.542178 &	0.001593 &	3048 &	2308 &	36 &	12 &	7 &	0 &	0.003937 &	0.003033 &	0 &	0.001467 &	0.001532 &	0 &	 \\
+%system-60 &	0.52987 &	0.004118 &	3048 &	2308 &	36 &	16 &	12 &	2 &	0.005249 &	0.005199 &	0.055556 &	0.003343 &	0.002371 &	0.005468 &	 \\
+%item-75 &	0.765866 &	0.037104 &	1010 &	708 &	53 &	97 &	74 &	4 &	0.09604 &	0.10452 &	0.075472 &	0.034926 &	0.036877 &	0.010268 &	 \\
+%user-75 &	0.718682 &	0.009978 &	1062 &	1559 &	70 &	22 &	63 &	4 &	0.020716 &	0.040411 &	0.057143 &	0.00273 &	0.013868 &	0.011675 &	 \\
+%user-10 &	0.658746 &	0.02711 &	3844 &	5281 &	430 &	68 &	129 &	29 &	0.01769 &	0.024427 &	0.067442 &	0.007861 &	0.018109 &	0.038802 &	 \\
+%user-40 &	0.689484 &	0.017514 &	2536 &	3620 &	230 &	55 &	97 &	14 &	0.021688 &	0.026796 &	0.06087 &	0.006168 &	0.014466 &	0.017258 &	 \\
+%avgs	 &	0.644999 &	0.012815 &	2574.888889 &	2488.444444 &	142.666667 &	42.777778 &	52.666667 &	6.555556 &	0.023741 &	0.028373 &	0.03958 &	0.00812 &	0.012078 &	0.010406 &	\\
 
 
 \subsection{Does our proposed implicit rating methods improve the recommendation quality over binary preference data?}
@@ -702,7 +526,7 @@ The more data the better. With little or no data you won't be able to make recom
 system will not be \emph{the milkshake that brings all the boys to the yard}. Instead the focus should be on building your core product, optimizing your e-commerce funnel, growing your user base, developing user loyalty and growing your inventory. In the meantime you can drive serendipitous recommendations simply by using a combination of most popular content and editors.
 
 
-%TIMEBASED 80:20
+%TIMEBASED 80:20 BASELINES
 %%ALSWR 20, 100, 5, true, 20
 %Count linear		&	0.602177 &	0.003624 &	3038 &	2328 &	36 &	29 &	15 &	1 &	0.009546 &	0.006443 &	0.027778 &	0.002993 &	0.002128 &	0.004167 &	 \\
 %Price linear		&	0.622406 &	0.004063 &	3038 &	2328 &	36 &	24 &	12 &	1 &	0.0079   &	0.005155 &	0.027778 &	0.003383 &	0.002566 &	0.041667 &	 \\
