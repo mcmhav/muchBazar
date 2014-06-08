@@ -355,17 +355,7 @@
         \caption{Figures presenting the distribution of events for the products i SoBazaar}
     \end{figure}
         80\% of the products only have an interaction count of 10 or less, where interaction count is \emph{product\_detail\_clicked}, \emph{product\_wanted} and \emph{product\_purchase\_intended}.
-        This means that there will not be more than 10 events for the majority of the items, with no more than 10 datapoints to connect with other items for the majority of the items,
-        Making recommendations through itembased recommendations might prove problematic.
-
-        6000 items
-            10 < evs on 80\% of items
-            one item 10 or less possible connection points for 80\% of the items
-
-
-        which might lead to an issue when doing collaborative filtering on the data.
-
-        prove problematic -> itembased paer per germener explain
+        This means that there will not be more than 10 events for the majority of the items, with no more than 10 datapoints to connect with other items for the majority of the items, recommendations done through connecting items to other items through item interaction, might prove problematic.
 
         When the majority of the events only has 10 events and there are over 6 000 items and 2 000 users, the probability that multiple users have interacted with similar items will be marginal, but promotes the importance of utilizing all the feedback to bolster the recommender.
 
@@ -515,6 +505,9 @@
     As we can see from table~\ref{table:paretosPrinciple}, the 20\% most frequently interacted with items represents 59.1701\% of the item interaction in total.
     We have to move up to 41\% to reach 80\% of the interactions, and the Pareto's principle does therefore not apply to the SoBazaar dataset.
 
+    Even though Pareto's Principle does not apply to this data, is the information regarding where the majority (the 80\%) of the item interaction resides valuable.
+    To reach the majority of the item interaction we have to cover over 41\% of the most popular items, which might in turn lead to bad most popular results.
+
 \paragraph{Long Tail}
     The definition of long tail is that the most frequently-occurring items represent less than 50\% of occurrences in logs~\cite{DBLP:journals/corr/abs-1203-4487}.
 
@@ -534,14 +527,15 @@
     As the table above shows the SoBazaar data does not posses a clear long tail behavior.
     The average interaction count of the products is 6.6928 and there is 4194 products with less than this number of interactions, but these items does only cover 28.5408\% of the total interactions.
 
+    The next figure displays an overview of which events are triggered on the \emph{storefronts} in the SoBazaar application.
+
     \begin{figure}[H]
         \includegraphics[width=5in]{image/storefront_nameandEventdistribution.png}
         \centering
         \caption{Distribution of events on storefronts}
     \label{figure:eventOnStoreFrontDist}
     \end{figure}
-        \marginpar{sort it}
-        The events triggered in context with the different storefronts.
+        The figure above presents the event distribution on the different storefronts.
         The events are segmented to show the different event counts on the different storefronts, and stacked to show the complete count, to be able to clearly see how the events are distributed over the different stores.
         We can see that \emph{H\&M} is the most popular store in total, but \emph{BIK BOK} has the most \emph{product\_purchase\_intended}-events.
         One interesting find to take from this graph is the \emph{storefront\_clicked} to the item interaction related events (\emph{product\_detail\_clicked}, \emph{product\_wanted} and \emph{product\_purchase\_intended}) ratio.
@@ -549,6 +543,20 @@
         Different aspects affecting this might be price, style and item presentation.
 
 \subsection{Time properties}
+    It is not only important to look at if a user has accessed an item, or if a user has a certain preference, time might also tell something about the preferences of the user.
+
+    The next figure shows the average lifetime of the products in the SoBazaar database.
+
+    \begin{figure}[H]
+        \includegraphics[width=5in]{image/itemTimespansdistribution.png}
+        \centering
+        \caption{Count of the different time spans of the items}
+    \label{figure:itemLifes}
+    \end{figure}
+        This figure shows the count of products which has the different time spans.
+        This figure makes it clearer than figure~\ref{figure:itemTimeSpanEventCount} how long the majority of the the products have lived.
+
+        Almost 2 500 products have a life span of less than a week, which shows how important it is to handle the recentness of the products to be able to follow the ever-changing trends.
 
     \begin{figure}[H]
         \includegraphics[width=5in]{image/avglifetimeoncount.png}
@@ -576,17 +584,6 @@
         Time is shown in weeks, so the longest time span of an item is about 27 weeks, which is close to the time span of the events gathered from SoBazaar.
         Even though an item has a long time span does not mean that the item has been of measurable interest to the users in the SoBazaar application, but we see that the more interaction on the item, the longer the average life time, but the recentness of an item is important.
         Even though some item has a lot of interaction, they item can have a quite low lifespan, which promotes the importance of looking into recentness.
-
-    \begin{figure}[H]
-        \includegraphics[width=5in]{image/itemTimespansdistribution.png}
-        \centering
-        \caption{Count of the different time spans of the items}
-    \label{figure:itemLifes}
-    \end{figure}
-        This figure shows the count of products which has the different time spans.
-        This figure makes it clearer than figure~\ref{figure:itemTimeSpanEventCount} how long the majority of the the products have lived.
-
-        Almost 2 500 products have a life span of less than a week, which shows how important it is to handle the recentness of the products to be able to follow the ever-changing trends.
 
     % hvorfor? er det pga:
         % a) pga veldig få events
@@ -654,7 +651,7 @@
     The time an item lives varies greatly, but over one third of the items are active for no more than 1 week, which makes it important to consider how new an item is when making predictions.
 
 
-\section{Conversion rate properties}
+\section{Conversion Rate Properties}
 \label{sec:conv-rate}
 
 In many domains the number of activities on an item given a specific user
