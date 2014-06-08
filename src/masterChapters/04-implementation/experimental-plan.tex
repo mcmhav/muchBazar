@@ -18,10 +18,10 @@ We have the following main goals for our experiment:
 	binary preference data.
 	\item Evaluate the different implicit rating features and attempt to quantify their importance.
 	\item Quantify the value of adding a cold-start solution method to the system.
-	\item Propose a \emph{best} best combination of methods, given our current limitations for the SoBazar recommender system.
+	\item Propose a \emph{best} combination of methods, given our current limitations for the SoBazar recommender system.
 \end{itemize}
 
-As baselines for our project we wish to first test a set of binary methods on the sobazar data
+As baselines for our project we wish to first test a set of binary methods on the SoBazaar data
 looking only at \emph{purchases}. We do the same for a binary dataset including the events
 \emph{purchase}, \emph{wants} and \emph{likes}. We then want to test our \emph{implicit ratings}
 considering different factors such as \emph{implicit factor weighting}, \emph{global popularity},
@@ -54,7 +54,7 @@ The following figure shows an overview of the rating evaluation pipeline:
 In order to further specify our goals we therefore have to take a closer look at the recommender's task,
 its interface and the available data. The most typical task for a e-commerce recommender system is to
 determine an order of items, often with the purpose of creating a top-k list of items that is shown in a sidebar
-or on a dedicated page. The following figure shows the Sobazar newsfeed. Recommendations are likely
+or on a dedicated page. The following figure shows the SoBazaar newsfeed. Recommendations are likely
 to be shown in a similar fashion. The interface currently initially shows four items, but lets the
 user scroll sideways over up to 20 items.
 
@@ -65,7 +65,7 @@ user scroll sideways over up to 20 items.
 		\end{subfigure}
 		\begin{subfigure}[b]{.45\linewidth}
 			\centering
-			\includegraphics[scale=0.25]{image/SoBazaarsale.png} 
+			\includegraphics[scale=0.25]{image/SoBazaarsale.png}
 		\end{subfigure}
 		\caption[Sobazaar News Feed - Version 0.5.1]{SobBazaar news feed items}
 		\label{figure:sobazarfeed}
@@ -77,7 +77,7 @@ and select the method that performs the best overall with respect to these prope
 
 \subsubsection{Dataset}
 
-In addition to evaluate the methods on the Sobazar dataset we want to make sure that our
+In addition to evaluate the methods on the SoBazaar dataset we want to make sure that our
 methods generalizes beyond our experimental dataset, in accordance to the general guidelines
 for experimental studies \cite{Shani2011}. The data used for offline evaluation should match
 as closely as possible the data we expect the recommender system to face when it is
@@ -85,7 +85,7 @@ deployed \cite{Gunawardana2009}. When selecting datasets for evaluation we focus
 following dataset properties:
 
 \begin{itemize}
-	\item Size of dataset: Preferable as close as possible to Sobazar or larger (a few months from now)
+	\item Size of dataset: Preferable as close as possible to SoBazaar or larger (a few months from now)
 	in terms of number of ratings, users and items.
 	\item Different different types of implicit factors	such as clicks, likes and purchases.
 	\item Domain: Preferably a domain as close to possible as the e-commerce domain where
@@ -99,9 +99,9 @@ Thus making the main contributions of this article untestable, thus rendering fu
 on other datasets useless. It is worth nothing that we inquired other researchers having
 experimented with similar datasets to no luck.
 
-\paragraph{The Sobazar Dataset}
+\paragraph{The SoBazaar Dataset}
 
-The Sobazar dataset is small and sparse dataset. When looking only at the purchases
+The SoBazaar dataset is small and sparse dataset. When looking only at the purchases
 we have a total of 1,592 binary ratings given by 466 users to 1188 items. When including
 clicks, wants and purchases we end up with 27,873 ratings given by 1,511 users to 5,855 items.
 We also have access to semi-structured product information collected/crawled from
@@ -130,7 +130,7 @@ factors in recency.
 
 \subparagraph{Overview of the Dataset}
 
-Table \ref{table:datasets} shows an overview of the sobazar dataset.
+Table \ref{table:datasets} shows an overview of the SoBazaar dataset.
 
 %TODO - What else is interesting to know? Rating scale, average number of ratings per user, number of cold start users...
 %TODO - % of users with less than 5 ratings for both datasets
@@ -141,8 +141,8 @@ Table \ref{table:datasets} shows an overview of the sobazar dataset.
     \toprule
 	Dataset						& 	Ratings		& 	Users		& 	Items 		& 	Sparsity			& Rating Scale 				    \\ \midrule
 	Sobazar	(Purchases Only) 	&	1,592		&	466			&	1188		&	99.71243			& Binary						\\
-	Sobazar (All events)		& 	27,873  	& 	1,511		&	5855		& 	99.69657			& Binary/Implicit Ratings		\\ 
-	%Movielens 1M				& 	1,000,029   &	6040 		&	3706		&	95.53164			& Explicit (1-5)				\\ 
+	Sobazar (All events)		& 	27,873  	& 	1,511		&	5855		& 	99.69657			& Binary/Implicit Ratings		\\
+	%Movielens 1M				& 	1,000,029   &	6040 		&	3706		&	95.53164			& Explicit (1-5)				\\
 	\bottomrule
     \end{tabular}
     \caption [Overview of the datasets used for evaluation]{Overview of the datasets used for evaluation}
@@ -201,7 +201,7 @@ occurring in one dataset? Only \emph{sensible} thing to do is to compare the pur
 in some way, the question is how? Currently we can not see how we possibly could compare the
 two using traditional offline evaluation methods. Meaning that our comparison of the two will
 be made on somewhat of a \emph{subjective} basis.
-	
+
 \subsubsection{Comparing Binary and Non-Binary Models}
 
 \marginpar{The question then, is how critical this flaw is to our experiment}
@@ -325,7 +325,7 @@ timestamps, meaning that the test set consists of the most recent ratings.
 		% STYLES
 		every node/.style={node distance=1.5cm},
 		% The comment style is used to describe the characteristics of each process
-		comment/.style={rectangle, 
+		comment/.style={rectangle,
 										inner sep= 5pt,
 										text width=3cm,
 										node distance=0.25cm,

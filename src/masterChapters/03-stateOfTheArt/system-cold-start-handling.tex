@@ -106,7 +106,7 @@ E.g. in the case of the Epinions dataset \cite{Epinions}, users can explicitly s
 user [1, -1], i.e. reviewers whose reviews and ratings they have consistently found to be valuable or reviewers which
 they find consistently offensive, inaccurate or not valuable.
 Imagine a fashion website where you can follow users which e.g. are your friends, users you like you like or simply
-find inspirational, much like Instagram \footnote{www.instagram.com}. By following a user you directly express a 
+find inspirational, much like Instagram \footnote{www.instagram.com}. By following a user you directly express a
 certain amount of trust in that user, saying that you are interested in the content of that profile. This
 trust information could then be used to recommend you content which the users you have chosen to follow like
 or have strong preferences for. In recommender systems trust relationships of users are often employed in order to correlate
@@ -168,7 +168,7 @@ other users. Trust metrics can either be local and global. Global trust metrics
 produces an estimated trust matrix with all the rows equal, meaning that the
 estimated trust in a certain user (column) is the same for every user (row). A
 simple local trust metric could e.g. for each user assign to every other user a
-predicted trust based on her minimum distance from the source user. 
+predicted trust based on her minimum distance from the source user.
 
 Massa et al. \cite{Massa2007} experimented with both local and global trust
 metrics. The PageRank algorithm was used as a global trust metric. PageRank
@@ -543,7 +543,7 @@ The authors found that linear mapping worked the best, and that their method
 yields accuracy comparable to state-of-the-art methods.
 
 \subsection{A Discussion on the Cold-start Solutions}
-\ref{sec:cold-start-discussion}
+\label{sec:cold-start-discussion}
 
 The following discussion will be based on the following points: the user-effort
 required before the system can start providing high quality recommendations, the
@@ -582,7 +582,7 @@ We believe trust-aware recommenders to be a good fit for the application
 due to its \emph{social nature}. We believe that trust aware recommender systems
 is something that should be considered at a later point when more social functionality
 is in place, to further enhance the recommendation quality
- 
+
 \subsubsection{Interview Process}
 
 %How can this be implemented?
@@ -592,12 +592,12 @@ You can then ask the user to "rate" e.g. 10 items by quickly \emph{swiping} them
 left or right. However, requiring the user to rate rate a certain amount of items
 can also be \emph{dangerous}. One should therefore perform a user study or similar
 to see how users experience this feature. We also imagine that the tinder interface
-could be available as a feature in the application for users users who just want a 
+could be available as a feature in the application for users users who just want a
 fun way of browsing clothes on their mobile phone. If done right this can be
 a great feature for collecting large amounts of both positive and negative feedback
 from the users.
 
-An important question to answer is how this interface will select items to 
+An important question to answer is how this interface will select items to
 present to the user. One could either choose the simple approach of
 recommending the most popular items to the user, but as previously mentioned
 this is likely to worsen the prefix bias. Rashid et al. \cite{Rashid2008} got
@@ -638,7 +638,7 @@ for items to ask the user to rate for a interview process.
 Filterbots is a simple, but elegant solution to the cold-start problem first
 presented in 1998 by Sarwar et. al. \cite{Sarwar1998}. This method
 requires no user-effort other than requiring the user to rate at least one
-item before recommendations can be made. 
+item before recommendations can be made.
 Park et al. \cite{Park2006} clearly demonstrated the robustness of their Naive
 Filterbot compared to item-based and user-based approaches in all three
 cold-start scenarios. The results in \cite{Agarwal2009, Agarwal2010} also show
@@ -700,9 +700,9 @@ something than about to understand something. Our ordinal rating scale spans fro
     \begin{tabular}{*{4}l}
     \toprule
     Method					& Cold-start performance  & User-effort \\ 			\midrule
-    Trust-aware RS 			& \checkmark			  &	\ding{55}				\\ 
-    Filterbots 				& \checkmark			  &	\checkmark\checkmark	\\ 
-    Seed users 				& \checkmark			  &	\ding{55}				\\ 
+    Trust-aware RS 			& \checkmark			  &	\ding{55}				\\
+    Filterbots 				& \checkmark			  &	\checkmark\checkmark	\\
+    Seed users 				& \checkmark			  &	\ding{55}				\\
     Intelligent selection 	& \checkmark			  &	\checkmark				\\
     Hybrid Methods 			& \checkmark \checkmark	  &	\checkmark\checkmark	\\
     \bottomrule
