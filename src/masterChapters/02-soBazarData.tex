@@ -4,8 +4,10 @@
 \label{chap:thesobazaardata}
 \minitoc
 
-    This sections will introduce the SoBazaar application and explore the data set used.
+    This sections will introduce the SoBazaar application and present and explore the data set used.
     This includes how the data was preprocessed, an overview of the dataset, statistics and graphs, findings from the data and finally a summary.
+
+    The motivation for doing this is to lay ground for the assumptions made throughout this thesis, and help to more effortlessly present the reasoning behind the choices made, in regards to the fashion domain, the usage of implicit feedback and the recommender systems used.
 
 \clearpage
 	\section{The SoBazaar Application}\mbox{}\\
@@ -15,7 +17,7 @@
 	  "SOBAZAAR is a newly developed social shopping experience --- a daily fashion bazaar on your mobile."
 	\end{chapquote}
 
-	SoBazaar is an online marketplace for fashion, but with a social twist. You can find stores like Moods of Norway, BIK BOK, Bianco and many more, which all have their own storefront in the application. The application lets you click through thousands of products. If you find something you like you can purchase it directly from the application or store it for later with the \emph{heart it} function. The following screenshots are taken from the application and highlights some functionality currently found in the application. On the far left you see an item from the \emph{homepage} or newsfeed. The newsfeed currently shows what other users have liked, notifies the user about sales and new products and recommends the most popular products.
+	SoBazaar is an online marketplace for fashion, but with a social twist. You can find stores like Moods of Norway, BIK BOK, Bianco and many more, which all have their own storefront in the application. The application lets you browse through thousands of products. If you find something you like you can purchase it directly from the application or store it for later with the \emph{heart it} function. The following screenshots are taken from the application and highlights some functionality currently found in the application. On the far left you see a newsfeed item from the \emph{homepage} or newsfeed. The newsfeed currently shows what other users have liked, notifies the user about sales and new products and recommends the most popular products.
 
 	\begin{figure}[H]
 		\centering
@@ -34,7 +36,7 @@
 		\label{figure:SoBazaarfeed}
 	\end{figure}
 
-	The application brand screen shows on overview of the brands and storefront currently included in the application. The brand sceen also features an editors pick page among other things. If you find a brand you like you can choose to enter their store and view their products.
+	The application brand screen shows on overview of the brands and storefront currently included in the application. The brand screen also features an editors pick page among other things. If you find a brand or store you like you can choose to enter their store and view their products.
 
 	\begin{figure}[H]
 		\centering
@@ -77,6 +79,8 @@
 
 \section{Preprocessing}
     \label{sec:preprocessing}
+    In data mining preprocessing is an important part, which creates the foundation to the data analysation and further down the pipeline.
+
     The data from SoBazaar has been been anonymised for privacy reasons.
     In addition to anonymization the data was cleaned by removing events containing test environment flags and applications run from simulator.
     What was left after the cleaning data was mainly events triggered by the users in production environment, and not created during applications testing.
@@ -514,7 +518,7 @@
         This figure shows the life span of the products grouped and sorted on the number of interactions on the items.
         The life span of an item is the time since the first event on the item till the last event on the item.
         The red line is the regression line of the top of the average life spans at the different interactions counts.
-        The big gap between 117 to 160 is because no items have an interaction count of that amount.
+        The gap between 117 to 160 is because no items have an interaction count of that amount.
 
         As we can see from the regression line, the average life span of an item increases with the count of item interactions.
 
@@ -529,9 +533,8 @@
         This figure is showing the same data as in figure~\ref{figure:averageLifetimBasedoncount}, but instead of taking the average life span at the give product interactions count, the products are mapped separately, to show the diversity in life span given the different product interaction counts.
 
         Time is shown in weeks, so the longest time span of an item is about 27 weeks, which is close to the time span of the events gathered from SoBazaar.
-        Even though an item has a long time span does not mean that the item has been of measurable interest to the users in the SoBazaar application, but we see that the more interaction on the item, the longer the average life time.
-
-        sdf
+        Even though an item has a long time span does not mean that the item has been of measurable interest to the users in the SoBazaar application, but we see that the more interaction on the item, the longer the average life time, but the recentness of an item is important.
+        Even though some item has a lot of interaction, they item can have a quite low lifespan, which promotes the importance of looking into recentness.
 
     \begin{figure}[H]
         \includegraphics[width=5in]{image/itemTimespansdistribution.png}
@@ -569,7 +572,6 @@
         The average times between the two are quite similar, but we can see that the user is on average somewhat faster to to press \emph{purchase}.
         The data set on \emph{product\_purchase\_intended} is considerably smaller than \emph{product\_wanted}, so the trends seen here are inconclusive at best.
 
-    % mtodo - hva betyr dette for oss? ha det i seconds, lol
     \begin{figure}[H]
         \includegraphics[width=5in]{image/product_detail_clickeddistribution.png}
         \centering
@@ -590,12 +592,10 @@
     \label{figure:eventOnDaysDist}
     \end{figure}
         This figure shows the event distribution per day over the time period the events were stored.
-        The spikes we see happens on a weekly basis, and is centered around the weekends.
+        The spikes we see happens on a weekly basis, and is centered around the weekends, which is natural since this is an entertainment applications.
         The larger spike from the start of January to the start of March and end of April to the end of May might be due to increase in publicity or other outside factors.
 
-        % mtodo add event splits
-
-    \begin{figure}[H]
+   \begin{figure}[H]
         \includegraphics[width=5in]{image/hrdistribution.png}
         \centering
         \caption{Events at time of day}
@@ -603,18 +603,16 @@
     \end{figure}
         The figure above presents the amount of events during the given hours.
 
-        One interesting discovery from this figure is the shape. One might have expected the application usage to have a sinus wave shape, but it has instead an increase in usage around 22 o'clock, which might indicate that the users look at the application right before they go to sleep. In other words the application is used as a late night entertainment portal, substituting other entertainment portals?... \marginpar{something?}
-
+        One interesting discovery from this figure is the shape. One might have expected the application usage to have a sinus wave shape, but it has instead an increase in usage around 22 o'clock, which support the claim done based on figure~\ref{figure:eventOnDaysDist}, that SoBazaar is an entertainment application.
 
 \subsection{Discussion}
-    %mtodo - masse fin info, men diskuter!
-        % hva betyr det for oss?
-        % hvordan kan data-pakket brukes av systemet?
-        % mange fine figurer uten konkrete beskrivelser og refereanser i teksten
-        % prøv heller å lage gode forklaringer til fiugurene i teksten så referer deretter
+    The repetitive pattern though out the preceding subsections is that the data is sparse, with low life span of user accounts and items, which is no surprise since the application as a product is in such an early stage.
+    This sparsity must be handled to be able to make good recommendations, since it is so central when it comes to making predictions.
+
+    Throughout the data exploration section we also saw that time plays a central role, in context of life span and the users and the items.
+    The time an item lives varies greatly, but over one third of the items are active for no more than 1 week, which makes it important to consider how new an item is when making predictions.
 
 
-\clearpage
 \section{Conversion rate properties}
 \label{sec:conv-rate}
 
