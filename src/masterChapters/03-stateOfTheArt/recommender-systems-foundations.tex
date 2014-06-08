@@ -111,11 +111,35 @@ Researchers have devised a number of collaborative filtering algorithms that
 can be divided into two main categories: Memory-based and Model-based
 algorithms \cite{Su2009}.
 
-\marginpar{fix figure, make it smaller}
-
 \begin{figure}[H]
-    \includegraphics[scale=0.5]{image/cftaxonomy.png}
     \centering
+    \begin{tikzpicture}[
+      rec/.style={
+        rectangle,
+        draw,
+        text width=2cm,
+        text centered
+      },
+      edge from parent fork down,
+      level 1/.style={level distance=25mm,sibling distance=85mm},
+      level 2/.style={level distance=25mm,sibling distance=25mm}
+    ]
+    \node[rec] {Collaborative filtering}
+      child{
+        node[rec] {Memory based}
+        child { node[rec, align=center] {Item-based CF} }
+        child { node[rec] {User-based CF} }
+      }
+      child{
+        node[rec, align=center] {Model\\based}
+        child { node[rec, align=center, right=-10mm] {Singular Value\\Decomp.} }
+        child { node[rec, align=center] {Principal Component\\Analysis} }
+        child { node[rec] {Baysian networks} }
+        child { node[rec, align=center] {Rule-based\\stategies} }
+        child { node[rec] {Clustering stategies} }
+      }
+    ;
+    \end{tikzpicture}
     \caption[Classification of collaborative filtering techniques]{Classification of collaborative filtering techniques}
     \label{figure:cftaxonomy}
 \end{figure}
