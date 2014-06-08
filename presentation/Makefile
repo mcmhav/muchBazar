@@ -2,7 +2,7 @@ all: build
 
 build:
 	mkdir -p pdf
-	if test -r pdf/report.aux; then bibtex pdf/report.aux; fi
+	if test -r pdf/telenor-workshop.aux; then bibtex pdf/telenor-workshop.aux; fi
 	pdflatex -output-directory=pdf -halt-on-error *.tex
 
 clean:

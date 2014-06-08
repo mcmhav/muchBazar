@@ -3,6 +3,15 @@
 % Frankfurt <3
 \usetheme{Frankfurt}
 
+% Some packages
+\usepackage{tikz}
+\usepackage{pgfplots}
+
+% Tikz options
+\usetikzlibrary{calc,trees,positioning,arrows,chains,fit,shapes.geometric,%
+    decorations.pathreplacing,decorations.pathmorphing,shapes,%
+    matrix,shapes.symbols}
+
 % Some basic stuff for the first slide
 \title{Making recommendations using extremely sparse
        implicit datasets}
@@ -20,6 +29,57 @@
   % Kickstart stuff with e-commerce statistics and competitor overview
   \begin{frame}
     \frametitle{E-commerce in Norway since 2005}
+    \begin{figure}[H]
+      \centering
+      \begin{tikzpicture}[scale=0.9]
+        \begin{axis}[
+          xlabel={Year},
+          ylabel={Percentage},
+          legend style={cells={anchor=east}, legend pos=outer north east,},
+          xtick=data,
+          x tick label style={rotate=45, anchor=east, /pgf/number format/1000 sep=},
+          mark size=1.0pt,
+          grid=major,
+          grid style={dashed},
+        ]
+        \legend{Both sexes, Men, Women}
+        \addplot coordinates {
+          (2005, 0)
+          (2006, 20)
+          (2007, 20)
+          (2008, 22)
+          (2009, 25)
+          (2010, 32)
+          (2011, 31)
+          (2012, 33)
+          (2013, 36)
+        };
+        \addplot coordinates {
+          (2005, 0)
+          (2006, 16)
+          (2007, 18)
+          (2008, 20)
+          (2009, 23)
+          (2010, 30)
+          (2011, 30)
+          (2012, 29)
+          (2013, 30)
+        };
+        \addplot coordinates {
+          (2005, 0)
+          (2006, 24)
+          (2007, 23)
+          (2008, 23)
+          (2009, 27)
+          (2010, 34)
+          (2011, 31)
+          (2012, 37)
+          (2013, 42)
+        };
+        \end{axis}
+      \end{tikzpicture}
+      \caption{Source: Statistics Norway~\cite{statisticsNorway}}
+    \end{figure}
   \end{frame}
 
   \begin{frame}
@@ -122,6 +182,12 @@
       \item Better results can be achieved with using Tinder-like interface.
       \item Framework for online evaluation
     \end{itemize}
+  \end{frame}
+
+  \begin{frame}[allowframebreaks]
+    \frametitle{References}
+    \bibliographystyle{plain}
+    \bibliography{../src/references}
   \end{frame}
 
 \end{document}
