@@ -79,7 +79,8 @@
 
 \section{Preprocessing}
     \label{sec:preprocessing}
-    In data mining preprocessing is an important part, which creates the foundation to the data analysation and further down the pipeline.
+    In data mining, preprocessing is an important part, which creates the foundation for the data analysation and for further down the pipeline.
+    The saying \emph{garbage in, garbage out}~\cite{GIGO} especially applies here, where the input data can make or break the results since all the raw values are seldom complete in regards to information and sense, and some will not make sense to consider. %, such as: \emph{gender:male}, \emph{pregnant:true}.
 
     The data from SoBazaar has been been anonymised for privacy reasons.
     In addition to anonymization the data was cleaned by removing events containing test environment flags and applications run from simulator.
@@ -89,11 +90,12 @@
     This field was added to help understand how users use the application, and to be able to see use patterns.
 
 \section{Dataset Overview}
-    The data from SoBazaar is gathered based on the actions of the users using the application.
-    Actions done by the users are called events, such as accessing a store, scrolling a page or purchasing a product.
+    The data from SoBazaar is based on the actions of the users, stored in logs, which are saved whenever a user executes an action the system has the ability to log.
+    Actions done by the users are called events, such as accessing a store, scrolling a page or purchasing a product, all these events put together is the dataset used in this thesis.
 
     When an event is triggered a set of information is stored regarding the event.
-    This data is used to make recommendations for the users though converting the implicit feedback to implicit ratings as we will see in later chapters.
+    This data is used to make recommendations for the users trough converting the implicit feedback to implicit ratings as we will see in later chapters.
+    Some of the most relevant metadata to making recommendations are presented in the table below.
 
     \begin{table}[H]
         \centering
@@ -115,6 +117,12 @@
         \caption[Event Metadata]{Metadata collected from an event. The complete list can be found in table~\ref{table:completeEventData}}
         \label{table:eventData}
     \end{table}
+
+    In the table above we see some of the more relevant attributes to an event triggered.
+    These can be used to derive information regarding the users of the application and the items, and put together, be used to predict preferences for the users.
+
+    After gathering the data and preprocessing it, on single set of data was left.
+    The statistics of this data is shown in the table below, and is there to present a birds view of the data used in this thesis.
 
     \begin{table}[H]
         \centering
@@ -172,14 +180,17 @@
     % check for price distribution based on location.
     % make price user graph
     % price for store dist
-    This section will look at the SoBazaar data through graphing and plotting.
+    This section will look at the SoBazaar data through visualizing the data and clearly communicating the information trough graphical means.
     It will start with the properties of the users seen in the data, then move over to the products and finally the time properties of the data.
 
 \subsection{User properties}
+    The properties of the users of the SoBazaar application can help understand how the application is used, and to get a better understanding of how to make predictions for them.
+
+    The first figure visualizing the user behavior is a figure of the event distribution, and shows the events the users are triggering, and to what extend they do so.
     \begin{figure}[H]
         \includegraphics[width=5in]{image/event_iddistribution.png}
         \centering
-        \caption{Count for different events}
+        \caption{Event distribution}
     \label{figure:eventIDDistribution}
     \end{figure}
         In the figure above (figure~\ref{figure:eventIDDistribution}) we see the count for each of the different events which can be triggered in the SoBazaar application\footnote{With the exception of the event types with a trigger count lower than 200, which are merged into on bar and labeled \emph{other}}.
@@ -191,6 +202,8 @@
         \emph{product\_purchase\_intended} on the other hand has to come after a \emph{product\_detail\_clicked}, so it is therefore safe to assume that about 8\% of item accesses progressed into an intended purchase.
 
         Some of the evens shown above are newly added events, and the data has to mature more for more certain conclusion to be drawn.
+
+        The distribution of events for the users are show in the next figure, and is intended to give a better overview of to what extent the users interact with the applications, and how the usage is distributed amongst the users.
 
     \begin{figure}[H]
         \centering
@@ -209,10 +222,12 @@
         \caption{Graphs presenting the distribution of events per user}
     \end{figure}
         Figure~\ref{figure:userEventDist} is showing the actual amount of users with the different counts of events.
-        78\% of the users have 50 or less events, with the most common amount being at 5 events.
+        78\% of the users have 50 or less events, with the mean being at 5 events.
         The figures are showing the values from 0 to 250 since 96\% of the users resides in this subset of the data.
 
         As seen from figure~\ref{figure:eventIDDistribution} most of the events are not directly related to products, from table~\ref{table:datasetSummary} we can see that there are over 6000 products, and as mentioned above, 78\% of the users have less than 50 events. Based on these three facts, we can assume that the data is extremely sparse and measures to deal with this must be implemented.
+
+        After having looked at the distribution of events per user, we move over to the user account lifetime, to see actually how long a user is active on the application in terms of time from first to last recorded event for the user.
 
     \begin{figure}[H]
         \includegraphics[width=5in]{image/userTimespansdistribution.png}
@@ -224,6 +239,8 @@
 
         From this figure it is apparent that over half of the user accounts have a lifespan of less than a week.
 
+        Lifetime of the accounts mapped together with their usage might tell us more than just the account life time alone, so the next figure displays just that.
+
     \begin{figure}[H]
         \includegraphics[width=5in]{image/avglifetimeoncountuser.png}
         \centering
@@ -232,9 +249,11 @@
     \end{figure}
         The figure above shows the lifetime of the user accounts together with their application interaction count.
         Users more to the right have a higher event count.
-        Some users have been removed to give focus to the majority of the users. As mentioned earlier, 78\% of the users have triggered 50 or less events.
+        Some outliers have been removed to give focus to the majority of the users. As mentioned earlier, 78\% of the users have triggered 50 or less events.
 
         The red line is the regression line of the user account lifetimes, and is there to show how the account life span increases with the amount of events.
+
+
 
     \begin{figure}[H]
         \includegraphics[width=5in]{image/sessiondistribution.png}
@@ -245,9 +264,9 @@
         The figure above shows the count of sessions for the users of the SoBazaar application, with the users with more than 30 sessions removed.
 
         More than 90\% of the users of SoBazaar have a session count of 20 and less.
-        This means that they have not used the applications more than 20 separate times, over the time the data was collected, and strengthens the hypothesis that the data from SoBazaar is sparse.
+        This means that they have not logged on to the applications more than 20 separate times, over the time the data was collected, and strengthens the hypothesis that the data from SoBazaar is sparse.
 
-        In figure~\ref{figure:sessCountDist} the 4 first bars sums up to 1000, which is the amount of users who has had 4 or less sessions on the application in total. In other words --- half of the user base used the application less than 4 times.
+        In figure~\ref{figure:sessCountDist} the 4 first bars sums up to 1000, which is the amount of users who has had 4 or less sessions on the application in total. In other words --- half of the users used the application less than 4 times.
 
 
     \begin{figure}[H]
