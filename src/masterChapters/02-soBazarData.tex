@@ -506,189 +506,221 @@ similar items will be marginal, but promotes the importance of utilizing all
 the feedback to bolster the recommender.
 
 \subsubsection{The Pareto principle and Long tail on sales}
-    In e-commerce the distribution of sales or product interactions can often be described by the Pareto principle and the phenomenon of long tail.
-    Pareto's principle is used to tell how the distribution is in the \emph{head}~\footnote{Take for example figure~\ref{figure:eventsPerproduct}, the \emph{head} is the left most part where the curve is steep} of the graph, and the long tail phenomenon is used to tell how the distribution is in the \emph{tail}~\footnote{Take for example figure~\ref{figure:eventsPerproduct}, the \emph{tail} is the right most part where the curve flattens out} of the graph.
+
+In e-commerce the distribution of sales or product interactions can often be
+described by the Pareto principle and the phenomenon of long tail.  Pareto's
+principle is used to tell how the distribution is in the
+\emph{head}~\footnote{Take for example figure~\ref{figure:eventsPerproduct},
+the \emph{head} is the left most part where the curve is steep} of the graph,
+and the long tail phenomenon is used to tell how the distribution is in the
+\emph{tail}~\footnote{Take for example figure~\ref{figure:eventsPerproduct},
+the \emph{tail} is the right most part where the curve flattens out} of the
+graph.
 
 \paragraph{Pareto's Principle}
-    Pareto's principle applies when the 20\% most frequent products account for more than 80\% of the ratings, sales or interactions in the dataset~\cite{newman05power}.
 
-    \begin{figure}[H]
-        \centering
-        \begin{tikzpicture}
-            \begin{axis}[
-                xlabel=Threshold,
-                ylabel=Percentage of item interaction,
-                grid=major,
-            ]
-            \addplot+[color=blue,sharp plot] coordinates
-                {(0,80) (100,80)};
-            \addplot+[color=blue,sharp plot] coordinates
-                {(20,0) (20,100)};
-            \addplot[color=red,mark=x] coordinates {
-                    (0.0, 0.0)
-                    (1.0, 10.089827139370456)
-                    (2.0, 15.879525954256096)
-                    (3.0, 20.48914274211811)
-                    (4.0, 24.52004126512845)
-                    (5.0, 28.004931686083083)
-                    (6.0, 31.16775281181592)
-                    (7.0, 34.053795636967514)
-                    (8.0, 36.72848048712981)
-                    (9.0, 39.184258863196035)
-                    (10.0, 41.49409958986488)
-                    (11.0, 43.66303499987419)
-                    (12.0, 45.76151775155373)
-                    (13.0, 47.72412751931158)
-                    (14.0, 49.60370379689505)
-                    (15.0, 51.44553757894472)
-                    (16.0, 53.116272047907806)
-                    (17.0, 54.75178018770601)
-                    (18.0, 56.2614800090582)
-                    (19.0, 57.79634149409959)
-                    (20.0, 59.17016833153008)
-                    (21.0, 60.52889817074705)
-                    (22.0, 61.887628009964025)
-                    (23.0, 63.14571119442417)
-                    (24.0, 64.35347105150593)
-                    (25.0, 65.56123090858767)
-                    (26.0, 66.78912009662079)
-                    (27.0, 67.84842613793623)
-                    (28.0, 68.90521601288278)
-                    (29.0, 69.9620058878293)
-                    (30.0, 71.03640892735828)
-                    (31.0, 72.00261681302368)
-                    (32.0, 72.90843670583499)
-                    (33.0, 73.8142565986463)
-                    (34.0, 74.73517348967114)
-                    (35.0, 75.64099338248245)
-                    (36.0, 76.49900611428427)
-                    (37.0, 77.25385602496037)
-                    (38.0, 78.02128676748107)
-                    (39.0, 78.77613667815716)
-                    (40.0, 79.53098658883326)
-                    (41.0, 80.29841733135395)
-                    (42.0, 81.05326724203005)
-                    (43.0, 81.77540698991017)
-                    (44.0, 82.37928691845104)
-                    (45.0, 82.9932315124676)
-                    (46.0, 83.59711144100848)
-                    (47.0, 84.20099136954934)
-                    (48.0, 84.80487129809023)
-                    (49.0, 85.41881589210678)
-                    (50.0, 86.02269582064767)
-                    (51.0, 86.62657574918853)
-                    (52.0, 87.11974435749693)
-                    (53.0, 87.57265430390258)
-                    (54.0, 88.02556425030824)
-                    (55.0, 88.47847419671389)
-                    (56.0, 88.9389326422263)
-                    (57.0, 89.39184258863196)
-                    (58.0, 89.84475253503761)
-                    (59.0, 90.29766248144327)
-                    (60.0, 90.75812092695568)
-                    (61.0, 91.21103087336134)
-                    (62.0, 91.66394081976699)
-                    (63.0, 92.06149510605641)
-                    (64.0, 92.36343507032684)
-                    (65.0, 92.66537503459729)
-                    (66.0, 92.96731499886772)
-                    (67.0, 93.27428729587601)
-                    (68.0, 93.57622726014644)
-                    (69.0, 93.87816722441687)
-                    (70.0, 94.18010718868732)
-                    (71.0, 94.48707948569559)
-                    (72.0, 94.78901944996603)
-                    (73.0, 95.09095941423647)
-                    (74.0, 95.39289937850691)
-                    (75.0, 95.69987167551518)
-                    (76.0, 96.00181163978563)
-                    (77.0, 96.30375160405606)
-                    (78.0, 96.61072390106435)
-                    (79.0, 96.8170495433158)
-                    (80.0, 96.96801952545103)
-                    (81.0, 97.11898950758624)
-                    (82.0, 97.27247565609038)
-                    (83.0, 97.4234456382256)
-                    (84.0, 97.57441562036082)
-                    (85.0, 97.72538560249603)
-                    (86.0, 97.87887175100018)
-                    (87.0, 98.0298417331354)
-                    (88.0, 98.18081171527061)
-                    (89.0, 98.33429786377475)
-                    (90.0, 98.48526784590997)
-                    (91.0, 98.6362378280452)
-                    (92.0, 98.7872078101804)
-                    (93.0, 98.94069395868455)
-                    (94.0, 99.09166394081976)
-                    (95.0, 99.24263392295498)
-                    (96.0, 99.3936039050902)
-                    (97.0, 99.54709005359435)
-                    (98.0, 99.69806003572957)
-                    (99.0, 99.84903001786478)
-                    (100.0, 100.0)
-            };
-            \end{axis}
-        \end{tikzpicture}
-        \caption{Pareto's principle values graphed}
-    \label{figure:paretosPrinciple}
-    \end{figure}
+Pareto's principle applies when the 20\% most frequent products account for
+more than 80\% of the ratings, sales or interactions in the
+dataset~\cite{newman05power}.
 
-    \begin{table}[H]
-        \centering
-        \begin{tabular}{lll}
-        \toprule
-        Threshold &   Products in threshold~\tablefootnote{\label{footnote:pt}The amount of products residing within the percentage threshold} &      Percentage of interactions \\
-        \midrule
-        20\%    &    1206   &    59.1701\% \\
-        41\%    &    2472   &    80.2984\% \\
-        \bottomrule
-        \end{tabular}
-        \caption{Pareto's principle values}
-    \label{table:paretosPrinciple}
-    \end{table}
+\begin{figure}[H]
+  \centering
+  \begin{tikzpicture}
+    \begin{axis}[
+      xlabel=Threshold,
+      ylabel=Percentage of item interaction,
+      grid=major,
+    ]
+    \addplot+[color=blue,sharp plot] coordinates
+      {(0,80) (100,80)};
+    \addplot+[color=blue,sharp plot] coordinates
+      {(20,0) (20,100)};
+    \addplot[color=red,mark=x] coordinates {
+      (0.0, 0.0)
+      (1.0, 10.089827139370456)
+      (2.0, 15.879525954256096)
+      (3.0, 20.48914274211811)
+      (4.0, 24.52004126512845)
+      (5.0, 28.004931686083083)
+      (6.0, 31.16775281181592)
+      (7.0, 34.053795636967514)
+      (8.0, 36.72848048712981)
+      (9.0, 39.184258863196035)
+      (10.0, 41.49409958986488)
+      (11.0, 43.66303499987419)
+      (12.0, 45.76151775155373)
+      (13.0, 47.72412751931158)
+      (14.0, 49.60370379689505)
+      (15.0, 51.44553757894472)
+      (16.0, 53.116272047907806)
+      (17.0, 54.75178018770601)
+      (18.0, 56.2614800090582)
+      (19.0, 57.79634149409959)
+      (20.0, 59.17016833153008)
+      (21.0, 60.52889817074705)
+      (22.0, 61.887628009964025)
+      (23.0, 63.14571119442417)
+      (24.0, 64.35347105150593)
+      (25.0, 65.56123090858767)
+      (26.0, 66.78912009662079)
+      (27.0, 67.84842613793623)
+      (28.0, 68.90521601288278)
+      (29.0, 69.9620058878293)
+      (30.0, 71.03640892735828)
+      (31.0, 72.00261681302368)
+      (32.0, 72.90843670583499)
+      (33.0, 73.8142565986463)
+      (34.0, 74.73517348967114)
+      (35.0, 75.64099338248245)
+      (36.0, 76.49900611428427)
+      (37.0, 77.25385602496037)
+      (38.0, 78.02128676748107)
+      (39.0, 78.77613667815716)
+      (40.0, 79.53098658883326)
+      (41.0, 80.29841733135395)
+      (42.0, 81.05326724203005)
+      (43.0, 81.77540698991017)
+      (44.0, 82.37928691845104)
+      (45.0, 82.9932315124676)
+      (46.0, 83.59711144100848)
+      (47.0, 84.20099136954934)
+      (48.0, 84.80487129809023)
+      (49.0, 85.41881589210678)
+      (50.0, 86.02269582064767)
+      (51.0, 86.62657574918853)
+      (52.0, 87.11974435749693)
+      (53.0, 87.57265430390258)
+      (54.0, 88.02556425030824)
+      (55.0, 88.47847419671389)
+      (56.0, 88.9389326422263)
+      (57.0, 89.39184258863196)
+      (58.0, 89.84475253503761)
+      (59.0, 90.29766248144327)
+      (60.0, 90.75812092695568)
+      (61.0, 91.21103087336134)
+      (62.0, 91.66394081976699)
+      (63.0, 92.06149510605641)
+      (64.0, 92.36343507032684)
+      (65.0, 92.66537503459729)
+      (66.0, 92.96731499886772)
+      (67.0, 93.27428729587601)
+      (68.0, 93.57622726014644)
+      (69.0, 93.87816722441687)
+      (70.0, 94.18010718868732)
+      (71.0, 94.48707948569559)
+      (72.0, 94.78901944996603)
+      (73.0, 95.09095941423647)
+      (74.0, 95.39289937850691)
+      (75.0, 95.69987167551518)
+      (76.0, 96.00181163978563)
+      (77.0, 96.30375160405606)
+      (78.0, 96.61072390106435)
+      (79.0, 96.8170495433158)
+      (80.0, 96.96801952545103)
+      (81.0, 97.11898950758624)
+      (82.0, 97.27247565609038)
+      (83.0, 97.4234456382256)
+      (84.0, 97.57441562036082)
+      (85.0, 97.72538560249603)
+      (86.0, 97.87887175100018)
+      (87.0, 98.0298417331354)
+      (88.0, 98.18081171527061)
+      (89.0, 98.33429786377475)
+      (90.0, 98.48526784590997)
+      (91.0, 98.6362378280452)
+      (92.0, 98.7872078101804)
+      (93.0, 98.94069395868455)
+      (94.0, 99.09166394081976)
+      (95.0, 99.24263392295498)
+      (96.0, 99.3936039050902)
+      (97.0, 99.54709005359435)
+      (98.0, 99.69806003572957)
+      (99.0, 99.84903001786478)
+      (100.0, 100.0)
+    };
+    \end{axis}
+  \end{tikzpicture}
+  \caption{Pareto's principle values graphed}
+  \label{figure:paretosPrinciple}
+\end{figure}
 
-    Figure~\ref{figure:paretosPrinciple} show the percentages of interactions within the given thresholds.
-    As we can see from table~\ref{table:paretosPrinciple}, the 20\% most frequently interacted with items represents 59.1701\% of the item interaction in total.
-    We have to move up to 41\% to reach 80\% of the interactions, and the Pareto's principle does therefore not apply to the SoBazaar dataset.
+\def \footnotept {The amount of products residing within the percentage threshold}
+\begin{table}[H]
+  \centering
+  \begin{tabular}{lll}
+    \toprule
+    Threshold &   Products in threshold~\tablefootnote{\label{footnote:pt}\footnotept} & Percentage of interactions \\
+    \midrule
+    20\%    &    1206   &    59.1701\% \\
+    41\%    &    2472   &    80.2984\% \\
+    \bottomrule
+  \end{tabular}
+  \caption{Pareto's principle values}
+  \label{table:paretosPrinciple}
+\end{table}
 
-    Even though Pareto's Principle does not apply to this data, is the information regarding where the majority (the 80\%) of the item interaction resides valuable.
-    To reach the majority of the item interaction we have to cover over 41\% of the most popular items, which might in turn lead to bad most popular results.
+Figure~\ref{figure:paretosPrinciple} show the percentages of interactions
+within the given thresholds.  As we can see from
+table~\ref{table:paretosPrinciple}, the 20\% most frequently interacted with
+items represents 59.1701\% of the item interaction in total.  We have to move
+up to 41\% to reach 80\% of the interactions, and the Pareto's principle does
+therefore not apply to the SoBazaar dataset.
+
+Even though Pareto's Principle does not apply to this data, is the information
+regarding where the majority (the 80\%) of the item interaction resides
+valuable.  To reach the majority of the item interaction we have to cover over
+41\% of the most popular items, which might in turn lead to bad most popular
+results.
 
 \paragraph{Long Tail}
-    The definition of long tail is that the most frequently-occurring items represent less than 50\% of occurrences in logs~\cite{DBLP:journals/corr/abs-1203-4487}.
 
-    \begin{table}[H]
-        \centering
-        \begin{tabular}{llll}
-        \toprule
-        Average product interaction   & Products in threshold~\tablefootnote{See footnote~\ref{footnote:pt}} & Coverage & Percentage of interactions \\
-        \midrule
-        6.6928   &    4194   & 68.8443\% &   28.5408\% \\
-        \bottomrule
-        \end{tabular}
-        \caption{Long tail values}
-    \label{table:longtail}
-    \end{table}
+The definition of long tail is that the most frequently-occurring items
+represent less than 50\% of occurrences in
+logs~\cite{DBLP:journals/corr/abs-1203-4487}.
 
-    As the table above shows the SoBazaar data does not posses a clear long tail behavior.
-    The average interaction count of the products is 6.6928 and there is 4194 products with less than this number of interactions, but these items does only cover 28.5408\% of the total interactions.
+\begin{table}[H]
+  \centering
+  \begin{tabular}{llll}
+    \toprule
+    Average product interaction   & Products in threshold~\tablefootnote{See footnote~\ref{footnote:pt}} & Coverage & Percentage of interactions \\
+    \midrule
+    6.6928   &    4194   & 68.8443\% &   28.5408\% \\
+    \bottomrule
+  \end{tabular}
+  \caption{Long tail values}
+  \label{table:longtail}
+\end{table}
 
-    The next figure displays an overview of which events are triggered on the \emph{storefronts} in the SoBazaar application.
+As the table above shows the SoBazaar data does not posses a clear long tail
+behavior.  The average interaction count of the products is 6.6928 and there is
+4194 products with less than this number of interactions, but these items does
+only cover 28.5408\% of the total interactions.  The next figure displays an
+overview of which events are triggered on the \emph{storefronts} in the
+SoBazaar application.
 
-    \begin{figure}[H]
-        \includegraphics[width=5in]{image/storefront_nameandEventdistribution.png}
-        \centering
-        \caption{Distribution of events on storefronts}
-    \label{figure:eventOnStoreFrontDist}
-    \end{figure}
-        The figure above presents the event distribution on the different storefronts.
-        The events are segmented to show the different event counts on the different storefronts, and stacked to show the complete count, to be able to clearly see how the events are distributed over the different stores.
-        We can see that \emph{H\&M} is the most popular store in total, but \emph{BIK BOK} has the most \emph{product\_purchase\_intended}-events.
-        One interesting find to take from this graph is the \emph{storefront\_clicked} to the item interaction related events (\emph{product\_detail\_clicked}, \emph{product\_wanted} and \emph{product\_purchase\_intended}) ratio.
-        For instance \emph{Bik Bok} has a much higher item interaction count than storefront access count, whereas stores such as \emph{Reiss} and \emph{Inwear} are mostly accessed and the items not interacted with.
-        Different aspects affecting this might be price, style and item presentation.
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=5in]{image/storefront_nameandEventdistribution.png}
+  \caption{Distribution of events on storefronts}
+  \label{figure:eventOnStoreFrontDist}
+\end{figure}
+
+The figure above presents the event distribution on the different storefronts.
+The events are segmented to show the different event counts on the different
+storefronts, and stacked to show the complete count, to be able to clearly see
+how the events are distributed over the different stores.  We can see that
+\emph{H\&M} is the most popular store in total, but \emph{BIK BOK} has the most
+\emph{product\_purchase\_intended}-events.  One interesting find to take from
+this graph is the \emph{storefront\_clicked} to the item interaction related
+events (\emph{product\_detail\_clicked}, \emph{product\_wanted} and
+\emph{product\_purchase\_intended}) ratio.  For instance \emph{Bik Bok} has a
+much higher item interaction count than storefront access count, whereas stores
+such as \emph{Reiss} and \emph{Inwear} are mostly accessed and the items not
+interacted with.  Different aspects affecting this might be price, style and
+item presentation.
 
 \subsection{Time properties}
+
     It is not only important to look at if a user has accessed an item, or if a user has a certain preference, time might also tell something about the preferences of the user.
 
     The next figure shows the average lifetime of the products in the SoBazaar database.
