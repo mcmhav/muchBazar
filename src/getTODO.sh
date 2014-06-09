@@ -1,5 +1,9 @@
 #!/bin/bash
-TODOS=$(grep -ri "marginpar\|todo" masterChapters);
-NUM_TODOS=$(echo "$TODOS" | wc -l | sed -e 's/^ *//');
-echo "$TODOS";
-echo "Found a total of $(tput bold)$NUM_TODOS" todos$(tput sgr0);
+MPAR_TODOS=$(grep -ri "marginpar\|todo" masterChapters);
+MPAR=$(grep -ri "marginpar" masterChapters);
+
+NUM_MPAR=$(echo "$MPAR" | wc -l | sed -e 's/^ *//');
+NUM_MPAR_TODOS=$(echo "$MPAR_TODOS" | wc -l | sed -e 's/^ *//');
+
+echo "$MPAR_TODOS";
+echo "Found a total of $(tput bold)${NUM_MPAR_TODOS} todos$(tput sgr0) ($NUM_MPAR marginpars)";
