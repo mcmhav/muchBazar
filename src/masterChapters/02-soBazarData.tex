@@ -505,29 +505,31 @@ items and 2 000 users, the probability that multiple users have interacted with
 similar items will be marginal, but promotes the importance of utilizing all
 the feedback to bolster the recommender.
 
-\subsubsection{The Pareto principle and Long tail on sales}
+\subsubsection{The Pareto principle and Long tail on interactions}
 
 In e-commerce the distribution of sales or product interactions can often be
-described by the Pareto principle and the phenomenon of long tail.  Pareto's
-principle is used to tell how the distribution is in the
-\emph{head}~\footnote{Take for example figure~\ref{figure:eventsPerproduct},
-the \emph{head} is the left most part where the curve is steep} of the graph,
-and the long tail phenomenon is used to tell how the distribution is in the
-\emph{tail}~\footnote{Take for example figure~\ref{figure:eventsPerproduct},
-the \emph{tail} is the right most part where the curve flattens out} of the
-graph.
+described by the Pareto principle and the phenomenon of \textit{long tail}
+which states that roughly 80\% of the effects come from 20\% of the causes.
+Often the principle goes by the name of \textit{factor sparsity}, which
+indicates that given a pareto distribution one \textit{may} observe sparsity
+issues. Whilst measuring the Pareto principle focuses on the \textit{head} of
+the distribution (that is, where it is steepst), the \textit{long tail}
+phenomenon targets the \textit{tail}. It states that the most frequently
+occuring items represent less than 50\% off seen
+occurences~\cite{DBLP:journals/corr/abs-1203-4487}, thus by having a Long-tail
+distribution, events are more evenly distributed compared to when Pareto yields
+true.
 
-\paragraph{Pareto's Principle}
-
-Pareto's principle applies when the 20\% most frequent products account for
-more than 80\% of the ratings, sales or interactions in the
-dataset~\cite{newman05power}.
+In order to analyze these distributions we map our product interactions on the
+Y-axis and sort our products by popularity on the X-axis -- grouped by the
+popularity percentage, that is the 1\% most popular items equals 1\% of 5688,
+in other words the 57 items.
 
 \begin{figure}[H]
   \centering
   \begin{tikzpicture}
     \begin{axis}[
-      xlabel=Threshold,
+      xlabel=Products sorted by popularity,
       ylabel=Percentage of item interaction,
       grid=major,
     ]
@@ -659,24 +661,13 @@ dataset~\cite{newman05power}.
   \label{table:paretosPrinciple}
 \end{table}
 
-Figure~\ref{figure:paretosPrinciple} show the percentages of interactions
-within the given thresholds.  As we can see from
-table~\ref{table:paretosPrinciple}, the 20\% most frequently interacted with
-items represents 59.1701\% of the item interaction in total.  We have to move
-up to 41\% to reach 80\% of the interactions, and the Pareto's principle does
-therefore not apply to the SoBazaar dataset.
-
-Even though Pareto's Principle does not apply to this data, is the information
-regarding where the majority (the 80\%) of the item interaction resides
-valuable.  To reach the majority of the item interaction we have to cover over
-41\% of the most popular items, which might in turn lead to bad most popular
-results.
-
-\paragraph{Long Tail}
-
-The definition of long tail is that the most frequently-occurring items
-represent less than 50\% of occurrences in
-logs~\cite{DBLP:journals/corr/abs-1203-4487}.
+As seen from both the figure and table, the 20\% most frequently interacted
+with items represent $59.1701$\% of the item interactions in total. We have to
+moce up to 41\% of the most popular items in order to reach 80\%, and thus we
+can conclude that Pareto's principle does not apply to the SoBazaar dataset.
+However, as we have seen in previous section this does not disprove sparsity,
+nor does it prove density in the dataset. In order to see this we can
+investigate if we have a Long-tail by observing the following values.
 
 \begin{table}[H]
   \centering
@@ -692,9 +683,9 @@ logs~\cite{DBLP:journals/corr/abs-1203-4487}.
 \end{table}
 
 As the table above shows the SoBazaar data does not posses a clear long tail
-behavior.  The average interaction count of the products is 6.6928 and there is
+behavior. The average interaction count of the products is 6.6928 and there is
 4194 products with less than this number of interactions, but these items does
-only cover 28.5408\% of the total interactions.  The next figure displays an
+only cover 28.5408\% of the total interactions. The next figure displays an
 overview of which events are triggered on the \emph{storefronts} in the
 SoBazaar application.
 
