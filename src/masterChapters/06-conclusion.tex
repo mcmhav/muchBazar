@@ -120,27 +120,47 @@ into these segments, looking at possible future work for each of them.
 
 \subsubsection{Generating implicit ratings}
 
-Finding and incorporating more implicit factors should also be considered as a
-possible future direction.
-Other implicit factors such as brand preference, ... could all be implemented
-too
+There are lot of research to still be done in conversion from implicit feedback
+to implicit ratings. Primarily one should try to get more concrete results by
+either performing user studies or evaluating various generated ratings in an
+online system.
+
+By incorperating a user-study or similar ways for active users to explicitly
+convey feedback on items, further studies into building regression models based
+on an ordinal scale should be performed -- especially using features found in
+the fashion domain. Some work, as we have seen in this thesis, has been done in
+this area already~\cite{parra2011walk}~\cite{parra2011implicit}, but as they
+too conclude more quantiative results should be presented to the research
+community.
+
+Extending the models in this thesis with regards to penalization of features
+can prove rewarding. Most features are linearly penalized, except for
+recentness, but here more sophisticated functions taking more domain and
+dataset specific challenges can be taken into account.
+
+Using other features such as brand preference, demographics and fashion trends
+could also prove beneficial in terms of rating quality. Finally, a more
+sophisticated way of combining a set of implicit ratings should be developed --
+although this is difficult due to the lack of a ground truth, one could e.g.
+look at AUC-scores in the last stage of our pipeline (see
+Sectian~\ref{sec:app-overview}) and optimize for this metric.
 
 \subsubsection{Cold-start issues}
 
-%Discussion on product database features to improve content-based recommendations
-%Missing color, category, age-group and others
-However, the content-based filtering methods require rich descriptions of items
-and well built and well informed user profiles. These ideal cases are rare in
-real applications. This dependence on the quality and structure of data is the
-main weakness of methods based on content.
+In terms of cold-start issues further work should be done in order to improve
+item classification, consequently creating a denser and more precise product
+database. Although this is closely related to natural-language processing, many
+artificial intelligence techniques has the potential of e.g. correctly
+identifying attire type, style and color based on a longer item description.
+
+%Demographic filtering as a solution to the cold-start user problem?
+% TODO: Some future work with regards to filterbots?
 
 \subsubsection{Recommending based on implicit feedback}
 
-As previously mentioned in~\ref{sec:experimental-plan} sec the main reasons for
-implementing a recommender system is the desire to improve user satisfaction
-and to increase the economic success of a platform.  We believe it would be
-interesting to look into how one could implement a reward attribute for the
-items, that factors in how much the retailer will profit from its sale.
+We believe it would be interesting to look into how one could implement a
+reward attribute for the items, that factors in how much the retailer will
+profit from its sale.
 
 \begin{equation}
 ExpectedReturn_i = P(Sale_i) * Reward(i)
@@ -150,58 +170,66 @@ The question then, is how this information can e.g. be used/incorporated into
 the recommender to increase profits without sacrificing (too much or any) user
 satisfaction by recommending more \emph{expensive} items to the user.
 
-%Recommender systems for anonymous users - Context
-%Recommend other items with a high similarity to the item currently being viewed
+In terms of implicit feedback a further study into methods especially tailored
+for generated ratings from implicit feedback should be performed. As we have
+primarily used open-source pre-built implementations of most recommender
+methods in this thesis, due to time contraints, a study focusing on only this
+component of the system could prove rewarding.
+
+%TODO: Recommender systems for anonymous users - Context - move to cold start?
 
 \subsubsection{Evaluation implicit feedback}
 
-Personalization of the impact of different implicit factors could be
-interesting to look at.  Implicit factors such as brand preference, importance
-of global popularity, weight given to the different event types and so on could
-all be personalized for each user.  However, we feel it is important to mention
-the connection to matrix factorization methods aka SVD which \emph{basicly}
-does the same thing automatically. It reduced the rating matrix to a set of
-item and users factors for each individual item and user and a set of utility
-values for these factors.
+As we have seen, evaluation should ideally be done in two compoenents of our
+system -- both when generating ratings and making recommendations. We have
+already mentioned how online evaluationg and user-studies may aid us in the
+first scenario, but in the second a larger study concerning other implicitly
+based methods (see Figure~\ref{overview-eval}) should be conducted.
 
-% TODO: Future work: perform user study to confirm implicit ratings
-% performance.
+Further, it would be interesting to study the effects personalization has on
+the implicit factors. We hypothesize that by creating accurate recommendations
+new user patterns will emerge, that either can worsen or improve future
+recommendations. In addition, it could be highly interesting to experiment with
+personalized weights to implicit factors, as perhaps some users are more
+brand-aware than others who concern themselves more with the price, and vica
+versa.
+
+Finally a study on the relationship between matrix factorization methods such
+as SVD and our manual feature selection could be carried out, as they are
+highly synonymous.
 
 \subsubsection{Future studies on SoBazaar data}
 
-With regards to recommendation quality we believe the main focus should be on
-getting more and higher quality data.
+With regards to the SoBazaar data our main desire is to see future analysis
+done when the data are more dense and user patterns going over multiple years
+emerges. Doing future studies in the fashion domain should be highly rewarding
+and has (as we have seen in Table~\ref{table:ecommerceCommpetiros}) a huge
+potential. Especially one should confirm claims made on fashion domain and user
+behaviours declared in this thesis, by performing user-studies or other forms
+of quantitative analysis.
 
-\begin{itemize}
+A more in-depth study on finding items with a high similarity to the one
+currently viewed, should be performed. 
 
-\item More extensive crawling the webstores collecting likes or popularity
-information, better content descriptions, and so on.
+By doing A/B-testing or Multi-Armed Bandit experiments (see Section~\ref{}) it
+could be studied to which degree adding a scale between 1 to 5, replacing the
+current heart-icon, hurt or boost the total number of item-interactions.
 
-\item Provide the user with \emph{cool} and \emph{fun} ways of expressing their
-preferences. A tinder-like \emph{hot or not} interface, the ability to follow
-brand or friends are a few such examples.
+Methods for better extracting data from the various brand-stores should be
+identified. Per Table~\ref{table:extracted-content-features} many items were
+\textit{featureless} due to poor descriptions and metadata -- which in turn
+weaken the final results.
 
-\item Negative feedback in the form of a dislike button or similar.
-\end{itemize}
-
-Adding data entry amounts by adding a step to your funnel could hurt sales more
-than it helps. One should therefore carefully consider adding features the
-require user effort. If a \emph{hot or not} interface is to be implemented one
-should preferably conduct a study to find the best strategy of selecting items
-to display to the users.
-
-Especially better quality and structure of the data. Table
-\ref{table:extracted-content-features} shows an overview of the percentage of
-items we managed to extract the different attributes for. Attributes such as
-category, color, brand-name ...  are particulary useful and should be easily
-extracted from the product database for most products.
+By adding alternative user interfaces such as a \textit{tinder-like hot or not}
+approach (see Section~\ref{}) on should observe their effects on both
+the number of item-interactions and quality of implicit feedbacks. Further
+studies into \textit{how} one can add negative feedback to the system should
+also be considered.
 
 Contextual item-to-item recommendations should be considered implemented to
 display related items to anonymous users in the context of viewing an item
 instead of the current system which recommends "People how love this also
 love".
-
-Do trends repeat year after year?
 
 As shown in \cite{FranceTelecom} most successful commercial recommender
 incorporate multiple sources of information. The following information sources
@@ -209,17 +237,9 @@ should therefore be examined more closely to assess if they can add any value
 to the system:
 
 \begin{itemize}
-\item Social information. Trust could be inferred from functionality such as
-\emph{follow user}, which could be used to improve recommendation quality and
-improve cold-start performance.
-\item Content information.
-\item Demographic information.
+	\item Social and information (friend and \textit{in-app following}-network).
+	\item Content information (type of attire, style, color, brand, subculture).
+	\item Demographic information (age, sex, interests and more).
 \end{itemize}
-\marginpar{Short discussion on the above mentioned information sources and how
-they can help. BE EXPLICIT!}
-
-%Importance of brand
-%Importance of social groups - fashion
-%Demographic filtering as a solution to the cold-start user problem?
 
 %%%% THE END %%%%%
