@@ -33,8 +33,10 @@ attributes. Since product descriptions could be either in Norwegian or in Englis
 both languages. We also experimented with stemming from the nltk software package in python, but since it did not
 improve our results it was not used in the final implementation. E.g. to determine if a product-type falls under
 the \emph{sweater} category we check for the following
-keywords: \emph{sweater, cardigan, jumper, hoody ,genser and genseren}. We attempt to extract the following
-features from the product-database content:
+keywords: \emph{sweater, cardigan, jumper, hoody ,genser and genseren}. The price and the brand of an item
+is stored in its own field, making it an easy task to extract. \newline
+
+We attempt to extract the following features from the product-database:
 
 \begin{itemize}
 \item Price: Grouped into price brackets
@@ -71,14 +73,15 @@ for content-based recommendation as it highlights on of the main weakness of con
 methods, namely that they require rich descriptions of items to build well informed user
 profiles. As mentioned in \cite{meyer2012recommender} this is most often not the case in
 real applications. The content-features will be used to to test our one content-boosted collaborative
-filtering method \cite{Gantner2010} in addition to being used by our filterbots to generate ratings based
-on content-features.
+filtering method \cite{Gantner2010}, described in \ref{cold-start-hybrid} in addition to being used by
+our filterbots to generate ratings based on content-features.
 
 \marginpar{Explain how the content information will be used}
 
 \subsection{Binary Algorithms}
 
-This subsection will describe the algorithms used on the binary datasets.
+This subsection will describe the algorithms used on the binary datasets. In addition to the methods
+described a binary user-based neighborhood model will be used.
 
 \subsubsection{Most-popular Recommender}
 
@@ -98,7 +101,7 @@ time. We have experimented with two different methods of dithering:
 
 The $runif$ function draw samples from a uniform distribution where $y$ specifies the lower boundary
 of the output interval and $z$ specifies the upper boundary. The probability density function of the
-uniform distribution is $P(x) = \frac{1}{z-y}$ anywhere within the interval $[y, z)$, and zero elsewhere.
+uniform distribution is $P(x) = \frac{1}{z-y}$ anywhere within the interval $[y, z]$, and zero elsewhere.
 The $rexp$ function draws a random number from an exponential distribution, where $z$ specifies the
 $\lambda$ value, which is set to $\frac{1}{z}$. Figure \ref{fig:expdist} shows the exponential probability
 density function given different $\lambda$ values.
@@ -142,7 +145,7 @@ Given $x=5$, $y=0$ and $z=6$ using the uniform distribution we get the following
 	10	& 5 &  1 &  0 &  8 &  3 &  18 &  25 & 24 & 2 & 28\\
 	\bottomrule
 \end{tabular}
-\caption{Result Dithering - Uniform Distribution}
+\caption{Most Popular Result Dithering - Uniform Distribution}
 \end{table}
 
 where 0 is the most popular item before the permutation. Given $x=1$, $y=3.0$ and $z=2.5$ using the exponential distribution we get the following permutations of the original ranking in 10 runs:
@@ -164,10 +167,10 @@ where 0 is the most popular item before the permutation. Given $x=1$, $y=3.0$ an
 	10	& 0 &  1 &  21 &  70 &  11 &  20 &  2 & 10 & 9& 3 \\
 	\bottomrule
 \end{tabular}
-\caption{Result Dithering - Exponential Distribution}
+\caption{Most-Popular Result Dithering - Exponential Distribution}
 \end{table}
 
-The following Figure shows the minimum, maximum and average position of the first 10 items for 100 recommendations
+To clearer highlight their differences, the following Figure shows the minimum, maximum and average position of the first 10 items for 100 over recommendations
 given the same parameters as above:
 
 \pgfplotstableread{
@@ -217,7 +220,7 @@ x    y    	y-max  	y-min
 	  table [y error plus=y-max, y error minus=y-min] {\expdist};
 	\end{axis}
 	\end{tikzpicture}
-	\caption{Minimum, maximum and average position for the 10 first items for 100 recommendations using the exponential distribution (blue) and uniform distribution (red)}
+	\caption{Minimum, maximum and average position of 10 first items over 100 recommendations for the exponential distribution dithering (blue) and uniform distribution dithering (red)}
 
 \end{figure}
 
@@ -240,14 +243,14 @@ The counts you have in these situations are the following:
 \item $c_{22}$ the number of times something was observed that was neither.
 \end{itemize}
 
-One you have these counts the log likelihood $G^2$ can be computed as follows:\newline
+Once you have these counts the log likelihood $G^2$ can be computed as follows:\newline
 
 \begin{subequations}
 $G^2$ = 2(matrixEntropy(c)-rowEntropy(c)-columnEntropy(c))
 \begin{align}
 	rowEntropy(c) = H(c_{11}, c_{12}) + H(c_{21}, c_{22}), \\
 	colEntropy(c) = H(c_{11}, c_{21}) + H(c_{12}, c_{22}), \\
-	matrixEntropy(x) = H(c_{11}, c_{12}, c_{21}, c{22}),
+	matrixEntropy(c) = H(c_{11}, c_{12}, c_{21}, c{22}),
 \end{align}
 \end{subequations}
 
@@ -263,27 +266,26 @@ where $N$ equals $\sum_i x_i$. Using the above notation Shannon's entropy for $H
 H = (c_{11} + c_{12})log(c_{11} + c_{12})-c_{11} log(c_{11}) - c_{12} log(c_{12})
 \end{equation}
 
-
+In addition to log likelihood we will also experiment with the cosine similarity model found in MyMediaLite \cite{Gantner2011MyMediaLite}.
 
 \subsubsection{BPR: Bayesian Personalized Ranking}
 
 BPR presented by Rendle et. al. \cite{Rendle2009} can be used to learn the latent factors of a
 latent factor model using binary implicit feedback. For our experiment we have used to implementation
-found in MyMediaLite \cite{Gantner2011MyMediaLite}
-
-Bayesian Personalized Ranking was designed for the item prediction task and optimized for ranking using implicit
-feedback such as e.g. purchases in an online shop. The task of the recommender system is to provide the
-user with a personalized ranking $>_c \subset I^2$ of all items, where $>_u$ has to meet the properties of a total order.
-Finding the personalized ranking for all items $S \epsilon S$ is to maximize the following posterior probability
-where $\theta$ represents the parameter vector of an arbitrary model class (e.g. matrix factorization).
+found in MyMediaLite \cite{Gantner2011MyMediaLite}. Bayesian Personalized Ranking was designed for the item
+prediction task and optimized for ranking using implicit feedback such as e.g. purchases in an online shop.
+The task of the recommender system is to provide the user with a personalized ranking $>_c \subset I^2$ of all
+items, where $>_c$ has to meet the properties of a total order. Finding the personalized ranking for all items
+$S \epsilon S$ is to maximize the following posterior probability where $\theta$ represents the parameter vector
+of an arbitrary model class (e.g. matrix factorization).
 
 \begin{equation}
 p(\theta | >_c) \propto p(>_c | \theta) p(\theta)
 \end{equation}
 
-Where $>_u$ is the desired but latent preference structure for user $c$. All users are presumed to act
+Where $>_c$ is the desired but latent preference structure for user $c$. All users are presumed to act
 independently of each other. The ordering of each pair of items is assumed to independent of every other pair.
-The generic optimization criterion for personalized ranking is the following:
+The generic optimization criterion for personalized ranking is as follows:
 
 \begin{equation}
 BPR(D_S) = \underset{\theta}{\arg\max} \sum_{(c,i,j)\epsilon D_s} ln \sigma(\hat{u}_{c,i}(\theta)-\hat{u}_{c,j}(\theta)) - \lambda \left\|\theta \right\|
@@ -307,9 +309,10 @@ where $\alpha$ is the learning rate and $\lambda_{\theta}$ is the regularization
 \subsection{Implicit Rating Algorithms}
 
 This subsection will describe the algorithms used on the non-binary datasets during our
-experiments.
+experiments. In addition to the methods described a traditional user-based collaborative
+filtering method will also be used.
 
-\subsubsection{Item-based KNN}
+\subsubsection{Item-based Collaborative-Filtering}
 
 For our non-binary item-based collaborative filtering model we will use the Mahout \cite{mahout}
 implementation. The Pearsons Correlation Coefficient \ref{equation:pearson} will be used to compute
@@ -354,14 +357,16 @@ f(P, Q) = \sum_{(c,s)\epsilon C} (u(c,s) - p^{T}_{c}q_{s})^{2} + \lambda (\sum_{
 \label{WeightedLamba}
 \end{equation}
 
+\marginpar{TODO: Compare with binary version in implicit feedback section}
+
 where $n_{p_{c}}$ and $n_{q_{s}}$ denote the number of ratings of user $c$ and item $s$ respectively. $S_{c}$ denote
 the set of items $s$ that user $c$ rated, then $n_{p_{c}}$ is the cardinality of $S_{c}$; similarly $C_{s}$ denotes
 the set of users who rated item $s$, and $n_{q_{s}}$ is the cardinality of $I_{s}$. A given column of P, $p_{c}$ is
 found by solving a regularized linear least squares problem involving the known ratings of user $c$, and the
 feature vectors $q_{s}$ of the items that user $c$ has rated. Similarly, we can compute individual $q_{s}$'s via
 a regularized linear least squares solution, using the feature vectors of users who rated item $j$, and their ratings of it.
+The implicit feedback extension of the method is described in \ref{implicit-als-wr}.
 
-\marginpar{TODO: Move implicit extension of ALS-WR here from implicit rating section}
 
 \subsubsection{Item-Average}
 
@@ -378,7 +383,7 @@ u(c,s) = k * \sum_{c' \epsilon C} u(c',s)
 where $k$ is a normalization factor ($1/|C|$). This is very similar to collaborative filtering, except for
 the fact that the user similarity $sim(c, c')$ has been taken out of the equation. This is the same as saying
 that all user similarities are the same. It is also worth mentioning that this method is not suited for binary
-ratings, as it becomes a most popular algorithm.
+ratings, is it need ratings to average on.
 
 \subsection{Cold-start Solutions}
 
@@ -399,8 +404,8 @@ problem by making it possible for new users to connect to users that capture the
 user group. Filterbots are mainly meant to improve performance when data is scarce and not to degrade performance when data is plentiful.
 
 Similarly as in \cite{Park2006} we decided to experiment with \emph{naive} global bots. The bots are \emph{naive}
-in the sense that they are \emph{dumb} in the way they rate items. We have currently implemented the
-following bots: A \emph{BrandBot} which rates an item based on the brands average rating,
+in the sense that they are \emph{dumb} in the way they rate items, e.g. by only considering one item-attribute of the items.
+We have currently implemented the following bots: A \emph{BrandBot} which rates an item based on the brands average rating,
 multiple \emph{SingleBrandBots} which gives all items of a given brand a top rating,
 an \emph{AverageBot} which rates an item based on their average rating given to it, a \emph{CriticBot} which selects $n$ critics
 among the most active users and rate items based on their average rating, a \emph{PopularityBot} which rates
@@ -408,10 +413,12 @@ an item based on its popularity. More ratings equals a higher rating. Compared t
 felt that the lack of high quality features was a limiting factor when designing the filterbots, as there is only
 so much information in the rating matrix.
 
-The intuition behind the \emph{SingleBrandBots} is as follows: When a new user \emph{rates} an item it will be connected to
-a \emph{psudo-user} which have rated all items of the same brand highly, thus making it more likely  that a new users will
-be recommended items by that brand. The \emph{SingleBrandBots} and \emph{BrandBot} can therefore be considered feature-bots.
-The \emph{PopularityBot} will have rated popular items highly meaning that users that have co-rated items with the \emph{PopularityBot}
+The intuition behind the \emph{SingleBrandBots} is as follows, given that a collaborative filtering algorithm is used:
+when a new user \emph{rates} an item it will be connected to a \emph{psudo-user} which have rated all items of the same brand highly,
+thus making it more likely that a new users will be recommended items by that brand. For item-based methods it works a little differently
+as it only has an effect on the item-similarity matrix. Since more item similarities can be defined due to the psuedo users, more
+neighbors for the target item can be chosen from the candidate set. The \emph{SingleBrandBots} and \emph{BrandBot} can therefore be considered
+feature-bots. The \emph{PopularityBot} will have rated popular items highly meaning that users that have co-rated items with the \emph{PopularityBot}
 user will be recommended the most popular items. The \emph{CriticBot} selects $n$ users among the most active users and rate items
 based on the average rating of the critics.
 
