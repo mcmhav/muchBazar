@@ -408,25 +408,19 @@ results using a combination of implicit ratings and non-binary methods than we w
 \subsection{Compare the different implicit rating functions}
 
 For the time-based splits both recentness functions, especially Count Sigmoid Fixed performed the best overall
-looking at our performance metrics. For the random-based splits both price and a blend of price and popularity performed \emph{equally good}.
-The difference is marginally in both cases, making it \emph{impossible} to give a definitive answer to which is \emph{better},
-as further testing is needed.
+looking at our performance metrics. For the random-based splits both price and a blend of price and popularity performed
+\emph{equally good}. The difference is marginally in both cases, making it \emph{impossible} to give a definitive answer
+to which is \emph{better}, as further testing is needed.
 
 \subsection{Cold-start Results}
 
-Our filterbot results did not improve the cold-start performance of either IBCF or ALS-WR. 
+We found no conclusive evidence to support that our filterbotsrmance of either IBCF or ALS-WR. 
+
 
 \subsection{Select the best combination of methods for the SoBazar recommender system}
 
 Our experiments have shown that ALS-WR combined with our implicit ratings performed the best of all the recommendation
 methods tested on our dataset. 
-
-
-
-
-
-
-
 
 
 
@@ -441,34 +435,23 @@ methods tested on our dataset.
 %The more data the better. With little or no data you won't be able to make recommendations \emph{at all}. Unless you have the users, domain expertise, algorithm development skill, massive inventory and frictionless user data entry your recommender
 %system will not be \emph{the milkshake that brings all the boys to the yard}. Instead the focus should be on building your core product, optimizing your e-commerce funnel, growing your user base, developing user loyalty and growing your inventory. In the meantime you can drive serendipitous recommendations simply by using a combination of most popular content and editors.
 
-
-
-
-
-
-
-
-
-
-
-
-\begin{table}\centering\resizebox{\columnwidth}{!}{\begin{tabular}{*{19}l}\toprule
- & AUC &        MAP@20 &        T\_c &  T\_w &  T\_p &  P\_c &  P\_w &  P\_p &  R\_c &  R\_w &  R\_p &  MAP@20-click &  MAP@20-want &   MAP@20-purchase &        \\
-\midrule
-Popularity Linear 		& 0.826453 &  0.021901 &   1334.5 &     1217.5 &        135.5 & 84.5 &  99.5 &  13 &    0.063344 &      0.08173 &       0.096577 &      0.017595 &      0.028308 &      0.016286 &       \\
-Price Linear 			& 0.807685 &  0.034168 &      1331.5 &        1218 &  138 &   108 &   123 &   7 &     0.081151 &      0.100936 &      0.05078 &       0.026794 &      0.044992 &      0.018096 &       \\
-Count Linear 			& 0.822363 &  0.036075 &      1305.5 &        1230.5 &        151.5 & 109 &   133 &   13 &    0.083285 &      0.108095 &      0.085686 &      0.026972 &      0.043421 &      0.033443 &       \\
-Blend 					& 0.830927 &  0.038488 &      1333.5 &        1218 &  136 &   119 &   123 &   11.5 &  0.089093 &      0.101065 &      0.084523 &      0.033347 &      0.041012 &      0.017738 &       \\
-avgs    				& 0.821857 &  0.032658 &      1326.25 &       1221 &  140.25 &        105.125 &       119.625 &       11.125 &        0.079218 &      0.097957 &      0.079392 &      0.026177 &      0.039433 &      0.021391 &      \\
-\bottomrule\end{tabular}}\caption{random mahout-svd}\end{table}
-
-\begin{table}\centering\resizebox{\columnwidth}{!}{\begin{tabular}{*{19}l}\toprule
- & AUC &        MAP@20 &        T\_c &  T\_w &  T\_p &  P\_c &  P\_w &  P\_p &  R\_c &  R\_w &  R\_p &  MAP@20-click &  MAP@20-want &   MAP@20-purchase &        \\
-\midrule
-Count Linear 		& 0.836785 & 0.038372 & 1298 	&  1195 &  136    &   105 &   121  &   10 &    0.080894 &      0.101255 &      0.073529 &      0.03457 &       0.040894 &      0.020969 &       \\
-Blend 		 		& 0.826914 & 0.028973 & 1296 	&  1203 &  130    &   90  &    108 &   9  &     0.069444 &      0.089776 &      0.069231 &      0.027885 &      0.029995 &      0.016919 &       \\
-Price Linear 		& 0.831955 & 0.038984 & 1249 	&  1246 &  134    &   119 &   126  &   12 &    0.095276 &      0.101124 &      0.089552 &      0.037668 &      0.034568 &      0.043466 &       \\
-Popularity Linear 	& 0.834801 & 0.019844 & 1302 	&  1196 &  131    &   70  &    81  &    3 &     0.053763 &      0.067726 &      0.022901 &      0.015446 &      0.023492 &      0.00115 &        \\
-avgs    			& 0.832614 & 0.031543 & 1286.25 & 1210  &  132.75 &   96  &    109 &   8.5 &   0.074844 &      0.08997 &       0.063803 &      0.028892 &      0.032237 &      0.020626 &      \\
-\bottomrule\end{tabular}}\caption{random mahout-svd}\end{table}
+%\begin{table}\centering\resizebox{\columnwidth}{!}{\begin{tabular}{*{19}l}\toprule
+% & AUC &        MAP@20 &        T\_c &  T\_w &  T\_p &  P\_c &  P\_w &  P\_p &  R\_c &  R\_w &  R\_p &  MAP@20-click &  MAP@20-want &   MAP@20-purchase &        \\
+%\midrule
+%Popularity Linear 		& 0.826453 &  0.021901 &   1334.5 &     1217.5 &        135.5 & 84.5 &  99.5 &  13 &    0.063344 &      0.08173 &       0.096577 &      0.017595 &      0.028308 &      0.016286 &       \\
+%Price Linear 			& 0.807685 &  0.034168 &      1331.5 &        1218 &  138 &   108 &   123 &   7 &     0.081151 &      0.100936 &      0.05078 &       0.026794 &      0.044992 &      0.018096 &       \\
+%Count Linear 			& 0.822363 &  0.036075 &      1305.5 &        1230.5 &        151.5 & 109 &   133 &   13 &    0.083285 &      0.108095 &      0.085686 &      0.026972 &      0.043421 &      0.033443 &       \\
+%Blend 					& 0.830927 &  0.038488 &      1333.5 &        1218 &  136 &   119 &   123 &   11.5 &  0.089093 &      0.101065 &      0.084523 &      0.033347 &      0.041012 &      0.017738 &       \\
+%avgs    				& 0.821857 &  0.032658 &      1326.25 &       1221 &  140.25 &        105.125 &       119.625 &       11.125 &        0.079218 &      0.097957 &      0.079392 &      0.026177 &      0.039433 &      0.021391 &      \\
+%\bottomrule\end{tabular}}\caption{random mahout-svd}\end{table}
+%
+%\begin{table}\centering\resizebox{\columnwidth}{!}{\begin{tabular}{*{19}l}\toprule
+% & AUC &        MAP@20 &        T\_c &  T\_w &  T\_p &  P\_c &  P\_w &  P\_p &  R\_c &  R\_w &  R\_p &  MAP@20-click &  MAP@20-want &   MAP@20-purchase &        \\
+%\midrule
+%Count Linear 		& 0.836785 & 0.038372 & 1298 	&  1195 &  136    &   105 &   121  &   10 &    0.080894 &      0.101255 &      0.073529 &      0.03457 &       0.040894 &      0.020969 &       \\
+%Blend 		 		& 0.826914 & 0.028973 & 1296 	&  1203 &  130    &   90  &    108 &   9  &     0.069444 &      0.089776 &      0.069231 &      0.027885 &      0.029995 &      0.016919 &       \\
+%Price Linear 		& 0.831955 & 0.038984 & 1249 	&  1246 &  134    &   119 &   126  &   12 &    0.095276 &      0.101124 &      0.089552 &      0.037668 &      0.034568 &      0.043466 &       \\
+%Popularity Linear 	& 0.834801 & 0.019844 & 1302 	&  1196 &  131    &   70  &    81  &    3 &     0.053763 &      0.067726 &      0.022901 &      0.015446 &      0.023492 &      0.00115 &        \\
+%avgs    			& 0.832614 & 0.031543 & 1286.25 & 1210  &  132.75 &   96  &    109 &   8.5 &   0.074844 &      0.08997 &       0.063803 &      0.028892 &      0.032237 &      0.020626 &      \\
+%\bottomrule\end{tabular}}\caption{random mahout-svd}\end{table}
 

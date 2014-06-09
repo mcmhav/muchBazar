@@ -14,6 +14,8 @@ Many identified properties of the dataset explored in this chapter will give
 reason to the majority of choices made throughout the thesis.
 
 \clearpage
+\section{The SoBazaar Application}
+\label{sec:sobazaar-application}
 
 
 \begin{chapquote}[30pt]{About SoBazaar}
@@ -194,10 +196,10 @@ to better understand its properties.
             Attribute       & Count   \\
             \midrule
             Total number of product events  &    35324 \\
-            Unique users ids    &    2014 \\
+            Unique users ids    &    1532 \\
             Unique item ids     &    5688 \\
             Unique storefronts  &    144~\tablefootnote{A storefront is a access point, with different clusterings of items. Stores can have multiple storefronts} \\
-            Unique retailer brands   &    22 \\
+            Unique retailer brands  &    22 \\
             \hline
             Item clicks     &    21400 \\
             Item wants  &    12436 \\
@@ -207,21 +209,30 @@ to better understand its properties.
             Last event & Mon, 19 May 2014 22:51:19 GMT \\
             Lifetime of data & 224 days \\
             \hline
-            Average item click count per user   &    10.625620655412115 \\
-            Average item want count per user     &    6.174776564051639 \\
-            Average item purchase count per user     &    0.7388282025819265 \\
+            Average item click count per user   &    13.968668407310705 \\
+            Average item want count per user    &    8.117493472584856 \\
+            Average item purchase count per user    &    0.9712793733681462 \\
             \hline
-            Average item interaction count per user     &    17.53922542204568 \\
             Average user interaction count per item     &    6.210267229254571 \\
+            Average item interaction count per user     &    23.057441253263708 \\
+            Median item interaction count per user  &    7.0 \\
             \bottomrule
         \caption[Dataset summary]{Overview of the key figures in the SoBazaar dataset}
         \label{table:datasetSummary}
         \end{tabular}
     \end{table}
 
-    As seen from table~\ref{table:datasetSummary} the average amount of \emph{purchases} per user are below one. Using purchase information alone to make recommendations will therefore in most cases render the recommendations incomplete. If one or more users have more than one purchases, then some users will of course have none purchases. Making personalized recommendations for these users will then be unattainable.
+As seen from table~\ref{table:datasetSummary} the average amount of
+\emph{purchases} per user are below one. Using purchase information alone to
+make recommendations will therefore in most cases render the recommendations
+incomplete. If one or more users have more than one purchases, then some users
+will of course have none purchases. Making personalized recommendations for
+these users will then be unattainable.
 
-    \emph{Clicks} and \emph{wants} on the other hand have a much higher occurrence. These two events together with \emph{purchases} tops a count of 20 on average per user, and opens for the possibility of more dense personalized recommendations, but the data is still rather sparse.
+\emph{Clicks} and \emph{wants} on the other hand have a much higher occurrence.
+These two events together with \emph{purchases} tops a count of 20 on average
+per user, and opens for the possibility of more dense personalized
+recommendations, but the data is still rather sparse.
 
 \section{Visualizations and analysis}
     % New graphs when/if:
@@ -271,16 +282,17 @@ Here we see the count for each of the different events which can be triggered
 in the SoBazaar application\footnote{With the exception of the event types with
 a trigger count lower than 200, which are merged into on bar and labeled
 \emph{other}}. As can be seen, the two events \emph{product\_detail\_clicked}
-and \emph{storefront\_clicked}, are the two most common in the dataset. 
-As mentioned earlier in Section~\ref{sec:sobazaar-data}, the \emph{storefront}
-is the main access point to a set of products, and the high values for this
-\emph{event\_id} is expected. The fact that accessing the \emph{storefront} is
-the most occurring event, over clicking an item, indicates that many users use
-the application primarily to browse through items, looking at thumbnails,
-rather than accessing the actual item. This underlines the importance of having
-good and presentable images, provide useful information about the product in
-the overview (See Figure~\ref{figure:SoBazaarfeed}) where price and status
-(\textit{New}, \textit{Hot} or \textit{On sale}) should be easily accessible.
+and \emph{storefront\_clicked}, are the two most common in the dataset. As
+mentioned earlier in Section~\ref{sec:sobazaar-appication}, the
+\emph{storefront} is the main access point to a set of products, and the high
+values for this \emph{event\_id} is expected. The fact that accessing the
+\emph{storefront} is the most occurring event, over clicking an item, indicates
+that many users use the application primarily to browse through items, looking
+at thumbnails, rather than accessing the actual item. This underlines the
+importance of having good and presentable images, provide useful information
+about the product in the overview (See Figure~\ref{figure:SoBazaarfeed}) where
+price and status (\textit{New}, \textit{Hot} or \textit{On sale}) should be
+easily accessible.
 
 As we can see from Figure~\ref{figure:SoBazaarfeed} it is possible to indicate
 that you want an item (\textit{product\_wanted}) by clicking the heart-icon,
@@ -312,24 +324,23 @@ users, below.
         \centering
         \includegraphics[width=\dualGraphWidth]{image/user_idcumdistribution.png}
         \caption{Cumulative distribution of events on users}
-        \label{figure:userEventCumDist}
+        \label{fig:userEventCumDist}
     \end{subfigure}
-    \caption{Graphs presenting the distribution of events per user}
+    \caption{Distribution of events per user}
 \end{figure}
 
 We can see that this figure confirms our title. In
-Figure~\ref{figure:userEventDist} we see that the majority of users have been
-observed doing less than 10 events. In Figure~\ref{fig:userEventCumDist} this
-is confirmed by looking at the cumalative graph, as we see that 78\% of the
-users have 50 events or less, with an average of 5 events per user. Note that
-we here look at \textit{all event types}, not only those where the user
-interact with items. As we, in our proposed system, do not use non-item events
-for neither recommending nor generating implicit ratings, we now look at the
-event distribution when only the three item events
-\textit{product\_detail\_clicked}, \textit{product\_wanted} and
-\textit{product\_purchase\_intended} are issued. We do include the distribution
-above however, to show how sparse the data is -- both in terms of product
-interaction, but also application interaction.
+Figure~\ref{figure:userEventDist} the majority of users have been observed
+doing less than 10 events, and Figure~\ref{fig:userEventCumDist} confirms this
+by presenting the cumalative graph where, 78\% of the users have 50 events or
+less, with an average of 5 events per user. Note that we here look at
+\textit{all event types}, not only those where the user interact with items. As
+we, in our proposed system, do not use non-item events for neither recommending
+nor generating implicit ratings, we now look at the event distribution when
+only the three item events \textit{product\_detail\_clicked},
+\textit{product\_wanted} and \textit{product\_purchase\_intended} are issued.
+We do include the distribution above however, to show how sparse the data is --
+both in terms of product interaction, but also application interaction.
 
 \begin{figure}[H]
     \centering
@@ -337,430 +348,507 @@ interaction, but also application interaction.
         \includegraphics[width=\dualGraphWidth]{image/ratingsPerUserdistribution.png}
         \centering
         \caption{Count of item interactions for users}
-\label{figure:ratingsPerUser}
+        \label{fig:ratingsPerUser}
     \end{subfigure}%
     \begin{subfigure}{.5\textwidth}
         \includegraphics[width=\dualGraphWidth]{image/ratingsPerUsercumdistribution.png}
         \centering
         \caption{Cumulative count of item interactions for users}
-\label{figure:ratingsPerUserCum}
+        \label{fig:ratingsPerUserCum}
     \end{subfigure}
-    \caption{Figures presenting the number of product interactions for the users in the data}
+    \caption{Number of product interactions per user}
 \end{figure}
 
-In the figures above the rightmost bar present 0 product interactions.  The
-graphs are limited to only showing interaction amounts up till 60 to give focus
-to the numbers where more than 90\% of the users resides.
+In the figures above we see the number of product interactions per user, where
+the following key charecterstics are apparent:
 
-As seen from figure~\ref{figure:ratingsPerUserCum}, over 20\% of the users have
-never interacted with an item, and about 10\% of the users have more than 50
-item interactions.
+\begin{itemize}
+  \item Over 20\% of all users have never interacted with an item (leftmost bar
+  in Figure~\ref{fig:ratingsPerUserCum})
+  \item 90\% of all users has 60 or fewer item interactions, this is set as
+  cut-off point in both figures.
+  \item 70\% percent of the users has 12 or fewer item interactions.
+  \item The average number of item-interactions per user is, per
+  Table~\ref{table:datasetSummary},
+  $23.05$, however as a few users skew this number a more accurate measure is
+  the median which yields $7.0$ interactions per user.
+\end{itemize}
 
-Even though the data is sparse, as seen from the previous figures, the fact
-that the majority of the users have in some way interacted with at least one
-item, opens for the possibility of connecting users based on their item
-interactions.
+Consequently, although the data extremely sparse the fact that the majority of
+the users have in \textit{some way} interacted with at least one item, opens
+for the possibility of connecting users based on their item interactions and
+making rudimentary recommendations.
 
-Now that we have looked at the distribution of events both as a whole, and as a
-reduced view, we might benefit from looking at how often the users use the
-application. The figure below shows the number of sessions for the users.
+Up until now, we have seen how the users have interacted with both the
+application and products, however we gain a better understanding of the domain
+by also studying user patterns such as how often the application is used and
+the lifespan of user-accounts.
 
-    \begin{figure}[H]
-        \includegraphics[width=5in]{image/sessiondistribution.png}
-        \centering
-        \caption{Distribution of sessions for users}
-    \label{figure:sessCountDist}
-    \end{figure}
-        The figure above shows the count of sessions for the users of the SoBazaar application, with the users with more than 30 sessions removed.
+\begin{figure}[H]
+  \includegraphics[width=5in]{image/sessiondistribution.png}
+  \centering
+  \caption{Distribution of sessions for users}
+  \label{fig:sessCountDist}
+\end{figure}
 
-        More than 90\% of the users of SoBazaar have a session count of 20 and less.
-        This means that they have not logged on to the applications more than 20 separate times, over the time the data was collected, and strengthens the hypothesis that the data from SoBazaar is sparse.
+As seen from the above figure, more than 90\% of the users have a session count
+of 20 or less, in addition almost 25\% of all users has only registered
+\textit{one} interaction in the lifetime of their account. Taking this
+calculation further, approximatly 50\% of the users has 6 interactions or fewer, all
+evidence to strengthen the sparsity claim made in the title of this thesis.
 
-        In figure~\ref{figure:sessCountDist} the 4 first bars sums up to 1000, which is the amount of users who has had 4 or less sessions on the application in total. In other words -- half of the users used the application less than 4 times.
+The low number of sessions leads us to look at account lifetime, where we
+define the lifetime of a user as the length between the first and last
+registered event recorded.
 
-        After having looked at the usage distribution of the users , we move over to the user account lifetime, to see actually how long a user is active on the application in terms of time from first to last recorded event for the user.
+\begin{figure}[H]
+  \includegraphics[width=5in]{image/userTimespansdistribution.png}
+  \centering
+  \caption{Distribution of user account lifetime}
+  \label{figure:userTimespandist}
+\end{figure}
 
-    \begin{figure}[H]
-        \includegraphics[width=5in]{image/userTimespansdistribution.png}
-        \centering
-        \caption{Distribution of user account lifetime}
-    \label{figure:userTimespandist}
-    \end{figure}
-        The figure above displays the lifetime of the user accounts in the application in weeks, where the lifetime is measured from the first occurrence of the unique user id till the last event triggered by that user.
+From this figure we conclude that over half of the users have a lifespan of
+less than a week, in many ways confirming the user effects seen in
+Figure~\ref{fig:sessCountDist}, as many users use the application a few times
+and never open it again. Using this knowledge we observe how important it is to
+based on demographics and \textit{cold-start methods} recommend relevant items
+from day one.
 
-        From this figure it is apparent that over half of the user accounts have a lifespan of less than a week.
+One might however argue that a short lifespan does not necessarily yield low
+activity, and in order to disprove this claim we map the average lifespan at
+the Y-axis and combine it with the event count of users on the X-axis.
 
-        Lifetime of the accounts mapped together with their usage might tell us more than just the account life time alone, so the next figure displays just that.
+\begin{figure}[H]
+  \includegraphics[width=5in]{image/avglifetimeoncountuser.png}
+  \centering
+  \caption{Average lifetime of user accounts sorted on event count}
+  \label{figure:avglifetimeoncountuser}
+\end{figure}
 
-    \begin{figure}[H]
-        \includegraphics[width=5in]{image/avglifetimeoncountuser.png}
-        \centering
-        \caption{Average lifetime of user accounts sorted on event count}
-    \label{figure:avglifetimeoncountuser}
-    \end{figure}
-        The figure above shows the lifetime of the user accounts together with their application interaction count.
-        Users more to the right have a higher event count.
-        Some outliers have been removed to give focus to the majority of the users. As mentioned earlier, 78\% of the users have triggered 50 or less events.
+As seen from the tendency line, a longer lifespan of a user yields a larger
+probability of a higher event count. Based on our findings at this point we can
+thus conclude that the data is sparse and many users have only used the
+application a few times, without coming back.
 
-        The red line is the regression line of the user account lifetimes, and is there to show how the account life span increases with the amount of events.
+Continuing, we want to learn more about the user demographics and therefore use
+the location provided with each event to map the locations of all users in
+Norway, as shown below.
 
-        As seen in the data set overview table~\ref{table:eventData}, the location of the user at event trigger is stored in the data. The locations of the users are shown in the figure below.
 
-    \begin{figure}[H]
-        \includegraphics[width=5in]{image/simpleGeoPlotNorway.png}
-        \centering
-        \caption{Plot of event location in and around Norway}
-    \label{figure:croppedGeoplot}
-    \end{figure}
-        Figure~\ref{figure:croppedGeoplot} shows the location of the user at the time the different events was triggered.
-        It is cropped to show events triggered in and around Norway.
-        We can see that the majority of the users are located in and around the capital city of Norway, Oslo.
+\begin{figure}[H]
+  \includegraphics[width=5in]{image/simpleGeoPlotNorway.png}
+  \centering
+  \caption{Primary event locations in Norway}
+  \label{figure:croppedGeoplot}
+\end{figure}
 
-        If the event is triggered from a phone, the event is as precise as the GPS hardware location of the phone, and would be helpful information to understand more about the user.
+The locations of all users in Norway, shows that users from the whole country
+are using the application and they correspond roughly to the population
+distribution as well -- this has the pleasant side-effect that making
+predictions based on demographics, may prove successful. However, experiments
+must the done in order to see to which degree one can make generalizations in
+city-centers, where most of the acitivity are coming from.
 
 \subsection{Product properties}
-    The properties of the products can tell help to tell how the products are being interacted with, and the distribution of events on them.
 
-    The next two figures presents the distribution of price of the products in the database.
+Having covered many of the properties found in the users of SoBazaar, we move
+our attention to the products to see how they are interacted with and if we
+gain any valuable knowledge which might lead us to better undertstand the
+domain. First we will look at the price distribution, before moving on to see
+how evenly distributed the product events are, and finally we delve more into
+detail on \textit{storefronts} and their effect on the dataset.
 
-    \begin{figure}[H]
-        \centering
-        \begin{subfigure}{.5\textwidth}
-            \includegraphics[width=\dualGraphWidth]{image/priceDistributiondistribution.png}
-            \centering
-            \caption{Price distribution of products}
-    \label{figure:pricePerProduct}
-        \end{subfigure}%
-        \begin{subfigure}{.5\textwidth}
-            \includegraphics[width=\dualGraphWidth]{image/cumpriceDistributiondistribution.png}
-            \centering
-            \caption{Cumulative price distribution of products}
-    \label{figure:pricePerProductCum}
-        \end{subfigure}
-        \caption{Figures presenting the distribution of price for the items i SoBazaar}
-    \end{figure}
-        Here we see how the products are distributed in regards to their price.
-        134 of the products have a price over 2 500 NOK and have been left out of this graph.
+\begin{figure}[H]
+  \centering
+  \begin{subfigure}{.5\textwidth}
+      \includegraphics[width=\dualGraphWidth]{image/priceDistributiondistribution.png}
+      \centering
+      \caption{Price distribution of products}
+      \label{figure:pricePerProduct}
+  \end{subfigure}%
+  \begin{subfigure}{.5\textwidth}
+      \includegraphics[width=\dualGraphWidth]{image/cumpriceDistributiondistribution.png}
+      \centering
+      \caption{Cumulative price distribution of products}
+      \label{figure:pricePerProductCum}
+  \end{subfigure}
+  \caption{Figures presenting the distribution of price for the items i SoBazaar}
+\end{figure}
 
-        The price range of the application varies a lot, but 82\% of the items have a price lower than 1 000 NOK.
+From the above figures we note that the majority of items (82\%) have a price
+lower than 1 000 NOK. There is a definite peak around 200-300 NOK, which
+correlates with the median price for items being 299 NOK.  Still, the
+variations seen in Figure~\ref{figure:pricePerProduct} are big and this is a
+good thing as it can help us differentiate on users based on their price
+preferences.
 
-        Next figures up are two ways of presenting the distribution of events on the items in the dataset.
+Can we, however, make the same differantiation based on popularity? We have
+seen that each item in average has $6.21$ interactions
+(Table~\ref{fig:dataSummary}, but as seen below these are not evenly
+distributed among the products.
 
-    \begin{figure}[H]
-        \centering
-        \begin{subfigure}{.5\textwidth}
-            \includegraphics[width=\dualGraphWidth]{image/product_iddistribution.png}
-            \centering
-            \caption{Count of events on products}
-    \label{figure:eventsPerproduct}
-        \end{subfigure}%
-        \begin{subfigure}{.5\textwidth}
-            \includegraphics[width=\dualGraphWidth]{image/product_idcumdistribution.png}
-            \centering
-            \caption{Cumulative count of events on products}
-    \label{figure:eventsPerproductCum}
-        \end{subfigure}
-        \caption{Figures presenting the distribution of events for the products i SoBazaar}
-    \end{figure}
-        80\% of the products only have an interaction count of 10 or less, where interaction count is \emph{product\_detail\_clicked}, \emph{product\_wanted} and \emph{product\_purchase\_intended}.
-        This means that there will not be more than 10 events for the majority of the items, with no more than 10 datapoints to connect with other items for the majority of the items, recommendations done through connecting items to other items through item interaction, might prove problematic.
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=\dualGraphWidth]{image/product_idcumdistribution.png}
+  \label{figure:eventsPerproductCum}
+  \caption{Cumulative count of events on products}
+\end{figure}
 
-        When the majority of the events only has 10 events and there are over 6 000 items and 2 000 users, the probability that multiple users have interacted with similar items will be marginal, but promotes the importance of utilizing all the feedback to bolster the recommender.
+80\% of the products only have an interaction count of 10 or less, where
+interaction count is \emph{product\_detail\_clicked}, \emph{product\_wanted}
+and \emph{product\_purchase\_intended}.  This means that there will not be more
+than 10 events for the majority of the items, with no more than 10 datapoints
+to connect with other items for the majority of the items, recommendations done
+through connecting items to other items through item interaction, might prove
+problematic.
 
-\subsubsection{The Pareto principle and Long tail on sales}
-    In e-commerce the distribution of sales or product interactions can often be described by the Pareto principle and the phenomenon of long tail.
-    Pareto's principle is used to tell how the distribution is in the \emph{head}~\footnote{Take for example figure~\ref{figure:eventsPerproduct}, the \emph{head} is the left most part where the curve is steep} of the graph, and the long tail phenomenon is used to tell how the distribution is in the \emph{tail}~\footnote{Take for example figure~\ref{figure:eventsPerproduct}, the \emph{tail} is the right most part where the curve flattens out} of the graph.
+When the majority of the events only has 10 events and there are over 6 000
+items and 2 000 users, the probability that multiple users have interacted with
+similar items will be marginal, but promotes the importance of utilizing all
+the feedback to bolster the recommender.
 
-\paragraph{Pareto's Principle}
-    Pareto's principle applies when the 20\% most frequent products account for more than 80\% of the ratings, sales or interactions in the dataset~\cite{newman05power}.
+\subsubsection{The Pareto principle and Long tail on interactions}
 
-    \begin{figure}[H]
-        \centering
-        \begin{tikzpicture}
-            \begin{axis}[
-                xlabel=Threshold,
-                ylabel=Percentage of item interaction,
-                grid=major,
-            ]
-            \addplot+[color=blue,sharp plot] coordinates
-                {(0,80) (100,80)};
-            \addplot+[color=blue,sharp plot] coordinates
-                {(20,0) (20,100)};
-            \addplot[color=red,mark=x] coordinates {
-                    (0.0, 0.0)
-                    (1.0, 10.089827139370456)
-                    (2.0, 15.879525954256096)
-                    (3.0, 20.48914274211811)
-                    (4.0, 24.52004126512845)
-                    (5.0, 28.004931686083083)
-                    (6.0, 31.16775281181592)
-                    (7.0, 34.053795636967514)
-                    (8.0, 36.72848048712981)
-                    (9.0, 39.184258863196035)
-                    (10.0, 41.49409958986488)
-                    (11.0, 43.66303499987419)
-                    (12.0, 45.76151775155373)
-                    (13.0, 47.72412751931158)
-                    (14.0, 49.60370379689505)
-                    (15.0, 51.44553757894472)
-                    (16.0, 53.116272047907806)
-                    (17.0, 54.75178018770601)
-                    (18.0, 56.2614800090582)
-                    (19.0, 57.79634149409959)
-                    (20.0, 59.17016833153008)
-                    (21.0, 60.52889817074705)
-                    (22.0, 61.887628009964025)
-                    (23.0, 63.14571119442417)
-                    (24.0, 64.35347105150593)
-                    (25.0, 65.56123090858767)
-                    (26.0, 66.78912009662079)
-                    (27.0, 67.84842613793623)
-                    (28.0, 68.90521601288278)
-                    (29.0, 69.9620058878293)
-                    (30.0, 71.03640892735828)
-                    (31.0, 72.00261681302368)
-                    (32.0, 72.90843670583499)
-                    (33.0, 73.8142565986463)
-                    (34.0, 74.73517348967114)
-                    (35.0, 75.64099338248245)
-                    (36.0, 76.49900611428427)
-                    (37.0, 77.25385602496037)
-                    (38.0, 78.02128676748107)
-                    (39.0, 78.77613667815716)
-                    (40.0, 79.53098658883326)
-                    (41.0, 80.29841733135395)
-                    (42.0, 81.05326724203005)
-                    (43.0, 81.77540698991017)
-                    (44.0, 82.37928691845104)
-                    (45.0, 82.9932315124676)
-                    (46.0, 83.59711144100848)
-                    (47.0, 84.20099136954934)
-                    (48.0, 84.80487129809023)
-                    (49.0, 85.41881589210678)
-                    (50.0, 86.02269582064767)
-                    (51.0, 86.62657574918853)
-                    (52.0, 87.11974435749693)
-                    (53.0, 87.57265430390258)
-                    (54.0, 88.02556425030824)
-                    (55.0, 88.47847419671389)
-                    (56.0, 88.9389326422263)
-                    (57.0, 89.39184258863196)
-                    (58.0, 89.84475253503761)
-                    (59.0, 90.29766248144327)
-                    (60.0, 90.75812092695568)
-                    (61.0, 91.21103087336134)
-                    (62.0, 91.66394081976699)
-                    (63.0, 92.06149510605641)
-                    (64.0, 92.36343507032684)
-                    (65.0, 92.66537503459729)
-                    (66.0, 92.96731499886772)
-                    (67.0, 93.27428729587601)
-                    (68.0, 93.57622726014644)
-                    (69.0, 93.87816722441687)
-                    (70.0, 94.18010718868732)
-                    (71.0, 94.48707948569559)
-                    (72.0, 94.78901944996603)
-                    (73.0, 95.09095941423647)
-                    (74.0, 95.39289937850691)
-                    (75.0, 95.69987167551518)
-                    (76.0, 96.00181163978563)
-                    (77.0, 96.30375160405606)
-                    (78.0, 96.61072390106435)
-                    (79.0, 96.8170495433158)
-                    (80.0, 96.96801952545103)
-                    (81.0, 97.11898950758624)
-                    (82.0, 97.27247565609038)
-                    (83.0, 97.4234456382256)
-                    (84.0, 97.57441562036082)
-                    (85.0, 97.72538560249603)
-                    (86.0, 97.87887175100018)
-                    (87.0, 98.0298417331354)
-                    (88.0, 98.18081171527061)
-                    (89.0, 98.33429786377475)
-                    (90.0, 98.48526784590997)
-                    (91.0, 98.6362378280452)
-                    (92.0, 98.7872078101804)
-                    (93.0, 98.94069395868455)
-                    (94.0, 99.09166394081976)
-                    (95.0, 99.24263392295498)
-                    (96.0, 99.3936039050902)
-                    (97.0, 99.54709005359435)
-                    (98.0, 99.69806003572957)
-                    (99.0, 99.84903001786478)
-                    (100.0, 100.0)
-            };
-            \end{axis}
-        \end{tikzpicture}
-        \caption{Pareto's principle values graphed}
-    \label{figure:paretosPrinciple}
-    \end{figure}
+In e-commerce the distribution of sales or product interactions can often be
+described by the Pareto principle and the phenomenon of \textit{long tail}
+which states that roughly 80\% of the effects come from 20\% of the causes.
+Often the principle goes by the name of \textit{factor sparsity}, which
+indicates that given a Pareto distribution one \textit{may} observe sparsity
+issues. Whilst measuring the Pareto principle focuses on the \textit{head} of
+the distribution (that is, where it is steepest), the \textit{long tail}
+phenomenon targets the \textit{tail}. It states that the most frequently
+occurring items represent less than 50\% of seen
+occurrences~\cite{DBLP:journals/corr/abs-1203-4487}, thus by having a Long-tail
+distribution, events are more evenly distributed compared to when Pareto yields
+true.
 
-    \begin{table}[H]
-        \centering
-        \begin{tabular}{lll}
-        \toprule
-        Threshold &   Products in threshold~\tablefootnote{\label{footnote:pt}The amount of products residing within the percentage threshold} &      Percentage of interactions \\
-        \midrule
-        20\%    &    1206   &    59.1701\% \\
-        41\%    &    2472   &    80.2984\% \\
-        \bottomrule
-        \end{tabular}
-        \caption{Pareto's principle values}
-    \label{table:paretosPrinciple}
-    \end{table}
+In order to analyze these distributions we map our product interactions on the
+Y-axis and sort our products by popularity on the X-axis -- grouped by the
+popularity percentage, that is the 1\% most popular items equals 1\% of 5688,
+in other words the 57 items.
 
-    Figure~\ref{figure:paretosPrinciple} show the percentages of interactions within the given thresholds.
-    As we can see from table~\ref{table:paretosPrinciple}, the 20\% most frequently interacted with items represents 59.1701\% of the item interaction in total.
-    We have to move up to 41\% to reach 80\% of the interactions, and the Pareto's principle does therefore not apply to the SoBazaar dataset.
+\begin{figure}[H]
+  \centering
+  \begin{tikzpicture}
+    \begin{axis}[
+      xlabel=Products sorted by popularity,
+      ylabel=Percentage of item interaction,
+      grid=major,
+    ]
+    \addplot+[color=blue,sharp plot] coordinates
+      {(0,80) (100,80)};
+    \addplot+[color=blue,sharp plot] coordinates
+      {(20,0) (20,100)};
+    \addplot[color=red,mark=x] coordinates {
+        (0.0, 0.0)
+        (1.0, 9.576667138609656)
+        (2.0, 15.129548350559253)
+        (3.0, 19.646042758034827)
+        (4.0, 23.57072065694464)
+        (5.0, 27.076313181367688)
+        (6.0, 30.22511680588985)
+        (7.0, 33.05394308367549)
+        (8.0, 35.6392467789891)
+        (9.0, 38.09995752513096)
+        (10.0, 40.41342205861532)
+        (11.0, 42.59946198499222)
+        (12.0, 44.697720515361745)
+        (13.0, 46.6402378592666)
+        (14.0, 48.54311199207136)
+        (15.0, 50.31856151776866)
+        (16.0, 52.00622964745859)
+        (17.0, 53.62027467081977)
+        (18.0, 55.23431969418095)
+        (19.0, 56.706781820756056)
+        (20.0, 58.15942234178111)
+        (21.0, 59.61206286280617)
+        (22.0, 60.91179385530228)
+        (23.0, 62.20302987399122)
+        (24.0, 63.4716126291944)
+        (25.0, 64.72037377884752)
+        (26.0, 65.85020529520034)
+        (27.0, 66.98003681155316)
+        (28.0, 68.10986832790599)
+        (29.0, 69.23969984425882)
+        (30.0, 70.2307801217613)
+        (31.0, 71.18221718816366)
+        (32.0, 72.15064420218039)
+        (33.0, 73.11907121619709)
+        (34.0, 74.08749823021378)
+        (35.0, 74.99362876964463)
+        (36.0, 75.80065128132522)
+        (37.0, 76.6076737930058)
+        (38.0, 77.41469630468639)
+        (39.0, 78.20756052668838)
+        (40.0, 79.01458303836897)
+        (41.0, 79.82160555004955)
+        (42.0, 80.52952003397989)
+        (43.0, 81.17513804332437)
+        (44.0, 81.82075605266884)
+        (45.0, 82.4663740620133)
+        (46.0, 83.11199207135778)
+        (47.0, 83.74628344895937)
+        (48.0, 84.39190145830383)
+        (49.0, 85.03751946764831)
+        (50.0, 85.63783095002123)
+        (51.0, 86.12204445702959)
+        (52.0, 86.60625796403795)
+        (53.0, 87.0904714710463)
+        (54.0, 87.56619000424749)
+        (55.0, 88.05040351125584)
+        (56.0, 88.5346170182642)
+        (57.0, 89.01883052527255)
+        (58.0, 89.5030440322809)
+        (59.0, 89.98725753928926)
+        (60.0, 90.47147104629761)
+        (61.0, 90.95568455330596)
+        (62.0, 91.371938269857)
+        (63.0, 91.69474727452923)
+        (64.0, 92.01755627920147)
+        (65.0, 92.34036528387371)
+        (66.0, 92.66317428854595)
+        (67.0, 92.98598329321818)
+        (68.0, 93.30879229789042)
+        (69.0, 93.63160130256264)
+        (70.0, 93.94874699136344)
+        (71.0, 94.27155599603569)
+        (72.0, 94.59436500070791)
+        (73.0, 94.91717400538015)
+        (74.0, 95.23998301005238)
+        (75.0, 95.56279201472462)
+        (76.0, 95.88560101939686)
+        (77.0, 96.20274670819765)
+        (78.0, 96.45759592241258)
+        (79.0, 96.61900042474869)
+        (80.0, 96.7804049270848)
+        (81.0, 96.94180942942093)
+        (82.0, 97.10321393175705)
+        (83.0, 97.26461843409317)
+        (84.0, 97.42602293642928)
+        (85.0, 97.58459578082967)
+        (86.0, 97.74600028316578)
+        (87.0, 97.90740478550191)
+        (88.0, 98.06880928783804)
+        (89.0, 98.23021379017415)
+        (90.0, 98.39161829251026)
+        (91.0, 98.55302279484638)
+        (92.0, 98.71442729718251)
+        (93.0, 98.8730001415829)
+        (94.0, 99.03440464391902)
+        (95.0, 99.19580914625513)
+        (96.0, 99.35721364859124)
+        (97.0, 99.51861815092737)
+        (98.0, 99.68002265326349)
+        (99.0, 99.8414271555996)
+        (100.0, 100.0)
+    };
+    \end{axis}
+  \end{tikzpicture}
+  \caption{Pareto's principle values graphed}
+  \label{figure:paretosPrinciple}
+\end{figure}
 
-    Even though Pareto's Principle does not apply to this data, is the information regarding where the majority (the 80\%) of the item interaction resides valuable.
-    To reach the majority of the item interaction we have to cover over 41\% of the most popular items, which might in turn lead to bad most popular results.
+\def \footnotept {The amount of products residing within the percentage threshold}
+\begin{table}[H]
+  \centering
+  \begin{tabular}{lll}
+    \toprule
+    Threshold &   Products in threshold~\tablefootnote{\label{footnote:pt}\footnotept} & Percentage of interactions \\
+    \midrule
+    20\%    &    1206   &    58.1594\% \\
+    41.3\%    &    2349   &    80.0622\% \\
+    \bottomrule
+  \end{tabular}
+  \caption{Pareto's principle values}
+  \label{table:paretosPrinciple}
+\end{table}
 
-\paragraph{Long Tail}
-    The definition of long tail is that the most frequently-occurring items represent less than 50\% of occurrences in logs~\cite{DBLP:journals/corr/abs-1203-4487}.
+As seen from both the figure and table, the 20\% most frequently interacted
+with items represent $58.1594$\% of the item interactions in total. We have to
+move up to 41.3\% of the most popular items in order to reach 80\%, and thus we
+can conclude that Pareto's principle does not apply to the SoBazaar dataset.
+However, as we have seen in previous section this does not disprove sparsity,
+nor does it prove density in the dataset. In order to see this we can
+investigate if we have a Long-tail by observing the following values.
 
-    \begin{table}[H]
-        \centering
-        \begin{tabular}{llll}
-        \toprule
-        Average product interaction   & Products in threshold~\tablefootnote{See footnote~\ref{footnote:pt}} & Coverage & Percentage of interactions \\
-        \midrule
-        6.6928   &    4194   & 68.8443\% &   28.5408\% \\
-        \bottomrule
-        \end{tabular}
-        \caption{Long tail values}
-    \label{table:longtail}
-    \end{table}
+\begin{table}[H]
+  \centering
+  \begin{tabular}{llll}
+    \toprule
+    Average product interaction   & Products in threshold~\tablefootnote{See footnote~\ref{footnote:pt}} & Coverage & Percentage of interactions \\
+    \midrule
+    6.2102   &    4029   & 70.8333\% &   30.6017\% \\
+    \bottomrule
+  \end{tabular}
+  \caption{Long tail values}
+  \label{table:longtail}
+\end{table}
 
-    As the table above shows the SoBazaar data does not posses a clear long tail behavior.
-    The average interaction count of the products is 6.6928 and there is 4194 products with less than this number of interactions, but these items does only cover 28.5408\% of the total interactions.
+As the table above shows the SoBazaar data does not posses a clear long tail
+behavior. The average interaction count of the products is 6.2102 and there is
+4029 products with less than this number of interactions, but these items does
+only cover 30.6017\% of the total interactions. The next figure displays an
+overview of which events are triggered on the \emph{storefronts} in the
+SoBazaar application.
 
-    The next figure displays an overview of which events are triggered on the \emph{storefronts} in the SoBazaar application.
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=5in]{image/storefront_nameandEventdistribution.png}
+  \caption{Distribution of events on storefronts}
+  \label{figure:eventOnStoreFrontDist}
+\end{figure}
 
-    \begin{figure}[H]
-        \includegraphics[width=5in]{image/storefront_nameandEventdistribution.png}
-        \centering
-        \caption{Distribution of events on storefronts}
-    \label{figure:eventOnStoreFrontDist}
-    \end{figure}
-        The figure above presents the event distribution on the different storefronts.
-        The events are segmented to show the different event counts on the different storefronts, and stacked to show the complete count, to be able to clearly see how the events are distributed over the different stores.
-        We can see that \emph{H\&M} is the most popular store in total, but \emph{BIK BOK} has the most \emph{product\_purchase\_intended}-events.
-        One interesting find to take from this graph is the \emph{storefront\_clicked} to the item interaction related events (\emph{product\_detail\_clicked}, \emph{product\_wanted} and \emph{product\_purchase\_intended}) ratio.
-        For instance \emph{Bik Bok} has a much higher item interaction count than storefront access count, whereas stores such as \emph{Reiss} and \emph{Inwear} are mostly accessed and the items not interacted with.
-        Different aspects affecting this might be price, style and item presentation.
+The figure above presents the event distribution on the different storefronts.
+The events are segmented to show the different event counts on the different
+storefronts, and stacked to show the complete count, to be able to clearly see
+how the events are distributed over the different stores.  We can see that
+\emph{H\&M} is the most popular store in total, but \emph{BIK BOK} has the most
+\emph{product\_purchase\_intended}-events.  One interesting find to take from
+this graph is the \emph{storefront\_clicked} to the item interaction related
+events (\emph{product\_detail\_clicked}, \emph{product\_wanted} and
+\emph{product\_purchase\_intended}) ratio.  For instance \emph{Bik Bok} has a
+much higher item interaction count than storefront access count, whereas stores
+such as \emph{Reiss} and \emph{Inwear} are mostly accessed and the items not
+interacted with.  Different aspects affecting this might be price, style and
+item presentation.
 
 \subsection{Time properties}
-    It is not only important to look at if a user has accessed an item, or if a user has a certain preference, time might also tell something about the preferences of the user.
 
-    The next figure shows the average lifetime of the products in the SoBazaar database.
+Not only is it important to look at user and product properties, but as
+\textit{time} is an important aspect of fashion we should identify properties
+related to this segment in our data as well. We have already looked at the
+lifespan of users (Figure~\ref{fig:sessCountDist}), and by applying the same
+methodology on products we can see which items that regularily are interacted
+with -- and perhaps more interestingly, which items are \textit{forgotten}.
 
-    \begin{figure}[H]
-        \includegraphics[width=5in]{image/itemTimespansdistribution.png}
-        \centering
-        \caption{Count of the different time spans of the items}
-    \label{figure:itemLifes}
-    \end{figure}
-        This figure shows the count of products which has the different time spans.
-        This figure makes it clearer than figure~\ref{figure:itemTimeSpanEventCount} how long the majority of the the products have lived.
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=5in]{image/itemTimespansdistribution.png}
+  \caption{Count of the different time spans of the items}
+  \label{figure:itemLifes}
+\end{figure}
 
-        Almost 2 500 products have a life span of less than a week, which shows how important it is to handle the recentness of the products to be able to follow the ever-changing trends.
+We can observe that almost 2 500 products have a life span of less than a week,
+which shows how important it is to handle the recentness of products in order
+to follow ever-changing trends. In addition, a future recommender system should
+strive not only to show the most popular items at moment, but also ensure a
+large \textit{coverage} of the product database in its recommendations. This is
+an important metric, which we will return to multiple times in this thesis --
+since, as we can see the coverage of items in the current state is low.
 
-        Including the amount of item interactions mapped together with the lifespan of the items is the next figure up, to better see how the lifespan of the items change with the amount of item interactions on them.
+Increasing the lifespan of an item has positive effects on the popularity of an
+item as well, as we see in the figure below, where the lifespan is mapped to
+the number of interactions on the item in question.
 
-    \begin{figure}[H]
-        \includegraphics[width=5in]{image/avglifetimeoncount.png}
-        \centering
-        \caption{Average life time of products grouped on event count}
-    \label{figure:averageLifetimBasedoncount}
-    \end{figure}
-        This figure shows the life span of the products grouped and sorted on the number of interactions on the items.
-        The life span of an item is the time from the first event on the item till the last event on the item.
-        The red line is the regression line of the average life spans at the different interactions counts.
-        The gap between 117 to 160 is because no items have an interaction count of that amount.
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=5in]{image/avglifetimeoncount.png}
+  \caption{Average life time of products grouped on event count}
+  \label{figure:averageLifetimBasedoncount}
+\end{figure}
 
-        As we can see from the regression line, the average life span of an item increases with the count of item interactions, which is somewhat expected since they are in many ways intertwined, but there are indications of a reduction of interest with time, which advocates the idea that recentness is important.
+One may see that the tendency line shows a positive growth as the average
+number of item interactions increase. Thus, as they are correlated it is both
+important to focus on making good recommendations, but also ensure good
+coverage. One may also see the sparsity affects this figure, as e.g. no items
+have between 116 and 160 interactions registered.
 
-        The figure above averaged the lifespan of the items and presented them with together with their respective count, the next figure keeps them separate, to not lose the lifespan distribution.
+The figure above averaged the lifespan of the items and presented them with
+together with their respective count, below we show the same tendency, but keep
+the lifespan seperate.
 
-    \begin{figure}[H]
-        \includegraphics[width=5in]{image/itemTimeSpansortedoneventcount.png}
-        \centering
-        \caption{Life time of items mapped with event count}
-    \label{figure:itemTimeSpanEventCount}
-    \end{figure}
-        This figure shows the total life span of each item mapped together with the amount of events triggered on them.
-        As mentioned earlier, the life span of an item is the time since the first event on the item till the last event on the item.
-        This figure is showing the same data as in figure~\ref{figure:averageLifetimBasedoncount}, but instead of taking the average life span at the give product interactions count, the products are mapped separately, to show the diversity in life span given the different product interaction counts.
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=5in]{image/itemTimeSpansortedoneventcount.png}
+  \caption{Life time of items mapped with event count}
+  \label{figure:itemTimeSpanEventCount}
+\end{figure}
 
-        Time is shown in weeks, so the longest time span of an item is about 27 weeks, which is close to the time span of the events gathered from SoBazaar.
-        Even though an item has a long time span does not mean that the item has been of measurable interest to the users in the SoBazaar application, but we see that the more interaction on the item, the longer the average life time, but the recentness of an item is important.
-        Even though some item has a lot of interaction, they item can have a quite low lifespan, which promotes the importance of looking into recentness.
+Time is shown in weeks, so the longest time span of an item is about 27 weeks,
+which is close to the time span of the events gathered from SoBazaar. As can be
+seen, even though an item has a long time span, it does not mean that the item
+has been of measurable interest to the users in the SoBazaar application. In
+addition we see that the more interaction on the item, the longer the average
+life time, again proving that the recentness of an item is important.
 
-        Next figures presents how long in average the user use before taking an action such as \emph{purchase} or \emph{want}.
+As described in Section~\ref{sec:preprocessing} when pre-processing the data we
+perform a session study, looking at timing related behaviours in order to e.g.
+detect the amount of \textit{bouncing}, that is clicking an item and then
+without delay return to the original page without \textit{actually} having read
+or shown interest to the product.
 
-    \begin{figure}[H]
-        \centering
-        \begin{subfigure}{.5\textwidth}
-            \centering
-            \includegraphics[width=\dualGraphWidth]{image/product_wanteddistribution.png}
-            \caption{View times before wanting an item}
-    \label{figure:viewWant}
-        \end{subfigure}%
-        \begin{subfigure}{.5\textwidth}
-            \centering
-            \includegraphics[width=\dualGraphWidth]{image/product_purchase_intendeddistribution.png}
-            \caption{View times before purchasing an item}
-    \label{figure:viewBuy}
-        \end{subfigure}
-        \caption{Average view times of products before want or purchase}
-    \end{figure}
-        The figures above shows the average time of the users of the SoBazaar application before pressing either \emph{want} or \emph{purchase}.
+\begin{figure}[H]
+  \centering
+  \begin{subfigure}{.5\textwidth}
+      \centering
+      \includegraphics[width=\dualGraphWidth]{image/product_wanteddistribution.png}
+      \caption{View times before wanting an item}
+      \label{figure:viewWant}
+  \end{subfigure}%
+  \begin{subfigure}{.5\textwidth}
+      \centering
+      \includegraphics[width=\dualGraphWidth]{image/product_purchase_intendeddistribution.png}
+      \caption{View times before purchasing an item}
+      \label{figure:viewBuy}
+  \end{subfigure}
+  \label{fig:view-times}
+  \caption{Average view times of products before want or purchase}
+\end{figure}
 
-        The average times between the two are quite similar, but we can see that the user is on average somewhat faster to press \emph{purchase}.
-        The data set on \emph{product\_purchase\_intended} is considerably smaller than \emph{product\_wanted}, so the trends seen here are inconclusive at best.
+By looking at the average view time before want and purchase above, we conclude
+that most users purchases or wants an item by looking at images and perhaps
+superfically at the product details. In other words, as we have mentioned
+earlier, the most important aspects in terms of retention and convertion are
+price, images, status of the item, brand and storefront.
 
-        The figures above presented the actions \emph{purchase} and \emph{want}, the next figure presents the \emph{bounce rate}, or in other words, how fast the user on average triggered a non related event to the item currently being watched.
-    \begin{figure}[H]
-        \includegraphics[width=5in]{image/product_detail_clickeddistribution.png}
-        \centering
-        \caption{View times before leaving an item (Bounce Rate)}
-    \label{figure:bounceRate}
-    \end{figure}
-        This figure shows the time the users use before not taking any more action towards the item (\emph{purchase} or \emph{want}).
-        The majority of the users have a view time of less than 6 seconds before they moves on to another item.
+Closely related is the already mentioned \textit{bounce rate}, which is
+depticted below.
 
-        When comparing this figure with figure~\ref{figure:viewWant} and figure~\ref{figure:viewBuy} we see a more definite difference.
-        The users are much faster to look at a new item when not pressing \emph{want} or \emph{purchase}.
-        This could indicate a disinterest towards the item.
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=5in]{image/product_detail_clickeddistribution.png}
+  \caption{View times before leaving an item (Bounce Rate)}
+  \label{figure:bounceRate}
+\end{figure}
 
-    \begin{figure}[H]
-        \includegraphics[width=5in]{image/eventsPerDay.png}
-        \centering
-        \caption{Distribution of events per day}
-    \label{figure:eventOnDaysDist}
-    \end{figure}
-        This figure shows the event distribution per day over the time period the events were stored.
-        The spikes we see happens on a weekly basis, and is centered around the weekends, which is natural since this is an entertainment applications.
-        The larger spike from the start of January to the start of March and end of April to the end of May might be due to increase in publicity or other outside factors.
+Comparing the above figure with Figure~\ref{fig:view-times} shows the
+difficulty of predicting bounces, as most events are \textit{fast-paced} and
+many users both buy and want an item in the same time as other users bounce.
+We can however observe that many users leave a product in under 2 seconds, and
+this could be used as \textit{negative evidence} in a future recommender --
+that is, we should not count it towards understanding the users preferences.
 
-   \begin{figure}[H]
-        \includegraphics[width=5in]{image/hrdistribution.png}
-        \centering
-        \caption{Events at time of day}
-    \label{figure:timeOfDayDistr}
-    \end{figure}
-        The figure above presents the amount of events during the given hours.
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=5in]{image/eventsPerDay.png}
+  \caption{Distribution of events per day}
+  \label{figure:eventOnDaysDist}
+\end{figure}
 
-        One interesting discovery from this figure is the shape. One might have expected the application usage to have a sinus wave shape, but it has instead an increase in usage around 22 o'clock, which support the claim done based on figure~\ref{figure:eventOnDaysDist}, that SoBazaar is an entertainment application.
+We conclude this section by looking at some key charecteisticts of the SoBazaar
+applicaiton in general, namely activity peaks both in terms in the lifespan of
+the application and hours of the day. As we can see two activity peaks stand
+out, one in mid-January and the second one in May, that is until and including
+the last event in the dataset.
 
-\subsection{Discussion}
-    The repetitive pattern though out the preceding subsections is that the data is sparse, with low life span of user accounts and items, which is no surprise since the application as a product is in such an early stage.
-    This sparsity must be handled to be able to make good recommendations, since it is so central when it comes to making predictions.
+However, it is worth mentioning again that the application is not officially
+released and thus acitivity levels are highly sensitive to publicity or other
+external factors.
 
-    Throughout the data exploration section we also saw that time plays a central role, in context of life span and the users and the items.
-    The time an item lives varies greatly, but over one third of the items are active for no more than 1 week, which makes it important to consider how new an item is when making predictions.
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=5in]{image/hrdistribution.png}
+  \caption{Events at time of day}
+  \label{figure:timeOfDayDistr}
+\end{figure}
 
+The figure above presents the amount of events during the given hours. One
+interesting discovery from this figure is the shape. One might have expected
+the application usage to have a sinus wave shape, that is gradually decrease as
+we see it does between 15:00 and 16:00. Instead, we see an increase in usage
+with a peak around 22:00, which provides strong evidence for SoBazaar primarily
+being an entertainment application.
 
 \section{Conversion Rate Properties}
 \label{sec:conv-rate}
@@ -885,26 +973,47 @@ is a higher probability of buying it compared to when the user has only
 clicked it once. This is also true when the user has clicked an item three
 times, but we can not defend it statistically for any higher value of clicks.
 
-\section{Session Findings}
-    \label{sec:sessionFindings}
-    \begin{figure}[H]
-        \includegraphics[width=5in]{image/statesInteractionTrue-gvfile.pdf}
-        \centering
-        \caption{A minimized view of the different states of the system and how they interact with each other.}
-        \label{figure:minStatesInteractions}
-    \end{figure}
-        The figure above presents the events as states and shows the interactions between them.
-        The weights on the edges between the states are the count of state changes from the sending state to the receiving state.
-        As we can see from the figure, states can access themselves.
-        This figure is a minimized view to better present the state interactions regarding products, where states such as \emph{activity\_clicked}, \emph{around\_me\_clicked} and \emph{stores\_map\_clicked}, have been left out to give focus to item interaction related states.
-        For a more complete view without reduced states see~\ref{figure:statesInteractions}.
+\section{Session Patterns}
+\label{sec:sessionPatterns}
 
-        The \emph{Init}-state is the initialization of the application, which leads to the \emph{Start}-state, which is a reduction of the variations of events which indicates that a session is started, such as \emph{user\_logged\_in}, \emph{app\_started} and \emph{app\_first\_started}.
-        From this most of the users enter the \emph{store\_accessed}-state, which is the shared state of all the store related states.
-        As we can see from the figure, in 12 477 cases the users enters a store after already having entered a store, which means that the user did not access any of the items in the first entered store, and we see that this is a common way of browsing the products in the application. Since this leaves little indication about the user preferences, other ways of gathering this must be utilized.
-        While this thesis was being written additional events was added, one of these was \emph{content:interact:item\_scroll}, which has proven to be of good help to derive user preferences~\cite{Claypool01inferringuser}.
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=5in]{image/statesInteractionTrue-gvfile.pdf}
+  \caption{A minimized view of the different states of the system and how they interact with each other.}
+  \label{figure:minStatesInteractions}
+\end{figure}
 
-        If we focus on the states \emph{product\_wanted} and \emph{product\_purchase\_intended}, we see that 160 occurrences of being in the \emph{product\_wanted}-state progressed into the \emph{product\_purchase\_intended}-state.
+The figure above presents the events as states and shows the interactions
+between them.  The weights on the edges between the states are the count of
+state changes from the sending state to the receiving state.  As we can see
+from the figure, states can access themselves.  This figure is a minimized view
+to better present the state interactions regarding products, where states such
+as \emph{activity\_clicked}, \emph{around\_me\_clicked} and
+\emph{stores\_map\_clicked}, have been left out to give focus to item
+interaction related states.
+
+For a more complete view without reduced states see~\ref{figure:statesInteractions}.
+
+The \emph{Init}-state is the initialization of the application, which leads to
+the \emph{Start}-state, which is a reduction of the variations of events which
+indicates that a session is started, such as \emph{user\_logged\_in},
+\emph{app\_started} and \emph{app\_first\_started}.  From this most of the
+users enter the \emph{store\_accessed}-state, which is the shared state of all
+the store related states.
+
+As we can see from the figure, in 9 470 cases the users enters a store after
+already having entered a store, which means that the user did not access any of
+the items in the first entered store, and we see that this is a common way of
+browsing the products in the application. Since this leaves little indication
+about the user preferences, other ways of gathering this must be utilized.
+While this thesis was being written additional events was added, one of these
+was \emph{content:interact:item\_scroll}, which has proven to be of good help
+to derive user preferences~\cite{Claypool01inferringuser}.
+
+If we focus on the states \emph{product\_wanted} and
+\emph{product\_purchase\_intended}, we see that 144 occurrences of being in the
+\emph{product\_wanted}-state progressed into the
+\emph{product\_purchase\_intended}-state.
 
 %     Init Hypothesis:
 
@@ -930,10 +1039,3 @@ times, but we can not defend it statistically for any higher value of clicks.
 
 %     Find a "most popular session"-pattern
 %     Find a "most likely to come after"-pattern
-
-\section{Conclusion}
-\label{sec:dataset-conclusion}
-
-%Summarize the findings
-%What can be used?
-
