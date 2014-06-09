@@ -33,7 +33,7 @@ experiments fluctuating the parameter values until the optimal
 % Refer to Appendix for more evaluation metrics, only focusing on suitable here.
 There exists too many evaluation metrics to describe them all in this thesis,
 consequently in this section will primarily focus on the ones suited for our
-needs – that is, extremely sparse implicit ratings in the fashion domain. A
+needs -- that is, extremely sparse implicit ratings in the fashion domain. A
 comprehensive study of non-suitable solutions were performed as well, and can
 be found in Appendix~\ref{appendix:evaluation-metrics}.
 
@@ -122,7 +122,7 @@ experiments is that they can answer a very narrow set of questions, typically
 questions about the predictive power of the algorithm, and does not measure
 other user factors.
 
-% TODO: Already defined in preceding section. Delete?
+% TODO: Already defined in preceding section. Delete? todo - can't find it earlier, lol
 % \paragraph{Explicit-feedback}
 % The definition of explicit is defined as `stated clearly and in detail, leaving
 % no room for confusion or doubt'. Explicit feedback are more precise than
@@ -130,7 +130,7 @@ other user factors.
 % involvement. One serious implication of this is that the amount of feedback
 % often is scarce since many users opt not to provide any feedback. Explicit
 % feedback mechanisms allow the users to unequivocally express their ratings on a
-% scale (usually in the form of a Likert scale (strongly disagree --- strongly
+% scale (usually in the form of a Likert scale (strongly disagree -- strongly
 % agree). Thus explicit feedback is able to capture both negative and positive
 % feedback, while implicit feedback \emph{only} can be positive. It is worth
 % noting that explicit feedback tend to concentrate on either side of the rating
@@ -193,7 +193,7 @@ selection and parameters.
 
 The advantages of this methods are amongst many that the results are averaged
 over the $K$ experiments. The strongest argument for using cross-validation is
-the potential of using the entire training set iterativly for testing, creating
+the potential of using the entire training set iteratively for testing, creating
 the largest possible test set for a fixed training data set.
 
 The main disadvantage with K-fold Cross-Validation is the training algorithm
@@ -201,7 +201,7 @@ has to be run $K$ times, and thereby increasing the runtime for producing an
 evaluation of the system. If the dataset is large, an increase of $K$ runs
 could prove to be disadvantageous in time sensitive environments.
 
-\subsubsection{Evluation metrics: predictive accuracy vs. relevance}
+\subsubsection{Evaluation metrics: predictive accuracy vs. relevance}
 When evaluating a recommender system, you wish to estimate a user's
 satisfaction for a given recommendation. Traditionally recommender systems have
 been evaluated by means of predictive accuracy. However, there is now a widely
@@ -210,7 +210,7 @@ recommendation engine~\cite{Shani2011, McNee2006} as one also need to consider
 the items \textit{relevance} and look at the set of recommendations as a whole.
 In addition, using implicit feedback, when we have no negative feedback and our
 feedback does not indicate preference, but rather confidence of a users
-opintion - evaluation the predictive accuracy is not efficient~\cite{something}
+opinion - evaluation the predictive accuracy is not efficient~\cite{something}
 % TODO: Thomas, a good cite for this?
 
 The three most common metrics for predictive accuracy are \textit{MAE},
@@ -444,7 +444,6 @@ the user in domains where the user preferences are expressed using numerical
 values.
 
 % TODO: Introduce the upcoming definitions.
-
 \textit{AP correlation}~\cite{Yilmaz:2008:NRC:1390334.1390435} measures the
 overall precision and is a variant of \textit{Kendall's tau}.  It counts the
 amount of items correctly placed in a ordered predicted rank list
@@ -593,21 +592,31 @@ used for the calculation is the set of recommended items for the user.
 The system should be able to produce items both items known to the user, and
 items unknown to the user.  For trust in the system and novelty respectively.
 
-% TODO: How to measure serpendipity ?! (Definition happens in SotA)
-% TODO: Introduce next figure.
+Measuring serendipity can be done though measuring how hard the prediction was to do~\cite{serendipity}.
+The metric used by~\cite{serendipity} bases its assumptions on the idea that unexpectedness is low for \emph{easy-to-predict} items, and high for \emph{difficult-to-predict} items.
+To calculate how easy a prediction is~\cite{serendipity} introduces a primitive prediction method and compare the predictions done by this recommender, with the results from their more sophisticated recommender, which serendipity is to be calculated for.
+Unexpectedness is then the deviation from the result obtained by the primitive predictions method.
+
+Unexpectedness is calculated in as shown in the equation below.
+
+\begin{equation}
+    unexpectedness = \frac{1}{N}\sum_{i=1}^{N}{max(Pr(s_i) - Prim(s_i),0) * isrel(s_i) * \frac{count(i)}{i}}
+    \label{equation:novelty}
+\end{equation}
+
+In equation~\ref{equation:novelty} $Pr(s_i)$ is the prediction made by the sophisticated method of item $s_i$ in a ranked list, and $Prim(s_i)$ is the same for the primitive.
+$isrel(s_i)$ is binary and indicated whether or not the item is of interest for the user, and $count(i)$ is used to give more weight to correct items higher in the list.
+
+The figure below presents the distribution of potentially interesting items for a user in the long tail graph.
 
 \begin{figure}[H]
     \centering
     \includegraphics[scale=0.4]{image/longtailNoveltyFig.png}
-    \caption{Long tail with the item similarity between items. }
+    \caption{Long tail with the item similarity between items~\cite{celma2008}}
     \label{figure:longtailNovelty}
 \end{figure}
 
-\marginpar{TODO: not sure if its ok to use this image (not self made) figure
-from music recommendation, but long tail applies to fashion, if so extend about
-longtail}
-
-This figure show the similarity between items as a long tail graph. The gray
+This figure shows the similarity between items as a long tail graph. The gray
 columns represents the user profile, the violet represents items which might be
 of interest to the user, and the height is the relevance. Adapted
 from~\cite{celma2008}

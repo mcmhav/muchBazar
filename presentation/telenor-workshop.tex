@@ -96,6 +96,7 @@
 
   \begin{frame}
     \frametitle{Competitor Overview}
+    \framesubtitle{Properties of competitors' recommender systems}
       \begin{table}[H]
           \centering
           \resizebox*{!}{0.6\textheight}{
@@ -128,7 +129,6 @@
                 \bottomrule
             \end{tabular}
           }
-          \caption{Properties of competitors' recommender systems}
       \end{table}
   \end{frame}
 
@@ -143,23 +143,24 @@
 
   % Some key figures and what they mean.
   \begin{frame}
-    \frametitle{SoBazaar Data - Dataset Summary}
+    \frametitle{SoBazaar Data}
+    \framesubtitle{Dataset Summary}
       \begin{table}[H]\centering\resizebox*{!}{0.7\textheight}{\begin{tabular}{l l}\toprule
             Attribute       & Count   \\
             \midrule
-            Total number of events  &    218975 \\
+            Total number of product events &    40773 \\
             Unique users ids    &    2021 \\
             Unique item ids     &    6092 \\
             Unique storefronts  &    147 \\
             Unique retailer brands  &    24 \\
             \hline
-            First event & Mon, 07 Oct 2013 10:59:57 GMT \\
-            Last event & Mon, 19 May 2014 22:51:19 GMT \\
-            Lifetime of data & 224 days \\
-            \hline
             Item clicks     &    25491 \\
             Item wants   &    13262 \\
             Item purchases   &    2020 \\
+            \hline
+            First event & Mon, 07 Oct 2013 10:59:57 GMT \\
+            Last event & Mon, 19 May 2014 22:51:19 GMT \\
+            Lifetime of data & 224 days \\
             \hline
             Average item click count per user   &    12.6130 \\
             Average item want count per user     &    6.5620 \\
@@ -167,7 +168,17 @@
             \hline
             Average item interaction count per user     &    20.1746 \\
             Average user interaction count per item     &    6.6928 \\
-    \bottomrule\end{tabular}}\caption{Overview of the key figures in the SoBazaar dataset}\end{table}
+    \bottomrule\end{tabular}}\end{table}
+  \end{frame}
+
+  % Continuation of key figures w/ visualizations.
+  \begin{frame}
+    \frametitle{SoBazaar Data}
+    \framesubtitle{Cumulative Count of Events on Products}
+    \begin{figure}[H]
+        \includegraphics[scale=0.3]{../src/image/product_idcumdistribution.png}
+        \centering
+    \end{figure}
   \end{frame}
 
   % Continuation of key figures w/ visualizations.
@@ -181,16 +192,16 @@
   \end{frame}
 
   \begin{frame}
-    \frametitle{SoBazaar Data - Event Distribution Per User}
-    \framesubtitle{Event Distribution Per User}
+    \frametitle{SoBazaar Data}
+    \framesubtitle{Cumulative Event Distribution Per User}
     \begin{figure}[H]
-        \includegraphics[scale=0.3]{../src/image/user_iddistribution.png}
+        \includegraphics[scale=0.3]{../src/image/user_idcumdistribution.png}
         \centering
     \end{figure}
   \end{frame}
 
   \begin{frame}
-    \frametitle{SoBazaar Data - Item Lifespan}
+    \frametitle{SoBazaar Data}
     \framesubtitle{Distribution of item account lifetime}
     \begin{figure}[H]
         \includegraphics[scale=0.3]{../src/image/itemTimespansdistribution.png}
@@ -200,9 +211,14 @@
 
   % What does it mean that feedback is implicit?
   \begin{frame}
-    \frametitle{Implicit Feedback}
+    \frametitle{Implicit feedback}
     \begin{itemize}
-      \item
+      \item Data captured from user behaviour.
+      \item Item features and application properties.
+      \item Recentness, price, popularity, brand, product properties.
+      \item Probabilities of various convertions.
+      \item Challenges?
+      \item Content features?
     \end{itemize}
   \end{frame}
 
@@ -274,7 +290,12 @@
   \begin{frame}
     \frametitle{Converting Implicit Feedback}
     \begin{itemize}
-      \item
+      \item Related articles
+      \item We looked at \textit{price}, \textit{item popularity} and
+      \textit{recentness}.
+      \item What is recentness? Both number of days and ordering of events.
+      \item Base our methods on probability of an event happening and then
+      penalize based on said features.
     \end{itemize}
   \end{frame}
 
@@ -282,7 +303,7 @@
     \frametitle{Converted Implicit Feedback}
     \framesubtitle{Distribution using blend of ordering and number of days since event, with logistic and linear penalization functions, overlayed with density function}
     \begin{figure}[H]
-        \includegraphics[scale=0.4]{../src/image/dist-blend}
+        \includegraphics[scale=0.4]{../src/image/dist-blend-price-popularity-recentness}
         \centering
     \end{figure}
   \end{frame}
@@ -291,7 +312,12 @@
   \begin{frame}
     \frametitle{Cold start boosting}
     \begin{itemize}
-      \item
+      \item Important when we have few users and sparse datasets.
+      \item Also important for handling new users and items.
+      \item Filterbots are used in thesis, in order to simulate user behaviour.
+      \item Can extend with social, demographic and content-based data.
+      \item Includes switching between recommender methods. Use naive methods
+      for cold-start users.
     \end{itemize}
   \end{frame}
 
@@ -299,15 +325,24 @@
   \begin{frame}
     \frametitle{Making recommendations}
     \begin{itemize}
-      \item
+      \item Implicit ratings requires us to look at methods differently.
+      \item Methods used: \textit{itembased}, \textit{userbased}, \textit{most
+      popular}, \textit{random}, \textit{SVD}, \dots
+      \item Best results with matrix factorization.
+      \item We do not perform any dynamic switching.
     \end{itemize}
   \end{frame}
 
   % Component four: how to evaluate the results.
   \begin{frame}
-    \frametitle{Evaluation - About}
+    \frametitle{Evaluation}
     \begin{itemize}
-      \item
+      \item Evaluating implicit feedback is difficult. You have no \textit{ground
+      truth}.
+      \item Best way of confirming performance: online experiments.
+      \item Various ways of splitting dataset.
+      \item Perform user studies to understand underlying features and
+      accuracy.
     \end{itemize}
   \end{frame}
 
@@ -409,74 +444,6 @@
         \end{figure}
   \end{frame}
 
-  % What does it mean that feedback is implicit?
-  \begin{frame}
-    \frametitle{Implicit feedback}
-    \begin{itemize}
-      \item Data captured from user behaviour.
-      \item Item features and application properties.
-      \item Recentness, price, popularity, brand, product properties.
-      \item Probabilities of various convertions.
-    \end{itemize}
-  \end{frame}
-
-  % How we propose to recommend items for SoBazaar
-  \begin{frame}
-    \frametitle{Application Overview}
-  \end{frame}
-
-  % Second section, going through each of these components.
-  \section{Proposed system components}
-
-  % Component one: creating implicit ratings.
-  \begin{frame}
-    \frametitle{Converting Implicit Feedback}
-    \begin{itemize}
-      \item We looked at \textit{price}, \textit{item popularity} and
-      \textit{recentness}.
-      \item What is recentness? Both number of days and ordering of events.
-      \item Base our methods on probability of an event happening and then
-      penalize based on said features.
-    \end{itemize}
-  \end{frame}
-
-  % Component two: filterbots and cold-start stuff.
-  \begin{frame}
-    \frametitle{Cold start boosting}
-    \begin{itemize}
-      \item Important when we have few users and sparse datasets.
-      \item Also important for handling new users and items.
-      \item Filterbots are used in thesis, in order to simulate user behaviour.
-      \item Can extend with social, demographic and content-based data.
-      \item Includes switching between recommender methods. Use naive methods
-      for cold-start users.
-    \end{itemize}
-  \end{frame}
-
-  % Component three: actually making recommendations.
-  \begin{frame}
-    \frametitle{Making recommendations}
-    \begin{itemize}
-      \item Implicit ratings requires us to look at methods differently.
-      \item Methods used: \textit{itembased}, \textit{userbased}, \textit{most
-      popular}, \textit{random}, \textit{SVD}, \dots
-      \item Best results with matrix factorization.
-      \item We do not perform any dynamic switching.
-    \end{itemize}
-  \end{frame}
-
-  % Component four: how to evaluate the results.
-  \begin{frame}
-    \frametitle{Evaluation}
-    \begin{itemize}
-      \item Evaluating implicit feedback is difficult. You have no \textit{ground
-      truth}.
-      \item Best way of confirming performance: online experiments.
-      \item Various ways of splitting dataset.
-      \item Perform user studies to understand underlying features and
-      accuracy.
-    \end{itemize}
-  \end{frame}
 
   % Section three: a summary and conclusions from our work.
   \section{Results and future work}
@@ -498,8 +465,11 @@
   % Figure showing system in relation to "the sky".
   \begin{frame}
     \frametitle{How to implement in SoBazaar}
-    Here we will put a figure showing the Application Overview connected to an
-    external DB and the SoBazaar backend connecting to it.
+    \framesubtitle{High level proposal of cloud based recommender}
+    \begin{figure}[H]
+        \includegraphics[scale=0.4]{../src/image/theCloud}
+        \centering
+    \end{figure}
   \end{frame}
 
   % How can future results be improved?
