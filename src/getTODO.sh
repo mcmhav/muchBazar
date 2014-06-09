@@ -1,5 +1,5 @@
 #!/bin/bash
-MPAR_TODOS=$(grep -ri "marginpar\|todo" masterChapters);
+MPAR_TODOS=$(grep --colour=always -ri "marginpar\|todo" masterChapters);
 MPAR=$(grep -ri "marginpar" masterChapters);
 
 NUM_MPAR=$(echo "$MPAR" | wc -l | sed -e 's/^ *//');
