@@ -141,44 +141,51 @@ us understand multiple usage patterns.
 
 \section{Dataset Overview}
 
-The data from SoBazaar is based on the actions of the users, stored in logs,
-which are saved whenever a user executes an action the system has the ability
-to log.  Actions done by the users are called events, such as accessing a
-store, scrolling a page or purchasing a product, all these events put together
-is the dataset used in this thesis.
+The data from SoBazaar is based on all actions, also called events, made by the
+users. They can range from accessing a storefront, scrolling the page or
+purchasing a product. Combined, they form the basis of which we develop all
+techniques in this thesis. When an event is triggered a set of information is
+stored regarding the event, describing the \textit{context} of which the event
+was fired, where the most relevant event-metadata, in terms of recommender
+systems, are presented in the table below.
 
-When an event is triggered a set of information is stored regarding the event.
-This data is used to make recommendations for the users trough converting the
-implicit feedback to implicit ratings as we will see in later chapters.  Some
-of the most relevant metadata to making recommendations are presented in the
-table below.
+\begin{table}[H]
+    \centering
+    \begin{tabular}{l p{11cm}}
+        \toprule
+        Variable     & Explanation   \\
+        \midrule
+        \emph{product\_id}        & Unique id of the item on which the event
+                                    was triggered \\
+        \emph{user\_id}           & Unique id of the user who triggered the event \\
+        \emph{event\_id}          & What kind of event was
+                                  triggered~\tablefootnote{Complete list of the
+                                  different types of events can be found in
+                                  table~\ref{table:events}} \\
+        \emph{price}              & The price (in NOK) of the item \\
+        \emph{retailer\_brand}    & Unique id of the item retailer. A retailer
+                                    is a distributer of products, such as H\&M,
+                                    Cubus or Moods Of Norway \\
+        \emph{storefront\_id}     & The storefront id of the storefront entered.
+                                    A \textit{retailer\_brand}s can have multiple
+                                    \emph{store\_fronts}. \\
+        \emph{event\_location}    & The location of the user when the event was triggered \\
+        \emph{ts}                 & Unix timestamp in milliseconds of when the event was triggered \\
+        \emph{session}            & Which session number the event belongs
+                                  to~\tablefootnote{This is the value added in the preprocessing
+                                  phase~\ref{sec:preprocessing}. For two events to end up in the same
+                                  session, the event has to be triggered within a certain period of time,
+                                  and both be after the same application started-flag} \\
+      \bottomrule
+    \end{tabular}
+    \caption[Event Metadata]{Metadata collected from an event. The complete list can be found in table~\ref{table:completeEventData}}
+    \label{table:eventData}
+\end{table}
 
-    \begin{table}[H]
-        \centering
-        \begin{tabular}{l p{11cm}}
-            \toprule
-            Variable     & Explanation   \\
-            \midrule
-            \emph{product\_id}      & The id of the item which triggered the event \\
-            \emph{user\_id}      & The unique id of the user who triggered the event \\
-            \emph{event\_id}         & What kind of event was triggered~\tablefootnote{Complete list of the different types of events can be found in table~\ref{table:events}} \\
-            \emph{price}             & The price of the item which triggered the event \\
-            \emph{retailer\_brand}   & The id of the retailer brands. A retailer is a distributer of products, such as H\&M, Cubus or Moods Of Norway \\
-            \emph{storefront\_id}    & The storefront id of the storefront entered. The \emph{retailer\_brand}s can have multiple \emph{store\_front}s. In addition to the main \emph{store\_front} most \emph{retailer\_brands} have, they can also add one or more when there is a special occasion such as a sale or a new release \\
-            \emph{event\_location}   & The location of the user when the event was triggered \\
-            \emph{ts}                & Unix timestamp in milliseconds of when the event was triggered \\
-            \emph{session}           & Which session number the event belongs to~\tablefootnote{This is the value added in the preprocessing phase~\ref{sec:preprocessing}. For two events to end up in the same session, the event has to be triggered within a certain period of time, and both be after the same application started-flag} \\
-            \bottomrule
-        \end{tabular}
-        \caption[Event Metadata]{Metadata collected from an event. The complete list can be found in table~\ref{table:completeEventData}}
-        \label{table:eventData}
-    \end{table}
-
-    In the table above we see some of the more relevant attributes to an event triggered.
-    These can be used to derive information regarding the users of the application and the items, and put together, be used to predict preferences for the users.
-
-    After gathering the data and preprocessing it, on single set of data was left.
-    The statistics of this data is shown in the table below, and is there to present a birds view of the data used in this thesis.
+These events are used to derive information regarding both users and products
+-- and combined and structured they form what we call \textit{implicit
+feedback}. After preprocessing the data we look at some key figures, in order
+to better understand its properties.
 
     \begin{table}[H]
         \centering
@@ -236,80 +243,127 @@ table below.
     % check for price distribution based on location.
     % make price user graph
     % price for store dist
-    This section will look at the SoBazaar data through visualizing the data and clearly communicating the information trough graphical means.
-    It will start with the properties of the users seen in the data, then move over to the products and finally the time properties of the data.
+
+In this section, in accordance to research \textbf{goal G1} a thorough analysis
+of the SoBazaar data will be carried out. By carefully crafted visualizations,
+patterns emerge and we gain valuable knowledge of which we share the
+consequences, both in terms of recommender systems and limitations of this
+thesis. In order, we inspect: user, product and time related properties found in
+the data -- keeping in mind the table presented in the previous section
+(Table~\ref{table:datasetSummary}).
 
 \subsection{User properties}
-    The properties of the users of the SoBazaar application can help understand how the application is used, and to get a better understanding of how to make predictions for them.
 
-    The first figure visualizing the user behavior is a figure of the event distribution, and shows the events the users are triggering, and to what extend they do so.
-    \begin{figure}[H]
-        \includegraphics[width=5in]{image/event_iddistribution.png}
+We start our analysis by trying to understand \textit{how} the users interact
+with the application and to which degree we can use user-based features in
+order ot make predictions. We do this by primarily looking at their
+distributions with regards to events, purchases, sessions and their lifespan in
+the application -- that is how well customers are retained.
+
+\begin{figure}[H]
+  \includegraphics[width=5in]{image/event_iddistribution.png}
+  \centering
+  \caption{Event distribution}
+\label{figure:eventIDDistribution}
+\end{figure}
+
+Here we see the count for each of the different events which can be triggered
+in the SoBazaar application\footnote{With the exception of the event types with
+a trigger count lower than 200, which are merged into on bar and labeled
+\emph{other}}. As can be seen, the two events \emph{product\_detail\_clicked}
+and \emph{storefront\_clicked}, are the two most common in the dataset. 
+As mentioned earlier in Section~\ref{sec:sobazaar-data}, the \emph{storefront}
+is the main access point to a set of products, and the high values for this
+\emph{event\_id} is expected. The fact that accessing the \emph{storefront} is
+the most occurring event, over clicking an item, indicates that many users use
+the application primarily to browse through items, looking at thumbnails,
+rather than accessing the actual item. This underlines the importance of having
+good and presentable images, provide useful information about the product in
+the overview (See Figure~\ref{figure:SoBazaarfeed}) where price and status
+(\textit{New}, \textit{Hot} or \textit{On sale}) should be easily accessible.
+
+As we can see from Figure~\ref{figure:SoBazaarfeed} it is possible to indicate
+that you want an item (\textit{product\_wanted}) by clicking the heart-icon,
+and without accessing the acutal item -- that is sending a
+\textit{product\_detail\_clicked}. Hence, although the number of wants are half
+the number of clicks, it does not imply that half of the users clicking an item
+wants it. This does not hold true for purchases, where one has to click the
+item before sending the \textit{product\_purchase\_indtended} event -- thus we
+can conclude that 6.9\% of all clicks progress into an \textit{intended}
+purchase.
+
+Some of the events shown above are newly added to the application, and the data
+for these (e.g. \textit{content:interact:item\_scroll} needs to mature more in
+order to draw certain conclusions.
+
+In the title of this thesis we proclaim that the dataset is \textit{extremely
+sparse} and this can be confirmed by looking at the distribution of events per
+users, below.
+
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}{.5\textwidth}
         \centering
-        \caption{Event distribution}
-    \label{figure:eventIDDistribution}
-    \end{figure}
-        In the figure above (figure~\ref{figure:eventIDDistribution}) we see the count for each of the different events which can be triggered in the SoBazaar application\footnote{With the exception of the event types with a trigger count lower than 200, which are merged into on bar and labeled \emph{other}}.
-        As seen from the graph the \emph{product\_detail\_clicked}-event and the \emph{storefront\_clicked}-event are the two most common events to be triggered.
-        As mentioned earlier in~\ref{table:eventData}, the \emph{storefront} is the main access point to a set of products, and the high values for this \emph{event\_id} is as expected.
-        The fact that accessing the \emph{storefront} is the most occurring event, over clicking an item, indicates that many users browse the items through looking at the thumbnails rather than accessing the actual item.
-
-        The \emph{product\_wanted}-event is the fourth most occurring event, and is about half the size of the \emph{product\_detail\_clicked}-event, this does not imply that half of the users accessing an item also adds the accessed item to their want list, since it is possible to want an item without accessing the item.
-        \emph{product\_purchase\_intended} on the other hand has to come after a \emph{product\_detail\_clicked}, so it is therefore safe to assume that about 8\% of item accesses progressed into an intended purchase.
-
-        Some of the evens shown above are newly added events, and the data has to mature more for more certain conclusion to be drawn.
-
-        The distribution of events for the users are show in the next figure, and is intended to give a better overview of to what extent the users interact with the applications, and how the usage is distributed amongst the users.
-
-    \begin{figure}[H]
+        \includegraphics[width=\dualGraphWidth]{image/user_iddistribution.png}
+        \caption{Distribution of events on users}
+        \label{fig:userEventDist}
+    \end{subfigure}%
+    \begin{subfigure}{.5\textwidth}
         \centering
-        \begin{subfigure}{.5\textwidth}
-            \centering
-            \includegraphics[width=\dualGraphWidth]{image/user_iddistribution.png}
-            \caption{Distribution of events on users}
-    \label{figure:userEventDist}
-        \end{subfigure}%
-        \begin{subfigure}{.5\textwidth}
-            \centering
-            \includegraphics[width=\dualGraphWidth]{image/user_idcumdistribution.png}
-            \caption{Cumulative distribution of events on users}
-    \label{figure:userEventCumDist}
-        \end{subfigure}
-        \caption{Graphs presenting the distribution of events per user}
-    \end{figure}
-        Figure~\ref{figure:userEventDist} is showing the actual amount of users with the different counts of events.
-        78\% of the users have 50 or less events, with the mean being at 5 events.
-        The figures are showing the values from 0 to 250 since 96\% of the users resides in this subset of the data.
+        \includegraphics[width=\dualGraphWidth]{image/user_idcumdistribution.png}
+        \caption{Cumulative distribution of events on users}
+        \label{figure:userEventCumDist}
+    \end{subfigure}
+    \caption{Graphs presenting the distribution of events per user}
+\end{figure}
 
-        As seen from figure~\ref{figure:eventIDDistribution} most of the events are not directly related to products, from table~\ref{table:datasetSummary} we can see that there are over 6000 products, and as mentioned above, 78\% of the users have less than 50 events. Based on these three facts, we can assume that the data is extremely sparse and measures to deal with this must be implemented.
+We can see that this figure confirms our title. In
+Figure~\ref{figure:userEventDist} we see that the majority of users have been
+observed doing less than 10 events. In Figure~\ref{fig:userEventCumDist} this
+is confirmed by looking at the cumalative graph, as we see that 78\% of the
+users have 50 events or less, with an average of 5 events per user. Note that
+we here look at \textit{all event types}, not only those where the user
+interact with items. As we, in our proposed system, do not use non-item events
+for neither recommending nor generating implicit ratings, we now look at the
+event distribution when only the three item events
+\textit{product\_detail\_clicked}, \textit{product\_wanted} and
+\textit{product\_purchase\_intended} are issued. We do include the distribution
+above however, to show how sparse the data is -- both in terms of product
+interaction, but also application interaction.
 
-        The distribution of events on the users tells us how the users interact with the applications, and how the events are distributed, but events are all actions taken by the users, and some of these might not be interesting when making recommendations for the users.
-        A reduced view of the one seen in the figures above are shown in the figures below, where the only events considered are item interaction events.
-
-    \begin{figure}[H]
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}{.5\textwidth}
+        \includegraphics[width=\dualGraphWidth]{image/ratingsPerUserdistribution.png}
         \centering
-        \begin{subfigure}{.5\textwidth}
-            \includegraphics[width=\dualGraphWidth]{image/ratingsPerUserdistribution.png}
-            \centering
-            \caption{Count of item interactions for users}
-    \label{figure:ratingsPerUser}
-        \end{subfigure}%
-        \begin{subfigure}{.5\textwidth}
-            \includegraphics[width=\dualGraphWidth]{image/ratingsPerUsercumdistribution.png}
-            \centering
-            \caption{Cumulative count of item interactions for users}
-    \label{figure:ratingsPerUserCum}
-        \end{subfigure}
-        \caption{Figures presenting the number of product interactions for the users in the data}
-    \end{figure}
-        In the figures above the rightmost bar present 0 product interactions.
-        The graphs are limited to only showing interaction amounts up till 60 to give focus to the numbers where more than 90\% of the users resides.
+        \caption{Count of item interactions for users}
+\label{figure:ratingsPerUser}
+    \end{subfigure}%
+    \begin{subfigure}{.5\textwidth}
+        \includegraphics[width=\dualGraphWidth]{image/ratingsPerUsercumdistribution.png}
+        \centering
+        \caption{Cumulative count of item interactions for users}
+\label{figure:ratingsPerUserCum}
+    \end{subfigure}
+    \caption{Figures presenting the number of product interactions for the users in the data}
+\end{figure}
 
-        As seen from figure~\ref{figure:ratingsPerUserCum}, over 20\% of the users have never interacted with an item, and about 10\% of the users have more than 50 item interactions.
+In the figures above the rightmost bar present 0 product interactions.  The
+graphs are limited to only showing interaction amounts up till 60 to give focus
+to the numbers where more than 90\% of the users resides.
 
-        Even though the data is sparse, as seen from the previous figures, the fact that the majority of the users have in some way interacted with at least one item, opens for the possibility of connecting users based on their item interactions.
+As seen from figure~\ref{figure:ratingsPerUserCum}, over 20\% of the users have
+never interacted with an item, and about 10\% of the users have more than 50
+item interactions.
 
-        Now that we have looked at the distribution of events both as a whole, and as a reduced view, we might benefit from looking at how often the users use the application. The figure below shows the number of sessions for the users.
+Even though the data is sparse, as seen from the previous figures, the fact
+that the majority of the users have in some way interacted with at least one
+item, opens for the possibility of connecting users based on their item
+interactions.
+
+Now that we have looked at the distribution of events both as a whole, and as a
+reduced view, we might benefit from looking at how often the users use the
+application. The figure below shows the number of sessions for the users.
 
     \begin{figure}[H]
         \includegraphics[width=5in]{image/sessiondistribution.png}
