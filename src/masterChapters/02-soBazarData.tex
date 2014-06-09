@@ -715,12 +715,12 @@ item presentation.
 
 \subsection{Time properties}
 
-It is not only important to look at if a user has accessed an item, or if a
-user has a certain preference, time might also tell something about the
-preferences of the user.
-
-The next figure shows the average lifetime of the products in the SoBazaar
-database.
+Not only is it important to look at user and product properties, but as
+\textit{time} is an important aspect of fashion we should identify properties
+related to this segment in our data as well. We have already looked at the
+lifespan of users (Figure~\ref{fig:sessCountDist}), and by applying the same
+methodology on products we can see which items that regularily are interacted
+with -- and perhaps more interestingly, which items are \textit{forgotten}.
 
 \begin{figure}[H]
   \centering
@@ -729,17 +729,17 @@ database.
   \label{figure:itemLifes}
 \end{figure}
 
-This figure shows the count of products which has the different time spans.
-This figure makes it clearer than figure~\ref{figure:itemTimeSpanEventCount}
-how long the majority of the the products have lived.
+We can observe that almost 2 500 products have a life span of less than a week,
+which shows how important it is to handle the recentness of products in order
+to follow ever-changing trends. In addition, a future recommender system should
+strive not only to show the most popular items at moment, but also ensure a
+large \textit{coverage} of the product database in its recommendations. This is
+an important metric, which we will return to multiple times in this thesis --
+since, as we can see the coverage of items in the current state is low.
 
-Almost 2 500 products have a life span of less than a week, which shows how
-important it is to handle the recentness of the products to be able to follow
-the ever-changing trends.
-
-Including the amount of item interactions mapped together with the lifespan of
-the items is the next figure up, to better see how the lifespan of the items
-change with the amount of item interactions on them.
+Increasing the lifespan of an item has positive effects on the popularity of an
+item as well, as we see in the figure below, where the lifespan is mapped to
+the number of interactions on the item in question.
 
 \begin{figure}[H]
   \centering
@@ -748,21 +748,15 @@ change with the amount of item interactions on them.
   \label{figure:averageLifetimBasedoncount}
 \end{figure}
 
-This figure shows the life span of the products grouped and sorted on the
-number of interactions on the items.  The life span of an item is the time from
-the first event on the item till the last event on the item.  The red line is
-the regression line of the average life spans at the different interactions
-counts.  The gap between 117 to 160 is because no items have an interaction
-count of that amount.
-
-As we can see from the regression line, the average life span of an item
-increases with the count of item interactions, which is somewhat expected since
-they are in many ways intertwined, but there are indications of a reduction of
-interest with time, which advocates the idea that recentness is important.
+One may see that the tendency line shows a positive growth as the average
+number of item interactions increase. Thus, as they are correlated it is both
+important to focus on making good recommendations, but also ensure good
+coverage. One may also see the sparsity affects this figure, as e.g. no items
+have between 116 and 160 interactions registered.
 
 The figure above averaged the lifespan of the items and presented them with
-together with their respective count, the next figure keeps them separate, to
-not lose the lifespan distribution.
+together with their respective count, below we show the same tendency, but keep
+the lifespan seperate.
 
 \begin{figure}[H]
   \centering
@@ -771,26 +765,18 @@ not lose the lifespan distribution.
   \label{figure:itemTimeSpanEventCount}
 \end{figure}
 
-This figure shows the total life span of each item mapped together with the
-amount of events triggered on them.  As mentioned earlier, the life span of an
-item is the time since the first event on the item till the last event on the
-item.  This figure is showing the same data as in
-figure~\ref{figure:averageLifetimBasedoncount}, but instead of taking the
-average life span at the give product interactions count, the products are
-mapped separately, to show the diversity in life span given the different
-product interaction counts.
-
 Time is shown in weeks, so the longest time span of an item is about 27 weeks,
-which is close to the time span of the events gathered from SoBazaar.  Even
-though an item has a long time span does not mean that the item has been of
-measurable interest to the users in the SoBazaar application, but we see that
-the more interaction on the item, the longer the average life time, but the
-recentness of an item is important.  Even though some item has a lot of
-interaction, they item can have a quite low lifespan, which promotes the
-importance of looking into recentness.
+which is close to the time span of the events gathered from SoBazaar. As can be
+seen, even though an item has a long time span, it does not mean that the item
+has been of measurable interest to the users in the SoBazaar application. In
+addition we see that the more interaction on the item, the longer the average
+life time, again proving that the recentness of an item is important.
 
-Next figures presents how long in average the user use before taking an action
-such as \emph{purchase} or \emph{want}.
+As described in Section~\ref{sec:preprocessing} when pre-processing the data we
+perform a session study, looking at timing related behaviours in order to e.g.
+detect the amount of \textit{bouncing}, that is clicking an item and then
+without delay return to the original page without \textit{actually} having read
+or shown interest to the product.
 
 \begin{figure}[H]
   \centering
@@ -806,21 +792,18 @@ such as \emph{purchase} or \emph{want}.
       \caption{View times before purchasing an item}
       \label{figure:viewBuy}
   \end{subfigure}
+  \label{fig:view-times}
   \caption{Average view times of products before want or purchase}
 \end{figure}
 
-The figures above shows the average time of the users of the SoBazaar
-application before pressing either \emph{want} or \emph{purchase}.
+By looking at the average view time before want and purchase above, we conclude
+that most users purchases or wants an item by looking at images and perhaps
+superfically at the product details. In other words, as we have mentioned
+earlier, the most important aspects in terms of retention and convertion are
+price, images, status of the item, brand and storefront.
 
-The average times between the two are quite similar, but we can see that the
-user is on average somewhat faster to press \emph{purchase}.  The data set on
-\emph{product\_purchase\_intended} is considerably smaller than
-\emph{product\_wanted}, so the trends seen here are inconclusive at best.
-
-The figures above presented the actions \emph{purchase} and \emph{want}, the
-next figure presents the \emph{bounce rate}, or in other words, how fast the
-user on average triggered a non related event to the item currently being
-watched.
+Closely related is the already mentioned \textit{bounce rate}, which is
+depticted below.
 
 \begin{figure}[H]
   \centering
@@ -829,14 +812,12 @@ watched.
   \label{figure:bounceRate}
 \end{figure}
 
-This figure shows the time the users use before not taking any more action
-towards the item (\emph{purchase} or \emph{want}).  The majority of the users
-have a view time of less than 6 seconds before they moves on to another item.
-
-When comparing this figure with figure~\ref{figure:viewWant} and
-figure~\ref{figure:viewBuy} we see a more definite difference.  The users are
-much faster to look at a new item when not pressing \emph{want} or
-\emph{purchase}.  This could indicate a disinterest towards the item.
+Comparing the above figure with Figure~\ref{fig:view-times} shows the
+difficulty of predicting bounces, as most events are \textit{fast-paced} and
+many users both buy and want an item in the same time as other users bounce.
+We can however observe that many users leave a product in under 2 seconds, and
+this could be used as \textit{negative evidence} in a future recommender --
+that is, we should not count it towards understanding the users preferences.
 
 \begin{figure}[H]
   \centering
@@ -845,12 +826,15 @@ much faster to look at a new item when not pressing \emph{want} or
   \label{figure:eventOnDaysDist}
 \end{figure}
 
-This figure shows the event distribution per day over the time period the
-events were stored.  The spikes we see happens on a weekly basis, and is
-centered around the weekends, which is natural since this is an entertainment
-applications.  The larger spike from the start of January to the start of March
-and end of April to the end of May might be due to increase in publicity or
-other outside factors.
+We conclude this section by looking at some key charecteisticts of the SoBazaar
+applicaiton in general, namely activity peaks both in terms in the lifespan of
+the application and hours of the day. As we can see two activity peaks stand
+out, one in mid-January and the second one in May, that is until and including
+the last event in the dataset.
+
+However, it is worth mentioning again that the application is not officially
+released and thus acitivity levels are highly sensitive to publicity or other
+external factors.
 
 \begin{figure}[H]
   \centering
@@ -859,25 +843,12 @@ other outside factors.
   \label{figure:timeOfDayDistr}
 \end{figure}
 
-The figure above presents the amount of events during the given hours.
-
-One interesting discovery from this figure is the shape. One might have
-expected the application usage to have a sinus wave shape, but it has instead
-an increase in usage around 22 o'clock, which support the claim done based on
-figure~\ref{figure:eventOnDaysDist}, that SoBazaar is an entertainment
-application.
-
-\subsection{Discussion} The repetitive pattern though out the preceding
-subsections is that the data is sparse, with low life span of user accounts and
-items, which is no surprise since the application as a product is in such an
-early stage.  This sparsity must be handled to be able to make good
-recommendations, since it is so central when it comes to making predictions.
-
-Throughout the data exploration section we also saw that time plays a central
-role, in context of life span and the users and the items.  The time an item
-lives varies greatly, but over one third of the items are active for no more
-than 1 week, which makes it important to consider how new an item is when
-making predictions.
+The figure above presents the amount of events during the given hours. One
+interesting discovery from this figure is the shape. One might have expected
+the application usage to have a sinus wave shape, that is gradually decrease as
+we see it does between 15:00 and 16:00. Instead, we see an increase in usage
+with a peak around 22:00, which provides strong evidence for SoBazaar primarily
+being an entertainment application.
 
 \section{Conversion Rate Properties}
 \label{sec:conv-rate}
