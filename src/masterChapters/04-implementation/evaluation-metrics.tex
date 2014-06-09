@@ -47,7 +47,7 @@ some important questions one should ask oneself when selecting evaluation metric
 \end{itemize}
 
 It is safe to assume that the users are more interested in the top ranked items, than rating
-predictions for the entire item collection. The social feed shown in Figure \ref{figure:sobazarfeed}
+predictions for the entire item collection. The social feed shown in Figure~\ref{figure:sobazarfeed}
 shows that the interface currently supports showing up to 20 items.
 Evaluation of top-k recommendations suggests a classification or ranking task, the evaluation
 should therefore focus on classification or ranking accuracy. A classification accuracy metric
@@ -69,7 +69,7 @@ would therefore yield a ROC curve that goes straight up towards 1.0 recall and 0
 relevant items are retrieved. Afterwards it would go straight towards 1.0 fallout while the remaining
 irrelevant items follow. One therefore obviously aims to maximize the area under the curve (AUC). The higher
 up all relevant items (true positives) are in the recommendation list, the higher the AUC score.
-AUC can therefore be used as a single measure for the overall quality of a recommender system. Table \ref{table:auc}
+AUC can therefore be used as a single measure for the overall quality of a recommender system. Table~\ref{table:auc}
 shows an example of the AUC values when varying the position of a single relevant document through the
 recommendation list.
 
@@ -143,7 +143,7 @@ Setting it to low you risk ending up with many $0.0$ values, and when setting it
 \emph{randomly} concatenated ratings in the results. We believe a value of \textit{20} is natural choice for our
 application as up to 20 recommendations can be shown in the user interface.
 
-Mean average precision (MAP@k), described in Section \ref{subp:mean_average_precision_map_} is a popular metric for search
+Mean average precision (MAP@k), described in Section~\ref{subp:mean_average_precision_map_} is a popular metric for search
 engines and is applied, for example, to report results at the Text Retrieval Conference (TREC). The main weakness with regard
 to recommender systems is that it assumes that the user is interested in finding many relevant documents for each query, and
 does not look at the relevance of the items. Consider the following examples where we have three lists of hidden items and
@@ -173,7 +173,12 @@ Example 	& 	Actual					& 	Recommended					&	AP@10   \\ \midrule
 As you see from example two and three average precision does not consider the order of the actual item list. We want some way to
 reward the recommender for getting the purchased ranked higher than both wants and clicks.
 
+<<<<<<< HEAD
 Normalized Discounted Cumulative Gain (nDCG) described in Section \ref{subp:normalized_discounted_cumulative_gain_} is another metric to
+=======
+
+Normalized Discounted Cumulative Gain (nDCG) described in Section~\ref{subp:normalized_discounted_cumulative_gain_} is another metric to
+>>>>>>> f11a550285b7343ad200bb11dfd9bfad9bf79719
 measure the rank accuracy. It is based on two main assumptions; (1) Highly relevant items are more useful than marginally relevant ones,
 (2) The lower the ranked position of a relevant item, the less useful it is for the user, since it is less likely to be \emph{examined}.
 The maybe most interesting aspect of nDCG is that it contains an utility function $rel_i$. One can replace the original utility function
@@ -231,7 +236,7 @@ about where in the top 20 the items are placed. This gives us the following addi
 	$R_{want}$		 		&	$P_{want}$ / $T_{want}$  \\
 	$R_{purchase}$	 		&	$P_{purchase}$ / $T_{purchase}$ \\
 	$MAP@20_{click}$ 		&	$MAP@20$ considering only click events as relevant items \\
-	$MAP@20_{want}$  		&	$MAP@20$ considering only want events as relevant items \\ 
+	$MAP@20_{want}$  		&	$MAP@20$ considering only want events as relevant items \\
 	$MAP@20_{purchase}$: 	& 	$MAP@20$ considering only purchase events as relevant items \\
 	\bottomrule
 	\end{tabular}
@@ -274,16 +279,16 @@ the following test set and prediction lists for three users:
             		\rowcolor{Gray}
             		15		&	21		 &  4.73		\\
             	\bottomrule
-            	\end{tabular}	
+            	\end{tabular}
             	\caption{Prediction set - true positives are highlighted}
             \end{table}
           \end{subfigure}
 \end{figure}
 
 We can see that we have an interaction between user 11 and item 21 in our testset and from our event file in
-Table \ref{table:event-type} we can see that the user clicked this item. Similarly we can see that user 15 purchased
+Table~\ref{table:event-type} we can see that the user clicked this item. Similarly we can see that user 15 purchased
 item 21 from our event file. Giving us the following event distribution of our test set: $T_{click}$ = 1, $T_{want}$ = 2 and
-$T_{purchase}$ = 3. 
+$T_{purchase}$ = 3.
 
 We then check each user-item touple in our prediction file against our test file, if it is a match we retrieve the
 event type for the predictions. Giving us the following $P$ values: $P_{click}$ = 1, $P_{want}$ = 1 and $P_{purchase}$ = 1.
@@ -293,12 +298,12 @@ the first item in his ranked list is a click meaning that his $AP@20_{click}$ sc
 would have been the third item in his list. The $MAP@20$ numbers can therefore be used as a measure of where in the
 top-20 lists the different events can be found. E.g. a high $MAP@20_{purchase}$ score would indicate that the retrieved
 purchase events normally are found high up in the top-20 recommendation list and vica versa.
- 
+
 We believe that having the raw counts coupled with the true-postive rate for the different event type and a measure of their
 ranking quality will be more informative and give us a clearer overview of the systems performance than using a single rank
 metric.
 
-%Normalized Discounted Cumulative Gain ($nDCG_{k}$), described in Section \ref{subp:normalized_discounted_cumulative_gain_}
+%Normalized Discounted Cumulative Gain ($nDCG_{k}$), described in Section~\ref{subp:normalized_discounted_cumulative_gain_}
 %
 %
 %For our application we believe it to be beneficial to use the rating of the item as a

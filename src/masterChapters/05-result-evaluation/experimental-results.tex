@@ -50,7 +50,7 @@ As we have access to timestamps we decided to split the dataset on time, making 
 affect of factoring in recentness. However, there seem to have been particularly few purchase activity over the last two months. We first attempted to evaluate the recommenders
 using a 90:10 timesplit, making predictions for the events between 7. may - 19. may. However, there have only been recorded two purchase or 0.07\% of
 all events in the last twelve day period, making it a bad period to use for evaluation. We did therefor not run multiple runs on this
-data, as we thought it more beneficial to get a better split to evaluate on. The results we did get can be found in the appendix \ref{90:10-timesplits}
+data, as we thought it more beneficial to get a better split to evaluate on. The results we did get can be found in the appendix~\ref{90:10-timesplits}
 We instead opted to use a 80:20 timesplit, predicting the events between 16. April - 22. May. Our baselines, or binary methods are colored gray to
 make the separation between them clearer. For our implicit ratings we wish to test all implicit rating functions individually and by making two different blends.
 Blend 1 factors in Count, Popularity, Recentness and Price, Blend 2 only factors in Price and Popularity.
@@ -168,7 +168,7 @@ We also notice that all methods except UserBasedKNN and ALS-WR did not significa
 recommender, which could be explained by our sparse data. Another interesting observation is that IBCF produce poor recommendations
 using popularity alone, but that the result improves drastically when blending it with Price. We also again notice that using traditional
 collaborative filtering methods yield far from optimal results. ALS-WR has the best performance overall, but only marginally.
-The results not shown in the table can be found in the Appendix \ref{appendix:random-split-results}
+The results not shown in the table can be found in the Appendix~\ref{appendix:random-split-results}
 
 \subsection{Cold-Start Results}
 
@@ -184,7 +184,7 @@ Running cold-start experiments costly in the sense that we need to train 9 diffe
 In addition we also have $2^5$ possible filterbots combinations, and the option of using different parameters for each method. We therefore chose
 to limit the number of combinations tested to 3, based on our preliminary results. The first combination, denoted [0,0,0,0,1], injects 12 brand
 bots which each give each item of a particular brand the maximum rating. Combination two, denoted [0,0,1,0,1] injects brand bots plus a popularity bot, which rates
-the items based on their popularity. Combination three, denoted [1,1,1,1,1] injects all the five bots described in \ref{implementation-filterbots}.
+the items based on their popularity. Combination three, denoted [1,1,1,1,1] injects all the five bots described in~\ref{implementation-filterbots}.
 
 \subsection{Time-based splits}
 
@@ -412,7 +412,7 @@ from using filterbots for either IBCF or ALS-WR.
 
 \subsection{Recommendations using all events}
 
-Table \ref{table:results-purchase-only} shows our results from testing personalized recommenders on the purchase only dataset.
+Table~\ref{table:results-purchase-only} shows our results from testing personalized recommenders on the purchase only dataset.
 The results show that the recommenders are unable to provide any better recommendation results than using a recommender to draws
 items at random. By comparing our results from our experiments stating that it is more beneficial to recommend a clicked or a wanted to be
 able to recommend almost 10\% of each event type in a top-20 recommendation list for 1532 users, from a catalogue 5688 items than it is to
@@ -448,6 +448,8 @@ for the recentness of an item. We believe that a sigmoid is a better solution fo
 suited for the not so active users. However, we do believe that the datasets timespan is to small for
 this purpose.
 
+\marginpar{Conclusion - Repeat this there, strong indications.}
+
 However, the difference is marginally in both cases, making it \emph{impossible} to give a most definitive
 answer to which is \emph{the best set of ratings}. Further testing should be repeated at a later point to
 solidify the results.
@@ -461,11 +463,10 @@ However, they did not seem to cause any serious performance degradation either.
 
 Our experiments have shown that ALS-WR combined with our implicit ratings performed the best of all the recommendation
 methods tested on our dataset. 
-%TODO - Switching is the best alternative in our opinion
+
+\marginpar{TODO: Switching is the currently best alternative in our opinion...}
 %Most popular understands why it is recommended
 %Personalize pretty early
-
-
 
 
 
@@ -488,3 +489,98 @@ methods tested on our dataset.
 %Popularity Linear 	& 0.834801 & 0.019844 & 1302 	&  1196 &  131    &   70  &    81  &    3 &     0.053763 &      0.067726 &      0.022901 &      0.015446 &      0.023492 &      0.00115 &        \\
 %avgs    			& 0.832614 & 0.031543 & 1286.25 & 1210  &  132.75 &   96  &    109 &   8.5 &   0.074844 &      0.08997 &       0.063803 &      0.028892 &      0.032237 &      0.020626 &      \\
 %\bottomrule\end{tabular}}\caption{random mahout-svd}\end{table}
+
+
+
+\begin{table}\centering\resizebox{\columnwidth}{!}{\begin{tabular}{*{19}l}\toprule
+ & AUC &        MAP@20 &        T\_c &  T\_w &  T\_p &  P\_c &  P\_w &  P\_p &  R\_c &  R\_w &  R\_p &  MAP@20-click &  MAP@20-want &   MAP@20-purchase &        \\
+\midrule
+Popularity Linear &     0.820892 &      0.018725 &      1281 &  1244.5 &        132.5 & 74 &    94.5 &  11.5 &  0.05778 &       0.075984 &      0.086836 &      0.014358 &      0.021657 &      0.016189 &       \\
+Blend & 0.833227 &      0.033997 &      1321 &  1202 &  135 &   110 &   110 &   15 &    0.083244 &      0.091591 &      0.111331 &      0.030199 &      0.033676 &      0.029479 &       \\
+Count Linear &  0.832332 &      0.034381 &      1296.5 &        1211 &  150.5 & 112.5 & 107 &   13.5 &  0.086779 &      0.088363 &      0.089518 &      0.026142 &      0.038815 &      0.022031 &       \\
+Price Linear &  0.827074 &      0.034773 &      1331.5 &        1190.5 &        136 &   114 &   118 &   9 &     0.085624 &      0.099275 &      0.066352 &      0.02961 &       0.033855 &      0.028147 &       \\
+avgs     &      0.828381 &      0.030469 &      1307.5 &        1212 &  138.5 & 102.625 &       107.375 &       12.25 & 0.078357 &      0.088803 &      0.088509 &      0.025077 &      0.032 & 0.023962 &      \\
+\bottomrule\end{tabular}}\caption{random mahout-svd}\end{table}
+\begin{table}\centering\resizebox{\columnwidth}{!}{\begin{tabular}{*{19}l}\toprule
+ & AUC &        MAP@20 &        T\_c &  T\_w &  T\_p &  P\_c &  P\_w &  P\_p &  R\_c &  R\_w &  R\_p &  MAP@20-click &  MAP@20-want &   MAP@20-purchase &        \\
+\midrule
+Popularity Linear &     0.559097 &      0.001039 &      1286 &  1255 &  132 &   0 &     9 &     7 &     0 &     0.007171 &      0.05303 &       0 &     0.001278 &      0.012201 &       \\
+Count Linear &  0.684442 &      0.004536 &      1302 &  1217 &  154 &   24 &    16 &    1 &     0.018433 &      0.013147 &      0.006494 &      0.005376 &      0.003063 &      0.000823 &       \\
+Blend & 0.69325 &       0.002834 &      1317 &  1224 &  132 &   17 &    13 &    1 &     0.012908 &      0.010621 &      0.007576 &      0.002777 &      0.002006 &      0.000685 &       \\
+Price Linear &  0.673905 &      0.006231 &      1336 &  1208 &  129 &   21 &    19 &    4 &     0.015719 &      0.015728 &      0.031008 &      0.003822 &      0.009969 &      0.003821 &       \\
+avgs     &      0.652674 &      0.00366 &       1310.25 &       1226 &  136.75 &        15.5 &  14.25 & 3.25 &  0.011765 &      0.011667 &      0.024527 &      0.002994 &      0.004079 &      0.004383 &      \\
+\bottomrule\end{tabular}}\caption{random mahout-itembased}\end{table}
+
+% ./testikus.sh -i mongo -m "svd itembased" -s cold -c
+% model, 100, 150, 15, true, 10
+\begin{table}\centering\resizebox{\columnwidth}{!}{\begin{tabular}{*{19}l}\toprule
+ & AUC &        MAP@20 &        T\_c &  T\_w &  T\_p &  P\_c &  P\_w &  P\_p &  R\_c &  R\_w &  R\_p &  MAP@20-click &  MAP@20-want &   MAP@20-purchase &        \\
+\midrule
+system-60 &     0.700599 &      0.01141 &       2620 &  2493.75 &       278 &   70 &    95.25 & 11.5 &  0.026721 &      0.038196 &      0.041568 &      0.008456 &      0.013681 &      0.012164 &       \\
+user-40 &       0.814795 &      0.046595 &      2353.25 &       2887.5 &        256 &   124.25 &        212 &   18.25 & 0.052935 &      0.073729 &      0.070665 &      0.017386 &      0.043957 &      0.016019 &       \\
+user-10 &       0.749688 &      0.052541 &      3487.75 &       4347.25 &       382.75 &        131 &   240.75 &        16 &    0.037655 &      0.055531 &      0.041285 &      0.018214 &      0.039171 &      0.012329 &       \\
+system-80 &     0.678032 &      0.0109 &        2620 &  2493.75 &       278 &   69.25 & 77.5 &  4.5 &   0.02643 &       0.031081 &      0.016225 &      0.010642 &      0.010781 &      0.005097 &       \\
+user-75 &       0.843745 &      0.018805 &      1000 &  1214 &  107.5 & 37.75 & 67 &    7.5 &   0.037807 &      0.055245 &      0.071091 &      0.009319 &      0.022345 &      0.017071 &       \\
+item-10 &       0.643553 &      0.000002 &      3229.75 &       2637 &  252.25 &        0 &     0.25 &  0 &     0 &     0.000095 &      0 &     0 &     0.000005 &      0 &      \\
+item-75 &       0.819198 &      0.05188 &       930.5 & 754.25 &        74.75 & 118 &   119.75 &        11.75 & 0.126923 &      0.158576 &      0.15773 &       0.04188 &       0.064668 &      0.046062 &       \\
+system-40 &     0.747051 &      0.018795 &      2620 &  2493.75 &       278 &   126.5 & 144.25 &        12.5 &  0.048288 &      0.057845 &      0.044948 &      0.015315 &      0.024603 &      0.01556 &        \\
+item-40 &       0.857711 &      0.023095 &      2163.75 &       1750.75 &       168.25 &        153 &   150.5 & 11.5 &  0.070713 &      0.085908 &      0.068284 &      0.017774 &      0.029951 &      0.023092 &       \\
+avgs     &      0.761597 &      0.026003 &      2336.111111 &   2341.333333 &   230.611111 &    92.194444 &     123.027778 &    10.388889 &     0.047497 &      0.0618 &        0.056866 &      0.015443 &      0.027685 &      0.016377 &    \\
+\bottomrule\end{tabular}}\caption{cold mahout-svd}\end{table}
+\begin{table}\centering\resizebox{\columnwidth}{!}{\begin{tabular}{*{19}l}\toprule
+ & AUC &        MAP@20 &        T\_c &  T\_w &  T\_p &  P\_c &  P\_w &  P\_p &  R\_c &  R\_w &  R\_p &  MAP@20-click &  MAP@20-want &   MAP@20-purchase &        \\
+\midrule
+system-60 &     0.619268 &      0.000893 &      2620 &  2493.75 &       278 &   14 &    13.25 & 3.75 &  0.005345 &      0.005313 &      0.013612 &      0.00085 &       0.000925 &      0.002746 &       \\
+user-40 &       0.51816 &       0.001746 &      2353.25 &       2887.5 &        256 &   6.75 &  11.75 & 4 &     0.002903 &      0.004112 &      0.015758 &      0.000451 &      0.001418 &      0.001011 &       \\
+user-10 &       0.572922 &      0.005124 &      3487.75 &       4347.25 &       382.75 &        14.75 & 26.75 & 8.75 &  0.004213 &      0.006171 &      0.024082 &      0.001196 &      0.00333 &       0.003179 &       \\
+system-80 &     0.614364 &      0.001634 &      2620 &  2493.75 &       278 &   15.75 & 19.75 & 3.5 &   0.006011 &      0.007922 &      0.012562 &      0.00147 &       0.002023 &      0.001259 &       \\
+system-40 &     0.60479 &       0.001445 &      2620 &  2493.75 &       278 &   13.5 &  12.25 & 2.5 &   0.005154 &      0.004915 &      0.009138 &      0.001207 &      0.001657 &      0.001073 &       \\
+item-10 &       0.491413 &      0.00108 &       3229.75 &       2637 &  252.25 &        21 &    15.5 &  2.75 &  0.006497 &      0.005883 &      0.010931 &      0.001203 &      0.000541 &      0.000803 &       \\
+item-75 &       0.489849 &      0.00029 &       930.5 & 754.25 &        74.75 & 1.75 &  0.75 &  0 &     0.001875 &      0.000991 &      0 &     0.000344 &      0.000487 &      0 &      \\
+user-75 &       0.492335 &      0.000346 &      1000 &  1214 &  107.5 & 2.5 &   2 &     0.5 &   0.002522 &      0.001634 &      0.00495 &       0.000123 &      0.000308 &      0.00026 &        \\
+item-40 &       0.524914 &      0.000587 &      2163.75 &       1750.75 &       168.25 &        6.5 &   3.5 &   1 &     0.00301 &       0.001992 &      0.005946 &      0.00066 &       0.000368 &      0.000532 &       \\
+avgs     &      0.547557 &      0.00146 &       2336.111111 &   2341.333333 &   230.611111 &    10.722222 &     11.722222 &     2.972222 &      0.00417 &       0.004326 &      0.010775 &      0.000834 &      0.001229 &      0.001207 &    \\
+\bottomrule\end{tabular}}\caption{cold mahout-itembased}\end{table}
+
+% ./testikus.sh -i mongo -m "svd itembased" -s random -c
+% 5 X random
+% 1.5 X time
+\begin{table}\centering\resizebox{\columnwidth}{!}{\begin{tabular}{*{19}l}\toprule
+ & AUC &    MAP@20 &    T\_c &  T\_w &  T\_p &  P\_c &  P\_w &  P\_p &  R\_c &  R\_w &  R\_p &  MAP@20-click &  MAP@20-want &   MAP@20-purchase &    \\
+\midrule
+Count Linear &  0.685822 &  0.004806 &  1319 &  1276 &  134 &   30 &    21 &    3 & 0.022745 &  0.016458 &  0.022388 &  0.004995 &  0.002649 &  0.007792 &   \\
+Blend & 0.689328 &  0.004256 &  1345.125 &  1229.625 &  136.625 &   18.1875 &   18.4375 &   1.5625 &    0.013467 &  0.014983 &  0.010851 &  0.003897 &  0.003688 &  0.002192 &   \\
+Price Linear &  0.681383 &  0.00618 &   1310.125 &  1259.625 &  142.375 &   22.875 &    24.4375 &   4.9375 &    0.017476 &  0.019434 &  0.034821 &  0.006033 &  0.005218 &  0.004966 &   \\
+Popularity Linear & 0.557652 &  0.000516 &  1335.4375 & 1236.5625 & 140.125 &   0 & 6.0625 &    3.875 & 0 & 0.004902 &  0.0277 &    0 & 0.000774 &  0.003872 &   \\
+avgs     &  0.653546 &  0.003939 &  1327.421875 &   1250.453125 &   138.28125 & 17.765625 & 17.484375 & 3.34375 &   0.013422 &  0.013944 &  0.02394 &   0.003731 &  0.003082 &  0.004705 &  \\
+\bottomrule\end{tabular}}\caption{random mahout-itembased}\end{table}
+\begin{table}\centering\resizebox{\columnwidth}{!}{\begin{tabular}{*{19}l}\toprule
+ & AUC &    MAP@20 &    T\_c &  T\_w &  T\_p &  P\_c &  P\_w &  P\_p &  R\_c &  R\_w &  R\_p &  MAP@20-click &  MAP@20-want &   MAP@20-purchase &    \\
+\midrule
+Count Linear Timetrain &    0.421583 &  0.002835 &  3037 &  2328 &  36 &    14 &    5 & 0 & 0.00461 &   0.002148 &  0 & 0.002681 &  0.000716 &  0 &  \\
+Recentness Sigmoid Fixed Sr &   0.419844 &  0.001989 &  3037 &  2328 &  36 &    14 &    6 & 0 & 0.00461 &   0.002577 &  0 & 0.002442 &  0.00064 &   0 &  \\
+Blend Timetrain &   0.420165 &  0.002595 &  3037 &  2328 &  36 &    12 &    7 & 0 & 0.003951 &  0.003007 &  0 & 0.002506 &  0.001524 &  0 &  \\
+Popularity Linear Timetrain &   0.326824 &  0 & 3037 &  2328 &  36 &    0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 &  \\
+Price Linear Timetrain &    0.419367 &  0.003731 &  3037 &  2328 &  36 &    19 &    5 & 1 & 0.006256 &  0.002148 &  0.027778 &  0.003329 &  0.001435 &  0.000421 &   \\
+avgs     &  0.401556 &  0.00223 &   3037 &  2328 &  36 &    11.8 &  4.6 &   0.2 &   0.003885 &  0.001976 &  0.005556 &  0.002192 &  0.000863 &  0.000084 &  \\
+\bottomrule\end{tabular}}\caption{time mahout-itembased}\end{table}
+\begin{table}\centering\resizebox{\columnwidth}{!}{\begin{tabular}{*{19}l}\toprule
+ & AUC &    MAP@20 &    T\_c &  T\_w &  T\_p &  P\_c &  P\_w &  P\_p &  R\_c &  R\_w &  R\_p &  MAP@20-click &  MAP@20-want &   MAP@20-purchase &    \\
+\midrule
+Blend & 0.833796 &  0.034925 &  1345.125 &  1229.625 &  136.625 &   116.5 & 124.5625 &  10.875 &    0.086677 &  0.101251 &  0.079373 &  0.029706 &  0.043486 &  0.015501 &   \\
+Count Linear &  0.842135 &  0.040149 &  1319 &  1276 &  134 &   139 &   126 &   13 &    0.105383 &  0.098746 &  0.097015 &  0.037713 &  0.03745 &   0.046512 &   \\
+Price Linear &  0.825122 &  0.036 & 1310.125 &  1259.625 &  142.375 &   108.4375 &  121 &   12 &    0.082778 &  0.096036 &  0.083958 &  0.031473 &  0.039653 &  0.024824 &   \\
+Popularity Linear & 0.835715 &  0.021448 &  1335.4375 & 1236.5625 & 140.125 &   79.5625 &   83.625 &    9.5625 &    0.059627 &  0.067652 &  0.067572 &  0.019811 &  0.019074 &  0.012906 &   \\
+avgs     &  0.834192 &  0.033131 &  1327.421875 &   1250.453125 &   138.28125 & 110.875 &   113.796875 &    11.359375 & 0.083616 &  0.090921 &  0.081979 &  0.029676 &  0.034916 &  0.024935 &  \\
+\bottomrule\end{tabular}}\caption{random mahout-svd}\end{table}
+\begin{table}\centering\resizebox{\columnwidth}{!}{\begin{tabular}{*{19}l}\toprule
+ & AUC &    MAP@20 &    T\_c &  T\_w &  T\_p &  P\_c &  P\_w &  P\_p &  R\_c &  R\_w &  R\_p &  MAP@20-click &  MAP@20-want &   MAP@20-purchase &    \\
+\midrule
+Count Linear Timetrain &    0.660527 &  0.006102 &  3037 &  2328 &  36 &    24 &    22 &    3 & 0.007903 &  0.00945 &   0.083333 &  0.003709 &  0.019371 &  0.045928 &   \\
+Recentness Sigmoid Fixed Sr &   0.665928 &  0.005734 &  3037 &  2328 &  36 &    27 &    17 &    2 & 0.00889 &   0.007302 &  0.055556 &  0.003275 &  0.01711 &   0.03125 &    \\
+Blend Timetrain &   0.659025 &  0.005783 &  3037 &  2328 &  36 &    25 &    17 &    3 & 0.008232 &  0.007302 &  0.083333 &  0.004066 &  0.009914 &  0.049057 &   \\
+Popularity Linear Timetrain &   0.639608 &  0.001276 &  3037 &  2328 &  36 &    8 & 12 &    1 & 0.002634 &  0.005155 &  0.027778 &  0.000338 &  0.00628 &   0.002083 &   \\
+Price Linear Timetrain &    0.64507 &   0.004391 &  3037 &  2328 &  36 &    17 &    16 &    2 & 0.005598 &  0.006873 &  0.055556 &  0.00291 &   0.008215 &  0.017508 &   \\
+avgs     &  0.654032 &  0.004657 &  3037 &  2328 &  36 &    20.2 &  16.8 &  2.2 &   0.006651 &  0.007216 &  0.061111 &  0.00286 &   0.012178 &  0.029165 &  \\
+\bottomrule\end{tabular}}\caption{time mahout-svd}\end{table}
+
