@@ -23,6 +23,68 @@
 % Other configs and variables
 \newcommand{\cmark}{\color{ForestGreen}\ding{52}} % Awesome green check mark
 \newcommand{\xmark}{\color{RedOrange}\ding{55}}   % Awesome red cross mark
+  % How we propose to recommend items for SoBazaar
+\newcommand{\applicationOverview}{
+  \begin{frame}
+    \frametitle{Application Overview}
+    \framesubtitle{Application overview, showing input and output from different
+      components in the proposed system}
+    \begin{figure}[H]
+      \centering
+      \resizebox*{!}{0.65\textheight}{
+      \begin{tikzpicture}[
+        % Manually overriden in most of the nodes :-)
+        node distance=2.3cm,
+        block/.style={
+          rectangle,
+          draw,
+          thick,
+          inner sep=5pt,
+          align=center,
+          rounded corners,
+          minimum width=2cm,
+        },
+        % Special style for the social networks
+        social/.style={
+          draw=red,
+          densely dotted,
+        },
+        % Box surrounding the data sources.
+        dsbox/.style={
+          draw,
+          dotted,
+          minimum height=1.2cm,
+        }
+      ]
+
+      % Create nodes - first, data sources.
+      \node(db)     [block] {Product DB};
+      \node(social) [block,social, right of=db] {Social data};
+      \node(log)    [block,right of=social] {Event log};
+
+      % Our various 'systems'
+      \node(coldstart) [block, below = 3.5cm of db] { Cold-start\\booster };
+      \node(converter) [block, below = 3.5cm of log] { Implicit\\Converter };
+      \node(recommender) [block, below = 2cm of coldstart] { Recommender };
+      \node(evaluation) [block, right = 3.5cm of recommender] { Evaluation };
+
+      % Box around data sources.
+      \node (datasources) [dsbox, fit=(db) (social) (log)] {};
+      \node at (datasources.north) [above, inner sep=2mm] {Data sources};
+
+      % Draw the links between systems and data sources.
+      \path[->,thick]
+         (log) edge [] node [sloped, above] {Implicit feedback} (converter)
+         (db) edge [] node [sloped, above, text width=3cm, align=center] {Structured\\product data} (coldstart)
+         (converter) edge [] node [sloped, above] {Ratings} (coldstart)
+         (coldstart) edge [] node [sloped, above] {Ratings} (recommender)
+         (recommender) edge [] node [sloped, above] {Recommendations} (evaluation);
+
+      \end{tikzpicture}
+      }
+    \end{figure}
+  \end{frame}
+}
 
 % Some basic stuff for the first slide
 \title{Making recommendations using extremely sparse
@@ -213,6 +275,8 @@
     \end{figure}
   \end{frame}
 
+  \applicationOverview
+
   % What does it mean that feedback is implicit?
   \begin{frame}
     \frametitle{Implicit feedback}
@@ -238,66 +302,6 @@
     \end{itemize}
   \end{frame}
 
-  % How we propose to recommend items for SoBazaar
-  \begin{frame}
-    \frametitle{Application Overview}
-    \framesubtitle{Application overview, showing input and output from different
-      components in the proposed system}
-    \begin{figure}[H]
-      \centering
-      \resizebox*{!}{0.65\textheight}{
-      \begin{tikzpicture}[
-        % Manually overriden in most of the nodes :-)
-        node distance=2.3cm,
-        block/.style={
-          rectangle,
-          draw,
-          thick,
-          inner sep=5pt,
-          align=center,
-          rounded corners,
-          minimum width=2cm,
-        },
-        % Special style for the social networks
-        social/.style={
-          draw=red,
-          densely dotted,
-        },
-        % Box surrounding the data sources.
-        dsbox/.style={
-          draw,
-          dotted,
-          minimum height=1.2cm,
-        }
-      ]
-
-      % Create nodes - first, data sources.
-      \node(db)     [block] {Product DB};
-      \node(social) [block,social, right of=db] {Social data};
-      \node(log)    [block,right of=social] {Event log};
-
-      % Our various 'systems'
-      \node(coldstart) [block, below = 3.5cm of db] { Cold-start\\booster };
-      \node(converter) [block, below = 3.5cm of log] { Implicit\\Converter };
-      \node(recommender) [block, below = 2cm of coldstart] { Recommender };
-      \node(evaluation) [block, right = 3.5cm of recommender] { Evaluation };
-
-      % Box around data sources.
-      \node (datasources) [dsbox, fit=(db) (social) (log)] {};
-      \node at (datasources.north) [above, inner sep=2mm] {Data sources};
-
-      % Draw the links between systems and data sources.
-      \path[->,thick]
-         (log) edge [] node [sloped, above] {Implicit feedback} (converter)
-         (db) edge [] node [sloped, above, text width=3cm, align=center] {Structured\\product data} (coldstart)
-         (converter) edge [] node [sloped, above] {Ratings} (coldstart)
-         (coldstart) edge [] node [sloped, above] {Ratings} (recommender)
-         (recommender) edge [] node [sloped, above] {Recommendations} (evaluation);
-
-      \end{tikzpicture}
-      }
-    \end{figure}
-  \end{frame}
 
   % Second section, going through each of these components.
   \section{Proposed system components}
@@ -363,6 +367,10 @@
     \end{figure}
   \end{frame}
 
+
+  \applicationOverview
+
+
   % Component two: filterbots and cold-start stuff.
   \begin{frame}
     \frametitle{Cold start boosting}
@@ -376,6 +384,10 @@
     \end{itemize}
   \end{frame}
 
+
+  \applicationOverview
+
+
   % Component three: actually making recommendations.
   \begin{frame}
     \frametitle{Making recommendations}
@@ -387,6 +399,10 @@
       \item We do not perform any dynamic switching.
     \end{itemize}
   \end{frame}
+
+
+  \applicationOverview
+
 
   % Component four: how to evaluate the results.
   \begin{frame}
@@ -499,7 +515,6 @@
         \end{figure}
   \end{frame}
 
-
   % Section three: a summary and conclusions from our work.
   \section{Results and future work}
 
@@ -516,6 +531,7 @@
       \item Weak item features yields no distinct gain in precision.
     \end{itemize}
   \end{frame}
+
 
   % Figure showing system in relation to "the sky".
   \begin{frame}
