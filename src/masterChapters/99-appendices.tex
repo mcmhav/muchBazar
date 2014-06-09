@@ -6,57 +6,59 @@
 \chapter{Data}\label{app:req}
     \begin{table}[H]
         \centering
-        \begin{tabular}{l|l}
-            \toprule
-            \emph{Variable}        & \emph{Example}   \\
-            \midrule
-            \emph{app\_version}   &   0.3  \\
-            \emph{user\_agent}"   &   "SOBAZAR 0.3 (iPhone; iPhone OS 6.1.4; Scale/2.00; nb\_NO)"   \\
-            \emph{product\_type}  &   "product"    \\
-            \emph{server\_time\_stamp} &   "2013-10-24T11:33:17.632Z"   \\
-            \emph{dy}    &   24   \\
-            \emph{origin\_ui} &   "storefront"     \\
-            \emph{currency}  &   "kr"     \\
-            \emph{country\_name}  &   "Norway"     \\
-            \emph{price} &   1995     \\
-            \emph{product\_name}  &   "DWS No47"   \\
-            \emph{tag\_name}  &   "NULL"   \\
-            \emph{tag\_id}    &   "NULL"   \\
-            \emph{storefront\_name}   &   "BIK BOK"    \\
-            \emph{event\_id}  &   "product\_purchase\_intended"  \\
-            \emph{age\_target}    &   "Any"    \\
-            \emph{epoch\_day} &   16002    \\
-            \emph{mo}    &   10   \\
-            \emph{yr}    &   2013     \\
-            \emph{product\_id}    &   2298002  \\
-            \emph{event\_location}    &   Geo Location     \\
-            \emph{ipAddress} &   IP  \\
-            \emph{contentDescription}    &   null     \\
-            \emph{sessionId} &   null     \\
-            \emph{contentId} &   null     \\
-            \emph{instKey}   &   "ed4c76251ac47da54299d8c0bce3dca6"   \\
-            \emph{viewer}    &   null     \\
-            \emph{ts}    &   NumberLong("1382614397632")  \\
-            \emph{gender\_target} &   "Female"     \\
-            \emph{client\_time\_stamp} &   "NULL"   \\
-            \emph{login\_type}    &   "NULL"   \\
-            \emph{transaction\_id}    &   "N/A"    \\
-            \emph{service\_id}    &   "SOBAZAR"    \\
-            \emph{platform}  &   "iPhone"     \\
-            \emph{epoch\_week}    &   2286     \\
-            \emph{storefront\_id} &   23002    \\
-            \emph{hr}    &   11   \\
-            \emph{tag\_position}  &   "NULL"   \\
-            \emph{time\_stamp}    &   "2013-10-24T13:33+0200"  \\
-            \emph{retailer\_brand}    &   13001    \\
-            \emph{storefront\_position}   &   2    \\
-            \emph{user\_id}   &   1342189870   \\
-            \emph{country\_id}    &   194001   \\
-            \emph{server\_environment}    &   "prod" \\
-            \bottomrule
+        \resizebox*{!}{0.7\textheight}{
+          \begin{tabular}{l|l}
+              \toprule
+              \emph{Variable}        & \emph{Example}   \\
+              \midrule
+              \emph{app\_version}   &   0.3  \\
+              \emph{user\_agent}"   &   "SOBAZAR 0.3 (iPhone; iPhone OS 6.1.4; Scale/2.00; nb\_NO)"   \\
+              \emph{product\_type}  &   "product"    \\
+              \emph{server\_time\_stamp} &   "2013-10-24T11:33:17.632Z"   \\
+              \emph{dy}    &   24   \\
+              \emph{origin\_ui} &   "storefront"     \\
+              \emph{currency}  &   "kr"     \\
+              \emph{country\_name}  &   "Norway"     \\
+              \emph{price} &   1995     \\
+              \emph{product\_name}  &   "DWS No47"   \\
+              \emph{tag\_name}  &   "NULL"   \\
+              \emph{tag\_id}    &   "NULL"   \\
+              \emph{storefront\_name}   &   "BIK BOK"    \\
+              \emph{event\_id}  &   "product\_purchase\_intended"  \\
+              \emph{age\_target}    &   "Any"    \\
+              \emph{epoch\_day} &   16002    \\
+              \emph{mo}    &   10   \\
+              \emph{yr}    &   2013     \\
+              \emph{product\_id}    &   2298002  \\
+              \emph{event\_location}    &   Geo Location     \\
+              \emph{ipAddress} &   IP  \\
+              \emph{contentDescription}    &   null     \\
+              \emph{sessionId} &   null     \\
+              \emph{contentId} &   null     \\
+              \emph{instKey}   &   "ed4c76251ac47da54299d8c0bce3dca6"   \\
+              \emph{viewer}    &   null     \\
+              \emph{ts}    &   NumberLong("1382614397632")  \\
+              \emph{gender\_target} &   "Female"     \\
+              \emph{client\_time\_stamp} &   "NULL"   \\
+              \emph{login\_type}    &   "NULL"   \\
+              \emph{transaction\_id}    &   "N/A"    \\
+              \emph{service\_id}    &   "SOBAZAR"    \\
+              \emph{platform}  &   "iPhone"     \\
+              \emph{epoch\_week}    &   2286     \\
+              \emph{storefront\_id} &   23002    \\
+              \emph{hr}    &   11   \\
+              \emph{tag\_position}  &   "NULL"   \\
+              \emph{time\_stamp}    &   "2013-10-24T13:33+0200"  \\
+              \emph{retailer\_brand}    &   13001    \\
+              \emph{storefront\_position}   &   2    \\
+              \emph{user\_id}   &   1342189870   \\
+              \emph{country\_id}    &   194001   \\
+              \emph{server\_environment}    &   "prod" \\
+              \bottomrule
+          \end{tabular}
+        }
         \caption[Complete List of Event Metadata]{Table of the complete list of event metadata stored when an event is triggered}
         \label{table:completeEventData}
-        \end{tabular}
     \end{table}
 
     \begin{table}[H]
@@ -92,21 +94,13 @@
             \emph{navigation:navbar:sobazaar\_icon}  \\
             \emph{app\_first\_started}  \\
             \bottomrule
-        \caption[List of Different Events]{Table of the different events that can be triggered by the user and an explanation}
-        \label{table:events}
         \end{tabular}
+        \label{table:events}
+        \caption[List of Different Events]{List of different events that can be triggered by the user}
     \end{table}
 
-
     \begin{figure}[H]
-        \includegraphics[width=5in]{image/simpleGeoPlotworld.png}
-        \centering
-        \caption[Event location mapped on the world]{This figure shows the location of the events from all over the world.
-        For a cropped version with focus on Norway and the surrounding countries, refer to~\ref{figure:croppedGeoplot}}
-    \end{figure}
-
-    \begin{figure}[H]
-        \includegraphics[width=5in]{image/statesInteractionFalse-gvfile.pdf}
+        \includegraphics[angle=90,width=5in]{image/statesInteractionFalse-gvfile.pdf}
         \centering
         \caption[States in session and how they interact]{The different states of the system and how they interact with each other.}
         \label{figure:statesInteractions}
@@ -117,10 +111,9 @@
 
 \section{Fashion domain}
 
-\marginpar{TODO: Fix some kind of left align centering og content}
 \begin{table}[H]
     \centering
-    \begin{tabular}{ccc}
+    \begin{tabular}{lll}
     \toprule
       \multicolumn{2}{c}{Concrete Attributes (Product Features)} & Abstract Attributes (Attitude-Based) \\
       \cmidrule(r{1em}){1-2}
@@ -145,33 +138,34 @@
 \section{SoBazaar Competitors}\label{app:sec:soCompetitors}
 \subsubsection{Flink} % (fold)
 \label{par:flink}
-    "Flink is THE brand-new app to discover, get inspired and share trendy looks from top fashion bloggers" - About Flink~\cite{flink}.
 
-    Flink is a fashion discovery application for iPhone.
-    It allows the user to browse fashion blogs, hot brands and new trends.
+"Flink is THE brand-new app to discover, get inspired and share trendy
+looks from top fashion bloggers" - About Flink~\cite{flink}.
 
-    The content displayed can be "liked" and can be a collection of clothes from different brands.
-    If the user is interested in the item, the application can redirect the user to the web page where it is sold.
-    \begin{table}[H]
-            \centering
-            \begin{tabularx}{\linewidth}{>{\parskip1ex}X@{\kern4\tabcolsep}>{\parskip1ex}X}
-                \toprule
-                \hfil\bfseries Strengths
-                &
-                \hfil\bfseries Weaknesses
-                \\\cmidrule(r{3\tabcolsep}){1-1}\cmidrule(l{-\tabcolsep}){2-2}
-                Can follow other users \par
-                Connect with facebook \par
-                Ability to add item to a \emph{want list} \par
-                &
-                No personalized recommendations \par
-                \\\bottomrule
-                \end{tabularx}
-        \caption[Recommendation related strengths and weaknesses of Flink~\cite{flink}]{This table is the list of the recommendation related strengths and weaknesses of the mobile fashion application Flink~\cite{flink}}
-        \label{table:iphoneAppFlink}
-    \end{table}
-  % todo - might be more, but can't explore the application since it is iOS 7 required
-% paragraph flink (end)
+Flink is a fashion discovery application for iPhone.
+It allows the user to browse fashion blogs, hot brands and new trends.
+
+The content displayed can be "liked" and can be a collection of clothes from different brands.
+If the user is interested in the item, the application can redirect the user to the web page where it is sold.
+
+\begin{table}[H]
+  \centering
+  \begin{tabularx}{\linewidth}{>{\parskip1ex}X@{\kern4\tabcolsep}>{\parskip1ex}X}
+    \toprule
+    \hfil\bfseries Strengths
+    &
+    \hfil\bfseries Weaknesses
+    \\\cmidrule(r{3\tabcolsep}){1-1}\cmidrule(l{-\tabcolsep}){2-2}
+    Can follow other users \par
+    Connect with facebook \par
+    Ability to add item to a \emph{want list} \par
+    &
+    No personalized recommendations \par
+    \\\bottomrule
+ \end{tabularx}
+ \caption[Recommendation related strengths and weaknesses of Flink~\cite{flink}]{This table is the list of the recommendation related strengths and weaknesses of the mobile fashion application Flink~\cite{flink}}
+ \label{table:iphoneAppFlink}
+\end{table}
 
 \subsubsection{Motilo} % (fold)
 \label{par:motilo}
@@ -203,8 +197,6 @@
             \caption[Recommendation related strengths and weaknesses of Motilo~\cite{motilo}]{This table is the list of the recommendation related strengths and weaknesses of e-commerce fashion web site Motilo~\cite{motilo}}
             \label{table:ecommenreceMotilo}
         \end{table}
-% paragraph motilo (end)
-
 
 \subsubsection{ModCloth} % (fold)
 \label{par:modcloth}
@@ -235,7 +227,6 @@
         ModCloth~\cite{modcloth}}
         \label{table:ecommenreceModCloth}
     \end{table}
-% paragraph modcloth (end)
 
 \subsubsection{UsTrendy} % (fold)
 \label{par:ustrendy}
@@ -353,7 +344,6 @@
     \end{table}
 % paragraph trendabl (end)
 
-
 \subsubsection{Rue La La} % (fold)
 \label{par:rue_la_la}
     "Rue La La is the destination for the most desired brands" - About Rue La La~\cite{RueLaLa}
@@ -435,7 +425,6 @@
         \caption[Recommendation related strengths and weaknesses of Ellos~\cite{Ellos}]{This table is the list of the recommendation related strengths and weaknesses of e-commerce fashion web site Ellos~\cite{Ellos}}
         \label{table:ecommenreceEllos}
     \end{table}
-% paragraph ellos (end)
 
 \subsubsection{LookBook} % (fold)
 \label{par:lookbook}
@@ -519,7 +508,43 @@
         \caption[Recommendation related strengths and weaknesses of ShopStyle~\cite{ShopStyle}]{This table is the list of the recommendation related strengths and weaknesses of e-commerce fashion web site ShopStyle~\cite{ShopStyle}}
         \label{table:ecommenreceShopStyle}
     \end{table}
-% paragraph shopstyle (end)
+
+\subsubsection{Kwoller}
+\label{par:Kwoller}
+
+"Kwoller brings window shopping to your phone and lets you buy the perfect products when they’re at your perfect price." - about Kwoller~\cite{kwoller}.
+
+Kwoller is a newly release application which allow the user to like or dislike items, and be notified when or if the like items are on sale.
+
+The user gets personalized recommendations based on the like and disklikes.
+With Kwoller the user can also share their finds with friends.
+
+This table is the list of the recommendation related strengths and weaknesses
+of the e-commerce fashion mobile application Mallzee~\cite{kwoller}
+
+\begin{table}[H]
+    \centering
+    \begin{tabularx}{\linewidth}{>{\parskip1ex}X@{\kern4\tabcolsep}>{\parskip1ex}X}
+        \toprule
+        \hfil\bfseries Strengths
+        &
+        \hfil\bfseries Weaknesses
+        \\\cmidrule(r{3\tabcolsep}){1-1}\cmidrule(l{-\tabcolsep}){2-2}
+        %Strengths
+        Ability to add item to a "want list" \par
+        Hot-or-Not approach \par
+        Personalized recommendations \par
+        &
+        %Weaknesses
+        Redirected on purchase \par
+        No most popular list \par
+        No option to follow friends \par
+        \\\bottomrule
+    \end{tabularx}
+    \caption{Kwoller: Strengths and weaknesses}
+    \label{table:ecommerceKwoller}
+\end{table}
+
 
 \section{Evaluation}
 \label{appendix:evaluation-metrics}
@@ -621,20 +646,10 @@ popular datasets containing additional information:
 \chapter{Extended Implementation}
 \label{app:impl}
 
-\section{Implemented Functional Requirements}
-\begin{enumerate}[label=\bfseries FR \arabic*:]
-  \item {\color{ForestGreen}Blablaba}
-  \item {\color{RedOrange}\st{Blablaba}}
-\end{enumerate}
-
-\section{Implemented Non Functional Requirements}
-\begin{enumerate}[label=\bfseries NFR \arabic*:]
-  \item {\color{ForestGreen}Blablaba}
-  \item {\color{RedOrange}\st{Blablaba}}
-\end{enumerate}
-
 \section{Experimental Results}
 \label{app:results}
+
+% TODO: Introduce this section and explain what to be expected.
 
 \begin{table}[H]
 \centering
@@ -712,6 +727,7 @@ ALS-WR Price Linear        &   0.611358 &  0.003687 &  3037 &  2328 &  36 & 18.7
 \caption{Appendix: Experimental Results - Time Split 16. April - 19. May}
 \end{table}
 
+% TODO: Short explanation the results seen above.
 
 \subsubsection{Random Splits}
 \label{appendix-random-split-results}
@@ -764,13 +780,10 @@ ALS-WR Blend 2		&	0.800422 &	0.034519 &	1344.75 &	1246.5  &	134.5 &	104.5 		&	12
 \caption{Appendix: Experimental Results - Random Splits}
 \end{table}
 
-
-
-
+% TODO: Short explanation the results seen above.
 
 It was interesting to see that the performance of ItemBasedKNN actually started to decrease when looking at more than 50 neighbors, while UserBasedKNN's performance kept going up or stayed mostly the same when adding
 neighbors. UserBasedKNN with between 50-200 neighbors seem to give the best recommendation quality of all the methods tested, and they different is fairly significant.
-
 
 \begin{table}
 \centering\resizebox
@@ -1038,4 +1051,3 @@ user-75		&	0.503525 &	0.000301 &	1094 &	1155 &	139 &	3 &	3 &	2 &	0.002742 &	0.00
 }
 \caption{Appendix: Cold-start - Random Splits}
 \end{table}
-

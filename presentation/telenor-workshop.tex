@@ -126,6 +126,9 @@
                 Fahsiolista  & \xmark & \cmark & \xmark & \cmark & \cmark & \xmark \\
                 ShopStyle  & \xmark & \xmark & \cmark & \cmark & \xmark & \xmark \\
                 MyHabit  & \cmark & \xmark & \cmark & \xmark & \xmark & \xmark \\
+                Asos  & \cmark & \cmark & \cmark & \cmark & \cmark & \xmark \\
+                Mallzee  & \xmark & \xmark & \xmark & \cmark & \cmark & \cmark \\
+                Kwoller  & \xmark & \xmark & \xmark & \cmark & \xmark & \cmark \\
                 \bottomrule
             \end{tabular}
           }
@@ -148,26 +151,27 @@
       \begin{table}[H]\centering\resizebox*{!}{0.7\textheight}{\begin{tabular}{l l}\toprule
             Attribute       & Count   \\
             \midrule
-            Total number of product events &    40773 \\
-            Unique users ids    &    2021 \\
-            Unique item ids     &    6092 \\
-            Unique storefronts  &    147 \\
-            Unique retailer brands  &    24 \\
+            Total number of product events  &    35324 \\
+            Unique users ids    &    1532 \\
+            Unique item ids     &    5688 \\
+            Unique storefronts  &    144 \\
+            Unique retailer brands  &    22 \\
             \hline
-            Item clicks     &    25491 \\
-            Item wants   &    13262 \\
-            Item purchases   &    2020 \\
+            Item clicks     &    21400 \\
+            Item wants  &    12436 \\
+            Item purchases  &    1488 \\
             \hline
             First event & Mon, 07 Oct 2013 10:59:57 GMT \\
             Last event & Mon, 19 May 2014 22:51:19 GMT \\
             Lifetime of data & 224 days \\
             \hline
-            Average item click count per user   &    12.6130 \\
-            Average item want count per user     &    6.5620 \\
-            Average item purchase count per user     &    0.9995 \\
+            Average item click count per user   &    13.968668407310705 \\
+            Average item want count per user    &    8.117493472584856 \\
+            Average item purchase count per user    &    0.9712793733681462 \\
             \hline
-            Average item interaction count per user     &    20.1746 \\
-            Average user interaction count per item     &    6.6928 \\
+            Average user interaction count per item     &    6.210267229254571 \\
+            Average item interaction count per user     &    23.057441253263708 \\
+            Median item interaction count per user  &    7.0 \\
     \bottomrule\end{tabular}}\end{table}
   \end{frame}
 
@@ -212,13 +216,25 @@
   % What does it mean that feedback is implicit?
   \begin{frame}
     \frametitle{Implicit feedback}
+    \framesubtitle{What is it?}
     \begin{itemize}
       \item Data captured from user behaviour.
       \item Item features and application properties.
       \item Recentness, price, popularity, brand, product properties.
       \item Probabilities of various convertions.
-      \item Challenges?
-      \item Content features?
+    \end{itemize}
+  \end{frame}
+
+  \begin{frame}
+    \frametitle{Implicit feedback}
+    \framesubtitle{Challenges}
+    \begin{itemize}
+      \item Not much existing research.
+      \item No good evaluation metrics.
+      \item No ground truth.
+      \item Difficult to weight features.
+      \item Performs better in dense environments.
+      \item Combining with other sources.
     \end{itemize}
   \end{frame}
 
@@ -290,7 +306,6 @@
   \begin{frame}
     \frametitle{Converting Implicit Feedback}
     \begin{itemize}
-      \item Related articles
       \item We looked at \textit{price}, \textit{item popularity} and
       \textit{recentness}.
       \item What is recentness? Both number of days and ordering of events.
@@ -337,8 +352,8 @@
   \begin{frame}
     \frametitle{Evaluation}
     \begin{itemize}
-      \item Evaluating implicit feedback is difficult. You have no \textit{ground
-      truth}.
+      \item Recap: Evaluating implicit feedback is difficult. You have no
+      \textit{ground truth}.
       \item Best way of confirming performance: online experiments.
       \item Various ways of splitting dataset.
       \item Perform user studies to understand underlying features and
@@ -478,6 +493,8 @@
     \begin{itemize}
       \item Add ways to provide negative feedback.
       \item Include social and demographic data.
+      \item Use simple demographic-based methods on new users, increase
+      complexity in accordance to density.
       \item Kick-start recommendations by asking for preferences.
       \item Better results can be achieved with using Tinder-like interface.
       \item Ensure that a framework for online evaluation, is in place.
@@ -488,6 +505,10 @@
     \frametitle{References}
     \bibliographystyle{plain}
     \bibliography{../src/references}
+  \end{frame}
+
+  \begin{frame}
+    \huge Our largest gratitude to all of you!
   \end{frame}
 
 \end{document}
