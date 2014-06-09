@@ -87,6 +87,7 @@ be found in Appendix~\ref{appendix:evaluation-metrics}.
 			}
 		;
 	\end{tikzpicture}
+	\label{fig:overview-eval}
 	\caption{Overview of evaluation metrics based on input to recommender system}
 \end{figure}
 
@@ -176,13 +177,13 @@ could prove to be disadvantageous in time sensitive environments.
 When evaluating a recommender system, you wish to estimate a user's
 satisfaction for a given recommendation. Traditionally recommender systems have
 been evaluated by means of predictive accuracy. However, there is now a widely
-agreed opinion that accurate predictions are crucial but insufficient to deploy a good
-recommendation engine~\cite{Shani2011, McNee2006} as one also need to consider
-the items \textit{relevance} and look at the set of recommendations as a whole.
-In addition, using implicit feedback, when we have no negative feedback and our
-feedback does not indicate preference, but rather confidence of a users
-opinion - evaluation the predictive accuracy is not efficient~\cite{something}
-% TODO: Thomas, a good cite for this?
+agreed opinion that accurate predictions are crucial but insufficient to deploy
+a good recommendation engine~\cite{Shani2011, McNee2006} as one also need to
+consider the items \textit{relevance} and look at the set of recommendations as
+a whole.  In addition, using implicit feedback we have no negative feedback and
+our feedback does not indicate preference, but rather confidence of a users
+opinion, thus calculating the predictive accuracy is not
+efficient~\cite{Hu2008}
 
 The three most common metrics for predictive accuracy are \textit{MAE},
 \textit{MSE} and \textit{RMSE}. They measure how close the predicted ratings
@@ -272,7 +273,7 @@ will see in the discussion, one have to look at several metrics and come to a
 joint reasoning based on multiple results. When items has been classified as
 per Table~\ref{table:usageprediction} we can utilize a range of different
 methods where the most common are \textit{Precision}, \textit{Recall},
-\textit{Fallout} and \textit{ROC}, which will be described here.
+\textit{Fallout} and \textit{MAP}, as seen in Figure~\ref{fig:overview-eval}.
 
 \textit{Precision} is the fraction of retrieved items that are relevant.
 
@@ -342,6 +343,24 @@ minimizing the fallout.
 
 $T$ is a threshold parameter.  The ROC curve is $TPR$ plotted together with
 $FPR$ at various $T$.
+
+\textit{Mean Average Precision (MAP)}~\cite{Manning:2008:IIR:1394399} measures
+quality across recall levels.
+
+\begin{equation}
+	ap@n = \sum_{k=1}^{n}{\frac{P(K)}{min(m,n)}}
+	\label{equation:apn}
+\end{equation}
+\begin{equation}
+	MAP@n = \sum_{i=1}^{N}{\frac{ap@n_i}{N}}
+	\label{equation:map}
+\end{equation}
+
+\ref{equation:apn} calculates the average precision at $n$ for a user.  From
+\ref{equation:apn}, $P(K)$ is the precision at $k$ in the item list, $n$ is the
+maximum number of predicted items and $m$ is the actual length of the predicted
+items list.  \ref{equation:map} calculates the mean of all the values from
+\ref{equation:apn}.
 
 \begin{equation}
     AUROC = \int_\infty^{-\infty} TPR(T)P_0(T)dTdT
@@ -414,6 +433,13 @@ most suitable to evaluate algorithms that are used to present ranked lists to
 the user in domains where the user preferences are expressed using numerical
 values.
 
+As we do not have explicit data in SoBazaar per Figure~\ref{fig:overview-eval}
+we will not explore these methods in detail, however we will list some of the
+most common ones. Note that although \textit{MAP} is defined as being a
+relevance based metric used with implicit ratings, it does produce a ranked
+list. It is however described in Section~\ref{} and not here, as it does not
+compare two ranked lists as the methods below does.
+
 % TODO: Introduce the upcoming definitions.
 \textit{AP correlation}~\cite{Yilmaz:2008:NRC:1390334.1390435} measures the
 overall precision and is a variant of \textit{Kendall's tau}.  It counts the
@@ -426,13 +452,10 @@ user \textit{list2}.
 	\label{equation:ap}
 \end{equation}
 
-How to calculate the \textit{AP correlation} value is shown in~\ref{equation:ap}.
-$C(i)$ is the number of items ranked correctly above rank $i$.
+where $C(i)$ is the number of items ranked correctly above rank $i$.
 The value of AP is between -1 and 1, where a score of 0 means that
 \textit{list1} can be considered a randomly generated list and 1 is a perfect
 match with the actual list \textit{list2}.
-
-\marginpar{if this is the setup, write a little intro}
 
 \textit{Mean Percentage Ranking (MPR)} is a recall-oriented metric.  A known
 issue with implicit feedback is that it often lack the actual user's
@@ -451,25 +474,6 @@ $rank_{ui} = 0$ means that $i$ is the most preferred item for $u$.  $r_{ui}$
 indicates whether $u$ has consumed $i$ or not.  This makes a $MPR$ value of
 0\% to be the most preferred value, and a value of 50\% meaning a near
 randomly produced list.
-
-\textit{Mean Average Precision (MAP)}~\cite{Manning:2008:IIR:1394399} measures
-quality across recall levels.
-
-\begin{equation}
-	ap@n = \sum_{k=1}^{n}{\frac{P(K)}{min(m,n)}}
-	\label{equation:apn}
-\end{equation}
-\begin{equation}
-	MAP@n = \sum_{i=1}^{N}{\frac{ap@n_i}{N}}
-	\label{equation:map}
-\end{equation}
-
-How to calculate the $MAP$ value is shown in~\ref{equation:map}.
-\ref{equation:apn} calculates the average precision at $n$ for a user.  From
-\ref{equation:apn}, $P(K)$ is the precision at $k$ in the item list, $n$ is the
-maximum number of predicted items and $m$ is the actual length of the predicted
-items list.  \ref{equation:map} calculates the mean of all the values from
-\ref{equation:apn}.
 
 \textit{Normalized Discounted Cumulative Gain (nDCG)} measures the graded
 relevance of the recommended item, the ranking quality or the usefulness of the
@@ -508,18 +512,24 @@ utility of all the users are shown in~\ref{equation:HL}
 	\label{equation:HL}
 \end{equation}
 
-$HL_u^{max}$ is the maximum possible value of the half-life utility value.
+where $HL_u^{max}$ is the maximum possible value of the half-life utility
+value.
 
-\marginpar{some overlapping of the algorithms (not really comparing two ranked
-list, but still evaluating a recommender system producing ranked lists)}
+One issue with using a ranked based approach is that the items in the predicted
+top K list has to be ranked in some way, the same goes for the list this list
+is to be compared to.  Thereby producing the requirement for a ranked list of
+preferred items from the user.  If there is such a ranked list, ranking
+accuracy will help to tell how well the system is suggesting items for the
+user, such as~\cite{Yilmaz:2008:NRC:1390334.1390435}.
 
-\subsubsection{Going beyond rank based metrics}
+\subsubsection{Global metrics - evaluating recommendation properties}
 
 There is an emerging understanding that good recommendations accuracy alone
 does not give the users of the recommender system an effective and satisfying
 experience \cite{Herlocker2004}. The following \emph{measures} attempts to
 assess a recommender systems usefulness beyond being able to provide accurate
-recommendations to the users.
+recommendations to the users. These metrics are important whether one have
+explicit, implicit or live users as input the the recommender system.
 
 \textit{Coverage} can refer to several distinct properties of the system. Most
 commonly, the term coverage refers to the proportion of items the
@@ -563,10 +573,15 @@ used for the calculation is the set of recommended items for the user.
 The system should be able to produce items both items known to the user, and
 items unknown to the user.  For trust in the system and novelty respectively.
 
-Measuring serendipity can be done though measuring how hard the prediction was to do~\cite{serendipity}.
-The metric used by~\cite{serendipity} bases its assumptions on the idea that unexpectedness is low for \emph{easy-to-predict} items, and high for \emph{difficult-to-predict} items.
-To calculate how easy a prediction is~\cite{serendipity} introduces a primitive prediction method and compare the predictions done by this recommender, with the results from their more sophisticated recommender, which serendipity is to be calculated for.
-Unexpectedness is then the deviation from the result obtained by the primitive predictions method.
+Measuring serendipity can be done though measuring how hard the prediction was
+to do~\cite{serendipity}.  The metric used by~\cite{serendipity} bases its
+assumptions on the idea that unexpectedness is low for \emph{easy-to-predict}
+items, and high for \emph{difficult-to-predict} items.  To calculate how easy a
+prediction is~\cite{serendipity} introduces a primitive prediction method and
+compare the predictions done by this recommender, with the results from their
+more sophisticated recommender, which serendipity is to be calculated for.
+Unexpectedness is then the deviation from the result obtained by the primitive
+predictions method.
 
 Unexpectedness is calculated in as shown in the equation below.
 
@@ -575,22 +590,11 @@ Unexpectedness is calculated in as shown in the equation below.
     \label{equation:novelty}
 \end{equation}
 
-In equation~\ref{equation:novelty} $Pr(s_i)$ is the prediction made by the sophisticated method of item $s_i$ in a ranked list, and $Prim(s_i)$ is the same for the primitive.
-$isrel(s_i)$ is binary and indicated whether or not the item is of interest for the user, and $count(i)$ is used to give more weight to correct items higher in the list.
-
-The figure below presents the distribution of potentially interesting items for a user in the long tail graph.
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[scale=0.4]{image/longtailNoveltyFig.png}
-    \caption{Long tail with the item similarity between items~\cite{celma2008}}
-    \label{figure:longtailNovelty}
-\end{figure}
-
-This figure shows the similarity between items as a long tail graph. The gray
-columns represents the user profile, the violet represents items which might be
-of interest to the user, and the height is the relevance. Adapted
-from~\cite{celma2008}
+In equation~\ref{equation:novelty} $Pr(s_i)$ is the prediction made by the
+sophisticated method of item $s_i$ in a ranked list, and $Prim(s_i)$ is the
+same for the primitive.  $isrel(s_i)$ is binary and indicated whether or not
+the item is of interest for the user, and $count(i)$ is used to give more
+weight to correct items higher in the list.
 
 \textit{Diversity} is generally defined as the opposite of similarity. In some
 cases suggesting a set of similar items may not be as useful for the user,
@@ -613,82 +617,6 @@ yet show interest in.  This allows user-centric evaluation to make evaluations
 on information about the system, such as the perceived quality and novelty of
 the recommendation system.  When the user feedback has been gathered the data
 must be analyzed.
-
-\marginpar{move offline beyond accuracy to here maybe? }
-
-\subsubsection{Evaluation using Implicit Feedback}
-
-% TODO: We are repeating ourselves.
-Accuracy metrics such as RMSE and MAE are not especially well suited for
-implicit feedback datasets, as they require knowing which items are undesired
-by a user~\cite{Hu2008}.  One way to handle the issue with missing negative
-feedback is through conversion of the implicit feedback to explicit feedback,
-and thereby producing a sense of negative feedback.  One issue with this is
-what is considered as negative feedback in the sense of implicit feedback.  The
-reason for a user not to access an item is not necessarily grounded in dislike,
-but could simply be an overlook.  On the other hand, if the user accessed the
-item for a short time without buying it, the user might not like it.  These
-questions raises the need for a different approach when wanting to measure a
-recommender system using implicit feedback.
-
-% TODO: I think we can delete this section, or move it somewhere else or
-% _ensure_ we are not overlapping with any other sections (either above or in
-% the future of the thesis)
-
-Joachims et al.~\cite{Joachims07evaluatingthe} shows that clicks can be biased,
-and has to be interpreted relative to the order of presentation and relative to
-the other abstracts.  Two ways of measuring the system is through ranking and
-usage prediction described earlier.
-
-\paragraph{Rank Based}
-\label{par:Ranking_based}
-
-The rank based approach can be considered more suited to test recommendation
-systems using implicit feedback since a subset of the items are meant to be
-recommended to the user.  This subset is usually a ranked top K list of items
-where the items in this list is the items the system predicts will be most
-liked by the user.
-
-One issue with this approach is that the items in the predicted top K list has
-to be ranked in some way, the same goes for the list this list is to be
-compared to.  Thereby producing the requirement for a ranked list of preferred
-items from the user.  If there is such a ranked list, ranking accuracy will
-help to tell how well the system is suggesting items for the user, such
-as~\cite{Yilmaz:2008:NRC:1390334.1390435}.
-
-\marginpar{maybe hard to differentiate between the names}
-
-\paragraph{Accuracy Ranking}
-\label{par:usage_prediction}
-
-When there is lack of explicit user feedback, and a ranked list of the items
-cannot be produced, other ways of measuring the preference must be used.
-Ranking the predicted list and scoring this list based on the actual user
-preferences can for instance be utilized to evaluate the system.
-The actual user preferences are a list of binary preferences for the items.
-This list is often possible to construct from implicit feedback, but will seldom
-be able to capture the complete set of preferences of the users, since implicit
-feedback is in most cases positive only.
-Some approaches to handle measuring a recommender system with implicit feedback
-are: Li et al.~\cite{deLace2010} who used $MPR$ and $MAP$ to calculate their
-performance,  Pan et al.~\cite{Pan:2013:GGP:2540128.2540516} who used a set of
-top-k evaluation metrics: precision, recall, F1, nDCG, ROC and 1-call, Sindhwani
-et al.~\cite{Sindhwani:2010:OMC:1933307.1934641} who used $ROC$ curve and
-precision-recall curve to evaluate their experiments and Pan et al.~\cite{pan2008} who used $MAP$ and Half-life Utility.
-
-$nDCG$, $MAP$ and Half-life utility has a similar setup.  They all have a
-decaying factor, and rewards the system in different ways for how early in the ranked list a relevant recommended item is.
-
-On the other hand metrics as precision alone has no decaying factor, and will
-not penalize a system with uninteresting items suggested earlier in a ranked
-list.
-
-% \cite{Nati03weightedlow-rank} average squared difference
-% paragraph usage_prediction (end)
-
-%TODO - What evaluation measures are suited for implicit feedback, and why are
-%traditional evaluation measures such as RMSE, ... not as suitable when working
-%with implicit feedback?
 
 \subsubsection{Evaluation of Cold-start Recommendations}
 \label{sec:cold-start-eval}
@@ -842,7 +770,7 @@ capture in an offline setting. Thus, the experiment that provides the strongest
 evidence as to the true real value of the system is an online evaluation, where
 the system is used by real users to perform real tasks.
 
-\subsubsection{Online Evaluation Metrics}
+\subsubsection{Click through rate}
 
 Online studies in recommendations and advertisement usually measure the
 click-through-rate (CTR) of the recommendations, which aligns with financial
@@ -873,16 +801,10 @@ In the case with the SoBazaar application, on way of doing a A/B testing on the
 system is as follows: 3 groups of users are made, one with the unaltered
 system, one with method $A$ to produce recommendations and one with method $B$.
 
-\subparagraph{Group Split}
-\label{par:group_split}
-
 The groups of users can either be selected to fit the global distribution of
 users, or be a set of similar minded users.  The latter case might benefit a
 system where the intended goal is to specialize the system for a set of users,
 or actually partition the system into fitting a subsets of its' users.
-
-\subparagraph{Group Size}
-\label{par:group_size}
 
 The size of the groups depends on the amount of splits and intended stability
 of the system.  The group with the original system will be the biggest group to
@@ -891,9 +813,6 @@ established image, and a large set of faithful users, changes in the system
 might produce unwanted results.  The two groups with the altered versions of
 the system can be of the same size to make it simpler to measure the
 performance of the two system against one another.
-
-\subparagraph{System Measuring}
-\label{par:system_measuring}
 
 After a set period of time, the two altered versions are compared to one
 another and the original system.  This is done trough measuring either the
@@ -904,14 +823,13 @@ portions of the users from version $A$ showed an increased interest in the
 recommended items compared to the users from version $B$, that might indicate
 that version $A$ is a stronger system than system $B$
 
-\paragraph{Disadvantages}
+\paragraph{Disadvantages with A/B-testing}
 
 An issue with A/B testing is that when splitting the users into subgroups of
 users, these subgroups might not possess the same user properties as the
 complete set of groups had.  This might lead to a biased score for the group,
 which might not reflect the actual score of the system when releasing it on the
 full set of user groups.
-
 
 \subsubsection{Multi-armed bandit experiments}
 
