@@ -53,38 +53,37 @@ given a carefully selected penalization function controlling the score,
 designed to account for observed behaviours in the domain.
 
 % Second component: filterbots.
-% TODO: Thomas, finish this.
 Our second component consists of creating pseudo users or filterbots in an
-attempt to \textit{mitigate} the cold start problem(s). These pseudo users rate
-items algorithmically according the attributes of the items or by aggregating
-rating information. We tested out different filterbot combinations for all
-three cold-start scenarios and found ...  to be the best combination. Our
-filterbots ... outperformed/did not outperform non personalized approaches such
-as most-popular. With the improvements being the most evident on...
+attempt to \textit{mitigate} the cold start problem. These pseudo users rate
+items algorithmically according the item-attributes or by aggregating rating
+information. A few such examples includes a \textit{PopularityBot} that rate
+items based on their popularity, \textit{BrandBots} that gives all items of a
+brand a maximum rating and so on. We tested out different filterbot combinations
+for all three cold-start scenarios, disappointingly we did not find the filterbots
+to improve the cold start performance of the system. 
 
 % Third component: recommendation.
-% TODO: Thomas, finish this.
-We tested out a wide array of different recommender systems on our dataset
-including simple non-personalized recommenders, collaborative filtering methods
-and latent factor models.
-
-By evaluating the different recommender systems on the dataset we got a general
-overview of which candidate models ... 
+Our third component is the system that takes ratings as input and outputs recommendations.
+We tested a wide array of different recommender systems on our dataset such as simple 
+non-personalized approaches, one-class collaborative filtering methods and more sophisticated
+latent factor models. The non-personalized and one-class collaborative filtering methods
+was used as a baseline for our implicit rating experiments. We found ALS-WR, a latent
+factor method for implicit feedback, to be a good fit for our implicit ratings.
 
 % Fourth component: evaluation.
-% TODO: Thomas/Martin, see above :)
+Our fourth component we came up with an set of evaluation metrics to measure the
+overall quality of the recommender systems. Evaluating recommender systems using implicit
+feedback differs from traditional recommender system evaluation, simply using RMSE was not
+enough. We determined that a combination of accuracy and rank-accuracy metrics was the best
+fit for our top-20 recommendation task. AUC measures the overall quality of the recommender
+system while $MAP@20$ and our own unique event specific measurements measure the systems
+ability to rank the top 20 recommendations.
 
-% Our evaluation metrics
-Evaluating recommender systems using implicit feedback differs from traditional
-recommender system evaluation, simply using RMSE was not enough.  We determined
-that a combination of accuracy and rank-accuracy metrics was the best way to
-evaluate the quality of the final system. AUC was used to measure the overall
-quality of the recommender system. AUC was complemented by $MAP@20$ in addition
-to our own unique event specific measurements to measure the systems ability
-the rank the events.
 
 % How the proposed system performs
-The proposed sysem performed ...
+The proposed system outperformed all other methods tested for all metrics. 
+
+
 
 % Concluding thoughts
 Better results with larger dataset
