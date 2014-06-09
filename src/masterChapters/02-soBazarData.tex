@@ -312,24 +312,23 @@ users, below.
         \centering
         \includegraphics[width=\dualGraphWidth]{image/user_idcumdistribution.png}
         \caption{Cumulative distribution of events on users}
-        \label{figure:userEventCumDist}
+        \label{fig:userEventCumDist}
     \end{subfigure}
-    \caption{Graphs presenting the distribution of events per user}
+    \caption{Distribution of events per user}
 \end{figure}
 
 We can see that this figure confirms our title. In
-Figure~\ref{figure:userEventDist} we see that the majority of users have been
-observed doing less than 10 events. In Figure~\ref{fig:userEventCumDist} this
-is confirmed by looking at the cumalative graph, as we see that 78\% of the
-users have 50 events or less, with an average of 5 events per user. Note that
-we here look at \textit{all event types}, not only those where the user
-interact with items. As we, in our proposed system, do not use non-item events
-for neither recommending nor generating implicit ratings, we now look at the
-event distribution when only the three item events
-\textit{product\_detail\_clicked}, \textit{product\_wanted} and
-\textit{product\_purchase\_intended} are issued. We do include the distribution
-above however, to show how sparse the data is -- both in terms of product
-interaction, but also application interaction.
+Figure~\ref{figure:userEventDist} the majority of users have been observed
+doing less than 10 events, and Figure~\ref{fig:userEventCumDist} confirms this
+by presenting the cumalative graph where, 78\% of the users have 50 events or
+less, with an average of 5 events per user. Note that we here look at
+\textit{all event types}, not only those where the user interact with items. As
+we, in our proposed system, do not use non-item events for neither recommending
+nor generating implicit ratings, we now look at the event distribution when
+only the three item events \textit{product\_detail\_clicked},
+\textit{product\_wanted} and \textit{product\_purchase\_intended} are issued.
+We do include the distribution above however, to show how sparse the data is --
+both in terms of product interaction, but also application interaction.
 
 \begin{figure}[H]
     \centering
@@ -337,48 +336,63 @@ interaction, but also application interaction.
         \includegraphics[width=\dualGraphWidth]{image/ratingsPerUserdistribution.png}
         \centering
         \caption{Count of item interactions for users}
-\label{figure:ratingsPerUser}
+        \label{fig:ratingsPerUser}
     \end{subfigure}%
     \begin{subfigure}{.5\textwidth}
         \includegraphics[width=\dualGraphWidth]{image/ratingsPerUsercumdistribution.png}
         \centering
         \caption{Cumulative count of item interactions for users}
-\label{figure:ratingsPerUserCum}
+        \label{fig:ratingsPerUserCum}
     \end{subfigure}
-    \caption{Figures presenting the number of product interactions for the users in the data}
+    \caption{Number of product interactions per user}
 \end{figure}
 
-In the figures above the rightmost bar present 0 product interactions.  The
-graphs are limited to only showing interaction amounts up till 60 to give focus
-to the numbers where more than 90\% of the users resides.
+In the figures above we see the number of product interactions per user, where
+the following key charecterstics are apparent:
 
-As seen from figure~\ref{figure:ratingsPerUserCum}, over 20\% of the users have
-never interacted with an item, and about 10\% of the users have more than 50
-item interactions.
+\begin{itemize}
+  \item Over 20\% of all users have never interacted with an item (leftmost bar
+  in Figure~\ref{fig:ratingsPerUserCum})
+  \item 90\% of all users has 60 or fewer item interactions, this is set as
+  cut-off point in both figures.
+  \item 70\% percent of the users has 12 or fewer item interactions.
+  \item The average number of item-interactions per user is, per
+  Table~\ref{table:datasetSummary},
+  $17.53$.
+\end{itemize}
 
-Even though the data is sparse, as seen from the previous figures, the fact
-that the majority of the users have in some way interacted with at least one
-item, opens for the possibility of connecting users based on their item
-interactions.
+Consequently, although the data extremely sparse the fact that the majority of
+the users have in \textit{some way} interacted with at least one item, opens
+for the possibility of connecting users based on their item interactions and
+making rudimentary recommendations.
 
-Now that we have looked at the distribution of events both as a whole, and as a
-reduced view, we might benefit from looking at how often the users use the
-application. The figure below shows the number of sessions for the users.
+Up until now, we have seen how the users have interacted with both the
+application and products, however we gain a better understanding of the domain
+by also studying user patterns such as how often the application is used and
+the lifespan of user-accounts.
 
-    \begin{figure}[H]
-        \includegraphics[width=5in]{image/sessiondistribution.png}
-        \centering
-        \caption{Distribution of sessions for users}
+\begin{figure}[H]
+    \includegraphics[width=5in]{image/sessiondistribution.png}
+    \centering
+    \caption{Distribution of sessions for users}
     \label{figure:sessCountDist}
-    \end{figure}
-        The figure above shows the count of sessions for the users of the SoBazaar application, with the users with more than 30 sessions removed.
+\end{figure}
 
-        More than 90\% of the users of SoBazaar have a session count of 20 and less.
-        This means that they have not logged on to the applications more than 20 separate times, over the time the data was collected, and strengthens the hypothesis that the data from SoBazaar is sparse.
+The figure above shows the count of sessions for the users of the SoBazaar
+application, with the users with more than 30 sessions removed.
 
-        In figure~\ref{figure:sessCountDist} the 4 first bars sums up to 1000, which is the amount of users who has had 4 or less sessions on the application in total. In other words -- half of the users used the application less than 4 times.
+More than 90\% of the users of SoBazaar have a session count of 20 and less.
+This means that they have not logged on to the applications more than 20
+separate times, over the time the data was collected, and strengthens the
+hypothesis that the data from SoBazaar is sparse.
 
-        After having looked at the usage distribution of the users , we move over to the user account lifetime, to see actually how long a user is active on the application in terms of time from first to last recorded event for the user.
+In figure~\ref{figure:sessCountDist} the 4 first bars sums up to 1000, which is
+the amount of users who has had 4 or less sessions on the application in total.
+In other words -- half of the users used the application less than 4 times.
+
+After having looked at the usage distribution of the users , we move over to
+the user account lifetime, to see actually how long a user is active on the
+application in terms of time from first to last recorded event for the user.
 
     \begin{figure}[H]
         \includegraphics[width=5in]{image/userTimespansdistribution.png}
