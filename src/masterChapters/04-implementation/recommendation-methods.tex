@@ -408,7 +408,7 @@ We have currently implemented the following bots: A \emph{BrandBot} which rates 
 multiple \emph{SingleBrandBots} which gives all items of a given brand a top rating,
 an \emph{AverageBot} which rates an item based on their average rating given to it, a \emph{CriticBot} which selects $n$ critics
 among the most active users and rate items based on their average rating, a \emph{PopularityBot} which rates
-an item based on its popularity, each rating r(c,s) = $log_{3}C_{s}$, where $C_{s}}$ is the number of users which have rated the item and 3 is a normalization constant that caps the ratings at 4.5, as the most popular item have been rated 147 times. More ratings equals a higher rating. Compared to the work presented by Park et. al. we
+an item based on its popularity, each rating $r(c,s) = log_{3}C_{s}$, where $C_{s}$ is the number of users which have rated the item and 3 is a normalization constant that caps the ratings at 4.5, as the most popular item have been rated 147 times. More ratings equals a higher rating. Compared to the work presented by Park et. al. we
 felt that the lack of high quality features was a limiting factor when designing the filterbots, as there is only
 so much information in the rating matrix.
 
