@@ -473,33 +473,37 @@ detail on \textit{storefronts} and their effect on the dataset.
   \caption{Figures presenting the distribution of price for the items i SoBazaar}
 \end{figure}
 
-        Here we see how the products are distributed in regards to their price.
-        134 of the products have a price over 2 500 NOK and have been left out of this graph.
+From the above figures we note that the majority of items (82\%) have a price
+lower than 1 000 NOK. There is a definite peak around 200-300 NOK, which
+correlates with the median price for items being 299 NOK.  Still, the
+variations seen in Figure~\ref{figure:pricePerProduct} are big and this is a
+good thing as it can help us differentiate on users based on their price
+preferences.
 
-        The price range of the application varies a lot, but 82\% of the items have a price lower than 1 000 NOK.
+Can we, however, make the same differantiation based on popularity? We have
+seen that each item in average has $6.21$ interactions
+(Table~\ref{fig:dataSummary}, but as seen below these are not evenly
+distributed among the products.
 
-        Next figures up are two ways of presenting the distribution of events on the items in the dataset.
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=\dualGraphWidth]{image/product_idcumdistribution.png}
+  \label{figure:eventsPerproductCum}
+  \caption{Cumulative count of events on products}
+\end{figure}
 
-    \begin{figure}[H]
-        \centering
-        \begin{subfigure}{.5\textwidth}
-            \includegraphics[width=\dualGraphWidth]{image/product_iddistribution.png}
-            \centering
-            \caption{Count of events on products}
-    \label{figure:eventsPerproduct}
-        \end{subfigure}%
-        \begin{subfigure}{.5\textwidth}
-            \includegraphics[width=\dualGraphWidth]{image/product_idcumdistribution.png}
-            \centering
-            \caption{Cumulative count of events on products}
-    \label{figure:eventsPerproductCum}
-        \end{subfigure}
-        \caption{Figures presenting the distribution of events for the products i SoBazaar}
-    \end{figure}
-        80\% of the products only have an interaction count of 10 or less, where interaction count is \emph{product\_detail\_clicked}, \emph{product\_wanted} and \emph{product\_purchase\_intended}.
-        This means that there will not be more than 10 events for the majority of the items, with no more than 10 datapoints to connect with other items for the majority of the items, recommendations done through connecting items to other items through item interaction, might prove problematic.
+80\% of the products only have an interaction count of 10 or less, where
+interaction count is \emph{product\_detail\_clicked}, \emph{product\_wanted}
+and \emph{product\_purchase\_intended}.  This means that there will not be more
+than 10 events for the majority of the items, with no more than 10 datapoints
+to connect with other items for the majority of the items, recommendations done
+through connecting items to other items through item interaction, might prove
+problematic.
 
-        When the majority of the events only has 10 events and there are over 6 000 items and 2 000 users, the probability that multiple users have interacted with similar items will be marginal, but promotes the importance of utilizing all the feedback to bolster the recommender.
+When the majority of the events only has 10 events and there are over 6 000
+items and 2 000 users, the probability that multiple users have interacted with
+similar items will be marginal, but promotes the importance of utilizing all
+the feedback to bolster the recommender.
 
 \subsubsection{The Pareto principle and Long tail on sales}
     In e-commerce the distribution of sales or product interactions can often be described by the Pareto principle and the phenomenon of long tail.
