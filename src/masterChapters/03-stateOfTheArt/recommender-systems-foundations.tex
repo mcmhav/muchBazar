@@ -145,8 +145,6 @@ algorithms \cite{Su2009}.
 \end{figure}
 
 \subsubsection{Memory-based Methods}
-\marginpar{Change to Neighborhood models?}
-\marginpar{Make clearer distinction between user-based and item-based}
 
 Memory-based Collaborative Filtering methods utilize the entire user-item
 database to generate predictions~\cite{Lin1994}. More formally, the value of an unknown
@@ -229,9 +227,9 @@ Items usually do not change as much as users, so this can often be computed offl
 Linden et al \cite{Linden2003} showed that item-based neighborhood methods also provide
 another advantage over other methods, such as e.g. user-based neighborhood models:
 in many industrial systems, most of the recommendation is made by the contextual
-recommendation to anonymous users, as on the Amazon's website \marginpar{Add footnote}. This
-recommendation is called item-to-item recommendation, and generally includes the archetype
-associated message "people who have seen / bought this item also viewed / purchased these items.
+recommendation to anonymous users, as on the Amazon's website. This
+recommendation is called item-to-item recommendation, and is generally associated
+with the message "people who have seen / bought this item also viewed / purchased these items.
 This recommendation is directly based on an item-item similarity matrix on click or
 purchase logs.
 
