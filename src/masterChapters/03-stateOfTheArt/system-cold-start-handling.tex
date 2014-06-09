@@ -2,8 +2,6 @@
 \section{The Cold-start Problem}
 \label{sec:sota-cold-start}
 
-\marginpar{What can improve this section? Cold-start solution classification? ...}
-
 In the literature, the term cold is used about an object in a system, or a
 whole system, which is new \cite{Schein2002, Park2006}. Cold-start scenarios in recommender systems are
 situations in which little/no prior events, like ratings or clicks, are known
@@ -50,12 +48,11 @@ amount of users. New items will therefore not be recommendable before multiple
 users somehow stumble upon the new item while e.g. browsing the item
 collection, unless additional measures are taken to solve this problem. To
 \emph{solve} the new-item problem, there are two commonly used (simple)
-solutions often used in E-commerce websites:\marginpar{heri-notes: cite}
+solutions often used in E-commerce websites:
 
 \begin{itemize}
-
 \item Advertising at the front-page of the website, putting the new items in an
-eye catching position. This solution, however, may this result in that some
+eye catching position. This solution, however, this may result in that some
 users, which don't like these new items, might leave the website.
 \item Requesting the user to choose one or more of his/hers categories while
 registering for the site, and recommend items from the selected categories.
@@ -78,8 +75,6 @@ systems, the lack of ratings given by the target user, means that the target use
 since the users content profile is constructed using content-information from his/hers rated items. In both cases,
 recommendation quality is most likely bound to suffer.\newline
 
-\marginpar{heri-notes: hvordan kan dette problemet være relevant for oppgaven deres?}
-
 This section will present a few different solutions to the cold-start problem, focusing mainly on \emph{complete} solutions to the cold-start problem.
 
 \subsection{Trust Aware Recommender Systems}
@@ -96,19 +91,18 @@ the trust network, newcomers can immediately gain access to a wide range of conn
 %researchers turn to incorporate the social relationships (e.g. trust) of users
 %to help complement users’ preference in addition to item ratings, in order to overcome the limitations of existing recommender systems
 
-\emph{Make fashion example smoother...}
-
 For example, when looking for movie recommendations we often turn to our friends which we share a similar
 taste in movies with. Trust can be defined as: "believe in the reliability, truth, or ability of", and in
 the context of recommender systems a trusted user would be a user you trust to provide you with good recommendations.
 E.g. in the case of the Epinions dataset \cite{Epinions}, users can explicitly state whether they trust or distrust a
 user [1, -1], i.e. reviewers whose reviews and ratings they have consistently found to be valuable or reviewers which
 they find consistently offensive, inaccurate or not valuable.
-Imagine a fashion website where you can follow users which e.g. are your friends, users you like you like or simply
-find inspirational, much like Instagram \footnote{www.instagram.com}. By following a user you directly express a
+
+Imagine a fashion website where you can follow users which e.g. are your friends, users you like or user which you find
+inspirational, much like Instagram \footnote{www.instagram.com}, where you can follow other users feeds. By following a user you directly express a
 certain amount of trust in that user, saying that you are interested in the content of that profile. This
 trust information could then be used to recommend you content which the users you have chosen to follow like
-or have strong preferences for. In recommender systems trust relationships of users are often employed in order to correlate
+or have strong preferences for. In recommender systems such trust relationships of users are often employed in order to correlate
 more potential raters for the active users who require recommendations \cite{Massa2004, Massa2007}. Massa et. al. \cite{Massa2004}
 also show that some of the weaknesses of recommender systems such as data sparseness and their susceptibility to shilling attacks
 could be alleviated by incorporating trust.
@@ -665,7 +659,6 @@ recommendations.
 
 \subsubsection{Hybrid recommenders}
 
-%TODO - Summarize results
 Latent factor models are currently the main paradigm within the recommender
 system field and are currently considered the state-of-the-art recommendation
 methods. The all the hybrid methods achieved state-of-the-art performance as well as
