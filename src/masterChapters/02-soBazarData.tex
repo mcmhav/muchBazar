@@ -4,83 +4,120 @@
 \label{chap:thesobazaardata}
 \minitoc
 
-    This sections will introduce the SoBazaar application and present and explore the data set used.
-    This includes how the data was preprocessed, an overview of the dataset, statistics and graphs, findings from the data and finally a summary.
-
-    The motivation for doing this is to lay ground for the assumptions made throughout this thesis, and help to more effortlessly present the reasoning behind the choices made, in regards to the fashion domain, the usage of implicit feedback and the recommender systems used.
+This chapter will in greater detail explore the SoBazaar application and
+explore the current state of the dataset used in this thesis. Further,
+interesting discoveries are presented, which all has an impact on \textit{how}
+we go forth and build a recommender engine for a fashion application. In order
+to best understand the domain in question, and answer research goal \textbf{G1}
+and \textbf{G2}, this chapter serves an important role for future chapters.
+Many identified properties of the dataset explored in this chapter will give
+reason to the majority of choices made throughout the thesis.
 
 \clearpage
-	\section{The SoBazaar Application}\mbox{}\\
-  \label{sec:sobazaar-data}
+\section{The SoBazaar Application}\mbox{}\\
+\label{sec:sobazaar-data}
 
-	\begin{chapquote}[30pt]{About SoBazaar}
-	  "SOBAZAAR is a newly developed social shopping experience --- a daily fashion bazaar on your mobile."
-	\end{chapquote}
 
-	SoBazaar is an online marketplace for fashion, but with a social twist. You can find stores like Moods of Norway, BIK BOK, Bianco and many more, which all have their own storefront in the application. The application lets you browse through thousands of products. If you find something you like you can purchase it directly from the application or store it for later with the \emph{heart it} function. The following screenshots are taken from the application and highlights some functionality currently found in the application. On the far left you see a newsfeed item from the \emph{homepage} or newsfeed. The newsfeed currently shows what other users have liked, notifies the user about sales and new products and recommends the most popular products.
+\begin{chapquote}[30pt]{About SoBazaar}
+  "SOBAZAAR is a newly developed social shopping experience --- a daily fashion bazaar on your mobile."
+\end{chapquote}
 
-	\begin{figure}[H]
-		\centering
-		\begin{minipage}{.30\linewidth}
-	  		\includegraphics[height=1.5\linewidth]{image/SoBazaarfeed.png}
-		\end{minipage}
-		\hspace{.02\linewidth}
-		\begin{minipage}{.3\linewidth}
-				  \includegraphics[height=1.5\linewidth]{image/SoBazaarsale.png}
-		\end{minipage}
-		\hspace{.02\linewidth}
-		\begin{minipage}{.30\linewidth}
-				\includegraphics[height=1.5\linewidth]{image/SoBazaarmostpop.png}
-		\end{minipage}
-		\caption[SoBazaar newsfeed screenshots - version 0.5.1]{Screenshots from the SoBazaar Application. From the left to right: a social feed item, a sale feed item and most popular recommendations}
-		\label{figure:SoBazaarfeed}
-	\end{figure}
+SoBazaar is an online marketplace for fashion, but with a social twist. You can
+find stores like Moods of Norway, BIK BOK, Bianco and many more, which all have
+their own \textit{storefront} in the application. The application lets you
+browse through thousands of products, presenting them in a \textit{newsfeed},
+which in todays state yields global recommendations to all users based on the
+opinions of professional fashion experts. If you find something you like you
+can purchase it directly from the application or store it for later with the
+\emph{heart it} function, which in this thesis is refered by its backend name
+\textit{product wanted}. The following screenshots highlights some
+functionality currently found in the application. In the leftmost screenshot a
+set of items are presented in the newsfeed, together with the name of a user
+(not necessarily connected to the logged in user) who has liked these items.
+The two remaining screenshots, also taken from the newsfeed, shows how brands
+are able to notify users on sales and new products, in addition to showing the
+most popular products at the moment.
 
-	The application brand screen shows on overview of the brands and storefront currently included in the application. The brand screen also features an editors pick page among other things. If you find a brand or store you like you can choose to enter their store and view their products.
+\begin{figure}[H]
+  \centering
+  \begin{minipage}{.30\linewidth}
+      \includegraphics[height=1.5\linewidth]{image/SoBazaarfeed.png}
+  \end{minipage}
+  \hspace{.02\linewidth}
+  \begin{minipage}{.3\linewidth}
+        \includegraphics[height=1.5\linewidth]{image/SoBazaarsale.png}
+  \end{minipage}
+  \hspace{.02\linewidth}
+  \begin{minipage}{.30\linewidth}
+      \includegraphics[height=1.5\linewidth]{image/SoBazaarmostpop.png}
+  \end{minipage}
+  \caption[SoBazaar newsfeed screenshots - version 0.5.1]{Screenshots from the
+  SoBazaar newsfeed.}
+  \label{figure:SoBazaarfeed}
+\end{figure}
 
-	\begin{figure}[H]
-		\centering
-		\begin{minipage}{.30\linewidth}
-		\includegraphics[height=1.5\linewidth]{image/SoBazaarbrands2.png}
-		\end{minipage}
-		\hspace{.02\linewidth}
-		\begin{minipage}{.3\linewidth}
-		  \includegraphics[height=1.5\linewidth]{image/SoBazaareditor.png}
-		\end{minipage}
-		\hspace{.02\linewidth}
-		\begin{minipage}{.3\linewidth}
-			  \includegraphics[height=1.5\linewidth]{image/SoBazaarStore.png}
-		\end{minipage}
-		\caption[SoBazaar storefront screenshots - version 0.5.1]{Screenshots from the SoBazaar Application. From the left to right: the brand browser, editors picks and the H\&M storefront}
-		\label{figure:SoBazaarfeed}
-	\end{figure}
+Users are also able to browse \textit{by brand} or storefront, as shown in the
+leftmost screenshot below. A storefront is different from a brand-store by
+combining products from a variety of brands into categorical sales or
+\textit{packages} such as \textit{«summer sale»}. One of these storefronts are
+coined \textit{Editor's picks}, which as we have mentioned, are curated by
+professionals. If a brand or storefront is clicked one is taken to a custom
+listing, presenting all products available together with their price and
+optional status such as \textit{Hot} or \textit{New}.
 
-	From the product screen you can choose to buy items, by being redirected to the stores online webshop. The product screen currently features a \emph{People who like this also love} widget, and also shows other products from the same store. The application also features your own personal page for your saved or \emph{loved} items. In additional the application
-	also supports simple search queries.
+\begin{figure}[H]
+  \centering
+  \begin{minipage}{.30\linewidth}
+  \includegraphics[height=1.5\linewidth]{image/SoBazaarbrands2.png}
+  \end{minipage}
+  \hspace{.02\linewidth}
+  \begin{minipage}{.3\linewidth}
+    \includegraphics[height=1.5\linewidth]{image/SoBazaareditor.png}
+  \end{minipage}
+  \hspace{.02\linewidth}
+  \begin{minipage}{.3\linewidth}
+      \includegraphics[height=1.5\linewidth]{image/SoBazaarStore.png}
+  \end{minipage}
+  \caption[SoBazaar storefront screenshots - version 0.5.1]{Screenshots from the SoBazaar Application. From the left to right: the brand browser, editors picks and the H\&M storefront}
+  \label{figure:SoBazaarfeed}
+\end{figure}
 
-	\begin{figure}[H]
-			\centering
-			\begin{minipage}{.30\linewidth}
-						\includegraphics[height=1.5\linewidth]{image/SoBazaarproduct.png}
-			\end{minipage}
-			\hspace{.02\linewidth}
-			\begin{minipage}{.3\linewidth}
-			  \includegraphics[height=1.5\linewidth]{image/SoBazaarlovelist.png}
-			\end{minipage}
-			\hspace{.02\linewidth}
-			\begin{minipage}{.3\linewidth}
-				  \includegraphics[height=1.5\linewidth]{image/SoBazaarsearch.png}
-			\end{minipage}
-			\caption[SoBazaar functionality screenshots - version 0.5.1]{Screenshots from the SoBazaar Application. From the left to right: product detail screen, the sobazar loved items list and the search screen}
-			\label{figure:SoBazaarfeed}
-	\end{figure}
+From the product screen you can choose to buy items, by being redirected to the
+stores online webshop. The product screen currently features a \emph{«People
+who like this also love»} section, in addition to show other products from the
+same store. The application also features a personal page for earlier saved or
+\emph{wanted} items. Finally, the application supports simple search queries
+on product descriptions, titles and brand names. As can be seen from the
+rightmost image it is also possible to filter the results by status, brand or
+category (type of attire).
 
-	The application is currently in a beta phase and is planned for a final release after the summer.
+\begin{figure}[H]
+    \centering
+    \begin{minipage}{.30\linewidth}
+          \includegraphics[height=1.5\linewidth]{image/SoBazaarproduct.png}
+    \end{minipage}
+    \hspace{.02\linewidth}
+    \begin{minipage}{.3\linewidth}
+      \includegraphics[height=1.5\linewidth]{image/SoBazaarlovelist.png}
+    \end{minipage}
+    \hspace{.02\linewidth}
+    \begin{minipage}{.3\linewidth}
+        \includegraphics[height=1.5\linewidth]{image/SoBazaarsearch.png}
+    \end{minipage}
+    \caption{Screenshots showing product details, love list and search
+    functionality}
+    \label{figure:SoBazaarfeed}
+\end{figure}
 
 \section{Preprocessing}
-    \label{sec:preprocessing}
-    In data mining, preprocessing is an important part, which creates the foundation for the data analysation and for further down the pipeline.
-    The saying \emph{garbage in, garbage out}~\cite{GIGO} especially applies here, where the input data can make or break the results since all the raw values are seldom complete in regards to information and sense, and some will not make sense to consider. %, such as: \emph{gender:male}, \emph{pregnant:true}.
+\label{sec:preprocessing}
+
+In data mining, preprocessing is an important part, which creates the
+foundation for the data analysation and for further down the pipeline.  The
+saying \emph{garbage in, garbage out}~\cite{GIGO} especially applies here,
+where the input data can make or break the results since all the raw values are
+seldom complete in regards to information and sense, and some will not make
+sense to consider. %, such as: \emph{gender:male}, \emph{pregnant:true}.
 
     The data from SoBazaar has been been anonymised for privacy reasons.
     In addition to anonymization the data was cleaned by removing events containing test environment flags and applications run from simulator.
@@ -662,11 +699,6 @@ specific TV-show~\cite{study-on-implicit-tv}. We want to validate this
 hypothesis in the SoBazaar data, determining if the \textit{number of clicks}
 on an item implies higher preference, that is an higher probability of buying
 the item.
-
-\marginpar{Herman: Implicit Feedback Recommendation via Implicit-to-Explicit
-Ordinal Logistic Regression Mapping
- Check out related work for similar articles}
-
 
 If the hypothesis holds true, we can use this fact in order improve
 classification of our models in future sections. In addition we can customize

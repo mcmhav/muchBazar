@@ -240,7 +240,7 @@ patterns.
 
 % No external sources of information (or weak quality)
 In addition, as seen in the overview, external sources of information such as
-social networks and trust-based networks are not considered --- as the dataset
+social networks and trust-based networks are not considered – as the dataset
 provided did not warrant this. As the products in the SoBazaar application are
 aggregated from multiple sources, and hence product databases, the quality of
 information are notably diverse. Consequently, since extracting basic content
@@ -250,6 +250,12 @@ systems (combining content and user-based recommendations), although some work
 is done in this area.
 
 \section{Application Overview}
+
+This thesis proposes a system for making recommendations based on implicit
+two sources: implicit feedback and product properties. The output of this
+system is a set of recommendations for all users in the system. Finally, this
+output is used for calculating various evaluation metrics, with the aim of
+differentiating between different parameters and methods in all earlier stages.
 
 \begin{figure}[H]
   \centering
@@ -306,75 +312,113 @@ is done in this area.
   components in the proposed system}
 \end{figure}
 
-\section{System Overview}
+As can be seen from the figure, the proposed system is a pipeline of
+interconnected processes. First a convertion from implicit feedback to ratings
+is made, a process which we first detail existing work in
+Section~\ref{sec:implicit} and later in
+Section~\ref{sec:implementation-implicit} study especially tailored methods
+taking into account sparsity and the domain in question.
 
-\marginpar{Include filterbots in a more detailed system overview?}
+In the next stage of the pipeline, we combine product features extracted from a
+product database together with the generated implicit ratings in order to do
+\textit{cold-start boosting}, which by simulating stereotypical users based on
+probabilities we are able to remove some sparsity. This process is further
+explained in Section~\ref{sec:sota-cold-start} and
+Section~\ref{implementation-filterbots}.
 
-This thesis proposes a system for making recommendations based on implicit
-data, where the input is implicit feedback collected on a set of users and
-items and the output is personalized recommendations to all users, proposing
-new and relevant products to their preferences.
+The third stage uses these ratings in a variety of different approaches for
+doing recommendations. Some are based on traditional and simple approaches such
+as looking at populatities and averages, while others use modern
+matrix-factorization techniques and alternative methods as further described in
+a background study in Section~\ref{sec:recsys} and in
+Section~\ref{sec:rec-models} where we discuss the algorithms in light of our
+proposed system.
 
-\begin{figure}[H]
-  \centering
-  \begin{tikzpicture}
-    [node distance = 1cm, auto,font=\footnotesize,
-    % STYLES
-    every node/.style={node distance=1.5cm},
-    % The comment style is used to describe the characteristics of each process
-    comment/.style={rectangle, inner sep= 5pt, text width=4cm, node distance=0.25cm, font=\scriptsize\sffamily},
-    % The nonProcess style
-    nonProcess/.style={rectangle, draw, inner sep=5pt, text width=4cm, text badly centered, minimum height=1.2cm, font=\footnotesize\sffamily},
-    % The process style is used to draw the processs' name
-    process/.style={rectangle, draw, fill=black!10, inner sep=5pt, text width=4cm, text badly centered, minimum height=1.2cm, font=\bfseries\footnotesize\sffamily}]
+In the final stage the recommendations are evaluated with respect to the
+relevant metrics for both domain and application. We attempt to evaluate all
+three earlier stages and look at how adjusting parameters in either of them may
+adjust the end-result. First a background study identifying common metrics are
+carried out in Section~\ref{sec:evaluation}, whilst a closer look at used
+metrics together with an experimental plan is found in
+Section~\ref{sec:experimental-plan}. Our final results can be found in
+Section~\ref{sec:results}.
 
-    % Draw processs
-    \node [nonProcess] (inputData) {Input data based on implicit feedback (events)};
-    \node [process, below of=inputData] (implicitConverter) {Convert implicit feedback to implicit ratings};
-    \node [nonProcess, below of=implicitConverter] (ratings) {Ratings};
-    \node [process, below of=ratings] (recommendations) {Recommending};
+Traditionally in most recommender systems, the process of making
+recommendations does not include the first two stages of our system (converting
+implicit feedback and cold-start boosting, respectivly), as they instead use a
+set of explicitly provided ratings directly from the users. However, as we will
+see, making ourselves non-dependent on explicit ratings can both provide us
+with a good set of recommendations and take us one step closer to true
+artificial intelligence, as we require no extra effort from the users – and are
+instead learning preferences from their actual behavior.
 
-    \node [comment, right=0.25 of inputData] (comment-inputData) {
-      Implicit Feedback (clicks, purhcases etc.) collected from the SoBazaar
-      analytics logs. Detailed description in Section~\ref{sec:sobazaar-data}
-    };
-
-    \node [comment, right=0.25 of implicitConverter] (comment-implicitConverter) {
-      Converts the inputed implicit feedback to implicit ratings based on
-      different conversion schemes. Detailed description in
-      Section~\ref{sec:implementation-implicit}
-    };
-
-    \node [comment, right=0.25 of ratings] (comment-ratings) {
-      Set of rating triplets, on the form \textit{user, product, rating}.
-    };
-
-    \node [comment, right=0.25 of recommendations] (comment-recommendations) {
-      Makes recommendations based on the inputed ratings. Different
-      approaches to make the recommendations can be take, such as matrix
-      factorization or neighborhood based approaches. Detailed description in
-      Section~\ref{sec:making-recommendations}
-    };
-
-    % Draw the links between processs
-    \path[->,thick]
-      (inputData) edge (implicitConverter)
-      (implicitConverter) edge (ratings)
-      (ratings) edge (recommendations);
-
-  \end{tikzpicture}
-  \label{fig:system-overview}
-  \caption{Overview of the system. Boxes in white represents input and output
-  data. Boxes in gray represents processes}
-\end{figure}
-
-Traditionally in most recommender systems this process does not include the
-first two stages of our system, hence going directly from a set of explicitly
-provided ratings to a set of recommendations. However, as we will see, making
-ourselves non-dependent on explicit ratings can both provide us with a good
-set of recommendations and take us one step closer to true artificial
-intelligence, as we require no extra effort from the users --- rather learning
-preferences from their behavior.
+% \section{System Overview}
+%
+% This thesis proposes a system for making recommendations based on implicit
+% data, where the input is implicit feedback collected on a set of users and
+% items and the output is personalized recommendations to all users, proposing
+% new and relevant products to their preferences.
+%
+% \begin{figure}[H]
+%   \centering
+%   \begin{tikzpicture}
+%     [node distance = 1cm, auto,font=\footnotesize,
+%     % STYLES
+%     every node/.style={node distance=1.5cm},
+%     % The comment style is used to describe the characteristics of each process
+%     comment/.style={rectangle, inner sep= 5pt, text width=4cm, node distance=0.25cm, font=\scriptsize\sffamily},
+%     % The nonProcess style
+%     nonProcess/.style={rectangle, draw, inner sep=5pt, text width=4cm, text badly centered, minimum height=1.2cm, font=\footnotesize\sffamily},
+%     % The process style is used to draw the processs' name
+%     process/.style={rectangle, draw, fill=black!10, inner sep=5pt, text width=4cm, text badly centered, minimum height=1.2cm, font=\bfseries\footnotesize\sffamily}]
+%
+%     % Draw processs
+%     \node [nonProcess] (inputData) {Input data based on implicit feedback (events)};
+%     \node [process, below of=inputData] (implicitConverter) {Convert implicit feedback to implicit ratings};
+%     \node [nonProcess, below of=implicitConverter] (ratings) {Ratings};
+%     \node [process, below of=ratings] (recommendations) {Recommending};
+%
+%     \node [comment, right=0.25 of inputData] (comment-inputData) {
+%       Implicit Feedback (clicks, purhcases etc.) collected from the SoBazaar
+%       analytics logs. Detailed description in Section~\ref{sec:sobazaar-data}
+%     };
+%
+%     \node [comment, right=0.25 of implicitConverter] (comment-implicitConverter) {
+%       Converts the inputed implicit feedback to implicit ratings based on
+%       different conversion schemes. Detailed description in
+%       Section~\ref{sec:implementation-implicit}
+%     };
+%
+%     \node [comment, right=0.25 of ratings] (comment-ratings) {
+%       Set of rating triplets, on the form \textit{user, product, rating}.
+%     };
+%
+%     \node [comment, right=0.25 of recommendations] (comment-recommendations) {
+%       Makes recommendations based on the inputed ratings. Different
+%       approaches to make the recommendations can be take, such as matrix
+%       factorization or neighborhood based approaches. Detailed description in
+%       Section~\ref{sec:making-recommendations}
+%     };
+%
+%     % Draw the links between processs
+%     \path[->,thick]
+%       (inputData) edge (implicitConverter)
+%       (implicitConverter) edge (ratings)
+%       (ratings) edge (recommendations);
+%
+%   \end{tikzpicture}
+%   \label{fig:system-overview}
+%   \caption{Overview of the system. Boxes in white represents input and output
+%   data. Boxes in gray represents processes}
+% \end{figure}
+%
+% Traditionally in most recommender systems this process does not include the
+% first two stages of our system, hence going directly from a set of explicitly
+% provided ratings to a set of recommendations. However, as we will see, making
+% ourselves non-dependent on explicit ratings can both provide us with a good
+% set of recommendations and take us one step closer to true artificial
+% intelligence, as we require no extra effort from the users --- rather learning
+% preferences from their behavior.
 
 \section{Outline}
 \begin{table}[H]
