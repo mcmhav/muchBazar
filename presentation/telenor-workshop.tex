@@ -315,6 +315,46 @@
   \end{frame}
 
   \begin{frame}
+    \frametitle{Converting Implicit Feedback}
+    \framesubtitle{How do we convert features the features?}
+    \begin{itemize}
+      \item There is no \textit{silver bullet}. It depends on the feature.
+      \item First, we base our scores on probabilities for each event:
+    \end{itemize}
+    \begin{table}[H]
+      \centering
+      \begin{tabular}{llll}
+        \toprule
+          Event type & Probability & Min ($m_e$) & Max ($M_e$) \\
+        \midrule
+          \textit{product\_detail\_clicked}     & $\frac{21400}{35324} \approx 61$  & 0   & 61  \\[1.5ex]
+          \textit{product\_wanted}              & $\frac{12436}{35324} \approx 35$  & 61  & 96  \\[1.5ex]
+          \textit{prodcut\_purchase\_intended}  & $\frac{1488}{35324} \approx 4$    & 96  & 100 \\
+        \bottomrule
+      \end{tabular}
+    \end{table}
+    These will later be \textit{normalized} to a scale from 1 to 5.
+  \end{frame}
+
+  \begin{frame}
+    \frametitle{Converting implicit feedback}
+    \framesubtitle{Penalization functions for various features}
+    \begin{itemize}
+      \item \textit{Popularity}: All products are sorted by popularity.
+      Penalization is calculated by $x/N$ where $x$ is the rank of product in
+      question, and $N$ is number of products.
+      \item \textit{Price}: All prices are split into 100 buckets, going from
+      cheap to very expensive. Penalization is calculated by $x/B$ where $x$ is
+      bucket number of current item and $B$ is number of buckets.
+      \item \textit{Ordering}: All events for one user are ordered from most
+      recent to oldest. Linearly penalize event $x$ as $x/E$ where $E$ is
+      number of events for the user.
+      \item \textit{Days}: Penalization given by $x/\min({O,k})$ where $x$ is how many
+      days ago, $O$ is days since oldest event and $k$ is a constant (e.g. 200).
+    \end{itemize}
+  \end{frame}
+
+  \begin{frame}
     \frametitle{Converted Implicit Feedback}
     \framesubtitle{Distribution using blend of ordering and number of days since event, with logistic and linear penalization functions, overlayed with density function}
     \begin{figure}[H]
