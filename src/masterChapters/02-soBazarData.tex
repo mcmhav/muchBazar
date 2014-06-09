@@ -116,27 +116,42 @@ filter the results by status, brand and category (type of attire).
 \section{Preprocessing}
 \label{sec:preprocessing}
 
-In data mining, preprocessing is an important part, which creates the
-foundation for the data analysation and for further down the pipeline.  The
-saying \emph{garbage in, garbage out}~\cite{GIGO} especially applies here,
-where the input data can make or break the results since all the raw values are
-seldom complete in regards to information and sense, and some will not make
-sense to consider. %, such as: \emph{gender:male}, \emph{pregnant:true}.
+In data mining, preprocessing is an important procedure which lays the 
+foundation for further data analyzation. The saying \emph{garbage in, garbage
+out}~\cite{GIGO} especially applies here, as the quality of input data can make or
+break the final results. This is due to a variety of reasons, ranging from
+non-complete raw-values, events outside target groups or outliers having
+user-beahviours which makes learning stereotypical patterns impossible.
 
-    The data from SoBazaar has been been anonymised for privacy reasons.
-    In addition to anonymization the data was cleaned by removing events containing test environment flags and applications run from simulator.
-    What was left after the cleaning data was mainly events triggered by the users in production environment, and not created during applications testing.
+The following pre-processing steps were performed before continuing to analyze
+the dataset:
 
-    As part of the preprocessing, an extra field was added to the data, a session field.
-    This field was added to help understand how users use the application, and to be able to see usage patterns.
+\begin{itemize}
+  \item Anonymization of all personal information, including positional data.
+  \item Removal of all events made in test or staging environments.
+  \item Removal of suspicious users having activity levels multiples above
+  normal. The majority of these events were made in the early phase of the
+  application.
+\end{itemize}
+
+As part of the preprocessing, a unique \textit{session identfier} field was
+added to the data, indicating which events were done in the same timespan
+without closing the application. This, as we will see in later sections helps
+us understand multiple usage patterns.
 
 \section{Dataset Overview}
-    The data from SoBazaar is based on the actions of the users, stored in logs, which are saved whenever a user executes an action the system has the ability to log.
-    Actions done by the users are called events, such as accessing a store, scrolling a page or purchasing a product, all these events put together is the dataset used in this thesis.
 
-    When an event is triggered a set of information is stored regarding the event.
-    This data is used to make recommendations for the users trough converting the implicit feedback to implicit ratings as we will see in later chapters.
-    Some of the most relevant metadata to making recommendations are presented in the table below.
+The data from SoBazaar is based on the actions of the users, stored in logs,
+which are saved whenever a user executes an action the system has the ability
+to log.  Actions done by the users are called events, such as accessing a
+store, scrolling a page or purchasing a product, all these events put together
+is the dataset used in this thesis.
+
+When an event is triggered a set of information is stored regarding the event.
+This data is used to make recommendations for the users trough converting the
+implicit feedback to implicit ratings as we will see in later chapters.  Some
+of the most relevant metadata to making recommendations are presented in the
+table below.
 
     \begin{table}[H]
         \centering
