@@ -14,10 +14,8 @@ can be divided into three sub problems:
 \begin{itemize}
   \item \emph{Cold-start system}: a situation where we only have new users and
   little or no ratings for the items.
-
   \item \emph{Cold-start item}: the problem of recommending items that are new
   to the system, which have not received any ratings.
-
   \item \emph{Cold-start user}: the problem of giving accurate recommendations
   to a user who is new to a recommender system.
 \end{itemize}
@@ -362,15 +360,15 @@ Their strategies can be divided into five classes, which they evaluated based
 on user effort and accuracy:
 
 \begin{itemize}
-\item Random: strategies: Strategies that avoid bias in the presentation
+\item Random: strategies: strategies that avoid bias in the presentation
 	  of bias
-\item Popularity: Select among the top N items where the probability
+\item Popularity: select among the top N items where the probability
 	  that an item is selected is proportionate to the items popularity.
-\item Pure entropy: Present the items with the highest entropy that the
+\item Pure entropy: present the items with the highest entropy that the
 	  user has not seen
-\item Balanced strategies: A balanced approach combining both popularity
+\item Balanced strategies: a balanced approach combining both popularity
 	  data and entropy.
-\item Personalized: As soon as some information is known about a user,
+\item Personalized: as soon as some information is known about a user,
 	  present items specifically tailored to that user using e.g. item-item
 	  similarity
 \end{itemize}
@@ -385,9 +383,9 @@ article they introduced three new strategies, which again was evaluated based
 on user effort and accuracy:
 
 \begin{itemize}
-\item Entropy0: Entropy Considering Missing Values
-\item HELF: Harmonic mean of Entropy and Logarithm of Frequency
-\item IGCN: Information Gain through Clustered Neighbors
+\item Entropy0: entropy Considering Missing Values
+\item HELF: harmonic mean of Entropy and Logarithm of Frequency
+\item IGCN: information Gain through Clustered Neighbors
 \end{itemize}
 
 The authors point out that popularity based approaches are likely to worsen the
@@ -590,8 +588,8 @@ Our rational behind including these articles is that we envision a simple "hot
 or not" tinder like interface to be presented when new users log into the system.
 You can then ask the user to "rate" e.g. 10 items by quickly \emph{swiping} them
 left or right. However, requiring the user to rate rate a certain amount of items
-can also be \emph{dangerous}. One should therefore perform a user study or similar
-to see how users experience this feature. We also imagine that the tinder interface
+can also be \emph{dangerous}. However, \cite{SuitUp} found that many users
+enjoyed this feature.We also imagine that the tinder interface
 could be available as a feature in the application for users users who just want a
 fun way of browsing clothes on their mobile phone. If done right this can be
 a great feature for collecting large amounts of both positive and negative feedback
@@ -683,7 +681,6 @@ from the product database, which demographic information could e.g. be
 extracted from Facebook data. Another concern of ours is that our dataset is
 currently to small for latent factor methods, since most of these methods
 rely on binary data (e.g. purchases only) to provide recommendations.
-
 
 \subsubsection{Summary}
 

@@ -407,7 +407,10 @@ ones breaking ties in the score of the higher ones
 sort of model, which is then the input by the next technique
 \end{itemize}
 
-Most commonly hybrid systems are built by combining collaborative and
+Switching could e.g. be used to give non-personalized recommenders to anonymous users,
+while a personalized recommender system could be used to give recommendations to users
+known by the system, or simply use different recommendation methods depending how much
+is known about the user. Most commonly hybrid systems are built by combining collaborative and
 content-based methods in an attempt to mitigate the limitations the approaches
 suffer individually. Adomavicius and Tuzhilin \cite{Adomavicius2005} lists the
 following approaches to building hybrid recommender systems:
@@ -420,33 +423,26 @@ following approaches to building hybrid recommender systems:
 content-based and collaborative characteristics
 \end{itemize}
 
-\marginpar{heri-notes: Which approach relevant to this work?}
+As we have access to a product database one possible approach could be to implement 
+content-based characteristics into a collaborative approach to further enhance the
+recommendation quality or vica versa. Another approach could be to build a unifying model incorporating both.
 
 \subsection{Recommender System Challenges}
 
 Below we briefly mention some of the main challenges one faces when working
 with recommender systems.
 
-% TODO: Remove or move to Appendix
-% \subsubsection{Scalability}
-%
-% As the number of existing users and items blow up, traditional CF algorithms
-% suffer serious scalability problems. The model building phase of \emph{Traditional}
-% collaborative filtering methods have a complexity of O(MN) where $M$ is the number
-% of users and $N$ is the number of items. For systems with millions of users and items,
-% even a complexity of $n$ is too large. Another fundamental issue is how to embed the
-% core recommendation techniques in real operational systems and how to deal with massive
-% and dynamic sets of data produced by the interactions of users with items. Recommender
-% systems are expected in many cases to provide rapid recommendations online, it is
-% therefore also important to consider how fast the system provides recommendations.
-%
-% Better scalability and improved accuracy make the item-item collaborative filtering
-% approaches more favourable in many cases. The computational complexity of item-to-item
-% based algorithms are up to two orders of magnitude faster than traditional user-based
-% algorithms \cite{Deshpande2004}. Dimensionality reduction techniques such as
-% SVD can deal with the scalability by providing more compact representations and
-% quickly produce good recommendations. However, most dimensionality reduction
-% techniques must undergo expensive matrix factorization steps.
+\subsubsection{Scalability}
+
+A fundamental issue is how to embed the core recommendation techniques in a real operational
+systems and how to deal with large and dynamic sets of data produced by the application.
+Recommender systems are expected to provide rapid recommendations, making it important
+to consider how fast the system provides recommendations.
+
+Dimensionality reduction techniques such as SVD can deal with the scalability by providing
+more compact representations and quickly produce good recommendations. However, most dimensionality reduction
+techniques must undergo expensive matrix factorization steps, which are often
+performed offline by batch processing.
 
 \subsubsection{Sparsity}
 

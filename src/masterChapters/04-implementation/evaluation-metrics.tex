@@ -5,6 +5,36 @@
 
 %http://www.slideshare.net/gunnar-schroeder
 
+The main reasons for implementing a recommender system is the desire to improve user
+satisfaction and to increase the economic success of a platform. Although both goals are
+interrelated they may be competing in some scenarios. The user might be more interested in purchasing
+the products with the best price-performance ratio, while the \emph{owners}
+are more interested in showing the products that lead to the highest revenue for the
+business. For this purpose, a commercial recommender could/should consider implementing
+a reward attribute for items that show how much the company profits from its sale. However,
+this is something that could be factored in during online testing at a later point, as it is
+hard to validate during offline experiments.
+
+In order to further specify our goals we therefore have to take a closer look at the recommender's task,
+its interface and the available data. The most typical task for a e-commerce recommender system is to
+determine an order of items, often with the purpose of creating a top-k list of items that is shown in a sidebar
+or on a dedicated page. The following figure shows the SoBazaar newsfeed. Personalized recommendations are likely
+to be shown in a similar fashion. The interface currently shows four items, but lets the
+user scroll sideways over a total of 20 items.
+
+\begin{figure}[H]
+		\begin{subfigure}[b]{.45\linewidth}
+			\centering
+	  	\includegraphics[scale=0.25]{image/SoBazaarfeed2.png}
+		\end{subfigure}
+		\begin{subfigure}[b]{.45\linewidth}
+			\centering
+			\includegraphics[scale=0.25]{image/SoBazaarsale.png}
+		\end{subfigure}
+		\caption[Sobazaar News Feed - Version 0.5.1]{SobBazaar news feed items}
+		\label{figure:sobazarfeed}
+\end{figure}
+
 A large variety of metrics have been published, and some of these metrics are highly correlated \cite{Herlocker2004}.
 There is little guidance for evaluating recommender systems and choosing metrics. However, there are
 some important questions one should ask oneself when selecting evaluation metrics:
@@ -21,17 +51,16 @@ some important questions one should ask oneself when selecting evaluation metric
 It is safe to assume that the users are more interested in the top ranked items, than rating
 predictions for the entire item collection. The social feed shown in Figure \ref{figure:sobazarfeed}
 shows that the interface currently supports showing up to 20 items.
-
 Evaluation of top-k recommendations suggests a classification or ranking task, the evaluation
 should therefore focus on classification or ranking accuracy. A classification accuracy metric
 will tell us something about the recommenders ability to retrieve relevant items. The ranking
 accuracy metric should measure how well the different methods are at putting the most relevant items
-e.g. purchases consistently over the assumed less relevant ones such as e.g. clicks. This gives us
+e.g. purchases consistently over the assumed less relevant events such as clicks. This gives us
 two hints with regards to our evaluation: (1) a ranking accuracy that measures the overall ranking
 is not appropriate, (2) the ranking accuracy metric should be able to factor in difference relevance
-values for the different event types.
-
-%TODO - Add some more cites
+values for the different event types. Ultimately, the goal of the experiment is to evaluate and measure the properties
+of the system, which we have identified as the most important for the systems success,
+and select the method that performs the best overall with respect to these properties.
 
 \subsection{Accuracy Metrics}
 
@@ -63,7 +92,7 @@ recommendation list.
 	10		& \xmark & \xmark & \xmark & \xmark & \xmark & \xmark & \xmark & \xmark & \xmark & \cmark & 0.000 \\
 	\bottomrule
 	\end{tabular}
-	\caption{Varying the position of a single relevant item on a four out of ten recommendation list}
+	\caption{AUC Example - Varying the position of a single relevant in the recommendation list}
 	\label{table:auc}
 \end{table}
 
@@ -89,11 +118,7 @@ highly rated items such as purchases, likes etc. are ranked higher than less rel
 as having these highly ranked items higher up in the recommendation list aligns with our previously
 mentioned financial incentives.
 
-%TODO - What is the "best" rank-accuracy metric?
-
 \subsection{Rank accuracy}
-
-\marginpar{TODO: Move to evaluation section?...}
 
 When using rank accuracy metrics, it is worth knowing whether one is measuring total or partial orderings.
 Most rank accuracy metrics (e.g. Kendall's tau and Spearman's rho) compare two total ordering. The problem
@@ -144,7 +169,7 @@ Example 	& 	Actual					& 	Recommended					&	AP@10   \\ \midrule
 10			& [1,2,3,4,5,6,7,8,9,10]	&	[0,0,0,0,0,1,2,8,5,3]		&	0.178  \\
 \bottomrule
 \end{tabular}
-\caption{AP\@10 Examples}
+\caption{$AP@10$ Examples}
 \end{table}
 
 As you see from example two and three average precision does not consider the order of the actual item list. We want some way to
@@ -166,11 +191,7 @@ the following functions:
 The latter would have been perfect, given that we could specify the importance of each event e.g. purchase gets a relevance of 3, want
 a relevance of 2 and a click a relevance of 1, as it would give us a single number on the ranking quality of the recommendations.
 However, we do not not know these values, meaning that nDCG cannot be used without making assumptions of the importance of the different
-event types.
-
-\marginpar{Mention why we think it is wrong to make these assumptions?}
-
-To solve this problem we decided to chose a \emph{simpler} approach. We independently measure the recall and counts of clicks,
+event types. To solve this problem we decided to chose a \emph{simpler} approach. We independently measure the recall and counts of clicks,
 wants and purchases retrieved by the recommender in the top 20 positions. To check if an user-item touple is a click, want or purchase
 we create a file which stores the log events in the following format:
 
@@ -194,7 +215,7 @@ UserID	&	ItemID	 &  Event Type  \\ \midrule
 For items where a user has multiple events we only use the most \emph{valuable} event. E.g. if a user have
 both clicked and purchased an item we store the item as a purchase, giving it a value of 3.
 When evaluating the recommender we first count the occurrences of the different events in the test set before looking at the top 20 predictions
-for each user to see how many of the events in the different \emph{buckets} was retrieved. In addition we separately measure the MAP\@20 scores
+for each user to see how many of the events in the different \emph{buckets} was retrieved. In addition we separately measure the $MAP@20$ scores
 for the different event types to give us some information about where in the top 20 the items are placed. This gives us the following
 additional columns for our evaluation metric tables:
 
@@ -221,42 +242,45 @@ additional columns for our evaluation metric tables:
 To illustrate this process more clearly consider the following example where we have
 the following test set and prediction lists for three users:
 
-\begin{table}[H]
-\parbox{.45\linewidth}{
-	\centering
-		\begin{tabular}{*{3}l}
-		\toprule
-			UserID	&	ItemID	 &  Rating  	\\ \midrule
-			11		&	21		 &	2			\\
-			11		&	101		 &	5			\\
-			13		&	213		 &	4			\\
-			13		&	202		 &  3			\\
-			15		&	202		 &  5			\\
-			15		&	21		 &  2			\\
-		\bottomrule
-		\end{tabular}
-}
-\hfill
-\parbox{.45\linewidth}{
-	\centering
-		\begin{tabular}{*{3}l}
-		\toprule
-			UserID	&	ItemID	 &  Rating  	\\ \midrule
-			\rowcolor{Gray}
-			11		&	21		 &	5.0			\\
-			11		&	123		 &	3.6			\\
-			\rowcolor{Gray}
-			13		&	213		 &	5.0			\\
-			13		&	1022	 &  4.7			\\
-			15		&	1202	 &  4.4			\\
-			\rowcolor{Gray}
-			15		&	21		 &  4.73		\\
-		\bottomrule
-	\end{tabular}	
-}
-\caption[Test and prediction set example]{Test and prediction set. The true positives in the prediction set are highlighted}
-\end{table}
-
+\begin{figure}[H]
+		\begin{subfigure}{.5\textwidth}
+        \begin{table}[H]
+        \centering
+        	\begin{tabular}{*{3}l}
+        	\toprule
+        			UserID	&	ItemID	 &  Rating  	\\ \midrule
+        			11		&	21		 &	2			\\
+        			11		&	101		 &	5			\\
+        			13		&	213		 &	4			\\
+        			13		&	202		 &  3			\\
+        			5		&	202		 &  5			\\
+        			15		&	21		 &  2			\\
+        	\bottomrule
+        	\end{tabular}
+        	\caption{Test set}
+        \end{table}
+        \end{subfigure}
+        \begin{subfigure}{.5\textwidth}
+            \begin{table}[H]
+            \centering
+            	\begin{tabular}{*{3}l}
+            	\toprule
+            		UserID	&	ItemID	 &  Rating  	\\ \midrule
+            		\rowcolor{Gray}
+            		11		&	21		 &	5.0			\\
+            		11		&	123		 &	3.6			\\
+            		\rowcolor{Gray}
+            		13		&	213		 &	5.0			\\
+            		13		&	1022	 &  4.7			\\
+            		15		&	1202	 &  4.4			\\
+            		\rowcolor{Gray}
+            		15		&	21		 &  4.73		\\
+            	\bottomrule
+            	\end{tabular}	
+            	\caption{Prediction set - true positives are highlighted}
+            \end{table}
+          \end{subfigure}
+\end{figure}
 
 We can see that we have an interaction between user 11 and item 21 in our testset and from our event file in
 Table \ref{table:event-type} we can see that the user clicked this item. Similarly we can see that user 15 purchased
@@ -340,11 +364,4 @@ metric.
 %%TODO - Justify why these metrics combined will give a good overview of the performance.
 %%TODO - Cold-start evaluation Metrics
 
-\subsection{Cold-Start Metrics}
 
-In addition to looking at the above mentioned metrics it would be interesting to see how
-the different sparsity levels affect both the user- and item-space coverage of the different
-methods when evaluating the cold-start system performance, as having a recommender that can only
-recommend a limited set of items to a small portion of the users is \emph{unfortunate}. The
-user-space coverage is the number of users the recommender is able to produce recommendations for while the item-space
-coverage is measured by looking at how many of the items are recommendable.
