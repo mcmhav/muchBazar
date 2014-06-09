@@ -100,8 +100,8 @@ a total ordering of all items not yet rated by the user. This means that the ite
 to the user will be appended in a random order after the known recommendations.
 E.g. lets say the recommender is able to generate 10 recommendations for a user out of 4000 items.
 The recommender was only able to retrieve one out of two relevant test items. The remaining 3990
-items are therefor appended in random order to the users recommendation list.
-Where the last test item is appended in the recommendation list can mean the difference between a AUC score of above
+items are therefor appended in random order to the users recommendation list. Where the last test item is
+appended in the recommendation list can mean the difference between a AUC score of above
 0.9 to less than 0.6 if the item is appended at the end of the list, the results can be even more
 severe if none of the items is in the initial recommended list, then the results for that user will be
 completely random. The most obvious solution to this problem would be to use resampling or to repeat
@@ -173,7 +173,6 @@ Example 	& 	Actual					& 	Recommended					&	AP@10   \\ \midrule
 As you see from example two and three average precision does not consider the order of the actual item list. We want some way to
 reward the recommender for getting the purchased ranked higher than both wants and clicks.
 
-
 Normalized Discounted Cumulative Gain (nDCG) described in Section \ref{subp:normalized_discounted_cumulative_gain_} is another metric to
 measure the rank accuracy. It is based on two main assumptions; (1) Highly relevant items are more useful than marginally relevant ones,
 (2) The lower the ranked position of a relevant item, the less useful it is for the user, since it is less likely to be \emph{examined}.
@@ -189,9 +188,12 @@ the following functions:
 The latter would have been perfect, given that we could specify the importance of each event e.g. purchase gets a relevance of 3, want
 a relevance of 2 and a click a relevance of 1, as it would give us a single number on the ranking quality of the recommendations.
 However, we do not not know these values, meaning that nDCG cannot be used without making assumptions of the importance of the different
-event types. To solve this problem we decided to chose a \emph{simpler} approach. We independently measure the recall and counts of clicks,
-wants and purchases retrieved by the recommender in the top 20 positions. To check if an user-item touple is a click, want or purchase
-we create a file which stores the log events in the following format:
+event types, which we did not know. To solve this problem we decided to chose a \emph{simpler} approach. We independently measure the recall
+and counts of clicks, wants and purchases retrieved by the recommender in the top 20 positions. As you see, it would have been nice to know these
+reward attributes to make the evaluation results more fluent.
+
+To check if an user-item touple is a click, want or purchase we create a file which
+stores the log events in the following format:
 
 \begin{table}[H]
 \label{table:event-type}
@@ -210,12 +212,11 @@ UserID	&	ItemID	 &  Event Type  \\ \midrule
 \caption{Evaluation - Example event type file}
 \end{table}
 
-For items where a user has multiple events we only use the most \emph{valuable} event. E.g. if a user have
-both clicked and purchased an item we store the item as a purchase, giving it a value of 3.
-When evaluating the recommender we first count the occurrences of the different events in the test set before looking at the top 20 predictions
-for each user to see how many of the events in the different \emph{buckets} was retrieved. In addition we separately measure the $MAP@20$ scores
-for the different event types to give us some information about where in the top 20 the items are placed. This gives us the following
-additional columns for our evaluation metric tables:
+For items where a user has multiple events we only use the most \emph{valuable} event. E.g. if a user have both clicked
+and purchased an item we store the item as a purchase, giving it a value of 3. When evaluating the recommender we first count the
+occurrences of the different events in the test set before looking at the top 20 predictions for each user to see how many of the events in the
+different \emph{buckets} was retrieved. In addition we separately measure the $MAP@20$ scores for the different event types to give us some information
+about where in the top 20 the items are placed. This gives us the following additional columns for our evaluation metric tables:
 
 \begin{table}[H]
 	\begin{tabular}{ll}
@@ -235,7 +236,6 @@ additional columns for our evaluation metric tables:
 	\bottomrule
 	\end{tabular}
 \end{table}
-
 
 To illustrate this process more clearly consider the following example where we have
 the following test set and prediction lists for three users:

@@ -406,11 +406,8 @@ We have currently implemented the following bots: A \emph{BrandBot} which rates 
 multiple \emph{SingleBrandBots} which gives all items of a given brand a top rating,
 an \emph{AverageBot} which rates an item based on their average rating given to it, a \emph{CriticBot} which selects $n$ critics
 among the most active users and rate items based on their average rating, a \emph{PopularityBot} which rates
-
-
-an item based on its popularity, each rating $r(c,s) = log_{3}C_{s}$, where $C_{s}$ is the number of users which have rated the item and 3 is a normalization constant that caps the ratings at 4.5, as the most popular item have been rated 147 times. More ratings equals a higher rating. Compared to the work presented by Park et. al. we
-felt that the lack of high quality features was a limiting factor when designing the filterbots, as there is only
-so much information in the rating matrix.
+an item based on its popularity, each rating $r(c,s) = log_{3}C_{s}$, where $C_{s}$ is the number of users which have rated the item and $3$ is a normalization constant that caps the ratings at 4.5, as the most popular item have been rated 147 times. More ratings equals a higher rating. Compared to the work presented by Park et. al. we felt that the lack of high quality features was a limiting factor when designing the filterbots, as most
+features would not let us rate most ratings, and there is only so much information in the rating matrix.
 
 The intuition behind the \emph{SingleBrandBots} is as follows, given that a collaborative filtering algorithm is used:
 when a new user \emph{rates} an item it will be connected to a \emph{psudo-user} which have rated all items of the same brand highly,
@@ -435,4 +432,4 @@ As many of our selected evaluation metrics is implemented in recommender system 
 script that takes the entire log file as input first transforming it to into a set of ratings, or blend of your choice before splitting it based on random or time
 . These outputs are then fed into either Mahout or/and MyMediaLite training the specified models and writing their predictions to file. Our evaluation suite
 then calculates all the metrics desired writing them out in a latex format. All in one command line call. Our evaluation suite currently supports
-nDCG, $MAP@K$
+nDCG, $MAP@K$, User and Item-Space Coverage, hLU, MPR, in addition to our own unique simple event evaluator.
