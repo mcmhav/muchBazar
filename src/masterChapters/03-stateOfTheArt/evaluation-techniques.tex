@@ -440,7 +440,8 @@ relevance based metric used with implicit ratings, it does produce a ranked
 list. It is however described in Section~\ref{} and not here, as it does not
 compare two ranked lists as the methods below does.
 
-% TODO: Introduce the upcoming definitions.
+% intro AP corr
+
 \textit{AP correlation}~\cite{Yilmaz:2008:NRC:1390334.1390435} measures the
 overall precision and is a variant of \textit{Kendall's tau}.  It counts the
 amount of items correctly placed in a ordered predicted rank list
@@ -456,6 +457,9 @@ where $C(i)$ is the number of items ranked correctly above rank $i$.
 The value of AP is between -1 and 1, where a score of 0 means that
 \textit{list1} can be considered a randomly generated list and 1 is a perfect
 match with the actual list \textit{list2}.
+
+
+% intro MPR
 
 \textit{Mean Percentage Ranking (MPR)} is a recall-oriented metric.  A known
 issue with implicit feedback is that it often lack the actual user's
@@ -474,6 +478,8 @@ $rank_{ui} = 0$ means that $i$ is the most preferred item for $u$.  $r_{ui}$
 indicates whether $u$ has consumed $i$ or not.  This makes a $MPR$ value of
 0\% to be the most preferred value, and a value of 50\% meaning a near
 randomly produced list.
+
+% intro nDCG
 
 \textit{Normalized Discounted Cumulative Gain (nDCG)} measures the graded
 relevance of the recommended item, the ranking quality or the usefulness of the
@@ -494,6 +500,8 @@ How to calculate the $nDCG$ value is shown in~\ref{equation:ndcg}.  Where $k$
 is the maximum amount of suggested items, and $rel_i$ is the graded relevance
 of the result at position $i$.  $IDCG_k$, from~\ref{equation:ndcg}, is the
 ideal $DCG_k$ value.  This is the result list sorted on relevance.
+
+% intro HLU
 
 \textit{Half-life utility}~\cite{Breese:1998:EAP:2074094.2074100} assume that
 the further down an item is in the list the less chance there is for that item
@@ -694,7 +702,7 @@ To simulate a cold-start system scenario Agarwal et al.~\cite{Agarwal2009}
 split the dataset in two using 75\% of the dataset for training and 25\% for
 testing. They then train the model using 30\%, 60\% and 75\% of the data and
 compare their performance on the testset. This model is both good and simple
-as it measures the recommender systems quality for different sparsity levels. 
+as it measures the recommender systems quality for different sparsity levels.
 
 %Summary of articles read
 

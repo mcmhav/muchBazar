@@ -31,19 +31,31 @@ In Chapter 1 we introduced a total of 8 goals for our Master's thesis:
 \end{itemize}
 
 In the following subsection we will reiterate these goals and discuss whether we have succeeded in reaching our goals. Readers should
-note that we already have performed a detailed analysis of the results of the work on goals G1 in Section \ref{sec:dataset-conclusion},
-G2 in Section \ref{}, G3 in Section \ref{}, G4 and G5 in Section \ref{sec:cold-start-discussion}, G6 in Section \ref{implicit-weaknesses},
+note that we already have performed a detailed analysis of the results of the work on goals G1 in Section \ref{subsec:fashion-theory} and \ref{chap:thesobazaardata},
+G2 in Section \ref{subsec:fashion-theory} and \ref{chap:thesobazaardata}, G3 in Section \ref{subsec:fashion-theory}, G4 and G5 in Section \ref{sec:cold-start-discussion}, G6 in Section \ref{implicit-weaknesses},
 G7 in Section \ref{}, G8 in Section \ref{} and finally G9 in Section \ref{sec:evaluation-metrics}.
 The following discussion will therefore be fairly high-level, and avoid the \emph{nitty-gritty} details.
 
 \subsection{G1, G2 and G3: Solutions to the fashion domain related problems}
 \label{sec:fashion-discussion}
 
-Through thorough examination and analysis of the data and a literature review of fashion articles we came to the following main conclusions...
+Through thorough examination and analysis of the data and a literature review of fashion articles we came to the following main conclusions:
+incorporating more data to a sparse data set is essential,
+time is central, both when it comes to the users and the items,
+and fashion is built on subcultures.
 
-%TODO - Dicuss data findings
+After analyzing the data it became apparent that the data was not just sparse in the sense of users, but also in the sense of items and item interactions.
+Working with purchases alone would render the data too sparse to be able to retrieve any good results, so more data was needed.
+Clicks and want naturally had a higher interaction rate, and proved to be usable data in the sense of user preferences, and this should be used to supplement the low purchase data.
 
-%Important notes 
+Another interesting find when looking at the data was the importance of time, and its relevance to the fashion domain.
+Many of both the user accounts and the items are short lived, and the decaying factor must generally be handled when doing recommendations in the fashion domain.
+The recommendation system should therefore be supplemented with the concept of time, and handle the average items' natural loss of attention over time.
+
+Looking at the fashion domain we saw how significant the idea of subcultures are for the fashion domain, and that purchasing fashion articles are not just done for the need, but for the \emph{belongingness} and to show off.
+Based on these findings we expect recommendations to greatly benefit from capturing these subcultures and utilizing them to improve user preference understanding, and thereby improve recommendations done to the users.
+
+%Important notes
 
 \subsection{G4: The Cold-Start Problem}
 \label{sec:cold-start-discussion}
