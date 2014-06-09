@@ -216,7 +216,7 @@ have the following events to choose from:
 \end{table}
 
 Then, our heuristic would count the frequency of each event for an item $i$ on
-user $u$. However, just counting is not a bounded function --- so if one give
+user $u$. However, just counting is not a bounded function -- so if one give
 \textit{Item browsed} the weight of $1$ and the \textit{Item purchased} event
 a weight of $100$, then a user browsing an item more than 100 times would get a
 higher implicit rating than a user buying it.
@@ -258,7 +258,7 @@ by table~\ref{implicit-table}:
 
 The advantage of this heuristic is that it requires no training, it is simple
 to understand and works reasonably well, if weights are chosen correctly.
-The latter is also its largest weakness --- as finding these weights may be
+The latter is also its largest weakness -- as finding these weights may be
 difficult. If one had explicit feedback, as well as the implicit, one could
 train a model automatically choosing weights. Further, when using the scores
 defined as above we only use a small percentage of the scale 0-100. This leads
@@ -637,7 +637,7 @@ implicit ratings it can instead be called the \textit{ground assumptions} and
 if wrong, all later stages become unsound as well. Furthermore, as briefly
 touched upon earlier, without much negative feedback our later stages in the
 pipeline need to take height for this, not penalizing a low ranking as much as
-in traditional settings --- as having some feedback is better than none. In
+in traditional settings -- as having some feedback is better than none. In
 essence, we need to ensure that two factors are emperically chosen: first, all
 assumptions should be grounded in statistical evidence and second, recommender
 algorithms and evaluation schemes should take height for weak evidence of

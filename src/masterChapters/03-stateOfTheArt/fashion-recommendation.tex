@@ -11,7 +11,7 @@ To achieve this a detailed study is needed, both to better understand
 effects seen in the dataset. We first study the broad definition of
 \textit{fashion} and what its implications are on consumer behavior. Next we
 study how the fashion industry is experiencing tremendous growth in the
-e-commerce sector, before finally looking at the SoBazaar application ---
+e-commerce sector, before finally looking at the SoBazaar application --
 performing a comprehensive competitor analysis where we try to identify the
 largest segments of both growth potential and recommendation system
 uniqueness.
@@ -43,7 +43,7 @@ common theme.
 The recurring themes can be classified as being related to clothes, popularity,
 time and cultural grouping. One of the main drives of fashion is the need and
 want for belonging, and for individuals to become a part of something bigger
---- sharing a common thought or opinion. A common term to use is \textit{making a
+-- sharing a common thought or opinion. A common term to use is \textit{making a
 fashion statement}, where a group or individual makes their opinion or
 statement heard without words, but through clothing and fashion. When making
 recommendations this is important, as social connections between users become
@@ -56,7 +56,7 @@ making recommendations.
 So fashion is what a \textbf{social group}, or a \textbf{set of groups},
 recognizes and highly advocates \textbf{at any one time}. Thus in broader
 terms we can classify music, hair and many other trends as being fashion as
-well --- however, when referencing the term \textit{fashion} in this thesis we
+well -- however, when referencing the term \textit{fashion} in this thesis we
 implicitly refer to clothing and accessories.
 
 Hanf et. al.~\cite{Hanf1994} states that customers are rational, when it comes
@@ -85,7 +85,7 @@ almost identical products made the consumer crowd shift towards the more well
 known brand. In comparison, when the users did not know the actual brands of
 the products, they yielded an almost equal distribution on the products. In
 SoBazaar, as in the fashion domain in general, there is consequently a large
-focus on brands. However, when recommending novelty is a key figure --- that is
+focus on brands. However, when recommending novelty is a key figure -- that is
 we want to introduce users to \textit{new} products as well as brands.
 
 \subsection{Recommendation challenges}
@@ -118,7 +118,7 @@ fixed time interval as we assume the tastes changes over time.
 \paragraph{Implicit data}
 The feedback from the user will mainly be implicit~\ref{sec:implicit}, and if
 the users had the possibility of rating an item there is no way of knowing
-\textit{which} features contributed to a positive rating --- without much data.
+\textit{which} features contributed to a positive rating -- without much data.
 Instead we assume that an increased interest in an item is correlated with
 increased interaction with the item, an hypothesis that per~\ref{sec:conv-rate}
 and Table~\ref{tab:prob-purchase} holds true, as we see more visits on an item
@@ -201,7 +201,7 @@ domains, but of which the reader should be aware of - as they greatly affect
 both which features and properties we can look at for making recommendations
 and they form an important backbone for understanding the SoBazaar dataset.
 We introduce this section by looking at one of the areas where the fashion
-domain really stands out – an area where an important property about SoBazaar
+domain really stands out -- an area where an important property about SoBazaar
 target group can be observed.
 
 \begin{figure}[H]
@@ -222,13 +222,13 @@ target group can be observed.
       \end{axis}
     \end{tikzpicture}
     \caption{Conversion rate in various fashion segments}
+    \label{fig:conversionRateFashion}
 \end{figure}
 
-\marginpar{TODO: Conversion rate in SoBazaar?}
 This figure is taken from~\cite{Jorij2012} and shows the conversion rate for
 various segments in the fashion domain. The conversion rate is the portion of
 users who visits a website, and reaches the target (makes a conversion) set
-by the site. For most e-commerce application, SoBazaar included, a conversion
+by the site. For most e-commerce application, a conversion
 is counted when a purchase is made. The conversion rate $r$ can easily be
 calculated by $r = \frac{|Conversions|}{|Total visits|}$~\cite{nielsen2013}.
 We can see that womens has the lowest conversion rate among the different
@@ -238,6 +238,15 @@ right product. This hypothesis is strengthen by looking at the general
 conversion rate in the e-commerce industry, which lies at 3\%. The potential
 of a personalized recommender could in other words make browsing easier and
 hence increase the conversion rate.
+
+When making a purchase in the SoBazaar application, the user is redirected to the retailer selling the item, so the purchase is not done in the application.
+This can lead to a higher \emph{purchase count} than the actual truth, but is what can be considered the conversion in the SoBazaar application.
+
+For SoBazaar there are todo sessions in total and todo purchases, so the conversion rate is $todo = \frac{todo}{todo}$, which is quite high compared to the conversion rate in women fashion from figure~\ref{fig:conversionRateFashion}.
+
+This is mainly because it is not possible to do a purchase in the SoBazaar application, the user is instead redirected to the retailer where the currently watched item is sold, and the user can purchase the item there.
+This will naturally lead to some non completed purchases, but
+
 
 \begin{figure}[H]
   \begin{tabular}{cc}
