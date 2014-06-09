@@ -380,65 +380,72 @@ by also studying user patterns such as how often the application is used and
 the lifespan of user-accounts.
 
 \begin{figure}[H]
-    \includegraphics[width=5in]{image/sessiondistribution.png}
-    \centering
-    \caption{Distribution of sessions for users}
-    \label{figure:sessCountDist}
+  \includegraphics[width=5in]{image/sessiondistribution.png}
+  \centering
+  \caption{Distribution of sessions for users}
+  \label{fig:sessCountDist}
 \end{figure}
 
-The figure above shows the count of sessions for the users of the SoBazaar
-application, with the users with more than 30 sessions removed.
+As seen from the above figure, more than 90\% of the users have a session count
+of 20 or less, in addition almost 25\% of all users has only registered
+\textit{one} interaction in the lifetime of their account. Taking this
+calculation further, approximatly 50\% of the users has 4 interactions or fewer, all
+evidence to strengthen the sparsity claim made in the title of this thesis.
 
-More than 90\% of the users of SoBazaar have a session count of 20 and less.
-This means that they have not logged on to the applications more than 20
-separate times, over the time the data was collected, and strengthens the
-hypothesis that the data from SoBazaar is sparse.
+The low number of sessions leads us to look at account lifetime, where we
+define the lifetime of a user as the length between the first and last
+registered event recorded. 
 
-In figure~\ref{figure:sessCountDist} the 4 first bars sums up to 1000, which is
-the amount of users who has had 4 or less sessions on the application in total.
-In other words -- half of the users used the application less than 4 times.
+\begin{figure}[H]
+  \includegraphics[width=5in]{image/userTimespansdistribution.png}
+  \centering
+  \caption{Distribution of user account lifetime}
+  \label{figure:userTimespandist}
+\end{figure}
 
-After having looked at the usage distribution of the users , we move over to
-the user account lifetime, to see actually how long a user is active on the
-application in terms of time from first to last recorded event for the user.
+From this figure we conclude that over half of the users have a lifespan of
+less than a week, in many ways confirming the user effects seen in
+Figure~\ref{fig:sessCountDist}, as many users use the application a few times
+and never open it again. Using this knowledge we observe how important it is to
+based on demographics and \textit{cold-start methods} recommend relevant items
+from day one.
 
-    \begin{figure}[H]
-        \includegraphics[width=5in]{image/userTimespansdistribution.png}
-        \centering
-        \caption{Distribution of user account lifetime}
-    \label{figure:userTimespandist}
-    \end{figure}
-        The figure above displays the lifetime of the user accounts in the application in weeks, where the lifetime is measured from the first occurrence of the unique user id till the last event triggered by that user.
+One might however argue that a short lifespan does not necessarily yield low
+activity, and in order to disprove this claim we map the average lifespan at
+the Y-axis and combine it with the event count of users on the X-axis.
 
-        From this figure it is apparent that over half of the user accounts have a lifespan of less than a week.
+\begin{figure}[H]
+  \includegraphics[width=5in]{image/avglifetimeoncountuser.png}
+  \centering
+  \caption{Average lifetime of user accounts sorted on event count}
+  \label{figure:avglifetimeoncountuser}
+\end{figure}
 
-        Lifetime of the accounts mapped together with their usage might tell us more than just the account life time alone, so the next figure displays just that.
+As seen from the tendency line, a longer lifespan of a user yields a larger
+probability of a higher event count. Based on our findings at this point we can
+thus conclude that the data is sparse and many users have only used the
+application a few times, without coming back.
 
-    \begin{figure}[H]
-        \includegraphics[width=5in]{image/avglifetimeoncountuser.png}
-        \centering
-        \caption{Average lifetime of user accounts sorted on event count}
-    \label{figure:avglifetimeoncountuser}
-    \end{figure}
-        The figure above shows the lifetime of the user accounts together with their application interaction count.
-        Users more to the right have a higher event count.
-        Some outliers have been removed to give focus to the majority of the users. As mentioned earlier, 78\% of the users have triggered 50 or less events.
+Continuing, we want to learn more about the user demographics and therefore use
+the location provided with each event to map the locations of all users in
+Norway, as shown below.
 
-        The red line is the regression line of the user account lifetimes, and is there to show how the account life span increases with the amount of events.
 
-        As seen in the data set overview table~\ref{table:eventData}, the location of the user at event trigger is stored in the data. The locations of the users are shown in the figure below.
+\begin{figure}[H]
+  \includegraphics[width=5in]{image/simpleGeoPlotNorway.png}
+  \centering
+  \caption{Plot of event location in and around Norway}
+  \label{figure:croppedGeoplot}
+\end{figure}
 
-    \begin{figure}[H]
-        \includegraphics[width=5in]{image/simpleGeoPlotNorway.png}
-        \centering
-        \caption{Plot of event location in and around Norway}
-    \label{figure:croppedGeoplot}
-    \end{figure}
-        Figure~\ref{figure:croppedGeoplot} shows the location of the user at the time the different events was triggered.
-        It is cropped to show events triggered in and around Norway.
-        We can see that the majority of the users are located in and around the capital city of Norway, Oslo.
+Figure~\ref{figure:croppedGeoplot} shows the location of the user at the time
+the different events was triggered.  It is cropped to show events triggered in
+and around Norway.  We can see that the majority of the users are located in
+and around the capital city of Norway, Oslo.
 
-        If the event is triggered from a phone, the event is as precise as the GPS hardware location of the phone, and would be helpful information to understand more about the user.
+If the event is triggered from a phone, the event is as precise as the GPS
+hardware location of the phone, and would be helpful information to understand
+more about the user.
 
 \subsection{Product properties}
     The properties of the products can tell help to tell how the products are being interacted with, and the distribution of events on them.
