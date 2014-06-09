@@ -75,7 +75,6 @@ A further discussion on evaluation metrics will follow in the next Section \ref{
 
 \subsubsection{Purchase Only Vs. Multiple Implicit Factors}
 
-
 We want to evaluate whether a recommender system utilizing multiple implicit factors is \emph{better}
 a recommender system utilizing purchase data only. Firstly, we have two completely different datasets.
 One containing multiple items and user not found in the other dataset. Secondly, one dataset
@@ -167,10 +166,8 @@ factors in recency.
 
 \subparagraph{Overview of the Dataset}
 
-Table \ref{table:datasets} shows an overview of the SoBazaar dataset.
+The following table shows an overview of the purchase only and multiple event SoBazaar datasets:
 
-%TODO - What else is interesting to know? Rating scale, average number of ratings per user, number of cold start users...
-%TODO - % of users with less than 5 ratings for both datasets
 
 \begin{table}[H]
     \centering
@@ -186,8 +183,8 @@ Table \ref{table:datasets} shows an overview of the SoBazaar dataset.
     \label{table:datasets}
 \end{table}
 
-As you can see the recommender can cover a much larger portion of the user group and items when including multiple event types.
-
+As you can see the recommender can cover a much larger portion of the user group and items when including multiple event types. However,
+the sparsity is only reduced slightly as the number of items and users are much higher.
 
 \subsubsection{Simulating the Cold-Start Problem}
 

@@ -1,5 +1,3 @@
-
-
 \section{Evaluation Metrics}
 \label{sec:eval-metrics}
 
@@ -297,7 +295,7 @@ top-20 lists the different events can be found. E.g. a high $MAP@20_{purchase}$ 
 purchase events normally are found high up in the top-20 recommendation list and vica versa.
  
 We believe that having the raw counts coupled with the true-postive rate for the different event type and a measure of their
-ranking quality will be more informative and give us a clearer overview of the systems performance than using a single ranking
+ranking quality will be more informative and give us a clearer overview of the systems performance than using a single rank
 metric.
 
 %Normalized Discounted Cumulative Gain ($nDCG_{k}$), described in Section \ref{subp:normalized_discounted_cumulative_gain_}
@@ -358,10 +356,5 @@ metric.
 %
 %As you can see Method 1 is a bit more \emph{balanced} than Method 2, as it does not give as much weight to highly rated items. Especially example 5 and 6 highlights this as Method 2 prefers retrieving one highly rated item over retrieving multiple less relevant ones. Method 2 is ultimately closer to what we want in addition to being commonly used by web search companies and on the data science competition platform Kaggle \cite{kaggle}. We have also chosen to truncate the recommendation list and only calculate the nDCG of the $k$ top items. Because nDCG has a relatively low positional discount, it allows us to set $k$ fairly high, but this only makes sense if we believe that the user will read large portions of the recommendation list.
 %
-%\marginpar{TODO: Spend any more time looking at partial order ranking measures?...}
-%
-%%TODO - Select K value based on user interface
-%%TODO - Justify why these metrics combined will give a good overview of the performance.
-%%TODO - Cold-start evaluation Metrics
 
 

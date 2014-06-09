@@ -356,8 +356,6 @@ f(P, Q) = \sum_{(c,s)\epsilon C} (u(c,s) - p^{T}_{c}q_{s})^{2} + \lambda (\sum_{
 \label{WeightedLamba}
 \end{equation}
 
-\marginpar{TODO: Compare with binary version in implicit feedback section}
-
 where $n_{p_{c}}$ and $n_{q_{s}}$ denote the number of ratings of user $c$ and item $s$ respectively. $S_{c}$ denote
 the set of items $s$ that user $c$ rated, then $n_{p_{c}}$ is the cardinality of $S_{c}$; similarly $C_{s}$ denotes
 the set of users who rated item $s$, and $n_{q_{s}}$ is the cardinality of $I_{s}$. A given column of P, $p_{c}$ is
@@ -408,8 +406,7 @@ We have currently implemented the following bots: A \emph{BrandBot} which rates 
 multiple \emph{SingleBrandBots} which gives all items of a given brand a top rating,
 an \emph{AverageBot} which rates an item based on their average rating given to it, a \emph{CriticBot} which selects $n$ critics
 among the most active users and rate items based on their average rating, a \emph{PopularityBot} which rates
-an item based on its popularity, each rating r(c,s) = $log_{3}C_{s}$, where $C_{s}}$ is the number of users which have rated the item and 3 is a normalization constant that caps the ratings at 4.5, as the most popular item have been rated 147 times. More ratings equals a higher rating. Compared to the work presented by Park et. al. we
-felt that the lack of high quality features was a limiting factor when designing the filterbots, as there is only
+an item based on its popularity, each rating r(c,s) = $log_{3}C_{s}$, where $C_{s}}$ is the number of users which have rated the item and 3 is a normalization constant that caps the ratings at 4.5, as the most popular item have been rated 147 times. More ratings equals a higher rating. Compared to the work presented by Park et. al. we felt that the lack of high quality features was a limiting factor when designing the filterbots, as there is only
 so much information in the rating matrix.
 
 The intuition behind the \emph{SingleBrandBots} is as follows, given that a collaborative filtering algorithm is used:
@@ -429,6 +426,10 @@ are no longer active. Since we have access to timestamps we could e.g. make the 
 their popularity the last couple of weeks instead of over the entire dataset period. Similarly, critics can be selected
 based on their activity the couple of weeks/months.
 
+\subsection{Test Suite}
 
-\marginpar{TODO: More detailed implementation details?}
-
+As many of our selected evaluation metrics is implemented in recommender system libraries we had to implement our own test suite. It is a bash
+script that takes the entire log file as input first transforming it to into a set of ratings, or blend of your choice before splitting it based on random or time
+. These outputs are then fed into either Mahout or/and MyMediaLite training the specified models and writing their predictions to file. Our evaluation suite
+then calculates all the metrics desired writing them out in a latex format. All in one command line call. Our evaluation suite currently supports
+nDCG, $MAP@K$
