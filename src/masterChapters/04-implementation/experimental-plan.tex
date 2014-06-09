@@ -31,7 +31,7 @@ recommendation quality.
 \subsection{Comparing Ratings}
 
 The success on our experiment mainly relies on whether we can successfully compare a set of ratings.
-Evaluating and comparing a set of ratings is not something you often encounter in the literature. 
+Evaluating and comparing a set of ratings is not something you often encounter in the literature.
 
 \begin{figure}[H]
 		\centering
@@ -71,7 +71,7 @@ we identified the following properties as the best indicators of improved recomm
 \item Does it improve the recommenders ability to rank the items?
 \end{itemize}
 
-A further discussion on evaluation metrics will follow in the next Section \ref{sec:eval-metrics}.
+A further discussion on evaluation metrics will follow in the next Section~\ref{sec:eval-metrics}.
 
 \subsubsection{Purchase Only Vs. Multiple Implicit Factors}
 
@@ -99,7 +99,7 @@ should not be used.
 We want to figure out how to evaluate and compare the different implicit rating
 methods.  The most obvious solution here is to compare their recommendation performance. This is
 mainly a evaluation metric problem. Which will be discussed at length in the
-next Section \ref{sec:eval-metrics}.
+next Section~\ref{sec:eval-metrics}.
 
 \subsection{Combining Implicit Ratings With Existing Cold-Start Solutions}
 
@@ -190,7 +190,7 @@ the sparsity is only reduced slightly as the number of items and users are much 
 
 To simulate the cold-start problem and evaluate how well our the different
 methods tackle the different cold-start situations we use the following
-evaluation methodology. As mentioned in Section \ref{sec:cold-start-eval} there
+evaluation methodology. As mentioned in Section~\ref{sec:cold-start-eval} there
 is no common framework for assessing the cold-start performance of recommender
 systems.  Our goal is to come up with \emph{comprehensive} framework to assess
 the cold-start performance of our recommender systems. The following inputs
@@ -227,7 +227,7 @@ users with more than 200 ratings, but you can not expect 10\% all the users for
 all datasets to have provided 200 ratings, so this number might be lowered if
 necessary, as in our case. To evaluate the cold-start system performance we use the same method as
 described in ~\cite{Agarwal2009}. We use a 80:20 training/test split, where
-we at random draw 40\%, 60\% and 80\% (all) ratings and predict the 
+we at random draw 40\%, 60\% and 80\% (all) ratings and predict the
 remaining 20\% for all models. It is important to note that this process should be repeated multiple times, as
 the chance of getting an \emph{unfortunate} split is highly probable due to the
 dataset size. We perform both random and time-based splits. For our time based

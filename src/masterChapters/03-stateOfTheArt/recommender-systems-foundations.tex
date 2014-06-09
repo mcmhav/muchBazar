@@ -44,7 +44,7 @@ similarity to these items. $ContentBasedProfile(c)$ can be designed as a vector
 of weights $(w_{c1} ... w_{ck})$, where each weight $w_{ci}$ denotes the
 importance of the keyword $k_{i}$ to user $c$.
 
-Figure \ref{figure:contentbaseddb} shows a simple database with rows
+Figure~\ref{figure:contentbaseddb} shows a simple database with rows
 describing 5 items that have been rated by 3 users. The column names starting
 with $X_{n}$ are the properties of the items, often referred to as
 "attributes".
@@ -164,7 +164,7 @@ where k serves as a normalization factor, usually being $1/|C|$. Various
 approaches have been used to compute the similarity $sim(c, c')$ between the
 users. Generally these approaches are based on the rating similarities for
 items both users have rated. The one of the most popular similarity measure is The Pearson
-Correlation Coefficient. Equation \ref{equation:pearson} shows how to calculate
+Correlation Coefficient. Equation~\ref{equation:pearson} shows how to calculate
 the Pearson Correlation Coefficient between two users $c$ and $c'$, Here
 $S_{cc'}$ is the set of items both users have in \emph{common}.
 
@@ -195,7 +195,7 @@ u(c,s) = \frac{\sum_{all similar items, S} (sim(s,S)u(c, S)}{\sum_{all similar i
 \end{equation}
 
 Items that often are rated similarly by users are considered more similar than
-items which share few similar ratings. Figure \ref{figure:itemsim} illustrates
+items which share few similar ratings. Figure~\ref{figure:itemsim} illustrates
 the process of finding the item-similarities.
 
 \begin{figure}[H]
@@ -271,7 +271,7 @@ more features makes the model building more expensive. Each user $c$ is
 associated with a vector $p_{c} \epsilon \mathbb{R}^{f}$, and each item $s$ is
 associated with a vector $q_{s} \epsilon \mathbb{R}^{f}$. Giving us a matrix Q
 containing the user factors and a matrix P containing the item factors as
-exemplified in Figure \ref{figure:matrixdecomp}.
+exemplified in Figure~\ref{figure:matrixdecomp}.
 
 \begin{figure}[H]
     \includegraphics[width=5in]{image/matrixdecomp.jpg}
@@ -312,11 +312,11 @@ observed ratings, in a way that we can predict future unknown ratings. The
 system should therefore avoid overfitting the data by regularizing the learned
 parameters, whose magnitudes are penalized. $\lambda$ controls the extent of
 regularization, and much like $f$, often determined by cross-validation. Two
-possible approaches to minimizing Equation \ref{equation:minimize} is to use
-Stochastic Gradient Descent or Alternating Least Squares \citep{Koren2009}.\newline
+possible approaches to minimizing Equation~\ref{equation:minimize} is to use
+Stochastic Gradient Descent or Alternating Least Squares~\citep{Koren2009}.\newline
 
 Consider the following example where we have the following rating matrix R
-shown in Table \ref{table:ratingMatrix} containing the rating of four users $C$
+shown in Table~\ref{table:ratingMatrix} containing the rating of four users $C$
 for four items $S$, giving us a $C \times S$ matrix with explicit ratings on a
   scale from 1 to 5.
 
@@ -362,7 +362,7 @@ $
 \caption{Item factor matrix $Q$}
 \end{figure}
 
-Equation \ref{equation:dotproduct} then gives us the following rating prediction matrix $\hat{R}$.
+Equation~\ref{equation:dotproduct} then gives us the following rating prediction matrix $\hat{R}$.
 
 \begin{figure}[H]
 \centering
@@ -379,7 +379,7 @@ $
 
 
 
-As you can see the values of known ratings in Table \ref{table:ratingMatrix}
+As you can see the values of known ratings in Table~\ref{table:ratingMatrix}
 are fairly similar to the corresponding ratings in the rating prediction
 matrix.
 
@@ -421,7 +421,7 @@ following approaches to building hybrid recommender systems:
 content-based and collaborative characteristics
 \end{itemize}
 
-As we have access to a product database one possible approach could be to implement 
+As we have access to a product database one possible approach could be to implement
 content-based characteristics into a collaborative approach to further enhance the
 recommendation quality or vica versa. Another approach could be to build a unifying model incorporating both.
 

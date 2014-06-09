@@ -74,7 +74,7 @@ for content-based recommendation as it highlights on of the main weakness of con
 methods, namely that they require rich descriptions of items to build well informed user
 profiles. As mentioned in \cite{meyer2012recommender} this is most often not the case in
 real applications. The content-features will be used to to test our one content-boosted collaborative
-filtering method \cite{Gantner2010}, described in \ref{cold-start-hybrid} in addition to being used by
+filtering method \cite{Gantner2010}, described in~\ref{cold-start-hybrid} in addition to being used by
 our filterbots to generate ratings based on content-features.
 
 \subsection{Binary Algorithms}
@@ -102,7 +102,7 @@ The $runif$ function draw samples from a uniform distribution where $y$ specifie
 of the output interval and $z$ specifies the upper boundary. The probability density function of the
 uniform distribution is $P(x) = \frac{1}{z-y}$ anywhere within the interval $[y, z]$, and zero elsewhere.
 The $rexp$ function draws a random number from an exponential distribution, where $z$ specifies the
-$\lambda$ value, which is set to $\frac{1}{z}$. Figure \ref{fig:expdist} shows the exponential probability
+$\lambda$ value, which is set to $\frac{1}{z}$. Figure~\ref{fig:expdist} shows the exponential probability
 density function given different $\lambda$ values.
 
 % Vertical alignment of equation and plot.
@@ -314,7 +314,7 @@ filtering method will also be used.
 \subsubsection{Item-based Collaborative-Filtering}
 
 For our non-binary item-based collaborative filtering model we will use the Mahout \cite{mahout}
-implementation. The Pearsons Correlation Coefficient \ref{equation:pearson} will be used to compute
+implementation. The Pearsons Correlation Coefficient~\ref{equation:pearson} will be used to compute
 the item similarities.
 
 \subsubsection{ALS-WR}
@@ -328,7 +328,7 @@ Alternating-least-squares with weighted-$\lambda$-regularization (ALS-WR) was de
 Competition \cite{Netflix}, where it obtained an RMSE score of 0.8975, which was one of the best results based
 on a pure method.
 
-Alternating-least-squares is a method to solve Equation \ref{equation:minimize}. Since both $q_{s}$ and $p_{c}$
+Alternating-least-squares is a method to solve Equation~\ref{equation:minimize}. Since both $q_{s}$ and $p_{c}$
 are unknown, the equation is not convex. However if we fix one of the unknowns, the optimization problem becomes
 quadratic and can be solved optimally. The ALS technique rotate between fixing the $q_{s}$'s and fixing the $p_{c}$'s.
 When all the $p_{c}$'s are fixed, the system recomputes the $q_{s}$'s by solving a least-squares problem, and vica versa.
@@ -362,7 +362,7 @@ the set of users who rated item $s$, and $n_{q_{s}}$ is the cardinality of $I_{s
 found by solving a regularized linear least squares problem involving the known ratings of user $c$, and the
 feature vectors $q_{s}$ of the items that user $c$ has rated. Similarly, we can compute individual $q_{s}$'s via
 a regularized linear least squares solution, using the feature vectors of users who rated item $j$, and their ratings of it.
-The implicit feedback extension of the method is described in \ref{implicit-als-wr}.
+The implicit feedback extension of the method is described in~\ref{implicit-als-wr}.
 
 
 \subsubsection{Item-Average}
@@ -406,13 +406,8 @@ We have currently implemented the following bots: A \emph{BrandBot} which rates 
 multiple \emph{SingleBrandBots} which gives all items of a given brand a top rating,
 an \emph{AverageBot} which rates an item based on their average rating given to it, a \emph{CriticBot} which selects $n$ critics
 among the most active users and rate items based on their average rating, a \emph{PopularityBot} which rates
-<<<<<<< HEAD
-an item based on its popularity, each rating r(c,s) = $log_{3}C_{s}$, where $C_{s}}$ is the number of users which have rated the item and 3 is a normalization constant that caps the ratings at 4.5, as the most popular item have been rated 147 times. More ratings equals a higher rating. Compared to the work presented by Park et. al. we felt that the lack of high quality features was a limiting factor when designing the filterbots, as there is only
-=======
 an item based on its popularity, each rating $r(c,s) = log_{3}C_{s}$, where $C_{s}$ is the number of users which have rated the item and 3 is a normalization constant that caps the ratings at 4.5, as the most popular item have been rated 147 times. More ratings equals a higher rating. Compared to the work presented by Park et. al. we
-felt that the lack of high quality features was a limiting factor when designing the filterbots, as there is only
->>>>>>> 49858a7be56079458e4038c9e92b57191eca32e4
-so much information in the rating matrix.
+felt that the lack of high quality features was a limiting factor when designing the filterbots, as there is only so much information in the rating matrix.
 
 The intuition behind the \emph{SingleBrandBots} is as follows, given that a collaborative filtering algorithm is used:
 when a new user \emph{rates} an item it will be connected to a \emph{psudo-user} which have rated all items of the same brand highly,

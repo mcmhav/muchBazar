@@ -122,7 +122,7 @@ over the trust network. The items appreciated by these users can then be
 recommended to the active user.
 
 % Web of Trust - Figure explanation
-Consider the example shown in Figure \ref{figure:weboftrust}. User $A$ has
+Consider the example shown in Figure~\ref{figure:weboftrust}. User $A$ has
 issued a trust statement in $B$ and $C$; hence $B$ and $C$ are in the web of
 trust of $A$. Using these explicit trust statements, it is possible to predict
 trust in unknown users by propagating trust, making it possible to infer
@@ -144,14 +144,14 @@ rating scale may differ from system to system.
 % Architecture
 The systems takes as input the trust network and the ratings matrix and
 produces, as output, a matrix of predicted ratings that the users would assign
-to the items. Figure \ref{figure:trustarchictecture} shows a conceptual
+to the items. Figure~\ref{figure:trustarchictecture} shows a conceptual
 overview of the trust-aware recommender system architecture.
 
 \begin{figure}[H]
     \includegraphics[width=5in]{image/trustawarearchitecture.png}
     \centering
     \caption[Trust-Aware Recommender System Architecture]{Trust-Aware
-    Recommender System Architecture (Adopted from \cite{Massa2004})}
+    Recommender System Architecture (Adopted from~\cite{Massa2004})}
     \label{figure:trustarchictecture}
 \end{figure}
 
@@ -244,7 +244,7 @@ trust would be considered.
 Due to the number of ratings that exist in recommendation systems, underlying
 social networks are very sparse. There are cases in which insufficient or loss
 of information is detrimental for the recommendation algorithms. Consider
-Figure \ref{figure:cfsocialnetwork}, classic CF will associate only the users
+Figure~\ref{figure:cfsocialnetwork}, classic CF will associate only the users
 which have co-rated an item (User $1$ and $2$ and user $1$ and $3$). To deal
 with the problem of a sparse social network, it is possible to infer trust
 between a source user $S$ and a target user $T$ through an intermediate user
