@@ -4,20 +4,34 @@
 \label{chap:thesobazaardata}
 \minitoc
 
-    This sections will introduce the SoBazaar application and present and explore the data set used.
-    This includes how the data was preprocessed, an overview of the dataset, statistics and graphs, findings from the data and finally a summary.
-
-    The motivation for doing this is to lay ground for the assumptions made throughout this thesis, and help to more effortlessly present the reasoning behind the choices made, in regards to the fashion domain, the usage of implicit feedback and the recommender systems used.
+This chapter will in greater detail explore the SoBazaar application and
+explore the current state of the dataset used in this thesis. Further,
+interesting discoveries are presented, which all has an impact on \textit{how}
+we go forth and build a recommender engine for a fashion application. In order
+to best understand the domain in question, and answer research goal \textbf{G1}
+and \textbf{G2}, this chapter serves an important role for future chapters.
+Many identified properties of the dataset explored in this chapter will give
+reason to the majority of choices made throughout the thesis.
 
 \clearpage
-	\section{The SoBazaar Application}\mbox{}\\
-  \label{sec:sobazaar-data}
+\section{The SoBazaar Application}\mbox{}\\
+\label{sec:sobazaar-data}
 
-	\begin{chapquote}[30pt]{About SoBazaar}
-	  "SOBAZAAR is a newly developed social shopping experience --- a daily fashion bazaar on your mobile."
-	\end{chapquote}
 
-	SoBazaar is an online marketplace for fashion, but with a social twist. You can find stores like Moods of Norway, BIK BOK, Bianco and many more, which all have their own storefront in the application. The application lets you browse through thousands of products. If you find something you like you can purchase it directly from the application or store it for later with the \emph{heart it} function. The following screenshots are taken from the application and highlights some functionality currently found in the application. On the far left you see a newsfeed item from the \emph{homepage} or newsfeed. The newsfeed currently shows what other users have liked, notifies the user about sales and new products and recommends the most popular products.
+\begin{chapquote}[30pt]{About SoBazaar}
+  "SOBAZAAR is a newly developed social shopping experience --- a daily fashion bazaar on your mobile."
+\end{chapquote}
+
+SoBazaar is an online marketplace for fashion, but with a social twist. You can
+find stores like Moods of Norway, BIK BOK, Bianco and many more, which all have
+their own storefront in the application. The application lets you browse
+through thousands of products. If you find something you like you can purchase
+it directly from the application or store it for later with the \emph{heart it}
+function. The following screenshots are taken from the application and
+highlights some functionality currently found in the application. On the far
+left you see a newsfeed item from the \emph{homepage} or newsfeed. The newsfeed
+currently shows what other users have liked, notifies the user about sales and
+new products and recommends the most popular products.
 
 	\begin{figure}[H]
 		\centering
@@ -662,11 +676,6 @@ specific TV-show~\cite{study-on-implicit-tv}. We want to validate this
 hypothesis in the SoBazaar data, determining if the \textit{number of clicks}
 on an item implies higher preference, that is an higher probability of buying
 the item.
-
-\marginpar{Herman: Implicit Feedback Recommendation via Implicit-to-Explicit
-Ordinal Logistic Regression Mapping
- Check out related work for similar articles}
-
 
 If the hypothesis holds true, we can use this fact in order improve
 classification of our models in future sections. In addition we can customize
