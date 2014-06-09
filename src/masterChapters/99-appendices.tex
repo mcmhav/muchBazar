@@ -111,10 +111,9 @@
 
 \section{Fashion domain}
 
-\marginpar{TODO: Fix some kind of left align centering og content}
 \begin{table}[H]
     \centering
-    \begin{tabular}{ccc}
+    \begin{tabular}{lll}
     \toprule
       \multicolumn{2}{c}{Concrete Attributes (Product Features)} & Abstract Attributes (Attitude-Based) \\
       \cmidrule(r{1em}){1-2}
@@ -139,33 +138,34 @@
 \section{SoBazaar Competitors}\label{app:sec:soCompetitors}
 \subsubsection{Flink} % (fold)
 \label{par:flink}
-    "Flink is THE brand-new app to discover, get inspired and share trendy looks from top fashion bloggers" - About Flink~\cite{flink}.
 
-    Flink is a fashion discovery application for iPhone.
-    It allows the user to browse fashion blogs, hot brands and new trends.
+"Flink is THE brand-new app to discover, get inspired and share trendy
+looks from top fashion bloggers" - About Flink~\cite{flink}.
 
-    The content displayed can be "liked" and can be a collection of clothes from different brands.
-    If the user is interested in the item, the application can redirect the user to the web page where it is sold.
-    \begin{table}[H]
-            \centering
-            \begin{tabularx}{\linewidth}{>{\parskip1ex}X@{\kern4\tabcolsep}>{\parskip1ex}X}
-                \toprule
-                \hfil\bfseries Strengths
-                &
-                \hfil\bfseries Weaknesses
-                \\\cmidrule(r{3\tabcolsep}){1-1}\cmidrule(l{-\tabcolsep}){2-2}
-                Can follow other users \par
-                Connect with facebook \par
-                Ability to add item to a \emph{want list} \par
-                &
-                No personalized recommendations \par
-                \\\bottomrule
-                \end{tabularx}
-        \caption[Recommendation related strengths and weaknesses of Flink~\cite{flink}]{This table is the list of the recommendation related strengths and weaknesses of the mobile fashion application Flink~\cite{flink}}
-        \label{table:iphoneAppFlink}
-    \end{table}
-  % todo - might be more, but can't explore the application since it is iOS 7 required
-% paragraph flink (end)
+Flink is a fashion discovery application for iPhone.
+It allows the user to browse fashion blogs, hot brands and new trends.
+
+The content displayed can be "liked" and can be a collection of clothes from different brands.
+If the user is interested in the item, the application can redirect the user to the web page where it is sold.
+
+\begin{table}[H]
+  \centering
+  \begin{tabularx}{\linewidth}{>{\parskip1ex}X@{\kern4\tabcolsep}>{\parskip1ex}X}
+    \toprule
+    \hfil\bfseries Strengths
+    &
+    \hfil\bfseries Weaknesses
+    \\\cmidrule(r{3\tabcolsep}){1-1}\cmidrule(l{-\tabcolsep}){2-2}
+    Can follow other users \par
+    Connect with facebook \par
+    Ability to add item to a \emph{want list} \par
+    &
+    No personalized recommendations \par
+    \\\bottomrule
+ \end{tabularx}
+ \caption[Recommendation related strengths and weaknesses of Flink~\cite{flink}]{This table is the list of the recommendation related strengths and weaknesses of the mobile fashion application Flink~\cite{flink}}
+ \label{table:iphoneAppFlink}
+\end{table}
 
 \subsubsection{Motilo} % (fold)
 \label{par:motilo}
@@ -197,8 +197,6 @@
             \caption[Recommendation related strengths and weaknesses of Motilo~\cite{motilo}]{This table is the list of the recommendation related strengths and weaknesses of e-commerce fashion web site Motilo~\cite{motilo}}
             \label{table:ecommenreceMotilo}
         \end{table}
-% paragraph motilo (end)
-
 
 \subsubsection{ModCloth} % (fold)
 \label{par:modcloth}
@@ -229,7 +227,6 @@
         ModCloth~\cite{modcloth}}
         \label{table:ecommenreceModCloth}
     \end{table}
-% paragraph modcloth (end)
 
 \subsubsection{UsTrendy} % (fold)
 \label{par:ustrendy}
@@ -347,7 +344,6 @@
     \end{table}
 % paragraph trendabl (end)
 
-
 \subsubsection{Rue La La} % (fold)
 \label{par:rue_la_la}
     "Rue La La is the destination for the most desired brands" - About Rue La La~\cite{RueLaLa}
@@ -429,7 +425,6 @@
         \caption[Recommendation related strengths and weaknesses of Ellos~\cite{Ellos}]{This table is the list of the recommendation related strengths and weaknesses of e-commerce fashion web site Ellos~\cite{Ellos}}
         \label{table:ecommenreceEllos}
     \end{table}
-% paragraph ellos (end)
 
 \subsubsection{LookBook} % (fold)
 \label{par:lookbook}
@@ -513,7 +508,6 @@
         \caption[Recommendation related strengths and weaknesses of ShopStyle~\cite{ShopStyle}]{This table is the list of the recommendation related strengths and weaknesses of e-commerce fashion web site ShopStyle~\cite{ShopStyle}}
         \label{table:ecommenreceShopStyle}
     \end{table}
-% paragraph shopstyle (end)
 
 \subsubsection{Kwoller}
 \label{par:Kwoller}
@@ -652,20 +646,10 @@ popular datasets containing additional information:
 \chapter{Extended Implementation}
 \label{app:impl}
 
-\section{Implemented Functional Requirements}
-\begin{enumerate}[label=\bfseries FR \arabic*:]
-  \item {\color{ForestGreen}Blablaba}
-  \item {\color{RedOrange}\st{Blablaba}}
-\end{enumerate}
-
-\section{Implemented Non Functional Requirements}
-\begin{enumerate}[label=\bfseries NFR \arabic*:]
-  \item {\color{ForestGreen}Blablaba}
-  \item {\color{RedOrange}\st{Blablaba}}
-\end{enumerate}
-
 \section{Experimental Results}
 \label{app:results}
+
+% TODO: Introduce this section and explain what to be expected.
 
 \begin{table}[H]
 \centering
@@ -743,6 +727,7 @@ ALS-WR Price Linear        &   0.611358 &  0.003687 &  3037 &  2328 &  36 & 18.7
 \caption{Appendix: Experimental Results - Time Split 16. April - 19. May}
 \end{table}
 
+% TODO: Short explanation the results seen above.
 
 \subsubsection{Random Splits}
 \label{appendix-random-split-results}
@@ -795,13 +780,10 @@ ALS-WR Blend 2		&	0.800422 &	0.034519 &	1344.75 &	1246.5  &	134.5 &	104.5 		&	12
 \caption{Appendix: Experimental Results - Random Splits}
 \end{table}
 
-
-
-
+% TODO: Short explanation the results seen above.
 
 It was interesting to see that the performance of ItemBasedKNN actually started to decrease when looking at more than 50 neighbors, while UserBasedKNN's performance kept going up or stayed mostly the same when adding
 neighbors. UserBasedKNN with between 50-200 neighbors seem to give the best recommendation quality of all the methods tested, and they different is fairly significant.
-
 
 \begin{table}
 \centering\resizebox
@@ -1069,4 +1051,3 @@ user-75		&	0.503525 &	0.000301 &	1094 &	1155 &	139 &	3 &	3 &	2 &	0.002742 &	0.00
 }
 \caption{Appendix: Cold-start - Random Splits}
 \end{table}
-
