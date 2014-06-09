@@ -435,40 +435,43 @@ Norway, as shown below.
 \begin{figure}[H]
   \includegraphics[width=5in]{image/simpleGeoPlotNorway.png}
   \centering
-  \caption{Plot of event location in and around Norway}
+  \caption{Primary event locations in Norway}
   \label{figure:croppedGeoplot}
 \end{figure}
 
-Figure~\ref{figure:croppedGeoplot} shows the location of the user at the time
-the different events was triggered.  It is cropped to show events triggered in
-and around Norway.  We can see that the majority of the users are located in
-and around the capital city of Norway, Oslo.
-
-If the event is triggered from a phone, the event is as precise as the GPS
-hardware location of the phone, and would be helpful information to understand
-more about the user.
+The locations of all users in Norway, shows that users from the whole country
+are using the application and they correspond roughly to the population
+distribution as well -- this has the pleasant side-effect that making
+predictions based on demographics, may prove successful. However, experiments
+must the done in order to see to which degree one can make generalizations in
+city-centers, where most of the acitivity are coming from.
 
 \subsection{Product properties}
-    The properties of the products can tell help to tell how the products are being interacted with, and the distribution of events on them.
 
-    The next two figures presents the distribution of price of the products in the database.
+Having covered many of the properties found in the users of SoBazaar, we move
+our attention to the products to see how they are interacted with and if we
+gain any valuable knowledge which might lead us to better undertstand the
+domain. First we will look at the price distribution, before moving on to see
+how evenly distributed the product events are, and finally we delve more into
+detail on \textit{storefronts} and their effect on the dataset.
 
-    \begin{figure}[H]
-        \centering
-        \begin{subfigure}{.5\textwidth}
-            \includegraphics[width=\dualGraphWidth]{image/priceDistributiondistribution.png}
-            \centering
-            \caption{Price distribution of products}
-    \label{figure:pricePerProduct}
-        \end{subfigure}%
-        \begin{subfigure}{.5\textwidth}
-            \includegraphics[width=\dualGraphWidth]{image/cumpriceDistributiondistribution.png}
-            \centering
-            \caption{Cumulative price distribution of products}
-    \label{figure:pricePerProductCum}
-        \end{subfigure}
-        \caption{Figures presenting the distribution of price for the items i SoBazaar}
-    \end{figure}
+\begin{figure}[H]
+  \centering
+  \begin{subfigure}{.5\textwidth}
+      \includegraphics[width=\dualGraphWidth]{image/priceDistributiondistribution.png}
+      \centering
+      \caption{Price distribution of products}
+      \label{figure:pricePerProduct}
+  \end{subfigure}%
+  \begin{subfigure}{.5\textwidth}
+      \includegraphics[width=\dualGraphWidth]{image/cumpriceDistributiondistribution.png}
+      \centering
+      \caption{Cumulative price distribution of products}
+      \label{figure:pricePerProductCum}
+  \end{subfigure}
+  \caption{Figures presenting the distribution of price for the items i SoBazaar}
+\end{figure}
+
         Here we see how the products are distributed in regards to their price.
         134 of the products have a price over 2 500 NOK and have been left out of this graph.
 
