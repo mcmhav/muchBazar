@@ -80,7 +80,6 @@ The proposed system outperformed all other methods tested both in terms of
 accuracy and its ability to rank the top results.
 \marginpar{TODO: mention increase in accuracy and ranking ability}
 
-
 % Concluding thoughts
 Based on findings presented in this thesis, it is concluded that despite making
 recommendations for a difficult domain, with a extremely sparse dataset and
@@ -114,6 +113,29 @@ inevitable.
 
 \section{Future Work}
 
+As this thesis concerns itself with multiple different segments of modern
+recommender systems, there are a range of future work which could yield
+both interesting and auspicious results. Consequently we divide this section
+into these segments, looking at possible future work for each of them.
+
+\subsubsection{Generating implicit ratings}
+
+Finding and incorporating more implicit factors should also be considered as a
+possible future direction.
+Other implicit factors such as brand preference, ... could all be implemented
+too
+
+\subsubsection{Cold-start issues}
+
+%Discussion on product database features to improve content-based recommendations
+%Missing color, category, age-group and others
+However, the content-based filtering methods require rich descriptions of items
+and well built and well informed user profiles. These ideal cases are rare in
+real applications. This dependence on the quality and structure of data is the
+main weakness of methods based on content.
+
+\subsubsection{Recommending based on implicit feedback}
+
 As previously mentioned in \ref{sec:experimental-plan} sec the main reasons for
 implementing a recommender system is the desire to improve user satisfaction
 and to increase the economic success of a platform.  We believe it would be
@@ -128,13 +150,24 @@ The question then, is how this information can e.g. be used/incorporated into
 the recommender to increase profits without sacrificing (too much or any) user
 satisfaction by recommending more \emph{expensive} items to the user.
 
+%Recommender systems for anonymous users - Context
+%Recommend other items with a high similarity to the item currently being viewed
 
-%Discussion on product database features to improve content-based recommendations
-%Missing color, category, age-group and others
-However, the content-based filtering methods require rich descriptions of items
-and well built and well informed user profiles. These ideal cases are rare in
-real applications. This dependence on the quality and structure of data is the
-main weakness of methods based on content.
+\subsubsection{Evaluation implicit feedback}
+
+Personalization of the impact of different implicit factors could be
+interesting to look at.  Implicit factors such as brand preference, importance
+of global popularity, weight given to the different event types and so on could
+all be personalized for each user.  However, we feel it is important to mention
+the connection to matrix factorization methods aka SVD which \emph{basicly}
+does the same thing automatically. It reduced the rating matrix to a set of
+item and users factors for each individual item and user and a set of utility
+values for these factors.
+
+% TODO: Future work: perform user study to confirm implicit ratings
+% performance.
+
+\subsubsection{Future studies on SoBazaar data}
 
 With regards to recommendation quality we believe the main focus should be on
 getting more and higher quality data.
@@ -163,31 +196,12 @@ items we managed to extract the different attributes for. Attributes such as
 category, color, brand-name ...  are particulary useful and should be easily
 extracted from the product database for most products.
 
-%Recommender systems for anonymous users - Context
-%Recommend other items with a high similarity to the item currently being viewed
-
 Contextual item-to-item recommendations should be considered implemented to
 display related items to anonymous users in the context of viewing an item
 instead of the current system which recommends "People how love this also
 love".
 
-Finding and incorporating more implicit factors should also be considered as a
-possible future direction.
-
 Do trends repeat year after year?
-
-Personalization of the impact of different implicit factors could be
-interesting to look at.  Implicit factors such as brand preference, importance
-of global popularity, weight given to the different event types and so on could
-all be personalized for each user.  However, we feel it is important to mention
-the connection to matrix factorization methods aka SVD which \emph{basicly}
-does the same thing automatically. It reduced the rating matrix to a set of
-item and users factors for each individual item and user and a set of utility
-values for these factors.
-
-
-Other implicit factors such as brand preference, ... could all be implemented
-to
 
 As shown in \cite{FranceTelecom} most successful commercial recommender
 incorporate multiple sources of information. The following information sources
@@ -201,24 +215,11 @@ improve cold-start performance.
 \item Content information.
 \item Demographic information.
 \end{itemize}
-
-% TODO: Future work: perform user study to confirm implicit ratings
-% performance.
-
 \marginpar{Short discussion on the above mentioned information sources and how
 they can help. BE EXPLICIT!}
+
 %Importance of brand
 %Importance of social groups - fashion
 %Demographic filtering as a solution to the cold-start user problem?
 
-
-Better results with larger dataset
-Lack of negative feedback
-Implicit feedback tells us a lot about user behaviour (which is a good thing)
-Our proposed system performs better than only looking at purchases, which
-proves this.
-By testing in a online scenario and performing user-studies the real
-performance may be evaluated.
-
-This thesis have only on a small part of the possibilities. There is much work
-to be done. %%% THE END %%%
+%%%% THE END %%%%%
