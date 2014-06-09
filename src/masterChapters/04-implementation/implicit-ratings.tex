@@ -90,7 +90,7 @@ score mapping looks like:
   \centering
   \begin{tabular}{llll}
     \toprule
-      Event type & Probability & Min & Max \\
+      Event type & Probability & Min ($m_e$) & Max ($M_e$) \\
     \midrule
       \textit{product\_detail\_clicked}     & $\frac{25416}{40686} \approx 62$  & 0   & 62  \\[1.5ex]
       \textit{product\_wanted}              & $\frac{13252}{40686} \approx 33$  & 62  & 95  \\[1.5ex]
@@ -106,12 +106,12 @@ sum of all three fractions is 1, thus covering 100\% of all events.
 
 How then do we distribute the feature-values  between the min and max limits
 above? In our first implementation we use a \textit{linear penalization}
-function, set in such a way that $0 \leq p(x) \leq 1$ and $0 \leq x \leq M_u$
-where $M_u$ is the maximal observed value for user $u$ of the feature in
+function, set in such a way that $0 \leq p(x) \leq 1$ and $0 \leq x \leq F_u$
+where $F_u$ is the maximal observed value for user $u$ of the feature in
 question, defined as:
 
 \begin{equation}
-  p(x, u) = \frac{x}{M_u}
+  p(x, u) = \frac{x}{F_u}
 \end{equation}
 
 By considering penalization we also implicitly add negative feedback to events.
@@ -121,7 +121,7 @@ engines work better when we are assuming ratings are based on both positive and
 negative feedback.
 
 Given $p(x, u)$ we formalize an equation for finding $S_e(x, u)$, the score
-given to event $e$ after penalization, given a max $M_u$ and min $m_u$ value.
+given to event $e$ after penalization, given a max $M_e$ and min $m_e$ value.
 
 \begin{equation}
   S_e(x,u) = M_e - (M_e - m_e) \cdot p(x, u)
@@ -139,13 +139,13 @@ normalized between 1 and 5 and the product IDs are there for illustrative
 purposes. We choose to look at the number of days since the user did the event
 in question as the implicit feature, where $x=0$ means the event was registered
 today (or as the most recent) and in our example $x=14$ is the oldest event
-happening two weeks ago.
+happening two weeks ago, hence $F_u = 14$.
 
 \begin{table}[H]
   \centering
   \begin{tabular}{llllll}
   \toprule
-  Event type & Product ID & x (days) & P(x) & Score & Rating \\
+  Event type & Product ID & x (days) & p(x) & Score & Rating \\
   \midrule
   \textit{product\_purchase\_intended}  & 1 & 0   & $\frac{0}{14} = 0.00$  & 100 & 5.00 \\[1.5ex]
   \textit{product\_purchase\_intended}  & 2 & 3   & $\frac{3}{14} = 0.21$  & 98.95 & 4.96 \\[1.5ex]
@@ -169,40 +169,26 @@ every bin having an interval size of 0.0267:
 
 \begin{figure}[H]
   \centering
-  \includegraphics[scale=0.6]{image/dist-recentness-linear}
-  \caption{Distribution of ratings using number of days since event as feature
-  and a linear penalization function}
-\end{figure}
-
-We can see two ratings are widely more popular than others: 3.48 and 1.0. This
-makes sense, as every user that has more than two clicks registered are
-guaranteed to have the penalizations 1.0 and 0.0 apparent. As this is an
-obvious weakness we change our penalizations such that $M_u$ and $m_u$ are not
-longer based on the oldest and most recent events for user $u$, but rather the
-oldest and newest event in the dataset globally. Changing these factors yield
-the following distribution:
-
-\begin{figure}[H]
-  \centering
   \includegraphics[scale=0.6]{image/dist-recentness-linear-global}
  \caption{Distribution of ratings using number of days since event, a linear
  penalization function and global min/max feature-values}
   \label{fig:dist-recentness-linear-global}
 \end{figure}
 
-This is a much more interesting result, having an more even distribution of
-ratings with few gaps. The average rating is \textit{3.29} with a median
-\textit{3.37}. The weakness in these results however is easy to spot given the
-scenario when a user is absent from the application over a longer time and then
-returns. In this scenario all the items the user has previously looked at,
-wanted or bought will all suffer from large penalization values - and hence low
-ratings, since the x for all items is very high. In addition the method does
-not scale well, unless one limit the $M_u$ value, so that the difference
-between two adjacent x values are significant. As SoBazaar is a relatively new
-application this proved not to be a problem with our experiments, but given a
-larger dataset with older events we would recommend testing $M_u = \min(O_e,
-L)$ where $O_e$ is the number of days since the oldest event and $L$ is the
-limit, set at e.g. 200.
+Worth noting is that we here use $F_u$ oldest event globally, and not per user,
+since too many users only have one or two events, as per
+Figure~\ref{fig:ratingsPerUser}. The average rating is \textit{3.29} with a
+median \textit{3.37}. The weakness in these results however is easy to spot
+given the scenario when a user is absent from the application over a longer
+time and then returns. In this scenario all the items the user has previously
+looked at, wanted or bought will all suffer from large penalization values -
+and hence low ratings, since the x for all items is very high. In addition the
+method does not scale well, unless one limit the $M_u$ value, so that the
+difference between two adjacent x values are significant. As SoBazaar is a
+relatively new application this proved not to be a problem with our
+experiments, but given a larger dataset with older events we would recommend
+testing $M_u = \min(O_e, L)$ where $O_e$ is the number of days since the oldest
+event and $L$ is the limit, set at e.g. 200.
 
 In order to mitigate the returning user problem we adjust our feature to
 instead consider the ordering of events for user $u$. This way, given $n$

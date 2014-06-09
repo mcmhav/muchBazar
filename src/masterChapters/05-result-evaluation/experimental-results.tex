@@ -6,13 +6,14 @@
 The following section will present our experimental results, dicuss our findings and
 discuss whether or not our results supports our hypotheses.
 
-\section{Binary Purchase Only Dataset}
+\section{Purchase Only Results}
 
 Attempting to do collaborative filtering, let alone do recommendations with only 466 users, 1188 items and
 an average of 1.34 ratings per items is no easy task using traditional recommender systems. However, these numbers
 are meant as a baseline to show what one could expect when only looking at purchase data.
 
 \begin{table}[H]
+\label{table:results-purchase-only}
     \centering
     \begin{tabular}{*{5}l}
     \toprule
@@ -33,12 +34,10 @@ all the items. Both item-based and user-based collaborative filtering performed 
 while BPR-MF performed much worse than random guessing. The $MAP@20$ scores for all recommenders are to small to be shown
 using 5 descimals, meaning that close to zero relevant items were retrieved in the top 20 lists.
 
-\section{Multiple Events Datasets}
+\section{Multiple Events Results}
 
 When incorporating both clicks and likes in addition to purchases we ended up with a total of 1,511 users, 5,855 items
-and an average of 4.76 ratings per item.
-
-Here each event type is seen as equally important and is not weighted differently.
+and an average of 4.76 ratings per item. Here each event type is seen as equally important and is not weighted differently.
 These numbers are meant as a baseline to show what is possible using binary positive feedback only recommendation methods.
 Our goal is therefore to prove that these results can be beaten using our implicit ratings.
 
@@ -86,12 +85,16 @@ ALS-WR Blend 2				&   0.617061 &  0.006219 &  3037 &  2328 &  36 &    17.75 & 12
 \caption{Time-based split results (16. April - 19. May). All scores are averaged over 10 runs}
 \end{table}
 
-Again we see that the event distribution if far from optimal as it contains only 0.6\% purchases. However, further increasing the size of the split did not improve this ratio noticeably.
-To our surprise none of the binary methods significantly outperformed the non-personalized most-popular recommender.
-There is no dithering implemented in the collaborative filtering algorithms used, combined with the fact that the dataset is the same each time, giving us the same list of
-recommendations each time. We can see that ALS-WR trained with our implicit ratings marginally outperformed all binary methods for most metrics, in particular the implicit ratings that factored in recency only seems
-to give the best performance. Which was a pleasant surprise, since this is a time-based split. We chose to not include the results from the collaborative filtering methods using implicit ratings as they were really
-poor in comparison to ALS-WR. All our results can be seen in the Appendix \ref{appendix:time-based-results}.
+Again we see that the event distribution if far from optimal as the test set contains only 0.6\% purchases. However, further increasing the
+size of the split did not improve this ratio noticeably. To our surprise none of the binary methods significantly outperformed the non-personalized most-popular
+recommender. We chose not to include the results from our collaborative filtering methods using our implicit ratings, as they were really poor in comparison to ALS-WR.
+We believe that this can be attributed to that they are designed for explicit feedback data, and not positive only data, as in our case.
+There is no dithering implemented in the collaborative filtering algorithms used, combined with the fact that the dataset split is the same each time,
+giving us no decimal numbers for the averages. We can see that ALS-WR trained with our implicit ratings marginally outperformed all binary methods for most metrics.
+The most noticeable improvement is in the number of wants and purchases retrieved. In particular the implicit ratings that factored in recency only seems
+to give the best performance when considering the $MAP@20$ scores and recall. This was a pleasant surprise, since this is a time-based split. We chose to
+not include the results from the collaborative filtering methods using implicit ratings as they were really poor in comparison to ALS-WR. All our results
+can be seen in the Appendix \ref{appendix:time-based-results}.
 
 \subsection{Random splits}
 
@@ -114,7 +117,7 @@ ItemBased Log	   			&   0.690723     & 0.002094  &   1353.9  &   1250.5  &   138
 \rowcolor{Gray}
 ItemBasedKNN k=120  		&   0.7357796    & 0.0069094 &   1295.8  &   1231.4  &   146.8   & 	37.6    &   53      & 7.2     &   0.0290256   &  0.0431066    &  0.0487262    &  0.0044356    &  0.0097038&   0.0060544 & \\
 \rowcolor{Gray}
-UserBasedKNN K = 200 cos	&   0.7926842	& 0.0317002	&	1282.2	&   1186.2 &	136.4	&	102.2	&	101.4	& 12.6    &	  0.0797042	  &	0.0854958	  &	0.471684	  &	0.128002	  &	0.182436  &	0.0349802	&	\\
+UserBasedKNN K = 200 cos	&   0.7926842	& 0.0317002	&	1282.2	&   1186.2 &	136.4	&	102.2	&	101.4	& 12.6    &	  0.0797042	  &	0.0854958	  &	0.092375	  &	0.128002	  &	0.182436  &	0.0349802	&	\\
 \rowcolor{Gray}
 BPR-MF          			&   0.7286434    & 0.0099586 &   1332.8  &   1233.8  &   135.4   &   51.4    &   31      & 5.2     &   0.0385224   &   0.025142    &   0.0385042   &   0.0120152   & 0.0058942 &   0.0133786 & \\
 \rowcolor{Gray}
@@ -131,42 +134,39 @@ ALS-WR Blend 2				&	0.800422 &	0.034519 &	1344.75 &	1246.5  &	134.5 	&	104.5 		&
 \bottomrule
 \end{tabular}
 }
-\caption{Random split results 90:10 - The Results are averaged over 5-10 runs}
+\caption{Random split results 90:10 - The Results are averaged over 10 runs}
 \end{table}
 
-%TODO - If time, play with BPR-MF Parameters
-%TODO - Makes no sense to look at recentness here, make other blends
-%TODO - If time, more tuning of ALS-WR parameters
-%TODO - Test two or three more blends
-%TODO - Compare with binary results, do we see any improvements?
-
-
-
-As you can see the random splits significantly improved our event distribution giving us approximately 5\% purchase events for each run. The scores in general for all metrics
-are much higher for the random splits. \marginpar{TODO: Why?}
-As you can see from the table, ItemBasedKNN using cosine similarity with 200 neighbors dominates the binary method category.
-Another interesting observation is that IBCF produce poor recommendations using popularity alone, but that the result improves drastically when blending it with Price.
-Again we see that ALS-WR is marginally better than the best baseline method. All our results can be seen in the Appendix \ref{appendix:random-split-results}
-
+As you can see the random splits significantly improved our event distribution giving us approximately 5\% purchase events
+for each run. The scores in general for all metrics are much higher for the random splits. As you can see from the table,
+ItemBasedKNN using cosine similarity with 200 neighbors dominates the binary method category with respect to all metrics.
+We also notice that all methods except UserBasedKNN and ALS-WR did not significantly outperform a simple non-personalized
+recommender, which could be explained by our sparse data. Another interesting observation is that IBCF produce poor recommendations
+using popularity alone, but that the result improves drastically when blending it with Price. We also again notice that using traditional
+collaborative filtering methods yield far from optimal results. ALS-WR has the best performance overall, but only marginally.
+The results not shown in the table can be found in the Appendix \ref{appendix:random-split-results}
 
 \subsection{Cold-Start Results}
 
-The following subsections will present our results from our cold-start evaluation runs, first measuring the native cold-start performance
-of the different methods. We then try to inject different combinations of filterbots to see if the recommendation quality improves.
+The following subsections will present our results from our cold-start evaluation runs. As ALS-WR proved to be the best method overall we wish to
+see how well it performs in the different cold-start scenarios. We will use a most-popular recommender and IBCF as baselines to get a better
+overview of how well the different methods perform in comparison. In a switching hybrid recommender one could e.g. use a most popular
+recommender to generate recommendations to new users, then switch to IBCF recommender with filterbots when the user have rated at least one item, and at a later 
+point e.g. when a user have rated 10 items, use ALS-WR to provide personalized recommendations. To recap, our cold-start solution was designed
+for neighborhood models and not latent factor methods. This means that we do not expect to much from applying them to ALS-WR.
+
+We then try to inject different combinations of filterbots to see if the recommendation quality improves.
 Running cold-start experiments costly in the sense that we need to train 9 different models for each implicit rating function and model.
 In addition we also have $2^5$ possible filterbots combinations, and the option of using different parameters for each method. We therefore chose
-to limit the number of combinations tested to 3, based on our preliminary results. The first combination we tested only injects 12 brand
-bots which each give each item of a particular brand the maximum rating. Combination two injects brand bots in a popularity bot, which rates
-the items based on their popularity. Combination three injects all the bots described in \ref{implementation-filterbots}.
+to limit the number of combinations tested to 3, based on our preliminary results. The first combination, denoted [0,0,0,0,1], injects 12 brand
+bots which each give each item of a particular brand the maximum rating. Combination two, denoted [0,0,1,0,1] injects brand bots plus a popularity bot, which rates
+the items based on their popularity. Combination three, denoted [1,1,1,1,1] injects all the five bots described in \ref{implementation-filterbots}.
 
-
-
-As ALS-WR and IBCF gave us the best results on our random split we chose to only apply filterbots to these models.
-\marginpar{TODO: Figure out what to do with filterbot-als-wr combo. I do not like it...}
 
 
 \subsection{Time-based splits}
 
+The following tables show the results from our cold-start runs using time-based splits using Blend 1.
 
 \begin{table}[H]
 \centering
@@ -186,21 +186,25 @@ Most-Popular 	 &	0.2964  &	0.908403&	0.973461&	0&	0.015807&	0.043607&	0&	0.12224
 
 \rowcolor{Gray}
 IBCF 			 &	0.581572&	0.783782&	0.647155&	0.000183&	0.008705&	0.002948&	0.000926&	0.021223&	0.01396	&	0.001526&	0.018261&	0.015304&	0&	0.076197&	0.013116	&	\\
-IBCF [0,0,0,0,1] &	0.541997&	0.58478	&	0.642857&	0.014604&	0.005501&	0.001959&	0.009187&	0.009037&	0.006354&	0.01123	& 0.009327&	0.005027&	0.009601&	0.008387&	0.019131& \\
+IBCF [0,0,0,0,1] &	0.541997&	0.58478	&	0.642857&	0.014604&	0.005501&	0.001959&	0.009187&	0.009037&	0.006354&	0.01123	& 0.009327&	0.005027&	0.009601&	0.008387&	0.019131& \\						
 IBCF [0,0,1,0,1] &	0.550556&	0.759351&	0.785536&	0.000507&	0.002808&	0.003399&	0.002737&	0.008781&	0.011933&	0.00152	&	0.005298&	0.009464&	0.004037&	0.012874&	0	& \\
 IBCF [1,1,1,1,1] &	0.592059&	0.67624	&	0.79985&	0.000984&	0.002873&	0.005914&	0.00318&	0.011957&	0.022349&	0.002196&	0.008525&	0.016026&	0.004175&	0.011679&	0.033806& \\
 
 \rowcolor{Gray}
 ALS-WR 			   & 0.548427&	0.808723&	0.728263&	0.000192&	0.037148&	0.011774&	0.000926&	0.092468&	0.037826&	0.000382&	0.108875&	0.03708	&	0	&	0.095247	&	0.026232	&	\\
-ALS-WR [0,0,0,0,1] & 0.541997&	0.58478	&	0.642857&	0.014604&	0.005501&	0.001959&	0.009187&	0.009037&	0.006354&	0.01123	&	0.009327&	0.005027&	0.009601&	0.008387&	0.019131& \\
+ALS-WR [0,0,0,0,1]  & 0.585388	&	0.802813	&	0.883175	&	0	&	0.014429	&	0.028139	&	0	&	0.037112	&	0.112164	&	0	&	0.03914	&	0.132859	&	0	&	0.045603	&	0.092624	& \\
 ALS-WR [0,0,1,0,1] & 0.584148&	0.809751&	0.867979&	0		&	0.013717&	0.031943&	0	&	0.036174&	0.114726&	0	&	0.040547&	0.131648&	0	&	0.041833&	0.08271	& \\
 ALS-WR [1,1,1,1,1] & 0.584146&	0.801188&	0.883362&	0		&	0.013521&	0.027455&	0&	0.036424&	0.10958&	0&	0.037991&	0.12838	&	0	&	0.035166	&	0.083817	& \\
 
 \bottomrule
 \end{tabular}
 }
-\caption{Cold-start item results - time splits}
+\caption{Cold-start item results - Time-based Splits}
 \end{table}
+
+The main reason why the most-popular recommender performs so well for this split is that many of the most popular items are used as test items, since
+all test items have been rated by a minimum of 15 users. The main improvements seen for adding filterbots is the combination [0,0,0,0,1] which seem to give
+a good improvement for both the 10\% and 40\% splits. Again we see that the ALS-WR outperforms IBCF on all counts for the 75\% splits.
 
 \begin{table}[H]
 \centering
@@ -223,18 +227,22 @@ IBCF 				&  0.525182&	0.569436&	0.618759&	0.013867&	0.003454&	0.005097&	0.00811	
 IBCF [0,0,0,0,1] 	&  0.596502& 	0.6813	&	0.801234&	0.0015&	0.003662&	0.006053&	0.003688&	0.012979&	0.022237&	0.002271&	0.008763&	0.016609&	0.004107&	0.019544&	0.03705	& \\
 IBCF [0,0,1,0,1] 	&  0.56392 &	0.636005 &	0.652698 &	0.01133	&	0.001954&	0.003557&	0.006783&	0.002302&	0.00223	&	0.00717	&	0.00322	&	0.002483&	0.01855	&	0.004944&	0& \\
 IBCF[1,1,1,1,1]		&  0.579214&	0.602512&	0.644213&	0.015548&	0.005702&	0.001516&	0.007389&	0.006104&	0.004312&	0.0088&	0.00623	&	0.004079&	0.006545&	0.004983&	0.007391	& \\
-
+																																																							
 \rowcolor{Gray}
 ALS-WR 			   	& 0.669121&	0.71492	&	0.747457&	0.021574&	0.012256&	0.015096&	0.015861&	0.024894&	0.017286&	0.018796&	0.030244&	0.024057&	0.035962&	0.024274&	0.039299	&	\\
-ALS-WR [0,0,0,0,1] 	& 0.596502&	0.6813	&	0.801234&	0.0015  &	0.003662&	0.006053&	0.003688&	0.012979&	0.022237&	0.002271&	0.008763&	0.016609&	0.004107&	0.019544&	0.03705	& \\
+ALS-WR [0,0,0,0,1] 	&	0.750818	&	0.776184	&	0.802479	&	0.032507	&	0.021176	&	0.013645	&	0.019687	&	0.018529	&	0.024681	&	0.02235	&	0.025151	&	0.03131	&	0.045516	&	0.049708	&	0.057392	& \\
 ALS-WR [0,0,1,0,1]  & 0.743056&	0.775837 &	0.794349 &	0.040067 &	0.022627&	0.011641&	0.013508&	0.014531&	0.0137 &	0.021821 &	0.021754 &	0.02263	&	0.035674 &	0.031372&	0.02843	& \\
 ALS-WR [1,1,1,1,1] 	& 0.765483& 0.783833&	0.80291	&	0.032886&	0.020741&	0.011311&	0.012785&	0.012398&	0.013864&	0.017822&	0.020488&	0.021422&	0.027702&	0.025919&	0.030864	& \\
 
 \bottomrule
 \end{tabular}
 }
-\caption{Cold-start user results -  time-split}
+\caption{Cold-start User Results -  Time-based Splits}
 \end{table}
+
+From the table we can see that most popular outperform IBCF on all counts except $R_{purchase}$ at 10\%. ALS-WR and most-popular have more or less
+the same performance, ALS-WR being slightly better, except for the purchase numbers. There are no apparent improvements to be seen from adding filterbots
+this time around.
 
 \begin{table}[H]
 \centering
@@ -259,25 +267,22 @@ IBCF [1,1,1,1,1] &	0.468626&	0.509375&	0.534009&	0.001836&	0.002444&	0.000348&	0
 
 \rowcolor{Gray}
 ALS-WR 				&	0.570946&	0.568137&	0.600738&	0.002545&	0.001761&	0.006208&	0.003937&	0.002625&	0.004265&	0.003466&	0.005199&	0.004766&	0.027778&	0.027778	&	0 & \\
-ALS-WR [0,0,0,0,1]	&	0.328139&	0.333955&	0.362105&	0.000348&	0.002444&	0.001836&	0.000656&	0.000328&	0.004593&	0.000433&	0.002166&	0.002166	&	0	&	0.027778	&	0	& \\
-ALS-WR [0,0,1,0,1] 	& 	0.602176&	0.596168&	0.640561&	0.001719&	0.0028&	0.004611&	0.003404&	0.005659&	0.00689	&	0.003954&	0.003304&	0.007095&	0	&	0	&	0.024306	& \\
+ALS-WR [0,0,0,0,1] &	0.573326&	0.582566&	0.632071&	0.00213&	0.003647&	0.003087&	0.006562&	0.006234&	0.00689	&	0.0013&	0.002166&	0.005199&	0	&	0	&	0	& \\		
+ALS-WR [0,0,1,0,1] 	& 	0.602176&	0.596168&	0.640561&	0.001719&	0.0028&	0.004611&	0.003404&	0.005659&	0.00689	&	0.003954&	0.003304&	0.007095&	0	&	0	&	0.024306	& \\				
 ALS-WR [1,1,1,1,1]  & 	0.686571&	0.682588&	0.69171	&	0.003087&	0.003647&	0.00213&	0.00689&	0.006234&	0.006562&	0.005199&	0.002166&	0.0013&	0&	0&	0	& \\
-
+																														
 \bottomrule
 \end{tabular}
 }
-\caption{Cold-start system results - time split}
+\caption{Cold-start System Results - Time Splits}
 \end{table}
 
-
-
-
-
-
+Again we can see that most-popular outperforms IBCF on all counts except $R_{purchase}$ at 10\%. ALS-WR and most popular again performs equally well.
+We can see no apparent improvements from using filterbots to IBCF. The filterbots do not seem to improve the performance.
 
 \subsection{Random splits}
 
-The following results shows the baseline cold-start performance of our models before applying the filterbots.
+The following results shows the results from our random cold-start splits using Blend 2.
 
 \begin{table}[H]
 \centering
@@ -306,8 +311,12 @@ ALS-WR [1,1,1,1,1]	& 0.637067& 0.79768	&	0.762618&	0.000114&	0.026056&	0.038596&
 \bottomrule
 \end{tabular}
 }
-\caption{Cold-start item results - random splits}
+\caption{Cold-Start Item Results - Random Splits}
 \end{table}
+
+Again we see that most-popular performs well, which mainly is a result of how the splits are made. ALS-WR can here be seen to significantly outperform
+IBCF. There are no significant performance improvements from the filterbots.
+
 
 \begin{table}[H]
 \centering
@@ -334,13 +343,15 @@ ALS-WR [0,0,0,0,1]  & 0.725338&	0.760125&	0.786315&	0.035379&	0.021941&	0.014229
 ALS-WR [0,0,1,0,1] 	& 0.695013&	0.767194&	0.788278&	0.045986 &	0.045413&	0.019044&	0.03157&	0.052224&	0.031098&	0.042866&	0.05386	& 0.045775&	0.040752& 0.055& 0.034884& \\
 ALS-WR [1,1,1,1,1] 	& 0.696383&	0.780863&	0.813625&	0.03936	&	0.045689&	0.0152	&	0.030845&	0.046977&	0.036929&	0.036536	&	0.057541	&	0.041757&	0.038356	&	0.07173	&	0.044248	& \\
 
-
-
 \bottomrule
 \end{tabular}
 }
-\caption{Cold-start user results - random splits}
+\caption{Cold-start User Results - Random Splits}
 \end{table}
+
+ALS-WR can again be seen to outperform both most popular and IBCF. The filterbot combination [0,0,0,0,1] seem to improve the 75\% split performance for all
+metrics except for AUC.
+
 
 \begin{table}[H]
 \centering
@@ -353,159 +364,94 @@ ALS-WR [1,1,1,1,1] 	& 0.696383&	0.780863&	0.813625&	0.03936	&	0.045689&	0.0152	&
 \multicolumn{1}{c}{60\%} & \multicolumn{1}{c}{80\%} & \multicolumn{1}{c}{40\%} & \multicolumn{1}{c}{60\%} & \multicolumn{1}{c}{80\%} & \multicolumn{1}{c}{40\%} & \multicolumn{1}{c}{60\%} &
 \multicolumn{1}{c}{80\%} & 	\\ \midrule
 
-
 %Pre Filterbots
 \rowcolor{Gray}
 Most Popualar 		& 0.663937&	0.6752165&	0.708515&	0.0139605&	0.0125785&	0.014044&	0.033597&	0.0370545&	0.041488&	0.029427&	0.0297455&	0.03214465&	0.021974&	0.0243725&	0.02887465 & \\
 \rowcolor{Gray}
-IBCF 			 	& 0.5730765&	0.5847735&	0.613753&	0.003057&	0.0034495&	0.002457&	0.009752&	0.0125695&	0.0086305&	0.021379&	0.0136815&	0.011022&	0.018308&	0.037721&	0.0271465 & \\
-IBCF [0,0,0,0,1] 	& 0.858169	&	0.859332&	0.857039&	0.001628&	0.001755&	0.001992&	0.00672	&	0.007671&	0.004163&	0.002358&	0.002112&	0.00275	&	0.001342&	0.002685&	0.001174	& \\
-IBCF [0,0,1,0,1] 	& 0.55964	&	0.570314&	0.624521&	0.003104&	0.002879&	0.003668&	0.009557&	0.013761&	0.014908&	0.02075	&	0.019553&	0.009178&	0.032727&	0.010909&	0.007273 & \\
-IBCF [1,1,1,1,1] 	& 0.637067  &	0.79768 &	0.762618&	0.000114&	0.026056&	0.038596&	0.000615&	0.070052&	0.115016&	0.000381&	0.073538&	0.120321&	0.003937&	0.10119	&	0.138889	& \\
+IBCF 			 	& 0.5730765&	0.5847735&	0.613753&	0.003057&	0.0034495&	0.002457&	0.009752&	0.0125695&	0.0086305&	0.021379&	0.0136815&	0.011022&	0.018308&	0.037721&	0.0271465 & \\				
+IBCF [0,0,0,0,1] 	& 0.858169 &	0.859332&	0.857039&	0.001628&	0.001755&	0.001992&	0.00672	&	0.007671&	0.004163&	0.002358&	0.002112&	0.00275	&	0.001342&	0.002685&	0.001174	& \\
+IBCF [0,0,1,0,1] 	& 0.55964  &	0.570314&	0.624521&	0.003104&	0.002879&	0.003668&	0.009557&	0.013761&	0.014908&	0.02075	&	0.019553&	0.009178&	0.032727&	0.010909&	0.007273 & \\
+IBCF [1,1,1,1,1] 	& 0.637067 &	0.79768 &	0.762618&	0.000114&	0.026056&	0.038596&	0.000615&	0.070052&	0.115016&	0.000381&	0.073538&	0.120321&	0.003937&	0.10119	&	0.138889	& \\
 \rowcolor{Gray}
-ALS-WR			   	& 0.6094695&	0.646568&	0.7473595&	0.0081595&	0.0110905&	0.030684&	0.0199265&	0.02659	&	0.076963&	0.028979&	0.03916	&	0.1011035&	0.018231&	0.034093&	0.0823435& \\
+ALS-WR			   	& 0.609470& 0.646568&	0.7473595&	0.0081595&	0.0110905&	0.030684&	0.0199265&	0.02659	&	0.076963&	0.028979&	0.03916	&	0.1011035&	0.018231&	0.034093&	0.0823435& \\
 ALS-WR [0,0,0,0,1] 	& 0.615021&	0.634666&	0.68831&	0.006068&	0.009741&	0.014679&	0.016717&	0.022796&	0.035334&	0.020968&	0.020161&	0.039113&	0.021127&	0.024648&	0.038732	& \\
-ALS-WR [0,0,0,0,1] 	& 0.548979&	0.558437&	0.569449&	0.00113	&	0.002377&	0.00222	&	0.001546&	0.003568&	0.002498&	0.001866&	0.002358&	0.003585&	0.000503&	0.001678&	0.000839& \\
+ALS-WR [0,0,0,0,1] 	& 0.548979&	0.558437&	0.569449&	0.00113	&	0.002377&	0.00222	&	0.001546&	0.003568&	0.002498&	0.001866&	0.002358&	0.003585&	0.000503&	0.001678&	0.000839& \\					
 ALS-WR [0,0,1,0,1]	& 0.587088& 0.620744&	0.681467&	0.008626&	0.01031	&	0.018522&	0.022104&	0.019436&	0.043445&	0.02518	&	0.035971&	0.049161&	0.01476&	0.03321&	0.070111 & \\
 ALS-WR [1,1,1,1,1] 	& 0.666988& 0.677643&	0.726329&	0.011568&	0.009503&	0.022999&	0.023229&	0.025133&	0.043412&	0.027375&	0.03864	&	0.062399&	0.031359&	0.02439&	0.062718	& \\
-
+																														
 \bottomrule
 \end{tabular}
 }
-\caption{Cold-start system results - random splits}
+\caption{Cold-start System Results - Random Splits}
 \end{table}
 
+For the 40\% splits we see that most-popular outperforms ALS-WR on all counts, while IBCF has the worst baseline performance. There seem to be no apparent gains
+from using filterbots for either IBCF or ALS-WR.
 
+\subsection{Recommendations using all events}
 
-
-
-
-
-
-
-
-
-
-
-
-
-The reason why most popular does so well on the cold-start item problem is due to the fact that we select items that have been rated over a certain number of times as test items.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+Table \ref{table:results-purchase-only} shows our results from testing personalized recommenders on the purchase only dataset.
+The results show that the recommenders are unable to provide any better recommendation results than using a recommender to draws
+items at random. By comparing our results from our experiments and the poor performance of the purchase only recommenders
+we assume it reasonable to conclude that including all events improves the recommendation quality.
 
 \subsection{Does our proposed implicit rating methods improve the recommendation quality over binary preference data?}
 
-Does our findings support our hypothesis?
+We got our best results in our experiments both for random and time-based splits combining ALS-WR with our implicit ratings.
+ALS-WR marginally outperformed all other binary recommendation methods tested for all measured metrics.
 
-
+As previously mentioned we have to consider that different methods have been used, and it would be \emph{dangerous}
+to draw any grand conclusions from our results as it can also be attributed to ALS-WR being a more sophisticated
+and better model than the ones we have compared it to. However, we can say that we managed to produce better recommendation
+results using a combination of implicit ratings and non-binary methods than we were using binary methods.
 
 \subsection{Compare the different implicit rating functions}
 
-Does our findings support our hypothesis?
+For the time-based splits both recentness functions, especially Count Sigmoid Fixed performed the best overall
+looking at our performance metrics. For the random-based splits both price and a blend of price and popularity performed
+\emph{equally good}. The difference is marginally in both cases, making it \emph{impossible} to give a definitive answer
+to which is \emph{better}, as further testing is needed.
+
+\subsection{Cold-start Results}
+
+We found no conclusive evidence to support that our filterbotsrmance of either IBCF or ALS-WR. 
+
 
 \subsection{Select the best combination of methods for the SoBazar recommender system}
 
-Does our findings support our hypothesis?
+Our experiments have shown that ALS-WR combined with our implicit ratings performed the best of all the recommendation
+methods tested on our dataset. 
 
 
 
 
+%%http://datacommunitydc.org/blog/2013/05/recommendation-engines-why-you-shouldnt-build-one/
+%
+%Recommender systems are arguably one of the trendiest uses of data science startups today. However, with the exception of very
+%rare cases, it is not \emph{the killer} feature of your application which make users flock to you. The reason it works
+%well for Amazon and Netflix is because they have \emph{millions} of titles and a large existing user base. Presenting users
+%with recommended movies and products increase usage and sales, but does not create either to begin with.
+%
+%The more data the better. With little or no data you won't be able to make recommendations \emph{at all}. Unless you have the users, domain expertise, algorithm development skill, massive inventory and frictionless user data entry your recommender
+%system will not be \emph{the milkshake that brings all the boys to the yard}. Instead the focus should be on building your core product, optimizing your e-commerce funnel, growing your user base, developing user loyalty and growing your inventory. In the meantime you can drive serendipitous recommendations simply by using a combination of most popular content and editors.
 
+%\begin{table}\centering\resizebox{\columnwidth}{!}{\begin{tabular}{*{19}l}\toprule
+% & AUC &        MAP@20 &        T\_c &  T\_w &  T\_p &  P\_c &  P\_w &  P\_p &  R\_c &  R\_w &  R\_p &  MAP@20-click &  MAP@20-want &   MAP@20-purchase &        \\
+%\midrule
+%Popularity Linear 		& 0.826453 &  0.021901 &   1334.5 &     1217.5 &        135.5 & 84.5 &  99.5 &  13 &    0.063344 &      0.08173 &       0.096577 &      0.017595 &      0.028308 &      0.016286 &       \\
+%Price Linear 			& 0.807685 &  0.034168 &      1331.5 &        1218 &  138 &   108 &   123 &   7 &     0.081151 &      0.100936 &      0.05078 &       0.026794 &      0.044992 &      0.018096 &       \\
+%Count Linear 			& 0.822363 &  0.036075 &      1305.5 &        1230.5 &        151.5 & 109 &   133 &   13 &    0.083285 &      0.108095 &      0.085686 &      0.026972 &      0.043421 &      0.033443 &       \\
+%Blend 					& 0.830927 &  0.038488 &      1333.5 &        1218 &  136 &   119 &   123 &   11.5 &  0.089093 &      0.101065 &      0.084523 &      0.033347 &      0.041012 &      0.017738 &       \\
+%avgs    				& 0.821857 &  0.032658 &      1326.25 &       1221 &  140.25 &        105.125 &       119.625 &       11.125 &        0.079218 &      0.097957 &      0.079392 &      0.026177 &      0.039433 &      0.021391 &      \\
+%\bottomrule\end{tabular}}\caption{random mahout-svd}\end{table}
+%
+%\begin{table}\centering\resizebox{\columnwidth}{!}{\begin{tabular}{*{19}l}\toprule
+% & AUC &        MAP@20 &        T\_c &  T\_w &  T\_p &  P\_c &  P\_w &  P\_p &  R\_c &  R\_w &  R\_p &  MAP@20-click &  MAP@20-want &   MAP@20-purchase &        \\
+%\midrule
+%Count Linear 		& 0.836785 & 0.038372 & 1298 	&  1195 &  136    &   105 &   121  &   10 &    0.080894 &      0.101255 &      0.073529 &      0.03457 &       0.040894 &      0.020969 &       \\
+%Blend 		 		& 0.826914 & 0.028973 & 1296 	&  1203 &  130    &   90  &    108 &   9  &     0.069444 &      0.089776 &      0.069231 &      0.027885 &      0.029995 &      0.016919 &       \\
+%Price Linear 		& 0.831955 & 0.038984 & 1249 	&  1246 &  134    &   119 &   126  &   12 &    0.095276 &      0.101124 &      0.089552 &      0.037668 &      0.034568 &      0.043466 &       \\
+%Popularity Linear 	& 0.834801 & 0.019844 & 1302 	&  1196 &  131    &   70  &    81  &    3 &     0.053763 &      0.067726 &      0.022901 &      0.015446 &      0.023492 &      0.00115 &        \\
+%avgs    			& 0.832614 & 0.031543 & 1286.25 & 1210  &  132.75 &   96  &    109 &   8.5 &   0.074844 &      0.08997 &       0.063803 &      0.028892 &      0.032237 &      0.020626 &      \\
+%\bottomrule\end{tabular}}\caption{random mahout-svd}\end{table}
 
-
-
-
-
-
-%http://datacommunitydc.org/blog/2013/05/recommendation-engines-why-you-shouldnt-build-one/
-
-Recommender systems are arguably one of the trendiest uses of data science startups today. However, with the exception of very
-rare cases, it is not \emph{the killer} feature of your application which make users flock to you. The reason it works
-well for Amazon and Netflix is because they have \emph{millions} of titles and a large existing user base. Presenting users
-with recommended movies and products increase usage and sales, but does not create either to begin with.
-
-The more data the better. With little or no data you won't be able to make recommendations \emph{at all}. Unless you have the users, domain expertise, algorithm development skill, massive inventory and frictionless user data entry your recommender
-system will not be \emph{the milkshake that brings all the boys to the yard}. Instead the focus should be on building your core product, optimizing your e-commerce funnel, growing your user base, developing user loyalty and growing your inventory. In the meantime you can drive serendipitous recommendations simply by using a combination of most popular content and editors.
-
-
-
-
-
-
-
-
-
-% ./testikus.sh -i mongo -m "itembased" -s random -c;
-% ./testikus.sh -i mongo -m "itembased" -s "time" -c;
-\begin{table}\centering\resizebox{\columnwidth}{!}{\begin{tabular}{*{19}l}\toprule
- & AUC &    MAP@20 &    T\_c &  T\_w &  T\_p &  P\_c &  P\_w &  P\_p &  R\_c &  R\_w &  R\_p &  MAP@20-click &  MAP@20-want &   MAP@20-purchase &    \\
-\midrule
-Popularity Linear & 0.563541 &  0.000487 &  1319.376953 &   1230.632812 &   133.609375 &    0.001953 &  6.763672 &  4.302734 &  0.000001 &  0.005509 &  0.03209 &   0 & 0.000925 &  0.00381 &    \\
-Blend & 0.688134 &  0.004102 &  1308.691406 &   1238.751953 &   136.175781 &    16.996094 & 18.550781 & 3.720703 &  0.012981 &  0.014969 &  0.027338 &  0.003973 &  0.003342 &  0.004446 &   \\
-Price Linear &  0.680404 &  0.004465 &  1317.310547 &   1234.445312 &   131.634766 &    22.265625 & 22.146484 & 4.722656 &  0.016899 &  0.017936 &  0.035774 &  0.003906 &  0.005031 &  0.003304 &   \\
-avgs     &  0.644026 &  0.003018 &  1315.126302 &   1234.610026 &   133.806641 &    13.087891 & 15.820312 & 4.248698 &  0.009961 &  0.012805 &  0.031734 &  0.002626 &  0.003099 &  0.003853 &  \\
-\bottomrule\end{tabular}}\caption{random mahout-itembased}\end{table}
-\begin{table}\centering\resizebox{\columnwidth}{!}{\begin{tabular}{*{19}l}\toprule
- & AUC &    MAP@20 &    T\_c &  T\_w &  T\_p &  P\_c &  P\_w &  P\_p &  R\_c &  R\_w &  R\_p &  MAP@20-click &  MAP@20-want &   MAP@20-purchase &    \\
-\midrule
-Popularity Linear Timetrain &   0.326824 &  0 & 3037 &  2328 &  36 &    0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 &  \\
-Blend Timetrain &   0.419749 &  0.002482 &  3037 &  2328 &  36 &    11 &    5 & 0 & 0.003622 &  0.002148 &  0 & 0.002422 &  0.000504 &  0 &  \\
-Price Linear Timetrain &    0.419367 &  0.003731 &  3037 &  2328 &  36 &    19 &    5 & 1 & 0.006256 &  0.002148 &  0.027778 &  0.003329 &  0.001435 &  0.000421 &   \\
-avgs     &  0.388647 &  0.002071 &  3037 &  2328 &  36 &    10 &    3.333333 &  0.333333 &  0.003293 &  0.001432 &  0.009259 &  0.001917 &  0.000647 &  0.00014 &   \\
-\bottomrule\end{tabular}}\caption{time mahout-itembased}\end{table}
-
-\begin{table}\centering\resizebox{\columnwidth}{!}{\begin{tabular}{*{19}l}\toprule
- & AUC &        MAP@20 &        T\_c &  T\_w &  T\_p &  P\_c &  P\_w &  P\_p &  R\_c &  R\_w &  R\_p &  MAP@20-click &  MAP@20-want &   MAP@20-purchase &        \\
-\midrule
-Popularity Linear &     0.826453 &      0.021901 &      1334.5 &        1217.5 &        135.5 & 84.5 &  99.5 &  13 &    0.063344 &      0.08173 &       0.096577 &      0.017595 &      0.028308 &      0.016286 &       \\
-Price Linear &  0.807685 &      0.034168 &      1331.5 &        1218 &  138 &   108 &   123 &   7 &     0.081151 &      0.100936 &      0.05078 &       0.026794 &      0.044992 &      0.018096 &       \\
-Count Linear &  0.822363 &      0.036075 &      1305.5 &        1230.5 &        151.5 & 109 &   133 &   13 &    0.083285 &      0.108095 &      0.085686 &      0.026972 &      0.043421 &      0.033443 &       \\
-Blend & 0.830927 &      0.038488 &      1333.5 &        1218 &  136 &   119 &   123 &   11.5 &  0.089093 &      0.101065 &      0.084523 &      0.033347 &      0.041012 &      0.017738 &       \\
-avgs     &      0.821857 &      0.032658 &      1326.25 &       1221 &  140.25 &        105.125 &       119.625 &       11.125 &        0.079218 &      0.097957 &      0.079392 &      0.026177 &      0.039433 &      0.021391 &      \\
-\bottomrule\end{tabular}}\caption{random mahout-svd}\end{table}
-
-\begin{table}\centering\resizebox{\columnwidth}{!}{\begin{tabular}{*{19}l}\toprule
- & AUC &        MAP@20 &        T\_c &  T\_w &  T\_p &  P\_c &  P\_w &  P\_p &  R\_c &  R\_w &  R\_p &  MAP@20-click &  MAP@20-want &   MAP@20-purchase &        \\
-\midrule
-Count Linear &  0.836785 &      0.038372 &      1298 &  1195 &  136 &   105 &   121 &   10 &    0.080894 &      0.101255 &      0.073529 &      0.03457 &       0.040894 &      0.020969 &       \\
-Blend & 0.826914 &      0.028973 &      1296 &  1203 &  130 &   90 &    108 &   9 &     0.069444 &      0.089776 &      0.069231 &      0.027885 &      0.029995 &      0.016919 &       \\
-Price Linear &  0.831955 &      0.038984 &      1249 &  1246 &  134 &   119 &   126 &   12 &    0.095276 &      0.101124 &      0.089552 &      0.037668 &      0.034568 &      0.043466 &       \\
-Popularity Linear &     0.834801 &      0.019844 &      1302 &  1196 &  131 &   70 &    81 &    3 &     0.053763 &      0.067726 &      0.022901 &      0.015446 &      0.023492 &      0.00115 &        \\
-avgs     &      0.832614 &      0.031543 &      1286.25 &       1210 &  132.75 &        96 &    109 &   8.5 &   0.074844 &      0.08997 &       0.063803 &      0.028892 &      0.032237 &      0.020626 &      \\
-\bottomrule\end{tabular}}\caption{random mahout-svd}\end{table}
-
-
-%./testikus.sh -i mongo -m "svd itembased" -s random -c
-% model, 100, 150, 15, true, 10
-\begin{table}\centering\resizebox{\columnwidth}{!}{\begin{tabular}{*{19}l}\toprule
- & AUC &    MAP@20 &    T\_c &  T\_w &  T\_p &  P\_c &  P\_w &  P\_p &  R\_c &  R\_w &  R\_p &  MAP@20-click &  MAP@20-want &   MAP@20-purchase &    \\
-\midrule
-Count Linear &  0.832332 &  0.034381 &  1296.5 &    1211 &  150.5 & 112.5 & 107 &   13.5 &  0.086779 &  0.088363 &  0.089518 &  0.026142 &  0.038815 &  0.022031 &   \\
-Price Linear &  0.827074 &  0.034773 &  1331.5 &    1190.5 &    136 &   114 &   118 &   9 & 0.085624 &  0.099275 &  0.066352 &  0.02961 &   0.033855 &  0.028147 &   \\
-Popularity Linear & 0.820892 &  0.018725 &  1281 &  1244.5 &    132.5 & 74 &    94.5 &  11.5 &  0.05778 &   0.075984 &  0.086836 &  0.014358 &  0.021657 &  0.016189 &   \\
-Blend & 0.833227 &  0.033997 &  1321 &  1202 &  135 &   110 &   110 &   15 &    0.083244 &  0.091591 &  0.111331 &  0.030199 &  0.033676 &  0.029479 &   \\
-avgs     &  0.828381 &  0.030469 &  1307.5 &    1212 &  138.5 & 102.625 &   107.375 &   12.25 & 0.078357 &  0.088803 &  0.088509 &  0.025077 &  0.032 & 0.023962 &  \\
-\bottomrule\end{tabular}}\caption{random mahout-svd}\end{table}
-\begin{table}\centering\resizebox{\columnwidth}{!}{\begin{tabular}{*{19}l}\toprule
- & AUC &    MAP@20 &    T\_c &  T\_w &  T\_p &  P\_c &  P\_w &  P\_p &  R\_c &  R\_w &  R\_p &  MAP@20-click &  MAP@20-want &   MAP@20-purchase &    \\
-\midrule
-Count Linear &  0.684442 &  0.004536 &  1302 &  1217 &  154 &   24 &    16 &    1 & 0.018433 &  0.013147 &  0.006494 &  0.005376 &  0.003063 &  0.000823 &   \\
-Blend & 0.69325 &   0.002834 &  1317 &  1224 &  132 &   17 &    13 &    1 & 0.012908 &  0.010621 &  0.007576 &  0.002777 &  0.002006 &  0.000685 &   \\
-Popularity Linear & 0.559097 &  0.001039 &  1286 &  1255 &  132 &   0 & 9 & 7 & 0 & 0.007171 &  0.05303 &   0 & 0.001278 &  0.012201 &   \\
-Price Linear &  0.673905 &  0.006231 &  1336 &  1208 &  129 &   21 &    19 &    4 & 0.015719 &  0.015728 &  0.031008 &  0.003822 &  0.009969 &  0.003821 &   \\
-avgs     &  0.652674 &  0.00366 &   1310.25 &   1226 &  136.75 &    15.5 &  14.25 & 3.25 &  0.011765 &  0.011667 &  0.024527 &  0.002994 &  0.004079 &  0.004383 &  \\
-\bottomrule\end{tabular}}\caption{random mahout-itembased}\end{table}
