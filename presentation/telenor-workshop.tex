@@ -216,13 +216,25 @@
   % What does it mean that feedback is implicit?
   \begin{frame}
     \frametitle{Implicit feedback}
+    \framesubtitle{What is it?}
     \begin{itemize}
       \item Data captured from user behaviour.
       \item Item features and application properties.
       \item Recentness, price, popularity, brand, product properties.
       \item Probabilities of various convertions.
-      \item Challenges?
-      \item Content features?
+    \end{itemize}
+  \end{frame}
+
+  \begin{frame}
+    \frametitle{Implicit feedback}
+    \framesubtitle{Challenges}
+    \begin{itemize}
+      \item Not much existing research.
+      \item No good evaluation metrics.
+      \item No ground truth.
+      \item Difficult to weight features.
+      \item Performs better in dense environments.
+      \item Combining with other sources.
     \end{itemize}
   \end{frame}
 
@@ -294,7 +306,6 @@
   \begin{frame}
     \frametitle{Converting Implicit Feedback}
     \begin{itemize}
-      \item Related articles
       \item We looked at \textit{price}, \textit{item popularity} and
       \textit{recentness}.
       \item What is recentness? Both number of days and ordering of events.
@@ -341,8 +352,8 @@
   \begin{frame}
     \frametitle{Evaluation}
     \begin{itemize}
-      \item Evaluating implicit feedback is difficult. You have no \textit{ground
-      truth}.
+      \item Recap: Evaluating implicit feedback is difficult. You have no
+      \textit{ground truth}.
       \item Best way of confirming performance: online experiments.
       \item Various ways of splitting dataset.
       \item Perform user studies to understand underlying features and
@@ -482,6 +493,8 @@
     \begin{itemize}
       \item Add ways to provide negative feedback.
       \item Include social and demographic data.
+      \item Use simple demographic-based methods on new users, increase
+      complexity in accordance to density.
       \item Kick-start recommendations by asking for preferences.
       \item Better results can be achieved with using Tinder-like interface.
       \item Ensure that a framework for online evaluation, is in place.
@@ -492,6 +505,10 @@
     \frametitle{References}
     \bibliographystyle{plain}
     \bibliography{../src/references}
+  \end{frame}
+
+  \begin{frame}
+    \huge Our largest gratitude to all of you!
   \end{frame}
 
 \end{document}
