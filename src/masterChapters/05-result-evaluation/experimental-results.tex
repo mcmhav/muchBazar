@@ -73,19 +73,31 @@ UserBasedKNN k=200  		&	0.585442 &	0.004358 &	3038 &	2328 &	36 &	17 &	14 &	3 &	0
 BPR-MF	 					&	0.601683 &	0.004902 &	3038 &	2328 &	36 &	21.8 &	9 &	  0.8 &	0.007176 &	0.003866 &	0.022222 &	0.004574 &	0.002854 &	0.004762 &	\\
 \rowcolor{Gray}
 BPR-Linear					&	0.559033 &	0.000443 &	3038 &	2328 &	36 &	2 	  &	2 	  	&	0 &	0.000658 &	0.000859 &	0 		 &	0.000136 &	0.000709 &	0 		 &	\\
+
+%ALS-WR Old settings
 ALS-WR Count 		        &   0.628547 &  0.006958 &  3037 &  2328 &  36 & 	19.25 & 22.25 	& 	3 & 0.006338 &  0.009558 &  0.083333 &  0.005049 &  0.009524 &  0.062978 &   \\
 ALS-WR Popularity   	    &   0.625682 &  0.001705 &  3037 &  2328 &  36 & 	13.5  & 12.75 	& 	3 & 0.004445 &  0.005477 &  0.083333 &  0.000739 &  0.003915 &  0.014694 &   \\
 ALS-WR Recentness     		&   0.631948 &  0.006444 &  3037 &  2328 &  36 & 	19    & 17.5  	& 	3 & 0.006256 &  0.007517 &  0.083333 &  0.004529 &  0.010394 &  0.073505 &   \\
 ALS-WR Price          		&   0.611358 &  0.003687 &  3037 &  2328 &  36 & 	18.75 & 13    	&   4 & 0.006174 &  0.005584 &  0.111111 &  0.002123 &  0.007305 &  0.038556 &   \\
 ALS-WR Blend 1              &   0.623146 &  0.005666 &  3037 &  2328 &  36 & 	19.25 & 14.5  	&  	3 & 0.006338 &  0.006229 &  0.083333 &  0.004144 &  0.007086 &  0.059737 &   \\
 ALS-WR Blend 2				&   0.617061 &  0.006219 &  3037 &  2328 &  36 &    17.75 & 12.75 	& 	3 & 0.005845 &  0.005477 &  0.083333 &  0.004658 &  0.008841 &  0.039871 &   \\
-
 %ALS-WR 100 150 15 true 10
 ALS-WR Popularity			&	0.638035 &	0.001479 &	3038 &	2328 &	36 &   11.5   &	12 		&	0.4375  &	0.003785 &	0.005155 &	0.012153 &	0.000496 &	0.005488 &	0.000976 &	 \\
 ALS-WR Blend 1 				&	0.656735 &	0.005932 &	3038 &	2328 &	36 &   23.875 &	16.9375 &	2.25 	&	0.007859 &	0.007276 &	0.0625 &	0.004373 &	0.009837 &	0.033155 &	 \\
 ALS-WR Count Sigmoid		&	0.661443 &	0.006259 &	3038 &	2328 &	36 &   26.0625&	23.0625 &	3 	 	&	0.008579 &	0.009907 &	0.083333 &	0.00395 &	0.019269 &	0.015598 &	 \\
 ALS-WR Price  				&	0.647824 &	0.004515 &	3038 &	2328 &	36 &   18.8125&	16.625  &	2.75    &	0.006192 &	0.007141 &	0.076389 &	0.002964 &	0.008836 &	0.023678 &	 \\
 ALS-WR Recentness 		 	&	0.664506 &	0.005746 &	3038 &	2328 &	36 &   24.125 &	17.1875 &	2.1875  &	0.007941 &	0.007383 &	0.060764 &	0.003672 &	0.014063 &	0.04791 &	 \\
+%
+%ALS-WR FINAL
+ALS-WR Popularity Linear  	&	0.638199 &	0.001481 &	3038 &	2328 &	36 &	9.9375 	  &	12 		  &	0.429688 &	0.003271 &	0.005155 &	0.011936 &	0.00043 &	0.00577 &	0.001082 &	 \\
+ALS-WR Blend 1 				&	0.657957 &	0.005772 &	3038 &	2328 &	36 &	24.859375 &	16.742188 &	2.03125  &	0.008183 &	0.007192 &	0.056424 &	0.00421 &	0.009891 &	0.028202 &	 \\
+ALS-WR Sigmoid 				&	0.661198 &	0.006693 &	3038 &	2328 &	36 &	26.382812 &	22.882812 &	3 		 &	0.008684 &	0.009829 &	0.083333 &	0.004389 &	0.01895 &	0.019176 &	 \\
+ALS-WR Price 				&	0.648736 &	0.004439 &	3038 &	2328 &	36 &	18.476562 &	16.828125 &	2.96875  &	0.006082 &	0.007229 &	0.082465 &	0.002892 &	0.008929 &	0.021748 &	 \\
+ALS-WR Recentness 			&	0.664772 &	0.005981 &	3038 &	2328 &	36 &	23.765625 &	16.273438 &	2.773438 &	0.007823 &	0.00699 &	0.07704 &	0.003701 &	0.017824 &	0.047961 &	 \\
+%TODO - ALS-WR Blend 2
+%TODO - ALS-WR Blend (sigmoid, price, popularity)
+
+
 
 \bottomrule
 \end{tabular}
@@ -411,28 +423,47 @@ all events improves the recommendation quality overall.
 
 We got our best results in our experiments both for random and time-based splits combining ALS-WR with our implicit ratings.
 ALS-WR marginally outperformed all other binary recommendation methods tested for all measured metrics.
+We like to be cautions and avoid drawing any grand conclusion from our work as yet. We can fairly certainly state
+that our method currently provide better performance than a most popular recommender. We can also state that
+our ALS-WR performed better than UserBased KNN with 200 neighbors for \marginpar{TODO: Cold-start UserKNN200 binary to compare cold-start performance}
+both our splitting methods. If we decompose their performance more closely during cold-start evaluation we see...
 
-As previously mentioned we have to consider that different methods have been used, and it would be \emph{dangerous}
-to draw any grand conclusions from our results as it can also be attributed to ALS-WR being a more sophisticated
-and better model than the ones we have compared it to. However, we can say that we managed to produce better recommendation
-results using a combination of implicit ratings and non-binary methods than we were using binary methods.
+It is important to consider consider that different methods have been used, and it would be \emph{unwise}
+to draw any grand conclusions from our results as it can also be attributed to ALS-WR simply is a better
+model that seems to work well with our ratings. However, we can say that we managed to produce better recommendation
+results using a combination of our implicit ratings and an existing methods than we were using binary methods.
+%Counts for our employer ;)
 
 \subsection{Compare the different implicit rating functions}
 
-For the time-based splits both recentness functions, especially Count Sigmoid Fixed performed the best overall
-looking at our performance metrics. For the random-based splits both price and a blend of price and popularity performed
-\emph{equally good}. The difference is marginally in both cases, making it \emph{impossible} to give a definitive answer
-to which is \emph{better}, as further testing is needed.
+For the time-based splits both recentness functions, especially looking at ordering using a sigmoid penalization function
+performed the best overall looking at our performance metrics. Which give some indication that recency actually is a factor
+in the fashion domain. Price had the lowest score for all measurements, which gives some indications that popularity plays
+a larger factor in the fashion domain than the price. The blend did not perform well, but it would have been interesting to 
+see the results if you could have had some way to learn this relationship with regression. We therefore believe we have
+managed to get some insight into some of the general underlying factors of the customers.
+
+Count does not appear to do better than sigmoid. This could gives some indication that number of days since an event is an as good estimator
+for the recentness of an item. We believe that a sigmoid is a better solution for active users, while count would be more
+suited for the not so active users. However, we do believe that the datasets timespan is to small for
+this purpose.
+
+However, the difference is marginally in both cases, making it \emph{impossible} to give a most definitive
+answer to which is \emph{the best set of ratings}. Further testing should be repeated at a later point to
+solidify the results.
 
 \subsection{Cold-start Results}
 
 We found no conclusive evidence to support that our filterbots increase the performance of either IBCF or ALS-WR. 
+However, they did not seem to cause any serious performance degradation either.
 
 \subsection{Select the best combination of methods for the SoBazar recommender system}
 
 Our experiments have shown that ALS-WR combined with our implicit ratings performed the best of all the recommendation
 methods tested on our dataset. 
-
+%TODO - Switching is the best alternative in our opinion
+%Most popular understands why it is recommended
+%Personalize pretty early
 
 
 
