@@ -76,9 +76,11 @@
       \path[->,thick]
          (log) edge [] node [sloped, above] {Implicit feedback} (converter)
          (db) edge [] node [sloped, above, text width=3cm, align=center] {Structured\\product data} (coldstart)
-         (converter) edge [] node [sloped, above] {Ratings} (coldstart)
          (coldstart) edge [] node [sloped, above] {Ratings} (recommender)
+         (converter) edge [] node [sloped, above] {Ratings} (coldstart)
          (recommender) edge [] node [sloped, above] {Recommendations} (evaluation);
+      \path[->,dashed]
+         (converter) edge [] node [sloped, above] {Ratings} (recommender);
 
       \end{tikzpicture}
       }
@@ -275,8 +277,6 @@
     \end{figure}
   \end{frame}
 
-  \applicationOverview
-
   % What does it mean that feedback is implicit?
   \begin{frame}
     \frametitle{Implicit feedback}
@@ -289,19 +289,7 @@
     \end{itemize}
   \end{frame}
 
-  \begin{frame}
-    \frametitle{Implicit feedback}
-    \framesubtitle{Challenges}
-    \begin{itemize}
-      \item Not much existing research.
-      \item No good evaluation metrics.
-      \item No ground truth.
-      \item Difficult to weight features.
-      \item Performs better in dense environments.
-      \item Combining with other sources.
-    \end{itemize}
-  \end{frame}
-
+  \applicationOverview
 
   % Second section, going through each of these components.
   \section{Proposed system components}
@@ -403,13 +391,24 @@
 
   \applicationOverview
 
+  % Some recap and present challenges before going into evaluation.
+  \begin{frame}
+    \frametitle{Implicit feedback}
+    \framesubtitle{Challenges}
+    \begin{itemize}
+      \item Not much existing research.
+      \item No good evaluation metrics.
+      \item No ground truth.
+      \item Difficult to weight features.
+      \item Performs better in dense environments.
+      \item Combining with other sources.
+    \end{itemize}
+  \end{frame}
 
   % Component four: how to evaluate the results.
   \begin{frame}
     \frametitle{Evaluation}
     \begin{itemize}
-      \item Recap: Evaluating implicit feedback is difficult. You have no
-      \textit{ground truth}.
       \item Best way of confirming performance: online experiments.
       \item Various ways of splitting dataset.
       \item Perform user studies to understand underlying features and
@@ -518,6 +517,19 @@
   % Section three: a summary and conclusions from our work.
   \section{Results and future work}
 
+  \begin{frame}
+    \frametitle{Results}
+    \begin{itemize}
+      \item Time based splits: MostPopular does not recommend any bought
+      product in top 20. Using ALS-WR, with recentness ratings, predict 8.33\%.
+      In number of \textit{wants} the ratio is 4.29\% vs. 9.83\%.
+      \vfill
+      \item Random splits: MostPopular recommend 3.33\% wanted item vs. 9.70\%
+      with ALS-WR. For purhchases: 2.70\% vs. 10.05\%. Using blend of price and
+      popularity.
+    \end{itemize}
+  \end{frame}
+
   % Some thoughts on what we have found.
   \begin{frame}
     \frametitle{Conclusions}
@@ -553,7 +565,7 @@
       complexity in accordance to density.
       \item Kick-start recommendations by asking for preferences.
       \item Better results can be achieved with using Tinder-like interface.
-      \item Ensure that a framework for online evaluation, is in place.
+      \item Ensure that a framework for online evaluation is in place.
     \end{itemize}
   \end{frame}
 
