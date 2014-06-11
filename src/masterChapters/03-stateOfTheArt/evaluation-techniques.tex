@@ -496,14 +496,13 @@ most suitable to evaluate algorithms that are used to present ranked lists to
 the user in domains where the user preferences are expressed using numerical
 values.
 
-\marginpar{TODO: Leave or let be?}
-The recommendation lists can also consist of several items with similar rating that
-can appear in varying orders.
-Since the user can express the same rating for similar
-items, the list will again contain groups of items that can appear in arbitrary order.
-The bottom line is that in most cases a rank metric for partial ordering would be more
-appropriate for comparing recommendation lists that are produced by recommenders to item
-rankings from known user preferences.
+A common problem is that the recommendation lists can consist of several items
+with similar rating that can appear in varying orders. Since the user can express
+the same rating for similar items, the list will again contain groups of items
+that can appear in arbitrary order. The bottom line is that in most cases a 
+rank metric for partial ordering would be more appropriate for comparing
+recommendation lists that are produced by recommenders to item rankings from
+known user preferences.
 
 As we do not have explicit data in SoBazaar per Figure~\ref{fig:overview-eval}
 we will not explore these methods in detail, however we will list some of the
@@ -512,8 +511,6 @@ relevance based metric used with implicit ratings, it does produce a ranked
 list. It is however described in Section~\ref{subsubsec:relevancemetrics} and not here, as it does not
 compare two ranked lists as the methods below does.
 
-% todo maybe structure:
-% precision - ranked list - explicit - human interaction
 
 Two naïve ways of measuring how well to lists compare is to see how many items they have in common or how many of the items in the lists have the same rank. AP correlation is more sophisticated than this, and is the next measuring method described.
 
