@@ -48,73 +48,80 @@ our results using both time-based and random splits testing different implicit r
 
 As we have access to timestamps we decided to split the dataset on time, making the evaluation more \textit{realistic}, but also to measure the
 affect of factoring in recentness. However, there seem to have been particularly few purchase activity over the last two months. We first attempted to evaluate the recommenders
-using a 90:10 timesplit, making predictions for the events between 7. may - 19. may. However, there have only been recorded two purchase or 0.07\% of
+using a 90:10 timesplit, making predictions for the events between 7. may - 19. may. However, there have only been recorded two purchase or $0.07\%$ of
 all events in the last twelve day period, making it a bad period to use for evaluation. We did therefor not run multiple runs on this
 data, as we thought it more beneficial to get a better split to evaluate on. The results we did get can be found in the Appendix~\ref{appendix:tab9010-timesplits}
 We instead opted to use a 80:20 timesplit, predicting the events between 16. April - 22. May. Our baselines, or binary methods are colored gray to
 make the separation between them clearer. For our implicit ratings we wish to test all implicit rating functions individually and by making two different blends.
 Blend 1 factors in Count, Popularity, Recentness and Price, Blend 2 only factors in Price and Popularity. For an explanation of the metrics see Table~\ref{metric-explanation}.
 
-\begin{table}[H]
-\centering
-\resizebox{
-\columnwidth}{!}{
-\begin{tabular}{\reducedTableView}
-\toprule
-Model & AUC &	$MAP@20$ &	$T_{click}$ &	$T_{want}$ &	$T_{purchase}$ &	$P_{click}$&	$P_{want}$ &	$P_{purchase}$ &	$R_{click}$ &	$R_{want}$ &	$R_{purchase}$ &	$MAP@20_{click}$ &	$MAP@20_{want}$	& $MAP@20_{purchase}$ &	 \\
-\midrule
-\rowcolor{Gray}
-Most Popular 		 		&	0.613218 &	0.004856 &	3038 &	2328 &	36 &	28 &	10 &	0 &	0.009217 &	0.004296 &	0 		 &	0.004622 &	0.003046 &	0 		 &	 \\
-\rowcolor{Gray}
-ItemBasedKNN k=100			& 	0.464325 &	0.002638 &	3038 &	2328 &	36 &	14 &	7  &	1 &	0.004608 &	0.003007 &	0.027778 &	0.002576 &	0.000623 &	0.002778 &	 \\
-\rowcolor{Gray}
-UserBasedKNN k=200  		&	0.585442 &	0.004358 &	3038 &	2328 &	36 &	17 &	14 &	3 &	0.005596 &	0.006014 &	0.083333 &	0.002927 &	0.007883 &	0.053241 &	 \\
-\rowcolor{Gray}
-BPR-MF	 					&	0.601683 &	0.004902 &	3038 &	2328 &	36 &	21.8 &	9 &	  0.8 &	0.007176 &	0.003866 &	0.022222 &	0.004574 &	0.002854 &	0.004762 &	\\
-\rowcolor{Gray}
-BPR-Linear					&	0.559033 &	0.000443 &	3038 &	2328 &	36 &	2 	  &	2 	  	&	0 &	0.000658 &	0.000859 &	0 		 &	0.000136 &	0.000709 &	0 		 &	\\
+% timesplit table command, input is the columns to show
+\newcommand{\timeBasedSplit}[1]{
+    \begin{table}[H]
+    \centering
+    \resizebox{
+    \columnwidth}{!}{
+    \begin{tabular}{#1}
+    \toprule
+    Model & AUC &	$MAP@20$ &	$T_{click}$ &	$T_{want}$ &	$T_{purchase}$ &	$P_{click}$&	$P_{want}$ &	$P_{purchase}$ &	$R_{click}$ &	$R_{want}$ &	$R_{purchase}$ &	$MAP@20_{click}$ &	$MAP@20_{want}$	& $MAP@20_{purchase}$ &	 \\
+    \midrule
+    \rowcolor{Gray}
+    Most Popular 		 		&	0.613218 &	0.004856 &	3038 &	2328 &	36 &	28 &	10 &	0 &	0.009217 &	0.004296 &	0 		 &	0.004622 &	0.003046 &	0 		 &	 \\
+    \rowcolor{Gray}
+    ItemBasedKNN k=100			& 	0.464325 &	0.002638 &	3038 &	2328 &	36 &	14 &	7  &	1 &	0.004608 &	0.003007 &	0.027778 &	0.002576 &	0.000623 &	0.002778 &	 \\
+    \rowcolor{Gray}
+    UserBasedKNN k=200  		&	0.585442 &	0.004358 &	3038 &	2328 &	36 &	17 &	14 &	3 &	0.005596 &	0.006014 &	0.083333 &	0.002927 &	0.007883 &	0.053241 &	 \\
+    \rowcolor{Gray}
+    BPR-MF	 					&	0.601683 &	0.004902 &	3038 &	2328 &	36 &	21.8 &	9 &	  0.8 &	0.007176 &	0.003866 &	0.022222 &	0.004574 &	0.002854 &	0.004762 &	\\
+    \rowcolor{Gray}
+    BPR-Linear					&	0.559033 &	0.000443 &	3038 &	2328 &	36 &	2 	  &	2 	  	&	0 &	0.000658 &	0.000859 &	0 		 &	0.000136 &	0.000709 &	0 		 &	\\
 
-%ALS-WR Old settings
-ALS-WR Count 		        &   0.628547 &  0.006958 &  3037 &  2328 &  36 & 	19.25 & 22.25 	& 	3 & 0.006338 &  0.009558 &  0.083333 &  0.005049 &  0.009524 &  0.062978 &   \\
-ALS-WR Popularity   	    &   0.625682 &  0.001705 &  3037 &  2328 &  36 & 	13.5  & 12.75 	& 	3 & 0.004445 &  0.005477 &  0.083333 &  0.000739 &  0.003915 &  0.014694 &   \\
-ALS-WR Recentness     		&   0.631948 &  0.006444 &  3037 &  2328 &  36 & 	19    & 17.5  	& 	3 & 0.006256 &  0.007517 &  0.083333 &  0.004529 &  0.010394 &  0.073505 &   \\
-ALS-WR Price          		&   0.611358 &  0.003687 &  3037 &  2328 &  36 & 	18.75 & 13    	&   4 & 0.006174 &  0.005584 &  0.111111 &  0.002123 &  0.007305 &  0.038556 &   \\
-ALS-WR Blend 1              &   0.623146 &  0.005666 &  3037 &  2328 &  36 & 	19.25 & 14.5  	&  	3 & 0.006338 &  0.006229 &  0.083333 &  0.004144 &  0.007086 &  0.059737 &   \\
-ALS-WR Blend 2				&   0.617061 &  0.006219 &  3037 &  2328 &  36 &    17.75 & 12.75 	& 	3 & 0.005845 &  0.005477 &  0.083333 &  0.004658 &  0.008841 &  0.039871 &   \\
-%ALS-WR 100 150 15 true 10
-ALS-WR Popularity			&	0.638035 &	0.001479 &	3038 &	2328 &	36 &   11.5   &	12 		&	0.4375  &	0.003785 &	0.005155 &	0.012153 &	0.000496 &	0.005488 &	0.000976 &	 \\
-ALS-WR Blend 1 				&	0.656735 &	0.005932 &	3038 &	2328 &	36 &   23.875 &	16.9375 &	2.25 	&	0.007859 &	0.007276 &	0.0625 &	0.004373 &	0.009837 &	0.033155 &	 \\
-ALS-WR Count Sigmoid		&	0.661443 &	0.006259 &	3038 &	2328 &	36 &   26.0625&	23.0625 &	3 	 	&	0.008579 &	0.009907 &	0.083333 &	0.00395 &	0.019269 &	0.015598 &	 \\
-ALS-WR Price  				&	0.647824 &	0.004515 &	3038 &	2328 &	36 &   18.8125&	16.625  &	2.75    &	0.006192 &	0.007141 &	0.076389 &	0.002964 &	0.008836 &	0.023678 &	 \\
-ALS-WR Recentness 		 	&	0.664506 &	0.005746 &	3038 &	2328 &	36 &   24.125 &	17.1875 &	2.1875  &	0.007941 &	0.007383 &	0.060764 &	0.003672 &	0.014063 &	0.04791 &	 \\
-%
-%ALS-WR FINAL
-ALS-WR Popularity Linear  	&	0.638199 &	0.001481 &	3038 &	2328 &	36 &	9.9375 	  &	12 		  &	0.429688 &	0.003271 &	0.005155 &	0.011936 &	0.00043 &	0.00577 &	0.001082 &	 \\
-ALS-WR Blend 1 				&	0.657957 &	0.005772 &	3038 &	2328 &	36 &	24.859375 &	16.742188 &	2.03125  &	0.008183 &	0.007192 &	0.056424 &	0.00421 &	0.009891 &	0.028202 &	 \\
-ALS-WR Sigmoid &	0.66227 &	0.006349 &	3038 &	2328 &	36 &	25.687874 &	23.74012 &	3 &	0.008456 &	0.010198 &	0.083333 &	0.004006 &	0.019112 &	0.031268 &	 \\
-ALS-WR Price 				&	0.648736 &	0.004439 &	3038 &	2328 &	36 &	18.476562 &	16.828125 &	2.96875  &	0.006082 &	0.007229 &	0.082465 &	0.002892 &	0.008929 &	0.021748 &	 \\
-ALS-WR Recentness 			&	0.664772 &	0.005981 &	3038 &	2328 &	36 &	23.765625 &	16.273438 &	2.773438 &	0.007823 &	0.00699 &	0.07704 &	0.003701 &	0.017824 &	0.047961 &	 \\
-%TODO - ALS-WR Blend 2
-%TODO - ALS-WR Blend (sigmoid, price, popularity)
-ALS-WR Blend 3 &	0.654464 &	0.006404 &	3038 &	2328 &	36 &	22.165878 &	16.512444 &	2.000031 &	0.007296 &	0.007093 &	0.055556 &	0.004827 &	0.012305 &	0.016913 &	 \\
+    %ALS-WR Old settings
+    ALS-WR Count 		        &   0.628547 &  0.006958 &  3037 &  2328 &  36 & 	19.25 & 22.25 	& 	3 & 0.006338 &  0.009558 &  0.083333 &  0.005049 &  0.009524 &  0.062978 &   \\
+    ALS-WR Popularity   	    &   0.625682 &  0.001705 &  3037 &  2328 &  36 & 	13.5  & 12.75 	& 	3 & 0.004445 &  0.005477 &  0.083333 &  0.000739 &  0.003915 &  0.014694 &   \\
+    ALS-WR Recentness     		&   0.631948 &  0.006444 &  3037 &  2328 &  36 & 	19    & 17.5  	& 	3 & 0.006256 &  0.007517 &  0.083333 &  0.004529 &  0.010394 &  0.073505 &   \\
+    ALS-WR Price          		&   0.611358 &  0.003687 &  3037 &  2328 &  36 & 	18.75 & 13    	&   4 & 0.006174 &  0.005584 &  0.111111 &  0.002123 &  0.007305 &  0.038556 &   \\
+    ALS-WR Blend 1              &   0.623146 &  0.005666 &  3037 &  2328 &  36 & 	19.25 & 14.5  	&  	3 & 0.006338 &  0.006229 &  0.083333 &  0.004144 &  0.007086 &  0.059737 &   \\
+    ALS-WR Blend 2				&   0.617061 &  0.006219 &  3037 &  2328 &  36 &    17.75 & 12.75 	& 	3 & 0.005845 &  0.005477 &  0.083333 &  0.004658 &  0.008841 &  0.039871 &   \\
+    %ALS-WR 100 150 15 true 10
+    ALS-WR Popularity			&	0.638035 &	0.001479 &	3038 &	2328 &	36 &   11.5   &	12 		&	0.4375  &	0.003785 &	0.005155 &	0.012153 &	0.000496 &	0.005488 &	0.000976 &	 \\
+    ALS-WR Blend 1 				&	0.656735 &	0.005932 &	3038 &	2328 &	36 &   23.875 &	16.9375 &	2.25 	&	0.007859 &	0.007276 &	0.0625 &	0.004373 &	0.009837 &	0.033155 &	 \\
+    ALS-WR Count Sigmoid		&	0.661443 &	0.006259 &	3038 &	2328 &	36 &   26.0625&	23.0625 &	3 	 	&	0.008579 &	0.009907 &	0.083333 &	0.00395 &	0.019269 &	0.015598 &	 \\
+    ALS-WR Price  				&	0.647824 &	0.004515 &	3038 &	2328 &	36 &   18.8125&	16.625  &	2.75    &	0.006192 &	0.007141 &	0.076389 &	0.002964 &	0.008836 &	0.023678 &	 \\
+    ALS-WR Recentness 		 	&	0.664506 &	0.005746 &	3038 &	2328 &	36 &   24.125 &	17.1875 &	2.1875  &	0.007941 &	0.007383 &	0.060764 &	0.003672 &	0.014063 &	0.04791 &	 \\
+    %
+    %ALS-WR FINAL
+    ALS-WR Popularity Linear  	&	0.638199 &	0.001481 &	3038 &	2328 &	36 &	9.9375 	  &	12 		  &	0.429688 &	0.003271 &	0.005155 &	0.011936 &	0.00043 &	0.00577 &	0.001082 &	 \\
+    ALS-WR Blend 1 				&	0.657957 &	0.005772 &	3038 &	2328 &	36 &	24.859375 &	16.742188 &	2.03125  &	0.008183 &	0.007192 &	0.056424 &	0.00421 &	0.009891 &	0.028202 &	 \\
+    ALS-WR Sigmoid &	0.66227 &	0.006349 &	3038 &	2328 &	36 &	25.687874 &	23.74012 &	3 &	0.008456 &	0.010198 &	0.083333 &	0.004006 &	0.019112 &	0.031268 &	 \\
+    ALS-WR Price 				&	0.648736 &	0.004439 &	3038 &	2328 &	36 &	18.476562 &	16.828125 &	2.96875  &	0.006082 &	0.007229 &	0.082465 &	0.002892 &	0.008929 &	0.021748 &	 \\
+    ALS-WR Recentness 			&	0.664772 &	0.005981 &	3038 &	2328 &	36 &	23.765625 &	16.273438 &	2.773438 &	0.007823 &	0.00699 &	0.07704 &	0.003701 &	0.017824 &	0.047961 &	 \\
+    %TODO - ALS-WR Blend 2
+    %TODO - ALS-WR Blend (sigmoid, price, popularity)
+    ALS-WR Blend 3 &	0.654464 &	0.006404 &	3038 &	2328 &	36 &	22.165878 &	16.512444 &	2.000031 &	0.007296 &	0.007093 &	0.055556 &	0.004827 &	0.012305 &	0.016913 &	 \\
 
-\bottomrule
-\end{tabular}
+    \bottomrule
+    \end{tabular}
+    }
+    \caption{Time-based split results (16. April - 19. May). All scores are averaged over 5-10 runs}
+    \end{table}
 }
-\caption{Time-based split results (16. April - 19. May). All scores are averaged over 5-10 runs}
-\end{table}
 
-Again we see that the event distribution if far from optimal as the test set contains only 0.6\% purchases. However, further increasing the
+% to show the table
+\timeBasedSplit{\reducedTableView}
+
+
+Again we see that the event distribution if far from optimal as the test set contains only $0.6\%$ purchases. However, further increasing the
 size of the split did not improve this ratio noticeably. To our surprise none of the binary methods significantly outperformed the non-personalized most-popular
 recommender. We chose not to include the results from our collaborative filtering methods using our implicit ratings, as they were really poor in comparison to ALS-WR.
 We believe that this mainly can be attributed to that they are designed for explicit feedback data, and not positive feedback only data, as in our case.
-For ALS-WR we see a noticable improvement overall number of wants and purchases retrieved. In particular the implicit ratings that factored in recency only seems
+For ALS-WR we see a noticeable improvement overall number of wants and purchases retrieved. In particular the implicit ratings that factored in recency only seems
 to give the best performance when considering the $MAP@20$ scores and recall. This was a pleasant surprise, since this is a time-based split. We chose to
 not include the results from the collaborative filtering methods using implicit ratings as they were really poor in comparison to ALS-WR. For more model results
 see the Appendix \ref{appendix:time-based-results}.
 There is no dithering implemented in the collaborative filtering algorithms used, which is a weakness, combined with the fact that the dataset split is the same
 each time, giving us no decimal numbers for the averages. We can see that ALS-WR trained with our implicit ratings marginally outperformed all binary methods for
-most metrics. However, we believe that this should be further evaluated due to the lack of dithering. By doing random splits and some shuffeling we will get a more
+most metrics. However, we believe that this should be further evaluated due to the lack of dithering. By doing random splits and some shuffling we will get a more
 truer picture, even though we have to sacrifice our recentness which seems to work quite well.
 
 \subsection{Random splits}
@@ -122,43 +129,45 @@ truer picture, even though we have to sacrifice our recentness which seems to wo
 Since we were not completely satisfied with the event distribution on our time-splits we decided to also evaluate the recommenders on random dataset splits.
 As it is a random split, we chose to only factor in popularity and price, in addition to blending them together.
 
-\begin{table}[H]
-\centering
-\resizebox{
-\columnwidth}{!}{
-\begin{tabular}{\reducedTableView}
-\toprule
-Model & AUC &	$MAP@20$ &	$T_{click}$ &	$T_{want}$ &	$T_{purchase}$ &	$P_{click}$&	$P_{want}$ & $P_{purchase}$ &	$R_{click}$ &	$R_{want}$ &	$R_{purchase}$ &	$MAP@20_{click}$ &	$MAP@20_{want}$	& $MAP@20_{purchase}$ &	 \\
-\midrule
-%Binary Methods
-\rowcolor{Gray}
-Most-Popular    			&   0.751516     & 0.013236  &   1323    &   1235    &   135     &   63      &   40.75   & 3.5     &   0.0476135   &   0.03300275  &   0.0270445   &   0.0147725   & 0.0111475 &   0.0098995 & \\
-\rowcolor{Gray}
-ItemBased Log	   			&   0.690723     & 0.002094  &   1353.9  &   1250.5  &   138     &   8.8     &   4.6     & 1.47    &   0.006488    &   0.003672    &   0.007252    &   0.001470    & 0.002043  &   0.000618  & \\
-\rowcolor{Gray}
-ItemBasedKNN k=120  		&   0.7357796    & 0.0069094 &   1295.8  &   1231.4  &   146.8   & 	37.6    &   53      & 7.2     &   0.0290256   &  0.0431066    &  0.0487262    &  0.0044356    &  0.0097038&   0.0060544 & \\
-\rowcolor{Gray}
-UserBasedKNN K = 200 cos	&   0.7926842	& 0.0317002	&	1282.2	&   1186.2 &	136.4	&	102.2	&	101.4	& 12.6    &	  0.0797042	  &	0.0854958	  &	0.092375	  &	0.128002	  &	0.182436  &	0.0349802	&	\\
-\rowcolor{Gray}
-BPR-MF          			&   0.7286434    & 0.0099586 &   1332.8  &   1233.8  &   135.4   &   51.4    &   31      & 5.2     &   0.0385224   &   0.025142    &   0.0385042   &   0.0120152   & 0.0058942 &   0.0133786 & \\
-\rowcolor{Gray}
-BPRLinear       			&   0.7097516    & 0.0070648 &   1344.3  &   1241.9  &   141.3   &   27.4    &   25.1    & 2.5     &   0.0203941   &   0.0202133   &   0.017821    &   0.006298    & 0.0075964 &   0.0022692 & \\
-%ItemBased
-IBCF Price					&	0.680758 &	0.004616 &	1332.8 &	1245.7 &	137.15  &	21.1   		&	17.6    &	5.63   &	0.015859 &	0.014138 &	0.041189 &	0.003722 &	0.005    &	0.008681 &	 \\
-IBCF Popularity				&	0.554495 &	0.001209 &	1335.7 &	1230.1 &	149.9 	&	0.3    		&	6 	    &	5.95   &	0.000198 &	0.004871 &	0.038575 &	0.000028 &	0.002344 &	0.006537 &	 \\
-IBCF Blend 2			    &	0.681773 &	0.006226 &	1328.5 &	1245   &	147.5   &	20.5        &	18.5    &	4.5    &	0.015464 &	0.014836 &	0.030416 &	0.004825 &	0.006603 &	0.009863 &	 \\
-%ALS-WR 100 100 15 true 10
-ALS-WR Price				&	0.797892 &  0.034154  &	1340.5	&	1250.8	&	138.0	&	108.3		&	121.4	&	15.0   &	0.080842 &	0.09701	 &	0.108833 &	0.028443 &	0.035474 &	0.033493 & 	\\
-ALS-WR Popularity		 	&	0.816561 &	0.023916 &	1340.5	&	1246.25 &	139   	&	86.5		&	98.25   &	8.5    &	0.064534 &	0.078812 &	0.060836 &	0.018396 &	0.031169 &	0.01758 &	\\
-ALS-WR Blend 2				&	0.800422 &	0.034519 &	1344.75 &	1246.5  &	134.5 	&	104.5 		&	120.75  &	13.5   &	0.077686 &	0.097038 &	0.100486 &	0.026307 &	0.041865 &	0.025649 &	 \\
-
-
-
-\bottomrule
-\end{tabular}
+\newcommand{\randomBasedSplit}[1]{
+    \begin{table}[H]
+    \centering
+    \resizebox{
+    \columnwidth}{!}{
+    \begin{tabular}{\reducedTableView}
+    \toprule
+    Model & AUC &	$MAP@20$ &	$T_{click}$ &	$T_{want}$ &	$T_{purchase}$ &	$P_{click}$&	$P_{want}$ & $P_{purchase}$ &	$R_{click}$ &	$R_{want}$ &	$R_{purchase}$ &	$MAP@20_{click}$ &	$MAP@20_{want}$	& $MAP@20_{purchase}$ &	 \\
+    \midrule
+    %Binary Methods
+    \rowcolor{Gray}
+    Most-Popular    			&   0.751516     & 0.013236  &   1323    &   1235    &   135     &   63      &   40.75   & 3.5     &   0.0476135   &   0.03300275  &   0.0270445   &   0.0147725   & 0.0111475 &   0.0098995 & \\
+    \rowcolor{Gray}
+    ItemBased Log	   			&   0.690723     & 0.002094  &   1353.9  &   1250.5  &   138     &   8.8     &   4.6     & 1.47    &   0.006488    &   0.003672    &   0.007252    &   0.001470    & 0.002043  &   0.000618  & \\
+    \rowcolor{Gray}
+    ItemBasedKNN k=120  		&   0.7357796    & 0.0069094 &   1295.8  &   1231.4  &   146.8   & 	37.6    &   53      & 7.2     &   0.0290256   &  0.0431066    &  0.0487262    &  0.0044356    &  0.0097038&   0.0060544 & \\
+    \rowcolor{Gray}
+    UserBasedKNN K = 200 cos	&   0.7926842	& 0.0317002	&	1282.2	&   1186.2 &	136.4	&	102.2	&	101.4	& 12.6    &	  0.0797042	  &	0.0854958	  &	0.092375	  &	0.128002	  &	0.182436  &	0.0349802	&	\\
+    \rowcolor{Gray}
+    BPR-MF          			&   0.7286434    & 0.0099586 &   1332.8  &   1233.8  &   135.4   &   51.4    &   31      & 5.2     &   0.0385224   &   0.025142    &   0.0385042   &   0.0120152   & 0.0058942 &   0.0133786 & \\
+    \rowcolor{Gray}
+    BPRLinear       			&   0.7097516    & 0.0070648 &   1344.3  &   1241.9  &   141.3   &   27.4    &   25.1    & 2.5     &   0.0203941   &   0.0202133   &   0.017821    &   0.006298    & 0.0075964 &   0.0022692 & \\
+    %ItemBased
+    IBCF Price					&	0.680758 &	0.004616 &	1332.8 &	1245.7 &	137.15  &	21.1   		&	17.6    &	5.63   &	0.015859 &	0.014138 &	0.041189 &	0.003722 &	0.005    &	0.008681 &	 \\
+    IBCF Popularity				&	0.554495 &	0.001209 &	1335.7 &	1230.1 &	149.9 	&	0.3    		&	6 	    &	5.95   &	0.000198 &	0.004871 &	0.038575 &	0.000028 &	0.002344 &	0.006537 &	 \\
+    IBCF Blend 2			    &	0.681773 &	0.006226 &	1328.5 &	1245   &	147.5   &	20.5        &	18.5    &	4.5    &	0.015464 &	0.014836 &	0.030416 &	0.004825 &	0.006603 &	0.009863 &	 \\
+    %ALS-WR 100 100 15 true 10
+    ALS-WR Price				&	0.797892 &  0.034154  &	1340.5	&	1250.8	&	138.0	&	108.3		&	121.4	&	15.0   &	0.080842 &	0.09701	 &	0.108833 &	0.028443 &	0.035474 &	0.033493 & 	\\
+    ALS-WR Popularity		 	&	0.816561 &	0.023916 &	1340.5	&	1246.25 &	139   	&	86.5		&	98.25   &	8.5    &	0.064534 &	0.078812 &	0.060836 &	0.018396 &	0.031169 &	0.01758 &	\\
+    ALS-WR Blend 2				&	0.800422 &	0.034519 &	1344.75 &	1246.5  &	134.5 	&	104.5 		&	120.75  &	13.5   &	0.077686 &	0.097038 &	0.100486 &	0.026307 &	0.041865 &	0.025649 &	 \\
+    \bottomrule
+    \end{tabular}
+    }
+    \caption{Random split results 90:10 - The Results are averaged over 10 runs}
+    \end{table}
 }
-\caption{Random split results 90:10 - The Results are averaged over 10 runs}
-\end{table}
+
+\randomBasedSplit{\reducedTableView}
+
 
 As you can see the random splits significantly improved our event distribution giving us approximately 5\% purchase events
 for each run. The scores in general for all metrics are much higher for the random splits. The main reason for the low AUC scores
@@ -202,7 +211,6 @@ The following tables show the results from our cold-start runs using time-based 
 \multicolumn{1}{c}{40\%} & \multicolumn{1}{c}{75\%} & \multicolumn{1}{c}{10\%} & \multicolumn{1}{c}{40\%} & \multicolumn{1}{c}{75\%} & \multicolumn{1}{c}{10\%} & \multicolumn{1}{c}{40\%} &
 \multicolumn{1}{c}{75\%} & 	\\ \midrule
 
-
 %PRE FILTERBOTS
 \rowcolor{Gray}
 Most-Popular 	 &	0.2964  &	0.908403&	0.973461&	0&	0.015807&	0.043607&	0&	0.122245&	0.14955	&	0&	0.083855&	0.116645&	0&	0.085254&	0.114296&	\\
@@ -239,7 +247,6 @@ a good improvement for both the 10\% and 40\% splits. Again we see that the ALS-
 \multicolumn{1}{c}{10\%} & \multicolumn{1}{c}{40\%} & \multicolumn{1}{c}{75\%} & \multicolumn{1}{c}{10\%} & \multicolumn{1}{c}{40\%} & \multicolumn{1}{c}{75\%} & \multicolumn{1}{c}{10\%} &
 \multicolumn{1}{c}{40\%} & \multicolumn{1}{c}{75\%} & \multicolumn{1}{c}{10\%} & \multicolumn{1}{c}{40\%} & \multicolumn{1}{c}{75\%} & \multicolumn{1}{c}{10\%} & \multicolumn{1}{c}{40\%} &
 \multicolumn{1}{c}{75\%} & 	\\ \midrule
-
 
 %Pre Filterbots
 \rowcolor{Gray}
