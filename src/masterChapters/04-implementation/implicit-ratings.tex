@@ -269,7 +269,7 @@ defined as:
   from 0 to 1.}
 \end{figure}
 
-Here the value of $f(x)$ is asymptotically limited between 0 and 1, dependent
+here the value of $f(x)$ is asymptotically limited between 0 and 1, dependent
 on the value of $x$. The steepest point of the curve happens when $x=0$. By
 adjusting the exponent of $e^{(-x)}$ we can skew the curve in order to map to our
 data, giving us a \textit{function of relevancy} ranging from an item being
@@ -299,7 +299,7 @@ well when the shift coefficient is low ($c \lessapprox 10$), however if the
 shift coefficient increases the steepness should decrease. In our dataset we
 found finding a fixed ratio between the steepness and shift worked best. The
 shift is set at $F/2$, where $F$ equals the number of days between the oldest
-and most recent event, in our example equalling 7.
+and most recent event, in our example equaling 7.
 
 \begin{table}[H]
   \centering
@@ -331,7 +331,7 @@ logistic function to instead using a ratio $r$ between the two constants:
   p(x) = \frac{1}{1+e^{-(r/c) \cdot (x - c)}}
 \end{equation}
 
-Here the $c$ equals the steepest point (shift coefficient), and we set it so
+here the $c$ equals the steepest point (shift coefficient), and we set it so
 that $c = M/2$ where $M$ still being the oldest event globally, as described in
 the previous section. In the SoBazaar dataset $M$ was $224$. Using a different
 ratio changes the logistic function in the following way:

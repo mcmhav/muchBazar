@@ -12,13 +12,13 @@ the main goals for our experiment, then discuss how we plan to achieve them.
 The second part therefore touches on our evaluation methodology.
 We have the following main goals for our experiment:
 
-\begin{itemize}
-	\item Goal 1: determine the effect of utilizing multiple event types
-	\item Goal 2: determine whether our proposed implicit rating methods improve the recommendation quality over
+\begin{enumerate}
+	\item Determine the effect of utilizing multiple event types
+	\item Determine whether our proposed implicit rating methods improve the recommendation quality over
 		  		  using \emph{more simplistic} binary methods.
-	\item Goal 3: evaluate the different implicit factors and attempt to quantify their importance.
-	\item Goal 4: quantify if our cold-start solution adds any value to the system.
-\end{itemize}
+	\item Evaluate the different implicit factors and attempt to quantify their importance.
+	\item Quantify if our cold-start solution adds any value to the system.
+\end{enumerate}
 
 \subsection{Experimental Datasets}
 
@@ -37,11 +37,12 @@ increased computation time. Another alternative well suited for sparse datasets 
 \emph{all but one} or the \emph{leave one out} method, in which we remove one rating
 from the test users and try to predict the hidden rating.
 Another important concern is whether or not to take the timestamps into consideration,
-which directly speaks against the use of cross-validation, as we wish to use the past
-interactions to predict future actions. When using the \emph{leave one out} method one
-could always remove the users freshest rating and try to predict it and repeat the
-process any number of times. This is particularly relevant as some of our implicit
-mapping functions factors in recency.
+which directly speaks against the use of cross-validation. Splitting the dataset
+on time is more realistic in the sense that you use past interactions to predict
+future actions, just as in a real life system. The \emph{leave one out} method could
+easily be adapted to always remove the users most recent ratings and try to predict
+them. This is particularly relevant in our case as some of our implicit mapping functions
+factors in recency.
 
 We chose to utilize both time-splits and random splits to improve our confidence
 in our results. For both splits we repeat the process 10 times to get as reliable
@@ -61,9 +62,8 @@ estimates as possible. The following table shows an overview of the experimental
 \end{table}
 
 As you can see the recommender can cover a much larger portion of the user group
-and items when including multiple event types. However, the sparsity is only reduced slightly
-as the number of items and users are much higher.
-
+and item collection when including multiple event types. However, as you can see, the sparsity is
+only reduced slightly as the number of items and users are proportionately higher.
 
 \subsection{Evaluation Methodology}
 
@@ -124,9 +124,9 @@ implicit mapping functions and blends:
 
 We wish to learn whether or not our filterbots enhance our systems ability to handle
 the three different cold-start related problems. This means that we need some methodology
-to be able to simulate the different cold-start scenarios and measure the recommendation quality.
+to simulate the different cold-start scenarios and measure the recommendation quality.
 As mentioned in Section~\ref{sec:cold-start-eval} there is no common framework for assessing 
-the cold-start performance of recommender systems. To recap the cold-start problem and how
+the cold-start performance of recommender systems. To recapitulate the cold-start problem and how
 the dataset changes over time we have three main input types:
 
 \begin{itemize}
@@ -141,7 +141,7 @@ we adopt a methodology similar to the one described in \cite{Stern2009, Lam2008}
 users are split in two disjoint sets, setting aside 10\% of the users as test users.
 We introduce a selection criteria similarly to the one described in \cite{Rashid2002, Rashid2008}
 where we only select users that have given above 20 ratings as eligible test users,
-then selecting a random subset of these users.
+we then selecting a random subset of these users.
 We then train three different models using 10\%, 40\% and 75\% of the test users
 ratings and try to predict their remaining ratings. The same methodolgy is applied
 to test items, the only difference being that only 5\% of the items are used as 
@@ -156,11 +156,11 @@ It is important to note that this process should be repeated multiple times, as
 the chance of getting an \emph{unfortunate} split is highly probable due to the
 dataset size.
 
-We perform both random and time-based splits. For our time based
-splits we train the model with ratings in chronological order, e.g. using
-the 10\% of the first ratings for a user, where his later activity is put in the testset.
-Similarly for the cold-start system splits we train the model using different random subset
-of the 80\% earliest ratings and try to predict the remaining 20\%.
+We perform both random and time-based splits. For our time based splits we train
+the model with ratings in chronological order, e.g. using the 10\% of the first
+ratings provided by user, where his later activities are put in the testset, which
+we then try to predict. Similarly for the cold-start system splits we train the model
+using different random subset of the 80\% earliest ratings and try to predict the remaining 20\%.
 
 \subsection{Generalization Properties}
 
@@ -168,7 +168,7 @@ We were unable to acquire any e-commerce datasets containing user browsing histo
 event types and timestamps. Although we inquired other researchers having experimented with similar
 datasets to no luck.
 
-In addition to evaluate the methods on the SoBazaar dataset wanted to verify that our
+In addition to evaluate the methods on the SoBazaar dataset we wanted to verify that our
 methods generalizes beyond our experimental dataset, in accordance to the general guidelines
 for experimental studies \cite{Shani2011}. The data used for offline evaluation should match
 as closely as possible the data we expect the recommender system to face when it is
@@ -176,12 +176,12 @@ deployed \cite{Gunawardana2009}. When searching for datasets for evaluation we f
 following dataset properties:
 
 \begin{itemize}
-	\item Size of dataset: Preferable as close as possible to SoBazaar or larger (a few months from now)
+	\item Size of dataset: preferably as close as possible to SoBazaar or larger (a few months from now)
 	in terms of number of ratings, users and items.
-	\item Different different types of implicit factors	such as clicks, likes and purchases.
-	\item Domain: Preferably a domain as close to possible as the e-commerce domain where
+	\item Different types of implicit factors such as clicks, likes and purchases.
+	\item Domain: preferably a domain as close to possible as the e-commerce domain where
 	factors like recency also would apply.
-	\item Timestamps: To evaluate the recentness mapping
+	\item Timestamps: to evaluate the recentness mapping
 	\item Presence of features (Secondary)
 \end{itemize}
 

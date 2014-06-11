@@ -2,21 +2,7 @@
 
 \section{Experimental Setup}
 
-\subsection{Computer Specifications}
-
-The experiments are run on a Ubuntu 14.04 LTS 64-bit
-machine with an Intel Core i7 920 CPU and 12GB of ram.
-
 \subsection{Parameter Settings}
-
-%Parameter settings for our fancy algorithms
-
-In k-NN item-item models, the number of neighbors 
-generally increases system performance (Bell et al., 2007a, 2007b). However, the quadratic 
-complexity of the search for k-NN, whether in time or space, is quadratic. So there's always a 
-tradeoff for an industrial system \cite{Deshpande2004, Cremonesi2010} to select a 
-reasonable value for K. We experimented with different values of neighbors and found that a K
-value between 80-200 generally produced the best results.
 
 For ALS-WR we found the following parameters to give us the best results after performing cross-validation.
 latent features = $100$, $\lambda$ = $100\-150$, number of iterations = $10\-15$, implicit feedback = true, alpha = $10$.
