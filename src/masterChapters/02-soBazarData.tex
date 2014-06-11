@@ -390,11 +390,12 @@ accessing, to see if there is a usage pattern amongst the users.
 
 The figure above displays the average price of the users in the SoBazaar dataset.
 The users are group together, where one one bucket represents the count of users
-with an item view price average between $x$ to $x+99$. The first bucket for
-instance contains the users with average item view price between $0$ and $99$.
+with an item view price average in the range $[x,x+99]$. The first bucket for
+instance contains the users with average item view price between $1$ and $100$.
 
 As we can see from the figure above the users are centered around $300$, where
-$300$ is the most common interaction price~\footnote{The median price is $299$}.
+$300$ is the most common interaction price~\footnote{The median interaction
+price is $299$}.
 
 This tells us that the preferred price of the users in the SoBazaar application
 is around $300$ , which can be utilized when making ratings based on the user
