@@ -248,10 +248,10 @@ level supersede all others). Equally, if a user browsed the item 100 times, it
 would make no difference in score compared to browsing it 4 times. The scores
 given to the various event types may vary from what kind of dataset one have,
 the domain and should be evaluated using one or more of the methods mentioned
-in Section~\ref{evaluation}.
+in Section~\ref{sec:evaluation}.
 
 If we wanted ratings between 1 and $k$ one can transform the score $s$ provided
-by table~\ref{implicit-table}:
+by Table~\ref{implicit-table}:
 
 \begin{equation}
   ImplicitRating(s, k) = 100 * \frac{k-1}{100} + 1
@@ -286,7 +286,6 @@ errors. An example regression line matching five data points is provided below:
 
 \begin{figure}[H]
   \centering
-  \label{fig-regression}
   \begin{tikzpicture}
     \begin{axis}[
         xlabel=Feature 1,
@@ -306,6 +305,7 @@ errors. An example regression line matching five data points is provided below:
     \end{axis}
   \end{tikzpicture}
   \caption{Regression line fitting the 5 observed datapoints}
+  \label{fig-regression}
 \end{figure}
 
 In this example we consider the relationship between one feature (the
@@ -316,8 +316,8 @@ solving the following equation, where we are given a number of independent and
 dependent values:
 
 \begin{equation}
-  \label{eq-regression}
   \hat{y}(w,x) = w_0 + w_1 x_1 + \cdots + w_p x_p
+  \label{eq-regression}
 \end{equation}
 
 where we want to find the values of the $w$-parameters, also called the unknown
@@ -377,11 +377,11 @@ rating $3.1614$.
 
 \paragraph{Using regression analysis on implicit feedback}
 The process of using regression analysis in order to predict ratings based on
-implicit feedback has already been done, in a different domain, by Parra et
-al.~\cite{parra2011walk}. Where they first did a quantitiative user study
+implicit feedback has already been done in a different domain, by Parra et
+al.~\cite{parra2011walk}. Where they first did a quantitative user study
 asking 114 active users of the music service Last.fm to rate items which was
 found in their activity history. These ratings were used as dependent variables
-and then using various schemes described below they mapped these to the
+and then using various schemes described below they, mapped these to the
 independent variables. Now, a key point in their study is the fact that all
 models found used explicit feedback from a user study as a \textit{ground
 truth}. The necessity of such a ground truth is the largest weakness in terms
@@ -389,7 +389,7 @@ of regression analysis on implicit datasets - as it is per definition
 non-existent. A possibility is to give various events scores based on
 importance in the system, with e.g. a purchase having top-score and clicking on
 an item a low score. This is discussed further in Section~\ref{} where an
-implimentaiton and evaluation of such a design is presented as well.
+implementation and evaluation of such a design is presented as well.
 
 The study looked at three different features for each item, found in the
 dataset:
@@ -397,7 +397,7 @@ dataset:
 \begin{itemize}
   \item User activity on the item
   \item Global popularity of the item
-  \item How recent the user had acitivity on the item
+  \item How recent the user had activity on the item
 \end{itemize}
 
 For each feature all items are categorized into three buckets, so that items
@@ -468,12 +468,12 @@ probability of the enquired outcome. The final rating is then calculated as:
   E[r_{ui}] = \sum_{k=1}^{5} k \cdot P(r_{ui} = k)
 \end{equation}
 
-where $u$ and $i$ is the user and item in question, respectivly. $k$ is the
+where $u$ and $i$ is the user and item in question, respectively. $k$ is the
 ordinal variable between 1 and 5, and $P(r_{ui})$ yields the probability of $k$
 being the rating for item $i$ on user $u$.
 
-This model yields an improvement in performence both measured in MAP and
-nDCG-scores (see Section~\ref{}), compared to their previous model. However,
+This model yields an improvement in performance both measured in MAP and
+nDCG-scores (see Section~\ref{sec:evaluation}), compared to their previous model. However,
 when they discuss the accuracy of their evaluation metrics a conclusion is made
 which is similar to what is laid out in this thesis as well:
 
@@ -572,7 +572,7 @@ In order to normalize $ImplicitRating(u,i)$ we set $x_{min} = 0$ and $x_{max} =
 
 At this point we have looked at multiple existing methods for creating implicit
 ratings based on implicit feedback, proving both their extensibility and
-numerious variations. However, there are some challanges and weaknesses that
+numerous variations. However, there are some challenges and weaknesses that
 holds true for all methods. We will take great care to explain these, but in
 addition describe the multiple ways of counteracting or minimizing their
 impact as well. The two largest challenges in regards to generating implicit
@@ -586,24 +586,24 @@ ratings are:
 \end{itemize}
 
 % First challenge, the lack of ground truth.
-As mentioned in Section~\ref{regression-sota}, when discussing regression
-analysis, without a ground truth both modelling and evaluating becomes a
+As mentioned in Section~\ref{sec:regression-sota}, when discussing regression
+analysis, without a ground truth both modeling and evaluating becomes a
 inaccurate science based on assumptions. Some assumptions may very well hold
-true, as proved by in~\cite{parra-2011walk}, however without conducting user
+true, as proved by in~\cite{parra2011walk}, however without conducting user
 studies or evaluating the implicit ratings in an online environment using
 conversion metrics such as an increase in purchases, we can not reliably
 evaluate our results. We can thus calculate and compare the performance of one
 set of implicit ratings compared to another set of implicit ratings, but only
 based on how well they \textit{match our assumptions} and selected features,
 not their real world performance. This in many answers, but also make it
-irrealizable given our data, to fulfill our research goal concering finding
+irrealizable given our data, to fulfill our research goal concerning finding
 good metrics for evaluating the implicit ratings (\textbf{Goal G9}) as we
 neither have a ground truth, nor a set of explicit ratings from the
 application.
 
 % Second challenge, no negative feedback.
 The second challenge is a result of almost all research on implicit feedback
-focusing on how implicit behaviours can be used as positive evidence in a
+focusing on how implicit behaviors can be used as positive evidence in a
 recommender system. Without any negative feedback direct comparisons to
 explicit ratings become troublesome, as an implicit rating of 2 does not mean
 \textit{dissatisfaction}, but instead only \textit{less} satisfaction than 3.
@@ -615,12 +615,12 @@ implicit feedbacks are often fewer in number and demand a larger effort to
 extract.
 
 % Other challenges; making too many generalizations on user behaviours.
-There are many other smaller challanges when generating implicit ratings, one
-of them concerning making too many generalization rules for user behaviour. In
-particular, users bahave differently and have varying approaches to information
+There are many other smaller challenges when generating implicit ratings, one
+of them concerning making too many generalization rules for user behavior. In
+particular, users behave differently and have varying approaches to information
 seeking, thus it becomes difficult to generate and dangerous to apply
-all-purpose rules for describing their behaviour. This way, induvidual
-differences can greatly impact the effectiveness of analyzing user behaviours,
+all-purpose rules for describing their behavior. This way, individual
+differences can greatly impact the effectiveness of analyzing user behaviors,
 which is at the core of our assumptions.
 
 % Weaknesses propagate, and recommender+evaluation is based on impl. feedb.

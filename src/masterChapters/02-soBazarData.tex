@@ -15,7 +15,7 @@ reason to the majority of choices made throughout the thesis.
 
 \clearpage
 \section{The SoBazaar Application}
-\label{sec:sobazaar-application}
+\label{sec:sobazaar-appication}
 
 
 \begin{chapquote}[30pt]{About SoBazaar}
@@ -79,7 +79,7 @@ optional status such as \textit{Hot} or \textit{New}.
       \includegraphics[height=1.5\linewidth]{image/SoBazaarStore.png}
   \end{minipage}
   \caption[SoBazaar storefront screenshots - version 0.5.1]{Screenshots from the SoBazaar Application. From the left to right: the brand browser, editors picks and the H\&M storefront}
-  \label{figure:SoBazaarfeed}
+  \label{figure:SoBazaarfeed2}
 \end{figure}
 
 From the product screen you can choose to buy the item, being redirected to an
@@ -108,9 +108,8 @@ filter the results by status, brand and category (type of attire).
     \begin{minipage}{.3\linewidth}
         \includegraphics[height=1.5\linewidth]{image/SoBazaarsearch.png}
     \end{minipage}
-    \caption{Screenshots showing product details, love list and search
-    functionality}
-    \label{figure:SoBazaarfeed}
+    \caption{Screenshots showing product details, love list and search functionality}
+    \label{figure:SoBazaarfeed3}
 \end{figure}
 
 The application is currently in a beta phase and is planned for a final release after the summer.
@@ -163,7 +162,7 @@ systems, are presented in the table below.
         \emph{event\_id}          & What kind of event was
                                   triggered~\tablefootnote{Complete list of the
                                   different types of events can be found in
-                                  table~\ref{table:events}} \\
+                                  table~\ref{table:completeEventData}} \\
         \emph{price}              & The price (in NOK) of the item \\
         \emph{retailer\_brand}    & Unique id of the item retailer. A retailer
                                     is a distributer of products, such as H\&M,
@@ -294,7 +293,7 @@ about the product in the overview (See Figure~\ref{figure:SoBazaarfeed}) where
 price and status (\textit{New}, \textit{Hot} or \textit{On sale}) should be
 easily accessible.
 
-As we can see from Figure~\ref{figure:SoBazaarfeed} it is possible to indicate
+As we can see from Figure~\ref{figure:SoBazaarfeed3} it is possible to indicate
 that you want an item (\textit{product\_wanted}) by clicking the heart-icon,
 and without accessing the acutal item -- that is sending a
 \textit{product\_detail\_clicked}. Hence, although the number of wants are half
@@ -330,7 +329,7 @@ users, below.
 \end{figure}
 
 We can see that this figure confirms our title. In
-Figure~\ref{figure:userEventDist} the majority of users have been observed
+Figure~\ref{fig:userEventDist} the majority of users have been observed
 doing less than 10 events, and Figure~\ref{fig:userEventCumDist} confirms this
 by presenting the cumalative graph where, 78\% of the users have 50 events or
 less, with an average of 5 events per user. Note that we here look at
@@ -485,7 +484,7 @@ preferences.
 
 Can we, however, make the same differantiation based on popularity? We have
 seen that each item in average has $6.21$ interactions
-(Table~\ref{fig:dataSummary}, but as seen below these are not evenly
+(Table~\ref{table:datasetSummary}, but as seen below these are not evenly
 distributed among the products.
 
 \begin{figure}[H]
@@ -792,18 +791,18 @@ or shown interest to the product.
       \caption{View times before purchasing an item}
       \label{figure:viewBuy}
   \end{subfigure}
-  \label{fig:view-times}
   \caption{Average view times of products before want or purchase}
+  \label{fig:view-times}
 \end{figure}
 
 By looking at the average view time before want and purchase above, we conclude
 that most users purchases or wants an item by looking at images and perhaps
-superfically at the product details. In other words, as we have mentioned
-earlier, the most important aspects in terms of retention and convertion are
+superficially at the product details. In other words, as we have mentioned
+earlier, the most important aspects in terms of retention and conversion are
 price, images, status of the item, brand and storefront.
 
 Closely related is the already mentioned \textit{bounce rate}, which is
-depticted below.
+depicted below.
 
 \begin{figure}[H]
   \centering
@@ -826,14 +825,14 @@ that is, we should not count it towards understanding the users preferences.
   \label{figure:eventOnDaysDist}
 \end{figure}
 
-We conclude this section by looking at some key charecteisticts of the SoBazaar
-applicaiton in general, namely activity peaks both in terms in the lifespan of
+We conclude this section by looking at some key characteristics of the SoBazaar
+application in general, namely activity peaks both in terms in the lifespan of
 the application and hours of the day. As we can see two activity peaks stand
 out, one in mid-January and the second one in May, that is until and including
 the last event in the dataset.
 
 However, it is worth mentioning again that the application is not officially
-released and thus acitivity levels are highly sensitive to publicity or other
+released and thus activity levels are highly sensitive to publicity or other
 external factors.
 
 \begin{figure}[H]
@@ -856,7 +855,7 @@ being an entertainment application.
 In many domains the number of activities on an item given a specific user
 implies preference. The activity in question may be the number of plays in a
 music service~\cite{parra2011walk} or the amount of minutes used watching a
-specific TV-show~\cite{study-on-implicit-tv}. We want to validate this
+specific TV-show~\cite{Hu2008}. We want to validate this
 hypothesis in the SoBazaar data, determining if the \textit{number of clicks}
 on an item implies higher preference, that is an higher probability of buying
 the item.
@@ -887,8 +886,8 @@ of conversion rates and standard errors.
     6 & 54    & 20    & 0.3703 & 6.57\% \\
     \bottomrule
   \end{tabular}
-  \label{tab:prob-purchase}
   \caption{Probabilties of purchase, given $N$ visits on item}
+  \label{tab:prob-purchase}
 \end{table}
 
 The standard error gives a useful indication on how certain we can be that the
@@ -976,6 +975,20 @@ times, but we can not defend it statistically for any higher value of clicks.
 \section{Session Patterns}
 \label{sec:sessionPatterns}
 
+Since the SoBazaar data is based on the events of the application user, sessions can be constructed from the data.
+Sessions are the set of events triggered during one separate user usage of the application.
+For instance:
+
+\begin{enumerate}
+  \item User logs into the application
+  \item User enters a storefront
+  \item User clicks an item
+  \item User clicks \emph{want} on an item
+\end{enumerate}
+
+As seen from the example above, first the user logs inn, which is the trigger flag to indicate a sessions is started. Then user does a set of actions in the application.
+These events put together forms the a session of a user and is used in the figure below to better understand the global user patterns.
+
 \begin{figure}[H]
   \centering
   \includegraphics[width=5in]{image/statesInteractionTrue-gvfile.pdf}
@@ -1015,27 +1028,7 @@ If we focus on the states \emph{product\_wanted} and
 \emph{product\_wanted}-state progressed into the
 \emph{product\_purchase\_intended}-state.
 
-%     Init Hypothesis:
+Based on the information above we better see that storefront related events and browsing them are a quite normal behavior, as expected after we saw Figure~\ref{figure:eventIDDistribution}, but we also see that the most often occurring next state after doing a \emph{product\_detail\_clicked} is another \emph{product\_detail\_clicked}, which indicates a sense of store belonging from the user.
+This can also be seen by the fact that there are 5 755 entries into \emph{product\_detail\_clicked} from a store access, but only 3 134 out. And this is true even though there are 1 596 store accesses after a \emph{product\_wanted} event since there are so many \emph{product\_wanted} events after store accesses.
 
-%     Must make different rules for the different stores:
-%     "Bik Bok", "Cubus", "Gina Trik", "H\&M", "Bianco" has a broad specter of extra
-%     functions inside the web store, whereas others might not, only shows the
-%     product and a add to chart button.  This might divide the use pattern of the
-%     users into a:
-
-%     "product\_detail\_clicked" $\Rightarrow$ "product\_purchase\_intended" $\Rightarrow$ "product\_wanted"
-
-%     "product\_detail\_clicked" $\Rightarrow$ "product\_purchase\_intended" $\notimplies$ "product\_wanted",
-
-%     and
-
-%     "product\_detail\_clicked" $\Rightarrow$ "product\_wanted"
-
-%     based on the store accessed.
-
-%     Use this to make a "rule set" with a probability.
-%     Then again use this to recommend items for the users with that given
-%     probability.
-
-%     Find a "most popular session"-pattern
-%     Find a "most likely to come after"-pattern
+One interesting find is that the most occurring way of accessing a \emph{product\_detail\_clicked} state, is by just having been in a \emph{product\_detail\_clicked} state, which strengthens the hypothesis that users are brand aware.

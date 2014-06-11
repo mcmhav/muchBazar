@@ -1,4 +1,4 @@
-%As  !TEX root = ../../report.tex
+% !TEX root = ../../report.tex
 \section{Generating Implicit Ratings}
 \label{sec:implementation-implicit}
 
@@ -11,13 +11,13 @@ Section~\ref{sec:implicit}. Our goals are two-fold:
   weaknesses and challenges, depicted in Section~\ref{implicit-weaknesses}, as
   possible
   \item Customize existing and new algorithms to our fashion domain, described
-  in Section~\ref{sec:fashion-theory}
+  in Section~\ref{sec:fashion}
 \end{itemize}
 
 The most important factor when creating ratings is to understand which implicit
 data are available and their implications on user preferences. In order to best
 understand the data one should do a quantitative study as presented in
-Chapter~\ref{sobazaar-data}, but always keeping in mind the domain in question.
+Chapter~\ref{chap:thesobazaardata}, but always keeping in mind the domain in question.
 When an understanding is obtained one can begin selecting features capturing
 the wanted properties and use these generalizations in order to generate
 ratings for different users inhabiting unique patterns and product
@@ -116,7 +116,7 @@ question, defined as:
 
 By considering penalization we also implicitly add negative feedback to events.
 This is an important aspect to keep in mind when working with implicit
-feedback, as discussed in Section~\ref{implicit-feedback} as modern recommender
+feedback, as discussed in Section~\ref{sec:implicit} as modern recommender
 engines work better when we are assuming ratings are based on both positive and
 negative feedback.
 
@@ -205,9 +205,9 @@ the following distribution:
 \end{figure}
 
 With much the same average and median values at \textit{3.26} and \textit{3.45}
-respectivly, we still have a distribution with a unique pattern where the
+respectively, we still have a distribution with a unique pattern where the
 ratings are more evenly distributed (the largest bin contains 700 ratings in
-the given interval, compared to Figure ~\ref{dist-recentness-linear-global}
+the given interval, compared to Figure~\ref{fig:dist-recentness-linear-global}
 where the same number is 1250.)
 
 \subsubsection{Penalization with logistic functions}
@@ -234,10 +234,10 @@ concurrently and we know that in domains such as technology, fashion and other
 consumer-products an item has an age of relevancy, somewhat metaphoric to a
 seasonal threshold. An example of this could be a fashion store recommending
 warm clothes in the months between December to March, but then want to "change"
-product pool based on the users behaviours -- who are probably looking for
+product pool based on the users behaviors -- who are probably looking for
 lighter clothes (changing season).
 
-In order to mimic this behaviour we introduce a logistic function, which is a
+In order to mimic this behavior we introduce a logistic function, which is a
 mathematical function having an "S" shape and a common special case of the more
 general sigmoid-function. In its most simplest case the logistic function is
 defined as:
@@ -600,17 +600,17 @@ function, showing the trend of histogram:
 
 \begin{figure}[H]
   \centering
-  \label{dist-blend}
   \includegraphics[scale=0.5]{image/dist-blend}
   \caption{Distribution using blend of ordering and number of days since event,
   with logistic and linear penalization functions, overlayed with density
   function}
+  \label{dist-blend}
 \end{figure}
 
 Especially noticable in this distribution is that we've achieved a even
 distribution without too many fluxuations. In addition there is a rounded peak
 aroung the rating 4, which by looking at other public datasets such as in the
-Netflix Prize~\cite{Netflix} or Million Song Dataset~\cite{Bertin-Mahieux-2011}
+Netflix Prize~\cite{Netflix} or Million Song Dataset~\cite{Bertin-Mahieux2011}
 is a common peak found in explicit environments. Indeed, there is a small gap
 where the scores between our two events \textit{click} and \textit{want} are
 bordering, a result of our sigmoid functions having a ratio of $3.5$ which
@@ -622,7 +622,7 @@ be seen on Figure~\ref{fig:sigmoid-penalizations}
 
 Instead of only looking at recentness, we can combine it with our other
 features found in the previous section - namely price and popularity, as well.
-As we saw by Figure~\ref{dist-price} and Figure~\ref{dist-popularity}, the
+As we saw by Figure~\ref{fig:dist-price} and Figure~\ref{fig:dist-popularity}, the
 distribution of ratings considering both prices and popularities respectivly
 have peaks at edge values $1$ and $5$. When combined an item with high rating
 in regards to price, but low rating considering popularity will be lowered to a
@@ -632,10 +632,10 @@ allocated a value around $3-4$ with few or none gaps.
 
 \begin{figure}[H]
   \centering
-  \label{dist-blend-price}
   \includegraphics[scale=0.5]{image/dist-blend-price-popularity-recentness}
   \caption{Distribution using blend of price, popularity and recentness with
   linear penalization, overlayed with density function}
+  \label{dist-blend-price}
 \end{figure}
 
 By here combinging ratings generated by recentness (both ordering and age of
@@ -643,7 +643,7 @@ events), popularity and price we see our so far "best" distribution in terms of
 non quantifiable metrics. The distribution has an average rating of $3.5305$
 and median $3.5780$, indicating an even spread. In the above example we have
 used logistic penalization functions with constant $3.5$ as depicted in
-Figure~\ref{dist-recentness-sigmoid} and~\ref{dist-count-sigmoid}. Using a
+Figure~\ref{fig:dist-recentness-sigmoid} and~\ref{fig:dist-count-sigmoid}. Using a
 linear penalization function instead yields the average value $3.5293$ and
 median $3.5883$, hence no large difference. The logistic approach was however
 considered superior and used in future experiments as it captures the linearity
