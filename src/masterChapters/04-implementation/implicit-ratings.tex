@@ -67,7 +67,7 @@ ratings representing a users preferences. This highlights the importance of
 generating high quality ratings and selecting good features and methods for
 doing so.
 
-\subsection{Improving mapping of event types}
+\subsection{Improving Mapping of Event Types}
 
 In Section~\ref{implicit-binary-domains} Pranab Ghosh proposes a global rating
 mapping without any specific justification of why the different values are
@@ -104,7 +104,7 @@ events. Thus, our score mapping looks like:
 Notice that the total number of events having product ids are $35324$, and the
 sum of all three fractions is 1, thus covering 100\% of all events.
 
-\subsection{Penalizing features}
+\subsection{Penalizing Features}
 
 How then do we distribute the feature-values  between the min and max limits
 above? In our implementation we use a feature-dependent \textit{penalization}
@@ -136,7 +136,7 @@ Equation~\ref{eq-normalization}. Now we have all components ready in order
 to do a rating generation, which we will describe the process of doing
 considering \textit{recentness}, \textit{price} and \textit{popularity}.
 
-\subsection{Considering recentness}
+\subsection{Considering Recentness}
 
 In order to see all parts working together, we imagine an example where a user
 has six events on three items, as presented in the table below. The ratings are
@@ -406,7 +406,7 @@ timestamp and give penalization $p(0,u) = 0$ and $p(n,u) = 1$ when the user has
 $n$ different interactions, where the $n$-th interaction is also the first
 interaction recorded on the user (and thus the oldest too).
 
-\subsection{Considering price}
+\subsection{Considering Price}
 
 In the same manner as with recentness we want to consider other features
 apparent in our data and domain. As seen in Figure~\ref{fig:priceperUserDist}
@@ -454,7 +454,7 @@ us that many users share the price preferences and by penalizing harder we can
 reduce the number of items with rating 5. However, as we will see in subsequent
 sections we are quite happy with the above distribution.
 
-\subsection{Considering item popularity}
+\subsection{Considering Item Popularity}
 
 By looking at the global popularity of all item we can essentially tell if a
 users activities classifies as conforming to the common standards or if the
@@ -530,7 +530,7 @@ connected to them. More interestingly we observe an evenly distributed spread
 of ratings and, as with price, a peak at rating $5$ is expected as this is
 given to the items close to the \textit{average} popularity.
 
-\subsection{Linearly combining implicit ratings}
+\subsection{Linearly Combining Implicit Ratings}
 
 At this point we have found multiple ways of calculating the implicit ratings,
 based on our implicit feedback. However, each method has its weaknesses,
