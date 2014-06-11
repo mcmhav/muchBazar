@@ -151,67 +151,84 @@ Section~\ref{sec:experimental-plan}, respectivly.
 \subsection{G1, G2 and G3: Fashion domain and recommendation systems}
 \label{sec:fashion-discussion}
 
-Through thorough examination and analysis of the data and a literature review
-of fashion articles we came to the following main conclusions: incorporating
-more data to a sparse data set is essential, time is central, both when it
-comes to the users and the items, and fashion is built on subcultures.
+By thorough examination and analysis of the data combined with an extensive
+literature review on the fashion domain we came to the main conclusion that
+time, subcultures, trends, brands and price were important features to
+incorperate into a fashion recommender. Additional features should be analyzed
+and verfied by having denser data over a longer timespan, in order to see
+trends and more statisically significant numbers.
 
-After analyzing the data it became apparent that the data was not just sparse
-in the sense of users, but also in the sense of items and item interactions.
-Working with purchases alone would render the data too sparse to be able to
-retrieve any good results, so more data was needed.
-Clicks and want naturally had a higher interaction rate, and proved to be
-usable data in the sense of user preferences, and this should be used to
-supplement the low purchase data.
+Analyzing the SoBazaar data, it became apparent that sparsity were not only a
+problem in number of users, but also looking at the amount of items and their
+connected interactions. Recentness was shown to have a great effect on user
+interactions, as well as it was demonstrated that yielding an increased number
+of clicks on an item augment the probabilty of purchase in a positive way.
 
-Another interesting find when looking at the data was the importance of time,
-and its relevance to the fashion domain.  Many of both the user accounts and
-the items are short lived, and the decaying factor must generally be handled
-when doing recommendations in the fashion domain.  The recommendation system
-should therefore be supplemented with the concept of time, and handle the
-average items' natural loss of attention over time.
+In terms of recommender systems in the fashion domain we determine that
+\textit{time} should play an important role in order to determine preferences.
+A decaying factor on feedback on both item popularity and based on season
+should be implemented, in order to handle the items' loss of attention over
+time due to changes in trends or weather. Demographics and social networks
+should also be established, and be used as a user-classifier, as they largly
+affect fashion preferences.
 
-Looking at the fashion domain we saw how significant the idea of subcultures
-are for the fashion domain, and that purchasing fashion articles are not just
-done for the need, but for the \emph{belongingness} and to show off.  Based on
-these findings we expect recommendations to greatly benefit from capturing
-these subcultures and utilizing them to improve user preference understanding,
-and thereby improve recommendations done to the users.
+By these conslusions we argue that \textbf{Goal G1, G2 and G3} were
+\textbf{fulfilled}.
 
-\subsection{G4: Cold-start issues and sparsity}
+\subsection{G4 and G5: Cold-start issues and sparsity}
 \label{sec:cold-start-discussion}
 
 Through our literature review, we closely examined five different classes of
 solutions to the cold-start problem. Namely trust-aware recommender system,
-filterbots, seed users, interview process and hybrid methods.
-
-However, a question that should be asked is whether there exists and solutions
-which we did not discover or was excluded from our review. An issue that could
-have influenced the results of our review is \emph{researchers bias}, which
-could have arisen of any of the researchers had preferences for one of the
-solution types before the literature search. The reason for including multiple
-methods that never were used was due to uncertainty regarding what data would
-become available during the project. Trust-aware recommender system and hybrid
-methods in particular could never be tested out due to a lack of
-social/demographic data, which we were hoping to get access to.
+filterbots, seed users, interview process and hybrid methods. The reason for
+including multiple methods that never were used was due to uncertainty
+regarding what data would become available during the project. Trust-aware
+recommender system and hybrid methods in particular could never be tested out
+due to a lack of social/demographic data, which we were hoping to get access
+to.
 
 After closely examining the different methods we concluded that both filterbots
 and content-boosted hybrid methods could provide a possible solution for our
-specific scenario...
+specific scenario. However, only modest results were achieved with our
+solution, and we largly attribute this to the quality of product metadata and
+the lack of demographic data on users. Agarwal et. al. \cite{Agarwal2009} used
+13 filterbots in their experiments, where 11 out of 13 bots rated items based
+on demographic information, which underlines the importance of this segment.
 
-Demographic information could further improve its performance and usefulness.
-Agarwal et. al. \cite{Agarwal2009} used 13 filterbots in their experiments,
-where 11 out of 13 bots rated items based on demographic information.
+However, we identified multiple existing solutions which, with better data,
+should mitigate most cold-start issues in the fashion domain and the SoBazaar
+application. In addition a successful implementation of filterbots were carried
+out, serving as an important proof of concept. Consequently we argue that
+\textbf{Goal G4 and G5} were \textbf{fulfilled}.
 
-\subsection{G5, G6, G7: Making recommendations with implicit feedback}
+\subsection{G6, G7, G8: Making recommendations with implicit feedback}
 \label{sec:implicit-discussion}
 
-Importance of implicit factors for the domain
+We identified multiple existing solutions for inferring user preference from
+implicit feedback, however a common denomiatior between a majority of them were
+the additional need for explicit feedback. As neither user studies nor
+online evaluation could be carried out, we proposed a solution based on
+dataset properties and domain-specific feature selection.
 
-Another question that arises is: when does it become obsolete to look at clicks
-and wants?
+Our results in this regard indicate the importance of implicit feedback, where
+we obtain an even and robust distribution of user-item ratings that performs
+well in all offline evaluation scenarios. In addition we argue that properties
+found in the implicit feedback is especially important for the fashion domain
+and, even in an environment with explicit feedback, it should be utilized in
+order to infer user preferences.
 
-%TODO - Discuss implicit ratings
+As have been highlighted in multiple studies on implicit feedback, there exist
+no good evaluation schemes for offline studies, when no explicit feedback is
+available. Consequently, we strongly advise to either conduct user-studies on
+users inhabiting interesting and representative user-patterns in the existing
+implicit data or having a framework for online-evaluation available in order to
+guide both method and parameter choices.
+
+We evaluate our implicit ratings looking at performance using the same
+parameters in all later components, and achieve a satisfactory result. This,
+combined with a comprehensive study of possibilities with regards to implicit
+feedback leads us to argue that \textbf{Goal G6, G7 and G8} were
+\textbf{fulfilled}.
 
 \section{Future Work}
 
