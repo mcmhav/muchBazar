@@ -76,9 +76,11 @@
       \path[->,thick]
          (log) edge [] node [sloped, above] {Implicit feedback} (converter)
          (db) edge [] node [sloped, above, text width=3cm, align=center] {Structured\\product data} (coldstart)
-         (converter) edge [] node [sloped, above] {Ratings} (coldstart)
          (coldstart) edge [] node [sloped, above] {Ratings} (recommender)
+         (converter) edge [] node [sloped, above] {Ratings} (coldstart)
          (recommender) edge [] node [sloped, above] {Recommendations} (evaluation);
+      \path[->,dashed]
+         (converter) edge [] node [sloped, above] {Ratings} (recommender);
 
       \end{tikzpicture}
       }
@@ -214,26 +216,26 @@
             Attribute       & Count   \\
             \midrule
             Total number of product events  &    35324 \\
-            Unique users ids    &    1532 \\
-            Unique item ids     &    5688 \\
-            Unique storefronts  &    144 \\
+            Unique users ids        &    1532 \\
+            Unique item ids         &    5688 \\
+            Unique storefronts      &    144 \\
             Unique retailer brands  &    22 \\
             \hline
             Item clicks     &    21400 \\
-            Item wants  &    12436 \\
+            Item wants      &    12436 \\
             Item purchases  &    1488 \\
             \hline
-            First event & Mon, 07 Oct 2013 10:59:57 GMT \\
-            Last event & Mon, 19 May 2014 22:51:19 GMT \\
-            Lifetime of data & 224 days \\
+            First event       & Mon, 07 Oct 2013 10:59:57 GMT \\
+            Last event        & Mon, 19 May 2014 22:51:19 GMT \\
+            Lifetime of data  & 224 days \\
             \hline
-            Average item click count per user   &    13.968668407310705 \\
-            Average item want count per user    &    8.117493472584856 \\
-            Average item purchase count per user    &    0.9712793733681462 \\
+            Average item click count per user       &    13.97 \\
+            Average item want count per user        &    8.12 \\
+            Average item purchase count per user    &    0.97 \\
             \hline
-            Average user interaction count per item     &    6.210267229254571 \\
-            Average item interaction count per user     &    23.057441253263708 \\
-            Median item interaction count per user  &    7.0 \\
+            Average user interaction count per item     &    6.21 \\
+            Average item interaction count per user     &    23.06 \\
+            Median item interaction count per user      &    7.00 \\
     \bottomrule\end{tabular}}\end{table}
   \end{frame}
 
@@ -275,8 +277,6 @@
     \end{figure}
   \end{frame}
 
-  \applicationOverview
-
   % What does it mean that feedback is implicit?
   \begin{frame}
     \frametitle{Implicit feedback}
@@ -289,19 +289,7 @@
     \end{itemize}
   \end{frame}
 
-  \begin{frame}
-    \frametitle{Implicit feedback}
-    \framesubtitle{Challenges}
-    \begin{itemize}
-      \item Not much existing research.
-      \item No good evaluation metrics.
-      \item No ground truth.
-      \item Difficult to weight features.
-      \item Performs better in dense environments.
-      \item Combining with other sources.
-    \end{itemize}
-  \end{frame}
-
+  \applicationOverview
 
   % Second section, going through each of these components.
   \section{Proposed system components}
@@ -403,13 +391,24 @@
 
   \applicationOverview
 
+  % Some recap and present challenges before going into evaluation.
+  \begin{frame}
+    \frametitle{Implicit feedback}
+    \framesubtitle{Challenges}
+    \begin{itemize}
+      \item Not much existing research.
+      \item No good evaluation metrics.
+      \item No ground truth.
+      \item Difficult to weight features.
+      \item Performs better in dense environments.
+      \item Combining with other sources.
+    \end{itemize}
+  \end{frame}
 
   % Component four: how to evaluate the results.
   \begin{frame}
     \frametitle{Evaluation}
     \begin{itemize}
-      \item Recap: Evaluating implicit feedback is difficult. You have no
-      \textit{ground truth}.
       \item Best way of confirming performance: online experiments.
       \item Various ways of splitting dataset.
       \item Perform user studies to understand underlying features and
@@ -518,6 +517,19 @@
   % Section three: a summary and conclusions from our work.
   \section{Results and future work}
 
+  \begin{frame}
+    \frametitle{Results}
+    \begin{itemize}
+      \item Time based splits: MostPopular does not recommend any bought
+      product in top 20. Using ALS-WR, with recentness ratings, predict 8.33\%.
+      In number of \textit{wants} the ratio is 4.29\% vs. 9.83\%.
+      \vfill
+      \item Random splits: MostPopular recommend 3.33\% wanted item vs. 9.70\%
+      with ALS-WR. For purhchases: 2.70\% vs. 10.05\%. Using blend of price and
+      popularity.
+    \end{itemize}
+  \end{frame}
+
   % Some thoughts on what we have found.
   \begin{frame}
     \frametitle{Conclusions}
@@ -553,7 +565,7 @@
       complexity in accordance to density.
       \item Kick-start recommendations by asking for preferences.
       \item Better results can be achieved with using Tinder-like interface.
-      \item Ensure that a framework for online evaluation, is in place.
+      \item Ensure that a framework for online evaluation is in place.
     \end{itemize}
   \end{frame}
 
