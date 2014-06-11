@@ -31,70 +31,74 @@ importance of subcultures, conformity and recentness of items.
 % Summarize our results from the State of the Art.
 Furthermore an in-depth \textit{state of the art} analysis were carried out,
 focusing in particular on existing or similar implementations of our proposed
-components. In addition we present a set of essential methods and techniques
-used in modern recommender systems, and which lay the foundation of our thesis.
-Great care is taken to discuss and consider all presented methods for both
-recommending and evaluating recommendations, with regards to having an
-extremely small dataset and designing a solution for the fashion domain.
+components. We here set forth a set of essential methods and techniques used in
+modern recommender systems which lay the foundation of our thesis.  Great care
+is taken to discuss and consider all presented methods for both recommending
+and evaluating recommendations, with regards to having an extremely small
+dataset and designing a solution for the fashion domain.
 
 % First component: generating implicit ratings.
-Our first component consists of creating implicit ratings based on a extremely
-sparse dataset with \textit{implicit} feedback such as user clicks and item
-interactions. First we consider the probability of each item-related event type
-to construct a scoring scheme. Then, for every event exhibited by a user on an
-item we then calculate the maximum score possible based on the event type and
-various features such as recentness, price and popularity. Every feature is
-given a carefully selected penalization function controlling the score,
-designed to account for observed behaviors in the domain.
+Our first component consists of creating implicit ratings from with
+\textit{implicit} feedback such as user clicks and item interactions. Initially
+we consider the probability of each item-related event type to construct a
+scoring scheme. Then, for every event exhibited by a user on an item we then
+calculate the maximum score possible based on the event type and various
+features such as recentness, price and popularity. Every feature is given a
+carefully selected penalization function controlling the score, designed to
+account for observed behaviors in the domain.
 
 % Second component: filterbots.
 Our second component consists of creating pseudo users or filterbots in an
 attempt to \textit{mitigate} the cold start problem. These pseudo users rate
 items algorithmically according the item-attributes or by aggregating rating
-information. A few such examples includes a \textit{PopularityBot} that rate
-items based on their popularity, \textit{BrandBots} that gives all items of a
-brand a maximum rating and so on. We tested out different filterbot combinations
-for all three cold-start scenarios, disappointingly we did not find the filterbots
-to improve the cold start performance of the system.
+information. Two such bots include a \textit{PopularityBot} who rate items
+based on their popularity and a \textit{BrandBot} who gives all items of a
+brand the maximum rating. We tested out different filterbot combinations for
+all three cold-start scenarios, disappointingly we did not find the filterbots
+to improve the cold start performance of the system, but primarily credit this
+to the dissatisfactory quality of product metadata and the lack of demographic
+details about the users.
 
 % Third component: recommendation.
-Our third component is the system that takes ratings as input and outputs
-recommendations.  We tested a wide array of different recommender systems on
+Our third component takes ratings as input and outputs
+recommendations. We tested a wide array of different recommender algorithms on
 our dataset such as simple non-personalized approaches, one-class collaborative
 filtering methods and more sophisticated latent factor models. The
 non-personalized and one-class collaborative filtering methods was used as a
 baseline for our implicit rating experiments. We found ALS-WR, a latent factor
-method for implicit feedback, to be a good fit for our implicit ratings.
+method for implicit feedback, to perform very well in our domain and given our
+evaluation criterias.
 
 % Fourth component: evaluation.
-Our fourth component we came up with an set of evaluation metrics to measure
-the overall quality of the recommender systems. Evaluating recommender systems
-using implicit feedback differs from traditional recommender system evaluation,
-simply using RMSE was not enough. We determined that a combination of accuracy
-and rank-accuracy metrics was the best fit for our top-20 recommendation task.
-AUC measures the overall quality of the recommender system while $MAP@20$ and
-our own unique event specific measurements measure the systems ability to rank
-the top 20 recommendations.
+In our fourth component we found a set of evaluation metrics to measure the
+overall quality of the recommender systems. Evaluating recommender systems
+using implicit feedback differs from traditional recommender system evaluation
+and simply using RMSE was not applicable. We determined that a combination of
+accuracy and rank-accuracy metrics was the best fit for our top-20
+recommendation task.  AUC measures the overall quality of the recommender
+system while $MAP@20$ and our own unique event specific measurements measure
+the systems ability to rank the top 20 recommendations.
 
 % How the proposed system performs
 The proposed system outperformed all other methods tested both in terms of
 accuracy and its ability to rank the top results for a time-based split.
 Ordering and Recency performed particularly well scoring an AUC of 8\% higher
-than the best binary method in addition being able to recall more clicks and 
-wants and increase the ranking quality. The improvements over the non-personalized
-most popular recommender was a 237\% increase in recall of wanted items
-and an increase from 0\% recall of purchased items to 8.33\% for
-ordering. For the random split the results were less conclusive.
-Here the blend scored an AUC that was 4.3\% higher than the best binary method
-and was able to recall both more wanted items and purchases. However, user-based
-kNN managed to achieve a higher $MAP@20$ scores when considering wanted and purchased
-items. Making our results inconclusive. Our results give some indication that recentness
-is an actual factor in the fashion domain. We also found prize to consistently give
-better results than popularity, which might give some indication that prize
-is a more important factor. Due to the limited size of our dataset we
-do not wish to draw any conclusions as our results should be verified
-through online experiments.
-
+than the best binary method in addition being able to recall more clicks and
+wants and increase the ranking quality. The improvements over the
+non-personalized most popular recommender was a 237\% increase in recall of
+wanted items and an increase from 0\% recall of purchased items to 8.33\% for
+ordering. For the random split the results were less conclusive.  Here the
+blend combining recentness, price and popularity, scored an AUC that was 4.3\%
+higher than the best binary method and was able to recall both more wanted
+items and purchases. However, user-based kNN managed to achieve a higher
+$MAP@20$ scores when considering wanted and purchased items, making this
+segment of our results inconclusive. Our results give strong indication that
+recentness is an important factor in the fashion domain. We also found that the
+price too consistently give better results than considering item-popularity,
+which might give some indication that this is a more important feature for
+users in this domain. Due to the limited size of our dataset we are careful to
+not make grand claims about the results, and believe they should be verified
+through online experiments or user studies.
 
 % Concluding thoughts
 Based on findings presented in this thesis, it is concluded that despite making
@@ -106,8 +110,7 @@ possible and would yield multiple competitive advantages. In addition, we have
 presented the current state of the art in both fashion recommending and
 implicit rating generation, from where we draw the conclusion that although
 little research in the area exist today, the potential is great and making
-recommendations based on user behaviors will in future recommender system be
-inevitable.
+recommendations based on user behaviors will in the future be inevitable.
 
 %Recommender systems are arguably one of the trendiest uses of data science
 %startups today. However, with the exception of very rare cases such as Pandora
