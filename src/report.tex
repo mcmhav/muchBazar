@@ -52,7 +52,7 @@
 \definecolor{Gray}{gray}{0.90} % table row color
 
 \lstset{
-  basicstyle=\ttfamily\tiny,
+  basicstyle=\ttfamily\small,
   breaklines=true,
   aboveskip=25pt,
   belowskip=25pt
@@ -170,23 +170,31 @@ active assessment effort from all users. In this thesis, we instead look at how
 these ratings can be inferred from looking at session data and the transaction
 history for every user.
 
-We analyze which recommender models are suitable for such an untraditional data
-source, whilst accounting for a sparse dataset with few events – often called a
-cold start environment. Multiple ways of generating ratings are presented
-taking into account recentness in the data as an important factor. This,
-combined with traditional recommender system approaches makes for a new and
-interesting way of making recommendations in small datasets with high sparsity.
-We then provide valuable insight into using and evaluating implicit ratings in
-recommender system algorithms, spanning from simple global-averages to
-state-of-the-art matrix-factorizations. A promising result is finally made,
-supported by a range of relevant metrics, promoting further research into the
-area of implicit ratings on sparse and small datasets.
+A system taking into account these untraditional data sources, whilst
+accounting for an extremely sparse dataset with few events, is proposed. The
+advised system consists of four components arranged in a pipeline --
+essentially taking implicit feedback as input and where recommendations
+combined with their evaluation scores are the output. Multiple ways of
+generating ratings from implicit feedback, which is the first component, are
+presented. We find that recentness, price and popularity proves effective
+defferentiators between users and their interactions on items, in order to
+induce preference from implicit feedback. In our second component, we extend
+this approach by further taking into account content features we strengthen our
+ratings, a process which we call \textit{boosting} of ratings. We then, in our
+third component, provide valuable insight and experiments using implicit
+ratings in recommender system algorithms, spanning from taking simple
+global-averages to State of the Art matrix factorization -- ultimatly yieding a
+set of recommendations for all users. These recommendations are then utilized
+in our final component where we perform a comprehensive evaluation of all
+earlier components, seeking to identify both optimal methods and parameters.
 
-Finally, a discussion is made on the various evaluation metrics for both
-implicit ratings and our recommender models, as here as well the untraditional
-approach of choosing implicit ratings as input to our models makes many of the
-conventional metrics inefficacious.
-\marginpar{heri-notes: Hovekonklusjon og hovedfunnene skal med her}
+A promising result is made, where we outperform all tested binary
+recommendation methods, including simply recommending the \textit{most popular}
+items, by several factors. We find that by factoring in recentness, price and
+popularity-trends for each user, we achieve a set of generated ratings that
+combined, generally outperforms all other feature alone. These promising
+results, coupled with a robust, modular and highly adaptive system for making
+recommendations from implicit feedback promotes further research into the area.
 
 \end{abstract}
 \pagenumbering{roman}

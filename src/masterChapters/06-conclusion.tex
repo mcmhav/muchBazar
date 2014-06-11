@@ -77,7 +77,11 @@ ability to rank the top 20 recommendations.
 
 % How the proposed system performs
 The proposed system outperformed all other methods tested both in terms of
-accuracy and its ability to rank the top results.
+accuracy and its ability to rank the top results. Our results also indicate:
+%TODO - %Sigmoid = Count
+%Recentness works!
+%Popularity better than price!
+%Results should be further verified through online experiments
 \marginpar{TODO: mention increase in accuracy and ranking ability}
 
 % Concluding thoughts
@@ -110,6 +114,104 @@ inevitable.
 %user loyalty and growing your inventory. In the meantime you can drive
 %serendipitous recommendations simply by using a combination of most popular
 %content and editors.
+
+\section{Discussion}
+
+In Chapter~\ref{chap:introduction} we introduced a total of 8 research goals
+which would lay the foundations of this thesis and guide our efforts towards
+the restulting system. We re-iterate them here:
+
+\begin{itemize}
+\item \textbf{G1}: Gain a better understanding of the fashion domain.
+\item \textbf{G2}: Identify the specific challenges of making fashion recommendations.
+\item \textbf{G3}: Study how existing technologies can be adapted to mitigate or
+overcome these challenges.
+\vfill
+\item \textbf{G4}: Study existing solutions to the cold-start problem.
+\item \textbf{G5}: Identify the best suited methods with regard to both application
+feedback and domain.
+\vfill
+\item \textbf{G6}: Explore the existing solutions of how to infer user preference from
+implicit feedback data.
+\item \textbf{G7}: Identify different methods of combining various event types into
+\textit{implicit ratings}.
+\item \textbf{G8}: Find metrics in order to evaluate the \emph{implicit ratings} and
+recommendations.
+\end{itemize}
+
+We will in this section provide an overview on how these research goals were
+attempted met and to which degree they were fulfilled. One should however note
+that more detailed analyses are issued throughout the thesis -- for G1, G2 and
+G3 consult Section~\ref{sec:fashion-theory} and
+Chapter~\ref{chap:thesobazaardata}; for G4 and G5 see
+Section~\ref{sec:cold-start-discussion}; and G6, G7 and G8 are discussed at
+length in Section~\ref{sec:implicit}, Section~\ref{sec:implementation-implicit} and
+Section~\ref{sec:experimental-plan}, respectivly.
+
+\subsection{G1, G2 and G3: Fashion domain and recommendation systems}
+\label{sec:fashion-discussion}
+
+Through thorough examination and analysis of the data and a literature review
+of fashion articles we came to the following main conclusions: incorporating
+more data to a sparse data set is essential, time is central, both when it
+comes to the users and the items, and fashion is built on subcultures.
+
+After analyzing the data it became apparent that the data was not just sparse
+in the sense of users, but also in the sense of items and item interactions.
+Working with purchases alone would render the data too sparse to be able to
+retrieve any good results, so more data was needed.
+Clicks and want naturally had a higher interaction rate, and proved to be
+usable data in the sense of user preferences, and this should be used to
+supplement the low purchase data.
+
+Another interesting find when looking at the data was the importance of time,
+and its relevance to the fashion domain.  Many of both the user accounts and
+the items are short lived, and the decaying factor must generally be handled
+when doing recommendations in the fashion domain.  The recommendation system
+should therefore be supplemented with the concept of time, and handle the
+average items' natural loss of attention over time.
+
+Looking at the fashion domain we saw how significant the idea of subcultures
+are for the fashion domain, and that purchasing fashion articles are not just
+done for the need, but for the \emph{belongingness} and to show off.  Based on
+these findings we expect recommendations to greatly benefit from capturing
+these subcultures and utilizing them to improve user preference understanding,
+and thereby improve recommendations done to the users.
+
+\subsection{G4: Cold-start issues and sparsity}
+\label{sec:cold-start-discussion}
+
+Through our literature review, we closely examined five different classes of
+solutions to the cold-start problem. Namely trust-aware recommender system,
+filterbots, seed users, interview process and hybrid methods.
+
+However, a question that should be asked is whether there exists and solutions
+which we did not discover or was excluded from our review. An issue that could
+have influenced the results of our review is \emph{researchers bias}, which
+could have arisen of any of the researchers had preferences for one of the
+solution types before the literature search. The reason for including multiple
+methods that never were used was due to uncertainty regarding what data would
+become available during the project. Trust-aware recommender system and hybrid
+methods in particular could never be tested out due to a lack of
+social/demographic data, which we were hoping to get access to.
+
+After closely examining the different methods we concluded that both filterbots
+and content-boosted hybrid methods could provide a possible solution for our
+specific scenario...
+
+Demographic information could further improve its performance and usefulness.
+Agarwal et. al. \cite{Agarwal2009} used 13 filterbots in their experiments,
+where 11 out of 13 bots rated items based on demographic information.
+
+\subsection{G5, G6, G7: Making recommendations with implicit feedback}
+\label{sec:implicit-discussion}
+
+Importance of implicit factors for the domain
+
+Another question that arises is: when does it become obsolete to look at clicks
+and wants?
+
+%TODO - Discuss implicit ratings
 
 \section{Future Work}
 
