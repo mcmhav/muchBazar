@@ -7,7 +7,7 @@ Our research \textbf{goals G5 and G8} requires us to identify existing metrics
 for evaluating recommender systems in a sparse dataset with implicit feedback.
 Set forth by our problem statement we need to propose one recommender system,
 selected from a range of candidate approaches and techniques. We recall our
-system overview in Figure~\ref{fig:system-overview} where in the last step of
+system overview in Figure~\ref{fig:app-overview} where in the last step of
 the pipeline we \textit{evaluate} our recommendations. There are a range of
 different metrics for ranking the performance of recommender systems, and they
 are all highly dependent on which properties the system designer prioritizes as
@@ -680,7 +680,7 @@ cold-start user scenario one selects a subset of the users with e.g.\ more than
 200 ratings. One then trains the model with a subset of the ratings. In the
 case of~\cite{Rashid2002} 30, 45, 60 and 90 ratings was used. After training
 the model one computes the error on the hidden ratings for the same user.
-Stern et. al. \cite{Stern1998} also used a similar method which they called
+Stern et. al. \cite{Stern2009} also used a similar method which they called
 Given $n$, in which they trained their model using 2, 5 and 10 ratings for each
 test user and predict the remaining values.
 The advantage of the latter approach is that they use a selection criteria for
