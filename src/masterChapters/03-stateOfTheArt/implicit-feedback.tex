@@ -47,23 +47,23 @@ complete view on the user preferences~\cite{Jawaheer2010}.
 There are also practical reasons for not having explicit feedback in form of
 ratings, dependent on how a website/application interacts and works with its
 customers. One of the most popular recommender sites in the world, Netflix, ask
-their users to rate items after consumation. However, this process does not
+their users to rate items after consummation. However, this process does not
 \textit{cost} anything for the user, and the possibility to rate is included in
 the monthly subscription price, whilst in a webstore rating an item often
 require the user to first buy it, consume it and finally rate it.
 
 Implicit feedback on the other hand utilizes, often already collected,
 analytics data and hence does not require any extra effort neither for the user
-nor the frontend-developers. This creates a more frictionless experience for
+nor the front-end-developers. This creates a more frictionless experience for
 the user, but can also yield better recommender results since often the event
 log is less sparse than rating datasets and contains implicit knowledge which,
 by only using explicit information, would never be exposed in a traditional
 system.
 
-It is important to understand that there are several fundemental differences
+It is important to understand that there are several fundamental differences
 between implicit and explicit ratings, in everything from \textit{meaning} to
 \textit{evaluation techniques}. Partly inspired by Hu et al.~\cite{Hu2008}, we
-can identify the following key charecterstics and differences between them:
+can identify the following key characteristics and differences between them:
 
 \vspace{3 mm}
 
@@ -98,9 +98,9 @@ with implicit rating and its precision. Researchers and developers need to be
 sure to select correct set of events and session-metrics to base implicit
 ratings on.
 \item As users do not provide numerical scores, a precision-recall evaluation
-scheme is often preffered to more preference-based metrics.
+scheme is often preferred to more preference-based metrics.
 \item Strengths include not requiring extra feedback for the user, having less
-sparsity and catching actual behaviour in the application. Less influenced by
+sparsity and catching actual behavior in the application. Less influenced by
 peer pressure and so forth.
 \end{itemize}
 
@@ -108,9 +108,9 @@ Notice that several events such as purchasing an item may be considered as
 explicitly giving positive feedback, but as we argue in this paper all events
 in the SoBazaar dataset (including purchases) are treated as implicit feedback.
 The reasoning behind this lies in the fact that purchasing, in contrast to
-positivly rating, an item happens before actual consumption. Hence the user may
+positively rating, an item happens before actual consumption. Hence the user may
 not like the item in question, it may be a gift for another person or a variety
-of other reasons. Whilst in the scenerio of rating, the user has already
+of other reasons. Whilst in the scenario of rating, the user has already
 consumed it and is explicitly answering the question \textit{«To which degree
 did you like it?»}.
 
@@ -120,7 +120,7 @@ did you like it?»}.
 
 One of the most common techniques of quantifying implicit feedback to implicit
 ratings is to use binary ratings - that is if a user has shown any interest in
-an item we give that item a weight of 1, similarily all items the user has not
+an item we give that item a weight of 1, similarly all items the user has not
 shown interest in (e.g. not clicked on) we give a rating of 0. This method was
 introduced and used by Hu et al.~\cite{Hu2008} where they formalized the
 notion of confidence which the $r_{ui}$ variables measure, e.g. if a user $u$
@@ -138,7 +138,7 @@ $r_{ui}$ values:
 
 As mentioned earlier in this section, and as it is also noted in the original
 research, when we have implicit rather than explicit feedback there may be
-multiple reasons beyond preference that decide consumation of an item. It may
+multiple reasons beyond preference that decide consummation of an item. It may
 be due to the items availability or price; the users knowledge of the item
 caused by e.g. the user interface or one of many other factors different from
 the user preferring or disliking the item. To remidate this they introduce a
@@ -187,12 +187,12 @@ In the previous sub-section we saw how $r_{ui}$, a score for user $u$ on item
 $i$, was set based on e.g. number of clicks but perhaps more commonly the
 duration or amount of which the user has consumed the item. This way, in a
 domain such as television a user would obtain $r_{ui} = 1.0$ if the whole
-programme was watched, and similarily $r_{ui} = 0.5$ if half of the show was
+program was watched, and similarly $r_{ui} = 0.5$ if half of the show was
 watched, and so forth. Now, this works well in domains where actions on an item
-are continious, but in many domains such as a e-commerce store we mostly have
+are continuous, but in many domains such as a e-commerce store we mostly have
 binary events such as clicks or purchases. One scheme, proposed by
 ~\cite{pkghost2014implicit} is to differentiate between different events and by
-weighting these by importance or relevence we can create ratings using the
+weighting these by importance or relevance we can create ratings using the
 whole scale between 0.0 and 1.0.
 
 This is just one example of how the domain and data available affects our
@@ -279,7 +279,7 @@ Section~\ref{sec:implementation-implicit}
 \paragraph{Introduction to linear regression}
 A different method for converting events to ratings is finding a mathematical
 model which fits our observed data. Using this model we can predict new ratings
-by extrapolation or intrapolaton. Our observed data can be in N-dimensions, but
+by extrapolation or interpolation. Our observed data can be in N-dimensions, but
 in the figure below we consider two dimensions of observed properties, in which
 the goal is to find a regression line matching the data points with minimal
 errors. An example regression line matching five data points is provided below:
@@ -321,8 +321,8 @@ dependent values:
 \end{equation}
 
 where we want to find the values of the $w$-parameters, also called the unknown
-parameters. This is done by using multipe known values for $x$ and $y$, the
-independent and dependent variables respectivly. In Figure~\ref{fig-regression}
+parameters. This is done by using multiple known values for $x$ and $y$, the
+independent and dependent variables respectively. In Figure~\ref{fig-regression}
 we have the following datapoints:
 
 \begin{table}[H]
@@ -366,7 +366,7 @@ form:
   \hat{w} = \argmin_w \sum_{i} (y - w^{T}x_{i})^2
 \end{equation}
 
-Carrying out this minimization for our equations~\ref{eqs-regression-example},
+Carrying out this minimization for our Equations~\ref{eqs-regression-example},
 we obtain an intercept value ($w_0$) of $1.4379$ and a slope ($w_1$) of
 $0.1149$, which matches the regression line plotted in
 Figure~\ref{fig-regression}. Predicting a new rating based on a feature value
@@ -381,7 +381,7 @@ implicit feedback has already been done in a different domain, by Parra et
 al.~\cite{parra2011walk}. Where they first did a quantitative user study
 asking 114 active users of the music service Last.fm to rate items which was
 found in their activity history. These ratings were used as dependent variables
-and then using various schemes described below they, mapped these to the
+and then using various schemes described below, they mapped these to the
 independent variables. Now, a key point in their study is the fact that all
 models found used explicit feedback from a user study as a \textit{ground
 truth}. The necessity of such a ground truth is the largest weakness in terms
@@ -404,8 +404,8 @@ For each feature all items are categorized into three buckets, so that items
 are equally distributed across one feature. Thus bucket one for the feature of
 global popularity contains items with low popularity and bucket three those
 with the highest popularity, and so forth. The main reason for having this
-sampling strategy is to create a homogenous set of items where outliers are
-accounted for, and we are less prone to over or underfitting.
+sampling strategy is to create a homogeneous set of items where outliers are
+accounted for, and we are less prone to over or under fitting.
 
 Four models are proposed, utilizing the features above and the ratings provided
 in the user study:
@@ -427,7 +427,7 @@ popularity of item $i$.
 Evaluating a regression model is done by confirming the \textit{goodness of
 fit}, and the most common metric is to calculate the $R^2$ which based on
 residual values in Equation~\ref{least-squares} yields a number between 0 and
-1, indicating a bad or good fit, respectivly. By accounting for recentness in
+1, indicating a bad or good fit, respectively. By accounting for recentness in
 their regression model (model 2\-4) they achieved an improvement in the $R^2$
 value by \textit{10\%}.
 
@@ -456,7 +456,7 @@ outcomes (1 to 5) they use a multinomial regression type.
 
 In \textit{multinomial logistic regression} problems such as this, the link
 function (logistic function, also called \textit{logit}) is trained based on
-features found in the data. In the refered study they examine the music domain
+features found in the data. In the referred study they examine the music domain
 and hence they include listen count, recentness and the global popularity as
 features to the link function.
 
@@ -498,8 +498,8 @@ method, coined HOPE, they calculate an implicit rating by finding the
 absolute preference $AP$ from users and items. These preferences are further
 used to find the relative preference which finally are normalized into an
 implicit rating. Once the implicit ratings are derived they calculate
-similarity scores and find K-nearest neighbours in a traditional fashion.
-Finally these neighbours are used in order to calculate a CF-based predicted
+similarity scores and find K-nearest neighbors in a traditional fashion.
+Finally these neighbors are used in order to calculate a CF-based predicted
 preference (CFPP). This score is integrated with a Sequential Pattern
 Analysis-based predicted preference (SPAPP) which is derived from matching
 subsequences of common sequential patterns between users. This process is
@@ -513,14 +513,14 @@ summarized in Figure~\ref{hope-system}.
   \label{hope-system}
 \end{figure}
 
-We will continue this section focusing on the convertion from transaction data
+We will continue this section focusing on the conversion from transaction data
 into implicit ratings, rather than going in depth into sequential pattern
 analysis and calculating the CFPP and SPAPP-scores, as the interested reader
-rather should consult the original research for a indepth discussion. When
+rather should consult the original research for a in depth discussion. When
 calculating the $AP$ score we focus solely on the purchase data of the user
 $u$, but it can easily be extended to other types of events. However, the score
 does makes more sense when using it on domains having a high degree of repeated
-actions - such as e-commerce stores selling convienience products with short
+actions - such as e-commerce stores selling convenience products with short
 life spans or a music service having users listening to a song multiple times.
 The absolute preference is calculated as follows:
 
@@ -535,8 +535,8 @@ user $p$ who has bought the same item one time out of one transaction the
 $AP(p,i) = \ln(2.0)$, and as one can see we should consider a relative preference so
 that repeated actions are rewarded. Further, the absolute preference only takes
 into account the frequency of purchases and because the frequency is heavily
-dependent on price, item category and lifespan of an item — so in the original
-research they propose the following equation in order to calcualte the relative
+dependent on price, item category and lifespan of an item -- so in the original
+research they propose the following equation in order to calculate the relative
 preference@:
 
 \begin{equation}
@@ -630,8 +630,8 @@ Section~\ref{subsec:cf} as input to our recommender algorithm makes which makes
 creates a model and later gives predictions on how well new data fits this
 model. In the end we use the output from this model (the predictions) for
 evaluation, determining the quality of how well the predictions were. However,
-notice that if all input to creting the \textit{recommender model} were
-unaccurate or wrong, then this would affect all later stages in the
+notice that if all input to creating the \textit{recommender model} were
+inaccurate or wrong, then this would affect all later stages in the
 \textit{recommender pipeline}. This is generally not a concern in explicit
 ratings, after all the ground truth is the \textit{truth}, but when considering
 implicit ratings it can instead be called the \textit{ground assumptions} and
@@ -639,14 +639,14 @@ if wrong, all later stages become unsound as well. Furthermore, as briefly
 touched upon earlier, without much negative feedback our later stages in the
 pipeline need to take height for this, not penalizing a low ranking as much as
 in traditional settings -- as having some feedback is better than none. In
-essence, we need to ensure that two factors are emperically chosen: first, all
+essence, we need to ensure that two factors are empirically chosen: first, all
 assumptions should be grounded in statistical evidence and second, recommender
 algorithms and evaluation schemes should take height for weak evidence of
 negative feedback.
 
 % We need in-depth understanding of the domain.
 A consequence of using implicit ratings is therefore to statistically select
-features that yields a good classification of user behaviours. In addition,
+features that yields a good classification of user behaviors. In addition,
 we need to consider the sparsity of the dataset and dependent on the domain
 filter out implicit feedback based on criterias such as time sensitivity or
 others. This is seen in the fashion domain, where we after some time want to

@@ -1,3 +1,4 @@
+% !TEX root = ../../report.tex
 \section{Evaluation Metrics}
 \label{sec:eval-metrics}
 
@@ -143,7 +144,7 @@ Setting it to low you risk ending up with many $0.0$ values, and when setting it
 \emph{randomly} concatenated ratings in the results. We believe a value of \textit{20} is natural choice for our
 application as up to 20 recommendations can be shown in the user interface.
 
-Mean average precision (MAP@k), described in Section~\ref{subp:mean_average_precision_map_} is a popular metric for search
+Mean average precision (MAP@k), described in Section~\ref{subsec:offlineeval} is a popular metric for search
 engines and is applied, for example, to report results at the Text Retrieval Conference (TREC). The main weakness with regard
 to recommender systems is that it assumes that the user is interested in finding many relevant documents for each query, and
 does not look at the relevance of the items. Consider the following examples where we have three lists of hidden items and
@@ -173,7 +174,7 @@ Example 	& 	Actual					& 	Recommended					&	AP@10   \\ \midrule
 As you see from example two and three average precision does not consider the order of the actual item list. We want some way to
 reward the recommender for getting the purchased ranked higher than both wants and clicks.
 
-Normalized Discounted Cumulative Gain (nDCG) described in Section \ref{subp:normalized_discounted_cumulative_gain_} is another metric to
+Normalized Discounted Cumulative Gain (nDCG) described in Section~\ref{subsec:offlineeval} is another metric to
 measure the rank accuracy. It is based on two main assumptions; (1) Highly relevant items are more useful than marginally relevant ones,
 (2) The lower the ranked position of a relevant item, the less useful it is for the user, since it is less likely to be \emph{examined}.
 The maybe most interesting aspect of nDCG is that it contains an utility function $rel_i$. One can replace the original utility function
@@ -192,11 +193,10 @@ event types, which we did not know. To solve this problem we decided to chose a 
 and counts of clicks, wants and purchases retrieved by the recommender in the top 20 positions. As you see, it would have been nice to know these
 reward attributes to make the evaluation results more fluent.
 
-To check if an user-item touple is a click, want or purchase we create a file which
+To check if an user-item tuple is a click, want or purchase we create a file which
 stores the log events in the following format:
 
 \begin{table}[H]
-\label{table:event-type}
 \centering
 \begin{tabular}{*{3}l}
 \toprule
@@ -210,6 +210,7 @@ UserID	&	ItemID	 &  Event Type  \\ \midrule
 \bottomrule
 \end{tabular}
 \caption{Evaluation - Example event type file}
+\label{table:event-type}
 \end{table}
 
 For items where a user has multiple events we only use the most \emph{valuable} event. E.g. if a user have both clicked

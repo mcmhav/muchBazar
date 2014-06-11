@@ -13,19 +13,19 @@ an average of 1.34 ratings per items is no easy task using traditional recommend
 are meant as a baseline to show what one could expect when only looking at purchase data.
 
 \begin{table}[H]
-\label{table:results-purchase-only}
     \centering
     \begin{tabular}{*{5}l}
     \toprule
-    Model 			&	AUC			&	$MAP@20$ \\ \midrule
+    Model           &   AUC         &   $MAP@20$ \\ \midrule
     \rowcolor{Gray}
-    Most Popular	&	0.30314		&	0.00000	\\
-    ItemBasedKNN	&	0.52366		&	0.00000	\\
-    UserBasedKNN	&	0.52189		&	0.00000	\\
-    BPR-MF			&	0.34490		&	0.00000	\\
+    Most Popular    &   0.30314     &   0.00000 \\
+    ItemBasedKNN    &   0.52366     &   0.00000 \\
+    UserBasedKNN    &   0.52189     &   0.00000 \\
+    BPR-MF          &   0.34490     &   0.00000 \\
     \bottomrule
     \end{tabular}
 \caption[Experimental Results - Purchase Only Dataset]{Experimental Results for the purchase only dataset using random splits. The results are averaged over 5 runs}
+\label{table:results-purchase-only}
 \end{table}
 
 To our surprise our Most Popular recommender performed much worse than random guessing. But since the average item
@@ -174,14 +174,14 @@ We also notice that all methods except UserBasedKNN and ALS-WR did not significa
 recommender, which could be explained by our sparse data. Another interesting observation is that IBCF produce poor recommendations
 using popularity alone, but that the result improves drastically when blending it with Price. We also again notice that using traditional
 collaborative filtering methods yield far from optimal results. ALS-WR has the best performance overall, but only marginally.
-The results not shown in the table can be found in the Appendix~\ref{appendix:random-split-results}
+The results not shown in the table can be found in the Appendix~\ref{appendix-random-split-results}
 
 \subsection{Cold-Start Results}
 
 The following subsections will present our results from our cold-start evaluation runs. As ALS-WR proved to be the best method overall we wish to
 see how well it performs in the different cold-start scenarios. We will use a most-popular recommender and IBCF as baselines to get a better
 overview of how well the different methods perform in comparison. In a switching hybrid recommender one could e.g. use a most popular
-recommender to generate recommendations to new users, then switch to IBCF recommender with filterbots when the user have rated at least one item, and at a later 
+recommender to generate recommendations to new users, then switch to IBCF recommender with filterbots when the user have rated at least one item, and at a later
 point e.g. when a user have rated 10 items, use ALS-WR to provide personalized recommendations. To recap, our cold-start solution was designed
 for neighborhood models and not latent factor methods. This means that we do not expect to much from applying them to ALS-WR.
 
@@ -214,7 +214,7 @@ Most-Popular 	 &	0.2964  &	0.908403&	0.973461&	0&	0.015807&	0.043607&	0&	0.12224
 
 \rowcolor{Gray}
 IBCF 			 &	0.581572&	0.783782&	0.647155&	0.000183&	0.008705&	0.002948&	0.000926&	0.021223&	0.01396	&	0.001526&	0.018261&	0.015304&	0&	0.076197&	0.013116	&	\\
-IBCF [0,0,0,0,1] &	0.541997&	0.58478	&	0.642857&	0.014604&	0.005501&	0.001959&	0.009187&	0.009037&	0.006354&	0.01123	& 0.009327&	0.005027&	0.009601&	0.008387&	0.019131& \\						
+IBCF [0,0,0,0,1] &	0.541997&	0.58478	&	0.642857&	0.014604&	0.005501&	0.001959&	0.009187&	0.009037&	0.006354&	0.01123	& 0.009327&	0.005027&	0.009601&	0.008387&	0.019131& \\
 IBCF [0,0,1,0,1] &	0.550556&	0.759351&	0.785536&	0.000507&	0.002808&	0.003399&	0.002737&	0.008781&	0.011933&	0.00152	&	0.005298&	0.009464&	0.004037&	0.012874&	0	& \\
 IBCF [1,1,1,1,1] &	0.592059&	0.67624	&	0.79985&	0.000984&	0.002873&	0.005914&	0.00318&	0.011957&	0.022349&	0.002196&	0.008525&	0.016026&	0.004175&	0.011679&	0.033806& \\
 
@@ -295,8 +295,8 @@ IBCF [1,1,1,1,1] &	0.468626&	0.509375&	0.534009&	0.001836&	0.002444&	0.000348&	0
 
 \rowcolor{Gray}
 ALS-WR 				&	0.570946&	0.568137&	0.600738&	0.002545&	0.001761&	0.006208&	0.003937&	0.002625&	0.004265&	0.003466&	0.005199&	0.004766&	0.027778&	0.027778	&	0 & \\
-ALS-WR [0,0,0,0,1] &	0.573326&	0.582566&	0.632071&	0.00213&	0.003647&	0.003087&	0.006562&	0.006234&	0.00689	&	0.0013&	0.002166&	0.005199&	0	&	0	&	0	& \\		
-ALS-WR [0,0,1,0,1] 	& 	0.602176&	0.596168&	0.640561&	0.001719&	0.0028&	0.004611&	0.003404&	0.005659&	0.00689	&	0.003954&	0.003304&	0.007095&	0	&	0	&	0.024306	& \\				
+ALS-WR [0,0,0,0,1] &	0.573326&	0.582566&	0.632071&	0.00213&	0.003647&	0.003087&	0.006562&	0.006234&	0.00689	&	0.0013&	0.002166&	0.005199&	0	&	0	&	0	& \\
+ALS-WR [0,0,1,0,1] 	& 	0.602176&	0.596168&	0.640561&	0.001719&	0.0028&	0.004611&	0.003404&	0.005659&	0.00689	&	0.003954&	0.003304&	0.007095&	0	&	0	&	0.024306	& \\
 ALS-WR [1,1,1,1,1]  & 	0.686571&	0.682588&	0.69171	&	0.003087&	0.003647&	0.00213&	0.00689&	0.006234&	0.006562&	0.005199&	0.002166&	0.0013&	0&	0&	0	& \\
 
 \bottomrule
@@ -403,9 +403,9 @@ IBCF [1,1,1,1,1] 	& 0.637067 &	0.79768 &	0.762618&	0.000114&	0.026056&	0.038596&
 \rowcolor{Gray}
 ALS-WR			   	& 0.609470& 0.646568&	0.7473595&	0.0081595&	0.0110905&	0.030684&	0.0199265&	0.02659	&	0.076963&	0.028979&	0.03916	&	0.1011035&	0.018231&	0.034093&	0.0823435& \\
 ALS-WR [0,0,0,0,1] 	& 0.615021&	0.634666&	0.68831&	0.006068&	0.009741&	0.014679&	0.016717&	0.022796&	0.035334&	0.020968&	0.020161&	0.039113&	0.021127&	0.024648&	0.038732	& \\
-ALS-WR [0,0,0,0,1] 	& 0.548979&	0.558437&	0.569449&	0.00113	&	0.002377&	0.00222	&	0.001546&	0.003568&	0.002498&	0.001866&	0.002358&	0.003585&	0.000503&	0.001678&	0.000839& \\		
+ALS-WR [0,0,0,0,1] 	& 0.548979&	0.558437&	0.569449&	0.00113	&	0.002377&	0.00222	&	0.001546&	0.003568&	0.002498&	0.001866&	0.002358&	0.003585&	0.000503&	0.001678&	0.000839& \\
 ALS-WR [0,0,1,0,1]	& 0.587088& 0.620744&	0.681467&	0.008626&	0.01031	&	0.018522&	0.022104&	0.019436&	0.043445&	0.02518	&	0.035971&	0.049161&	0.01476&	0.03321&	0.070111 & \\
-ALS-WR [1,1,1,1,1] 	& 0.666988& 0.677643&	0.726329&	0.011568&	0.009503&	0.022999&	0.023229&	0.025133&	0.043412&	0.027375&	0.03864	&	0.062399&	0.031359&	0.02439&	0.062718	& \\			
+ALS-WR [1,1,1,1,1] 	& 0.666988& 0.677643&	0.726329&	0.011568&	0.009503&	0.022999&	0.023229&	0.025133&	0.043412&	0.027375&	0.03864	&	0.062399&	0.031359&	0.02439&	0.062718	& \\
 
 \bottomrule
 \end{tabular}
@@ -445,7 +445,7 @@ results using a combination of our implicit ratings and an existing methods than
 For the time-based splits both recentness functions, especially looking at ordering using a sigmoid penalization function
 performed the best overall looking at our performance metrics. Which give some indication that recency actually is a factor
 in the fashion domain. Price had the lowest score for all measurements, which gives some indications that popularity plays
-a larger factor in the fashion domain than the price. The blend did not perform well, but it would have been interesting to 
+a larger factor in the fashion domain than the price. The blend did not perform well, but it would have been interesting to
 see the results if you could have had some way to learn this relationship with regression. We therefore believe we have
 managed to get some insight into some of the general underlying factors of the customers.
 
@@ -462,13 +462,13 @@ solidify the results.
 
 \subsection{Cold-start Results}
 
-We found no conclusive evidence to support that our filterbots increase the performance of either IBCF or ALS-WR. 
+We found no conclusive evidence to support that our filterbots increase the performance of either IBCF or ALS-WR.
 However, they did not seem to cause any serious performance degradation either.
 
 \subsection{Select the best combination of methods for the SoBazar recommender system}
 
 Our experiments have shown that ALS-WR combined with our implicit ratings performed the best of all the recommendation
-methods tested on our dataset. 
+methods tested on our dataset.
 
 \marginpar{TODO: Switching is the currently best alternative in our opinion...}
 %Most popular understands why it is recommended
