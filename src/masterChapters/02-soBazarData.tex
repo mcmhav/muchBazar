@@ -378,6 +378,9 @@ the users have in \textit{some way} interacted with at least one item, opens
 for the possibility of connecting users based on their item interactions and
 making rudimentary recommendations.
 
+Next figure is used to present the average price of the items the users are
+accessing, to see if there is a usage pattern amongst the users.
+
 \begin{figure}[H]
   \includegraphics[width=5in]{image/avgUserPricesdistribution.png}
   \centering
@@ -385,7 +388,18 @@ making rudimentary recommendations.
   \label{fig:priceperUserDist}
 \end{figure}
 
-% todo some sweet sweet text
+The figure above displays the average price of the users in the SoBazaar dataset.
+The users are group together, where one one bucket represents the count of users
+with an item view price average in the range $[x,x+99]$. The first bucket for
+instance contains the users with average item view price between $1$ and $100$.
+
+As we can see from the figure above the users are centered around $300$, where
+$300$ is the most common interaction price~\footnote{The median interaction
+price is $299$}.
+
+This tells us that the preferred price of the users in the SoBazaar application
+is around $300$ , which can be utilized when making ratings based on the user
+events.
 
 Up until now, we have seen how the users have interacted with both the
 application and products, however we gain a better understanding of the domain
@@ -696,9 +710,14 @@ investigate if we have a Long-tail by observing the following values.
 As the table above shows the SoBazaar data does not posses a clear long tail
 behavior. The average interaction count of the products is 6.2102 and there is
 4029 products with less than this number of interactions, but these items does
-only cover 30.6017\% of the total interactions. The next figure displays an
-overview of which events are triggered on the \emph{storefronts} in the
-SoBazaar application.
+only cover 30.6017\% of the total interactions.
+
+This allows us to see that we should give too much focus to the \emph{tail}
+of the data since it does not cover more than 30.6017\% of the interactions
+in the dataset.
+
+The next figure displays an overview of which events are triggered on the
+\emph{storefronts} in the SoBazaar application.
 
 \begin{figure}[H]
   \centering
@@ -824,7 +843,7 @@ Comparing the above figure with Figure~\ref{fig:view-times} shows the
 difficulty of predicting bounces, as most events are \textit{fast-paced} and
 many users both buy and want an item in the same time as other users bounce.
 We can however observe that many users leave a product in under 2 seconds, and
-this could be used as \textit{negative evidence} in a future recommender --
+this could be used as \textit{negative evidence} in a future recommender --
 that is, we should not count it towards understanding the users preferences.
 
 \begin{figure}[H]

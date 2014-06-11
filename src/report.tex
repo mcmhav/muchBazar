@@ -1,5 +1,6 @@
 \PassOptionsToPackage{dvipsnames}{xcolor}
 \documentclass[10pt,a4paper,oneside]{report}
+\csname @openrightfalse\endcsname
 
 \usepackage[section] {placeins}
 \usepackage{amsmath} % math symbols
@@ -32,6 +33,7 @@
 \usepackage{tikz}
 \usepackage{xcolor,colortbl} % highlight table rows and columns
 \usepackage{array}
+\usepackage[utf8]{inputenc} % utf-8 chars (norwegian) in thesis -- (do not remove!)
 \usepackage{silence}  % silence "unfixable" warnings
 \WarningFilter{minitoc(hints)}{} % silence mintoc
 \usetikzlibrary{calc,trees,positioning,arrows,chains,fit,shapes.geometric,%
@@ -123,6 +125,100 @@ Norwegian University of Science and Technology
 \clearpage
 
 %----------------------------------------------
+% ABSTRACT
+%----------------------------------------------
+
+\renewcommand{\abstractname}{Abstract}
+\begin{abstract}
+In recommender systems, we seek to predict the rating or preference that a user
+would give to an item. With the advent of modern applications such as movie and
+music streaming, E-commerce, social networks and many other platforms –
+recommender systems have gained an important role in both a commercial and
+academic setting. When analyzing various approaches to \textit{how} an
+application generates recommendations, the prevalent technique is explicitly
+asking the users for a numeric rating and from these observed \textit{explicit}
+values predict how the user would rate other items.  However, this procedure
+often requires important changes to the application frontend in addition to an
+active assessment effort from all users. In this thesis, we instead look at how
+these ratings can be inferred from looking at session data and the transaction
+history for every user.
+
+A system taking into account these untraditional data sources, whilst
+accounting for an extremely sparse dataset with few events, is proposed. The
+advised system consists of four components arranged in a pipeline --
+essentially taking implicit feedback as input and where recommendations
+combined with their evaluation scores are the output. Multiple ways of
+generating ratings from implicit feedback, which is the first component, are
+presented. We find that recentness, price and popularity proves effective
+differentiators between users and their interactions on items, in order to
+induce preference from implicit feedback. In our second component, we extend
+this approach by further taking into account content features we strengthen our
+ratings, a process which we call \textit{boosting} of ratings. We then, in our
+third component, provide valuable insight and experiments using implicit
+ratings in recommender system algorithms, spanning from taking simple
+global-averages to State of the Art matrix factorization -- ultimatly yieding a
+set of recommendations for all users. These recommendations are then utilized
+in our final component where we perform a comprehensive evaluation of all
+earlier components, seeking to identify both optimal methods and parameters.
+
+A promising result is made, where we outperform all tested binary
+recommendation methods, including simply recommending the \textit{most popular}
+items, by several factors. We find that by multiple features for each user, we
+achieve a set of generated ratings that, combined, generally outperforms all
+other features alone. These promising results, coupled with a robust, modular
+and highly adaptive system for making recommendations from implicit feedback
+promotes further research into the area.
+\end{abstract}
+
+\renewcommand{\abstractname}{Sammendrag}
+\begin{abstract}
+Ved bruk av anbefalingssystemer ønsker vi å estimere i hvor stor grad en bruker
+liker eller misliker et produkt. Med framveksten av moderne applikasjoner slik
+som film- og musikkstreaming, e-handel, sosiale nettverk og mange andre
+platformer de siste årene -- får anbefalingssytemer en viktigere og viktigere
+rolle i både kommersielle og akademiske miljøer. Den vanligste framgangsmåten for
+å gjøre slike estimater er å \textit{eksplisitt} spørre brukeren om i hvilken
+grad, på en numerisk skala, produktet tilfredstiller vedkommendes preferanser.
+Basert på \textit{karakterene} brukeren deler med systemet kan
+anbefalingssystemet beregne karakterer på produkter som brukeren enda ikke har
+delt sin mening om. Denne framgangsmåten krever ofte store endringer i
+brukergrensesnitt, i tillegg til en stor og aktiv innsats fra brukeren for å få
+gode anbefalinger. I denne avhandlingen, ser vi istedet på hvordan disse
+karakterene kan bli estimert ved å se brukerenes bruksmønstre og hvilke
+produkter de viser interesse for.
+
+Et system som bruker denne typen estimering og som baserer sine estimeringer ved
+hjelp av et ekstremt lite datasett, blir i denne avhandlingen foreslått.
+Systemet som foreslås har fire hovedkomponenter som bygger på hverandre -- hvor
+inndata er \textit{implisitt data} (brukermønstre/systemlogger) og anbefalinger
+med tilhørende evalueringsresultat er utdataen. Første komponenten består av å
+konvertere den implisitte dataen til estimerte karakterer, hvor det påvises at
+pris, popularitet og tid er viktige produktfaktorerer for å bestemme potensiell
+interesse hos en bruker. Videre, i komponent to, utvider vi karakterene fra
+forrige komponent ved hjelp av produktbeskrivelser og metadata, med mål om å
+skape et mer robust resultat gitt det lille datasettet - en prosess vi kaller
+\textit{boosting} av karakterer. I den tredje komponenten deler vi verdifulle
+erfaringer og eksperimentanalyser om det å bruke \textit{implisitte karakterer}
+i anbefalingssystemer. Ved å utforske metoder med variabel vanskelighets- og
+kompleksitetsgrad presenterer vi flere anbefalingssresultater som vi i siste
+komponent gjør en evaluering av. I denne fjerde komponenten prøver vi å finne
+optimale metoder både for å konvertere implisitt data, gjøre boosting og
+anbefale produkter basert på implisitte karakterer. I tilleg har samtlige
+metoder flere parametere, hvor vi analyserer hvilke som passer seg for vårt
+domene og system.
+
+Et lovene resultat blir til slutt presentert, hvor det foreslåtte systemet gir
+bedre resultater enn alle andre testede anbefalingsmetoder, hvor kun antall
+kjøp blir vurdert, inkludert scenariotet ved å kun anbefale de mest populære
+produktene til brukerene. Vi viser i tillegg at ved å \textit{kombinere} flere
+faktorer for konverting av implisitt data blir resultatet jevnt over bedre,
+sammenlignet med å se på faktorene alene. Resultatene presentert i denne
+avhandlingen -- kombinert med et modulært, robust og tilpasningsdyktig system
+for å estimere brukerpreferenser -- fremmer videre forskning på bruk av
+implisitt data i moderne anbefalingssystemer.
+\end{abstract}
+
+%----------------------------------------------
 % ACKNOWLEDGEMENTS
 %----------------------------------------------
 
@@ -156,61 +252,13 @@ There are many people to thank, but in summary we had the luxury of having
 multiple researchers and supervisors, not only interested in the project, but
 in helping us throughout these last months. We are grateful for all your
 support and contributions. Again, thank you.
-
 \end{abstract}
-
-%----------------------------------------------
-% ABSTRACT
-%----------------------------------------------
-
-\renewcommand{\abstractname}{Abstract}
-\begin{abstract}
-% todo make norsk
-In recommender systems, we seek to predict the rating or preference that a user
-would give to an item. With the advent of modern applications such as movie and
-music streaming, E-commerce, social networks and many other platforms –
-recommender systems have gained an important role in both a commercial and
-academic setting. When analyzing various approaches to \textit{how} an
-application generates recommendations, the prevalent technique is explicitly
-asking the users for a numeric rating and from these observed \textit{explicit}
-values predict how the user would rate other items.  However, this procedure
-often requires important changes to the application frontend in addition to an
-active assessment effort from all users. In this thesis, we instead look at how
-these ratings can be inferred from looking at session data and the transaction
-history for every user.
-
-A system taking into account these untraditional data sources, whilst
-accounting for an extremely sparse dataset with few events, is proposed. The
-advised system consists of four components arranged in a pipeline --
-essentially taking implicit feedback as input and where recommendations
-combined with their evaluation scores are the output. Multiple ways of
-generating ratings from implicit feedback, which is the first component, are
-presented. We find that recentness, price and popularity proves effective
-defferentiators between users and their interactions on items, in order to
-induce preference from implicit feedback. In our second component, we extend
-this approach by further taking into account content features we strengthen our
-ratings, a process which we call \textit{boosting} of ratings. We then, in our
-third component, provide valuable insight and experiments using implicit
-ratings in recommender system algorithms, spanning from taking simple
-global-averages to State of the Art matrix factorization -- ultimatly yieding a
-set of recommendations for all users. These recommendations are then utilized
-in our final component where we perform a comprehensive evaluation of all
-earlier components, seeking to identify both optimal methods and parameters.
-
-A promising result is made, where we outperform all tested binary
-recommendation methods, including simply recommending the \textit{most popular}
-items, by several factors. We find that by factoring in recentness, price and
-popularity-trends for each user, we achieve a set of generated ratings that
-combined, generally outperforms all other feature alone. These promising
-results, coupled with a robust, modular and highly adaptive system for making
-recommendations from implicit feedback promotes further research into the area.
-\end{abstract}
-\pagenumbering{roman}
 
 %----------------------------------------------
 % TABLE OF CONTENTS
 %----------------------------------------------
 
+\pagenumbering{roman}
 \setcounter{tocdepth}{2}
 \dominitoc
 \minilof
