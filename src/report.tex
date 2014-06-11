@@ -200,18 +200,66 @@ earlier components, seeking to identify both optimal methods and parameters.
 
 A promising result is made, where we outperform all tested binary
 recommendation methods, including simply recommending the \textit{most popular}
-items, by several factors. We find that by factoring in recentness, price and
-popularity-trends for each user, we achieve a set of generated ratings that
-combined, generally outperforms all other feature alone. These promising
-results, coupled with a robust, modular and highly adaptive system for making
-recommendations from implicit feedback promotes further research into the area.
+items, by several factors. We find that by factoring in feature-trends for each
+user, we achieve a set of generated ratings that combined, generally
+outperforms all other feature alone. These promising results, coupled with a
+robust, modular and highly adaptive system for making recommendations from
+implicit feedback promotes further research into the area.
 \end{abstract}
-\pagenumbering{roman}
+
+\renewcommand{\abstractname}{Sammendrag}
+\begin{abstract}
+Ved bruk av anbefalingssystemer ønsker vi å estimere i hvor stor grad en bruker
+liker eller misliker et produkt. Med framveksten av moderne applikasjoner slik
+som film- og musikkstreaming, e-handel, sosiale nettverk og mange andre
+platformer de siste årene -- får anbefalingssytemer en viktigere og viktigere
+rolle i både kommersielle og akademiske miljø. Den vanligste framgangsmåten for
+å gjøre slike estimater er å \textit{eksplisitt} spørre brukeren om i hvilken
+grad, på en numerisk skala, produktet tilfredstiller vedkommendes preferanser.
+Basert på \textit{karakterene} brukeren deler med systemet kan
+anbefalingssystemet beregne karakterer på produkter som brukeren enda ikke har
+delt sin mening om. Denne framgangsmåten krever ofte store endringer i
+brukergrensesnitt, i tillegg til en stor og aktiv innsats fra brukeren for å få
+gode anbefalinger. I denne avhandlingen, ser vi istedet på hvordan disse
+karakterene kan bli estimert ved å se brukerenes bruksmønstre og hvilke
+produkter de viser interesse for.
+
+Et system som bruker denne type estimering og som baserer sine estimeringer ved
+hjelp av et ekstremt lite datasett, blir i denne avhandlingen foreslått.
+Systemet som foreslås har fire hovedkomponenter som bygger på hverandre -- hvor
+inndata er \textit{implisitt data} (brukermønstre/systemlogger) og anbefalinger
+med tilhørende evalueringsresultat er utdataen. Første komponenten består av å
+konvertere den implisitte dataen til estimerte karakterer, hvor det påvises at
+pris, popularitet og tid er viktige produktfaktorerer for å bestemme potensiell
+interesse hos en bruker. Videre, i komponent to, utvider vi karakterene fra
+forrige komponent ved hjelp av produktbeskrivelser og metadata, med mål om å
+skape et mer robust resultat gitt det lille datasettet - en prosess vi kaller
+\textit{boosting} av karakterer. I den tredje komponenten deler vi verdifulle
+erfaringer og eksperimentanalyser om det å bruke \textit{implisitte karakterer}
+i anbefalingssystemer. Ved å utforske metoder med variabel vanskelighets- og
+kompleksitetsgrad presenterer vi flere anbefalingssresultat som vi i siste
+komponent gjør en evaluering av. I denne fjerde komponenten prøver vi å finne
+optimale metoder både for å konvertere implisitt data, gjøre boosting og
+anbefale produkter basert på implisitte karakterer. I tilleg har samtlige
+metoder flere parametere, hvor vi analyserer hvilke som passer seg for vårt
+domene og system.
+
+Et lovene resultat blir til slutt presentert, hvor det foreslåtte systemet gir
+bedre resultater enn alle andre testede anbefalingsmetoder, hvor kun antall
+kjøp blir vurdert, inkludert scenariotet ved å kun anbefale de mest populære
+produktene til brukerene. Vi viser i tillegg at ved å \textit{kombinere} flere
+faktorer for konverting av implisitt data blir resultatet jevnt over bedre,
+sammenlignet med å se på faktorene alene. Resultatene presentert i denne
+avhandlingen -- kombinert med et modulært, robust og tilpasningsdyktig system
+for å estimere brukerpreferenser -- fremmer videre forskning på bruk av
+implisitt data i moderne anbefalingssystemer.
+\end{abstract}
 
 %----------------------------------------------
 % TABLE OF CONTENTS
 %----------------------------------------------
 
+\pagenumbering{roman}
 \setcounter{tocdepth}{2}
 \dominitoc
 \minilof
