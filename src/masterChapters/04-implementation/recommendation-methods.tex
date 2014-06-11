@@ -5,8 +5,8 @@
 
 The section will introduce the different recommendation methods included in our
 experiments. We have included some simple non-personalized methods in addition
-to the one-class collaborative filtering methods to be used as baselines for
-our experiment. Since we want to compare our traditional methods with the one-class
+to the one-class collaborative filtering methods which will be used as baselines in
+our experiment. Since we want to compare traditional methods with the one-class
 collaborative methods we have chosen state-of-the-art solutions from both classes
 to minimize the differences.
 
@@ -36,9 +36,9 @@ to minimize the differences.
 
 To extract features for content-based recommendations we closely examined the content in the product database.
 The product descriptions had five fields in particular that we found interesting: price, brand, title, description
-and meta-description. Where the first two only contain one value while the three latter was made up of text.
+and meta-description. The first two only contain one value and the three latter are made up of text.
 Finding inspiration from the work on Ghani et. al. \cite{ghani2002building} and more closely studying the top keywords
-found in the description we decided to extract the following features from the product database:
+found in the product description we decided to extract the following features:
 
 \begin{itemize}
 \item Price: grouped into price brackets
@@ -58,8 +58,7 @@ the \emph{sweater} category we check for the following keywords: \emph{sweater, 
 The price and the brand of an item is stored in its own field, making it an easy task to extract. \newline
 
 It was a pleasant surprise to find out that 5,060 out of 5,855 or 86.4\% of the items could be found in the
-product database and be assigned features. The following table shows an overview of how our feature
-extractor were to extract the different features for these items:
+product database and be assigned features. The following our feature extraction results:
 
 \begin{table}[H]
 	\centering
@@ -89,9 +88,9 @@ on content-features.
 
 \subsection{One-Class Recommenders}
 
-This subsection will describe the algorithms used on the binary datasets. One-Class Collaborative
+This subsection will describe the algorithms used on the binary datasets. One-class Collaborative
 filtering methods uses only binary data of the user's interaction to generate recommendations.
-In addition to the methods described a one-class user-based neighborhood model will be used.
+In addition to the methods described a user-based collaborative filtering model will be used.
 
 \subsubsection{Most-popular Recommender}
 
@@ -128,7 +127,7 @@ density function given different $\lambda$ values:
       	legend entries={$\lambda=1.0$,$\lambda=1.5$,$\lambda=2.0$},
       	domain=0:3,
       ]
-      \addplot[thick,smooth,red]{exp(x)};
+      \addplot[thick,smooth,red]{exp(-x)};
       \addplot[thick,smooth,blue]{1.5*exp(-1.5*x)};
       \addplot[thick,smooth,green]{2.0*exp(-2.0*x)};
       \end{axis}
@@ -294,7 +293,8 @@ where $N$ equals $\sum_i x_i$. Using the above notation Shannon's entropy for $H
 H = (c_{11} + c_{12})log(c_{11} + c_{12})-c_{11} log(c_{11}) - c_{12} log(c_{12})
 \end{equation}
 
-In addition to log likelihood we will also experiment with the one-class cosine similarity model found in MyMediaLite \cite{Gantner2011MyMediaLite}.
+In addition to log likelihood we will also experiment with the cosine similarity model
+found in MyMediaLite \cite{Gantner2011MyMediaLite}.
 
 \subsubsection{BPR: Bayesian Personalized Ranking}
 
@@ -324,7 +324,7 @@ the model parameters, $\hat{u}_{c,s}$ is the predicted score for user $c$ and it
 $\lambda \left\|\theta \right\|$ is the regularization term. It reduces the model learning task to
 a pairwise classification problem.\newline
 
-BPR learns the model parameters $\theta$ as follows using stochastic gradient descent.
+BPR learns the model parameters $\theta$ as follows using stochastic gradient descent:
 
 \begin{itemize}
 \item Step 1: Draw (c,i,j) from $D_S$
@@ -434,15 +434,16 @@ We have currently implemented the following bots:
 \item PopularityBot: rates all items based on their popularity
 \item AverageBot: rates all items based on their average rating
 \item CriticBot: $n$ critics among the most active users are selected and rate items based on the average
-	  rating given by the critics.
+	  rating given by these critics.
 \end{itemize}
 
 The \emph{PopularityBot} estimates each rating using the following formula: $r(c,s) = log_{3}C_{s}$, where $C_{s}$ is the number of users which have rated the item and $3$ is a normalization constant that caps the ratings a little below 5, which is our maximum rating.
 Compared to the work presented by Park et. al. we felt that the lack of high quality features was a limiting factor when designing the filterbots, as most features would not let us rate most ratings, and there is only so much information in the rating matrix.
 
-The intuition behind the \emph{SingleBrandBots} is as follows, given that a collaborative filtering algorithm is used:
-when a new user \emph{rates} a item of a single brand it will be connected with one such bot. The user can then be recommended
-items from this bot's list, meaning that the user can be recommended items of the same brand. Similarly, the \emph{PopularityBot}
+The intuition behind the \emph{SingleBrandBots} is as follows, given that a user-based collaborative filtering algorithm is used:
+when a new user \emph{rates} an item of a single brand it will be connected with one such bot. The user can then be recommended
+items from this bot's list, meaning that the user can be recommended items of the same brand. Which in theory, should be better
+than recommending some item from a random brand. Similarly, the \emph{PopularityBot}
 will have rated the popular items highly meaning that new users that connect to this psuedo user will be recommended the
 most popular items. For item-based methods it works a little differently as it only has an effect on the item-similarity matrix.
 Since more item similarities can be defined due to the psuedo users, more neighbors for the target item can be chosen from the candidate set.
