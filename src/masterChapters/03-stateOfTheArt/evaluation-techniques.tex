@@ -395,27 +395,26 @@ as all items are seen as equally relevant.
 \end{equation}
 
 Equation~\ref{equation:auroc} can be used to calculate the area under the
-curve.  $AUROC$ is the probability that the recommender system will rank
-positive examples higher than negative examples.  The Area Under is a commonly
+curve. $AUROC$ is the probability that the recommender system will rank
+positive examples higher than negative examples. $AUROC$ is a commonly
 used evaluation method for binary choice problems. If somebody makes random
 guesses, the ROC curve should be a diagonal line stretching from (0,0) to
 (1,1), as shown by the blue line in the figure below, scoring an AUC of 0.5. A
 perfect model will score an AUC of 1.0. In practice, almost all models will fit
 somewhere in between. One therefore obviously  aims to maximize the area under the
-curve (AUC). The higher up all relevant items (true positives) are in the recommendation list,
+curve (AUC). The higher in the ranked list all the relevant items (true positives) are,
 the higher the AUC score. AUC can therefore be used as a single measure for the overall
 quality of a recommender system.
 
-\marginpar{TODO: Make Fit}
+Beneath we see three ROC curves with different scores, to help explain the concept of $AUROC$.
 
 \begin{figure}[H]
-\label{fig:aucroc}
   \centering
     \begin{tikzpicture}
       \begin{axis}[
-      	xlabel={false positive rate},
-      	ylabel={true positive ratem},
-      	ymin = 0, ymax=1, xmin=0, xmax=1,
+        xlabel={false positive rate},
+        ylabel={true positive ratem},
+        ymin = 0, ymax=1, xmin=0, xmax=1,
       ]
       \addplot[thick,smooth,blue]{x};
       \addplot[thick,smooth,red] plot coordinates {
@@ -433,7 +432,10 @@ quality of a recommender system.
       \end{axis}
     \end{tikzpicture}
     \caption{ROC curves}
+\label{fig:aucroc}
 \end{figure}
+
+In Figure~\ref{fig:aucroc} three ROC curves have been plotted. As mentioned earlier, the blue line represent a set of true random guesses, resulting in a $AUROC$ of $0.5$. The red and green lines are performing better than the blue line in sense of $AUROC$, and has therefore a larger area under their curves, where the green is performing the best.
 
 \subsubsection{Limitations of relevance based metrics}
 \label{subsec:limitations-relevancebased}
