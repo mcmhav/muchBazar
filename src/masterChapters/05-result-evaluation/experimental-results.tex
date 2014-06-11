@@ -109,7 +109,7 @@ dataset splits was also performed. As it is a random split, we chose to only fac
 \resizebox{\columnwidth}{!}{%
 \begin{tabular}{\reducedTableView}
 \toprule
-Model & AUC &	$MAP@20$ &	$T_{click}$ &	$T_{want}$ &	$T_{purchase}$ &	$P_{click}$&	$P_{want}$ & $P_{purchase}$ &	$R_{click}$ &	$R_{want}$ &	$R_{purchase}$ &	$MAP@20_{click}$ &	$MAP@20_{want}$	& $MAP@20_{purchase}$ &	 \\
+Model & AUC &   $MAP@20$ &  $T_{click}$ &   $T_{want}$ &    $T_{purchase}$ &    $P_{click}$ &   $P_{want}$ &    $P_{purchase}$ &    $R_{click}$ &   $R_{want}$ &    $R_{purchase}$ &    $MAP@20_{click}$ &  $MAP@20_{want}$ &   $MAP@20_{purchase}$ &   \\
 \midrule
 %Binary Methods
 
@@ -146,7 +146,7 @@ We also notice that all methods except UserBasedKNN and ALS-WR did not significa
 recommender, which could be explained by our sparse data. Blend 2, which combines price and popularity, performed the best of the implicit
 ating functions and was able to retrieve 9.66\% of all purchases and 8.94\% of all wants. UserBasedKNN with 200 neighbors performed equally
 well to ALS-WR for these splits. ALS-WR has better recall scores for wants 8.95\% vs 8.70\% and 9.66\% vs 9.08\% for purchases. However,
-UserBasedKNN have slightly higher $MAP@20$ scores for both wants and purchases 
+UserBasedKNN have slightly higher $MAP@20$ scores for both wants and purchases
 
 Another interesting observation is that IBCF produce poor recommendations using popularity alone, but that the result improves drastically when blending it
 with price. We also again notice that using traditional collaborative filtering methods yield far from optimal results.
@@ -424,7 +424,7 @@ The following paragraphs will discuss our findings in accordance to our experime
 \paragraph{Recommendations using all events}
 
 Our results from the purchase only dataset indicate the we are not able to get much better performance than using random selection.
-In addition, a $MAP@20$ score of 0.0000 for all recommenders indicate the recommender did not recommend any of the relevant items 
+In addition, a $MAP@20$ score of 0.0000 for all recommenders indicate the recommender did not recommend any of the relevant items
 to the user. By comparing it with our results for the multiple event datasets we were successfully able to attain a relatively high total
 ordering performance, scoring an AUC of over 0.83\% for the random split in addition to being able to retrieve
 7.5\% of all clicked items, 8.95\% of all wants and 9.66\% of all purchases in the top 20 lists. By also factoring in the added
@@ -434,7 +434,7 @@ all events improves the overall recommendation quality.
 \paragraph{Implicit vs. Binary Methods}
 
 We got our best results in our experiments both for random and time-based splits combining ALS-WR with our implicit ratings.
-ALS-WR outperformed all other binary recommendation methods with the improvements most evident on the recall 
+ALS-WR outperformed all other binary recommendation methods with the improvements most evident on the recall
 rates. When not factoring in recentness the difference became less apparent and ALS-WR tied with UserBasedKNN using
 200 neighbors for our experiments with random splits. ALS-WR scored a higher AUC, and retrieved a higher portion of wants
 and purchases. However, the $MAP@20$ scores produced by UserbasedKNN was slightly better for both wants and purchases,
