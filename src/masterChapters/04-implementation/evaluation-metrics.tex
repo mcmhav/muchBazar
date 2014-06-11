@@ -173,12 +173,7 @@ Example 	& 	Actual					& 	Recommended					&	AP@10   \\ \midrule
 As you see from example two and three average precision does not consider the order of the actual item list. We want some way to
 reward the recommender for getting the purchased ranked higher than both wants and clicks.
 
-<<<<<<< HEAD
 Normalized Discounted Cumulative Gain (nDCG) described in Section \ref{subp:normalized_discounted_cumulative_gain_} is another metric to
-=======
-
-Normalized Discounted Cumulative Gain (nDCG) described in Section~\ref{subp:normalized_discounted_cumulative_gain_} is another metric to
->>>>>>> f11a550285b7343ad200bb11dfd9bfad9bf79719
 measure the rank accuracy. It is based on two main assumptions; (1) Highly relevant items are more useful than marginally relevant ones,
 (2) The lower the ranked position of a relevant item, the less useful it is for the user, since it is less likely to be \emph{examined}.
 The maybe most interesting aspect of nDCG is that it contains an utility function $rel_i$. One can replace the original utility function
