@@ -58,22 +58,23 @@ for all three cold-start scenarios, disappointingly we did not find the filterbo
 to improve the cold start performance of the system.
 
 % Third component: recommendation.
-Our third component is the system that takes ratings as input and outputs recommendations.
-We tested a wide array of different recommender systems on our dataset such as simple
-non-personalized approaches, one-class collaborative filtering methods and more sophisticated
-latent factor models. The non-personalized and one-class collaborative filtering methods
-was used as a baseline for our implicit rating experiments. We found ALS-WR, a latent
-factor method for implicit feedback, to be a good fit for our implicit ratings.
+Our third component is the system that takes ratings as input and outputs
+recommendations.  We tested a wide array of different recommender systems on
+our dataset such as simple non-personalized approaches, one-class collaborative
+filtering methods and more sophisticated latent factor models. The
+non-personalized and one-class collaborative filtering methods was used as a
+baseline for our implicit rating experiments. We found ALS-WR, a latent factor
+method for implicit feedback, to be a good fit for our implicit ratings.
 
 % Fourth component: evaluation.
-Our fourth component we came up with an set of evaluation metrics to measure the
-overall quality of the recommender systems. Evaluating recommender systems using implicit
-feedback differs from traditional recommender system evaluation, simply using RMSE was not
-enough. We determined that a combination of accuracy and rank-accuracy metrics was the best
-fit for our top-20 recommendation task. AUC measures the overall quality of the recommender
-system while $MAP@20$ and our own unique event specific measurements measure the systems
-ability to rank the top 20 recommendations.
-
+Our fourth component we came up with an set of evaluation metrics to measure
+the overall quality of the recommender systems. Evaluating recommender systems
+using implicit feedback differs from traditional recommender system evaluation,
+simply using RMSE was not enough. We determined that a combination of accuracy
+and rank-accuracy metrics was the best fit for our top-20 recommendation task.
+AUC measures the overall quality of the recommender system while $MAP@20$ and
+our own unique event specific measurements measure the systems ability to rank
+the top 20 recommendations.
 
 % How the proposed system performs
 The proposed system outperformed all other methods tested both in terms of
@@ -156,7 +157,7 @@ literature review on the fashion domain we came to the main conclusion that
 time, subcultures, trends, brands and price were important features to
 incorperate into a fashion recommender. Additional features should be analyzed
 and verfied by having denser data over a longer timespan, in order to see
-trends and more statisically significant numbers.
+more features and statisically significant numbers.
 
 Analyzing the SoBazaar data, it became apparent that sparsity were not only a
 problem in number of users, but also looking at the amount of items and their
@@ -168,11 +169,11 @@ In terms of recommender systems in the fashion domain we determine that
 \textit{time} should play an important role in order to determine preferences.
 A decaying factor on feedback on both item popularity and based on season
 should be implemented, in order to handle the items' loss of attention over
-time due to changes in trends or weather. Demographics and social networks
-should also be established, and be used as a user-classifier, as they largly
-affect fashion preferences.
+time due to changes in trends or climate. Demographics and social networks
+should also be established, and be used as a user-classifier, as they affect
+fashion preferences.
 
-By these conslusions we argue that \textbf{Goal G1, G2 and G3} were
+By these conclusions we argue that \textbf{Goal G1, G2 and G3} were
 \textbf{fulfilled}.
 
 \subsection{G4 and G5: Cold-start issues and sparsity}
@@ -181,7 +182,7 @@ By these conslusions we argue that \textbf{Goal G1, G2 and G3} were
 Through our literature review, we closely examined five different classes of
 solutions to the cold-start problem. Namely trust-aware recommender system,
 filterbots, seed users, interview process and hybrid methods. The reason for
-including multiple methods that never were used was due to uncertainty
+including multiple methods that never were used, was due to uncertainty
 regarding what data would become available during the project. Trust-aware
 recommender system and hybrid methods in particular could never be tested out
 due to a lack of social/demographic data, which we were hoping to get access
@@ -192,8 +193,8 @@ and content-boosted hybrid methods could provide a possible solution for our
 specific scenario. However, only modest results were achieved with our
 solution, and we largly attribute this to the quality of product metadata and
 the lack of demographic data on users. Agarwal et. al. \cite{Agarwal2009} used
-13 filterbots in their experiments, where 11 out of 13 bots rated items based
-on demographic information, which underlines the importance of this segment.
+13 filterbots in their experiments, where 11 of them were based on demographic
+information, which underlines the importance of this segment.
 
 However, we identified multiple existing solutions which, with better data,
 should mitigate most cold-start issues in the fashion domain and the SoBazaar
@@ -206,29 +207,29 @@ out, serving as an important proof of concept. Consequently we argue that
 
 We identified multiple existing solutions for inferring user preference from
 implicit feedback, however a common denomiatior between a majority of them were
-the additional need for explicit feedback. As neither user studies nor
-online evaluation could be carried out, we proposed a solution based on
-dataset properties and domain-specific feature selection.
+the additional need for explicit feedback as well. As neither user studies nor
+online evaluation could be carried out, we proposed a solution based on dataset
+properties and domain-specific feature selection.
 
 Our results in this regard indicate the importance of implicit feedback, where
-we obtain an even and robust distribution of user-item ratings that performs
-well in all offline evaluation scenarios. In addition we argue that properties
-found in the implicit feedback is especially important for the fashion domain
-and, even in an environment with explicit feedback, it should be utilized in
-order to infer user preferences.
+we obtain an even and robust distribution of ratings that performs well in all
+offline evaluation scenarios. In addition we argue that found properties is
+especially important for the fashion domain and that, even in an environment
+with explicit feedback, it should be utilized in order to infer user
+preferences.
 
 As have been highlighted in multiple studies on implicit feedback, there exist
-no good evaluation schemes for offline studies, when no explicit feedback is
-available. Consequently, we strongly advise to either conduct user-studies on
-users inhabiting interesting and representative user-patterns in the existing
-implicit data or having a framework for online-evaluation available in order to
-guide both method and parameter choices.
+no good evaluation schemes for offline studies, especially when no explicit
+feedback is available. Consequently, we strongly advise to either conduct
+user-studies on users inhabiting interesting and representative user-patterns
+or having a framework for online-evaluation available in order to guide both
+method and parameter choices.
 
-We evaluate our implicit ratings looking at performance using the same
-parameters in all later components, and achieve a satisfactory result. This,
-combined with a comprehensive study of possibilities with regards to implicit
-feedback leads us to argue that \textbf{Goal G6, G7 and G8} were
-\textbf{fulfilled}.
+Nonetheless, we evaluate our implicit ratings looking at performance using the
+same parameters in all later components, and still achieve a satisfactory
+result proving the effectiveness of our implementation. This, combined with a
+comprehensive study of possibilities with regards to implicit feedback leads us
+to argue that \textbf{Goal G6, G7 and G8} were \textbf{fulfilled}.
 
 \section{Future Work}
 
