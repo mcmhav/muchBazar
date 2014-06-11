@@ -40,7 +40,7 @@ utilize, found in the \textit{fashion store aggregation} domain are:
   \item Items have a short lifespan, due to:
   \begin{itemize}
     \item Seasons
-    \item Fashion and trends
+    \item Fashion and popularity-trends
     \item Sales and price fluctuations
   \end{itemize}
   \item Items are not bought regularily, as with food and other convenience
@@ -107,7 +107,7 @@ sum of all three fractions is 1, thus covering 100\% of all events.
 \subsection{Penalizing features}
 
 How then do we distribute the feature-values  between the min and max limits
-above? In our implementation we use feature-dependent \textit{penalization}
+above? In our implementation we use a feature-dependent \textit{penalization}
 function. In most our features however, we will use a linear penalization
 function or a variant there of -- set in such a way that $0 \leq p(x,u) \leq 1$
 and $0 \leq x \leq F_u$ where $F_u$ is the maximal observed value for user $u$
@@ -120,7 +120,7 @@ of the feature in question, and $p(x,u)$ is defined as:
 
 By considering penalization we also implicitly add negative feedback to events.
 This is an important aspect to keep in mind when working with implicit
-feedback, as discussed in Section~\ref{sec:implicit} as modern recommender
+feedback, as discussed in Section~\ref{sec:implicit} modern recommender
 engines work better when we are assuming ratings are based on both positive and
 negative feedback.
 
@@ -176,26 +176,24 @@ every bin having an interval size of 0.0267:
 
 \begin{figure}[H]
   \centering
-  \includegraphics[scale=0.6]{image/dist-recentness-linear-global}
+  \includegraphics[scale=0.5]{image/dist-recentness-linear-global}
  \caption[Distribution of ratings using number of days since event]{Distribution of ratings using number of days since event, a linear
  penalization function and global min/max feature-values}
   \label{fig:dist-recentness-linear-global}
 \end{figure}
 
-Worth noting is that we here use $F_u$ as the oldest event globally, and not
-per user, since too many users only have one or two events, as per
-Figure~\ref{fig:ratingsPerUser}. The average rating is \textit{3.29} with a
-median \textit{3.37}. The weakness in these results however is given the
-scenario when a user is absent from the application over a longer time and then
-returns. In this scenario all the items the user has previously looked at,
-wanted or bought will all suffer from large penalization values -- and hence low
-ratings, since the x for all items is very high. In addition the method does
-not scale well, unless one limit the $F_u$ value, so that the difference
-between two adjacent x values are significant. As SoBazaar is a relatively new
-application this proved not to be a problem with our experiments, but given a
-larger dataset with older events we would recommend testing $M_u = \min(O_e,
-L)$ where $O_e$ is the number of days since the oldest event and $L$ is the
-limit, set at e.g. 200 or 300.
+In this distribution, the average rating is \textit{3.29} with a median of
+\textit{3.37}. The weakness in these results however is given the scenario when
+a user is absent from the application over a longer time and then returns. In
+this scenario all the items the user has previously looked at, wanted or bought
+will all suffer from large penalization values -- and hence low ratings, since
+the x for all items is very high. In addition the method does not scale well,
+unless one limit the $F_u$ value, so that the difference between two adjacent x
+values are significant. As SoBazaar is a relatively new application this proved
+not to be a problem with our experiments, but given a larger dataset with older
+events we would recommend testing $M_u = \min(O_e, L)$ where $O_e$ is the
+number of days since the oldest event and $L$ is the limit, set at e.g. 200 or
+300.
 
 In order to mitigate the returning user problem we adjust our feature to
 instead consider the ordering of events for user $u$. This way, given $n$
@@ -305,7 +303,7 @@ and most recent event, in our example equaling 7.
   \centering
   \begin{tabular}{llllll}
   \toprule
-  Event type & Product ID & x (days) & P(x) & Score & Rating \\
+  Event type & Product ID & x (days) & $P(x,u)$ & Score $S_e(x,u)$ & Rating \\
   \midrule
   \textit{product\_purchase\_intended}  & 1 & 0   & $\frac{1}{1 + \exp^{-0.8(0*7)}} = 0.00$  & 100 & 5.00 \\[1.5ex]
   \textit{product\_purchase\_intended}  & 2 & 3   & $\frac{1}{1 + \exp^{-0.8(3*7)}} = 0.03$  & 99.85 & 4.99 \\[1.5ex]
@@ -542,7 +540,7 @@ as number of days since the event in question captures our implicit knowledge
 about seasons and items having a short life-span. However, as pointed out
 earlier given many events on the same day there are no way of differentiating
 them - unless we consider the ordering of items, saying the most recent item
-shall be higher rated than older events. However, exclusively changing the
+shall be higher rated than older events. Exclusively changing the
 feature like this forces us to loose some of our implicit data about items
 having a fixed lifespan. What we want to do is \textit{combine multiple 
 features} in a procedure that often in recommender systems are coined
@@ -579,19 +577,19 @@ Blending \cite{jahrer2010combining} \cite{toscher2009bigchaos} which are based
 on the same principles.
 
 However, as discussed in Section~\ref{sec:implicit}, when creating ratings from
-implicit feedback we lack a ground truth -- that is we make several assumptions
-on which implicit features contribute towards higher preference and thus higher
-ratings, but with no real means of confirming the assumptions. A user buying an
-item as a gift for a friend may not actually like the item and would not give a
-high rating - and this, with a traditional collaborative filtering approach
-based on explicit feedback would be accounted for, looking at the user pattern
-of the user and labeling the purchase as an outlier. Without this ground truth
-however we can not without injecting negative feedback, based on assumptions,
-make classifications of outliers nor evaluate our implicit ratings in a
-reliable and quantitative fashion. Without a good evaluation metric and ground
-truth there does not exists a simple way of comparing different blends with
-each other except using either user studies or online evaluation, as described
-in Section~\ref{sec:online-eval}.
+implicit feedback we lack a ground truth -- that is, we make several
+assumptions on which implicit features contribute towards higher preference and
+thus higher ratings, but with no real means of confirming the assumptions. A
+user buying an item as a gift for a friend may not actually like the item and
+would not give a high rating - and this, with a traditional collaborative
+filtering approach based on explicit feedback would be accounted for, looking
+at the user pattern of the user and labeling the purchase as an outlier.
+Without this ground truth however we can not without injecting negative
+feedback, based on assumptions, make classifications of outliers nor evaluate
+our implicit ratings in a reliable and quantitative fashion. Without a good
+evaluation metric and ground truth there does not exists a simple way of
+comparing different blends with each other except using either user studies or
+online evaluation, as described in Section~\ref{sec:online-eval}.
 
 Instead, we return to our introductory text where we notice some factors
 important to evaluating ratings: it needs to be evenly distributed, it should

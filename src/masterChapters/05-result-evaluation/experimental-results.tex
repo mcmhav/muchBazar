@@ -87,7 +87,7 @@ BPR-Linear					&	0.559033 &	0.000443 &	3038 &	2328 &	36 &	2 	  &	2 	  	&	0 &	0.0
 The low AUC scores can be attributed to the fact that 143 new users and 870 previously unrated items were introduced in the test period, many of the true positives
 were therefor never found in the recommendation lists. To our surprise none of the binary methods significantly outperformed the
 non-personalized most-popular recommender in terms of AUC. UserBasedKNN performed the best overall of the binary methods retrieving or 8.33\% of all purchases
-and 0.7\% of all all wanted items as seen in the columns $R_{purchase}$ and $R_{want}$.
+and 0.7\% of all all wanted items as seen in the columns $R_{purchase}$ and $R_{want}$.
 
 ALS-WR performed the best overall for most features, except popularity. In particular the implicit ratings that factored in recency only seems
 to give the best performance overall. Logistic ordering in particular scored the highest AUC score, retrieved 1\% of all wants and 8.33\% of all purchases.
