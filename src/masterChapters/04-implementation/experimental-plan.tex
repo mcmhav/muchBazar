@@ -106,7 +106,18 @@ in ratings with different confidence levels attached to them. Thus, making this
 problem mainly an evaluation metric problem, which is discussed at greater
 length in Section \ref{sec:eval-metrics}. This allows us to input different sets
 of ratings generated incorporating different implicit factors and see which implicit
-factors improve our results the most.
+factors improve our results the most. In our experiments we will evaluate the following
+implicit mapping functions and blends:
+
+\begin{itemize}
+\item Logistic ordering 
+\item Recentness (days)
+\item Price
+\item Popularity
+\item Blend 1: logistic ordering, recentness, price, popularity
+\item Blend 2: price, popularity
+\item Blend 3: logistic ordering, price, popularity
+\end{itemize}
 
 \subsection{Goal 4}
 
