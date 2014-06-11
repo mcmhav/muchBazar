@@ -113,37 +113,38 @@ inevitable.
 
 \section{Discussion}
 
-In Chapter 1 we introduced a total of 8 goals for our Master's thesis:
+In Chapter~\ref{chap:introduction} we introduced a total of 8 research goals
+which would lay the foundations of this thesis and guide our efforts towards
+the restulting system. We re-iterate them here:
 
 \begin{itemize}
-\item G1: Gain a better understanding of the fashion domain.
-\item G2: Identify the specific challenges of making fashion recommendations.
-\item G3: Study how existing technologies can be adapted to mitigate or
+\item \textbf{G1}: Gain a better understanding of the fashion domain.
+\item \textbf{G2}: Identify the specific challenges of making fashion recommendations.
+\item \textbf{G3}: Study how existing technologies can be adapted to mitigate or
 overcome these challenges.
-\item G4: Study existing solutions to the cold-start.
-\item G5: Identify the best suited methods with regard to both application and
-domain.
-\item G6: Explore the existing solutions of how to infer user preference from
+\vfill
+\item \textbf{G4}: Study existing solutions to the cold-start problem.
+\item \textbf{G5}: Identify the best suited methods with regard to both application
+feedback and domain.
+\vfill
+\item \textbf{G6}: Explore the existing solutions of how to infer user preference from
 implicit feedback data.
-\item G7: Establish user interaction patterns to support our assumptions.
-\item G8: Find different methods of combining various event types into implicit
-ratings.
-\item G9: Find metrics in order to evaluate the \emph{implicit ratings}
+\item \textbf{G7}: Identify different methods of combining various event types into
+\textit{implicit ratings}.
+\item \textbf{G8}: Find metrics in order to evaluate the \emph{implicit ratings} and
+recommendations.
 \end{itemize}
 
-In the following subsection we will reiterate these goals and discuss whether
-we have succeeded in reaching our goals. Readers should note that we already
-have performed a detailed analysis of the results of the work on goals G1 in
-Section~\ref{subsec:fashion-theory} and~\ref{chap:thesobazaardata}, G2 in
-Section~\ref{subsec:fashion-theory} and~\ref{chap:thesobazaardata}, G3 in
-Section~\ref{subsec:fashion-theory}, G4 and G5 in
-Section~\ref{sec:cold-start-discussion}, G6 in
-Sectionv\ref{implicit-weaknesses}, G7 in Section~\ref{}, G8 in Section~\ref{}
-and finally G9 in Section~\ref{sec:evaluation-metrics}.  The following
-discussion will therefore be fairly high-level, and avoid the
-\emph{nitty-gritty} details.
+We will in this section provide an overview on how these research goals were
+attempted met and to which degree they were fulfilled. One should however note
+that more detailed analyses are issued throughout the thesis -- for G1, G2 and
+G3 consult Section~\ref{sec:fashion-theory} and
+Chapter~\ref{chap:thesobazaardata}; for G4 and G5 see
+Section~\ref{sec:cold-start-discussion}; and G6, G7 and G8 are discussed at
+length in Section~\ref{sec:implicit}, Section~\ref{sec:implementation-implicit} and
+Section~\ref{sec:experimental-plan}, respectivly.
 
-\subsection{G1, G2 and G3: Solutions to the fashion domain related problems}
+\subsection{G1, G2 and G3: Fashion domain and recommendation systems}
 \label{sec:fashion-discussion}
 
 Through thorough examination and analysis of the data and a literature review
@@ -173,7 +174,7 @@ these findings we expect recommendations to greatly benefit from capturing
 these subcultures and utilizing them to improve user preference understanding,
 and thereby improve recommendations done to the users.
 
-\subsection{G4: The Cold-Start Problem}
+\subsection{G4: Cold-start issues and sparsity}
 \label{sec:cold-start-discussion}
 
 Through our literature review, we closely examined five different classes of
@@ -198,7 +199,7 @@ Demographic information could further improve its performance and usefulness.
 Agarwal et. al. \cite{Agarwal2009} used 13 filterbots in their experiments,
 where 11 out of 13 bots rated items based on demographic information.
 
-\subsection{G5, G6, G7: Implicit Ratings}
+\subsection{G5, G6, G7: Making recommendations with implicit feedback}
 \label{sec:implicit-discussion}
 
 Importance of implicit factors for the domain
