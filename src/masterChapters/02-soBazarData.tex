@@ -1,20 +1,20 @@
 % !TEX root = ../report.tex
 
-\chapter{The SoBazaar Data}
+\chapter{The SoBazaar Application}
 \label{chap:thesobazaardata}
 \minitoc
 
-This chapter will in greater detail explore the SoBazaar application and
-explore the current state of the dataset used in this thesis. Further,
-interesting discoveries are presented, which all has an impact on \textit{how}
-we go forth and build a recommender engine for a fashion application. In order
-to best understand the domain in question, and answer research goal \textbf{G1}
-and \textbf{G2}, this chapter serves an important role for future chapters.
-Many identified properties of the dataset explored in this chapter will give
-reason to the majority of choices made throughout the thesis.
+This chapter will in greater detail explore the SoBazaar application and the
+current state of the dataset used in this thesis. Further, interesting
+discoveries are presented, which all has an impact on \textit{how} we go forth
+and build a recommender engine for a fashion application. In order to best
+understand the domain in question, and answer research goal \textbf{G1} and
+\textbf{G2}, this chapter serves an important role for future chapters.  Many
+identified properties of the dataset explored in this chapter will give reason
+to the majority of choices made throughout the thesis.
 
 \clearpage
-\section{The SoBazaar Application}
+\section{Application Description}
 \label{sec:sobazaar-appication}
 
 
@@ -262,7 +262,7 @@ thesis. In order, we inspect: user, product and time related properties found in
 the data -- keeping in mind the table presented in the previous section
 (Table~\ref{table:datasetSummary}).
 
-\subsection{User properties}
+\subsection{User Properties}
 
 We start our analysis by trying to understand \textit{how} the users interact
 with the application and to which degree we can use user-based features in
@@ -377,6 +377,15 @@ Consequently, although the data extremely sparse the fact that the majority of
 the users have in \textit{some way} interacted with at least one item, opens
 for the possibility of connecting users based on their item interactions and
 making rudimentary recommendations.
+
+\begin{figure}[H]
+  \includegraphics[width=5in]{image/avgUserPricesdistribution.png}
+  \centering
+  \caption{Distribution of average price for users}
+  \label{fig:priceperUserDist}
+\end{figure}
+
+% todo some sweet sweet text
 
 Up until now, we have seen how the users have interacted with both the
 application and products, however we gain a better understanding of the domain
@@ -910,7 +919,7 @@ $\mathbf{H_0:}$ The differences in conversion rates between our first
 $\mathbf{H_1:}$ The difference is significant, such that one scenario have a
 higher probability of conversion.
 
-and we want to do multiple tests when $n \in [2,6[$, using $n-1$ as baseline
+and we want to do multiple tests when $n \in [2,6]$, using $n-1$ as baseline
 and $n$ as the second scenario. For each test we calculate the
 \textit{P-value}, which is the probability of obtaining a result at least as
 extreme as the one that was actually observed. When the P-value becomes less

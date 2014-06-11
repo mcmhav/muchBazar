@@ -173,7 +173,7 @@ has to be run $K$ times, and thereby increasing the runtime for producing an
 evaluation of the system. If the dataset is large, an increase of $K$ runs
 could prove to be disadvantageous in time sensitive environments.
 
-\subsubsection{Evaluation metrics: predictive accuracy vs. relevance}
+\subsubsection{Evaluation Mtrics: Prdictive Accuacy vs. Relevace}
 When evaluating a recommender system, you wish to estimate a user's
 satisfaction for a given recommendation. Traditionally recommender systems have
 been evaluated by means of predictive accuracy. However, there is now a widely
@@ -225,9 +225,8 @@ equations, $RMSE$ is always bigger or equal to $MAE$, since $RMSE$ penalizes
 errors more than $MAE$.
 
 \subsubsection{Relevance based metrics}
-\label{sec:relevance-based}
-
-In many applications (including SoBazaar) the recommender system does not
+bsec:relevancemetrics}
+ecommender system does not
 predict the user's preferences of items, but tries to recommend to users items
 that they may use. This is often done by giving the user a top-K set of
 recommendations. Then using a dataset consisting of items each user has
@@ -491,23 +490,14 @@ most suitable to evaluate algorithms that are used to present ranked lists to
 the user in domains where the user preferences are expressed using numerical
 values.
 
-\marginpar{TODO: Make it fit in or remove?}
-
-When using rank accuracy metrics, it is worth knowing whether one is measuring total or partial orderings.
-Most rank accuracy metrics (e.g. Kendall's tau and Spearman's rho) compare two total ordering. The problem
-with these measures is that we in most cases are not provided with a full ranking of the items as most recommendation
-algorithms only generate a partial list of items that are likely to be preferred by a user. The remaining items
-would therefore have to be concatenated in random order. The recommendation list can also consist of several
-items with similar rating that can appear in varying orders. Therefore, in order to create a full ranking of
-the items all preference values for the user have to be known. Since the user can express the same rating for similar
-items, the list will again contain groups of items that can appear in arbitrary order. However, the largest problem
-is posed by items for which no rating is known. These items could hold an arbitrary place within the ranking.
-Again, consider an example where a user e.g. have rated 5 items out of 4000, and the recommender is able to recommend
-only 10 items for that user. To measure the rank accuracy we would have to randomly add 3995 items to the users known
-preference list and 3990 to the users prediction list. Comparing the order of these lists would not make much sense.
-The bottom line is that in most cases a rank metric for partial ordering would be more appropriate for comparing
-recommendation lists that are produced by recommenders to item rankings from known user preferences.
-
+\marginpar{TODO: Leave or let be?}
+The recommendation lists can also consist of several items with similar rating that
+can appear in varying orders. 
+Since the user can express the same rating for similar
+items, the list will again contain groups of items that can appear in arbitrary order.
+The bottom line is that in most cases a rank metric for partial ordering would be more
+appropriate for comparing recommendation lists that are produced by recommenders to item
+rankings from known user preferences.
 
 As we do not have explicit data in SoBazaar per Figure~\ref{fig:overview-eval}
 we will not explore these methods in detail, however we will list some of the
@@ -745,7 +735,7 @@ their methods.
 To simulate the cold-start scenario, different approaches have been employed:
 One popular way to simulate a cold-start user scenario used by~\cite{Stern2009,
 Lam2008} is to split the dataset in two disjoint sets, a training set
-containing 90\% of the users and the remaining 10\% being in the test set. For
+containing 90\% of the users and the remaining $0\%$ eing in the test set. For
 each test user one trains a model with a random subset $T\%$ of their ratings
 e.g.\ $5\%$ or $75\%$, and then use the model to predict their remaining
 ratings. The same methodology can also be used to simulate a cold-start item

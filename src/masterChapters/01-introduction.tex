@@ -68,7 +68,7 @@
 % What are recommender systems good for?
 In today's day and age the increasing amount of data overwhelm our human
 processing capabilities in many information seeking tasks. To cope with this
-overload researchers have introduced recommender system to filter the ever
+overload researchers have introduced recommender systems to filter the ever
 increasing information and only present a small selection of items which
 reflects the users tastes, interests and priorities. Recommender systems are an
 active research field and has been successfully applied to many different
@@ -115,7 +115,7 @@ discoveries made in this thesis and the application itself.
 
 % Limited amount of data -> we need to utilize other sources. Implicit!
 As the application is not yet officially released there is a limited amount of
-user-item interaction recorded so far. In addition users do not have the
+user-item interactions recorded so far. In addition users do not have the
 possibility to explicitly rate items on a numeric scale, a scheme often
 employed by machine learning engineers and application developers in order to
 easier understand their users preferences. Combining these two factors makes
@@ -176,7 +176,7 @@ resources are extremely limited in both quality and volume.
 % Introduce goals related to domain
 In order to propose such a system, one need an exhaustive understanding of both
 the fashion domain and available data. In addition a study is required looking
-at existing solutions, competitors and idientify potential competitive
+at existing solutions, competitors and identify potential competitive
 advantages. Finally a discussion on how to overcome found challenges with
 respect to both understanding the implicit feedback and making recommendations
 is needed. Hence, our domain specific goals can be defined as:
@@ -192,7 +192,7 @@ is needed. Hence, our domain specific goals can be defined as:
 % Introduce goals related to cold-start
 In most recommender systems one base future recommendations on existing
 feedback already given by the user. An important scenario however, is what to
-recommend when no feedback has been given, which is the case new users. The
+recommend when no feedback has been given, which is the case of new users. The
 same issue is apparent when a new item is added to the application, where we
 need a strategy for introducing it to users although the product is not
 connected to any existing feedback. Finally, the closely related problem of
@@ -231,24 +231,24 @@ limitiations. Hence, the reader should be familiar with what this thesis
 \textit{does not set out to do}.
 
 % Small and sparse dataset
-The main limitiation of this thesis are primarly linked to having only one
+The main limitiation of this thesis is primarly linked to having only one
 available dataset with both sparse and modest data. As a result, making
 conclusions based user behaviour proved difficult due to lack of statistical
 significance on many observations. Limitiations in both time available and
 number of existing users with sufficient activity made is also impossible to
 conduct a thorough user study, which could confirm possible found user
-patterns.
+patterns -- nor was it possible to conduct online experiments.
 
 % No external sources of information (or weak quality)
 In addition, as seen in the overview, external sources of information such as
 social networks and trust-based networks are not considered -- as the dataset
 provided did not warrant this. As the products in the SoBazaar application are
-aggregated from multiple sources, and hence product databases, the quality of
-information are notably diverse. Consequently, since extracting basic content
-features different from product titles became close to impossible without large
-engineering efforts, the \textit{main focus} does not lie on hybrid recommender
-systems (combining content and user-based recommendations), although some work
-is done in this area.
+aggregated from multiple sources, and hence external product databases, the
+quality of information are notably diverse. Consequently, since extracting
+basic content features different from product titles became close to impossible
+without large engineering efforts, the \textit{main focus} does not lie on
+hybrid recommender systems (combining content and user-based recommendations),
+although initial work is done in this area using filterbots.
 
 \section{Application Overview}
 \label{sec:app-overview}
@@ -312,6 +312,7 @@ differentiating between different parameters and methods in all earlier stages.
   \end{tikzpicture}
   \caption{Application overview, showing input and output from different
   components in the proposed system}
+  \label{fig:app-overview}
 \end{figure}
 
 As can be seen from the figure, the proposed system is a pipeline of
@@ -324,16 +325,16 @@ taking into account sparsity and the domain in question.
 In the next stage of the pipeline, we combine product features extracted from a
 product database together with the generated implicit ratings in order to do
 \textit{cold-start boosting}, which by simulating stereotypical users based on
-probabilities we are able to remove some sparsity. This process is further
-explained in Section~\ref{sec:sota-cold-start} and
+probabilities we are able to remove some sparsity issues. This process is
+further explained in Section~\ref{sec:sota-cold-start} and
 Section~\ref{implementation-filterbots}.
 
 The third stage uses these ratings in a variety of different approaches for
 doing recommendations. Some are based on traditional and simple approaches such
 as looking at populatities and averages, while others use modern
-matrix-factorization techniques and alternative methods as further described in
-a background study in Section~\ref{sec:recsys} and in
-Section~\ref{sec:rec-models} where we discuss the algorithms in light of our
+matrix-factorization techniques and varieties as further described in a
+background study in Section~\ref{sec:recsys} and in
+Section~\ref{sec:rec-models}, where we discuss the algorithms in light of our
 proposed system.
 
 In the final stage the recommendations are evaluated with respect to the
@@ -436,8 +437,9 @@ The rest of this thesis is structured as follows.
     project to the reader. It also outlines the purpose and motivation of the
     project.  \\[1.5ex]
 
-    Chapter~\ref{chap:thesobazaardata} & \nameref{chap:thesobazaardata} chapter presents the results from our
-    dataset analysis. \\[1.5ex]
+    Chapter~\ref{chap:thesobazaardata} & \nameref{chap:thesobazaardata} chapter
+    describes the SoBazaar application and presents the results from our
+    dataset analysis \\[1.5ex]
 
     Chapter~\ref{chap:SotA} & The \nameref{chap:SotA} chapter documents knowledge,
     research and technology that are relevant to the project, and how and why

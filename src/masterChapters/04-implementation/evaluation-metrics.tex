@@ -1,3 +1,4 @@
+% !TEX root = ../../report.tex
 \section{Evaluation Metrics}
 \label{sec:eval-metrics}
 
@@ -78,6 +79,7 @@ recommendations, because we are not penalized for bad guesses. We also assume th
 is better to submit more certain recommendations first, followed by recommendations we are less sure about.
 Which means that we basically select the $20$ best candidates in order. 
 
+<<<<<<< HEAD
 Mean average precision $MAP@k$, described in Section~\ref{subp:mean_average_precision_map_} is a popular metric for search
 engines and is applied, for example, to report results at the Text Retrieval Conference (TREC). $MAP@20$ will give us a score
 of how many items we are able to retrieve and how high up in the recommendation list they are placed. The main weakness in our
@@ -85,6 +87,40 @@ case is that it assumes all items to be equally relevant, meaning that it has no
 
 Normalized Discounted Cumulative Gain (nDCG) described in Section \ref{subp:normalized_discounted_cumulative_gain_} is a popular metric for
 measuring the rank accuracy. It is based on two main assumptions; (1) Highly relevant items are more useful than marginally relevant ones,
+=======
+Mean average precision (MAP@k), described in Section~\ref{subsec:offlineeval} is a popular metric for search
+engines and is applied, for example, to report results at the Text Retrieval Conference (TREC). The main weakness with regard
+to recommender systems is that it assumes that the user is interested in finding many relevant documents for each query, and
+does not look at the relevance of the items. Consider the following examples where we have three lists of hidden items and
+three recommendations lists. All none relevant items are labeled with the item-id $0$.
+
+\begin{table}[H]
+\label{table:ap}
+\centering
+\begin{tabular}{*{4}l}
+\toprule
+Example 	& 	Actual					& 	Recommended					&	AP@10   \\ \midrule
+1			& [1,2,3,4,5,6,7,8,9,10]	&	[1,0,0,0,0,0,0,0,0,0]		&	0.100  \\
+2			& [1,2,3,4,5,6,7,8,9,10]	&	[1,0,0,0,2,0,0,0,0,0]		&	0.140  \\
+3			& [1,2,3,4,5,6,7,8,9,10]	&	[8,0,0,0,9,0,0,0,0,0]		&	0.140  \\
+4			& [1,2,3,4,5,6,7,8,9,10]	&	[1,0,0,0,3,0,5,0,0,0]		&	0.183  \\
+5			& [1,2,3,4,5,6,7,8,9,10]	&	[0,0,0,2,0,0,0,6,5,0]		&	0.083  \\
+6			& [1,2,3,4,5,6,7,8,9,10]	&	[0,0,0,0,7,0,8,0,0,0]		&	0.049  \\
+7			& [1,2,3,4,5,6,7,8,9,10]	&	[0,0,0,0,7,0,0,0,0,1]		&	0.040  \\
+8			& [1,2,3,4,5,6,7,8,9,10]	&	[0,0,0,0,0,0,0,8,5,0]		&	0.035  \\
+9			& [1,2,3,4,5,6,7,8,9,10]	&	[1,3,4,5,6,0,0,0,0,0]		&	0.500  \\
+10			& [1,2,3,4,5,6,7,8,9,10]	&	[0,0,0,0,0,1,2,8,5,3]		&	0.178  \\
+\bottomrule
+\end{tabular}
+\caption{$AP@10$ Examples}
+\end{table}
+
+As you see from example two and three average precision does not consider the order of the actual item list. We want some way to
+reward the recommender for getting the purchased ranked higher than both wants and clicks.
+
+Normalized Discounted Cumulative Gain (nDCG) described in Section~\ref{subsec:offlineeval} is another metric to
+measure the rank accuracy. It is based on two main assumptions; (1) Highly relevant items are more useful than marginally relevant ones,
+>>>>>>> f0332291a5f01c7cee3f7a798995f919497c3c5c
 (2) The lower the ranked position of a relevant item, the less useful it is for the user, since it is less likely to be \emph{examined}.
 The maybe most interesting aspect of nDCG is that it contains an utility function $rel_i$. One can replace the original utility function
 and replace it with a function that is more suited to the application. One could e.g. assign the relevance of an item using
@@ -100,11 +136,17 @@ a relevance of 2 and a click a relevance of 1, as it would give us a single numb
 However, we do not not know these values, meaning that nDCG cannot be used without making assumptions about the importance of the different
 event types. To solve this problem we decided to chose a \emph{simpler} approach. We independently measure the recall
 and counts of clicks, wants and purchases retrieved by the recommender in the top 20 positions. As you see, it would have been nice to know these
+<<<<<<< HEAD
 reward attributes to make the evaluation results more \emph{reader friendly}. To check if an user-item touple is a click, want or purchase we create
 a file which stores the log events in the following format:
+=======
+reward attributes to make the evaluation results more fluent.
+
+To check if an user-item tuple is a click, want or purchase we create a file which
+stores the log events in the following format:
+>>>>>>> f0332291a5f01c7cee3f7a798995f919497c3c5c
 
 \begin{table}[H]
-\label{table:event-type}
 \centering
 \begin{tabular}{*{3}l}
 \toprule
@@ -118,6 +160,7 @@ UserID	&	ItemID	 &  Event Type  \\ \midrule
 \bottomrule
 \end{tabular}
 \caption{Evaluation - Example event type file}
+\label{table:event-type}
 \end{table}
 
 For items where a user has multiple events we only use the most \emph{valuable} event. E.g. if a user have both clicked

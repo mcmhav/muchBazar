@@ -71,11 +71,11 @@ extractor were to extract the different features for these items:
 	Category 		& 0.628 \\
 	Material 		& 0.408 \\
 	Style 			& 0.314 \\
-	Color 			& 0.162 \\ 
+	Color 			& 0.162 \\
 	\bottomrule
 	\end{tabular}
+    \caption[Extracted content features]{Exteacted content features in dataset}
 	\label{table:extracted-content-features}
-	\caption[Extracted content features]{Exteacted content features in dataset}
 \end{table}
 
 Price, brand and product-type can be found for \emph{most} items, while material style
@@ -338,7 +338,7 @@ referred to as BPR-MF.
 \subsection{Non-Binary Recommenders}
 
 The following recommenders will be used to test our implicit ratings. In addition to the methods described,
-traditional user-based and item-based collaborative filtering described in Section \ref{sec:memory-based} will
+traditional user-based and item-based collaborative filtering described in Section~\ref{subsubsec:memory-based} will
 also be used.
 
 \subsubsection{ALS-WR}
@@ -443,9 +443,9 @@ Compared to the work presented by Park et. al. we felt that the lack of high qua
 The intuition behind the \emph{SingleBrandBots} is as follows, given that a collaborative filtering algorithm is used:
 when a new user \emph{rates} a item of a single brand it will be connected with one such bot. The user can then be recommended
 items from this bot's list, meaning that the user can be recommended items of the same brand. Similarly, the \emph{PopularityBot}
-will have rated the popular items highly meaning that new users that connect to this psuedo user will be recommended the 
+will have rated the popular items highly meaning that new users that connect to this psuedo user will be recommended the
 most popular items. For item-based methods it works a little differently as it only has an effect on the item-similarity matrix.
-Since more item similarities can be defined due to the psuedo users, more neighbors for the target item can be chosen from the candidate set. 
+Since more item similarities can be defined due to the psuedo users, more neighbors for the target item can be chosen from the candidate set.
 
 Both the \emph{AverageBot} and \emph{BrandBot} can be seen to incorporate the implicit rating factors such as recency into
 the ratings generated. However, for the \emph{PopularityBot} and \emph{Critic} but we wish to implement additional functionality to ensure

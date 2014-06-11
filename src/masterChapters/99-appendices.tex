@@ -605,7 +605,7 @@ user might like an item, by e.g.\\ predicting what rating a user might give an
 item. In recent years, various test collections for different domains such as
 books, music, movies have been made available to the public. These datasets
 usually consist of user ratings similar to the ones used in this thesis (see
-Section~\ref{}):
+Section~\ref{sec:implementation-implicit}):
 
 \begin{table}[H]
 \centering
@@ -795,7 +795,8 @@ The following table shows our experimental results for our time-based cold-start
 [0,0,0,0,0] means that no filterbots were used, [0,0,1,0,1] means that both a popularity bot and the single brand bots were used and [1,1,1,1,1] means that all five bots were used.
 
 \begin{table}
-\centering\resizebox
+\centering
+\resizebox
 {\columnwidth}{!}{
 \begin{tabular}{*{19}l}
 \toprule
@@ -849,7 +850,6 @@ ALS-WR [0,0,1,0,1] user-10 &	0.672386 &	0.028034 &	3952 &	4562.5 &	391 &	65 &	83
 ALS-WR [0,0,1,0,1] user-40 &	0.707324 &	0.016305 &	2609 &	3131 &	218 &	39 &	62.5 &	9 &	0.014753 &	0.019615 &	0.03672 &	0.005155 &	0.017507 &	0.019089 &	 \\
 
 %SVD 0 0 1 0 1
-
 ALS-WR [0,0,1,0,1] item-10 &	0.584148 &	0 &	3288 &	2631.625 &	247.75 &	0 &	0 &	0 &	0 &	0 &	0 &	0 &	0 &	0 &	 \\
 ALS-WR [0,0,1,0,1] item-40 &	0.809751 &	0.013717 &	2263.375 &	1698.625 &	155.375 &	81.875 &	68.875 &	6.5 &	0.036174 &	0.040547 &	0.041833 &	0.013415 &	0.015674 &	0.009912 &	 \\
 ALS-WR [0,0,1,0,1] system-40 &	0.640561 &	0.004611 &	3048 &	2308 &	36 &	21 &	16.375 &	0.875 &	0.00689 &	0.007095 &	0.024306 &	0.002783 &	0.009659 &	0.009115 &	 \\
@@ -859,7 +859,6 @@ ALS-WR [0,0,1,0,1] item-75 &	0.867979 &	0.031943 &	1005.625 &	713 &	54.375 &	115
 ALS-WR [0,0,1,0,1] user-75 &	0.794349 &	0.011641 &	1043.25 &	1393.75 &	79.125 &	13.75 &	31.625 &	2.25 &	0.0137 &	0.02263 &	0.02843 &	0.007477 &	0.013215 &	0.024714 &	 \\
 ALS-WR [0,0,1,0,1] user-10 &	0.743056 &	0.040067 &	3829.875 &	4696.375 &	388.625 &	50.5 &	103 &	13.875 &	0.013508 &	0.021821 &	0.035674 &	0.014796 &	0.025201 &	0.022644 &	 \\
 ALS-WR [0,0,1,0,1] user-40 &	0.775837 &	0.022627 &	2540.375 &	3206.875 &	215.75 &	35.875 &	70.375 &	6.875 &	0.014531 &	0.021754 &	0.031372 &	0.009156 &	0.016736 &	0.020775 &	 \\
-ALS-WR [0,0,1,0,1] avgs	 &	0.71267 &	0.014347 &	2568.277778 &	2362.694444 &	138.777778 &	38.444444 &	44.541667 &	3.875 &	0.023177 &	0.028084 &	0.027147 &	0.009281 &	0.013179 &	0.012471 &	\\
 
 %Itembased 0 0 1 0 1
 IBCF [0,0,0,0,1] item-10 &	0.558101 &	0.000614 &	3322.5 &	2617 &	248 &	11 &	5 &	1 &	0.003311 &	0.001911 &	0.004033 &	0.000548 &	0.000845 &	0.000313 &	 \\
@@ -940,7 +939,7 @@ IBCF [1,1,1,1,1] avgs	 &	0.600678 &	0.00413 &	2536.75 &	2317.215278 &	132.166667
 \bottomrule
 \end{tabular}
 }
-\caption{Appendix: Cold-start - Time-Based Splits - Raw Numbers}
+\caption[lol]{Appendix: Cold-start - Time-Based Splits - Raw Numbers}
 \end{table}
 
 
