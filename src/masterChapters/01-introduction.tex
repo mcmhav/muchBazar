@@ -68,7 +68,7 @@
 % What are recommender systems good for?
 In today's day and age the increasing amount of data overwhelm our human
 processing capabilities in many information seeking tasks. To cope with this
-overload researchers have introduced recommender systems to filter the ever
+overload, researchers have introduced recommender systems to filter the ever
 increasing information and only present a small selection of items which
 reflects the users tastes, interests and priorities. Recommender systems are an
 active research field and has been successfully applied to many different
@@ -97,7 +97,7 @@ accessories effortlessly and without the need of registering an account on
 multiple web stores. Currently the application makes global recommendations
 based on popular products and trends within social networks -- however, the goal
 before launching the application this upcoming summer (\the\year) is to improve
-these ratings making them personalized and grounded in a larger array of
+these ratings, making them personalized and grounded in a larger array of
 features. This has as noted the potential of improving sales, activity and user
 satisfaction.
 
@@ -109,7 +109,7 @@ Norway~\cite{statisticsNorway}, the growth potential for such an application is
 immense in Norway -- where since 2006 there has been a steady increase in the
 number of e-commerce sales of about 8\% per year. Still the competition within
 \textit{personalized recommendations}, is small at both a national and
-international level, as we will see in a detailed comptetitor analysis in
+international level, as we will see in a detailed competitor analysis in
 Section~\ref{subsec:competitors}. This underlines the importance of both the
 discoveries made in this thesis and the application itself.
 
@@ -124,14 +124,14 @@ utilize the implicit information contained in user behavior such as clicking,
 wanting or buying an item. Limited data both in number of users and recorded
 events, makes the system prone to what is called \textit{cold-start issues},
 where making recommendations with limited information is resolved by a variety
-of specialy crafted techniques.
+of specially crafted techniques.
 
 % The fashion domain have certain challenges.
 This scenario differs from making recommendations on movies, books and music,
 not just in the lack of rich explicit ratings, but also in the context of the
 domain the recommendations will be done, namely the fashion domain. Firstly,
 fashion consumption is largely determined by seasons. E.g. one does not buy
-winter jackets in the middle of summer. Most clothes do also go \textit{out of
+winter jackets in the middle of the summer. Most clothes do also go \textit{out of
 fashion}, the same can not be said for \emph{all} movies. Secondly, there are a
 whole different set of important aspects regarding the items or products when
 recommending in the fashion domain, such as: brand, color, size and price.
@@ -148,7 +148,7 @@ but to show of or make a statement.
 % What are our goals and purpose?
 In our system, there are two sources of information available for making
 recommendations: an aggregated product database and event logs capturing user
-activities. Out first goal is to find a technique for translating the implicit
+activities. Our first goal is to find a technique for translating the implicit
 feedback into preferences. These preferences are then combined with product
 features and techniques for mitigating the cold-start problem. Finally the
 user-item preferences are utilized in making recommendations where challenges
@@ -164,20 +164,20 @@ is implicitly changing his/hers preference-profile and will then, by just using
 the application, get novel and more robust recommendations. Further, as
 personalized recommendations hopefully will increase both sales and user
 activity we will, with a larger set of data, be able to understand more user
-patterns and consequently gain a deeper understanding of the domain.
+patterns and consequently gain a deeper understanding in the domain.
 
 \section{Problem Statement and Goals}
 \label{sec:problem-statement}
 
 % Overall problem statement
 The primary aim of this thesis is proposing a system, producing personalized
-fashion recommendations based on user behaviour and product features, when both
+fashion recommendations based on user behavior and product features, when both
 resources are extremely limited in both quality and volume.
 
 % Introduce goals related to domain
 In order to propose such a system, one need an exhaustive understanding of both
 the fashion domain and available data. In addition a study is required looking
-at existing solutions, competitors and identify potential competitive
+at existing solutions, competitors and to identify potential competitive
 advantages. Finally a discussion on how to overcome found challenges with
 respect to both understanding the implicit feedback and making recommendations
 is needed. Hence, our domain specific goals can be defined as:
@@ -197,9 +197,9 @@ recommend when no feedback has been given, which is the case of new users. The
 same issue is apparent when a new item is added to the application, where we
 need a strategy for introducing it to users although the product is not
 connected to any existing feedback. Finally, the closely related problem of
-making recommendations in scenarios where feedback is extremely sparse need to
+making recommendations in scenarios where feedback is extremely sparse, need to
 be addressed. First impressions are important both for retention and customer
-satisfaction and consequently, seperate goals were set specifically concerning
+satisfaction and consequently, separate goals were set specifically concerning
 cold-start issues.
 
 \begin{itemize}
@@ -210,7 +210,7 @@ cold-start issues.
 
 % Introduce goals related to implicit feedback
 There is no explicit way for users to \textit{rate} or give \textit{negative
-feedback} to items in SoBazaar. This forces us to look at user behaviour and
+feedback} to items in SoBazaar. This forces us to look at user behavior and
 more specifically interactions on items such as \textit{clicking},
 \textit{wanting} or \textit{purchasing}. We would like to learn how these
 events could be used to predict the users true preferences. Using implicit
@@ -226,16 +226,16 @@ feedback yields the following goals:
 \end{itemize}
 
 % Introduce limitations
-\paragraph{Limitiations} Our problem statement and consequent goals establish
+\paragraph{Limitations} Our problem statement and consequent goals establish
 the main theme of this thesis, but simultaneously they introduce some
-limitiations. Hence, the reader should be familiar with what this thesis
+limitations. Hence, the reader should be familiar with what this thesis
 \textit{does not set out to do}.
 
 % Small and sparse dataset
-The main limitiation of this thesis is primarly linked to having only one
+The main limitation of this thesis is primarily linked to having only one
 available dataset with both sparse and modest data. As a result, making
-conclusions based user behaviour proved difficult due to lack of statistical
-significance on many observations. Limitiations in both time available and
+conclusions based user behavior proved difficult due to lack of statistical
+significance on many observations. Limitations in both time available and
 number of existing users with sufficient activity made is also impossible to
 conduct a thorough user study, which could confirm possible found user
 patterns -- nor was it possible to conduct online experiments.
@@ -254,7 +254,7 @@ although initial work is done in this area using filterbots.
 \section{Application Overview}
 \label{sec:app-overview}
 
-This thesis proposes a system for making recommendations based on implicit
+This thesis proposes a system for making recommendations based on
 two sources: implicit feedback and product properties. The output of this
 system is a set of recommendations for all users in the system. Finally, this
 output is used for calculating various evaluation metrics, with the aim of
@@ -317,7 +317,7 @@ differentiating between different parameters and methods in all earlier stages.
 \end{figure}
 
 As can be seen from the figure, the proposed system is a pipeline of
-interconnected processes. First a convertion from implicit feedback to ratings
+interconnected processes. First a conversion from implicit feedback to ratings
 is made, a process which we first detail existing work in
 Section~\ref{sec:implicit} and later, in
 Section~\ref{sec:implementation-implicit} study especially tailored methods
@@ -332,7 +332,7 @@ Section~\ref{implementation-filterbots}.
 
 The third stage uses these ratings in a variety of different approaches for
 doing recommendations. Some are based on traditional and simple approaches such
-as looking at populatities and averages, while others use modern
+as looking at popularities and averages, while others use modern
 matrix-factorization techniques and varieties as further described in a
 background study in Section~\ref{sec:recsys} and in
 Section~\ref{sec:rec-models}, where we discuss the algorithms in light of our
@@ -349,7 +349,7 @@ Section~\ref{sec:results}.
 
 Traditionally in most recommender systems, the process of making
 recommendations does not include the first two stages of our system (converting
-implicit feedback and cold-start boosting, respectivly), as they instead use a
+implicit feedback and cold-start boosting, respectively), as they instead use a
 set of explicitly provided ratings directly from the users. However, as we will
 see, making ourselves non-dependent on explicit ratings can both provide us
 with a good set of recommendations and take us one step closer to true

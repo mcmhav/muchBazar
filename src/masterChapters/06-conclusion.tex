@@ -3,7 +3,7 @@
 \chapter{Conclusion}
 \label{chap:conclusion}
 
-\section{Main results of this work}
+\section{Main Results of this Work}
 
 % Our proposed system and its components
 In this thesis we have proposed a new system for making recommendations using
@@ -54,7 +54,7 @@ items algorithmically according the item-attributes or by aggregating rating
 information. Two such bots include a \textit{PopularityBot} who rate items
 based on their popularity and a \textit{BrandBot} who gives all items of a
 brand the maximum rating. We tested out different filterbot combinations for
-all three cold-start scenarios, disappointingly we did not find the filterbots
+all three cold-start scenarios, disappointingly we did not find the them
 to improve the cold start performance of the system, but primarily credit this
 to the dissatisfactory quality of product metadata and the lack of demographic
 details about the users.
@@ -94,7 +94,7 @@ items and purchases. However, user-based kNN managed to achieve a higher
 $MAP@20$ scores when considering wanted and purchased items, making this
 segment of our results inconclusive. Our results give strong indication that
 recentness is an important factor in the fashion domain. We also found that the
-price too consistently give better results than considering item-popularity,
+price consistently give better results than considering item-popularity,
 which might give some indication that this is a more important feature for
 users in this domain. Due to the limited size of our dataset we are careful to
 not make grand claims about the results, and believe they should be verified
@@ -145,7 +145,7 @@ Section~\ref{sec:cold-start-discussion}; and G6, G7 and G8 are discussed at
 length in Section~\ref{sec:implicit}, Section~\ref{sec:implementation-implicit} and
 Section~\ref{sec:experimental-plan}, respectively.
 
-\subsection{G1, G2 and G3: Fashion domain and recommendation systems}
+\subsection{G1, G2 and G3: Fashion Domain and Recommendation Systems}
 \label{sec:fashion-discussion}
 
 By thorough examination and analysis of the data combined with an extensive
@@ -172,7 +172,7 @@ fashion preferences.
 By these conclusions we argue that \textbf{Goal G1, G2 and G3} were
 \textbf{fulfilled}.
 
-\subsection{G4 and G5: Cold-start issues and sparsity}
+\subsection{G4 and G5: Cold-start Issues and Sparsity}
 \label{sec:cold-start-conclusion-discussion}
 
 Through our literature review, we closely examined five different classes of
@@ -187,8 +187,8 @@ to.
 After closely examining the different methods we concluded that both filterbots
 and content-boosted hybrid methods could provide a possible solution for our
 specific scenario. However, only modest results were achieved with our
-solution, and we largly attribute this to the quality of product metadata and
-the lack of demographic data on users. Agarwal et. al. \cite{Agarwal2009} used
+solution, and we largely attribute this to the quality of product metadata and
+the lack of demographic data on users. Agarwal et al. \cite{Agarwal2009} used
 13 filterbots in their experiments, where 11 of them were based on demographic
 information, which underlines the importance of this segment.
 
@@ -198,7 +198,7 @@ application. In addition a successful implementation of filterbots were carried
 out, serving as an important proof of concept. Consequently we argue that
 \textbf{Goal G4 and G5} were \textbf{fulfilled}.
 
-\subsection{G6, G7, G8: Making recommendations with implicit feedback}
+\subsection{G6, G7, G8: Making Recommendations with Implicit Feedback}
 \label{sec:implicit-discussion}
 
 We identified multiple existing solutions for inferring user preference from
@@ -234,7 +234,7 @@ recommender systems, there are a range of future work which could yield
 both interesting and auspicious results. Consequently we divide this section
 into these segments, looking at possible future work for each of them.
 
-\subsubsection{Generating implicit ratings}
+\subsubsection{Generating Implicit Ratings}
 
 There are lot of research to still be done in conversion from implicit feedback
 to implicit ratings. Primarily one should try to get more concrete results by
@@ -289,7 +289,7 @@ primarily used open-source pre-built implementations of most recommender
 methods in this thesis, due to time constraints, a study focusing on only this
 component of the system could prove rewarding.
 
-\subsubsection{Evaluation implicit feedback}
+\subsubsection{Evaluating implicit feedback}
 
 As we have seen, evaluation should ideally be done in two components of our
 system -- both when generating ratings and making recommendations. We have
@@ -300,14 +300,19 @@ based methods (see Figure~\ref{fig:overview-eval}) should be conducted.
 Further, it would be interesting to study the effects personalization has on
 the implicit factors. We hypothesize that by creating accurate recommendations
 new user patterns will emerge, that either can worsen or improve future
-recommendations. In addition, it could be highly interesting to experiment with
-personalized weights to implicit factors, as perhaps some users are more
-brand-aware than others who concern themselves more with the price, and vica
-versa.
+recommendations, if no dynamic adoptation is performed by the recommender. In
+addition, it could be highly interesting to experiment with personalized
+weights to implicit factors, as perhaps some users are more brand-aware than
+others who concern themselves more with the price, and vica versa.
 
 Finally a study on the relationship between matrix factorization methods such
 as SVD and our manual feature selection could be carried out, as they are
 highly synonymous.
+
+\subsubsection{Session Analysis}
+
+As we saw in Section~\ref{sec:sessionPatterns}, the sessions can be used to infer usage patterns to better the recommendations. One way of doing so is trough utilizing Markov Hidden Models~\cite{rabiner1986introduction} to predict state accessing, which could be an interesting addition to the implicit data, to better make personalized recommendations.
+
 
 \subsubsection{Future studies on SoBazaar data}
 

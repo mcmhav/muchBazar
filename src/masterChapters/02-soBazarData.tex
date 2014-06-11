@@ -29,7 +29,7 @@ browse through thousands of products, presenting them in a \textit{newsfeed},
 which in todays state yields global recommendations to all users based on the
 opinions of professional fashion experts. If you find something you like you
 can purchase it directly from the application or store it for later with the
-\emph{heart it} function, which in this thesis is refered by its backend name
+\emph{heart it} function, which in this thesis is referred by its backend name
 \textit{product wanted}. The following screenshots highlights some
 functionality currently found in the application. In the leftmost screenshot a
 set of items are presented in the newsfeed, together with the name of a user
@@ -59,7 +59,7 @@ most popular products at the moment.
 Users are also able to browse \textit{by brand} or storefront, as shown in the
 leftmost screenshot below. A storefront is different from a brand-store by
 combining products from a variety of brands into categorical sales or
-\textit{packages} such as \textit{«summer sale»}. One of these storefronts are
+\textit{packages}, such as \textit{«summer sale»}. One of these storefronts are
 coined \textit{Editor's picks}, which as we have mentioned, are curated by
 professionals. If a brand or storefront is clicked one is taken to a custom
 listing, presenting all products available together with their price and
@@ -87,8 +87,8 @@ external online shop for completing the purchase. The product screen currently
 features a \emph{«People who like this also love»} section, in addition to show
 other products from the same store. Clicking the map marker a map showing
 nearby physical stores selling the item is expanded. Furthermore, the
-info-button yields a more detailed description of the product and pressing the
-rightmost arrow one has the possibility of sharing the item with friends via.
+info-button yields a more detailed description of the product, and pressing the
+rightmost arrow one has the possibility of sharing the item with friends via
 various social networks. The application also features a personal page for
 earlier saved or \emph{wanted} items, named \textit{My love list}. Finally, the
 application supports simple search queries on product descriptions, titles and
@@ -122,7 +122,7 @@ foundation for further data analyzation. The saying \emph{garbage in, garbage
 out}~\cite{GIGO} especially applies here, as the quality of input data can make or
 break the final results. This is due to a variety of reasons, ranging from
 non-complete raw-values, events outside target groups or outliers having
-user-beahviours which makes learning stereotypical patterns impossible.
+user-behaviors which might skew the learned stereotypical patterns and rendering them almost useless.
 
 The following pre-processing steps were performed before continuing to analyze
 the dataset:
@@ -135,7 +135,7 @@ the dataset:
   application.
 \end{itemize}
 
-As part of the preprocessing, a unique \textit{session identfier} field was
+As part of the preprocessing, a unique \textit{session identifier} field was
 added to the data, indicating which events were done in the same timespan
 without closing the application. This, as we will see in later sections helps
 us understand multiple usage patterns.
@@ -195,7 +195,7 @@ to better understand its properties.
             Attribute       & Count   \\
             \midrule
             Total number of product events  &    35324 \\
-            Unique users ids    &    1532 \\
+            Unique user ids    &    1532 \\
             Unique item ids     &    5688 \\
             Unique storefronts  &    144~\tablefootnote{A storefront is a access point, with different clusterings of items. Stores can have multiple storefronts} \\
             Unique retailer brands  &    22 \\
@@ -221,19 +221,19 @@ to better understand its properties.
         \end{tabular}
     \end{table}
 
-As seen from table~\ref{table:datasetSummary} the average amount of
+As seen from Table~\ref{table:datasetSummary} the average amount of
 \emph{purchases} per user are below one. Using purchase information alone to
 make recommendations will therefore in most cases render the recommendations
 incomplete. If one or more users have more than one purchases, then some users
-will of course have none purchases. Making personalized recommendations for
-these users will then be unattainable.
+will of course have no purchases. Making personalized recommendations for
+these users unattainable.
 
 \emph{Clicks} and \emph{wants} on the other hand have a much higher occurrence.
 These two events together with \emph{purchases} tops a count of 20 on average
 per user, and opens for the possibility of more dense personalized
 recommendations, but the data is still rather sparse.
 
-\section{Visualizations and analysis}
+\section{Visualizations and Analysis}
     % New graphs when/if:
     % Price range of items in stores
     % unique Stores count for users
@@ -266,7 +266,7 @@ the data -- keeping in mind the table presented in the previous section
 
 We start our analysis by trying to understand \textit{how} the users interact
 with the application and to which degree we can use user-based features in
-order ot make predictions. We do this by primarily looking at their
+order to make predictions. We do this by primarily looking at their
 distributions with regards to events, purchases, sessions and their lifespan in
 the application -- that is how well customers are retained.
 
@@ -279,11 +279,11 @@ the application -- that is how well customers are retained.
 
 Here we see the count for each of the different events which can be triggered
 in the SoBazaar application\footnote{With the exception of the event types with
-a trigger count lower than 200, which are merged into on bar and labeled
+a trigger count lower than 200, which are merged into one bar and labeled
 \emph{other}}. As can be seen, the two events \emph{product\_detail\_clicked}
 and \emph{storefront\_clicked}, are the two most common in the dataset. As
 mentioned earlier in Section~\ref{sec:sobazaar-appication}, the
-\emph{storefront} is the main access point to a set of products, and the high
+\emph{storefront} is the main access point for the user to get to a set of products, and the high
 values for this \emph{event\_id} is expected. The fact that accessing the
 \emph{storefront} is the most occurring event, over clicking an item, indicates
 that many users use the application primarily to browse through items, looking
@@ -295,11 +295,11 @@ easily accessible.
 
 As we can see from Figure~\ref{figure:SoBazaarfeed3} it is possible to indicate
 that you want an item (\textit{product\_wanted}) by clicking the heart-icon,
-and without accessing the acutal item -- that is sending a
+and without accessing the actual item -- that is sending a
 \textit{product\_detail\_clicked}. Hence, although the number of wants are half
 the number of clicks, it does not imply that half of the users clicking an item
 wants it. This does not hold true for purchases, where one has to click the
-item before sending the \textit{product\_purchase\_indtended} event -- thus we
+item before sending the \textit{product\_purchase\_indtended} event\footnote{This was true during the time lifetime of the captured dataset. In later versions, the user has been given the option to press \emph{buy} without accessing the item} -- thus we
 can conclude that 6.9\% of all clicks progress into an \textit{intended}
 purchase.
 
@@ -330,8 +330,8 @@ users, below.
 
 We can see that this figure confirms our title, as the majority of users have
 been observed doing less than 10 events, and Figure~\ref{fig:userEventCumDist}
-confirms this by presenting the cumalative graph where, 78\% of the users have
-50 events or less, with an average of 5 events per user. Note that we here look
+confirms this by presenting the cumulative graph where, 78\% of the users have
+50 events or less, with an average of about 30 events per user. Note that we here look
 at \textit{all event types}, not only those where the user interact with items.
 As we, in our proposed system, do not use non-item events for neither
 recommending nor generating implicit ratings, we now look at the event
@@ -358,14 +358,12 @@ both in terms of product interaction, but also application interaction.
 \end{figure}
 
 In the figures above we see the number of product interactions per user, where
-the following key charecterstics are apparent:
+the following key characteristics are apparent:
 
 \begin{itemize}
-  \item Over 20\% of all users have never interacted with an item (leftmost bar
-  in Figure~\ref{fig:ratingsPerUserCum})
   \item 90\% of all users has 60 or fewer item interactions, this is set as
   cut-off point in both figures.
-  \item 70\% percent of the users has 12 or fewer item interactions.
+  \item 70\% percent of the users has 17 or fewer item interactions.
   \item The average number of item-interactions per user is, per
   Table~\ref{table:datasetSummary},
   $23.05$, however as a few users skew this number a more accurate measure is
@@ -378,7 +376,7 @@ for the possibility of connecting users based on their item interactions and
 making rudimentary recommendations.
 
 Next figure is used to present the average price of the items the users are
-accessing, to see if there is a usage pattern amongst the users.
+accessing, to see if there is a usage pattern of some kind.
 
 \begin{figure}[H]
   \includegraphics[width=5in]{image/avgUserPricesdistribution.png}
@@ -388,16 +386,16 @@ accessing, to see if there is a usage pattern amongst the users.
 \end{figure}
 
 The figure above displays the average price of the users in the SoBazaar dataset.
-The users are group together, where one one bucket represents the count of users
+The users are group together, where one bucket represents the count of users
 with an item view price average in the range $[x,x+99]$. The first bucket for
 instance contains the users with average item view price between $1$ and $100$.
 
-As we can see from the figure above the users are centered around $300$, where
-$300$ is the most common interaction price~\footnote{The median interaction
-price is $299$}.
+As we can see from the figure above the users are centered around $300$ NOK, where
+$300$ NOK is the most common interaction price~\footnote{The median interaction
+price is $299$ NOK}.
 
 This tells us that the preferred price of the users in the SoBazaar application
-is around $300$ , which can be utilized when making ratings based on the user
+is around $300$ NOK, which can be utilized when making ratings based on the user
 events.
 
 Up until now, we have seen how the users have interacted with both the
@@ -415,7 +413,7 @@ the lifespan of user-accounts.
 As seen from the above figure, more than 90\% of the users have a session count
 of 20 or less, in addition almost 25\% of all users has only registered
 \textit{one} interaction in the lifetime of their account. Taking this
-calculation further, approximatly 50\% of the users has 6 interactions or fewer, all
+calculation further, approximately 50\% of the users has 6 sessions or fewer, all
 evidence to strengthen the sparsity claim made in the title of this thesis.
 
 The low number of sessions leads us to look at account lifetime, where we
@@ -433,7 +431,7 @@ From this figure we conclude that over half of the users have a lifespan of
 less than a week, in many ways confirming the user effects seen in
 Figure~\ref{fig:sessCountDist}, as many users use the application a few times
 and never open it again. Using this knowledge we observe how important it is to
-based on demographics and \textit{cold-start methods} recommend relevant items
+based on demographics and \textit{cold-start methods}, recommend relevant items
 from day one.
 
 One might however argue that a short lifespan does not necessarily yield low
@@ -469,13 +467,13 @@ are using the application and they correspond roughly to the population
 distribution as well -- this has the pleasant side-effect that making
 predictions based on demographics, may prove successful. However, experiments
 must the done in order to see to which degree one can make generalizations in
-city-centers, where most of the acitivity are coming from.
+city-centers, where most of the activity are coming from.
 
-\subsection{Product properties}
+\subsection{Product Properties}
 
 Having covered many of the properties found in the users of SoBazaar, we move
 our attention to the products to see how they are interacted with and if we
-gain any valuable knowledge which might lead us to better undertstand the
+gain any valuable knowledge which might lead us to better understand the
 domain. First we will look at the price distribution, before moving on to see
 how evenly distributed the product events are, and finally we delve more into
 detail on \textit{storefronts} and their effect on the dataset.
@@ -504,7 +502,7 @@ variations seen in Figure~\ref{figure:pricePerProduct} are big and this is a
 good thing as it can help us differentiate on users based on their price
 preferences.
 
-Can we, however, make the same differantiation based on popularity? We have
+Can we, however, make the same differentiation based on popularity? We have
 seen that each item in average has $6.21$ interactions
 (Table~\ref{table:datasetSummary}, but as seen below these are not evenly
 distributed among the products.
@@ -691,7 +689,7 @@ move up to 41.3\% of the most popular items in order to reach 80\%, and thus we
 can conclude that Pareto's principle does not apply to the SoBazaar dataset.
 However, as we have seen in previous section this does not disprove sparsity,
 nor does it prove density in the dataset. In order to see this we can
-investigate if we have a Long-tail by observing the following values.
+investigate if we have a \emph{long-tail} by observing the following values.
 
 \begin{table}[H]
   \centering
@@ -739,13 +737,13 @@ such as \emph{Reiss} and \emph{Inwear} are mostly accessed and the items not
 interacted with.  Different aspects affecting this might be price, style and
 item presentation.
 
-\subsection{Time properties}
+\subsection{Time Properties}
 
 Not only is it important to look at user and product properties, but as
 \textit{time} is an important aspect of fashion we should identify properties
 related to this segment in our data as well. We have already looked at the
 lifespan of users (Figure~\ref{fig:sessCountDist}), and by applying the same
-methodology on products we can see which items that regularily are interacted
+methodology on products we can see which items that regularly are interacted
 with -- and perhaps more interestingly, which items are \textit{forgotten}.
 
 \begin{figure}[H]
@@ -780,9 +778,9 @@ important to focus on making good recommendations, but also ensure good
 coverage. One may also see the sparsity affects this figure, as e.g. no items
 have between 116 and 160 interactions registered.
 
-The figure above averaged the lifespan of the items and presented them with
+The figure above averaged the lifespan of the items and presented them
 together with their respective count, below we show the same tendency, but keep
-the lifespan seperate.
+the lifespan separate.
 
 \begin{figure}[H]
   \centering
@@ -799,7 +797,7 @@ addition we see that the more interaction on the item, the longer the average
 life time, again proving that the recentness of an item is important.
 
 As described in Section~\ref{sec:preprocessing} when pre-processing the data we
-perform a session study, looking at timing related behaviours in order to e.g.
+perform a session study, looking at timing related behaviors in order to e.g.
 detect the amount of \textit{bouncing}, that is clicking an item and then
 without delay return to the original page without \textit{actually} having read
 or shown interest to the product.
@@ -955,8 +953,8 @@ Z-score:
 \end{equation}
 
 where $r_b$ and $r_v$ are the conversion rates for the baseline and second
-scenario respecivly. $e_b$ and $e_v$ are equally the standard errors for the
-two scenarios. Using standard normal deviate (normallly distributed random
+scenario respectively. $e_b$ and $e_v$ are equally the standard errors for the
+two scenarios. Using standard normal deviate (normally distributed random
 variable with expected value 0 ($s$) and standard deviation 1 ($h$)) we can
 find the cumulative probability for validity of the model - the P-value.
 
@@ -1013,7 +1011,7 @@ For instance:
   \item User clicks \emph{want} on an item
 \end{enumerate}
 
-As seen from the example above, first the user logs inn, which is the trigger flag to indicate a sessions is started. Then user does a set of actions in the application.
+As seen from the example above, first the user logs inn, which is the trigger flag to indicate a sessions is started. Then the user does a set of actions in the application.
 These events put together forms the a session of a user and is used in the figure below to better understand the global user patterns.
 
 \begin{figure}[H]
@@ -1032,7 +1030,7 @@ as \emph{activity\_clicked}, \emph{around\_me\_clicked} and
 \emph{stores\_map\_clicked}, have been left out to give focus to item
 interaction related states.
 
-For a more complete view without reduced states see~\ref{figure:statesInteractions}.
+For a more complete view without reduced states see Figure~\ref{figure:statesInteractions}.
 
 The \emph{Init}-state is the initialization of the application, which leads to
 the \emph{Start}-state, which is a reduction of the variations of events which
@@ -1045,7 +1043,7 @@ As we can see from the figure, in 9 470 cases the users enters a store after
 already having entered a store, which means that the user did not access any of
 the items in the first entered store, and we see that this is a common way of
 browsing the products in the application. Since this leaves little indication
-about the user preferences, other ways of gathering this must be utilized.
+about the user preferences, other ways of gathering the preferences must be utilized.
 While this thesis was being written additional events was added, one of these
 was \emph{content:interact:item\_scroll}, which has proven to be of good help
 to derive user preferences~\cite{Claypool01inferringuser}.

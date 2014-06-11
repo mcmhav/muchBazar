@@ -5,7 +5,7 @@
 
 The following section will present our experimental results, first we present our results
 for the purchase only dataset, secondly we present our experimental results for the multiple
-event dataset before presenting out cold-start results, finally we discuss our results in
+event dataset before presenting our cold-start results, finally we discuss our results in
 relation to our experimental goals.
 
 \subsection{Purchase Only Results}
@@ -87,22 +87,22 @@ BPR-Linear					&	0.559033 &	0.000443 &	3038 &	2328 &	36 &	2 	  &	2 	  	&	0 &	0.0
 
 The low AUC scores can be attributed to the fact that 143 new users and 870 previously unrated items were introduced in the test period, many of the true positives
 were therefor never found in the recommendation lists. To our surprise none of the binary methods significantly outperformed the
-non-personalized most-popular recommender in terms of AUC. UserBasedKNN performed the best overall of the binary methods retrieving or 8.33\% of all purchases
+non-personalized most-popular recommender in terms of AUC. UserBasedKNN performed the best overall of the binary methods, retrieving 8.33\% of all purchases
 and 0.7\% of all all wanted items as seen in the columns $R_{purchase}$ and $R_{want}$.
 
-ALS-WR performed the best overall for most features, except popularity. In particular the implicit ratings that factored in recency only seems
-to give the best performance overall. Logistic ordering in particular scored the highest AUC score, retrieved 1\% of all wants and 8.33\% of all purchases.
+ALS-WR performed the best overall for most features, except popularity. In particular the implicit ratings that factored in recency seems
+to give the best performance overall. Logistic ordering in particular scored the highest AUC score, retrieving 1\% of all wants and 8.33\% of all purchases.
 Thus confirming the importance of recency. We chose to not include the results from the collaborative filtering methods using implicit
 ratings as they were really poor in comparison to ALS-WR. We believe that this mainly can be attributed to that they are designed for explicit feedback data,
 and not positive feedback only data, as in our case. For more model results and detailed metrics see the Appendix \ref{appendix:time-based-results}.
 
 There is no result dithering implemented in the collaborative filtering algorithms used, combined with the fact that the dataset split at the exact same day,
-means that we need some other way of getting a better estimate of the true error. Further evaluation is therefore needed.
-By doing random splits and some shuffling we will get a more a more reliable estimate of the true error. However, this also means that we can no longer factor in recency.
+means that we need some other way of getter a better estimate of the true error. Further evaluation is therefore needed.
+By doing random splits and some shuffling we will get a more reliable estimate of the true error. However, this also means that we can no longer factor in recency.
 
 \subsubsection{Random splits}
 
-Since we were not completely satisfied with the event distribution on our time-splits in addition to the lack of dithering evaluation using random
+Since we were not completely satisfied with the event distribution on our time-splits, in addition to the lack of dithering, evaluation using random
 dataset splits was also performed. As it is a random split, we chose to only factor in popularity and price, in addition to blending them together.
 
 \begin{table}[H]
@@ -110,7 +110,7 @@ dataset splits was also performed. As it is a random split, we chose to only fac
 \resizebox{\columnwidth}{!}{%
 \begin{tabular}{\reducedTableView}
 \toprule
-Model & AUC &	$MAP@20$ &	$T_{click}$ &	$T_{want}$ &	$T_{purchase}$ &	$P_{click}$&	$P_{want}$ & $P_{purchase}$ &	$R_{click}$ &	$R_{want}$ &	$R_{purchase}$ &	$MAP@20_{click}$ &	$MAP@20_{want}$	& $MAP@20_{purchase}$ &	 \\
+Model & AUC &   $MAP@20$ &  $T_{click}$ &   $T_{want}$ &    $T_{purchase}$ &    $P_{click}$ &   $P_{want}$ &    $P_{purchase}$ &    $R_{click}$ &   $R_{want}$ &    $R_{purchase}$ &    $MAP@20_{click}$ &  $MAP@20_{want}$ &   $MAP@20_{purchase}$ &   \\
 \midrule
 %Binary Methods
 
@@ -145,9 +145,9 @@ As you can see the random splits significantly improved our event distribution g
 for each run. ItemBasedKNN using cosine similarity with 200 neighbors dominates the binary method category with respect to all metrics.
 We also notice that all methods except UserBasedKNN and ALS-WR did not significantly outperform a simple non-personalized
 recommender, which could be explained by our sparse data. Blend 2, which combines price and popularity, performed the best of the implicit
-ating functions and was able to retrieve 9.66\% of all purchases and 8.94\% of all wants. UserBasedKNN with 200 neighbors performed equally
+feature functions and was able to retrieve 9.66\% of all purchases and 8.94\% of all wants. UserBasedKNN with 200 neighbors performed equally
 well to ALS-WR for these splits. ALS-WR has better recall scores for wants 8.95\% vs 8.70\% and 9.66\% vs 9.08\% for purchases. However,
-UserBasedKNN have slightly higher $MAP@20$ scores for both wants and purchases 
+UserBasedKNN have slightly higher $MAP@20$ scores for both wants and purchases
 
 Another interesting observation is that IBCF produce poor recommendations using popularity alone, but that the result improves drastically when blending it
 with price. We also again notice that using traditional collaborative filtering methods yield far from optimal results.
@@ -158,7 +158,7 @@ The results not shown in the table and further details can be found in the Appen
 The following subsections will present our results from our cold-start evaluation runs. As ALS-WR proved to be the best method overall we wish to
 see how well it performs in the different cold-start scenarios. All methods will first be evaluated in terms of pre-filterbot cold-start performance,
 which will be used as a baseline. In a switching hybrid recommender one could e.g. use a most popular recommender to generate recommendations to new users,
-then switch to IBCF recommender with filterbots when the user have rated at least one item, and at a later point e.g. when a user have rated 10 items,
+then switch to IBCF recommender with filterbots when the user has rated at least one item, and at a later point e.g. when a user has rated 10 items,
 use ALS-WR to provide personalized recommendations. To recap, our cold-start solution was designed for neighborhood models and not latent factor methods.
 This means that we do not expect too much from applying them to ALS-WR.
 
@@ -178,11 +178,12 @@ To recapitulate from section \ref{implementation-filterbots}, we have the follow
 
 Based on our preliminary results the we selected the following filterbot combinations for further testing: combination 1, denoted [0,0,0,0,1]
 injects \emph{SingleBrandBots} or one filterbot for each brand, which gives all ratings of the same brand a maximum rating, combination 2 which denoted [0,0,1,0,1] injects
-a \emph{PopularityBot} and \emph{SingleBrandBots:} and combination 3, denoted [1,1,1,1,1] does not surprisingly inject all the bots listed above.
+a \emph{PopularityBot} and \emph{SingleBrandBots} and combination 3, denoted [1,1,1,1,1] does not surprisingly inject all the bots listed above.
+
 
 \subsubsection{Time-based splits}
 
-For our time based splits we use the time-based methodology described in our experimental plan \ref{cold-start-methodology}.
+For our time based splits we use the time-based methodology described in our experimental setup \ref{cold-start-methodology}.
 ALS-WR have been trained using blend 1 combining price, popularity, ordering and age. The following table shows the cold-start new
 item performance of the system, where we simulate a \emph{new item being added to the system}.
 
@@ -221,8 +222,7 @@ ALS-WR [1,1,1,1,1] & 0.584146&	0.801188&	0.883362&	0		&	0.013521&	0.027455&	0		&
 \end{table}
 
 The main reason for the most-populars rapid increase in performance is due to the fact that many of the most popular items are used as test items.
-All test items must have been rated by a minimum of 15 users, which explains the high AUC scores. The main improvements seen for adding filterbots
-is the combination 1, which seems to give a good improvement for both the 10\% and 40\% splits. The filterbots greatly improves the AUC for both methods,
+All test items must have been rated by a minimum of 15 users, which explains the high AUC scores. The main improvements seen form adding filterbots is combination 1, which seems to give a good improvement for both the 10\% and 40\% splits. The filterbots greatly improves the AUC for both methods,
 but it does not consistently improve the recall or $MAP@20$ scores.
 
 The following table shows the cold-start new user performance simulating a \emph{new user joining the system}:
@@ -304,14 +304,15 @@ ALS-WR [1,1,1,1,1]  & 	0.686571&	0.682588&	0.69171	&	0.003087&	0.003647&	0.00213
 Again we can see that most-popular outperforms IBCF for all metrics except $R_{purchase}$ at 10\%. ALS-WR and most popular again performs equally well.
 Again we see an increase in the AUC scores from adding the filterbots and a slight improvement for IBCF. For ALS-WR the general trend seem to be that the filterbots
 improve the AUC score quite strongly overall, especially combination 3, which means that the total ordering of items have been improved. Another interesting observation
-is that it also improves the score quite drasticly for all metrics when looking at the 75\% item-split. For the cold-start user split we see that Combination 1 in particular
-increase the score for the majority of metrics with the results being the most evident on the 10\% and 75\% split. For IBCF we see the same general improvements for the AUC scores.
+is that it also improves the score quite drastically for all metrics when looking at the 75\% item-split. For the cold-start user split we see that Combination 1 in particular
+increase the score for the majority of the metrics with the results being the most evident on the 10\% and 75\% split. For IBCF we see the same general improvements for the AUC scores.
 There are otherwise no conclusive evidence to support that one of the filterbot combinations consistently outperforms the baseline. The greatest improvements can be seen for the cold-start
 system splits where combination 3 improved the results for all metrics.
 
 \subsubsection{Random splits}
 
-The following tables show the experimental results when performing random-splits as described in the experimental plan \ref{cold-start-methodology}.
+
+The following tables show the experimental results when performing random-splits as described in the experimental setup, in Section~\ref{cold-start-methodology}.
 The main difference being that the item, user and system splits are now done randomly instead of being based on time.
 ALS-WR have been trained using blend 2, which combines price and popularity.
 
@@ -425,7 +426,7 @@ The following paragraphs will discuss our findings in accordance to our experime
 \paragraph{Recommendations using all events}
 
 Our results from the purchase only dataset indicate the we are not able to get much better performance than using random selection.
-In addition, a $MAP@20$ score of 0.0000 for all recommenders indicate the recommender did not recommend any of the relevant items 
+In addition, a $MAP@20$ score of 0.00 for all recommenders indicate the recommender did not recommend any of the relevant items
 to the user. By comparing it with our results for the multiple event datasets we were successfully able to attain a relatively high total
 ordering performance, scoring an AUC of over 0.83\% for the random split in addition to being able to retrieve
 7.5\% of all clicked items, 8.95\% of all wants and 9.66\% of all purchases in the top 20 lists. By also factoring in the added
@@ -435,28 +436,27 @@ all events improves the overall recommendation quality.
 \paragraph{Implicit vs. Binary Methods}
 
 We got our best results in our experiments both for random and time-based splits combining ALS-WR with our implicit ratings.
-ALS-WR outperformed all other binary recommendation methods with the improvements most evident on the recall 
+ALS-WR outperformed all other binary recommendation methods with the improvements most evident on the recall
 rates. When not factoring in recentness the difference became less apparent and ALS-WR tied with UserBasedKNN using
 200 neighbors for our experiments with random splits. ALS-WR scored a higher AUC, and retrieved a higher portion of wants
 and purchases. However, the $MAP@20$ scores produced by UserbasedKNN was slightly better for both wants and purchases,
 meaning that the retrieved items were placed higher in the recommendation lists.
 
-We can fairly certainly state that our method currently provide better performance than a most popular recommender.
+We can therefore state that our methods provide better performance than a most popular recommender.
 We can also state that our method performed better on the time-based split where we were able to factor in recency. We consider
 the results from the random splits a draw. It is important to consider that different recommendation methods
-have been used, and it would be \emph{unwise} to draw any grand conclusions from our results as it can also be attributed
-to ALS-WR simply is a better model. Our results should be confirmed in an online experiment.
+have been used, and it would be \emph{unwise} to draw any grand conclusions from our results as it can also be attributed to the fact that ALS-WR simply is a better model. Our results should therefore be confirmed in an online experiment.
 
 \paragraph{Implicit rating functions}
 
 For the time-based splits both recentness features, especially looking at ordering using a logistic penalization function
-gave us the best score overall. We can not say whether ordering does better than age,
-as they performed equally well. We believe that a age is a better solution for active users in theory, while ordering
+gave us the best score overall. We can not say whether \emph{ordering} does better than \emph{age},
+as they performed equally well. We believe that considering event age is a better solution for active users in theory, while ordering
 would be more suited for the not so active users. Which give some indication that recency is an important factor
 in the fashion domain. Popularity had the lowest score and consistently retrieved less items and produced lower quality
-rankings that the others. This might give some indication that prize plays a larger factor in the fashion domain
+rankings than the others. This might give some indication that price plays a larger factor in the fashion domain
 than popularity. The blend incorporating all functions performed the best, although its performance was not on pair
-with age and ordering. It would have been interesting to see the results if you could have had some way to learn
+with age and ordering features. It would have been interesting to see the results if you could have had some way to learn
 this relationship with regression, as done in \cite{parra2011walk}. We believe that our results might give some indication
 that recency plays an important role in SoBazaar.
 

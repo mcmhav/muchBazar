@@ -22,27 +22,27 @@ We have the following main goals for our experiment:
 
 \subsection{Experimental Datasets}
 
-As previously mentioned the SoBazaar dataset is both small and sparse.
-Having such a small and sparse dataset has several implications. Firstly we have
-to avoid \emph{wishful thinking} as we have very thin data, meaning that we cannot
-rely on getting reliable results. Secondly, our evaluation methodology must be
-\emph{tailored} for small sparse datasets. E.g. when using cross-validation the number
-of folds depends on the size of the dataset. For large datasets, even 3-fold Cross
-validation will be quite accurate, while for very sparse datasets, one may have to
-use leave-one-out in order to train on as many examples as possible. The advantages
-of using a large number of folds is that the bias of the true error rate estimators
-will be small, meaning that the estimator will be very accurate, with the disadvantages
-being that the variance of the true error rate estimator will be large in addition to
-increased computation time. Another alternative well suited for sparse datasets is the
-\emph{all but one} or the \emph{leave one out} method, in which we remove one rating
-from the test users and try to predict the hidden rating.
-Another important concern is whether or not to take the timestamps into consideration,
-which directly speaks against the use of cross-validation. Splitting the dataset
-on time is more realistic in the sense that you use past interactions to predict
-future actions, just as in a real life system. The \emph{leave one out} method could
-easily be adapted to always remove the users most recent ratings and try to predict
-them. This is particularly relevant in our case as some of our implicit mapping functions
-factors in recency.
+Having such a small and sparse dataset, as in SoBazaar, yields several
+implications. Firstly we have to avoid \emph{wishful thinking} as we have very
+thin data, meaning that we cannot rely on getting reliable results. Secondly,
+our evaluation methodology must be \emph{tailored} for small sparse datasets.
+E.g. when using cross-validation the number of folds depends on the size of the
+dataset. For large datasets, even 3-fold Cross validation will be quite
+accurate, while for very sparse datasets, one may have to use leave-one-out in
+order to train on as many examples as possible. The advantages of using a large
+number of folds is that the bias of the true error rate estimators will be
+small, meaning that the estimator will be very accurate, with the disadvantages
+being that the variance of the true error rate estimator will be large in
+addition to increased computation time. Another alternative well suited for
+sparse datasets is the \emph{all but one} or the \emph{leave one out} method,
+in which we remove one rating from the test users and try to predict the hidden
+rating.  Another important concern is whether or not to take the timestamps
+into consideration, which directly speaks against the use of cross-validation.
+Splitting the dataset on time is more realistic in the sense that you use past
+interactions to predict future actions, just as in a real life system. The
+\emph{leave one out} method could easily be adapted to always remove the users
+most recent ratings and try to predict them. This is particularly relevant in
+our case as some of our implicit mapping functions factors in recency.
 
 We chose to utilize both time-splits and random splits to improve our confidence
 in our results. For both splits we repeat the process 10 times to get as reliable
