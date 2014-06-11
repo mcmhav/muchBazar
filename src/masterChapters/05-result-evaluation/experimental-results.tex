@@ -53,10 +53,7 @@ all events in the last twelve day period, making it a bad period to use for eval
 data, as we thought it more beneficial to get a better split to evaluate on. The results we did get can be found in the Appendix~\ref{appendix:tab9010-timesplits}
 We instead opted to use a 80:20 timesplit, predicting the events between 16. April - 22. May. Our baselines, or binary methods are colored gray to
 make the separation between them clearer. For our implicit ratings we wish to test all implicit rating functions individually and by making two different blends.
-Blend 1 factors in Count, Popularity, Recentness and Price, Blend 2 only factors in Price and Popularity. For an explanation of the metrics see Table \ref{metric-explanation}.
-
-
-
+Blend 1 factors in Count, Popularity, Recentness and Price, Blend 2 only factors in Price and Popularity. For an explanation of the metrics see Table~\ref{metric-explanation}.
 
 \begin{table}[H]
 \centering
@@ -101,11 +98,6 @@ ALS-WR Recentness 			&	0.664772 &	0.005981 &	3038 &	2328 &	36 &	23.765625 &	16.2
 %TODO - ALS-WR Blend (sigmoid, price, popularity)
 ALS-WR Blend 3 &	0.654464 &	0.006404 &	3038 &	2328 &	36 &	22.165878 &	16.512444 &	2.000031 &	0.007296 &	0.007093 &	0.055556 &	0.004827 &	0.012305 &	0.016913 &	 \\
 
-
-
-
-
-
 \bottomrule
 \end{tabular}
 }
@@ -134,7 +126,7 @@ As it is a random split, we chose to only factor in popularity and price, in add
 \centering
 \resizebox{
 \columnwidth}{!}{
-\begin{tabular}{*{19}l}
+\begin{tabular}{\reducedTableView}
 \toprule
 Model & AUC &	$MAP@20$ &	$T_{click}$ &	$T_{want}$ &	$T_{purchase}$ &	$P_{click}$&	$P_{want}$ & $P_{purchase}$ &	$R_{click}$ &	$R_{want}$ &	$R_{purchase}$ &	$MAP@20_{click}$ &	$MAP@20_{want}$	& $MAP@20_{purchase}$ &	 \\
 \midrule
@@ -479,7 +471,7 @@ methods tested on our dataset.
 
 
 
-%\begin{table}\centering\resizebox{\columnwidth}{!}{\begin{tabular}{*{19}l}\toprule
+%\begin{table}\centering\resizebox{\columnwidth}{!}{\begin{tabular}{\reducedTableView}\toprule
 % & AUC &        MAP@20 &        T\_c &  T\_w &  T\_p &  P\_c &  P\_w &  P\_p &  R\_c &  R\_w &  R\_p &  MAP@20-click &  MAP@20-want &   MAP@20-purchase &        \\
 %\midrule
 %Popularity Linear 		& 0.826453 &  0.021901 &   1334.5 &     1217.5 &        135.5 & 84.5 &  99.5 &  13 &    0.063344 &      0.08173 &       0.096577 &      0.017595 &      0.028308 &      0.016286 &       \\
@@ -489,7 +481,7 @@ methods tested on our dataset.
 %avgs    				& 0.821857 &  0.032658 &      1326.25 &       1221 &  140.25 &        105.125 &       119.625 &       11.125 &        0.079218 &      0.097957 &      0.079392 &      0.026177 &      0.039433 &      0.021391 &      \\
 %\bottomrule\end{tabular}}\caption{random mahout-svd}\end{table}
 %
-%\begin{table}\centering\resizebox{\columnwidth}{!}{\begin{tabular}{*{19}l}\toprule
+%\begin{table}\centering\resizebox{\columnwidth}{!}{\begin{tabular}{\reducedTableView}\toprule
 % & AUC &        MAP@20 &        T\_c &  T\_w &  T\_p &  P\_c &  P\_w &  P\_p &  R\_c &  R\_w &  R\_p &  MAP@20-click &  MAP@20-want &   MAP@20-purchase &        \\
 %\midrule
 %Count Linear 		& 0.836785 & 0.038372 & 1298 	&  1195 &  136    &   105 &   121  &   10 &    0.080894 &      0.101255 &      0.073529 &      0.03457 &       0.040894 &      0.020969 &       \\
@@ -501,7 +493,7 @@ methods tested on our dataset.
 
 
 
-%\begin{table}\centering\resizebox{\columnwidth}{!}{\begin{tabular}{*{19}l}\toprule
+%\begin{table}\centering\resizebox{\columnwidth}{!}{\begin{tabular}{\reducedTableView}\toprule
 % & AUC &        MAP@20 &        T\_c &  T\_w &  T\_p &  P\_c &  P\_w &  P\_p &  R\_c &  R\_w &  R\_p &  MAP@20-click &  MAP@20-want &   MAP@20-purchase &        \\
 %\midrule
 %Popularity Linear &     0.820892 &      0.018725 &      1281 &  1244.5 &        132.5 & 74 &    94.5 &  11.5 &  0.05778 &       0.075984 &      0.086836 &      0.014358 &      0.021657 &      0.016189 &       \\
@@ -510,7 +502,7 @@ methods tested on our dataset.
 %Price Linear &  0.827074 &      0.034773 &      1331.5 &        1190.5 &        136 &   114 &   118 &   9 &     0.085624 &      0.099275 &      0.066352 &      0.02961 &       0.033855 &      0.028147 &       \\
 %avgs     &      0.828381 &      0.030469 &      1307.5 &        1212 &  138.5 & 102.625 &       107.375 &       12.25 & 0.078357 &      0.088803 &      0.088509 &      0.025077 &      0.032 & 0.023962 &      \\
 %\bottomrule\end{tabular}}\caption{random mahout-svd}\end{table}
-%\begin{table}\centering\resizebox{\columnwidth}{!}{\begin{tabular}{*{19}l}\toprule
+%\begin{table}\centering\resizebox{\columnwidth}{!}{\begin{tabular}{\reducedTableView}\toprule
 % & AUC &        MAP@20 &        T\_c &  T\_w &  T\_p &  P\_c &  P\_w &  P\_p &  R\_c &  R\_w &  R\_p &  MAP@20-click &  MAP@20-want &   MAP@20-purchase &        \\
 %\midrule
 %Popularity Linear &     0.559097 &      0.001039 &      1286 &  1255 &  132 &   0 &     9 &     7 &     0 &     0.007171 &      0.05303 &       0 &     0.001278 &      0.012201 &       \\
@@ -522,7 +514,7 @@ methods tested on our dataset.
 %
 %% ./testikus.sh -i mongo -m "svd itembased" -s cold -c
 %% model, 100, 150, 15, true, 10
-%\begin{table}\centering\resizebox{\columnwidth}{!}{\begin{tabular}{*{19}l}\toprule
+%\begin{table}\centering\resizebox{\columnwidth}{!}{\begin{tabular}{\reducedTableView}\toprule
 % & AUC &        MAP@20 &        T\_c &  T\_w &  T\_p &  P\_c &  P\_w &  P\_p &  R\_c &  R\_w &  R\_p &  MAP@20-click &  MAP@20-want &   MAP@20-purchase &        \\
 %\midrule
 %system-60 &     0.700599 &      0.01141 &       2620 &  2493.75 &       278 &   70 &    95.25 & 11.5 &  0.026721 &      0.038196 &      0.041568 &      0.008456 &      0.013681 &      0.012164 &       \\
@@ -536,7 +528,7 @@ methods tested on our dataset.
 %item-40 &       0.857711 &      0.023095 &      2163.75 &       1750.75 &       168.25 &        153 &   150.5 & 11.5 &  0.070713 &      0.085908 &      0.068284 &      0.017774 &      0.029951 &      0.023092 &       \\
 %avgs     &      0.761597 &      0.026003 &      2336.111111 &   2341.333333 &   230.611111 &    92.194444 &     123.027778 &    10.388889 &     0.047497 &      0.0618 &        0.056866 &      0.015443 &      0.027685 &      0.016377 &    \\
 %\bottomrule\end{tabular}}\caption{cold mahout-svd}\end{table}
-%\begin{table}\centering\resizebox{\columnwidth}{!}{\begin{tabular}{*{19}l}\toprule
+%\begin{table}\centering\resizebox{\columnwidth}{!}{\begin{tabular}{\reducedTableView}\toprule
 % & AUC &        MAP@20 &        T\_c &  T\_w &  T\_p &  P\_c &  P\_w &  P\_p &  R\_c &  R\_w &  R\_p &  MAP@20-click &  MAP@20-want &   MAP@20-purchase &        \\
 %\midrule
 %system-60 &     0.619268 &      0.000893 &      2620 &  2493.75 &       278 &   14 &    13.25 & 3.75 &  0.005345 &      0.005313 &      0.013612 &      0.00085 &       0.000925 &      0.002746 &       \\
@@ -554,7 +546,7 @@ methods tested on our dataset.
 %% ./testikus.sh -i mongo -m "svd itembased" -s random -c
 %% 5 X random
 %% 1.5 X time
-%\begin{table}\centering\resizebox{\columnwidth}{!}{\begin{tabular}{*{19}l}\toprule
+%\begin{table}\centering\resizebox{\columnwidth}{!}{\begin{tabular}{\reducedTableView}\toprule
 % & AUC &    MAP@20 &    T\_c &  T\_w &  T\_p &  P\_c &  P\_w &  P\_p &  R\_c &  R\_w &  R\_p &  MAP@20-click &  MAP@20-want &   MAP@20-purchase &    \\
 %\midrule
 %Count Linear &  0.685822 &  0.004806 &  1319 &  1276 &  134 &   30 &    21 &    3 & 0.022745 &  0.016458 &  0.022388 &  0.004995 &  0.002649 &  0.007792 &   \\
@@ -563,7 +555,7 @@ methods tested on our dataset.
 %Popularity Linear & 0.557652 &  0.000516 &  1335.4375 & 1236.5625 & 140.125 &   0 & 6.0625 &    3.875 & 0 & 0.004902 &  0.0277 &    0 & 0.000774 &  0.003872 &   \\
 %avgs     &  0.653546 &  0.003939 &  1327.421875 &   1250.453125 &   138.28125 & 17.765625 & 17.484375 & 3.34375 &   0.013422 &  0.013944 &  0.02394 &   0.003731 &  0.003082 &  0.004705 &  \\
 %\bottomrule\end{tabular}}\caption{random mahout-itembased}\end{table}
-%\begin{table}\centering\resizebox{\columnwidth}{!}{\begin{tabular}{*{19}l}\toprule
+%\begin{table}\centering\resizebox{\columnwidth}{!}{\begin{tabular}{\reducedTableView}\toprule
 % & AUC &    MAP@20 &    T\_c &  T\_w &  T\_p &  P\_c &  P\_w &  P\_p &  R\_c &  R\_w &  R\_p &  MAP@20-click &  MAP@20-want &   MAP@20-purchase &    \\
 %\midrule
 %Count Linear Timetrain &    0.421583 &  0.002835 &  3037 &  2328 &  36 &    14 &    5 & 0 & 0.00461 &   0.002148 &  0 & 0.002681 &  0.000716 &  0 &  \\
@@ -573,7 +565,7 @@ methods tested on our dataset.
 %Price Linear Timetrain &    0.419367 &  0.003731 &  3037 &  2328 &  36 &    19 &    5 & 1 & 0.006256 &  0.002148 &  0.027778 &  0.003329 &  0.001435 &  0.000421 &   \\
 %avgs     &  0.401556 &  0.00223 &   3037 &  2328 &  36 &    11.8 &  4.6 &   0.2 &   0.003885 &  0.001976 &  0.005556 &  0.002192 &  0.000863 &  0.000084 &  \\
 %\bottomrule\end{tabular}}\caption{time mahout-itembased}\end{table}
-%\begin{table}\centering\resizebox{\columnwidth}{!}{\begin{tabular}{*{19}l}\toprule
+%\begin{table}\centering\resizebox{\columnwidth}{!}{\begin{tabular}{\reducedTableView}\toprule
 % & AUC &    MAP@20 &    T\_c &  T\_w &  T\_p &  P\_c &  P\_w &  P\_p &  R\_c &  R\_w &  R\_p &  MAP@20-click &  MAP@20-want &   MAP@20-purchase &    \\
 %\midrule
 %Blend & 0.833796 &  0.034925 &  1345.125 &  1229.625 &  136.625 &   116.5 & 124.5625 &  10.875 &    0.086677 &  0.101251 &  0.079373 &  0.029706 &  0.043486 &  0.015501 &   \\
@@ -582,7 +574,7 @@ methods tested on our dataset.
 %Popularity Linear & 0.835715 &  0.021448 &  1335.4375 & 1236.5625 & 140.125 &   79.5625 &   83.625 &    9.5625 &    0.059627 &  0.067652 &  0.067572 &  0.019811 &  0.019074 &  0.012906 &   \\
 %avgs     &  0.834192 &  0.033131 &  1327.421875 &   1250.453125 &   138.28125 & 110.875 &   113.796875 &    11.359375 & 0.083616 &  0.090921 &  0.081979 &  0.029676 &  0.034916 &  0.024935 &  \\
 %\bottomrule\end{tabular}}\caption{random mahout-svd}\end{table}
-%\begin{table}\centering\resizebox{\columnwidth}{!}{\begin{tabular}{*{19}l}\toprule
+%\begin{table}\centering\resizebox{\columnwidth}{!}{\begin{tabular}{\reducedTableView}\toprule
 % & AUC &    MAP@20 &    T\_c &  T\_w &  T\_p &  P\_c &  P\_w &  P\_p &  R\_c &  R\_w &  R\_p &  MAP@20-click &  MAP@20-want &   MAP@20-purchase &    \\
 %\midrule
 %Count Linear Timetrain &    0.660527 &  0.006102 &  3037 &  2328 &  36 &    24 &    22 &    3 & 0.007903 &  0.00945 &   0.083333 &  0.003709 &  0.019371 &  0.045928 &   \\
@@ -597,13 +589,13 @@ methods tested on our dataset.
 % ./testikus.sh -i mongo -m "svd itembased" -s random -c -l >/dev/null 2>/dev/null X 10
 % python2.7 $SCRIPT $OPTS -m price -fx linear &
 % python2.7 $SCRIPT $OPTS -m popularity -fx linear &
-\begin{table}\centering\resizebox{\columnwidth}{!}{\begin{tabular}{*{19}l}\toprule
+\begin{table}\centering\resizebox{\columnwidth}{!}{\begin{tabular}{\reducedTableView}\toprule
  & AUC &    MAP@20 &    T\_c &  T\_w &  T\_p &  P\_c &  P\_w &  P\_p &  R\_c &  R\_w &  R\_p &  MAP@20-click &  MAP@20-want &   MAP@20-purchase &    \\
 \midrule
 Blend & 0.681352 &  0.005182 &  1330.853516 &   1215.837891 &   137.164062 &    20.693359 & 15.453125 & 6.199219 &  0.015501 &  0.012699 &  0.04507 &   0.004577 &  0.004831 &  0.010347 &   \\
 avgs     &  0.681352 &  0.005182 &  1330.853516 &   1215.837891 &   137.164062 &    20.693359 & 15.453125 & 6.199219 &  0.015501 &  0.012699 &  0.04507 &   0.004577 &  0.004831 &  0.010347 &  \\
 \bottomrule\end{tabular}}\caption{random mahout-itembased}\end{table}
-\begin{table}\centering\resizebox{\columnwidth}{!}{\begin{tabular}{*{19}l}\toprule
+\begin{table}\centering\resizebox{\columnwidth}{!}{\begin{tabular}{\reducedTableView}\toprule
  & AUC &    MAP@20 &    T\_c &  T\_w &  T\_p &  P\_c &  P\_w &  P\_p &  R\_c &  R\_w &  R\_p &  MAP@20-click &  MAP@20-want &   MAP@20-purchase &    \\
 \midrule
 Blend & 0.830996 &  0.030869 &  1330.853516 &   1215.837891 &   137.164062 &    99.730469 & 108.767578 &    13.310547 & 0.074787 &  0.089454 &  0.096624 &  0.026687 &  0.031277 &  0.019471 &   \\
@@ -611,7 +603,7 @@ avgs     &  0.830996 &  0.030869 &  1330.853516 &   1215.837891 &   137.164062 &
 \bottomrule\end{tabular}}\caption{random mahout-svd}\end{table}
 
 % ./testikus.sh -i mongo -p "UserKNN" -k '200' -s cold -c >/dev/null 2>/dev/null; X 8
-\begin{table}\centering\resizebox{\columnwidth}{!}{\begin{tabular}{*{19}l}\toprule
+\begin{table}\centering\resizebox{\columnwidth}{!}{\begin{tabular}{\reducedTableView}\toprule
  & AUC &    MAP@20 &    T\_c &  T\_w &  T\_p &  P\_c &  P\_w &  P\_p &  R\_c &  R\_w &  R\_p &  MAP@20-click &  MAP@20-want &   MAP@20-purchase &    \\
 \midrule
 item-40 &   0.729813 &  0.025537 &  2212.097656 &   1754.996094 &   163.949219 &    165.460938 &    151.414062 &    14.074219 & 0.074813 &  0.086283 &  0.085625 &  0.022548 &  0.028702 &  0.023413 &   \\
@@ -627,7 +619,7 @@ avgs     &  0.669512 &  0.022508 &  2322.452257 &   2409.018229 &   240.034288 &
 \bottomrule\end{tabular}}\caption{cold item recommender-UserKNN-200}\end{table}
 
 % ./testikus.sh -i mongo -p "UserKNN" -k '201' -s cold -c >/dev/null 2>/dev/null; X 8
-\begin{table}\centering\resizebox{\columnwidth}{!}{\begin{tabular}{*{19}l}\toprule
+\begin{table}\centering\resizebox{\columnwidth}{!}{\begin{tabular}{\reducedTableView}\toprule
  & AUC &    MAP@20 &    T\_c &  T\_w &  T\_p &  P\_c &  P\_w &  P\_p &  R\_c &  R\_w &  R\_p &  MAP@20-click &  MAP@20-want &   MAP@20-purchase &    \\
 \midrule
 item-40 &   0.732754 &  0.021706 &  2175.320312 &   1790.375 &  165.007812 &    159.148438 &    156.078125 &    19.078125 & 0.073112 &  0.087196 &  0.116151 &  0.01722 &   0.026924 &  0.035371 &   \\
@@ -643,7 +635,7 @@ avgs     &  0.670166 &  0.021788 &  2405.275174 &   2326.104167 &   233.819444 &
 \bottomrule\end{tabular}}\caption{cold item recommender-UserKNN-201}\end{table}
 
 % ./testikus.sh -i mongo -p "UserKNN" -k '202' -s cold -t -c >/dev/null 2>/dev/null; X 8
-\begin{table}\centering\resizebox{\columnwidth}{!}{\begin{tabular}{*{19}l}\toprule
+\begin{table}\centering\resizebox{\columnwidth}{!}{\begin{tabular}{\reducedTableView}\toprule
  & AUC &    MAP@20 &    T\_c &  T\_w &  T\_p &  P\_c &  P\_w &  P\_p &  R\_c &  R\_w &  R\_p &  MAP@20-click &  MAP@20-want &   MAP@20-purchase &    \\
 \midrule
 item-40 &   0.648235 &  0.016706 &  2279.84375 &    1703.867188 &   157.773438 &    109.421875 &    79.320312 & 11.914062 & 0.047991 &  0.04656 &   0.075527 &  0.014401 &  0.022078 &  0.019659 &   \\
@@ -659,7 +651,7 @@ avgs     &  0.575615 &  0.010946 &  2171.310764 &   2492.175347 &   374.565104 &
 \bottomrule\end{tabular}}\caption{cold item recommender-UserKNN-202}\end{table}
 
 % ./testikus.sh -i mongo -p "UserKNN" -k '203' -s cold -a "1,1,1,1,1" -t -c >/dev/null 2>/dev/null; X 8
-\begin{table}\centering\resizebox{\columnwidth}{!}{\begin{tabular}{*{19}l}\toprule
+\begin{table}\centering\resizebox{\columnwidth}{!}{\begin{tabular}{\reducedTableView}\toprule
  & AUC &    MAP@20 &    T\_c &  T\_w &  T\_p &  P\_c &  P\_w &  P\_p &  R\_c &  R\_w &  R\_p &  MAP@20-click &  MAP@20-want &   MAP@20-purchase &    \\
 \midrule
 item-40 &   0.814685 &  0.016729 &  2267.679688 &   1710.414062 &   154.207031 &    96.667969 & 91.707031 & 12.515625 & 0.042631 &  0.053615 &  0.081151 &  0.014052 &  0.022257 &  0.022414 &   \\
@@ -675,7 +667,7 @@ avgs     &  0.622987 &  0.010888 &  2166.554688 &   2332.026476 &   373.707899 &
 \bottomrule\end{tabular}}\caption{cold item recommender-UserKNN-203}\end{table}
 
 % ./testikus.sh -i mongo -p "UserKNN" -k '204' -s cold -a "1,1,1,1,1" -c >/dev/null 2>/dev/null; X 8
-\begin{table}\centering\resizebox{\columnwidth}{!}{\begin{tabular}{*{19}l}\toprule
+\begin{table}\centering\resizebox{\columnwidth}{!}{\begin{tabular}{\reducedTableView}\toprule
  & AUC &    MAP@20 &    T\_c &  T\_w &  T\_p &  P\_c &  P\_w &  P\_p &  R\_c &  R\_w &  R\_p &  MAP@20-click &  MAP@20-want &   MAP@20-purchase &    \\
 \midrule
 item-40 &   0.855659 &  0.025778 &  2166.539062 &   1786.109375 &   169.835938 &    173.492188 &    177.851562 &    18.289062 & 0.080066 &  0.099612 &  0.107735 &  0.021921 &  0.031262 &  0.022966 &   \\
@@ -691,7 +683,7 @@ avgs     &  0.732834 &  0.023717 &  2368.546007 &   2510.763021 &   226.716146 &
 \bottomrule\end{tabular}}\caption{cold item recommender-UserKNN-204}\end{table}
 
 % ./testikus.sh -i mongo -p "UserKNN" -k '205' -s cold -a "0,0,1,0,1" -t -c >/dev/null 2>/dev/null; X 8
-\begin{table}\centering\resizebox{\columnwidth}{!}{\begin{tabular}{*{19}l}\toprule
+\begin{table}\centering\resizebox{\columnwidth}{!}{\begin{tabular}{\reducedTableView}\toprule
  & AUC &    MAP@20 &    T\_c &  T\_w &  T\_p &  P\_c &  P\_w &  P\_p &  R\_c &  R\_w &  R\_p &  MAP@20-click &  MAP@20-want &   MAP@20-purchase &    \\
 \midrule
 item-40 &   0.803095 &  0.01611 &   2236.210938 &   1703.125 &  153.0625 &  108.101562 &    80.859375 & 12.617188 & 0.04831 &   0.047466 &  0.082315 &  0.015453 &  0.019822 &  0.020325 &   \\
@@ -707,7 +699,7 @@ avgs     &  0.639105 &  0.010032 &  2213.5 &    2505.708333 &   377.367188 &    
 \bottomrule\end{tabular}}\caption{cold item recommender-UserKNN-205}\end{table}
 
 % ./testikus.sh -i mongo -p "UserKNN" -k '206' -s cold -a "0,0,0,0,1" -t -c >/dev/null 2>/dev/null; X 8
-\begin{table}\centering\resizebox{\columnwidth}{!}{\begin{tabular}{*{19}l}\toprule
+\begin{table}\centering\resizebox{\columnwidth}{!}{\begin{tabular}{\reducedTableView}\toprule
  & AUC &    MAP@20 &    T\_c &  T\_w &  T\_p &  P\_c &  P\_w &  P\_p &  R\_c &  R\_w &  R\_p &  MAP@20-click &  MAP@20-want &   MAP@20-purchase &    \\
 \midrule
 item-40 &   0.789355 &  0.01461 &   2238.700867 &   1711.209045 &   152.747925 &    105.489685 &    82.338928 & 12.259216 & 0.047114 &  0.048104 &  0.080229 &  0.01065 &   0.018065 &  0.021833 &   \\
@@ -723,7 +715,7 @@ avgs     &  0.642204 &  0.008882 &  2159.869042 &   2443.921017 &   365.02123 & 
 \bottomrule\end{tabular}}\caption{cold item recommender-UserKNN-206}\end{table}
 
 % ./testikus.sh -i mongo -p "UserKNN" -k '207' -s cold -a "0,0,0,0,1" -c >/dev/null 2>/dev/null; X8
-\begin{table}\centering\resizebox{\columnwidth}{!}{\begin{tabular}{*{19}l}\toprule
+\begin{table}\centering\resizebox{\columnwidth}{!}{\begin{tabular}{\reducedTableView}\toprule
  & AUC &    MAP@20 &    T\_c &  T\_w &  T\_p &  P\_c &  P\_w &  P\_p &  R\_c &  R\_w &  R\_p &  MAP@20-click &  MAP@20-want &   MAP@20-purchase &    \\
 \midrule
 item-40 &   0.792919 &  0.024905 &  2221.515625 &   1746.3125 & 165.4375 &  167.90625 & 163.671875 &    14.59375 &  0.075559 &  0.093667 &  0.087469 &  0.022896 &  0.026702 &  0.023497 &   \\

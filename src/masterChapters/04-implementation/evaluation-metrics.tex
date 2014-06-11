@@ -46,7 +46,7 @@ the recommender for constantly ranking purchases over less relevant events such 
 
 Due to the fact that we are working with a highly sparse dataset with a large item collection
 it is reasonable to believe the the likeliness of finding a hidden item in the top-20 recommended items
-is not very high. We therefore felt that The Area Under Curve (AUC), described in Section \ref{sec:relevance-based}
+is not very high. We therefore felt that The Area Under Curve (AUC), described in Section~\ref{subsubsec:relevancemetrics}
 would be a nice complement to the rank accuracy metrics. AUC allows us to measure the recommenders overall
 ability to retrieve relevant items and can therefore be used as a single measure for the overall quality of a recommender
 system. Not only considering the top results.
@@ -61,7 +61,7 @@ items are therefor appended in random order to the users recommendation list. Wh
 appended in the recommendation list can mean the difference between a AUC score of above
 0.9 to less than 0.6 if the item is appended at the end of the list, the results can be even more
 severe if none of the items is in the initial recommended list, then the results for that user will be
-completely random. The most obvious solution to this problem would be to use resampling or to repeat
+completely random. The most obvious solution to this problem would be to use re-sampling or to repeat
 the experiment multiple times where the order of the items not in the recommendation list are drawn at random and
 the results averaged over all the trials.
 
@@ -77,15 +77,15 @@ metric should be able to account for the different relevance levels.
 Again, we assume that we can recommend at most $20$ items for each user at a time. It also pays to submit all $20$
 recommendations, because we are not penalized for bad guesses. We also assume that the order matters, so it
 is better to submit more certain recommendations first, followed by recommendations we are less sure about.
-Which means that we basically select the $20$ best candidates in order. 
+Which means that we basically select the $20$ best candidates in order.
 
 
-Mean average precision $MAP@k$, described in Section~\ref{subp:mean_average_precision_map_} is a popular metric for search
+Mean average precision $MAP@k$, described in Section~\ref{subsubsec:relevancemetrics} is a popular metric for search
 engines and is applied, for example, to report results at the Text Retrieval Conference (TREC). $MAP@20$ will give us a score
 of how many items we are able to retrieve and how high up in the recommendation list they are placed. The main weakness in our
 case is that it assumes all items to be equally relevant, meaning that it has no way of factoring in the different event types.
 
-Normalized Discounted Cumulative Gain (nDCG) described in Section \ref{subp:normalized_discounted_cumulative_gain_} is a popular metric for
+Normalized Discounted Cumulative Gain (nDCG) described in Section~\ref{subsubsec:rankbased} is a popular metric for
 measuring the rank accuracy. It is based on two main assumptions; (1) Highly relevant items are more useful than marginally relevant ones,
 (2) The lower the ranked position of a relevant item, the less useful it is for the user, since it is less likely to be \emph{examined}.
 The maybe most interesting aspect of nDCG is that it contains an utility function $rel_i$. One can replace the original utility function
@@ -102,7 +102,7 @@ a relevance of 2 and a click a relevance of 1, as it would give us a single numb
 However, we do not not know these values, meaning that nDCG cannot be used without making assumptions about the importance of the different
 event types. To solve this problem we decided to chose a \emph{simpler} approach. We independently measure the recall
 and counts of clicks, wants and purchases retrieved by the recommender in the top 20 positions. As you see, it would have been nice to know these
-reward attributes to make the evaluation results more \emph{reader friendly}. To check if an user-item touple is a click, want or purchase we create
+reward attributes to make the evaluation results more \emph{reader friendly}. To check if an user-item tuple is a click, want or purchase we create
 a file which stores the log events in the following format:
 
 
@@ -130,23 +130,24 @@ different \emph{buckets} was retrieved. In addition we separately measure the $M
 about where in the top 20 the items are placed. This gives us the following additional columns for our evaluation metric tables:
 
 \begin{table}[H]
+    \begin{tabular}{ll}
+    \toprule
+    $T_{click}$             &   Number of click events in the testset \\
+    $T_{want}$              &   Number of test events in the testset \\
+    $T_{purchase}$          &   Number of purchase events in the testset \\
+    $P_{click}$             &   Number of click events retrieved in the top 20 prediction lists \\
+    $P_{want}$              &   Number of want events retrieved in the top 20 prediction lists \\
+    $P_{purchase}$          &   Number of purchase events retrieved in the top 20 prediction lists \\
+    $R_{click}$             &   $P_{click}$ / $T_{click}$ \\
+    $R_{want}$              &   $P_{want}$ / $T_{want}$  \\
+    $R_{purchase}$          &   $P_{purchase}$ / $T_{purchase}$ \\
+    $MAP@20_{click}$        &   $MAP@20$ considering only click events as relevant items \\
+    $MAP@20_{want}$         &   $MAP@20$ considering only want events as relevant items \\
+    $MAP@20_{purchase}$:    &   $MAP@20$ considering only purchase events as relevant items \\
+    \bottomrule
+    \end{tabular}
+\caption{Experiment table explanation}
 \label{metric-explanation}
-	\begin{tabular}{ll}
-	\toprule
-	$T_{click}$	 	 		& 	Number of click events in the testset \\
-	$T_{want}$				&	Number of test events in the testset \\
-	$T_{purchase}$	 		&	Number of purchase events in the testset \\
-	$P_{click}$		 		&	Number of click events retrieved in the top 20 prediction lists \\
-	$P_{want}$		 		&	Number of want events retrieved in the top 20 prediction lists \\
-	$P_{purchase}$  		&	Number of purchase events retrieved in the top 20 prediction lists \\
-	$R_{click}$				&	$P_{click}$ / $T_{click}$ \\
-	$R_{want}$		 		&	$P_{want}$ / $T_{want}$  \\
-	$R_{purchase}$	 		&	$P_{purchase}$ / $T_{purchase}$ \\
-	$MAP@20_{click}$ 		&	$MAP@20$ considering only click events as relevant items \\
-	$MAP@20_{want}$  		&	$MAP@20$ considering only want events as relevant items \\
-	$MAP@20_{purchase}$: 	& 	$MAP@20$ considering only purchase events as relevant items \\
-	\bottomrule
-	\end{tabular}
 \end{table}
 
 To illustrate this process more clearly consider the following example where we have
@@ -197,7 +198,7 @@ Table~\ref{table:event-type} we can see that the user clicked this item. Similar
 item 21 from our event file. Giving us the following event distribution of our test set: $T_{click}$ = 1, $T_{want}$ = 2 and
 $T_{purchase}$ = 3.
 
-We then check each user-item touple in our prediction file against our test file, if it is a match we retrieve the
+We then check each user-item tuple in our prediction file against our test file, if it is a match we retrieve the
 event type for the predictions. Giving us the following $P$ values: $P_{click}$ = 1, $P_{want}$ = 1 and $P_{purchase}$ = 1.
 Meaning that we retrieved one of each event type, giving us the following recall score for the different event type:
 $R_{click}$ = 1/1, $R_{want}$ = 1/2 and $R_{purchase}$ = 1/3. We can then calculate the different $MAP@20$ scores. E.g. for user 11
@@ -206,8 +207,6 @@ would have been the third item in his list. The $MAP@20$ numbers can therefore b
 top-20 lists the different events can be found. E.g. a high $MAP@20_{purchase}$ score would indicate that the retrieved
 purchase events normally are found high up in the top-20 recommendation list and vica versa.
 
-We believe that having the raw counts coupled with the true-postive rate for the different event type and a measure of their
+We believe that having the raw counts coupled with the true-positive rate for the different event type and a measure of their
 ranking quality will be more informative and give us a clearer overview of the systems performance than using a single rank
 metric.
-
-
