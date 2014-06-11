@@ -269,7 +269,7 @@ defined as:
 
 here the value of $f(x)$ is asymptotically limited between 0 and 1, dependent
 on the value of $x$. The steepest point of the curve happens when $x=0$. By
-adjusting the exponent of $e^{(-x)}$ we can skew the curve in order to map to our
+adjusting the exponent of $\exp^{(-x)}$ we can skew the curve in order to map to our
 data, giving us a \textit{function of relevancy} ranging from an item being
 very relevant ($f(x)=0$) and not relevant ($f(x)=1$).
 
@@ -326,7 +326,7 @@ shift-coefficient is imprecise and non-scientific. Instead we alter our
 logistic function to instead using a ratio $r$ between the two constants:
 
 \begin{equation}
-  p(x) = \frac{1}{1+e^{-(r/c) \cdot (x - c)}}
+  p(x) = \frac{1}{1+\exp^{-(r/c) \cdot (x - c)}}
 \end{equation}
 
 here the $c$ equals the steepest point (shift coefficient), and we set it so
