@@ -31,6 +31,7 @@
 \usepackage{pifont}   % Can add check symbol
 \usepackage{tikz}
 \usepackage{xcolor,colortbl} % highlight table rows and columns
+\usepackage{array}
 \usepackage{silence}  % silence "unfixable" warnings
 \WarningFilter{minitoc(hints)}{} % silence mintoc
 \usetikzlibrary{calc,trees,positioning,arrows,chains,fit,shapes.geometric,%
@@ -40,6 +41,12 @@
 
 \pagestyle{headings} % Footer is blank, header displays information according
                      % to document class (e.g., section name) and page number top right.
+
+% Table view commands, used to hide columns
+\newcolumntype{H}{>{\setbox0=\hbox\bgroup}c<{\egroup}@{}}
+\newcolumntype{\reducedTableView}{*{2}l*{7}H*{10}l}
+\newcolumntype{\fullTableView}{*{19}l}
+
 \DeclareMathOperator*{\argmin}{arg\,min}
 
 \newcommand{\dualGraphWidth}{3.1in} % to make dualgraph look similar

@@ -55,11 +55,14 @@ We instead opted to use a 80:20 timesplit, predicting the events between 16. Apr
 make the separation between them clearer. For our implicit ratings we wish to test all implicit rating functions individually and by making two different blends.
 Blend 1 factors in Count, Popularity, Recentness and Price, Blend 2 only factors in Price and Popularity.
 
+
+
+
 \begin{table}[H]
 \centering
 \resizebox{
 \columnwidth}{!}{
-\begin{tabular}{*{19}l}
+\begin{tabular}{\reducedTableView}
 \toprule
 Model & AUC &	$MAP@20$ &	$T_{click}$ &	$T_{want}$ &	$T_{purchase}$ &	$P_{click}$&	$P_{want}$ &	$P_{purchase}$ &	$R_{click}$ &	$R_{want}$ &	$R_{purchase}$ &	$MAP@20_{click}$ &	$MAP@20_{want}$	& $MAP@20_{purchase}$ &	 \\
 \midrule
