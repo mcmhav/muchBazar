@@ -12,7 +12,7 @@ consists of four core functions:
 
 \begin{itemize}
 	\item Generating implicit ratings from event logs (implicit feedback).
-	\item Boosting rating quality by simulating user probabilties with filterbots.
+	\item Boosting rating quality by simulating user probabilities with filterbots.
 	\item Making recommendations - in light of sparsity, implicit feedback and
 	fashion domain.
 	\item Evaluation and precision metrics.
@@ -20,7 +20,7 @@ consists of four core functions:
 
 % We have also studied the fashion domain.
 In addition, in accordance to set research goals, we have conducted a careful
-study of the fashion domain, considering both common user behaviours and the
+study of the fashion domain, considering both common user behaviors and the
 state of recommender systems. We showed that whilst there exists multiple
 competitors, very few provide \textit{personalized recommendations} to its
 users, hence this segment was identified as having the largest future potential
@@ -41,11 +41,11 @@ extremely small dataset and designing a solution for the fashion domain.
 Our first component consists of creating implicit ratings based on a extremely
 sparse dataset with \textit{implicit} feedback such as user clicks and item
 interactions. First we consider the probability of each item-related event type
-to contruct a scoring scheme. Then, for every event exhibited by a user on an
+to construct a scoring scheme. Then, for every event exhibited by a user on an
 item we then calculate the maximum score possible based on the event type and
 various features such as recentness, price and popularity. Every feature is
 given a carefully selected penalization function controlling the score,
-designed to account for observed behaviours in the domain.
+designed to account for observed behaviors in the domain.
 
 % Second component: filterbots.
 Our second component consists of creating pseudo users or filterbots in an
@@ -88,14 +88,14 @@ accuracy and its ability to rank the top results. Our results also indicate:
 % Concluding thoughts
 Based on findings presented in this thesis, it is concluded that despite making
 recommendations for a difficult domain, with a extremely sparse dataset and
-without any negative or explicit feedback -- a promosing result was still made.
+without any negative or explicit feedback -- a promising result was still made.
 Using ideas, methods and insight from this thesis we believe that a well
 functioning recommender system for use in a production environment is both
 possible and would yield multiple competitive advantages. In addition, we have
 presented the current state of the art in both fashion recommending and
 implicit rating generation, from where we draw the conclusion that although
 little research in the area exist today, the potential is great and making
-recommendations based on user behaviours will in future recommender system be
+recommendations based on user behaviors will in future recommender system be
 inevitable.
 
 %Recommender systems are arguably one of the trendiest uses of data science
@@ -147,7 +147,7 @@ G3 consult Section~\ref{subsec:fashion-theory} and
 Chapter~\ref{chap:thesobazaardata}; for G4 and G5 see
 Section~\ref{sec:cold-start-discussion}; and G6, G7 and G8 are discussed at
 length in Section~\ref{sec:implicit}, Section~\ref{sec:implementation-implicit} and
-Section~\ref{sec:experimental-plan}, respectivly.
+Section~\ref{sec:experimental-plan}, respectively.
 
 \subsection{G1, G2 and G3: Fashion domain and recommendation systems}
 \label{sec:fashion-discussion}
@@ -155,15 +155,15 @@ Section~\ref{sec:experimental-plan}, respectivly.
 By thorough examination and analysis of the data combined with an extensive
 literature review on the fashion domain we came to the main conclusion that
 time, subcultures, trends, brands and price were important features to
-incorperate into a fashion recommender. Additional features should be analyzed
-and verfied by having denser data over a longer timespan, in order to see
-more features and statisically significant numbers.
+incorporate into a fashion recommender. Additional features should be analyzed
+and verified by having denser data over a longer timespan, in order to see
+more features and statistically significant numbers.
 
 Analyzing the SoBazaar data, it became apparent that sparsity were not only a
 problem in number of users, but also looking at the amount of items and their
 connected interactions. Recentness was shown to have a great effect on user
 interactions, as well as it was demonstrated that yielding an increased number
-of clicks on an item augment the probabilty of purchase in a positive way.
+of clicks on an item augment the probability of purchase in a positive way.
 
 In terms of recommender systems in the fashion domain we determine that
 \textit{time} should play an important role in order to determine preferences.
@@ -245,12 +245,12 @@ to implicit ratings. Primarily one should try to get more concrete results by
 either performing user studies or evaluating various generated ratings in an
 online system.
 
-By incorperating a user-study or similar ways for active users to explicitly
+By incorporating a user-study or similar ways for active users to explicitly
 convey feedback on items, further studies into building regression models based
 on an ordinal scale should be performed -- especially using features found in
 the fashion domain. Some work, as we have seen in this thesis, has been done in
 this area already~\cite{parra2011walk}~\cite{parra2011implicit}, but as they
-too conclude more quantiative results should be presented to the research
+too conclude more quantitative results should be presented to the research
 community.
 
 Extending the models in this thesis with regards to penalization of features
@@ -263,7 +263,7 @@ could also prove beneficial in terms of rating quality. Finally, a more
 sophisticated way of combining a set of implicit ratings should be developed --
 although this is difficult due to the lack of a ground truth, one could e.g.
 look at AUC-scores in the last stage of our pipeline (see
-Sectian~\ref{sec:app-overview}) and optimize for this metric.
+Section~\ref{sec:app-overview}) and optimize for this metric.
 
 \subsubsection{Cold-start issues}
 
@@ -293,16 +293,16 @@ satisfaction by recommending more \emph{expensive} items to the user.
 In terms of implicit feedback a further study into methods especially tailored
 for generated ratings from implicit feedback should be performed. As we have
 primarily used open-source pre-built implementations of most recommender
-methods in this thesis, due to time contraints, a study focusing on only this
+methods in this thesis, due to time constraints, a study focusing on only this
 component of the system could prove rewarding.
 
 %TODO: Recommender systems for anonymous users - Context - move to cold start?
 
 \subsubsection{Evaluation implicit feedback}
 
-As we have seen, evaluation should ideally be done in two compoenents of our
+As we have seen, evaluation should ideally be done in two components of our
 system -- both when generating ratings and making recommendations. We have
-already mentioned how online evaluationg and user-studies may aid us in the
+already mentioned how online evaluation and user-studies may aid us in the
 first scenario, but in the second a larger study concerning other implicitly
 based methods (see Figure~\ref{fig:overview-eval}) should be conducted.
 
@@ -325,7 +325,7 @@ done when the data are more dense and user patterns going over multiple years
 emerges. Doing future studies in the fashion domain should be highly rewarding
 and has (as we have seen in Table~\ref{table:ecommerceCommpetiros}) a huge
 potential. Especially one should confirm claims made on fashion domain and user
-behaviours declared in this thesis, by performing user-studies or other forms
+behaviors declared in this thesis, by performing user-studies or other forms
 of quantitative analysis.
 
 A more in-depth study on finding items with a high similarity to the one

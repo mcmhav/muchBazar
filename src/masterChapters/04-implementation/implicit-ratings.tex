@@ -170,7 +170,7 @@ every bin having an interval size of 0.0267:
 \begin{figure}[H]
   \centering
   \includegraphics[scale=0.6]{image/dist-recentness-linear-global}
- \caption{Distribution of ratings using number of days since event, a linear
+ \caption[Distribution of ratings using number of days since event]{Distribution of ratings using number of days since event, a linear
  penalization function and global min/max feature-values}
   \label{fig:dist-recentness-linear-global}
 \end{figure}
@@ -377,7 +377,7 @@ good selection.
 \begin{figure}[H]
   \centering
   \includegraphics[scale=0.5]{image/dist-sigmoid-fixed-recentness-3-5}
-  \caption{Distribution of ratings using number of days since earliest event,
+  \caption[Distribution of ratings using number of days since earliest event]{Distribution of ratings using number of days since earliest event,
   a logistic penalization function and global min/max feature-values}
   \label{fig:dist-recentness-sigmoid}
 \end{figure}
@@ -391,7 +391,7 @@ as well. Continuing with a ratio of $3.5$ we obtain the following distribution:
 \begin{figure}[H]
   \centering
   \includegraphics[scale=0.5]{image/dist-sigmoid-fixed-count-3-5}
-  \caption{Distribution using ordering of events, a logistic penalization
+  \caption[Distribution using ordering of events w/logistic penalization]{Distribution using ordering of events, a logistic penalization
   function and global min/max feature-values}
   \label{fig:dist-count-sigmoid}
 \end{figure}
@@ -510,7 +510,7 @@ normalization:
       \end{tikzpicture}
     }
   \end{subfigure}
-  \caption{Distribution and penalization function, considering item popularity
+  \caption[Distribution of popularity based ratings]{Distribution and penalization function, considering item popularity
   and the users conformity to popular items}
   \label{fig:dist-popularity}
 \end{figure}
@@ -601,7 +601,7 @@ function, showing the trend of histogram:
 \begin{figure}[H]
   \centering
   \includegraphics[scale=0.5]{image/dist-blend}
-  \caption{Distribution using blend of ordering and number of days since event,
+  \caption[Distribution using blend of ordering and number of days since event]{Distribution using blend of ordering and number of days since event,
   with logistic and linear penalization functions, overlayed with density
   function}
   \label{dist-blend}
@@ -633,7 +633,8 @@ allocated a value around $3-4$ with few or none gaps.
 \begin{figure}[H]
   \centering
   \includegraphics[scale=0.5]{image/dist-blend-price-popularity-recentness}
-  \caption{Distribution using blend of price, popularity and recentness with
+  \caption[Distribution using blend of price, popularity and recentness with
+  linear penalization]{Distribution using blend of price, popularity and recentness with
   linear penalization, overlayed with density function}
   \label{dist-blend-price}
 \end{figure}
