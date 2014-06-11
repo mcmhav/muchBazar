@@ -18,29 +18,75 @@ We have the following main goals for our experiment:
 		  		  using \emph{more simplistic} binary methods.
 	\item Goal 3: evaluate the different implicit factors and attempt to quantify their importance.
 	\item Goal 4: quantify if our cold-start solution adds any value to the system.
-	\item Goal 5: propose a \emph{best} combination of methods for the SoBazar recommender system.
 \end{itemize}
 
-The following subsections will describe our methodology for testing and verifying these goals:
+\subsection{Experimental Datasets}
 
-\subsection{Utilizing multiple event types}
+As previously mentioned the SoBazaar dataset is both small and sparse.
+Having such a small and sparse dataset has several implications. Firstly we have
+to avoid \emph{wishful thinking} as we have very thin data, meaning that we cannot
+rely on getting reliable results. Secondly, our evaluation methodology must be
+\emph{tailored} for small sparse datasets. E.g. when using cross-validation the number
+of folds depends on the size of the dataset. For large datasets, even 3-fold Cross
+validation will be quite accurate, while for very sparse datasets, one may have to
+use leave-one-out in order to train on as many examples as possible. The advantages
+of using a large number of folds is that the bias of the true error rate estimators
+will be small, meaning that the estimator will be very accurate, with the disadvantages
+being that the variance of the true error rate estimator will be large in addition to
+increased computation time. Another alternative well suited for sparse datasets is the
+\emph{all but one} or the \emph{leave one out} method, in which we remove one rating
+from the test users and try to predict the hidden rating.
+Another important concern is whether or not to take the timestamps into consideration,
+which directly speaks against the use of cross-validation, as we wish to use the past
+interactions to predict future actions. When using the \emph{leave one out} method one
+could always remove the users freshest rating and try to predict it and repeat the
+process any number of times. This is particularly relevant as some of our implicit
+mapping functions factors in recency.
 
-We want to measure if there is any added value to using multiple implicit factors over looking
-at purchase data only. Meaning that we want to measure whether a recommender that utilizes
+We chose to utilize both time-splits and random splits to improve our confidence
+in our results. For both splits we repeat the process 10 times to get as reliable
+estimates as possible. The following table shows an overview of the experimental datasets.
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{l l l l l l }
+    \toprule
+	Dataset						& 	Ratings		& 	Users		& 	Items 		& 	Sparsity	& Rating Scale 				    \\ \midrule
+	Sobazar	(Purchases Only) 	&	1,592		&	466			&	1188		&	99.71243	& Binary						\\
+	Sobazar (All events)		& 	27,873  	& 	1,532		&	5688		& 	99.69657	& Binary/Implicit Ratings		\\
+	\bottomrule
+    \end{tabular}
+    \caption [Experimental datasets]{General overview of the datasets used for evaluation}
+    \label{table:datasets}
+\end{table}
+
+As you can see the recommender can cover a much larger portion of the user group
+and items when including multiple event types. However, the sparsity is only reduced slightly
+as the number of items and users are much higher.
+
+
+\subsection{Evaluation Methodology}
+
+The following paragraphs will describe our methodology for testing and verifying our experimental
+goals.
+
+\paragraph{Goal 1}
+
+We want to measure if there is any added value to using multiple implicit factors compared to
+looking at purchase data only. Meaning that we want to measure whether a recommender that utilizes
 data including multiple implicit factors improve the recommendation quality. This can not
 easily be measured using traditional measures due to the fact that the datasets contains
-different users and items. In addition to measure their quality by means of different
-evaluation metrics one must also make a few assumptions regarding the importance
-of the different events. Our main assumptions is that it is better to recommend a clicked
-item than a random item, and that the same also applies to wants. The additional coverage
-will also be factored in. This means that our comparison will be made on a somewhat
-subjective basis.
+different users and items. In addition to measure their quality, by means of different
+evaluation metrics, one must also make a few assumptions regarding the importance
+of the different events. Our main assumptions are that it is better to recommend a clicked
+item than a random item, and that the same also applies to wants. This means that our comparison
+will be made on a somewhat subjective basis. The additional coverage will also be factored in. 
 
-\subsection{Improved Recommendation Quality}
+\paragraph{Goal 2}
 
 We want a way to measure if our proposed models outperform the \emph{simpler} one-class
 collaborative filtering methods. The main problem with this is that our main contribution
-is the ratings that are fed into the recommender, and that we are forced to use different
+are the ratings that are fed into the recommender, and that we are forced to use different
 methods for providing recommendation. Optimally, we would like every variable to be fixed
 to get the most reliable results. In an attempt to \emph{mitigate} this problem, we 
 have carefully selected methods which we consider to be the state-of-the-art from both segments
@@ -48,13 +94,12 @@ to make the comparison as fair as possible. The comparison of recommendation qua
 is mainly a evaluation metric problem and will be discussed at greater length in
 Section \ref{sec:eval-metrics}.
 
-
-\subsection{Quantifying the Importance of Implicit factors}
+\paragraph{Goal 3}
 
 We want to learn which implicit factors are the most \emph{important} with regard to
 improved recommendation quality. Our success then relies on that we successfully can compare
 a set of ratings, which is something you not often encounter in the literature. As we currently
-are limited to offline studies we have to make a few assumptions to execute the comparison.
+are limited to offline studies we have to make a few assumptions to perform the comparison.
 Our main assumption is that better ratings will produce better recommendation results,
 which we believe to be a fair assumption, as ALS-WR especially is designed to take
 in ratings with different confidence levels attached to them. Thus, making this
@@ -63,12 +108,11 @@ length in Section \ref{sec:eval-metrics}. This allows us to input different sets
 of ratings generated incorporating different implicit factors and see which implicit
 factors improve our results the most.
 
-\subsection{Cold-start}
+\subsection{Goal 4}
 
 We wish to learn whether or not our filterbots enhance our systems ability to handle
 the three different cold-start related problems. This means that we need some methodology
 to be able to simulate the different cold-start scenarios and measure the recommendation quality.
-
 As mentioned in Section~\ref{sec:cold-start-eval} there is no common framework for assessing 
 the cold-start performance of recommender systems. To recap the cold-start problem and how
 the dataset changes over time we have three main input types:
@@ -106,18 +150,17 @@ the 10\% of the first ratings for a user, where his later activity is put in the
 Similarly for the cold-start system splits we train the model using different random subset
 of the 80\% earliest ratings and try to predict the remaining 20\%.
 
-\subsection{Proposing a solution}
-
-Based on the experimental results from \textbf{Goal 1}, \textbf{Goal 2}, \textbf{Goal 3}, and \textbf{Goal 4}
-we will propose a solution for the SoBazaar recommender system.
-
 \subsection{Generalization Properties}
 
-In addition to evaluate the methods on the SoBazaar dataset we want to verify that our
+We were unable to acquire any e-commerce datasets containing user browsing history including different
+event types and timestamps. Although we inquired other researchers having experimented with similar
+datasets to no luck.
+
+In addition to evaluate the methods on the SoBazaar dataset wanted to verify that our
 methods generalizes beyond our experimental dataset, in accordance to the general guidelines
 for experimental studies \cite{Shani2011}. The data used for offline evaluation should match
 as closely as possible the data we expect the recommender system to face when it is
-deployed \cite{Gunawardana2009}. When selecting datasets for evaluation we focused on the
+deployed \cite{Gunawardana2009}. When searching for datasets for evaluation we focused on the
 following dataset properties:
 
 \begin{itemize}
@@ -130,53 +173,7 @@ following dataset properties:
 	\item Presence of features (Secondary)
 \end{itemize}
 
-We were unable to acquire any e-commerce datasets containing user browsing history including different event types
-and timestamps. Thus making the main contributions of this article untestable, thus rendering further experiments
-on other datasets useless. It is worth mentioning that we inquired other researchers having experimented with similar
-datasets to no luck.
 
-\paragraph{Experimental Datasets}
 
-As previously mentioned the SoBazaar dataset is both small and sparse.
-Having such a small and sparse dataset has several implications. Firstly we have
-to avoid \emph{wishful thinking} as we have very thin data, meaning that we cannot
-rely on getting reliable results. Secondly, our evaluation methodology must be
-\emph{tailored} for small sparse datasets. E.g. when using cross-validation the number
-of folds depends on the size of the dataset. For large datasets, even 3-fold Cross
-validation will be quite accurate, while for very sparse datasets, one may have to
-use leave-one-out in order to train on as many examples as possible. The advantages
-of using a large number of folds is that the bias of the true error rate estimators
-will be small, meaning that the estimator will be very accurate, with the disadvantages
-being that the variance of the true error rate estimator will be large in addition to
-increased computation time. Another alternative well suited for sparse datasets is the
-\emph{all but one} or the \emph{leave one out} method, in which we remove one rating
-from the test users and try to predict the hidden rating.
 
-Another important concern is whether or not to take the timestamps into consideration,
-which directly speaks against the use of cross-validation, as we wish to use the past
-interactions to predict future actions. When using the \emph{leave one out} method one
-could always remove the users freshest rating and try to predict it and repeat the
-process any number of times. This is particularly relevant as some of our implicit
-mapping functions factors in recency.
-
-We chose to utilize both time-splits and random splits to improve our confidence
-in our results. For both splits we repeat the process 10 times to get as reliable
-estimates as possible. The following table shows an overview of the experimental datasets.
-
-\begin{table}[H]
-    \centering
-    \begin{tabular}{l l l l l l }
-    \toprule
-	Dataset						& 	Ratings		& 	Users		& 	Items 		& 	Sparsity	& Rating Scale 				    \\ \midrule
-	Sobazar	(Purchases Only) 	&	1,592		&	466			&	1188		&	99.71243	& Binary						\\
-	Sobazar (All events)		& 	27,873  	& 	1,532		&	5688		& 	99.69657	& Binary/Implicit Ratings		\\
-	\bottomrule
-    \end{tabular}
-    \caption [Experimental datasets]{General overview of the datasets used for evaluation}
-    \label{table:datasets}
-\end{table}
-
-As you can see the recommender can cover a much larger portion of the user group
- and items when including multiple event types. However,
-the sparsity is only reduced slightly as the number of items and users are much higher.
 

@@ -7,7 +7,7 @@ Our research \textbf{goals G5 and G8} requires us to identify existing metrics
 for evaluating recommender systems in a sparse dataset with implicit feedback.
 Set forth by our problem statement we need to propose one recommender system,
 selected from a range of candidate approaches and techniques. We recall our
-system overview in Figure~\ref{fig:app-overview} where in the last step of
+system overview in Figure~\ref{fig:system-overview} where in the last step of
 the pipeline we \textit{evaluate} our recommendations. There are a range of
 different metrics for ranking the performance of recommender systems, and they
 are all highly dependent on which properties the system designer prioritizes as
@@ -103,7 +103,6 @@ we first analyze offline evaluation and look at the different methods in light
 of the feedback from users being either explicit or implicit.
 
 \subsection{Offline evaluation}
-\label{subsec:offlineeval}
 
 Offline experiments are performed using pre-collected datasets and a protocol
 that models the user behavior to estimate recommender performance through
@@ -174,7 +173,7 @@ has to be run $K$ times, and thereby increasing the runtime for producing an
 evaluation of the system. If the dataset is large, an increase of $K$ runs
 could prove to be disadvantageous in time sensitive environments.
 
-\subsubsection{Evaluation Metrics: Predictive Accuracy vs. Relevance}
+\subsubsection{Evaluation Mtrics: Prdictive Accuacy vs. Relevace}
 When evaluating a recommender system, you wish to estimate a user's
 satisfaction for a given recommendation. Traditionally recommender systems have
 been evaluated by means of predictive accuracy. However, there is now a widely
@@ -226,8 +225,8 @@ equations, $RMSE$ is always bigger or equal to $MAE$, since $RMSE$ penalizes
 errors more than $MAE$.
 
 \subsubsection{Relevance based metrics}
-\label{subsubsec:relevancemetrics}
-In many applications (including SoBazaar) the recommender system does not
+bsec:relevancemetrics}
+ecommender system does not
 predict the user's preferences of items, but tries to recommend to users items
 that they may use. This is often done by giving the user a top-K set of
 recommendations. Then using a dataset consisting of items each user has
@@ -363,6 +362,33 @@ maximum number of predicted items and $m$ is the actual length of the predicted
 items list. Equation~\ref{equation:map} calculates the mean of all the values from
 \ref{equation:apn}.
 
+Consider the following examples where we have three lists of hidden items and
+three recommendations lists. All none relevant items are labeled with the item-id $0$.
+
+\begin{table}[H]
+\label{table:ap}
+\centering
+\begin{tabular}{*{4}l}
+\toprule
+Example 	& 	Actual					& 	Recommended					&	AP@10   \\ \midrule
+1			& [1,2,3,4,5,6,7,8,9,10]	&	[1,0,0,0,0,0,0,0,0,0]		&	0.100  \\
+2			& [1,2,3,4,5,6,7,8,9,10]	&	[1,0,0,0,2,0,0,0,0,0]		&	0.140  \\
+3			& [1,2,3,4,5,6,7,8,9,10]	&	[8,0,0,0,9,0,0,0,0,0]		&	0.140  \\
+4			& [1,2,3,4,5,6,7,8,9,10]	&	[1,0,0,0,3,0,5,0,0,0]		&	0.183  \\
+5			& [1,2,3,4,5,6,7,8,9,10]	&	[0,0,0,2,0,0,0,6,5,0]		&	0.083  \\
+6			& [1,2,3,4,5,6,7,8,9,10]	&	[0,0,0,0,7,0,8,0,0,0]		&	0.049  \\
+7			& [1,2,3,4,5,6,7,8,9,10]	&	[0,0,0,0,7,0,0,0,0,1]		&	0.040  \\
+8			& [1,2,3,4,5,6,7,8,9,10]	&	[0,0,0,0,0,0,0,8,5,0]		&	0.035  \\
+9			& [1,2,3,4,5,6,7,8,9,10]	&	[1,3,4,5,6,0,0,0,0,0]		&	0.500  \\
+10			& [1,2,3,4,5,6,7,8,9,10]	&	[0,0,0,0,0,1,2,8,5,3]		&	0.178  \\
+\bottomrule
+\end{tabular}
+\caption{$AP@10$ Examples}
+\end{table}
+
+As you see from example two and three average precision does not consider the order of the actual item list
+as all items are seen as equally relevant.
+
 \begin{equation}
     AUROC = \int_\infty^{-\infty} TPR(T)P_0(T)dTdT
     \label{equation:auroc}
@@ -375,7 +401,12 @@ used evaluation method for binary choice problems. If somebody makes random
 guesses, the ROC curve should be a diagonal line stretching from (0,0) to
 (1,1), as shown by the blue line in the figure below, scoring an AUC of 0.5. A
 perfect model will score an AUC of 1.0. In practice, almost all models will fit
-somewhere in between e.g. somewhat like the red or green line.
+somewhere in between. One therefore obviously  aims to maximize the area under the
+curve (AUC). The higher up all relevant items (true positives) are in the recommendation list,
+the higher the AUC score. AUC can therefore be used as a single measure for the overall
+quality of a recommender system.
+
+\marginpar{TODO: Make Fit}
 
 \begin{figure}[H]
 \label{fig:aucroc}
@@ -407,6 +438,31 @@ somewhere in between e.g. somewhat like the red or green line.
 \subsubsection{Limitations of relevance based metrics}
 \label{subsec:limitations-relevancebased}
 
+The following table shows an example of the AUC values when varying the position of a single relevant document through the
+recommendation list.
+
+\begin{table}[H]
+	\centering
+	\begin{tabular}{*{12}l}
+	\toprule
+	\#Example	& R1 & R2 & R3 & R4 & R5 & R6 & R7 & R8 & R9 & R10 & AUC \\ \midrule
+	1		& \cmark & \xmark & \xmark & \xmark & \xmark & \xmark & \xmark & \xmark & \xmark & \xmark & 1.000 \\
+	2		& \xmark & \cmark & \xmark & \xmark & \xmark & \xmark & \xmark & \xmark & \xmark & \xmark & 0.889 \\
+	3		& \xmark & \xmark & \cmark & \xmark & \xmark & \xmark & \xmark & \xmark & \xmark & \xmark & 0.778 \\
+	4		& \xmark & \xmark & \xmark & \cmark & \xmark & \xmark & \xmark & \xmark & \xmark & \xmark & 0.667 \\
+	5		& \xmark & \xmark & \xmark & \xmark & \cmark & \xmark & \xmark & \xmark & \xmark & \xmark & 0.556 \\
+	6		& \xmark & \xmark & \xmark & \xmark & \xmark & \cmark & \xmark & \xmark & \xmark & \xmark & 0.444 \\
+	7		& \xmark & \xmark & \xmark & \xmark & \xmark & \xmark & \cmark & \xmark & \xmark & \xmark & 0.333 \\
+	8		& \xmark & \xmark & \xmark & \xmark & \xmark & \xmark & \xmark & \cmark & \xmark & \xmark & 0.222 \\
+	9		& \xmark & \xmark & \xmark & \xmark & \xmark & \xmark & \xmark & \xmark & \cmark & \xmark & 0.111 \\
+	10		& \xmark & \xmark & \xmark & \xmark & \xmark & \xmark & \xmark & \xmark & \xmark & \cmark & 0.000 \\
+	\bottomrule
+	\end{tabular}
+	\caption{AUC Example - Varying the position of a single relevant in the recommendation list}
+	\label{table:auc}
+\end{table}
+
+
 As mentioned by Powers et al.~\cite{powers2007}, recall, precision, F-measure
 have a bias.  Recall, precision and F-measure ignore performance in correctly
 handling negative examples, they propagate the marginal prevalences and biases,
@@ -434,11 +490,20 @@ most suitable to evaluate algorithms that are used to present ranked lists to
 the user in domains where the user preferences are expressed using numerical
 values.
 
+\marginpar{TODO: Leave or let be?}
+The recommendation lists can also consist of several items with similar rating that
+can appear in varying orders. 
+Since the user can express the same rating for similar
+items, the list will again contain groups of items that can appear in arbitrary order.
+The bottom line is that in most cases a rank metric for partial ordering would be more
+appropriate for comparing recommendation lists that are produced by recommenders to item
+rankings from known user preferences.
+
 As we do not have explicit data in SoBazaar per Figure~\ref{fig:overview-eval}
 we will not explore these methods in detail, however we will list some of the
 most common ones. Note that although \textit{MAP} is defined as being a
 relevance based metric used with implicit ratings, it does produce a ranked
-list. It is however described in Section~\ref{subsubsec:relevancemetrics} and not here, as it does not
+list. It is however described in Section~\ref{} and not here, as it does not
 compare two ranked lists as the methods below does.
 
 % todo maybe structure:
@@ -670,7 +735,7 @@ their methods.
 To simulate the cold-start scenario, different approaches have been employed:
 One popular way to simulate a cold-start user scenario used by~\cite{Stern2009,
 Lam2008} is to split the dataset in two disjoint sets, a training set
-containing $90\%$ of the users and the remaining $10\%$ being in the test set. For
+containing 90\% of the users and the remaining $0\%$ eing in the test set. For
 each test user one trains a model with a random subset $T\%$ of their ratings
 e.g.\ $5\%$ or $75\%$, and then use the model to predict their remaining
 ratings. The same methodology can also be used to simulate a cold-start item
@@ -680,7 +745,7 @@ cold-start user scenario one selects a subset of the users with e.g.\ more than
 200 ratings. One then trains the model with a subset of the ratings. In the
 case of~\cite{Rashid2002} 30, 45, 60 and 90 ratings was used. After training
 the model one computes the error on the hidden ratings for the same user.
-Stern et. al. \cite{Stern2009} also used a similar method which they called
+Stern et. al. \cite{Stern1998} also used a similar method which they called
 Given $n$, in which they trained their model using 2, 5 and 10 ratings for each
 test user and predict the remaining values.
 The advantage of the latter approach is that they use a selection criteria for
