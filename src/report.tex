@@ -100,28 +100,32 @@
 % TITLE PAGE
 %----------------------------------------------
 
-\begin{titlepage}
-\begin{center}
-\mbox{}\\[6pc]
-\begin{center}
-\Huge{\thesistitle}\\[2pc]
+\newcommand{\thesistitlepage}[0]{
+  \begin{titlepage}
+  \begin{center}
+  \mbox{}\\[6pc]
+  \begin{center}
+  \Huge{\thesistitle}\\[2pc]
 
-\Large{\authorname}\\[1pc]
-\large{\today}\\[2pc]
+  \Large{\authorname}\\[1pc]
+  \large{\today}\\[2pc]
 
-MASTER THESIS\\
-Department of Computer and Information Science\\
-Norwegian University of Science and Technology
-\end{center}
-\vfill
+  MASTER THESIS\\
+  Department of Computer and Information Science\\
+  Norwegian University of Science and Technology
+  \end{center}
+  \vfill
 
-\noindent Principal supervisor: \suphelge \\
-\noindent Secondary supervisor: \supheri
+  \noindent Principal supervisor: \suphelge \\
+  \noindent Secondary supervisor: \supheri
 
-\end{center}
-\end{titlepage}
+  \end{center}
+  \end{titlepage}
+  \clearpage
+}
 
-\clearpage
+% Insert the title-page (as above)
+% \thesistitlepage
 
 %----------------------------------------------
 % ABSTRACT
