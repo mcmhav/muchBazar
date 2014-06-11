@@ -423,7 +423,7 @@ The following paragraphs will discuss our findings in accordance to our experime
 \paragraph{Recommendations using all events}
 
 Our results from the purchase only dataset indicate the we are not able to get much better performance than using random selection.
-In addition, a $MAP@20$ score of 0.0000 for all recommenders indicate the recommender did not recommend any of the relevant items
+In addition, a $MAP@20$ score of 0.00 for all recommenders indicate the recommender did not recommend any of the relevant items
 to the user. By comparing it with our results for the multiple event datasets we were successfully able to attain a relatively high total
 ordering performance, scoring an AUC of over 0.83\% for the random split in addition to being able to retrieve
 7.5\% of all clicked items, 8.95\% of all wants and 9.66\% of all purchases in the top 20 lists. By also factoring in the added
@@ -439,21 +439,21 @@ rates. When not factoring in recentness the difference became less apparent and 
 and purchases. However, the $MAP@20$ scores produced by UserbasedKNN was slightly better for both wants and purchases,
 meaning that the retrieved items were placed higher in the recommendation lists.
 
-We can fairly certainly state that our method currently provide better performance than a most popular recommender.
+We can therefore state that our methods provide better performance than a most popular recommender.
 We can also state that our method performed better on the time-based split where we were able to factor in recency. We consider
 the results from the random splits a draw. It is important to consider that different recommendation methods
-have been used, and it would be \emph{unwise} to draw any grand conclusions from our results as it can also be attributed to the fact that ALS-WR simply is a better model. Our results should be confirmed in an online experiment.
+have been used, and it would be \emph{unwise} to draw any grand conclusions from our results as it can also be attributed to the fact that ALS-WR simply is a better model. Our results should therefore be confirmed in an online experiment.
 
 \paragraph{Implicit rating functions}
 
 For the time-based splits both recentness features, especially looking at ordering using a logistic penalization function
 gave us the best score overall. We can not say whether \emph{ordering} does better than \emph{age},
-as they performed equally well. We believe that age is a better solution for active users in theory, while ordering
+as they performed equally well. We believe that considering event age is a better solution for active users in theory, while ordering
 would be more suited for the not so active users. Which give some indication that recency is an important factor
 in the fashion domain. Popularity had the lowest score and consistently retrieved less items and produced lower quality
 rankings than the others. This might give some indication that price plays a larger factor in the fashion domain
 than popularity. The blend incorporating all functions performed the best, although its performance was not on pair
-with age and ordering. It would have been interesting to see the results if you could have had some way to learn
+with age and ordering features. It would have been interesting to see the results if you could have had some way to learn
 this relationship with regression, as done in \cite{parra2011walk}. We believe that our results might give some indication
 that recency plays an important role in SoBazaar.
 

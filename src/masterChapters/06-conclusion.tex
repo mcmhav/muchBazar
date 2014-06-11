@@ -54,7 +54,7 @@ items algorithmically according the item-attributes or by aggregating rating
 information. Two such bots include a \textit{PopularityBot} who rate items
 based on their popularity and a \textit{BrandBot} who gives all items of a
 brand the maximum rating. We tested out different filterbot combinations for
-all three cold-start scenarios, disappointingly we did not find the filterbots
+all three cold-start scenarios, disappointingly we did not find the them
 to improve the cold start performance of the system, but primarily credit this
 to the dissatisfactory quality of product metadata and the lack of demographic
 details about the users.
@@ -94,7 +94,7 @@ items and purchases. However, user-based kNN managed to achieve a higher
 $MAP@20$ scores when considering wanted and purchased items, making this
 segment of our results inconclusive. Our results give strong indication that
 recentness is an important factor in the fashion domain. We also found that the
-price too consistently give better results than considering item-popularity,
+price consistently give better results than considering item-popularity,
 which might give some indication that this is a more important feature for
 users in this domain. Due to the limited size of our dataset we are careful to
 not make grand claims about the results, and believe they should be verified
@@ -187,8 +187,8 @@ to.
 After closely examining the different methods we concluded that both filterbots
 and content-boosted hybrid methods could provide a possible solution for our
 specific scenario. However, only modest results were achieved with our
-solution, and we largly attribute this to the quality of product metadata and
-the lack of demographic data on users. Agarwal et. al. \cite{Agarwal2009} used
+solution, and we largely attribute this to the quality of product metadata and
+the lack of demographic data on users. Agarwal et al. \cite{Agarwal2009} used
 13 filterbots in their experiments, where 11 of them were based on demographic
 information, which underlines the importance of this segment.
 
