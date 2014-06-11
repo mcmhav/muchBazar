@@ -78,12 +78,23 @@ the top 20 recommendations.
 
 % How the proposed system performs
 The proposed system outperformed all other methods tested both in terms of
-accuracy and its ability to rank the top results. Our results also indicate:
-%TODO - %Sigmoid = Count
-%Recentness works!
-%Popularity better than price!
-%Results should be further verified through online experiments
-\marginpar{TODO: mention increase in accuracy and ranking ability}
+accuracy and its ability to rank the top results for a time-based split.
+Ordering and Recency performed particularly well scoring an AUC of 8\% higher
+than the best binary method in addition being able to recall more clicks and 
+wants and increase the ranking quality. The improvements over the non-personalized
+most popular recommender was a 237\% increase in recall of wanted items
+and an increase from 0\% recall of purchased items to 8.33\% for
+ordering. For the random split the results were less conclusive.
+Here the blend scored an AUC that was 4.3\% higher than the best binary method
+and was able to recall both more wanted items and purchases. However, user-based
+kNN managed to achieve a higher $MAP@20$ scores when considering wanted and purchased
+items. Making our results inconclusive. Our results give some indication that recentness
+is an actual factor in the fashion domain. We also found prize to consistently give
+better results than popularity, which might give some indication that prize
+is a more important factor. Due to the limited size of our dataset we
+do not wish to draw any conclusions as our results should be verified
+through online experiments.
+
 
 % Concluding thoughts
 Based on findings presented in this thesis, it is concluded that despite making
