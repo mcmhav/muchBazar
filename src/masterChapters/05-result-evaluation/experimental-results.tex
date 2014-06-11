@@ -50,7 +50,7 @@ As we have access to timestamps we decided to split the dataset on time, making 
 affect of factoring in recentness. However, there seem to have been particularly few purchase activity over the last two months. We first attempted to evaluate the recommenders
 using a 90:10 timesplit, making predictions for the events between 7. may - 19. may. However, there have only been recorded two purchase or 0.07\% of
 all events in the last twelve day period, making it a bad period to use for evaluation. We did therefor not run multiple runs on this
-data, as we thought it more beneficial to get a better split to evaluate on. The results we did get can be found in the appendix~\ref{90:10-timesplits}
+data, as we thought it more beneficial to get a better split to evaluate on. The results we did get can be found in the Appendix~\ref{appendix:tab9010-timesplits}
 We instead opted to use a 80:20 timesplit, predicting the events between 16. April - 22. May. Our baselines, or binary methods are colored gray to
 make the separation between them clearer. For our implicit ratings we wish to test all implicit rating functions individually and by making two different blends.
 Blend 1 factors in Count, Popularity, Recentness and Price, Blend 2 only factors in Price and Popularity.

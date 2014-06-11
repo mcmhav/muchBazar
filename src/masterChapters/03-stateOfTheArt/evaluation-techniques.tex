@@ -25,7 +25,7 @@ offline setting.
 It is important to note that having good evaluation metrics combined with
 robust automation techniques are a crucial requirement in order to find the
 optimal model-parameters. In most recommender models the number of free
-parmeters are high, and in order to best set them the designer need to first
+parameters are high, and in order to best set them the designer need to first
 select values based on intuition and experience. Later it is crucial to run
 experiments fluctuating the parameter values until the optimal
 \textit{evaluation score} is achieved.
@@ -87,8 +87,8 @@ be found in Appendix~\ref{appendix:evaluation-metrics}.
 			}
 		;
 	\end{tikzpicture}
+    \caption{Overview of evaluation metrics based on input to recommender system}
 	\label{fig:overview-eval}
-	\caption{Overview of evaluation metrics based on input to recommender system}
 \end{figure}
 
 % Explain the figure and that we will refer to it. Mention that rightmost is
@@ -98,7 +98,7 @@ the following section, as well as functioning as a structure for the upcoming
 discussion. As one can see the types of metrics used is highly dependent on
 which type of data available. As one can see, the rightmost tree has live users
 and is thus an online evaluation, whilst the remaining metrics are considered
-in an offline environment. Various names and abbrivations will be explained as
+in an offline environment. Various names and abbreviations will be explained as
 we first analyze offline evaluation and look at the different methods in light
 of the feedback from users being either explicit or implicit.
 
@@ -148,7 +148,7 @@ The second method, \textit{K-fold Cross-Validation} builds on the holdout
 methods by creating K partitions of the dataset. Then one runs $K$ experiments,
 using $K-1$ partitions (or \textit{folds}) for training and the remaining one
 for testing. One can easily see that setting $K=2$, makes this method
-equivanlent to the holdout method. The estimated error is found by taking the
+equivalent to the holdout method. The estimated error is found by taking the
 average error from all the experiments.
 
 \textit{Leave-one-out} is the degenerate case of K-fold Cross-Validation, where
@@ -245,8 +245,8 @@ outcomes:
 	Not Recommended	&	False-Negative (FN)	&	True-Negative (TN)	\\
 	\bottomrule
 	\end{tabular}
+    \caption[Usage prediction (Confusion Matrix)]{This table is showing the different categories recommended items can end up in.}
 	\label{table:usageprediction}
-	\caption[Usage prediction (Confusion Matrix)]{This table is showing the different categories recommended items can end up in.}
 \end{table}
 
 \noindent
