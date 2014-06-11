@@ -10,7 +10,7 @@ relation to our experimental goals.
 
 \subsection{Purchase Only Results}
 
-The following table shows our experimental results from the purchase only dataset where all purchases
+Table \ref{table:results-purchase-only} shows our experimental results from the purchase only dataset where all purchases
 are given a score of 1. These numbers are mainly meant to serve as a baseline in order show what one
 could achieve when only looking at the purchase data.
 
@@ -47,7 +47,8 @@ and are therefor highlighted in the tables, which in addition have been sorted i
 By splitting the dataset on time we make the evaluation more \textit{realistic}, we also make it possible to factor in and measure the effect of recency.
 There seem to have been particularly few purchase events the last couple of months, only 0.07\% of the last 10\% of all events have been purchases. We ended up
 splitting the dataset on time, training the model on the first 80\% of the ratings in chronological order, making predictions for the last 20\%. In this period
-0.6\% of all events are purchases. For an explanation of the metrics used see Table~\ref{metric-explanation}.
+0.6\% of all events are purchases. For an explanation of the metrics used see Table~\ref{metric-explanation}. As you may recall \emph{Blend 1} combines price, popularity,
+age and ordering, \emph{Blend 2} combines price and popularity while \emph{Blend 3} combines age, price and popularity.
 
 \begin{table}[H]
 \centering
@@ -58,7 +59,7 @@ Model & AUC &	$MAP@20$ &	$T_{click}$ &	$T_{want}$ &	$T_{purchase}$ &	$P_{click}$
 \midrule
 
 %ALS-WR FINAL
-ALS-WR Days		 			&	0.664772 &	0.005981 &	3038 &	2328 &	36 &	23.765625 &	16.273438 &	2.773438 &	0.007823 &	0.00699 &	0.07704 &	0.003701 &	0.017824 &	0.047961 &	 \\
+ALS-WR Age		 			&	0.664772 &	0.005981 &	3038 &	2328 &	36 &	23.765625 &	16.273438 &	2.773438 &	0.007823 &	0.00699 &	0.07704 &	0.003701 &	0.017824 &	0.047961 &	 \\
 ALS-WR Ordering Logistic	&	0.66227 &	0.006349 &	3038 &	2328 &	36 &	25.687874 &	23.74012 &	3 &	0.008456 &	0.010198 &	0.083333 &	0.004006 &	0.019112 &	0.031268 &	 \\
 ALS-WR Blend 1 				&	0.657957 &	0.005772 &	3038 &	2328 &	36 &	24.859375 &	16.742188 &	2.03125  &	0.008183 &	0.007192 &	0.056424 &	0.00421 &	0.009891 &	0.028202 &	 \\
 ALS-WR Blend 3 				&	0.654464 &	0.006404 &	3038 &	2328 &	36 &	22.165878 &	16.512444 &	2.000031 &	0.007296 &	0.007093 &	0.055556 &	0.004827 &	0.012305 &	0.016913 &	 \\
@@ -80,7 +81,7 @@ BPR-Linear					&	0.559033 &	0.000443 &	3038 &	2328 &	36 &	2 	  &	2 	  	&	0 &	0.0
 \bottomrule
 \end{tabular}
 }
-\caption{Time-based split results 16. April - 19. May. All scores are averaged over 10 runs}
+\caption{Time-based split results 16. April - 19. May. All scores are averaged over 10 runs, sorted on AUC}
 \end{table}
 
 
@@ -96,7 +97,7 @@ ratings as they were really poor in comparison to ALS-WR. We believe that this m
 and not positive feedback only data, as in our case. For more model results and detailed metrics see the Appendix \ref{appendix:time-based-results}.
 
 There is no result dithering implemented in the collaborative filtering algorithms used, combined with the fact that the dataset split at the exact same day,
-means that we need some other way of getter a better estimate of the true error. Further evaluation is therefore needed.
+means that we need some other way of getting a better estimate of the true error. Further evaluation is therefore needed.
 By doing random splits and some shuffling we will get a more a more reliable estimate of the true error. However, this also means that we can no longer factor in recency.
 
 \subsubsection{Random splits}
@@ -136,7 +137,7 @@ IBCF Popularity				& 0.554495 &	0.001209 &	1335.7 &	1230.1 &	149.9 	&	0.3    		&
 \bottomrule
 \end{tabular}
 }
-\caption{Random split results 90:10 - The Results are averaged over 10 runs}
+\caption{Random split results 90:10 - The Results are averaged over 10 runs, sorted on AUC}
 \end{table}
 
 
@@ -163,7 +164,7 @@ This means that we do not expect too much from applying them to ALS-WR.
 
 We then try to inject different combinations of filterbots to see if the recommendation quality improves. Running our cold-start experiments are costly in the sense
 that we need to train 9 different models for one run. In addition we also have $2^5$ possible filterbots combinations, and
-the option of using different parameters for each method. We therefore chose to limit the number of filterbot combinations tested to 3
+the option of using different parameters for each method. We therefore chose to limit the number of filterbot combinations tested to three.
 To recapitulate from section \ref{implementation-filterbots}, we have the following filterbots at our disposal:
 
 \begin{itemize}
@@ -172,18 +173,18 @@ To recapitulate from section \ref{implementation-filterbots}, we have the follow
 \item PopularityBot: rates all items based on their popularity
 \item CriticBot: $n$ critics among the most active users are selected and rate items based on the average
 	  rating given by the critics.
-\item BrandBots: multiple bots that give all items of a specific brand a maximum rating
+\item SingleBrandBots: multiple bots that give all items of a specific brand a maximum rating
 \end{itemize}
 
 Based on our preliminary results the we selected the following filterbot combinations for further testing: combination 1, denoted [0,0,0,0,1]
-injects \emph{BrandBots} or one filterbot for each brand, which gives all ratings of the same brand a maximum rating, combination 2 which denoted [0,0,1,0,1] injects
-a \emph{PopularityBot} and \emph{BrandBots} and combination 3, denoted [1,1,1,1,1] does not surprisingly inject all the bots listed above.
+injects \emph{SingleBrandBots} or one filterbot for each brand, which gives all ratings of the same brand a maximum rating, combination 2 which denoted [0,0,1,0,1] injects
+a \emph{PopularityBot} and \emph{SingleBrandBots:} and combination 3, denoted [1,1,1,1,1] does not surprisingly inject all the bots listed above.
 
 \subsubsection{Time-based splits}
 
-For our time based splits we use the time-based methodology described in the experimental plan \ref{cold-start-methodology}.
-ALS-WR have been trained using blend 1 combining price, popularity, ordering and days. The following table shows the cold-start new
-item performance of the system, where we simulate a new item being added to the system.
+For our time based splits we use the time-based methodology described in our experimental plan \ref{cold-start-methodology}.
+ALS-WR have been trained using blend 1 combining price, popularity, ordering and age. The following table shows the cold-start new
+item performance of the system, where we simulate a \emph{new item being added to the system}.
 
 \begin{table}[H]
 \centering
@@ -224,7 +225,7 @@ All test items must have been rated by a minimum of 15 users, which explains the
 is the combination 1, which seems to give a good improvement for both the 10\% and 40\% splits. The filterbots greatly improves the AUC for both methods,
 but it does not consistently improve the recall or $MAP@20$ scores.
 
-The following table shows the cold-start new user performance simulating a new user joining the system:
+The following table shows the cold-start new user performance simulating a \emph{new user joining the system}:
 
 \begin{table}[H]
 \centering
@@ -264,7 +265,7 @@ From this table we can see that most popular outperform IBCF on all counts excep
 the same performance, ALS-WR being slightly better, except for the purchase numbers. Again we see the same trend of improved AUC scores, but the recall and
 $MAP@20$ scores do not improve.
 
-The following table shows the cold-start system performance when varying the sparsity levels of the system:
+The following table shows the cold-start system performance for \emph{varying the sparsity levels}:
 
 \begin{table}[H]
 \centering
@@ -310,7 +311,7 @@ system splits where combination 3 improved the results for all metrics.
 
 \subsubsection{Random splits}
 
-The following tables show the experimental results when performing random-splits as described in the experimental \ref{cold-start-methodology}.
+The following tables show the experimental results when performing random-splits as described in the experimental plan \ref{cold-start-methodology}.
 The main difference being that the item, user and system splits are now done randomly instead of being based on time.
 ALS-WR have been trained using blend 2, which combines price and popularity.
 

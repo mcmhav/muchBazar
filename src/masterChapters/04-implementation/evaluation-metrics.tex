@@ -5,9 +5,9 @@
 %http://www.slideshare.net/gunnar-schroeder
 
 This section will discuss the suitedness of different evaluation metrics in the context
-of measuring the recommendation quality for SoBazaar and \emph{G8} of our thesis.
+of measuring the recommendation quality for SoBazaar and \textbf{G8} of our thesis.
 
-\textbf{G8} automatically disqualifies metrics that consider the ratings themselves as the
+Goal \textbf{G8} automatically disqualifies metrics that consider the ratings themselves as the
 ground truth and bases its evaluation score on these numbers. MAE and RMSE can therefore
 confidently be crossed off the list of suited metrics.
 
@@ -49,7 +49,7 @@ it is reasonable to believe the the likeliness of finding a hidden item in the t
 is not very high. We therefore felt that The Area Under Curve (AUC), described in Section~\ref{subsubsec:relevancemetrics}
 would be a nice complement to the rank accuracy metrics. AUC allows us to measure the recommenders overall
 ability to retrieve relevant items and can therefore be used as a single measure for the overall quality of a recommender
-system. Not only considering the top results.
+system.
 
 One should be aware of that the AUC scores can be highly inaccurate, especially for cold-start users,
 users which the recommender is unable to provide more than a handful of recommendations for. AUC requires

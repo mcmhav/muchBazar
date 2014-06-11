@@ -72,7 +72,7 @@ goals.
 
 \paragraph{Goal 1}
 
-We want to measure if there is any added value to using multiple implicit factors compared to
+Identify if there is any added value to using multiple implicit factors compared to
 looking at purchase data only. Meaning that we want to measure whether a recommender that utilizes
 data including multiple implicit factors improve the recommendation quality. This can not
 easily be measured using traditional measures due to the fact that the datasets contains
@@ -84,7 +84,7 @@ will be made on a somewhat subjective basis. The additional coverage will also b
 
 \paragraph{Goal 2}
 
-We want a way to measure if our proposed models outperform the \emph{simpler} one-class
+Identify if our proposed models outperform the \emph{simpler} one-class
 collaborative filtering methods. The main problem with this is that our main contribution
 are the ratings that are fed into the recommender, and that we are forced to use different
 methods for providing recommendation. Optimally, we would like every variable to be fixed
@@ -96,7 +96,7 @@ Section \ref{sec:eval-metrics}.
 
 \paragraph{Goal 3}
 
-We want to learn which implicit factors are the most \emph{important} with regard to
+Identify which implicit factors are the most \emph{important} with regard to
 improved recommendation quality. Our success then relies on that we successfully can compare
 a set of ratings, which is something you not often encounter in the literature. As we currently
 are limited to offline studies we have to make a few assumptions to perform the comparison.
@@ -122,7 +122,7 @@ implicit mapping functions and blends:
 \subsection{Goal 4}
 \label{cold-start-methodology}
 
-We wish to learn whether or not our filterbots enhance our systems ability to handle
+Study whether or not our filterbots enhance our systems ability to handle
 the three different cold-start related problems. This means that we need some methodology
 to simulate the different cold-start scenarios and measure the recommendation quality.
 As mentioned in Section~\ref{sec:cold-start-eval} there is no common framework for assessing 
@@ -166,9 +166,7 @@ using different random subset of the 80\% earliest ratings and try to predict th
 
 We were unable to acquire any e-commerce datasets containing user browsing history including different
 event types and timestamps. Although we inquired other researchers having experimented with similar
-datasets to no luck.
-
-In addition to evaluate the methods on the SoBazaar dataset we wanted to verify that our
+datasets to no luck. In addition to evaluate the methods on the SoBazaar dataset we wanted to verify that our
 methods generalizes beyond our experimental dataset, in accordance to the general guidelines
 for experimental studies \cite{Shani2011}. The data used for offline evaluation should match
 as closely as possible the data we expect the recommender system to face when it is
